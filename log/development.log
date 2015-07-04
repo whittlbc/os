@@ -3062,3 +3062,112 @@ Compiled jquery.js  (22ms)  (pid 26235)
 Compiled jquery.min.js  (1ms)  (pid 26235)
 Compiled jquery_ujs.js  (1ms)  (pid 26235)
 Compiled coffee-script.js  (19ms)  (pid 26235)
+
+
+Started GET "/" for 127.0.0.1 at 2015-07-04 00:24:30 -0700
+Connecting to database specified by database.yml
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 144ms (Views: 143.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /home.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /application.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /bootstrap.css - 304 Not Modified (27ms)
+
+
+Started GET "/assets/require.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /require.js - 304 Not Modified (39ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Compiled application.js  (0ms)  (pid 26583)
+Served asset /application - 200 OK (38ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /underscore.js - 304 Not Modified (12ms)
+
+
+Started GET "/assets/jquery.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /jquery.js - 304 Not Modified (28ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /router.js - 304 Not Modified (9ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /backbone.js - 304 Not Modified (23ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /events.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-04 00:24:31 -0700
+Served asset /views/home/index-view.js - 304 Not Modified (15ms)
+
+
+Started GET "/assets/views/home/index-view.html" for 127.0.0.1 at 2015-07-04 00:24:32 -0700
+Served asset /views/home/index-view.html - 304 Not Modified (27ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-07-04 00:53:39 -0700
+Connecting to database specified by database.yml
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (1.6ms)
+Compiled bootstrap.css  (1ms)  (pid 26878)
+Compiled home.css  (27ms)  (pid 26878)
+Compiled application.css  (37ms)  (pid 26878)
+Completed 200 OK in 151ms (Views: 150.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-04 00:53:40 -0700
+Served asset /home.css - 304 Not Modified (1ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-07-04 00:53:40 -0700
+Served asset /bootstrap.css - 304 Not Modified (1ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-04 00:53:40 -0700
+Compiled application.js  (0ms)  (pid 26878)
+Served asset /application - 304 Not Modified (200ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-04 00:53:40 -0700
+Compiled underscore.js  (1ms)  (pid 26878)
+Served asset /underscore.js - 304 Not Modified (88ms)
+
+
+Started GET "/assets/jquery.js" for 127.0.0.1 at 2015-07-04 00:53:40 -0700
+Compiled jquery.js  (4ms)  (pid 26878)
+Served asset /jquery.js - 304 Not Modified (252ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-04 00:53:41 -0700
+Compiled router.js  (0ms)  (pid 26878)
+Served asset /router.js - 304 Not Modified (96ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-04 00:53:41 -0700
+Compiled backbone.js  (1ms)  (pid 26878)
+Served asset /backbone.js - 304 Not Modified (47ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-04 00:53:41 -0700
+Compiled views/home/index-view.js  (0ms)  (pid 26878)
+Served asset /views/home/index-view.js - 304 Not Modified (16ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-04 00:53:41 -0700
+Compiled events.js  (0ms)  (pid 26878)
+Served asset /events.js - 304 Not Modified (33ms)
