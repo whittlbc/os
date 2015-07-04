@@ -1,7 +1,7 @@
 define(["backbone",
     "events",
     "views/home/index-view",
-    "views/projects/index-view"],
+    "views/projects/project-view"],
     function(Backbone,
      Events,
      IndexView,
@@ -18,7 +18,7 @@ define(["backbone",
         console.log('heard project route');
 
         var projectView = new ProjectView({
-            el: '#proj'
+            el: '#project'
         });
 
         projectView.render();
