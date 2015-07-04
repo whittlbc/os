@@ -46,5 +46,9 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
+gem 'rails_serve_static_assets'
+
+gem 'rails_stdout_logging'
+
 gem 'backbone-on-rails' # KD
 gem 'requirejs-rails' , :git => 'https://github.com/coderanger/requirejs-rails.git' # See https://github.com/jwhitley/requirejs-rails/pull/59 # KD
