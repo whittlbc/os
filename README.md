@@ -1,5 +1,2 @@
-Backbone-Rails-Mustache-RequireJS
+OS
 ==========================================
-
-A 'Hello World' Template
-
