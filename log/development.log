@@ -3216,3 +3216,52 @@ Served asset /events.js - 304 Not Modified (121ms)
 
 Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-04 01:07:40 -0700
 Served asset /backbone.js - 304 Not Modified (31ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-07-04 02:06:10 -0700
+Connecting to database specified by database.yml
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (1.3ms)
+Compiled bootstrap.min.css  (0ms)  (pid 31553)
+Compiled home.css  (61ms)  (pid 31553)
+Compiled application.css  (116ms)  (pid 31553)
+Completed 200 OK in 336ms (Views: 335.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-04 02:06:11 -0700
+Served asset /home.css - 304 Not Modified (1ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled application.js  (0ms)  (pid 31553)
+Served asset /application - 304 Not Modified (115ms)
+
+
+Started GET "/assets/jquery.js" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled jquery.js  (4ms)  (pid 31553)
+Served asset /jquery.js - 304 Not Modified (122ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled underscore.js  (1ms)  (pid 31553)
+Served asset /underscore.js - 304 Not Modified (37ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled router.js  (0ms)  (pid 31553)
+Served asset /router.js - 304 Not Modified (9ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled backbone.js  (1ms)  (pid 31553)
+Served asset /backbone.js - 304 Not Modified (63ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled events.js  (0ms)  (pid 31553)
+Served asset /events.js - 304 Not Modified (40ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-04 02:06:12 -0700
+Compiled views/home/index-view.js  (0ms)  (pid 31553)
+Served asset /views/home/index-view.js - 304 Not Modified (8ms)
