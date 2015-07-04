@@ -50,5 +50,9 @@ gem 'rails_serve_static_assets'
 
 gem 'rails_stdout_logging'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 gem 'backbone-on-rails' # KD
 gem 'requirejs-rails' , :git => 'https://github.com/coderanger/requirejs-rails.git' # See https://github.com/jwhitley/requirejs-rails/pull/59 # KD
