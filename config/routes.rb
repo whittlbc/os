@@ -2,11 +2,11 @@ Backboneworld::Application.routes.draw do
 
   get '/' => 'home#index'
 
-  resources :projects do
-    collection do
-      get :index
-    end
-  end
+  resources :projects
+  #
+  # scope '/projects', controller: :projects do
+  #   post '/create', to: :create
+  # end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

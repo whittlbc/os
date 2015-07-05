@@ -1,16 +1,22 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/project',
     'views/home/project-post-view',
 	'stache!views/home/project-feed-view',
     ], function ($,
      Backbone,
      _,
+     Project,
      ProjectPostView,
      ProjectFeedViewTpl) {
 	'use strict';
 
 	var ProjectFeedView = Backbone.View.extend({
+
+        errorHandler: function(resp, status, xhr) {
+            console.log('AJAX ERROR: ', xhr, resp);
+        },
 
 		populateFeed: function () {
 
@@ -48,7 +54,13 @@ define(['jquery',
         },
 
         onSelectProject: function() {
-            window.location = '/projects';
+            var self = this;
+            var project = new Project();
+            project.create({title: 'FUCK YEAHHH'}, {success: self.createProjectSuccess, error: self.errorHandler});
+        },
+
+        createProjectSuccess: function(resp, status, xhr) {
+            console.log('Successfully created new project');
         },
 
 		render: function () {
