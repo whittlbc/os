@@ -2,7 +2,7 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'views/home/project-feed-view',
-	'stache!views/home/index-view',
+	'stache!views/home/index-view'
     ], function ($,
      Backbone,
      _,

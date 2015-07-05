@@ -1,10 +1,14 @@
 define(['jquery',
     'backbone',
     'underscore',
-    'stache!views/projects/project-view',
+    'views/projects/project-details-view',
+    'views/projects/details-chat-feed-view',
+    'stache!views/projects/project-view'
 ], function ($,
              Backbone,
              _,
+             ProjectDetailsView,
+             DetailsChatFeedView,
              ProjectViewTpl) {
     'use strict';
 
@@ -19,6 +23,18 @@ define(['jquery',
             var self = this;
             this.$el.html(ProjectViewTpl({
             }));
+
+            this.projectDetailsView = new ProjectDetailsView({
+                el: '#projectDetailsView'
+            });
+
+            this.projectDetailsView.render();
+
+            this.detailsChatFeedView = new DetailsChatFeedView({
+                el: '#detailsChatFeedView'
+            });
+
+            this.detailsChatFeedView.render();
         }
     });
 

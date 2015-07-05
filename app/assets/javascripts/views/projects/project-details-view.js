@@ -1,14 +1,14 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-	'stache!views/home/project-post-view'
+	'stache!views/home/project-details-view'
     ], function ($,
      Backbone,
      _,
-     ProjectPostViewTpl) {
+     ProjectDetailsViewTpl) {
 	'use strict';
 
-	var ProjectPostView = Backbone.View.extend({
+	var ProjectDetailsView = Backbone.View.extend({
 
 		initialize: function () {
 		},
@@ -17,11 +17,10 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
-            this.$el.html(ProjectPostViewTpl({
-            }));
+            this.$el.html(ProjectDetailsViewTpl());
 		}
 	});
 
-	return ProjectPostView;
+	return ProjectDetailsView;
 
 });
