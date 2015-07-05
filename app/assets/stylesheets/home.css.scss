@@ -5,11 +5,17 @@
 }
 
 #project-feed {
-  height: 400px;
+  min-height: 700px;
   background-color: black;
 }
 
+.project-feed-list {
+  list-style: none;
+}
+
 .project-post-view {
-  height: 300px;
+  height: 200px;
   background-color: blue;
+  border-bottom: 1px solid white;
+
 }

@@ -1,5 +1,25 @@
 
 .project-body {
-  height: 1000px;
   background-color: #eeeeee;
+  min-height: 700px;
+}
+
+#projectDetailsView {
+  background-color: gray;
+  height: 250px;
+}
+
+#detailsChatFeedView {
+  min-height: 700px;
+  background-color: black;
+}
+
+.details-chat-list {
+  list-style: none;
+}
+
+.details-chat-message {
+  height: 100px;
+  background-color: blue;
+  border-bottom: 1px solid white;
 }

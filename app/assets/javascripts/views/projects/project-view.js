@@ -5,11 +5,11 @@ define(['jquery',
     'views/projects/details-chat-feed-view',
     'stache!views/projects/project-view'
 ], function ($,
-             Backbone,
-             _,
-             ProjectDetailsView,
-             DetailsChatFeedView,
-             ProjectViewTpl) {
+     Backbone,
+     _,
+     ProjectDetailsView,
+     DetailsChatFeedView,
+     ProjectViewTpl) {
     'use strict';
 
     var ProjectView = Backbone.View.extend({

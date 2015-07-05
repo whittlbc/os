@@ -12,20 +12,49 @@ define(['jquery',
 
 	var ProjectFeedView = Backbone.View.extend({
 
-		initialize: function () {
+		populateFeed: function () {
+
+            if (this.POST_VIEWS) {
+                while (this.POST_VIEWS.length > 0) {
+                    this.POST_VIEWS.pop();
+                }
+            } else {
+                this.POST_VIEWS = [];
+            }
+
+            for (var i = 0; i < 10; i++) {
+                this.addPost();
+            }
 		},
 
-		events: {},
+        addPost: function() {
+
+            var projectPostView = new ProjectPostView({
+                tagName: 'li'
+            });
+
+            projectPostView.render();
+
+            var projectPostEl = projectPostView.el;
+
+            this.$el.find('.project-feed-list').append(projectPostEl);
+
+            this.POST_VIEWS.push(projectPostView);
+
+        },
+
+		events: {
+            'click .project-post-view': 'onSelectProject'
+        },
+
+        onSelectProject: function() {
+            window.location = '/projects';
+        },
 
 		render: function () {
 			var self = this;
             this.$el.html(ProjectFeedViewTpl());
-
-            this.projectPostView = new ProjectPostView({
-                el: '.project-post-view'
-            });
-
-            this.projectPostView.render();
+            this.populateFeed();
 		}
 	});
 
