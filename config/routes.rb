@@ -2,8 +2,11 @@ Backboneworld::Application.routes.draw do
 
   get '/' => 'home#index'
 
+  get '/projects/feed', to: 'projects#feed'
+
   resources :projects
-  #
+
+
   # scope '/projects', controller: :projects do
   #   post '/create', to: :create
   # end

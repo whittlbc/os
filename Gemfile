@@ -57,3 +57,6 @@ end
 
 gem 'backbone-on-rails' # KD
 gem 'requirejs-rails' , :git => 'https://github.com/coderanger/requirejs-rails.git' # See https://github.com/jwhitley/requirejs-rails/pull/59 # KD
+
+# Github API
+gem 'octokit', '~> 3.0'

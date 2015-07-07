@@ -11,9 +11,9 @@ define(['jquery',
 ) {
     'use strict';
 
-    var Project = OSModel.extend({
+    var User = OSModel.extend({
 
-        extension: 'projects',
+        extension: 'users',
 
         create: function(info, options){
             var requestInfo = options || {};
@@ -26,14 +26,14 @@ define(['jquery',
             return this.sync('create', this, requestInfo);
         },
 
-        fetchFeedProjects: function(options){
+        read: function(options){
             var requestInfo = options || {};
 
             _.extend(requestInfo, {
-                url: this.extension + '/feed'
+                url: this.extension + '/all'
             });
 
-            return this.sync('fetchFeedProjects', this, requestInfo);
+            return this.sync('read', this, requestInfo);
         },
 
         update: function(info, options) {
@@ -58,5 +58,5 @@ define(['jquery',
         }
     });
 
-    return Project;
+    return User;
 });

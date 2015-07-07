@@ -12,24 +12,30 @@ define(['jquery',
      ProjectFeedViewTpl) {
 	'use strict';
 
+    var view;
+
 	var ProjectFeedView = Backbone.View.extend({
+
+        initialize: function() {
+            view = this;
+        },
 
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
         },
 
-		populateFeed: function () {
+		populateFeed: function (resp, status, xhr) {
 
-            if (this.POST_VIEWS) {
-                while (this.POST_VIEWS.length > 0) {
-                    this.POST_VIEWS.pop();
+            if (view.POST_VIEWS) {
+                while (view.POST_VIEWS.length > 0) {
+                    view.POST_VIEWS.pop();
                 }
             } else {
-                this.POST_VIEWS = [];
+                view.POST_VIEWS = [];
             }
 
-            for (var i = 0; i < 10; i++) {
-                this.addPost();
+            for (var i = 0; i < resp.length; i++) {
+                view.addPost();
             }
 		},
 
@@ -55,18 +61,23 @@ define(['jquery',
 
         onSelectProject: function() {
             var self = this;
-            var project = new Project();
-            project.create({title: 'FUCK YEAHHH'}, {success: self.createProjectSuccess, error: self.errorHandler});
         },
 
         createProjectSuccess: function(resp, status, xhr) {
             console.log('Successfully created new project');
         },
 
+        updateProjectSuccess: function(resp, status, xhr) {
+            console.log('Successfully updated project');
+        },
+
+        deleteProjectSuccess: function(resp, status, xhr) {
+            console.log('Successfully deleted project');
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(ProjectFeedViewTpl());
-            this.populateFeed();
 		}
 	});
 

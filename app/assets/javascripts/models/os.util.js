@@ -22,6 +22,10 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'delete': {
                 verb: 'DELETE',
                 action: 'delete'
+            },
+            'fetchFeedProjects': {
+                verb: 'GET',
+                action: 'read'
             }
         }
     };

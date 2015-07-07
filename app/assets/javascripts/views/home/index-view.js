@@ -2,11 +2,13 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'views/home/project-feed-view',
+    'models/project',
 	'stache!views/home/index-view'
     ], function ($,
      Backbone,
      _,
      ProjectFeedView,
+     Project,
      IndexViewTpl) {
 	'use strict';
 
@@ -27,6 +29,11 @@ define(['jquery',
             });
 
             this.projectFeedView.render();
+
+            var project = new Project();
+
+            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+
 		}
 	});
 

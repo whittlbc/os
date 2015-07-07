@@ -11,12 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150705183528) do
+ActiveRecord::Schema.define(:version => 20150706043824) do
 
-  create_table "projects", :force => true do |t|
-    t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+# Could not dump table "projects" because of following StandardError
+#   Unknown type 'json' for column 'contributors'
+
+  create_table "users", :force => true do |t|
+    t.string   "uuid"
+    t.string   "username"
+    t.string   "email"
+    t.string   "name"
+    t.string   "gh_username"
+    t.string   "password"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end
