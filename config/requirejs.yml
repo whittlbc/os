@@ -1,12 +1,16 @@
 paths:
+    jquery: 'jquery.min'
+    bootstrap: 'bootstrap.min'
     stache: 'stache'
     eventbroker: 'backbone-eventbroker'
 shim:
+    jquery:
+        exports: '$'
+    underscore:
+        exports: '_'
     backbone:
         deps: ['underscore', 'jquery']
         exports: 'Backbone'
-    underscore:
-        exports: '_'
     bootstrap:
         deps: ['jquery']
     eventbroker:

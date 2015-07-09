@@ -2,6 +2,9 @@ define(['backbone', 'eventbroker'], function(Backbone) {
     'use strict';
 
     var OSUtil = {
+
+        hidePopupTimeout: 400,
+
         customMethodMap: {
             'create': {
                 verb: 'POST',
@@ -26,8 +29,17 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'fetchFeedProjects': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'login': {
+                verb: 'GET',
+                action: 'read'
+            },
+            'checkUsername': {
+                verb: 'GET',
+                action: 'read'
             }
         }
+
     };
 
     return OSUtil;

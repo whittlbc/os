@@ -1,31 +1,45 @@
 define(["backbone",
     "events",
     "views/home/index-view",
-    "views/projects/project-view"],
+    "views/projects/project-view",
+    "views/login/login-view"],
     function(Backbone,
      Events,
      IndexView,
-     ProjectView) {
+     ProjectView,
+     LoginView) {
 
   var Router = Backbone.Router.extend({
 
     routes: {
         'projects': 'projectRoute',
+        'login': 'loginRoute',
         '': 'defaultRoute'
     },
 
-    projectRoute: function() {
-        console.log('heard project route');
+      loginRoute: function() {
+
+          var loginView = new LoginView({
+              el: '#login'
+          });
+
+          loginView.render();
+      },
+
+     projectRoute: function() {
 
         var projectView = new ProjectView({
             el: '#project'
         });
 
         projectView.render();
-    },
+     },
 
       defaultRoute: function () {
-          console.log('heard default route');
+
+          if (window.location.search != '') {
+              //GH
+          }
 
           var indexView = new IndexView({
               el: '#home'
@@ -33,7 +47,6 @@ define(["backbone",
 
           indexView.render();
       }
-
 
   });
 

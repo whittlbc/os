@@ -1,20 +1,23 @@
 define(['jquery',
     'backbone',
     'underscore',
+    'views/os.view',
     'views/projects/project-details-view',
     'views/projects/details-chat-feed-view',
     'stache!views/projects/project-view'
 ], function ($,
      Backbone,
      _,
+     OSView,
      ProjectDetailsView,
      DetailsChatFeedView,
      ProjectViewTpl) {
     'use strict';
 
-    var ProjectView = Backbone.View.extend({
+    var ProjectView = OSView.extend({
 
         initialize: function () {
+            this.osInitialize();
         },
 
         events: {},

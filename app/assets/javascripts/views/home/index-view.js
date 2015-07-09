@@ -1,23 +1,33 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'views/os.view',
     'views/home/project-feed-view',
     'models/project',
-	'stache!views/home/index-view'
-    ], function ($,
+    'stache!views/home/index-view',
+], function ($,
      Backbone,
      _,
+     OSView,
      ProjectFeedView,
      Project,
-     IndexViewTpl) {
+     IndexViewTpl
+     ) {
 	'use strict';
 
-	var IndexView = Backbone.View.extend({
+	var IndexView = OSView.extend({
 
 		initialize: function () {
+            this.osInitialize();
 		},
 
-		events: {},
+		events: {
+            'click [data-trigger=popup]': 'onShowPopup'
+        },
+
+        onShowPopup: function () {
+            this.showLoginPopup();
+        },
 
 		render: function () {
 			var self = this;

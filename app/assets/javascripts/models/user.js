@@ -15,7 +15,18 @@ define(['jquery',
 
         extension: 'users',
 
-        create: function(info, options){
+        login: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/login',
+                data: info
+            });
+
+            return this.sync('login', this, requestInfo);
+        },
+
+        signup: function(info, options){
             var requestInfo = options || {};
 
             _.extend(requestInfo, {
@@ -24,6 +35,17 @@ define(['jquery',
             });
 
             return this.sync('create', this, requestInfo);
+        },
+
+        checkUsername: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/check_username',
+                data: info
+            });
+
+            return this.sync('checkUsername', this, requestInfo);
         },
 
         read: function(options){

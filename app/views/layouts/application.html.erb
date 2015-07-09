@@ -4,6 +4,7 @@
   <title>OS</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "bootstrap.min" %>
+  <%= stylesheet_link_tag "animate" %>
   <%= stylesheet_link_tag "main" %>
   <%= stylesheet_link_tag "favicon.ico", :rel => "shortcut icon" %>
   <link href="http://fonts.googleapis.com/css?family=Lato:400,900,300,700" rel="stylesheet">
@@ -20,6 +21,13 @@
 <body>
 
   <%= yield %>
+
+
+  <!-- Login Popup -->
+  <div class="myPopup hidden-popup">
+    <div id="myPopup"></div>
+  </div>
+  <div class="popup-backdrop" hidden></div>
 
 </body>
 

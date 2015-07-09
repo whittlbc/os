@@ -25,8 +25,6 @@ define(['jquery',
             if (_.contains(['POST', 'PUT'], requestInfo.type)) {
                 requestInfo.contentType = 'application/json';
                 requestInfo.data = JSON.stringify(options.data || this.toJSON());
-            } else if (requestInfo.data) {
-                requestInfo.url = requestInfo.url + '?' + this.toParams(requestInfo.data);
             }
 
             var success = options.success;
