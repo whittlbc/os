@@ -42,7 +42,7 @@ define(['jquery',
                     self.hideLoginPopup();
                 });
                 $('.myPopup').removeClass('hidden-popup');
-                $('.myPopup').removeClass('fadeOutUp');
+                $('.myPopup').removeClass('fadeOut');
                 $('.myPopup').addClass('animated fadeInDown');
                 this.loginPopupShown = true;
             }
@@ -51,10 +51,12 @@ define(['jquery',
         hideLoginPopup: function () {
             if (this.loginPopupShown) {
                 $('.myPopup').removeClass('fadeInDown');
-                $('.myPopup').addClass('fadeOutUp');
-                $('.popup-backdrop').hide();
+                $('.myPopup').addClass('fadeOut');
+                $('.popup-backdrop').addClass('animated fadeOut');
                 setTimeout(function () {
                     $('.myPopup').addClass('hidden-popup');
+                    $('.popup-backdrop').hide();
+                    $('.popup-backdrop').removeClass('fadeOut');
                 }, OSUtil.hidePopupTimeout);
                 this.loginPopupShown = false;
             }

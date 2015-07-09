@@ -15,6 +15,17 @@ define(['jquery',
 
         extension: 'users',
 
+        postGHCode: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/postGHCode',
+                data: info
+            });
+
+            return this.sync('postGHCode', this, requestInfo);
+        },
+
         login: function(info, options){
             var requestInfo = options || {};
 

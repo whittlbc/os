@@ -37,6 +37,10 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'checkUsername': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'postGHCode': {
+                verb: 'POST',
+                action: 'create'
             }
         }
 

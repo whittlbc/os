@@ -62,3 +62,5 @@ gem 'requirejs-rails' , :git => 'https://github.com/coderanger/requirejs-rails.g
 gem 'octokit', '~> 3.0'
 
 gem 'activeuuid', '~> 0.6.0'
+
+gem 'rest-client', '>= 1.8.0'

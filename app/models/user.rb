@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :email, :gh_username, :name, :password, :username, :uuid
+  attr_accessible :email, :gh_username, :name, :password, :username, :uuid, :pic
 
   has_many :projects
 

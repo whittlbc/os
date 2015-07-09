@@ -2,12 +2,14 @@ define(["backbone",
     "events",
     "views/home/index-view",
     "views/projects/project-view",
-    "views/login/login-view"],
+    "views/login/login-view",
+    "models/user"],
     function(Backbone,
      Events,
      IndexView,
      ProjectView,
-     LoginView) {
+     LoginView,
+     User) {
 
   var Router = Backbone.Router.extend({
 
@@ -38,7 +40,10 @@ define(["backbone",
       defaultRoute: function () {
 
           if (window.location.search != '') {
-              //GH
+              var search = window.location.search;
+              var code = search.slice(search.indexOf('code=')+5);
+              var user = new User();
+              user.postGHCode({code: code});
           }
 
           var indexView = new IndexView({

@@ -9,6 +9,7 @@ Backboneworld::Application.routes.draw do
     collection do
       get :login, :path => '/login'
       get :username_test, :path => '/check_username'
+      post :gh_code, :path => '/postGHCode'
     end
   end
 
