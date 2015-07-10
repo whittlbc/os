@@ -43,8 +43,8 @@ class UsersController < ApplicationController
 
   def gh_code
     data = {
-      :client_id => 'bfdb73ed12138dddbfcc',
-      :client_secret => '91347eb62e866f7960510aafd81c2f41b2dda2d4',
+      :client_id => User::GH::CLIENT_ID,
+      :client_secret => User::GH::CLIENT_SECRET,
       :code => params[:code]
     }
     response = RestClient.post('https://github.com/login/oauth/access_token', data, :accept => :json)
