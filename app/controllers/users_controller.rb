@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     end
 
     render :json => {
-               :gh_username => gh_username,
+               :username => gh_username,
                :name => name,
                :pic => pic,
                :email => email
@@ -88,13 +88,12 @@ class UsersController < ApplicationController
 
   def get_by_username
     user = User.find_by_gh_username(params[:username])
-
     if user.nil?
       render :json => {:found_user => false}
     else
       render :json => {
                  :found_user => true,
-                 :gh_username => user.gh_username,
+                 :username => user.gh_username,
                  :name => user.name,
                  :pic => user.pic,
                  :email => user.email
