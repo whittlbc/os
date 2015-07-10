@@ -26,6 +26,17 @@ define(['jquery',
             return this.sync('postGHCode', this, requestInfo);
         },
 
+        getByUsername: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getByUsername',
+                data: info
+            });
+
+            return this.sync('getByUsername', this, requestInfo);
+        },
+
         login: function(info, options){
             var requestInfo = options || {};
 

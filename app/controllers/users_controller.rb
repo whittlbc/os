@@ -51,7 +51,6 @@ class UsersController < ApplicationController
     body = JSON.parse(response.body)
     if body["access_token"]
       login_or_create(body["access_token"])
-      render :json => {:status => 'got access token'}
     else
       render :json => {:status => 'Error getting access token'}
     end
@@ -64,9 +63,9 @@ class UsersController < ApplicationController
     name = body["name"]
     email = body["email"]
     pic = body["avatar_url"]
-    if User.find_by_gh_username(gh_username)
-      # Just Login
-    else
+    old_user = User.find_by_gh_username(gh_username)
+
+    if old_user.nil?
       # Create new User
       @user = User.new(:uuid => UUIDTools::UUID.random_create.to_s,
                        :gh_username => gh_username,
@@ -75,6 +74,31 @@ class UsersController < ApplicationController
                        :email => email,
                        :password => access_token)
       @user.save
+    else
+      old_user.update_attributes(:password => access_token)
+    end
+
+    render :json => {
+               :gh_username => gh_username,
+               :name => name,
+               :pic => pic,
+               :email => email
+           }
+  end
+
+  def get_by_username
+    user = User.find_by_gh_username(params[:username])
+
+    if user.nil?
+      render :json => {:found_user => false}
+    else
+      render :json => {
+                 :found_user => true,
+                 :gh_username => user.gh_username,
+                 :name => user.name,
+                 :pic => user.pic,
+                 :email => user.email
+             }
     end
   end
 
