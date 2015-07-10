@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150709093440) do
+ActiveRecord::Schema.define(:version => 20150710080246) do
 
 # Could not dump table "projects" because of following StandardError
 #   Unknown type 'json' for column 'contributors'
