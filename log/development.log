@@ -61987,3 +61987,883 @@ Started GET "/projects/feed" for 127.0.0.1 at 2015-07-09 02:51:15 -0700
 Processing by ProjectsController#feed as JSON
   [1m[35mProject Load (0.5ms)[0m  SELECT "projects".* FROM "projects" 
 Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/?code=fa68502b7fef7d613b7f" for 127.0.0.1 at 2015-07-09 19:18:20 -0700
+Processing by HomeController#index as HTML
+  Parameters: {"code"=>"fa68502b7fef7d613b7f"}
+  Rendered home/index.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 42ms (Views: 40.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /application.css - 200 OK (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /projects.css - 200 OK (0ms)
+
+
+Started GET "/assets/animate.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /animate.css - 200 OK (0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /home.css - 200 OK (0ms)
+
+
+Started GET "/assets/main.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /main.css - 200 OK (0ms)
+
+
+Started GET "/assets/bootstrap.min.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /bootstrap.min.css - 200 OK (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /users.css - 200 OK (0ms)
+
+
+Started GET "/assets/require.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /require.js - 200 OK (31ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /application - 200 OK (0ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /underscore.js - 200 OK (25ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /router.js - 200 OK (0ms)
+
+
+Started GET "/assets/jquery.min.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /jquery.min.js - 200 OK (20ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/home/index-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /events.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/projects/project-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/login/login-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/user.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /models/user.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/os.view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/os.view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/project.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /models/project.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/home/project-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/stache.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /stache.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /backbone.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/projects/project-details-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.model.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /models/os.model.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/projects/details-chat-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/home/project-post-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/mustache.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /mustache.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone-eventbroker.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /backbone-eventbroker.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/projects/details-chat-message-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/text.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /text.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.util.js" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /models/os.util.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.html" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/home/index-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.html" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/login/login-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.html" for 127.0.0.1 at 2015-07-09 19:18:21 -0700
+Served asset /views/projects/project-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.html" for 127.0.0.1 at 2015-07-09 19:18:22 -0700
+Served asset /views/projects/project-details-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.html" for 127.0.0.1 at 2015-07-09 19:18:22 -0700
+Served asset /views/home/project-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.html" for 127.0.0.1 at 2015-07-09 19:18:22 -0700
+Served asset /views/projects/details-chat-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.html" for 127.0.0.1 at 2015-07-09 19:18:22 -0700
+Served asset /views/home/project-post-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.html" for 127.0.0.1 at 2015-07-09 19:18:22 -0700
+Served asset /views/projects/details-chat-message-view.html - 200 OK (0ms)
+
+
+Started POST "/users/postGHCode" for 127.0.0.1 at 2015-07-09 19:18:22 -0700
+Processing by UsersController#gh_code as JSON
+  Parameters: {"code"=>"fa68502b7fef7d613b7f", "user"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."gh_username" = 'whittlbc' LIMIT 1[0m
+Completed 200 OK in 1398ms (Views: 0.2ms | ActiveRecord: 6.9ms)
+
+
+Started GET "/projects/feed" for 127.0.0.1 at 2015-07-09 19:18:23 -0700
+Processing by ProjectsController#feed as JSON
+  [1m[35mProject Load (0.4ms)[0m  SELECT "projects".* FROM "projects" 
+Completed 200 OK in 8ms (Views: 0.2ms | ActiveRecord: 4.9ms)
+
+
+Started GET "/?code=fa68502b7fef7d613b7f" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Processing by HomeController#index as HTML
+  Parameters: {"code"=>"fa68502b7fef7d613b7f"}
+  Rendered home/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 6ms (Views: 5.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /application.css - 200 OK (0ms)
+
+
+Started GET "/assets/bootstrap.min.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /bootstrap.min.css - 200 OK (0ms)
+
+
+Started GET "/assets/animate.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /animate.css - 200 OK (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /projects.css - 200 OK (0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /home.css - 200 OK (0ms)
+
+
+Started GET "/assets/main.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /main.css - 200 OK (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /users.css - 200 OK (0ms)
+
+
+Started GET "/assets/require.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /require.js - 200 OK (0ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /application - 200 OK (0ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /underscore.js - 200 OK (0ms)
+
+
+Started GET "/assets/jquery.min.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /jquery.min.js - 200 OK (0ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /router.js - 200 OK (0ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /events.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/user.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /models/user.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/home/index-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/login/login-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/project-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /backbone.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.model.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /models/os.model.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/os.view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/os.view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/home/project-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/project.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /models/project.js - 200 OK (0ms)
+
+
+Started GET "/assets/stache.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /stache.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/project-details-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/details-chat-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone-eventbroker.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /backbone-eventbroker.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.util.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /models/os.util.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/home/project-post-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/text.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /text.js - 200 OK (0ms)
+
+
+Started GET "/assets/mustache.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /mustache.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.js" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/details-chat-message-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/home/index-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/project-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/project-details-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/details-chat-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/home/project-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/login/login-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/home/project-post-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.html" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Served asset /views/projects/details-chat-message-view.html - 200 OK (0ms)
+
+
+Started POST "/users/postGHCode" for 127.0.0.1 at 2015-07-09 19:18:26 -0700
+Processing by UsersController#gh_code as JSON
+  Parameters: {"code"=>"fa68502b7fef7d613b7f", "user"=>{}}
+Completed 200 OK in 591ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/projects/feed" for 127.0.0.1 at 2015-07-09 19:18:27 -0700
+Processing by ProjectsController#feed as JSON
+  [1m[36mProject Load (0.5ms)[0m  [1mSELECT "projects".* FROM "projects" [0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/?code=fa68502b7fef7d613b7f" for 127.0.0.1 at 2015-07-09 19:28:41 -0700
+Processing by HomeController#index as HTML
+  Parameters: {"code"=>"fa68502b7fef7d613b7f"}
+  Rendered home/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 45ms (Views: 44.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /application.css - 200 OK (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /projects.css - 200 OK (0ms)
+
+
+Started GET "/assets/main.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /main.css - 200 OK (0ms)
+
+
+Started GET "/assets/animate.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /animate.css - 200 OK (0ms)
+
+
+Started GET "/assets/bootstrap.min.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /bootstrap.min.css - 200 OK (0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /home.css - 200 OK (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /users.css - 200 OK (0ms)
+
+
+Started GET "/assets/require.js" for 127.0.0.1 at 2015-07-09 19:28:42 -0700
+Served asset /require.js - 200 OK (0ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /application - 200 OK (0ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /underscore.js - 200 OK (0ms)
+
+
+Started GET "/assets/jquery.min.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /jquery.min.js - 200 OK (0ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /router.js - 200 OK (0ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /events.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/home/index-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/projects/project-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/user.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /models/user.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/login/login-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /backbone.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/os.view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Compiled views/os.view.js  (0ms)  (pid 61945)
+Served asset /views/os.view.js - 200 OK (134ms)
+
+
+Started GET "/assets/models/project.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /models/project.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/home/project-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/stache.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /stache.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/projects/project-details-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/projects/details-chat-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.model.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /models/os.model.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone-eventbroker.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /backbone-eventbroker.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.util.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /models/os.util.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/projects/details-chat-message-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/mustache.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /mustache.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/home/project-post-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/text.js" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /text.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.html" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/home/index-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.html" for 127.0.0.1 at 2015-07-09 19:28:43 -0700
+Served asset /views/projects/project-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.html" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Served asset /views/login/login-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.html" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Served asset /views/home/project-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.html" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Served asset /views/projects/project-details-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.html" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Served asset /views/projects/details-chat-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.html" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Served asset /views/projects/details-chat-message-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.html" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Served asset /views/home/project-post-view.html - 200 OK (0ms)
+
+
+Started POST "/users/postGHCode" for 127.0.0.1 at 2015-07-09 19:28:44 -0700
+Processing by UsersController#gh_code as JSON
+  Parameters: {"code"=>"fa68502b7fef7d613b7f", "user"=>{}}
+Completed 200 OK in 1504ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/projects/feed" for 127.0.0.1 at 2015-07-09 19:28:45 -0700
+Processing by ProjectsController#feed as JSON
+  [1m[35mProject Load (0.7ms)[0m  SELECT "projects".* FROM "projects" 
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/?code=51a77e505c5ca28616fe" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Processing by HomeController#index as HTML
+  Parameters: {"code"=>"51a77e505c5ca28616fe"}
+  Rendered home/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 40ms (Views: 39.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /application.css - 200 OK (0ms)
+
+
+Started GET "/assets/animate.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /animate.css - 200 OK (0ms)
+
+
+Started GET "/assets/main.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /main.css - 200 OK (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /projects.css - 200 OK (0ms)
+
+
+Started GET "/assets/bootstrap.min.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /bootstrap.min.css - 200 OK (0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /home.css - 200 OK (0ms)
+
+
+Started GET "/assets/require.js" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /require.js - 200 OK (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /users.css - 200 OK (0ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /application - 200 OK (0ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /underscore.js - 200 OK (0ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /router.js - 200 OK (0ms)
+
+
+Started GET "/assets/jquery.min.js" for 127.0.0.1 at 2015-07-09 19:29:00 -0700
+Served asset /jquery.min.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/home/index-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /events.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/login/login-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/project-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/user.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /models/user.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /backbone.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/os.view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/os.view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/home/project-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/stache.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /stache.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/project.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /models/project.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/project-details-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.model.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /models/os.model.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/details-chat-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone-eventbroker.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /backbone-eventbroker.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.util.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /models/os.util.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/home/project-post-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/mustache.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /mustache.js - 200 OK (0ms)
+
+
+Started GET "/assets/text.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /text.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.js" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/details-chat-message-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/home/index-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/login/login-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/project-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/home/project-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/project-details-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/details-chat-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/home/project-post-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.html" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Served asset /views/projects/details-chat-message-view.html - 200 OK (0ms)
+
+
+Started POST "/users/postGHCode" for 127.0.0.1 at 2015-07-09 19:29:01 -0700
+Processing by UsersController#gh_code as JSON
+  Parameters: {"code"=>"51a77e505c5ca28616fe", "user"=>{}}
+  [1m[36mUser Load (0.9ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."gh_username" = 'whittlbc' LIMIT 1[0m
+Completed 200 OK in 996ms (Views: 0.2ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/projects/feed" for 127.0.0.1 at 2015-07-09 19:29:02 -0700
+Processing by ProjectsController#feed as JSON
+  [1m[35mProject Load (0.4ms)[0m  SELECT "projects".* FROM "projects" 
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/?code=51a77e505c5ca28616fe" for 127.0.0.1 at 2015-07-09 19:29:18 -0700
+Processing by HomeController#index as HTML
+  Parameters: {"code"=>"51a77e505c5ca28616fe"}
+  Rendered home/index.html.erb within layouts/application (0.1ms)
+Compiled home.css  (523ms)  (pid 61945)
+Compiled application.css  (3ms)  (pid 61945)
+Completed 200 OK in 900ms (Views: 899.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /application.css - 200 OK (6ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /home.css - 200 OK (3ms)
+
+
+Started GET "/assets/animate.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /animate.css - 200 OK (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /projects.css - 200 OK (0ms)
+
+
+Started GET "/assets/bootstrap.min.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /bootstrap.min.css - 200 OK (0ms)
+
+
+Started GET "/assets/main.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /main.css - 200 OK (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /users.css - 200 OK (0ms)
+
+
+Started GET "/assets/require.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /require.js - 200 OK (0ms)
+
+
+Started GET "/assets/application" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /application - 200 OK (0ms)
+
+
+Started GET "/assets/underscore.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /underscore.js - 200 OK (0ms)
+
+
+Started GET "/assets/router.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /router.js - 200 OK (0ms)
+
+
+Started GET "/assets/jquery.min.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /jquery.min.js - 200 OK (0ms)
+
+
+Started GET "/assets/events.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /events.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/home/index-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/projects/project-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/login/login-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/user.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /models/user.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /backbone.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/os.view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/os.view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/home/project-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/projects/project-details-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/stache.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /stache.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/projects/details-chat-feed-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/project.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /models/project.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.model.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /models/os.model.js - 200 OK (0ms)
+
+
+Started GET "/assets/backbone-eventbroker.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /backbone-eventbroker.js - 200 OK (0ms)
+
+
+Started GET "/assets/models/os.util.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /models/os.util.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/home/project-post-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/text.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /text.js - 200 OK (0ms)
+
+
+Started GET "/assets/mustache.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /mustache.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.js" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/projects/details-chat-message-view.js - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/index-view.html" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/home/index-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-feed-view.html" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/home/project-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-view.html" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/projects/project-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/login/login-view.html" for 127.0.0.1 at 2015-07-09 19:29:19 -0700
+Served asset /views/login/login-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-feed-view.html" for 127.0.0.1 at 2015-07-09 19:29:20 -0700
+Served asset /views/projects/details-chat-feed-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/project-details-view.html" for 127.0.0.1 at 2015-07-09 19:29:20 -0700
+Served asset /views/projects/project-details-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/home/project-post-view.html" for 127.0.0.1 at 2015-07-09 19:29:20 -0700
+Served asset /views/home/project-post-view.html - 200 OK (0ms)
+
+
+Started GET "/assets/views/projects/details-chat-message-view.html" for 127.0.0.1 at 2015-07-09 19:29:20 -0700
+Served asset /views/projects/details-chat-message-view.html - 200 OK (0ms)
+
+
+Started POST "/users/postGHCode" for 127.0.0.1 at 2015-07-09 19:29:20 -0700
+Processing by UsersController#gh_code as JSON
+  Parameters: {"code"=>"51a77e505c5ca28616fe", "user"=>{}}
+Completed 200 OK in 551ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/projects/feed" for 127.0.0.1 at 2015-07-09 19:29:20 -0700
+Processing by ProjectsController#feed as JSON
+  [1m[36mProject Load (0.5ms)[0m  [1mSELECT "projects".* FROM "projects" [0m
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.5ms)

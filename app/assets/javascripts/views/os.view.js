@@ -13,8 +13,14 @@ define(['jquery',
 	var OSView = Backbone.View.extend({
 
 		osInitialize: function () {
+            var self = this;
             this.createLoginPopupView();
             this.loginPopupShown = false;
+            this.loginPopup = $('.myPopup');
+            this.backdrop = $('.popup-backdrop');
+            this.backdrop.click(function(){
+                self.hideLoginPopup();
+            });
 		},
 
         events: {
@@ -27,9 +33,7 @@ define(['jquery',
                 this.loginView = new LoginView({
                     el: '#myPopup'
                 });
-
                 this.loginView.render();
-
                 this.listenTo(this.loginView, 'hidePopup', self.hideLoginPopup);
             }
         },
@@ -37,27 +41,23 @@ define(['jquery',
         showLoginPopup: function () {
             var self = this;
             if (!this.loginPopupShown) {
-                $('.popup-backdrop').show();
-                $('.popup-backdrop').click(function(){
-                    self.hideLoginPopup();
-                });
-                $('.myPopup').removeClass('hidden-popup');
-                $('.myPopup').removeClass('fadeOut');
-                $('.myPopup').addClass('animated fadeInDown');
+
+                this.backdrop.removeClass('hidden-popup').addClass('animated fadeIn');
+                this.loginPopup.removeClass('hidden-popup').addClass('animated fadeInDown');
                 this.loginPopupShown = true;
             }
         },
 
         hideLoginPopup: function () {
+            var self = this;
             if (this.loginPopupShown) {
-                $('.myPopup').removeClass('fadeInDown');
-                $('.myPopup').addClass('fadeOut');
-                $('.popup-backdrop').addClass('animated fadeOut');
+                this.loginPopup.removeClass('fadeInDown').addClass('fadeOut');
+                this.backdrop.removeClass('fadeIn').addClass('fadeOut');
                 setTimeout(function () {
-                    $('.myPopup').addClass('hidden-popup');
-                    $('.popup-backdrop').hide();
-                    $('.popup-backdrop').removeClass('fadeOut');
+                    self.loginPopup.addClass('hidden-popup').removeClass('fadeOut');
+                    self.backdrop.addClass('hidden-popup').removeClass('fadeOut');
                 }, OSUtil.hidePopupTimeout);
+
                 this.loginPopupShown = false;
             }
         }
