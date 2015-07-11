@@ -53,9 +53,9 @@ define(["backbone",
 
             getUserByCookie: function (user) {
                 var self = this;
-                var cookieUsername = this.getCookie('username');
-                if (cookieUsername != '') {
-                    user.getByUsername({username: cookieUsername}, {success: self.setUserFromResponse});
+                var cookieGHUsername = this.getCookie('gh_username');
+                if (cookieGHUsername != '') {
+                    user.getByGHUsername({gh_username: cookieGHUsername}, {success: self.setUserFromResponse});
                 }
             },
 
@@ -80,7 +80,7 @@ define(["backbone",
             setUserFromResponse: function(response) {
                 var authedUser = response;
                 console.log('AUTHED USER: ', authedUser);
-                masterSelf.setCookie('username', response.username, 7); // expires in 7 days
+                masterSelf.setCookie('gh_username', response.gh_username, 7); // expires in 7 days
                 masterSelf.authed = true;
             },
 

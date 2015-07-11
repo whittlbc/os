@@ -26,15 +26,15 @@ define(['jquery',
             return this.sync('postGHCode', this, requestInfo);
         },
 
-        getByUsername: function(info, options){
+        getByGHUsername: function(info, options){
             var requestInfo = options || {};
 
             _.extend(requestInfo, {
-                url: this.extension + '/getByUsername',
+                url: this.extension + '/getByGHUsername',
                 data: info
             });
 
-            return this.sync('getByUsername', this, requestInfo);
+            return this.sync('getByGHUsername', this, requestInfo);
         },
 
         login: function(info, options){
@@ -63,7 +63,7 @@ define(['jquery',
             var requestInfo = options || {};
 
             _.extend(requestInfo, {
-                url: this.extension + '/check_username',
+                url: this.extension + '/checkUsername',
                 data: info
             });
 

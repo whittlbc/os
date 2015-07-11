@@ -8,9 +8,9 @@ Backboneworld::Application.routes.draw do
   resources :users do
     collection do
       get :login, :path => '/login'
-      get :username_test, :path => '/check_username'
+      get :username_test, :path => '/checkUsername'
       post :gh_code, :path => '/postGHCode'
-      get :get_by_username, :path => '/getByUsername'
+      get :get_by_gh_username, :path => '/getByGHUsername'
     end
   end
 

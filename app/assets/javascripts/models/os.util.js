@@ -42,7 +42,7 @@ define(['backbone', 'eventbroker'], function(Backbone) {
                 verb: 'POST',
                 action: 'create'
             },
-            'getByUsername': {
+            'getByGHUsername': {
                 verb: 'GET',
                 action: 'read'
             }

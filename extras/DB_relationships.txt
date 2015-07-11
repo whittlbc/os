@@ -1,0 +1,30 @@
+
+
+*** A user is the owner of a project but is also one of the contributors of that project
+*** Can access user from contributor, but not the other way around
+
+user --> projects
+
+project --> contributors
+
+contributor --> user
+
+---------------------------------
+
+User has many projects
+
+Project has many contributors
+
+Contributor has one user
+
+--------------------------------
+
+@user.projects
+
+@project.contributors
+
+@contributor.user
+
+
+
+

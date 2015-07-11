@@ -2,13 +2,14 @@ class UsersController < ApplicationController
   require 'rest-client'
   require 'json'
 
+
+  # Used to create users based off of actual username/email/password login
   def create
     if check_username_availability(params[:username].downcase)
       render :json => {:login_allowed => false}
     else
       @user = User.new(:uuid => UUIDTools::UUID.random_create.to_s,
                        :username => params[:username],
-                       # :gh_username => params[:gh_username],
                        :email => params[:email],
                        :password => params[:password])
       @user.save
@@ -16,6 +17,8 @@ class UsersController < ApplicationController
     end
   end
 
+
+  # Method for checking actual username availbility on 'blur' event of loginview's username field for user signup
   def username_test
     if check_username_availability(params[:username].downcase)
       render :json => {:available => false}
@@ -24,12 +27,15 @@ class UsersController < ApplicationController
     end
   end
 
+
+  # Ask the DB if the username is already taken
   def check_username_availability (username)
-    User.find_by_username(username).empty
+    User.find_by_username(username)
   end
 
-  def login
 
+  # Original login function for non-GH login
+  def login
     username_or_email = params[:username_or_email].downcase
     password = params[:password]
 
@@ -41,6 +47,8 @@ class UsersController < ApplicationController
     end
   end
 
+
+  # Get GH access token from returned code give provide you after OAuth login
   def gh_code
     data = {
       :client_id => User::GH::CLIENT_ID,
@@ -56,6 +64,8 @@ class UsersController < ApplicationController
     end
   end
 
+
+  # GH login - If user's not there, create him
   def login_or_create(access_token)
     response = RestClient.get("https://api.github.com/user?access_token=#{access_token}", :accept => :json)
     body = JSON.parse(response.body)
@@ -79,21 +89,24 @@ class UsersController < ApplicationController
     end
 
     render :json => {
-               :username => gh_username,
+               :gh_username => gh_username,
                :name => name,
                :pic => pic,
                :email => email
            }
   end
 
-  def get_by_username
-    user = User.find_by_gh_username(params[:username])
+
+  # Get user by gh_username --> Most likely pulled from cookie
+  def get_by_gh_username
+
+    user = User.find_by_gh_username(params[:gh_username])
     if user.nil?
       render :json => {:found_user => false}
     else
       render :json => {
                  :found_user => true,
-                 :username => user.gh_username,
+                 :gh_username => user.gh_username,
                  :name => user.name,
                  :pic => user.pic,
                  :email => user.email
