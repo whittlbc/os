@@ -7,6 +7,8 @@ user --> projects
 
 project --> contributors
 
+project —-> integrations
+
 contributor --> user
 
 ---------------------------------
@@ -15,13 +17,17 @@ User has many projects
 
 Project has many contributors
 
+Project has many integrations
+
 Contributor has one user
 
 --------------------------------
 
-@user.projects
+@user.projects (and project.user)
 
-@project.contributors
+@project.contributors (and contributor.project)
+
+@project.integrations (and integration.project)
 
 @contributor.user
 

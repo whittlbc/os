@@ -70845,3 +70845,51 @@ Started GET "/projects/feed" for 127.0.0.1 at 2015-07-10 22:39:31 -0700
 Processing by ProjectsController#feed as JSON
   [1m[36mProject Load (0.4ms)[0m  [1mSELECT "projects".* FROM "projects" [0m
 Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.4ms)
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (6.0ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreateProjects (20150705183528)
+Migrating to CreateUsers (20150706035750)
+Migrating to AddUuidToProjects (20150706041451)
+Migrating to AddRepoNameToProjects (20150706041500)
+Migrating to AddDescriptionToProjects (20150706041507)
+Migrating to AddVoteCountToProjects (20150706041514)
+Migrating to AddOwnerToProjects (20150706041519)
+Migrating to AddContributorsToProject (20150706042837)
+Migrating to AddUserToProjects (20150706043824)
+Migrating to AddPicToUsers (20150709093440)
+Migrating to ChangeUserToUserId (20150710080246)
+Migrating to ChangeUserIdColType (20150711024259)
+Migrating to CreateContributors (20150711025538)
+Migrating to AddMoreBasicInfoToProjects (20150711200139)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (61.9ms)[0m  [1mALTER TABLE "projects" ADD COLUMN "license" character varying(255)[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" ADD COLUMN "status" character varying(255)
+  [1m[36m (42.1ms)[0m  [1mALTER TABLE "projects" ADD COLUMN "seeking" character varying(255)[0m
+  [1m[35m (208.9ms)[0m  ALTER TABLE "projects" ADD COLUMN "anon" boolean DEFAULT 'f'
+  [1m[36m (1.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150711200139')[0m
+  [1m[35m (68.6ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (0.6ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreateProjects (20150705183528)
+Migrating to CreateUsers (20150706035750)
+Migrating to AddUuidToProjects (20150706041451)
+Migrating to AddRepoNameToProjects (20150706041500)
+Migrating to AddDescriptionToProjects (20150706041507)
+Migrating to AddVoteCountToProjects (20150706041514)
+Migrating to AddOwnerToProjects (20150706041519)
+Migrating to AddContributorsToProject (20150706042837)
+Migrating to AddUserToProjects (20150706043824)
+Migrating to AddPicToUsers (20150709093440)
+Migrating to ChangeUserToUserId (20150710080246)
+Migrating to ChangeUserIdColType (20150711024259)
+Migrating to CreateContributors (20150711025538)
+Migrating to AddMoreBasicInfoToProjects (20150711200139)
+Migrating to CreateIntegrations (20150711201856)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (183.4ms)[0m  [1mCREATE TABLE "integrations" ("id" serial primary key, "service" character varying(255), "project_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (25.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150711201856')
+  [1m[36m (87.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations" 
