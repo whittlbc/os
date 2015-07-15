@@ -6,15 +6,29 @@
   <%= stylesheet_link_tag "bootstrap.min" %>
   <%= stylesheet_link_tag "animate" %>
   <%= stylesheet_link_tag "main" %>
-  <%= stylesheet_link_tag "favicon.ico", :rel => "shortcut icon" %>
   <link href="http://fonts.googleapis.com/css?family=Lato:400,900,300,700" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet">
   <%= requirejs_include_tag "application.js" %>
   <%= csrf_meta_tags %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <header>
-  <div class="navbar navbar-default navbar-fixed-top header">
+  <div class="navbar navbar-default header">
+    <div class="header-logo-container"><div class="header-logo"></div></div><%
+  %><div class="rest-of-header-container">
+      <div class="header-user-pic"></div>
+      <div class="header-searchbar-container">
+        <div class="searchbox">
+          <input type="search" placeholder="Search projects" name="search" class="searchbox-input">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="project-type-nav">
+    <div class="project-type-container">
+      <div class="project-type"></div><div class="project-type"></div><div class="project-type"></div>
+    </div>
   </div>
 </header>
 
@@ -29,14 +43,16 @@
   </div>
   <div class="popup-backdrop hidden-popup"></div>
 
+
+  <%= javascript_include_tag "vanilla.js" %>
 </body>
 
-<!--<footer class="main-footer">-->
-  <!--<div class="footer-container">-->
-    <!--<div class="container inner copyright-container">-->
-      <!--<p class="copyright">© 2015 Ben Whittle</p>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</footer>-->
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="container inner copyright-container">
+      <p class="copyright">© 2015 OS</p>
+    </div>
+  </div>
+</footer>
 
 </html>

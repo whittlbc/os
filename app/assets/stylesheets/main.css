@@ -1,11 +1,13 @@
 
 body {
-    padding-top: 90px;
+    /*padding-top: 72px;*/
 }
 
 .header {
-    height: 90px;
+    height: 72px;
     margin-bottom: 0px;
+    display: block;
+    width: 100%;
 }
 
 .footer-menu {
@@ -26,3 +28,159 @@ body {
 .copyright-container {
     height: 72px;
 }
+
+.project-type-nav {
+    height: 72px;
+    width: 100%;
+    background-color: blue;
+    border-bottom: 1px solid black;
+    position: fixed;
+    top:72px;
+}
+
+.project-type-container {
+    height: 72px;
+    width: 48%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: red;
+}
+
+.project-type {
+    height: 72px;
+    width: 33.33%;
+    background-color: gray;
+    border: 1px solid yellow;
+    display: inline-block;
+}
+
+.header-logo-container {
+    display: inline-block;
+    height: 72px;
+    width: 25%;
+    background-color: black;
+}
+
+.header-logo {
+    height: 72px;
+    width: 80%;
+    background-color: red;
+    margin-left: 20%;
+}
+
+.rest-of-header-container {
+    display: inline-block;
+    height: 72px;
+    width: 75%;
+    background-color: gray;
+}
+
+.header-user-pic {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background-color: white;
+    float: right;
+    margin-right: 5%;
+    margin-top: 16px;
+    display: inline-block;
+}
+
+.header-searchbar-container{
+    display: inline-block;
+    width: 80%;
+    height: 72px;
+    float: right;
+    margin-right: 5%;
+    background-color: purple;
+}
+
+.searchbox{
+    position:relative;
+    width: 35%;
+    height: 40px;
+    float: right;
+    margin-top: 16px;
+    overflow:hidden;
+    -webkit-transition: width 0.3s;
+    -moz-transition: width 0.3s;
+    -ms-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    transition: width 0.3s;
+}
+
+.searchbox-input{
+    top:0;
+    right:0;
+    border: 1px solid black;
+    outline:0;
+    border-radius: 20px;
+    background:#dcddd8;
+    width:100%;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    font-size: 16px;
+    color: black;
+}
+
+.searchbox-input::-webkit-input-placeholder {
+    color: #aaaaaa;
+}
+.searchbox-input:-moz-placeholder {
+    color: #aaaaaa;
+}
+.searchbox-input::-moz-placeholder {
+    color: #aaaaaa;
+}
+.searchbox-input:-ms-input-placeholder {
+    color: #aaaaaa;
+}
+
+.searchbox-icon,
+.searchbox-submit{
+    width:50px;
+    height:50px;
+    display:block;
+    position:absolute;
+    top:0;
+    font-family:verdana;
+    font-size:22px;
+    right:0;
+    padding:0;
+    margin:0;
+    border:0;
+    outline:0;
+    line-height:50px;
+    text-align:center;
+    cursor:pointer;
+    color:#dcddd8;
+    background:#172b3c;
+}
+
+.searchbox-open{
+    width:100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

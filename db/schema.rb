@@ -9,39 +9,58 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150711201856) do
+ActiveRecord::Schema.define(version: 20150714062731) do
 
-  create_table "contributors", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "contributors", force: true do |t|
     t.string   "uuid"
     t.string   "name"
     t.integer  "project_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "admin",      default: false
   end
 
-  create_table "integrations", :force => true do |t|
+  create_table "integrations", force: true do |t|
     t.string   "service"
     t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-# Could not dump table "projects" because of following StandardError
-#   Unknown type 'json' for column 'contributors'
+  create_table "projects", force: true do |t|
+    t.string   "title"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "uuid"
+    t.string   "repo_name"
+    t.text     "description"
+    t.integer  "vote_count"
+    t.json     "contributors"
+    t.integer  "user_id"
+    t.string   "license"
+    t.integer  "status"
+    t.string   "seeking"
+    t.boolean  "anon",         default: false
+  end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "uuid"
     t.string   "username"
     t.string   "email"
     t.string   "name"
     t.string   "gh_username"
     t.string   "password"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "pic"
+    t.integer  "starred",     default: [],              array: true
+    t.integer  "following",   default: [],              array: true
   end
 
 end

@@ -5,8 +5,6 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    attr_accessible :title, :user_id, :uuid, :repo_name, :description, :vote_count, :contributors, :license, :status, :seeking, :anon
-
     @user = User.find_by_uuid(params[:user_uuid])
 
     @project = Project.new(:title => params[:title],
@@ -49,5 +47,12 @@ class ProjectsController < ApplicationController
     end
 
   end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:title, :user_id, :uuid, :repo_name, :description, :vote_count, :contributors, :license, :status, :seeking, :anon)
+  end
+
 
 end

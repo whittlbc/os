@@ -114,4 +114,10 @@ class UsersController < ApplicationController
     end
   end
 
+  private
+
+  def user_params
+    params.require(:user).permit(:email, :gh_username, :name, :password, :username, :uuid, :pic)
+  end
+
 end
