@@ -29,6 +29,27 @@ define(['jquery',
             this.showLoginPopup();
         },
 
+        showShouldStartFeed: function () {
+            var self = this;
+            var project = new Project();
+            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+            console.log('heard should start');
+        },
+
+        showStartingFeed: function () {
+            var self = this;
+            var project = new Project();
+            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+            console.log('heard starting');
+        },
+
+        showStartedFeed: function () {
+            var self = this;
+            var project = new Project();
+            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+            console.log('heard started');
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(IndexViewTpl({
@@ -39,11 +60,6 @@ define(['jquery',
             });
 
             this.projectFeedView.render();
-
-            var project = new Project();
-
-            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
-
 		}
 	});
 

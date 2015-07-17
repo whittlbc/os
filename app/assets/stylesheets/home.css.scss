@@ -6,14 +6,19 @@
 
 #project-feed {
   min-height: 700px;
+  margin-top: 90px;
 }
 
 .project-feed-list {
   list-style: none;
+  padding-left: 0;
+  max-width: 950px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .project-post-view {
-  height: 200px;
+  height: 170px;
   background-color: blue;
   border-bottom: 1px solid white;
 

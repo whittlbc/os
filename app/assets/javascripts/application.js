@@ -2,7 +2,7 @@ define(["backbone", "router"], function(Backbone, Router) {
     var App = {};
     App.start = function() {
         new Router();
-        Backbone.history.start({pushState: true});
+        Backbone.history.start();
     };
 
     App.csrfToken = $("meta[name='csrf-token']").attr('content');

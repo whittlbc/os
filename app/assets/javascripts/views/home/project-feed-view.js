@@ -9,7 +9,8 @@ define(['jquery',
      _,
      Project,
      ProjectPostView,
-     ProjectFeedViewTpl) {
+     ProjectFeedViewTpl
+     ) {
 	'use strict';
 
     var view;
@@ -34,7 +35,7 @@ define(['jquery',
                 view.POST_VIEWS = [];
             }
 
-            for (var i = 0; i < resp.length; i++) {
+            for (var i = 0; i < resp.length+10; i++) {
                 view.addPost();
             }
 		},

@@ -10,20 +10,85 @@ body {
     width: 100%;
 }
 
+footer {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+footer.dark-bg {
+    color: #A3B1BF;
+}
+
+footer .inner {
+    padding-top: 45px;
+    padding-bottom: 35px;
+}
+
+footer .container > .row {
+    margin-left: -25px;
+    margin-right: -25px;
+}
+
+footer .row .inner {
+    padding: 25px;
+}
+
+footer .logo {
+    height: auto;
+    max-height: 100%;
+}
+
+footer h4 {
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+footer p {
+    margin-bottom: 15px;
+}
+
 .footer-menu {
-    padding-right: 32px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
-.main-footer {
-    padding-top: 0px;
+.footer-menu li {
+    display: inline;
+    padding-left: 10px;
 }
 
-.copyright {
-    text-align: center;
-    height: 72px;
-    margin-bottom: 0;
-    line-height: 72px;
+.footer-menu li:before {
+    display: inline-block;
+    content: "·";
+    padding-right: 12px;
+    font-family: 'Open Sans';
 }
+
+.footer-menu li:first-child:before {
+    display: none;
+}
+
+.footer-bottom {
+    background-color: white;
+    color: black;
+}
+
+.footer-bottom .container.inner {
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.footer-bottom p,
+.footer-bottom a {
+    color: #707E8C;
+}
+
+.footer-bottom p {
+    padding: 0;
+    margin: 0;
+}
+
 
 .copyright-container {
     height: 72px;
@@ -51,8 +116,16 @@ body {
     height: 72px;
     width: 33.33%;
     background-color: gray;
-    border: 1px solid yellow;
+    border: 1px solid green;
     display: inline-block;
+    color: white;
+    text-align: center;
+    line-height: 72px;
+}
+
+.selected-project-type {
+    background-color: white;
+    color: black;
 }
 
 .header-logo-container {

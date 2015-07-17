@@ -15,9 +15,13 @@ define(["backbone",
 
         var Router = Backbone.Router.extend({
 
+            entered: false,
+
             routes: {
-                'projects': 'projectRoute',
-                '': 'defaultRoute'
+                'shouldStart': 'shouldStartRoute',
+                'starting': 'startingRoute',
+                'started': 'startedRoute',
+                '*path': 'startingRoute'
             },
 
             projectRoute: function () {
@@ -29,6 +33,22 @@ define(["backbone",
                 });
 
                 projectView.render();
+            },
+
+            emptyHash: function () {
+                return (window.location.hash == "");
+            },
+
+            setShouldStartHash: function () {
+                window.location.hash = "#shouldStart";
+            },
+
+            setStartingHash: function () {
+                window.location.hash = "#starting";
+            },
+
+            setStartedHash: function () {
+                window.location.hash = "#started";
             },
 
             determineEntry: function () {
@@ -84,17 +104,38 @@ define(["backbone",
                 masterSelf.authed = true;
             },
 
-            defaultRoute: function () {
+            shouldStartRoute: function() {
+                if (this.emptyHash()) {
+                    this.setStartingHash();
+                }
+                this.initializeHome();
+                this.indexView.showShouldStartFeed();
+            },
+
+            startingRoute: function() {
+                this.initializeHome();
+                this.indexView.showStartingFeed();
+            },
+
+            startedRoute: function() {
+                this.initializeHome();
+                this.indexView.showStartedFeed();
+            },
+
+            initializeHome: function () {
                 masterSelf = this;
                 var self = this;
 
-                this.determineEntry();
+                if (!this.entered) {
+                    this.determineEntry();
+                    this.entered = true;
+                    this.indexView = new IndexView({
+                        el: '#home'
+                    });
 
-                var indexView = new IndexView({
-                    el: '#home'
-                });
+                    this.indexView.render();
+                }
 
-                indexView.render();
             }
 
         });

@@ -1,5 +1,4 @@
 paths:
-    jquery: 'jquery.min'
     bootstrap: 'bootstrap.min'
     stache: 'stache'
     eventbroker: 'backbone-eventbroker'
