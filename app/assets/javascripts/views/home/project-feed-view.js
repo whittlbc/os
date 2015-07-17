@@ -21,20 +21,19 @@ define(['jquery',
             view = this;
         },
 
+        setProjectType: function (type) {
+            var self = this;
+            this.projectType = type;
+        },
+
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
         },
 
 		populateFeed: function (resp, status, xhr) {
 
-            if (view.POST_VIEWS) {
-                while (view.POST_VIEWS.length > 0) {
-                    view.POST_VIEWS.pop();
-                }
-            } else {
-                view.POST_VIEWS = [];
-            }
-
+            view.POST_VIEWS = [];
+            view.$el.find('.project-feed-list').empty();
             for (var i = 0; i < resp.length+10; i++) {
                 view.addPost();
             }

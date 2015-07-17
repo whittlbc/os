@@ -32,22 +32,22 @@ define(['jquery',
         showShouldStartFeed: function () {
             var self = this;
             var project = new Project();
+            this.projectFeedView.setProjectType('shouldStart')
             project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
-            console.log('heard should start');
         },
 
         showStartingFeed: function () {
             var self = this;
             var project = new Project();
+            this.projectFeedView.setProjectType('starting')
             project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
-            console.log('heard starting');
         },
 
         showStartedFeed: function () {
             var self = this;
             var project = new Project();
+            this.projectFeedView.setProjectType('started')
             project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
-            console.log('heard started');
         },
 
 		render: function () {
