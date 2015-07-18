@@ -8,17 +8,17 @@ define(['backbone', 'eventbroker'], function(Backbone) {
         LICENSES: ['MIT', 'GPL', 'BSD'],
 
         SHOULD_START: {
-            str: 'Should Start',
+            str: 'shouldStart',
             num: 0
         },
 
         STARTING: {
-            str: 'Starting',
+            str: 'starting',
             num: 1
         },
 
         STARTED: {
-            str: 'Started',
+            str: 'started',
             num: 2
         },
 

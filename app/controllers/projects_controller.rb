@@ -22,7 +22,9 @@ class ProjectsController < ApplicationController
         :license => params[:license],
         :status => params[:status],
         :langs_and_frames => params[:langs_and_frames],
-        :anon => params[:anon]
+        :anon => params[:anon],
+        :privacy => params[:privacy]
+
     }
 
     @project = Project.new(project_data)
@@ -49,7 +51,8 @@ class ProjectsController < ApplicationController
         :vote_count => 0,
         :license => params[:license],
         :status => params[:status],
-        :langs_and_frames => languages
+        :langs_and_frames => languages,
+        :privacy => params[:privacy]
     }
 
     @project = Project.new(project_data)
@@ -98,7 +101,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :contributors => [], :langs_and_frames => [])
+    params.require(:project).permit(:title, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [])
   end
 
 

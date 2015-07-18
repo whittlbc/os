@@ -81,9 +81,10 @@ define(['jquery',
                 repo_name: $('#repoName').val(),
                 description: $('#projectDescriptionField').val(),
                 license: $('#license').val(),
-                status: OSUtil.getProjectIntStatus($('#project-type-selection-dropdown').find(':selected').text()),
+                status: OSUtil.getProjectIntStatus($('#project-type-selection-dropdown').find(':selected').val()),
                 langs_and_frames: [$('#langsAndFrames').val()],
-                anon: $('#anonCheckbox').is(':checked')
+                anon: $('#anonCheckbox').is(':checked'),
+                privacy: $('#privacy-selection-dropdown').find(':selected').val()
             }
         },
 
