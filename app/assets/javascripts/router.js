@@ -3,12 +3,14 @@ define(["backbone",
         "views/home/index-view",
         "views/projects/project-view",
         "views/login/login-view",
+        'models/os.util',
         "models/user"],
     function (Backbone,
               Events,
               IndexView,
               ProjectView,
               LoginView,
+              OSUtil,
               User) {
 
         var masterSelf;
@@ -107,7 +109,7 @@ define(["backbone",
 
             shouldStartRoute: function() {
                 this.initializeHome();
-                this.indexView.showShouldStartFeed();
+                this.indexView.showShouldStartFeed(OSUtil.SHOULD_START.num);
             },
 
             startingRoute: function() {
@@ -115,12 +117,13 @@ define(["backbone",
                     this.setStartingHash();
                 }
                 this.initializeHome();
-                this.indexView.showStartingFeed();
+                this.indexView.showStartingFeed(OSUtil.STARTING.num);
+
             },
 
             startedRoute: function() {
                 this.initializeHome();
-                this.indexView.showStartedFeed();
+                this.indexView.showStartedFeed(OSUtil.STARTED.num);
             },
 
             initializeHome: function () {

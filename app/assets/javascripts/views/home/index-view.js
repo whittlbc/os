@@ -50,7 +50,7 @@ define(['jquery',
         },
 
         showNewProject: function () {
-            master.projectFeedView.addPost(master.newProjectData);
+            master.projectFeedView.handleShowNewProject(master.newProjectData);
         },
 
         handlePullGHProject: function () {
@@ -87,25 +87,25 @@ define(['jquery',
             this.showLoginPopup();
         },
 
-        showShouldStartFeed: function () {
+        showShouldStartFeed: function (status) {
             var self = this;
             var project = new Project();
-            this.projectFeedView.setProjectType('shouldStart')
-            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+            this.projectFeedView.setProjectTypeStatus(status)
+            project.fetchFeedProjects({success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
 
-        showStartingFeed: function () {
+        showStartingFeed: function (status) {
             var self = this;
             var project = new Project();
-            this.projectFeedView.setProjectType('starting')
-            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+            this.projectFeedView.setProjectTypeStatus(status)
+            project.fetchFeedProjects({success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
 
-        showStartedFeed: function () {
+        showStartedFeed: function (status) {
             var self = this;
             var project = new Project();
-            this.projectFeedView.setProjectType('started')
-            project.fetchFeedProjects({success: self.projectFeedView.populateFeed, error: self.projectFeedView.errorHandler});
+            this.projectFeedView.setProjectTypeStatus(status)
+            project.fetchFeedProjects({success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
 
 		render: function () {

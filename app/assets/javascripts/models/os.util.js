@@ -5,6 +5,21 @@ define(['backbone', 'eventbroker'], function(Backbone) {
 
         hidePopupTimeout: 400,
 
+        SHOULD_START: {
+            str: 'Should Start',
+            num: 0
+        },
+
+        STARTING: {
+            str: 'Starting',
+            num: 1
+        },
+
+        STARTED: {
+            str: 'Started',
+            num: 2
+        },
+
         customMethodMap: {
             'create': {
                 verb: 'POST',
@@ -50,9 +65,9 @@ define(['backbone', 'eventbroker'], function(Backbone) {
 
         getProjectIntStatus: function (textType) {
             var self = this;
-            if (textType == 'Should Start') {
+            if (textType == this.SHOULD_START.str) {
                 return 0
-            } else if (textType == 'Started') {
+            } else if (textType == this.STARTED.str) {
                 return 2
             } else {
                 return 1;

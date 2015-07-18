@@ -18,6 +18,7 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(ProjectPostViewTpl({
+                message: self.message
             }));
 		}
 	});
