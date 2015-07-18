@@ -1,6 +1,9 @@
 class ProjectsController < ApplicationController
+  include ProjectsHelper
 
   LICENSES = %w(MIT GPL BSD)
+  LANGUAGES = Languages::AllLanguages.fetch
+  puts LANGUAGES
 
   def index
     render :index, :layout => 'layouts/application'
@@ -57,10 +60,6 @@ class ProjectsController < ApplicationController
 
   def feed
     all_projects = special_sort(Project.where(:status => params[:status]))
-
-    client = Octokit::Client.new(:access_token => "5455cf338e354569629cfb1cbbc44f60b15e2240")
-    puts client.licenses
-
     render :json => all_projects
   end
 
