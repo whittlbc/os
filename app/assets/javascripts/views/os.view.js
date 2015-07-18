@@ -61,6 +61,8 @@ define(['jquery',
                 this.loginPopupShown = false;
             }
         }
+
+
 	});
 
 	return OSView;

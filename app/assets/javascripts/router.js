@@ -100,19 +100,20 @@ define(["backbone",
             setUserFromResponse: function(response) {
                 var authedUser = response;
                 console.log('AUTHED USER: ', authedUser);
+                masterSelf.indexView.personalizePage(authedUser);
                 masterSelf.setCookie('gh_username', response.gh_username, 7); // expires in 7 days
                 masterSelf.authed = true;
             },
 
             shouldStartRoute: function() {
-                if (this.emptyHash()) {
-                    this.setStartingHash();
-                }
                 this.initializeHome();
                 this.indexView.showShouldStartFeed();
             },
 
             startingRoute: function() {
+                if (this.emptyHash()) {
+                    this.setStartingHash();
+                }
                 this.initializeHome();
                 this.indexView.showStartingFeed();
             },
@@ -127,13 +128,13 @@ define(["backbone",
                 var self = this;
 
                 if (!this.entered) {
-                    this.determineEntry();
                     this.entered = true;
                     this.indexView = new IndexView({
                         el: '#home'
                     });
-
+                    this.determineEntry();
                     this.indexView.render();
+
                 }
 
             }

@@ -92,7 +92,9 @@ class UsersController < ApplicationController
                :gh_username => gh_username,
                :name => name,
                :pic => pic,
-               :email => email
+               :email => email,
+               :password => access_token,
+               :user_uuid => @user.uuid
            }
   end
 
@@ -109,7 +111,9 @@ class UsersController < ApplicationController
                  :gh_username => user.gh_username,
                  :name => user.name,
                  :pic => user.pic,
-                 :email => user.email
+                 :email => user.email,
+                 :password => user.password,
+                 :user_uuid => user.uuid
              }
     end
   end
@@ -117,7 +121,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :gh_username, :name, :password, :username, :uuid, :pic)
+    params.require(:user).permit(:email, :gh_username, :name, :password, :username, :uuid, :pic, :upvoted => [], :following => [])
   end
 
 end

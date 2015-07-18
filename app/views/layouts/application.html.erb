@@ -10,6 +10,7 @@
   <%= stylesheet_link_tag "slick-theme" %>
   <link href="http://fonts.googleapis.com/css?family=Lato:400,900,300,700" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet">
+  <%= requirejs_include_tag "application.js" %>
   <%= csrf_meta_tags %>
 </head>
 
@@ -17,7 +18,7 @@
   <div class="navbar navbar-default header">
     <div class="header-logo-container"><div class="header-logo"></div></div><%
   %><div class="rest-of-header-container">
-      <div class="header-user-pic"></div>
+      <img class="header-user-pic"/>
       <div class="header-searchbar-container">
         <div class="searchbox">
           <input type="search" placeholder="Search projects" name="search" class="searchbox-input">
@@ -31,15 +32,13 @@
       %><a href="/#starting"><div id="startingType" class="project-type">Starting</div></a><%
       %><a href="/#started"><div id="startedType" class="project-type">Started</div></a>
     </div>
+    <a target="_blank" data-toggle="modal" data-target="#myLoginModal"><div id="addProjectBtn">+ Add Project</div></a>
   </div>
 </header>
 
 <body>
 
-  <div class="single-item"></div>
-
   <%= yield %>
-
 
   <!-- Login Popup -->
   <div class="myPopup hidden-popup">
@@ -47,10 +46,34 @@
   </div>
   <div class="popup-backdrop hidden-popup"></div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://cdn.jsdelivr.net/jquery.slick/1.5.6/slick.min.js"></script>
-  <%= javascript_include_tag "vanilla.js" %>
-  <%= requirejs_include_tag "application.js" %>
+  <div class="modal fade" id="myLoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">New Project</h4>
+        </div>
+        <div class="modal-body" style="height: 300px; width: 400px;">
+          <select id="project-type-selection-dropdown">
+            <option value="shouldStart">Should Start</option>
+            <option value="starting" selected="selected">Starting</option>
+            <option value="started">Started</option>
+          </select>
+          <input id="projectTitleField" type="text" placeholder="Title"/>
+          <textarea id="projectDescriptionField" row="1" placeholder="Description"></textarea>
+          <!--<div data-field="langsAndFrames" id="langsAndFrames"></div>-->
+          <!--<div data-field="license" id="license"></div>-->
+          <input id="langsAndFrames" type="text" placeholder="Languages and Frameworks"/>
+          <input id="license" type="text" placeholder="License"/>
+          <input id="anonCheckbox" type="checkbox" name="Post anonymously"/>
+          <input id="repoName" type="text" placeholder="Github repo name"/>
+          <div id="pullGHProject">Import from Github</div>
+          <div id="submitNewProject">Create</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 <footer class="main-footer">

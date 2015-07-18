@@ -1,5 +1,6 @@
 paths:
-    bootstrap: 'bootstrap.min'
+    jquery: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min'
+    bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min'
     stache: 'stache'
     eventbroker: 'backbone-eventbroker'
 shim:
@@ -12,6 +13,7 @@ shim:
         exports: 'Backbone'
     bootstrap:
         deps: ['jquery']
+        exports: 'bootstrap'
     eventbroker:
         deps: ['backbone']
         exports: 'Backbone.EventBroker'

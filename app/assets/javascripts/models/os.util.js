@@ -46,7 +46,18 @@ define(['backbone', 'eventbroker'], function(Backbone) {
                 verb: 'GET',
                 action: 'read'
             }
-        }
+        },
+
+        getProjectIntStatus: function (textType) {
+            var self = this;
+            if (textType == 'Should Start') {
+                return 0
+            } else if (textType == 'Started') {
+                return 2
+            } else {
+                return 1;
+            }
+        },
 
     };
 

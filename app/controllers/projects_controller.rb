@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
                            :vote_count => 0,
                            :license => params[:license],
                            :status => params[:status],
-                           :seeking => params[:seeking],
+                           :langs_and_frames => params[:langs_and_frames],
                            :anon => params[:anon])
       @project.save
       render :json => {:response => 'Successfully created project'}
@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :user_id, :uuid, :repo_name, :description, :vote_count, :contributors, :license, :status, :seeking, :anon)
+    params.require(:project).permit(:title, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :contributors => [], :langs_and_frames => [])
   end
 
 

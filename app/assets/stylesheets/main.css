@@ -106,9 +106,8 @@ footer p {
 .project-type-container {
     height: 72px;
     width: 48%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 26%;
+    display: inline-block;
     background-color: red;
 }
 
@@ -237,7 +236,21 @@ footer p {
 }
 
 
+#addProjectBtn {
+    display: inline-block;
+    width: 20%;
+    height: 72px;
+    line-height: 72px;
+    text-align: center;
+    color: white;
+    background-color: lightgray;
+    float: right;
+    cursor: pointer;
+}
 
+#myLoginModal {
+    margin-top: 7%;
+}
 
 
 

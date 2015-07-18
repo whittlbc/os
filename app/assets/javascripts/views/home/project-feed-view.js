@@ -34,7 +34,7 @@ define(['jquery',
 
             view.POST_VIEWS = [];
             view.$el.find('.project-feed-list').empty();
-            for (var i = 0; i < resp.length+10; i++) {
+            for (var i = 0; i < resp.length; i++) {
                 view.addPost();
             }
 		},
