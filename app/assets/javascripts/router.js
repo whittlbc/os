@@ -102,7 +102,7 @@ define(["backbone",
             setUserFromResponse: function(response) {
                 var authedUser = response;
                 console.log('AUTHED USER: ', authedUser);
-                masterSelf.indexView.personalizePage(authedUser);
+                masterSelf.indexView.passUserInfo(authedUser);
                 masterSelf.setCookie('gh_username', response.gh_username, 7); // expires in 7 days
                 masterSelf.authed = true;
             },

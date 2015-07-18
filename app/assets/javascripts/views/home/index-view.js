@@ -5,6 +5,7 @@ define(['jquery',
     'models/os.util',
     'views/home/project-feed-view',
     'models/project',
+    'models/user',
     'stache!views/home/index-view',
 ], function ($,
      Backbone,
@@ -13,6 +14,7 @@ define(['jquery',
      OSUtil,
      ProjectFeedView,
      Project,
+     User,
      IndexViewTpl
      ) {
 	'use strict';
@@ -33,29 +35,42 @@ define(['jquery',
 
         erbEvents: function () {
             var self = this;
-            $('#pullGHProject').click(function() {
-                self.handlePullGHProject();
+            $('#fetchGHProject').click(function() {
+                self.handleFetchGHProject();
             });
             $('#submitNewProject').click(function() {
                 self.handleCreateProject();
             });
+            $('#getAllRepos').click(function() {
+                self.getAllUserRepos();
+            });
+        },
+
+        getAllUserRepos: function () {
+            var self = this;
+            var user = new User();
+            user.getAllUserRepos({gh_username: self.gh_username, password: self.ghAccessToken}, {success: self.handleAllReposResponse, error: self.errorHandler});
+        },
+
+        handleAllReposResponse: function (resp) {
+            var self = this;
+            console.log(resp);
         },
 
         handleCreateProject: function () {
             var self = this;
-            this.newProjectData = this.getCreateProjectData();
             var project = new Project();
-            project.create(this.newProjectData, {success: self.showNewProject, error: self.errorHandler});
-
+            project.create(this.getCreateProjectData(), {success: self.showNewProject, error: self.errorHandler});
         },
 
-        showNewProject: function () {
-            master.projectFeedView.handleShowNewProject(master.newProjectData);
+        showNewProject: function (resp) {
+            master.projectFeedView.handleShowNewProject(resp.new_project);
         },
 
-        handlePullGHProject: function () {
+        handleFetchGHProject: function () {
             var self = this;
-
+            var project = new Project();
+            project.createByGH(this.getCreateProjectData(), {success: self.showNewProject, error: self.errorHandler});
         },
 
         getCreateProjectData: function () {
@@ -72,11 +87,12 @@ define(['jquery',
             }
         },
 
-        personalizePage: function (data) {
+        passUserInfo: function (data) {
             var self = this;
             $('.header-user-pic').attr('src', data.pic);
             this.user_uuid = data.user_uuid;
             this.ghAccessToken = data.password;
+            this.gh_username = data.gh_username;
         },
 
 		events: {
@@ -91,21 +107,21 @@ define(['jquery',
             var self = this;
             var project = new Project();
             this.projectFeedView.setProjectTypeStatus(status)
-            project.fetchFeedProjects({success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+            project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
 
         showStartingFeed: function (status) {
             var self = this;
             var project = new Project();
             this.projectFeedView.setProjectTypeStatus(status)
-            project.fetchFeedProjects({success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+            project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
 
         showStartedFeed: function (status) {
             var self = this;
             var project = new Project();
             this.projectFeedView.setProjectTypeStatus(status)
-            project.fetchFeedProjects({success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+            project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
 
 		render: function () {

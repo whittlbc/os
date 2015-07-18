@@ -60,6 +60,14 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'getByGHUsername': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'createByGH': {
+                verb: 'POST',
+                action: 'create'
+            },
+            'getAllUserRepos': {
+                verb: 'GET',
+                action: 'read'
             }
         },
 

@@ -26,11 +26,23 @@ define(['jquery',
             return this.sync('create', this, requestInfo);
         },
 
-        fetchFeedProjects: function(options){
+        createByGH: function(info, options){
             var requestInfo = options || {};
 
             _.extend(requestInfo, {
-                url: this.extension + '/feed'
+                url: this.extension + '/createByGH',
+                data: info
+            });
+
+            return this.sync('createByGH', this, requestInfo);
+        },
+
+        fetchFeedProjects: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/feed',
+                data: info
             });
 
             return this.sync('fetchFeedProjects', this, requestInfo);

@@ -7,22 +7,54 @@ class ProjectsController < ApplicationController
   def create
     @user = User.find_by_uuid(params[:user_uuid])
 
-    @project = Project.new(:title => params[:title],
-                           :user_id => @user.id,
-                           :uuid => UUIDTools::UUID.random_create.to_s,
-                           :repo_name => params[:repo_name],
-                           :description => params[:description],
-                           :vote_count => 0,
-                           :license => params[:license],
-                           :status => params[:status],
-                           :langs_and_frames => params[:langs_and_frames],
-                           :anon => params[:anon])
-      @project.save
-      render :json => {:response => 'Successfully created project'}
+    project_data = {
+        :title => params[:title],
+        :user_id => @user.id,
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :repo_name => params[:repo_name],
+        :description => params[:description],
+        :vote_count => 0,
+        :license => params[:license],
+        :status => params[:status],
+        :langs_and_frames => params[:langs_and_frames],
+        :anon => params[:anon]
+    }
+
+    @project = Project.new(project_data)
+    @project.save
+
+    render :json => {:new_project => project_data}
+  end
+
+  def createByGH
+    @user = User.find_by_uuid(params[:user_uuid])
+    client = Octokit::Client.new(:access_token => @user.password)
+    repo = client.repository({:user => @user.gh_username, :repo => params[:repo_name]})
+    languages = []
+    client.languages({:user => @user.gh_username, :repo => params[:repo_name]}).each { |key, value|
+      languages.push(key)
+    }
+
+    project_data = {
+        :title => params[:title],
+        :user_id => @user.id,
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :repo_name => params[:repo_name],
+        :description => repo.description,
+        :vote_count => 0,
+        :license => params[:license],
+        :status => params[:status],
+        :langs_and_frames => languages
+    }
+
+    @project = Project.new(project_data)
+    @project.save
+
+    render :json => {:new_project => project_data}
   end
 
   def feed
-    all_projects = Project.all
+    all_projects = Project.where(:status => params[:status]).sort { |a, b| b[:voteCount] <=> a[:voteCount] }
     render :json => all_projects
   end
 
