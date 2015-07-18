@@ -15,10 +15,18 @@ define(['jquery',
 
 		events: {},
 
-		render: function () {
+        setData: function (data) {
+            var self = this;
+            this.data = data;
+            this.title = data.title;
+            this.voteCount = data.vote_count;
+        },
+
+        render: function () {
 			var self = this;
             this.$el.html(ProjectPostViewTpl({
-                message: self.message
+                title: self.title,
+                voteCount: self.voteCount
             }));
 		}
 	});

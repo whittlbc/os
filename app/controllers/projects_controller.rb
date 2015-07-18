@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
 
+  LICENSES = %w(MIT GPL BSD)
+
   def index
     render :index, :layout => 'layouts/application'
   end
@@ -54,7 +56,11 @@ class ProjectsController < ApplicationController
   end
 
   def feed
-    all_projects = Project.where(:status => params[:status]).sort { |a, b| b[:voteCount] <=> a[:voteCount] }
+    all_projects = special_sort(Project.where(:status => params[:status]))
+
+    client = Octokit::Client.new(:access_token => "5455cf338e354569629cfb1cbbc44f60b15e2240")
+    puts client.licenses
+
     render :json => all_projects
   end
 
@@ -78,6 +84,16 @@ class ProjectsController < ApplicationController
       render :json => {:response => 'Error deleting project'}
     end
 
+  end
+
+  def special_sort(arr)
+    arr.sort { |a, b|
+      if b[:vote_count] == a[:vote_count]
+        b[:created_at] <=> a[:created_at]
+      else
+        b[:vote_count] <=> a[:vote_count]
+      end
+    }
   end
 
   private

@@ -43,6 +43,7 @@ define(['jquery',
                 var newViewsArray = [];
                 for (var i = 0; i < this.POST_VIEWS.length; i++) {
                     var projectPostView = this.POST_VIEWS[i];
+                    projectPostView.setData(this.POST_VIEWS[i].data);
                     projectPostView.render();
                     this.$el.find('.project-feed-list').append(projectPostView.el);
                     newViewsArray.push(projectPostView);
@@ -55,8 +56,7 @@ define(['jquery',
             var projectPostView = new ProjectPostView({
                 tagName: 'li'
             });
-            projectPostView.message = 'HEY BEN';
-            // set the data on this view
+            projectPostView.setData(data);
             this.POST_VIEWS.unshift(projectPostView);
         },
 
@@ -65,14 +65,15 @@ define(['jquery',
             this.POST_VIEWS = [];
             this.$el.find('.project-feed-list').empty();
             for (var i = 0; i < projects.length; i++) {
-                this.addPost();
+                this.addPost(projects[i]);
             }
         },
 
-        addPost: function() {
+        addPost: function(data) {
             var projectPostView = new ProjectPostView({
                 tagName: 'li'
             });
+            projectPostView.setData(data);
             projectPostView.render();
             this.$el.find('.project-feed-list').append(projectPostView.el);
             this.POST_VIEWS.push(projectPostView);
