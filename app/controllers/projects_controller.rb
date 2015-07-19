@@ -95,7 +95,18 @@ class ProjectsController < ApplicationController
   end
 
   def filtered_feed
-    filtered_projects = special_sort(Project.where(params[:filters]))
+    filters = params[:filters]
+    query = Project.where(status: filters[:status])
+    filters.each { |filter|
+      if filter[1].is_a?(Array)
+        filter[1].each { |item|
+          query = query.where.any(filter[0] => item)
+        }
+      else
+        query = query.where(filter[0] => filter[1])
+      end
+    }
+    filtered_projects = query.map { |project| project }
     render :json => filtered_projects
   end
 
@@ -103,7 +114,6 @@ class ProjectsController < ApplicationController
     ideas = special_sort(Project.where(:status => 0))
     render :json => ideas
   end
-
 
   private
 

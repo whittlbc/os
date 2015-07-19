@@ -56,14 +56,18 @@ define(['jquery',
 
         getFilters: function () {
             var self = this;
-            var obj = { filters: {} };
+            var obj = {
+                filters: {
+                    status: self.projectTypeStatus
+                }
+            };
             var langs_and_frames = self.$el.find('#filters-langs-frames').val();
             var privacy = self.$el.find('#filters-privacy-dropdown').find(':selected').val();
             var anon = self.$el.find('#filters-anon-checkbox').is(':checked');
             var license = self.$el.find('#filters-license-dropdown').find(':selected').val();
 
             if (langs_and_frames) {
-                obj.filters.langs_and_frames = langs_and_frames;
+                obj.filters.langs_and_frames = ["JavaScript", "HTML"];
             }
             if (privacy) {
                 obj.filters.privacy = privacy;
@@ -157,6 +161,7 @@ define(['jquery',
         showShouldStartFeed: function (status) {
             var self = this;
             var project = new Project();
+            this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status)
             project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
@@ -164,6 +169,7 @@ define(['jquery',
         showStartingFeed: function (status) {
             var self = this;
             var project = new Project();
+            this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status)
             project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },
@@ -171,6 +177,7 @@ define(['jquery',
         showStartedFeed: function (status) {
             var self = this;
             var project = new Project();
+            this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status)
             project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
         },

@@ -73,3 +73,5 @@ gem 'activeuuid', '~> 0.6.0'
 gem 'rest-client', '>= 1.8.0'
 
 gem 'rails4_upgrade'
+
+gem 'postgres_ext'
