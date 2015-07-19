@@ -48,6 +48,16 @@ define(['jquery',
             return this.sync('fetchFeedProjects', this, requestInfo);
         },
 
+        pullFromIdeas: function(options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/pullFromIdeas',
+            });
+
+            return this.sync('pullFromIdeas', this, requestInfo);
+        },
+
         update: function(info, options) {
             var requestInfo = options || {};
 

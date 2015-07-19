@@ -70,6 +70,10 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'getAllUserRepos': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'pullFromIdeas': {
+                verb: 'GET',
+                action: 'read'
             }
         },
 

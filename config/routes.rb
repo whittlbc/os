@@ -1,10 +1,15 @@
 Backboneworld::Application.routes.draw do
 
   get '/' => 'home#index'
-  get '/projects/feed', to: 'projects#feed'
-  post '/projects/createByGH', to: 'projects#createByGH'
+  root :to => "home#index"
 
-  resources :projects
+  resources :projects do
+    collection do
+      get :feed, :path => '/feed'
+      post :create_by_gh, :path => '/createByGH'
+      get :pull_from_ideas, :path => '/pullFromIdeas'
+    end
+  end
 
   resources :users do
     collection do
@@ -15,7 +20,5 @@ Backboneworld::Application.routes.draw do
       get :get_all_user_repos, :path => '/getAllUserRepos'
     end
   end
-
-  root :to => "home#index"
 
 end

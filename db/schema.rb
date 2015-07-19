@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150718213546) do
+ActiveRecord::Schema.define(version: 20150719031335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20150718213546) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "languages", force: true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.string   "projects",   default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "frameworks", default: [], array: true
+  end
+
   create_table "projects", force: true do |t|
     t.string   "title"
     t.datetime "created_at",                           null: false
@@ -50,6 +59,11 @@ ActiveRecord::Schema.define(version: 20150718213546) do
     t.string   "privacy",          default: "request"
   end
 
+  add_index "projects", ["anon"], name: "index_projects_on_anon", using: :btree
+  add_index "projects", ["license"], name: "index_projects_on_license", using: :btree
+  add_index "projects", ["privacy"], name: "index_projects_on_privacy", using: :btree
+  add_index "projects", ["status"], name: "index_projects_on_status", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "uuid"
     t.string   "username"
@@ -63,5 +77,9 @@ ActiveRecord::Schema.define(version: 20150718213546) do
     t.integer  "upvoted",     default: [],              array: true
     t.integer  "following",   default: [],              array: true
   end
+
+  add_index "users", ["gh_username"], name: "index_users_on_gh_username", using: :btree
+  add_index "users", ["name"], name: "index_users_on_name", using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", using: :btree
 
 end

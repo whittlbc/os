@@ -44,6 +44,19 @@ define(['jquery',
             $('#getAllRepos').click(function() {
                 self.getAllUserRepos();
             });
+            $('#pullFromIdeas').click(function() {
+                self.pullFromIdeas();
+            });
+        },
+
+        pullFromIdeas: function () {
+            var self = this;
+            var project = new Project();
+            project.pullFromIdeas({success: self.handlePullFromIdeas});
+        },
+
+        handlePullFromIdeas: function (resp) {
+            console.log(resp);
         },
 
         getAllUserRepos: function () {

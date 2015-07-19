@@ -2,8 +2,6 @@ class ProjectsController < ApplicationController
   include ProjectsHelper
 
   LICENSES = %w(MIT GPL BSD)
-  LANGUAGES = Languages::AllLanguages.fetch
-  puts LANGUAGES
 
   def index
     render :index, :layout => 'layouts/application'
@@ -33,7 +31,7 @@ class ProjectsController < ApplicationController
     render :json => {:new_project => project_data}
   end
 
-  def createByGH
+  def create_by_gh
     @user = User.find_by_uuid(params[:user_uuid])
     client = Octokit::Client.new(:access_token => @user.password)
     repo = client.repository({:user => @user.gh_username, :repo => params[:repo_name]})
@@ -97,6 +95,17 @@ class ProjectsController < ApplicationController
       end
     }
   end
+
+  def filtered_search
+    ideas = special_sort(Project.where(params))
+    render :json => ideas
+  end
+
+  def pull_from_ideas
+    ideas = special_sort(Project.where(:status => 0))
+    render :json => ideas
+  end
+
 
   private
 
