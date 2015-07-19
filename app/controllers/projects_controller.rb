@@ -1,8 +1,6 @@
 class ProjectsController < ApplicationController
   include ProjectsHelper
 
-  LICENSES = %w(MIT GPL BSD)
-
   def index
     render :index, :layout => 'layouts/application'
   end

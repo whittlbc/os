@@ -5,8 +5,6 @@ define(['backbone', 'eventbroker'], function(Backbone) {
 
         hidePopupTimeout: 400,
 
-        LICENSES: ['MIT', 'GPL', 'BSD'],
-
         SHOULD_START: {
             str: 'shouldStart',
             num: 0

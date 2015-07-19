@@ -29,6 +29,11 @@ define(['jquery',
             master = this;
 		},
 
+        events: {
+            'click [data-trigger=popup]': 'onShowPopup',
+            'click #submit-filters': 'getFilters'
+        },
+
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
         },
@@ -51,12 +56,25 @@ define(['jquery',
 
         getFilters: function () {
             var self = this;
-            // grab data from UI filters and jam into an object
-            var obj = {
-                filters: {
-                    // need to put your filters here
-                }
-            };
+            var obj = { filters: {} };
+            var langs_and_frames = self.$el.find('#filters-langs-frames').val();
+            var privacy = self.$el.find('#filters-privacy-dropdown').find(':selected').val();
+            var anon = self.$el.find('#filters-anon-checkbox').is(':checked');
+            var license = self.$el.find('#filters-license-dropdown').find(':selected').val();
+
+            if (langs_and_frames) {
+                obj.filters.langs_and_frames = langs_and_frames;
+            }
+            if (privacy) {
+                obj.filters.privacy = privacy;
+            }
+            if (anon) {
+                obj.filters.anon = anon;
+            }
+            if (license) {
+                obj.filters.license = license;
+            }
+
             self.getFilteredFeed(obj);
         },
 
@@ -130,10 +148,6 @@ define(['jquery',
             this.user_uuid = data.user_uuid;
             this.ghAccessToken = data.password;
             this.gh_username = data.gh_username;
-        },
-
-		events: {
-            'click [data-trigger=popup]': 'onShowPopup'
         },
 
         onShowPopup: function () {
