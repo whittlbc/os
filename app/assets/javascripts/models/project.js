@@ -58,6 +58,17 @@ define(['jquery',
             return this.sync('pullFromIdeas', this, requestInfo);
         },
 
+        filteredFeed: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/filteredFeed',
+                data: info
+            });
+
+            return this.sync('filteredFeed', this, requestInfo);
+        },
+
         update: function(info, options) {
             var requestInfo = options || {};
 

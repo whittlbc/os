@@ -74,7 +74,11 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'pullFromIdeas': {
                 verb: 'GET',
                 action: 'read'
-            }
+            },
+            'filteredFeed': {
+                verb: 'POST',
+                action: 'create'
+            },
         },
 
         getProjectIntStatus: function (textType) {

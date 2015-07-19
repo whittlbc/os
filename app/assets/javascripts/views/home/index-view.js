@@ -49,6 +49,28 @@ define(['jquery',
             });
         },
 
+        getFilters: function () {
+            var self = this;
+            // grab data from UI filters and jam into an object
+            var obj = {
+                filters: {
+                    // need to put your filters here
+                }
+            };
+            self.getFilteredFeed(obj);
+        },
+
+        getFilteredFeed: function (obj) {
+            var self = this;
+            var project = new Project();
+            project.filteredFeed(obj, {success: self.handleFilteredFeed});
+        },
+
+        handleFilteredFeed: function (resp) {
+            // master
+            console.log(resp);
+        },
+
         pullFromIdeas: function () {
             var self = this;
             var project = new Project();
@@ -56,6 +78,7 @@ define(['jquery',
         },
 
         handlePullFromIdeas: function (resp) {
+            // master
             console.log(resp);
         },
 

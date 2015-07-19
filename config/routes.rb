@@ -8,6 +8,7 @@ Backboneworld::Application.routes.draw do
       get :feed, :path => '/feed'
       post :create_by_gh, :path => '/createByGH'
       get :pull_from_ideas, :path => '/pullFromIdeas'
+      post :filtered_feed, :path => '/filteredFeed'
     end
   end
 

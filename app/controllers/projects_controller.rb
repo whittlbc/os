@@ -96,9 +96,9 @@ class ProjectsController < ApplicationController
     }
   end
 
-  def filtered_search
-    ideas = special_sort(Project.where(params))
-    render :json => ideas
+  def filtered_feed
+    filtered_projects = special_sort(Project.where(params[:filters]))
+    render :json => filtered_projects
   end
 
   def pull_from_ideas
