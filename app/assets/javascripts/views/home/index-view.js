@@ -27,8 +27,7 @@ define(['jquery',
 	var IndexView = OSView.extend({
 
 		initialize: function () {
-            this.osInitialize();
-            this.erbEvents();
+            this.osInitialize(this);
             master = this;
             this.filters = null;
             this.langsFramesValue = [];
@@ -44,22 +43,6 @@ define(['jquery',
 
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
-        },
-
-        erbEvents: function () {
-            var self = this;
-            $('#fetchGHProject').click(function() {
-                self.handleFetchGHProject();
-            });
-            $('#submitNewProject').click(function() {
-                self.handleCreateProject();
-            });
-            $('#getAllRepos').click(function() {
-                self.getAllUserRepos();
-            });
-            $('#pullFromIdeas').click(function() {
-                self.pullFromIdeas();
-            });
         },
 
         getLanguages: function () {
@@ -86,7 +69,7 @@ define(['jquery',
                 }
             };
 
-            var $select = $('#filters-langs-frames').selectize(options);
+            var $select = master.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
             selectize.on('change', function () {
                 master.langsFramesValue = selectize.getValue();

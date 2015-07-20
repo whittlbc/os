@@ -11,6 +11,7 @@ Backboneworld::Application.routes.draw do
       get :pull_from_ideas, :path => '/pullFromIdeas'
       post :filtered_feed, :path => '/filteredFeed'
       put :vote, :path => '/vote'
+      get :universal_search, :path => '/universalSearch'
     end
   end
 

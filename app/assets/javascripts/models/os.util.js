@@ -84,6 +84,10 @@ define(['backbone', 'eventbroker'], function(Backbone) {
             'getAll': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'getUniversalSearchData': {
+                verb: 'GET',
+                action: 'read'
             }
         },
 

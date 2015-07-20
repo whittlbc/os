@@ -2,66 +2,67 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'models/os.util',
-    'views/login/login-view'
-], function ($,
+    'models/project'], function ($,
      Backbone,
      _,
      OSUtil,
-     LoginView) {
+     Project) {
 	'use strict';
+
+    var master;
 
 	var OSView = Backbone.View.extend({
 
-		osInitialize: function () {
-            var self = this;
-            this.createLoginPopupView();
-            this.loginPopupShown = false;
-            this.loginPopup = $('.myPopup');
-            this.backdrop = $('.popup-backdrop');
-            this.backdrop.click(function(){
-                self.hideLoginPopup();
+        osInitialize: function(view) {
+            master = this;
+            this.erbEvents(view);
+        },
+
+        erbEvents: function (view) {
+            var self = view;
+            $('#fetchGHProject').click(function() {
+                self.handleFetchGHProject();
             });
-		},
+            $('#submitNewProject').click(function() {
+                self.handleCreateProject();
+            });
+            $('#getAllRepos').click(function() {
+                self.getAllUserRepos();
+            });
+            $('#pullFromIdeas').click(function() {
+                self.pullFromIdeas();
+            });
 
-        events: {
+            var isOpen = false;
+            var inputBox = $('#universal-searchbox-input');
+            var searchBox = $('.searchbox');
+            inputBox.focus(function(){
+                if(!isOpen) {
+                    self.getUniversalSearchData();
+                    searchBox.addClass('searchbox-open');
+                    isOpen = true;
+                }
+            });
+            inputBox.blur(function(){
+                if(isOpen) {
+                    searchBox.removeClass('searchbox-open');
+                    isOpen = false;
+                }
+            });
         },
 
-        createLoginPopupView: function () {
-            var self = this;
+        events: {},
 
-            if (!this.loginView) {
-                this.loginView = new LoginView({
-                    el: '#myPopup'
-                });
-                this.loginView.render();
-                this.listenTo(this.loginView, 'hidePopup', self.hideLoginPopup);
-            }
+        getUniversalSearchData: function () {
+            var self = this;
+            var project = new Project();
+            project.getUniversalSearchData({success: self.handleUniversalSearchData});
         },
 
-        showLoginPopup: function () {
-            var self = this;
-            if (!this.loginPopupShown) {
-
-                this.backdrop.removeClass('hidden-popup').addClass('animated fadeIn');
-                this.loginPopup.removeClass('hidden-popup').addClass('animated fadeInDown');
-                this.loginPopupShown = true;
-            }
-        },
-
-        hideLoginPopup: function () {
-            var self = this;
-            if (this.loginPopupShown) {
-                this.loginPopup.removeClass('fadeInDown').addClass('fadeOut');
-                this.backdrop.removeClass('fadeIn').addClass('fadeOut');
-                setTimeout(function () {
-                    self.loginPopup.addClass('hidden-popup').removeClass('fadeOut');
-                    self.backdrop.addClass('hidden-popup').removeClass('fadeOut');
-                }, OSUtil.hidePopupTimeout);
-
-                this.loginPopupShown = false;
-            }
+        handleUniversalSearchData: function (projects) {
+            // master
+            console.log(projects);
         }
-
 
 	});
 

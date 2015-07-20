@@ -124,12 +124,32 @@ class ProjectsController < ApplicationController
     end
   end
 
-
   # Apply vote
   def vote
     @project = Project.find_by(uuid: params[:uuid])
     @project.update_attributes(:vote_count => (@project.vote_count + 1))
     render :json => {:response => 'Successfully applied vote to project'}
+  end
+
+  def universal_search
+    projects = Project.all.map { |proj|
+      {
+        uuid: proj.uuid,
+        title: proj.title,
+        repoName: proj.repo_name,
+        description: proj.description,
+        voteCount: proj.vote_count,
+        owner: proj.user,
+        status: proj.status,
+        anon: proj.anon,
+        langsAndFrames: proj.langs_and_frames,
+        contributors: proj.contributors,
+        privacy: proj.privacy
+      }
+    }
+
+    render :json => projects
+
   end
 
   private

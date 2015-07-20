@@ -101,7 +101,7 @@ footer p {
     border-bottom: 1px solid black;
     position: fixed;
     top:72px;
-    z-index: 2;
+    /*z-index: 11;*/
 }
 
 .project-type-container {
@@ -183,7 +183,7 @@ footer p {
     transition: width 0.3s;
 }
 
-.searchbox-input{
+#universal-searchbox-input{
     top:0;
     right:0;
     border: 1px solid black;
@@ -198,16 +198,16 @@ footer p {
     color: black;
 }
 
-.searchbox-input::-webkit-input-placeholder {
+#universal-searchbox-input::-webkit-input-placeholder {
     color: #aaaaaa;
 }
-.searchbox-input:-moz-placeholder {
+#universal-searchbox-input:-moz-placeholder {
     color: #aaaaaa;
 }
-.searchbox-input::-moz-placeholder {
+#universal-searchbox-input::-moz-placeholder {
     color: #aaaaaa;
 }
-.searchbox-input:-ms-input-placeholder {
+#universal-searchbox-input:-ms-input-placeholder {
     color: #aaaaaa;
 }
 
@@ -218,7 +218,7 @@ footer p {
     display:block;
     position:absolute;
     top:0;
-    font-family:verdana;
+    font-family: verdana;
     font-size:22px;
     right:0;
     padding:0;
@@ -252,8 +252,6 @@ footer p {
 #myLoginModal {
     margin-top: 7%;
 }
-
-
 
 
 

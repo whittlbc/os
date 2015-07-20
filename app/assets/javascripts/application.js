@@ -2,21 +2,6 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
 
     // Document On Ready Shit
     $(document).ready(function(){
-        var isOpen = false;
-        var inputBox = $('.searchbox-input');
-        var searchBox = $('.searchbox');
-        inputBox.focus(function(){
-            if(!isOpen) {
-                searchBox.addClass('searchbox-open');
-                isOpen = true;
-            }
-        });
-        inputBox.blur(function(){
-            if(isOpen) {
-                searchBox.removeClass('searchbox-open');
-                isOpen = false;
-            }
-        });
 
         (function() {
             var $wnd = $(window),
@@ -57,8 +42,6 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
         });
 
     });
-
-
 
     // Actual Backbone App
     var App = {};

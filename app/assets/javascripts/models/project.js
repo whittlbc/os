@@ -99,8 +99,17 @@ define(['jquery',
             });
 
             return this.sync('vote', this, requestInfo);
-        }
+        },
 
+        getUniversalSearchData: function(options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/universalSearch',
+            });
+
+            return this.sync('getUniversalSearchData', this, requestInfo);
+        }
     });
 
     return Project;
