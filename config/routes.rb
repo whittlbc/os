@@ -2,6 +2,7 @@ Backboneworld::Application.routes.draw do
 
   get '/' => 'home#index'
   root :to => "home#index"
+  get '/languages/getAll' => 'languages#get_all'
 
   resources :projects do
     collection do
@@ -9,6 +10,7 @@ Backboneworld::Application.routes.draw do
       post :create_by_gh, :path => '/createByGH'
       get :pull_from_ideas, :path => '/pullFromIdeas'
       post :filtered_feed, :path => '/filteredFeed'
+      put :vote, :path => '/vote'
     end
   end
 

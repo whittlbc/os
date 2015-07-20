@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-  include ProjectsHelper
 
   def index
     render :index, :layout => 'layouts/application'
@@ -99,20 +98,38 @@ class ProjectsController < ApplicationController
     query = Project.where(status: filters[:status])
     filters.each { |filter|
       if filter[1].is_a?(Array)
-        filter[1].each { |item|
-          query = query.where.any(filter[0] => item)
-        }
+        query = query.where.overlap(filter[0] => filter[1])
       else
         query = query.where(filter[0] => filter[1])
       end
     }
     filtered_projects = query.map { |project| project }
-    render :json => filtered_projects
+    render :json => special_sort(filtered_projects)
   end
 
   def pull_from_ideas
     ideas = special_sort(Project.where(:status => 0))
     render :json => ideas
+  end
+
+  # Join project as collaborator
+  def join
+    @user = User.find_by(gh_username: params[:gh_username])
+    if @user
+      client = Octokit::Client.new(:access_token => @user.password)
+      client.add_collaborator({:user => params[:owner_gh_username], :repo => params[:repo_name]}, @user.gh_username)
+      render :json => { :message => 'Successfully added contributor' }
+    else
+      render :json => {:status => 500, :message => 'Could not find user by passed gh_username'}
+    end
+  end
+
+
+  # Apply vote
+  def vote
+    @project = Project.find_by(uuid: params[:uuid])
+    @project.update_attributes(:vote_count => (@project.vote_count + 1))
+    render :json => {:response => 'Successfully applied vote to project'}
   end
 
   private

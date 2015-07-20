@@ -1,10 +1,12 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/project',
 	'stache!views/home/project-post-view'
     ], function ($,
      Backbone,
      _,
+     Project,
      ProjectPostViewTpl) {
 	'use strict';
 
@@ -13,12 +15,32 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+            'click .vote-arrow': 'handleVote'
+        },
+
+        errorHandler: function(resp, status, xhr) {
+            console.log('AJAX ERROR: ', xhr, resp);
+        },
+
+        handleVote: function() {
+            var self = this;
+            self.voteCount++;
+            self.render();
+            var project = new Project();
+            project.vote({uuid: self.uuid}, {success: self.voteSuccess, error: self.errorHandler});
+        },
+
+        voteSuccess: function (resp) {
+            var self = this;
+            console.log(resp);
+        },
 
         setData: function (data) {
             var self = this;
             this.data = data;
             this.title = data.title;
+            this.uuid = data.uuid;
             this.voteCount = data.vote_count;
         },
 

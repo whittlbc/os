@@ -88,7 +88,19 @@ define(['jquery',
             });
 
             return this.sync('delete', this, requestInfo);
+        },
+
+        vote: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/vote',
+                data: info
+            });
+
+            return this.sync('vote', this, requestInfo);
         }
+
     });
 
     return Project;

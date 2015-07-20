@@ -101,6 +101,7 @@ footer p {
     border-bottom: 1px solid black;
     position: fixed;
     top:72px;
+    z-index: 2;
 }
 
 .project-type-container {

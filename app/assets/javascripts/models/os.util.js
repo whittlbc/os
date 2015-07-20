@@ -77,6 +77,14 @@ define(['backbone', 'eventbroker'], function(Backbone) {
                 verb: 'POST',
                 action: 'create'
             },
+            'vote': {
+                verb: 'PUT',
+                action: 'update'
+            },
+            'getAll': {
+                verb: 'GET',
+                action: 'read'
+            }
         },
 
         getProjectIntStatus: function (textType) {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150719054657) do
+ActiveRecord::Schema.define(version: 20150720034113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,24 +43,22 @@ ActiveRecord::Schema.define(version: 20150719054657) do
 
   create_table "projects", force: true do |t|
     t.string   "title"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "uuid"
     t.string   "repo_name"
     t.text     "description"
     t.integer  "vote_count"
     t.integer  "user_id"
-    t.string   "license"
     t.integer  "status"
     t.boolean  "anon",             default: false
-    t.string   "langs_and_frames", default: [],                     array: true
-    t.integer  "contributors",     default: [],                     array: true
-    t.string   "privacy",          default: "request"
+    t.string   "langs_and_frames", default: [],                 array: true
+    t.integer  "contributors",     default: [],                 array: true
+    t.string   "license",          default: [],                 array: true
+    t.string   "privacy",          default: [],                 array: true
   end
 
   add_index "projects", ["anon"], name: "index_projects_on_anon", using: :btree
-  add_index "projects", ["license"], name: "index_projects_on_license", using: :btree
-  add_index "projects", ["privacy"], name: "index_projects_on_privacy", using: :btree
   add_index "projects", ["status"], name: "index_projects_on_status", using: :btree
 
   create_table "users", force: true do |t|
