@@ -8,7 +8,7 @@ define(['jquery',
     'models/user',
     'models/language',
     'stache!views/home/index-view',
-    "selectize"
+    'selectize'
 ], function ($,
      Backbone,
      _,
@@ -33,16 +33,50 @@ define(['jquery',
             this.langsFramesValue = [];
             this.licenses = [];
             this.privacy = [];
+            this.forcedItems = [];
 		},
 
         events: {
             'click [data-trigger=popup]': 'onShowPopup',
             'click #submit-filters': 'getFilters',
-            'click #filters-anon-checkbox': 'getFilters'
+            'click #filters-anon-checkbox': 'getFilters',
+            'click #launchProject': 'clickedLaunchProject'
+        },
+
+        clickedLaunchProject: function () {
+            var self = this;
+            var project = new Project();
+            var obj = {
+                project_uuid: 'jhgfdsedrfghjhgfdf',
+                user_uuid: 'yrdyftughgrdtuyfgih'
+            };
+            project.launch(obj, {success: self.successfullyLaunchProject})
+        },
+
+        successfullyLaunchProject: function (resp) {
+            // master
+            console.log(resp)
         },
 
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
+        },
+
+        cacheFeedBeforeSearch: function () {
+            var self = this;
+            self.cachedFeed = self.projectFeedView.POST_VIEWS.map(function(project){
+                return project;
+            });
+            console.log(self.cachedFeed);
+        },
+
+        showCachedFeed: function () {
+            var self = this;
+            self.projectFeedView.populateFeed(self.cachedFeed);
+        },
+
+        passUniveralSearchResults: function (projects) {
+            this.projectFeedView.populateFeed(projects);
         },
 
         getLanguages: function () {
@@ -52,6 +86,8 @@ define(['jquery',
         },
 
         handleAllLanguages: function (resp) {
+            master.all_langs = resp.all_langs;
+            master.all_frames = resp.all_frames;
 
             var options = {
                 theme: 'links',
@@ -59,6 +95,7 @@ define(['jquery',
                 valueField: 'id',
                 searchField: 'title',
                 options: resp.dropdown_items,
+                selectOnTab: true,
                 render: {
                     option: function (data, escape) {
                         return '<div class="option title">' + escape(data.title) + '</div>';
@@ -71,7 +108,20 @@ define(['jquery',
 
             var $select = master.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
-            selectize.on('change', function () {
+            selectize.on('item_add', function (value, $item) {
+                /* if you just entered the framework as a lang/frame filter, but haven't entered the language that framework
+                goes with, then we'll go ahead and add that for you */
+                if (master.all_frames[value] && !_.contains(master.langsFramesValue, master.all_frames[value])){
+                    master.langsFramesValue = selectize.getValue();
+                    selectize.lastQuery = null;
+                    selectize.setTextboxValue('');
+                    selectize.addItem(master.all_frames[value]);
+                } else {
+                    master.langsFramesValue = selectize.getValue();
+                    master.getFilters();
+                }
+            });
+            selectize.on('item_remove', function (value, $item) {
                 master.langsFramesValue = selectize.getValue();
                 master.getFilters();
             });
@@ -179,9 +229,10 @@ define(['jquery',
 
         passUserInfo: function (data) {
             var self = this;
+            console.log(data);
             $('.header-user-pic').attr('src', data.pic);
             this.user_uuid = data.user_uuid;
-            this.user_uuid = data.user_uuid;
+            this.userID = data.id;
             this.ghAccessToken = data.password;
             this.gh_username = data.gh_username;
         },
@@ -277,6 +328,7 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
+
             this.$el.html(IndexViewTpl({
             }));
 

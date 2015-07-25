@@ -101,7 +101,7 @@ footer p {
     border-bottom: 1px solid black;
     position: fixed;
     top:72px;
-    /*z-index: 11;*/
+    z-index: 11;
 }
 
 .project-type-container {
@@ -249,7 +249,7 @@ footer p {
     cursor: pointer;
 }
 
-#myLoginModal {
+#createNewProjectModal {
     margin-top: 7%;
 }
 

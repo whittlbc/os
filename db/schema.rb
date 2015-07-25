@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150720034113) do
+ActiveRecord::Schema.define(version: 20150725203610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: true do |t|
+    t.string  "uuid"
+    t.text    "text"
+    t.integer "project_id"
+    t.integer "user_id"
+    t.integer "vote_count"
+  end
 
   create_table "contributors", force: true do |t|
     t.string   "uuid"
@@ -31,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150720034113) do
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "key"
   end
 
   create_table "languages", force: true do |t|

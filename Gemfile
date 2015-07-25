@@ -75,3 +75,6 @@ gem 'rest-client', '>= 1.8.0'
 gem 'rails4_upgrade'
 
 gem 'postgres_ext'
+
+# Slack integration
+gem 'slack-api'

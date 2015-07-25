@@ -1,7 +1,46 @@
 class ProjectsController < ApplicationController
 
+  require "slack"
+  require "net/http"
+  require "net/https"
+  require "uri"
+  require "json"
+  require "cgi"
+
   def index
     render :index, :layout => 'layouts/application'
+  end
+
+  def fetch_details
+    project = Project.find_by(id: params[:id])
+    if !project.blank?
+      comments = Comment.where(project_id: params[:id])
+      render :json => {:project => project, :comments => comments}
+    else
+      render :json => {:message => "Can't find project from id that was passed"}
+    end
+
+  end
+
+  def launch
+
+    # WHAT SHOULD BE HERE
+
+    # project = Project.find_by(uuid: params[:project_uuid])
+    # user = User.find_by(uuid: params[:user_uuid])
+    # client = Octokit::Client.new(:access_token => user.password)
+    # options = {
+    #     :description => project.description,
+    #     :auto_init => true
+    # }
+    # client.create_repository(project.repo_name, options)
+
+
+    # JUST ME HARDCODING SOME STUFF
+    user = User.find_by(uuid: "35e982e1-c95d-43ac-ae60-a532596c5495")
+    client = Octokit::Client.new(:access_token => user.password)
+    client.create_repository('from-os')
+    render :json => {:message => "Successfullly created repo"}
   end
 
   def create
@@ -25,7 +64,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_data)
     @project.save
 
-    render :json => {:new_project => project_data}
+    render :json => {:new_project => @project}
   end
 
   def create_by_gh
@@ -95,15 +134,14 @@ class ProjectsController < ApplicationController
 
   def filtered_feed
     filters = params[:filters]
-    query = Project.where(status: filters[:status])
+    filtered_projects = Project.where(status: filters[:status])
     filters.each { |filter|
       if filter[1].is_a?(Array)
-        query = query.where.overlap(filter[0] => filter[1])
+        filtered_projects = filtered_projects.where.overlap(filter[0] => filter[1])
       else
-        query = query.where(filter[0] => filter[1])
+        filtered_projects = filtered_projects.where(filter[0] => filter[1])
       end
     }
-    filtered_projects = query.map { |project| project }
     render :json => special_sort(filtered_projects)
   end
 
@@ -114,14 +152,63 @@ class ProjectsController < ApplicationController
 
   # Join project as collaborator
   def join
-    @user = User.find_by(gh_username: params[:gh_username])
-    if @user
-      client = Octokit::Client.new(:access_token => @user.password)
-      client.add_collaborator({:user => params[:owner_gh_username], :repo => params[:repo_name]}, @user.gh_username)
+    owner = User.find_by(id: params[:owner_id])
+    joiner = User.find_by(uuid: params[:joiner_uuid])
+    project = Project.find_by(uuid: params[:project_uuid])
+    if !owner.nil? && !joiner.nil?
+      client = Octokit::Client.new(:access_token => owner.password)
+      client.add_collaborator({:user => owner.gh_username, :repo => project.repo_name}, joiner.gh_username)
+      integration = Integration.where(project_id: project.id, service: 'Slack').first
+      if !integration.nil?
+        invite_slack_user(joiner, integration.key)
+      end
       render :json => { :message => 'Successfully added contributor' }
     else
       render :json => {:status => 500, :message => 'Could not find user by passed gh_username'}
     end
+  end
+
+  def invite_slack_user(user, api_token)
+    Slack.configure do |config|
+      config.token = api_token
+    end
+    email = user.email
+    first_name = !user.name.empty? ? user.name.split(' ')[0] : user.gh_username
+    base = "https://#{get_team_name(Slack)}.slack.com"
+    hash = "/api/users.admin.invite?t=#{Time.now.to_i}"
+    data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(first_name)}&token=#{api_token}&set_active=true&_attempts=1"
+    uri = URI.parse(base)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    request = Net::HTTP::Post.new(hash)
+    request.add_field('Content-Type', 'application/x-www-form-urlencoded')
+    request.body = data
+    http.request(request)
+  end
+
+  # Get all channels for a team
+  def get_channels(slack)
+    count = 0
+    all_channels = ''
+    request = slack.channels_list
+    channels_list = request["channels"]
+    channels_list.each do |channel|
+      count += 1
+      if count == channels_list.length
+        all_channels += channel["id"]
+      else
+        all_channels += channel["id"] + ','
+      end
+    end
+    all_channels
+  end
+
+
+  def get_team_name(slack)
+    request = slack.team_info
+    team_name = request["team"]["name"]
+    team_name
   end
 
   # Apply vote
@@ -135,22 +222,41 @@ class ProjectsController < ApplicationController
     projects = Project.all.map { |proj|
       {
         uuid: proj.uuid,
+        id: proj.id,
         title: proj.title,
-        repoName: proj.repo_name,
         description: proj.description,
-        voteCount: proj.vote_count,
+        contributors: proj.contributors,
         owner: proj.user,
+        owner_gh_username: proj.user.gh_username,
+        created_at: proj.created_at,
+        repo_name: proj.repo_name,
+        vote_count: proj.vote_count,
         status: proj.status,
         anon: proj.anon,
-        langsAndFrames: proj.langs_and_frames,
-        contributors: proj.contributors,
+        langs_and_frames: proj.langs_and_frames,
+        license: proj.license,
         privacy: proj.privacy
       }
     }
-
     render :json => projects
+  end
+
+  def add_comment
+    user = User.find_by(uuid: params[:user_uuid])
+    comment_info = {
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :text => params[:text],
+        :project_id => params[:project_id],
+        :user_id => user.id,
+        :vote_count => 0
+    }
+    comment = Comment.new(comment_info)
+    comment.save
+
+    render :json => {:message => 'Successfully created comment'}
 
   end
+
 
   private
 

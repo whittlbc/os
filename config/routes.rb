@@ -6,12 +6,16 @@ Backboneworld::Application.routes.draw do
 
   resources :projects do
     collection do
+      get :fetch_details, :path => '/fetchDetails'
       get :feed, :path => '/feed'
       post :create_by_gh, :path => '/createByGH'
       get :pull_from_ideas, :path => '/pullFromIdeas'
       post :filtered_feed, :path => '/filteredFeed'
       put :vote, :path => '/vote'
       get :universal_search, :path => '/universalSearch'
+      post :add_comment, :path => '/addComment'
+      post :join, :path => '/join'
+      post :launch, :path => '/launch'
     end
   end
 

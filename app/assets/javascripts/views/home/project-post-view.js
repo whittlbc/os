@@ -16,16 +16,21 @@ define(['jquery',
 		},
 
 		events: {
-            'click .vote-arrow': 'handleVote'
+            'click .vote-arrow': 'handleVote',
+            'click .project-post-title': 'openProjectDetails'
         },
 
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
         },
 
+        openProjectDetails: function () {
+            window.location.hash = '#projects/' + this.id;
+        },
+
         handleVote: function() {
             var self = this;
-            self.voteCount++;
+            self.vote_count++;
             self.render();
             var project = new Project();
             project.vote({uuid: self.uuid}, {success: self.voteSuccess, error: self.errorHandler});
@@ -40,15 +45,16 @@ define(['jquery',
             var self = this;
             this.data = data;
             this.title = data.title;
+            this.id = data.id;
             this.uuid = data.uuid;
-            this.voteCount = data.vote_count;
+            this.vote_count = data.vote_count;
         },
 
         render: function () {
 			var self = this;
             this.$el.html(ProjectPostViewTpl({
                 title: self.title,
-                voteCount: self.voteCount
+                vote_count: self.vote_count
             }));
 		}
 	});

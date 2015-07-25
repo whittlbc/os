@@ -43,6 +43,7 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
 
     });
 
+
     // Actual Backbone App
     var App = {};
     App.start = function() {

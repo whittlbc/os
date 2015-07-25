@@ -10,10 +10,16 @@ define(['jquery',
      DetailsChatFeedViewTpl) {
 	'use strict';
 
+    var master;
+
 	var DetailsChatFeedView = Backbone.View.extend({
 
-        populateFeed: function () {
+        initialize: function () {
+            var self = this;
+            master = this;
+        },
 
+        populateFeed: function (comments) {
             if (this.CHAT_VIEWS) {
                 while (this.CHAT_VIEWS.length > 0) {
                     this.CHAT_VIEWS.pop();
@@ -21,34 +27,30 @@ define(['jquery',
             } else {
                 this.CHAT_VIEWS = [];
             }
-
-            for (var i = 0; i < 5; i++) {
-                this.addPost();
+            for (var i = 0; i < comments.length; i++) {
+                this.addComment(comments[i]);
             }
         },
 
-        addPost: function() {
-
+        addComment: function(data) {
             var detailsChatMessageView = new DetailsChatMessageView({
                 tagName: 'li'
             });
 
+            detailsChatMessageView.setContent(data);
             detailsChatMessageView.render();
-
             var detailsChatMessageEl = detailsChatMessageView.el;
-
-            this.$el.find('.details-chat-list').append(detailsChatMessageEl);
-
-            this.CHAT_VIEWS.push(detailsChatMessageView);
-
+            master.$el.find('.details-chat-list').append(detailsChatMessageEl);
+            master.CHAT_VIEWS.push(detailsChatMessageView);
         },
 
 		events: {},
 
-		render: function () {
+		render: function (comments) {
 			var self = this;
+            this.comments = comments;
             this.$el.html(DetailsChatFeedViewTpl());
-            this.populateFeed();
+            this.populateFeed(comments);
 		}
 	});
 

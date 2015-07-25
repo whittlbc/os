@@ -13,28 +13,33 @@ define(["backbone",
               OSUtil,
               User) {
 
+        console.log('loading router');
+
         var masterSelf;
 
         var Router = Backbone.Router.extend({
 
             entered: false,
+            lastHash: '',
 
             routes: {
                 'shouldStart': 'shouldStartRoute',
                 'starting': 'startingRoute',
                 'started': 'startedRoute',
-                '*path': 'startingRoute'
+                'projects/:id': 'projectRoute',
+                '': 'startingRoute'
             },
 
-            projectRoute: function () {
+            projectRoute: function (id) {
+                this.initializeProject(id);
+            },
 
-                this.determineEntry();
+            wasOnHome: function () {
+                return (this.lastHash == '#shouldStart' || this.lastHash == '#starting' || this.lastHash == '#started');
+            },
 
-                var projectView = new ProjectView({
-                    el: '#project'
-                });
-
-                projectView.render();
+            amOnHome: function () {
+                return (window.location.hash == '#shouldStart' || window.location.hash == '#starting' || window.location.hash == '#started');
             },
 
             emptyHash: function () {
@@ -63,7 +68,7 @@ define(["backbone",
                 if (window.location.search != '' && window.location.search.indexOf('?code=') == 0) {
                     // Get user info from new GH access_token
                     var search = window.location.search;
-                    var code = search.slice(search.indexOf('code=') + 5);
+                    var code = search.slice(search.indexOf('code=') + 5);;
                     user.postGHCode({code: code}, {success: self.setUserFromResponse, error: function () {
                         console.log('user.postGHCode() failed...now trying to get user by cookie');
                         self.getUserByCookie(user);
@@ -100,11 +105,14 @@ define(["backbone",
             },
 
             setUserFromResponse: function(response) {
-                var authedUser = response;
-                console.log('AUTHED USER: ', authedUser);
-                masterSelf.indexView.passUserInfo(authedUser);
+                masterSelf.authedUser = response;
                 masterSelf.setCookie('gh_username', response.gh_username, 7); // expires in 7 days
                 masterSelf.authed = true;
+                if ((window.location.hash == '' || masterSelf.amOnHome()) && masterSelf.indexView) {
+                    masterSelf.indexView.passUserInfo(masterSelf.authedUser);
+                } else if (window.location.hash.indexOf('#projects') == 0 && masterSelf.project) {
+                    masterSelf.project.passUserInfo(masterSelf.authedUser);
+                }
             },
 
             shouldStartRoute: function() {
@@ -113,12 +121,12 @@ define(["backbone",
             },
 
             startingRoute: function() {
-                if (this.emptyHash()) {
+                if (this.emptyHash() && window.location.pathname == '/') {
                     this.setStartingHash();
+                } else {
+                    this.initializeHome();
+                    this.indexView.showStartingFeed(OSUtil.STARTING.num);
                 }
-                this.initializeHome();
-                this.indexView.showStartingFeed(OSUtil.STARTING.num);
-
             },
 
             startedRoute: function() {
@@ -129,18 +137,43 @@ define(["backbone",
             initializeHome: function () {
                 masterSelf = this;
                 var self = this;
-
-                if (!this.entered) {
-                    this.entered = true;
+                if (!this.entered || !this.wasOnHome()) {
                     this.indexView = new IndexView({
                         el: '#home'
                     });
-                    this.determineEntry();
                     this.indexView.render();
-
                 }
 
-            }
+                window.scrollTo(0, 0);
+
+                if (!this.entered) {
+                    this.determineEntry();
+                } else {
+                    self.indexView.passUserInfo(self.authedUser);
+                }
+                this.entered = true;
+                this.setLastHash();
+            },
+
+            initializeProject: function (id) {
+                masterSelf = this;
+                var self = this;
+                this.project = new ProjectView({
+                    el: '#home',
+                    id: id
+                });
+                if (!this.entered) {
+                    this.entered = true;
+                    this.determineEntry();
+                } else {
+                    self.project.passUserInfo(self.authedUser);
+                }
+                this.setLastHash();
+            },
+
+            setLastHash: function () {
+                this.lastHash = window.location.hash;
+            },
 
         });
 

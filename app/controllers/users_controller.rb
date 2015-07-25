@@ -74,6 +74,13 @@ class UsersController < ApplicationController
     email = body["email"]
     pic = body["avatar_url"]
     old_user = User.find_by_gh_username(gh_username)
+    json_response = {
+        :gh_username => gh_username,
+        :name => name,
+        :pic => pic,
+        :email => email,
+        :password => access_token
+    }
 
     if old_user.nil?
       # Create new User
@@ -84,18 +91,15 @@ class UsersController < ApplicationController
                        :email => email,
                        :password => access_token)
       @user.save
+      json_response[:user_uuid] = @user.uuid
+      json_response[:id] = @user.id
     else
       old_user.update_attributes(:password => access_token)
+      json_response[:user_uuid] = old_user.uuid
+      json_response[:id] = old_user.id
     end
 
-    render :json => {
-               :gh_username => gh_username,
-               :name => name,
-               :pic => pic,
-               :email => email,
-               :password => access_token,
-               :user_uuid => @user.uuid
-           }
+    render :json => json_response
   end
 
 
@@ -113,7 +117,8 @@ class UsersController < ApplicationController
                  :pic => user.pic,
                  :email => user.email,
                  :password => user.password,
-                 :user_uuid => user.uuid
+                 :user_uuid => user.uuid,
+                 :id => user.id
              }
     end
   end

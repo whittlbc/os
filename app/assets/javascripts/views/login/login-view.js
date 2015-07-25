@@ -99,7 +99,7 @@ define(['jquery',
 
         onGHLogin: function () {
             var self = this;
-            window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&redirect_uri=http://localhost:3000'
+            window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&redirect_uri=http://localhost:3000&scope=public_repo'
         },
 
 		render: function () {

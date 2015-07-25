@@ -109,7 +109,52 @@ define(['jquery',
             });
 
             return this.sync('getUniversalSearchData', this, requestInfo);
+        },
+
+        fetchDetails: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/fetchDetails',
+                data: info
+            });
+
+            return this.sync('fetchDetails', this, requestInfo);
+        },
+
+        addComment: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/addComment',
+                data: info
+            });
+
+            return this.sync('addComment', this, requestInfo);
+        },
+
+        join: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/join',
+                data: info
+            });
+
+            return this.sync('join', this, requestInfo);
+        },
+
+        launch: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/launch',
+                data: info
+            });
+
+            return this.sync('launch', this, requestInfo);
         }
+
     });
 
     return Project;

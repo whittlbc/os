@@ -15,9 +15,18 @@ define(['jquery',
 
         events: {},
 
+        setContent: function (data) {
+            console.log(data);
+            this.text = data.text;
+        },
+
         render: function () {
+
+
             var self = this;
-            this.$el.html(DetailsChatMessageViewTpl());
+            this.$el.html(DetailsChatMessageViewTpl({
+                text: self.text
+            }));
         }
     });
 
