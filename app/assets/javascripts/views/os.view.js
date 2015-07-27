@@ -3,7 +3,8 @@ define(['jquery',
 	'underscore',
     'models/os.util',
     'sifter.min',
-    'models/project'], function ($,
+    'models/project',
+    'backbone-eventbroker'], function ($,
      Backbone,
      _,
      OSUtil,
@@ -12,33 +13,36 @@ define(['jquery',
 	'use strict';
 
     var master;
+    var loadedEBTriggers = false;
 
     var loadedAllProjects = false;
 
 	var OSView = Backbone.View.extend({
 
-        osInitialize: function(view) {
+        osInitialize: function() {
             master = this;
-            this.erbEvents(view);
+            this.erbEvents();
         },
 
         erbEvents: function () {
-            var self = this;
-            $('#fetchGHProject').click(function() {
-                self.handleFetchGHProject();
-            });
-            $('#submitNewProject').click(function() {
-                self.handleCreateProject();
-            });
-            $('#getAllRepos').click(function() {
-                self.getAllUserRepos();
-            });
-            $('#pullFromIdeas').click(function() {
-                self.pullFromIdeas();
-            });
-            $('#universal-searchbox-input').keyup(function(e){
-                master.universalSearch($(e.currentTarget).val());
-            });
+            if (!loadedAllProjects) {
+                $('#fetchGHProject').click(function() {
+                    Backbone.EventBroker.trigger('handleFetchGHProject');
+                });
+                $('#submitNewProject').click(function() {
+                    Backbone.EventBroker.trigger('handleCreateProject');
+                });
+                $('#getAllRepos').click(function() {
+                    Backbone.EventBroker.trigger('getAllUserRepos');
+                });
+                $('#pullFromIdeas').click(function() {
+                    Backbone.EventBroker.trigger('pullFromIdeas');
+                });
+                $('#universal-searchbox-input').keyup(function(e){
+                    master.universalSearch($(e.currentTarget).val());
+                });
+                loadedAllProjects = true;
+            }
 
             var isOpen = false;
             var inputBox = $('#universal-searchbox-input');

@@ -13,8 +13,6 @@ define(["backbone",
               OSUtil,
               User) {
 
-        console.log('loading router');
-
         var masterSelf;
 
         var Router = Backbone.Router.extend({
@@ -135,6 +133,7 @@ define(["backbone",
             },
 
             initializeHome: function () {
+
                 masterSelf = this;
                 var self = this;
                 if (!this.entered || !this.wasOnHome()) {

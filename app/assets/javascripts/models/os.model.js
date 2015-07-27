@@ -2,7 +2,7 @@ define(['jquery',
     'backbone',
     'underscore',
     'models/os.util',
-    'eventbroker'
+    'backbone-eventbroker'
 ], function (
     $,
     Backbone,

@@ -9,6 +9,7 @@
   <%= stylesheet_link_tag "slick" %>
   <%= stylesheet_link_tag "slick-theme" %>
   <%= stylesheet_link_tag "selectize" %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.7/slick.min.css" rel="stylesheet" type="text/css">
   <link href="http://fonts.googleapis.com/css?family=Lato:400,900,300,700" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet">
   <%= requirejs_include_tag "application.js" %>
@@ -16,7 +17,7 @@
 </head>
 
 <header>
-  <div class="navbar navbar-default header">
+  <div class="navbar navbar-fixed-top navbar-default header">
     <div class="header-logo-container"><div class="header-logo"></div></div><%
   %><div class="rest-of-header-container">
       <img class="header-user-pic"/>
@@ -26,14 +27,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="project-type-nav">
-    <div class="project-type-container">
-      <a href="/#shouldStart"><div id="shouldStartType" class="project-type">Should Start</div></a><%
-      %><a href="/#starting"><div id="startingType" class="project-type">Starting</div></a><%
-      %><a href="/#started"><div id="startedType" class="project-type">Started</div></a>
-    </div>
-    <a target="_blank" data-toggle="modal" data-target="#createNewProjectModal"><div id="addProjectBtn">+ Add Project</div></a>
   </div>
 </header>
 

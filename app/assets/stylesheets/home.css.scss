@@ -1,26 +1,23 @@
 
 .home-body {
-  background-color: #eeeeee;
   min-height: 700px;
 }
 
 #project-feed {
   min-height: 700px;
-  margin-top: 90px;
 }
 
 .project-feed-list {
   list-style: none;
   padding-left: 0;
-  max-width: 950px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .project-post-view {
-  height: 170px;
-  background-color: blue;
-  border-bottom: 1px solid white;
+  height: 150px;
+  border-bottom: 1px solid black;
 
 }
 
@@ -59,4 +56,68 @@
 .project-section-title {
   height: 80px;
   margin-top: 80px;
+}
+
+
+.project-type-nav {
+  height: 100px;
+  width: 94%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 65px;
+  border-bottom: 1px solid #EEE;
+}
+
+.project-type-container {
+  height: 100px;
+  width: 46%;
+  display: inline-block;
+}
+
+.project-type {
+  height: 80px;
+  width: 33.33%;
+  display: inline-block;
+  color: black;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 80px;
+}
+
+.selected-project-type {
+  background-color: white;
+  color: black;
+}
+
+.add-project-container {
+  width: 27%;
+  height: 100px;
+  display: inline-block;
+}
+
+
+.filters-container {
+  width: 27%;
+  height: 100px;
+  display: inline-block;
+}
+
+#addProjectBtn {
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  line-height: 80px;
+  text-align: center;
+  color: black;
+  cursor: pointer;
+}
+
+#toggleFiltersBtn {
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  line-height: 80px;
+  text-align: center;
+  color: black;
+  cursor: pointer;
 }

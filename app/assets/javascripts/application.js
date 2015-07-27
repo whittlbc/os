@@ -3,13 +3,15 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
     // Document On Ready Shit
     $(document).ready(function(){
 
-        (function() {
-            var $wnd = $(window),
-                $header = $(".project-type-nav");
-            $wnd.on("scroll", function() {
-                $header.css("top", Math.max(0, 72 - $wnd.scrollTop()));
-            });
-        })();
+
+        //// If you want one part of the site to "catch" when it reaches the top of the page on scroll
+        //(function() {
+        //    var $wnd = $(window),
+        //        $header = $(".project-type-nav");
+        //    $wnd.on("scroll", function() {
+        //        $header.css("top", Math.max(0, 72 - $wnd.scrollTop()));
+        //    });
+        //})();
 
         //// Highlight the current Project Type based on the initial has upon site entrance
         var initialPath = window.location.hash;

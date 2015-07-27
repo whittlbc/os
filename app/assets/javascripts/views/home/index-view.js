@@ -8,8 +8,8 @@ define(['jquery',
     'models/user',
     'models/language',
     'stache!views/home/index-view',
-    'selectize'
-], function ($,
+    'selectize',
+    'backbone-eventbroker'], function ($,
      Backbone,
      _,
      OSView,
@@ -27,7 +27,13 @@ define(['jquery',
 	var IndexView = OSView.extend({
 
 		initialize: function () {
-            this.osInitialize(this);
+            Backbone.EventBroker.register({
+                'handleFetchGHProject': 'handleFetchGHProject',
+                'handleCreateProject': 'handleCreateProject',
+                'getAllUserRepos': 'getAllUserRepos',
+                'pullFromIdeas': 'pullFromIdeas'
+            }, this);
+            this.osInitialize();
             master = this;
             this.filters = null;
             this.langsFramesValue = [];
@@ -35,6 +41,11 @@ define(['jquery',
             this.privacy = [];
             this.forcedItems = [];
 		},
+
+        ebTesting: function () {
+            var self = this;
+            console.log('heard event');
+        },
 
         events: {
             'click [data-trigger=popup]': 'onShowPopup',
@@ -76,6 +87,7 @@ define(['jquery',
         },
 
         passUniveralSearchResults: function (projects) {
+            window.scrollTo(0,0);
             this.projectFeedView.populateFeed(projects);
         },
 

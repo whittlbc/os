@@ -1,4 +1,4 @@
-define(['backbone', 'eventbroker'], function(Backbone) {
+define(['backbone', 'backbone-eventbroker'], function(Backbone) {
     'use strict';
 
     var OSUtil = {
