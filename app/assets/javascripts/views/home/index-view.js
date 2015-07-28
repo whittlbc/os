@@ -7,6 +7,7 @@ define(['jquery',
     'models/project',
     'models/user',
     'models/language',
+    'views/home/lang-selection-list',
     'stache!views/home/index-view',
     'selectize',
     'backbone-eventbroker'], function ($,
@@ -18,6 +19,7 @@ define(['jquery',
      Project,
      User,
      Language,
+     LangSelectionList,
      IndexViewTpl
      ) {
 	'use strict';
@@ -36,6 +38,7 @@ define(['jquery',
             this.osInitialize();
             master = this;
             this.filters = null;
+            this.filtersShown = false;
             this.langsFramesValue = [];
             this.licenses = [];
             this.privacy = [];
@@ -51,7 +54,36 @@ define(['jquery',
             'click [data-trigger=popup]': 'onShowPopup',
             'click #submit-filters': 'getFilters',
             'click #filters-anon-checkbox': 'getFilters',
-            'click #launchProject': 'clickedLaunchProject'
+            'click #launchProject': 'clickedLaunchProject',
+            'click #toggleFiltersBtn': 'toggleFilters'
+        },
+
+        toggleFilters: function () {
+            if (!this.filtersShown) {
+                this.showFilters();
+            } else {
+                this.hideFilters();
+            }
+            this.filtersShown = !this.filtersShown;
+        },
+
+        showFilters: function () {
+            this.$el.find('.selectize-control.multi').show();
+            this.$el.find('#langSelectionListContainer').show();
+            this.$el.find('.filters-container').animate({height: 250}, 300);
+            this.$el.find('.selectize-control.multi').animate({opacity: 1}, 5);
+            this.$el.find('.selectize-control.multi').animate({width: 470}, 330);
+        },
+
+        hideFilters: function () {
+            var self = this;
+            this.$el.find('.filters-container').animate({height: 0}, 300);
+            this.$el.find('.selectize-control.multi').animate({width: 0}, 305);
+            this.$el.find('.selectize-control.multi').animate({opacity: 0}, 50);
+            setTimeout(function () {
+                self.$el.find('.selectize-control.multi').hide();
+                self.$el.find('#langSelectionListContainer').hide();
+            }, 100);
         },
 
         clickedLaunchProject: function () {
@@ -78,7 +110,6 @@ define(['jquery',
             self.cachedFeed = self.projectFeedView.POST_VIEWS.map(function(project){
                 return project;
             });
-            console.log(self.cachedFeed);
         },
 
         showCachedFeed: function () {
@@ -132,6 +163,9 @@ define(['jquery',
                     master.langsFramesValue = selectize.getValue();
                     master.getFilters();
                 }
+
+                master.langSelectionList.addItem();
+
             });
             selectize.on('item_remove', function (value, $item) {
                 master.langsFramesValue = selectize.getValue();
@@ -351,6 +385,12 @@ define(['jquery',
             });
 
             this.projectFeedView.render();
+
+            this.langSelectionList = new LangSelectionList({
+                el: '#langSelectionListContainer'
+            });
+
+            this.langSelectionList.render();
 
             this.createLicenseAndPrivacyDropdown();
         }

@@ -2,24 +2,27 @@
     <select id="filters-license-dropdown" placeholder="License"></select>
     <input id="filters-anon-checkbox" type="checkbox" name="Anonymous"/>Anonymous Only
     <select id="filters-privacy-dropdown" placeholder="Privacy"></select>
-    <select id="filters-langs-frames" placeholder="Languages and frameworks"></select>
     <div id="submit-filters">Update Feed</div>
     <div id="launchProject">Launch Project</div>
     <a href="https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&redirect_uri=http://localhost:3000&scope=public_repo">Login with GH</a>
 </div>
 <div class="home-body span12">
     <div class="project-type-nav">
-        <div class="filters-container">
+        <div class="toggleFiltersBtnContainer">
             <div id="toggleFiltersBtn">Filters</div>
         </div>{{
         }}<div class="project-type-container">
-            <a href="/#shouldStart"><div id="shouldStartType" class="project-type">Up For Grabs</div></a>{{
-            }}<a href="/#starting"><div id="startingType" class="project-type">Gauge Interest</div></a>{{
+            <a href="/#shouldStart"><div id="shouldStartType" class="project-type">Up for Grabs</div></a>{{
+            }}<a href="/#starting"><div id="startingType" class="project-type">On the Fence</div></a>{{
             }}<a href="/#started"><div id="startedType" class="project-type">Launched</div></a>
         </div>{{
         }}<div class="add-project-container">
             <a target="_blank" data-toggle="modal" data-target="#createNewProjectModal"><div id="addProjectBtn">+ Add Project</div></a>
         </div>
+    </div>
+    <div class="filters-container">
+        <div id="langSelectionListContainer" hidden></div>
+        <select id="filters-langs-frames" placeholder="Languages and frameworks"></select>
     </div>
     <div id="project-feed"></div>
 </div>

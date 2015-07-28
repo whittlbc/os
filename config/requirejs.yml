@@ -3,6 +3,7 @@ paths:
     bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min'
     selectize: 'https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min'
     stache: 'stache'
+    velocity: 'https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min'
 shim:
     jquery:
         exports: '$'
@@ -17,6 +18,8 @@ shim:
     selectize:
         deps: ['jquery']
         exports: 'selectize'
+    velocity:
+        exports: 'velocity'
 modules:
     - name: 'application'
 
