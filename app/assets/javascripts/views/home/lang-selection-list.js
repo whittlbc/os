@@ -57,6 +57,12 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(LangSelectionListTpl());
+
+            var $header = this.$el.find(".lang-selection-list");
+            $(window).on("scroll", function(e) {
+                var disp = $(window).scrollTop();
+                    $header.css("top", Math.max(0, 55 + disp));
+            });
 		}
 	});
 

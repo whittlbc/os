@@ -7,9 +7,9 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
         //// If you want one part of the site to "catch" when it reaches the top of the page on scroll
         //(function() {
         //    var $wnd = $(window),
-        //        $header = $(".project-type-nav");
+        //        $header = $(".lang-selection-list");
         //    $wnd.on("scroll", function() {
-        //        $header.css("top", Math.max(0, 72 - $wnd.scrollTop()));
+        //        $header.css("top", Math.max(0, 250 - $wnd.scrollTop()));
         //    });
         //})();
 
