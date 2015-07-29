@@ -58,11 +58,24 @@ define(['jquery',
 			var self = this;
             this.$el.html(LangSelectionListTpl());
 
+            //var $header = this.$el.find(".lang-selection-list");
+            //$(window).on("scroll", function(e) {
+            //    var disp = $(window).scrollTop();
+            //        $header.css("top", Math.max(0, 55 + disp));
+            //});
+
             var $header = this.$el.find(".lang-selection-list");
-            $(window).on("scroll", function(e) {
-                var disp = $(window).scrollTop();
-                    $header.css("top", Math.max(0, 55 + disp));
+            $(window).scroll(function(e){
+                if ($(window).scrollTop() > 195 && $header.css('position') != 'fixed'){
+                    $header.css({'position': 'fixed', 'top': '65px'});
+                }
+                if ($(window).scrollTop() < 255 && $header.css('position') == 'fixed')
+                {
+                    $header.css({'position': 'relative', 'top': '150px'});
+                }
+                console.log($(window).scrollTop());
             });
+
 		}
 	});
 
