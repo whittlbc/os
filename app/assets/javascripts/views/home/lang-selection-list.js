@@ -17,6 +17,7 @@ define(['jquery',
             this.LANG_ITEMS = [];
             this.baseX = -1*((window.innerWidth/2)-25);
             this.itemDiameter = 50;
+            this.collapsed = false;
 		},
 
 		events: {
@@ -54,20 +55,33 @@ define(['jquery',
             $(el).velocity({ right: newRight}, 900, [100, 15]);
         },
 
+        toggleCollapse: function () {
+            if (this.collapsed) {
+                console.log('expand');
+                //for (var i = 0; i < this.LANG_ITEMS.length; i++) {
+                //    console.log(this.LANG_ITEMS[i].el.style.right);
+                //}
+            } else {
+                console.log('collapse');
+            }
+            this.collapsed = !this.collapsed;
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(LangSelectionListTpl());
 
             var $header = this.$el.find(".lang-selection-list");
             $(window).scroll(function(e){
-                if ($(window).scrollTop() > 195 && $header.css('position') != 'fixed'){
+                var scrollTop = $(window).scrollTop();
+                if (scrollTop > 195 && $header.css('position') != 'fixed'){
                     $header.css({'position': 'fixed', 'top': '65px'});
+                    self.toggleCollapse();
                 }
-                if ($(window).scrollTop() < 255 && $header.css('position') == 'fixed')
+                if (scrollTop < 255 && $header.css('position') == 'fixed')
                 {
                     $header.css({'position': 'relative', 'top': '150px'});
                 }
-                console.log($(window).scrollTop());
             });
 
 		}
