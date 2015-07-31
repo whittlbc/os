@@ -47,7 +47,10 @@ define(['jquery',
             this.forcedItems = [];
             this.gotLanguages = false;
             this.selectizeOpenDuration = 290;
-		},
+            this.zipUpDuration = 250;
+            this.zipDownDuration = 250;
+            this.langsFramesDropdownShown = false;
+        },
 
         ebTesting: function () {
             var self = this;
@@ -62,42 +65,16 @@ define(['jquery',
             'click #toggleFiltersBtn': 'toggleFilters'
         },
 
-        //toggleFilters: function () {
-        //    if (!this.filtersShown) {
-        //        this.showFilters();
-        //    } else {
-        //        this.hideFilters();
-        //    }
-        //    this.filtersShown = !this.filtersShown;
-        //},
-        //
-        //showFilters: function () {
-        //    this.$el.find('.selectize-control.multi').show();
-        //    this.$el.find('.filters-container').animate({height: 250}, 300);
-        //    this.$el.find('.selectize-control.multi').animate({opacity: 1}, 5);
-        //    this.$el.find('.selectize-control.multi').animate({width: 470}, 330);
-        //},
-        //
-        //hideFilters: function () {
-        //    var self = this;
-        //    this.$el.find('.filters-container').animate({height: 0}, 300);
-        //    this.$el.find('.selectize-control.multi').animate({width: 0}, 305);
-        //    this.$el.find('.selectize-control.multi').animate({opacity: 0}, 50);
-        //    setTimeout(function () {
-        //        self.$el.find('.selectize-control.multi').hide();
-        //    }, 100);
-        //},
-
         showLangFrameSelection: function () {
             var self = this;
-            console.log('heard');
             this.$el.find('.selectize-control.multi').show();
             this.$el.find('.selectize-control.multi').css('opacity', 1);
             this.$el.find('.selectize-control.multi').animate({ width: self.langFrameWidth - 20 }, {duration: self.selectizeOpenDuration, queue: false});
             this.$el.find('.selectize-control.multi').animate({ left: 10 }, {duration: self.selectizeOpenDuration, queue: false});
             this.$el.find('.lang-selection-list').animate({ top: 240 }, {duration: self.selectizeOpenDuration, queue: false});
             setTimeout(function(){
-                master.selectize.focus();
+                self.selectize.focus();
+                self.langsFramesDropdownShown = true;
             }, self.selectizeOpenDuration);
         },
 
@@ -164,6 +141,14 @@ define(['jquery',
                 searchField: 'title',
                 options: resp.dropdown_items,
                 selectOnTab: true,
+                onFocus: function () {
+                    if (master.langsFramesDropdownShown) {
+                        master.zipDownDropdown();
+                    }
+                },
+                onBlur: function() {
+                    master.zipUpDropdown();
+                },
                 render: {
                     option: function (data, escape) {
                         return '<div class="option title">' + escape(data.title) + '</div>';
@@ -200,7 +185,20 @@ define(['jquery',
                 master.langsFramesValue = selectize.getValue();
                 master.getFilters();
             });
+
             master.selectize = selectize;
+        },
+
+        zipUpDropdown: function () {
+            var self = this;
+            this.selectize.zipUp(this.zipUpDuration);
+            this.$el.find('.lang-selection-list').animate({ top: 130 }, this.zipUpDuration);
+        },
+
+        zipDownDropdown: function () {
+            var self = this;
+            this.selectize.zipDown(this.zipDownDuration);
+            this.$el.find('.lang-selection-list').animate({ top: 240 }, this.zipDownDuration);
         },
 
         getFilters: function () {
