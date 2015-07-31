@@ -192,8 +192,8 @@ define(['jquery',
 
         zipUpDropdown: function () {
             var self = this;
-            this.selectize.zipUp(this.zipUpDuration);
             this.$el.find('.lang-selection-list').velocity({ top: 130 }, 450, [230, 20]);
+            this.selectize.zipUp(this.zipUpDuration);
             //this.$el.find('.lang-selection-list').animate({ top: 130 }, this.zipUpDuration);
         },
 
