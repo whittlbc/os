@@ -13,7 +13,8 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+        },
 
 		render: function () {
 			var self = this;

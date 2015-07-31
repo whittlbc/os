@@ -9,7 +9,7 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
         //    var $wnd = $(window),
         //        $header = $(".lang-selection-list");
         //    $wnd.on("scroll", function() {
-        //        $header.css("top", Math.max(0, 250 - $wnd.scrollTop()));
+        //        $header.css("top", Math.max(0, 165 - $wnd.scrollTop())+'px');
         //    });
         //})();
 

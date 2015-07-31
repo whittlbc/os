@@ -264,6 +264,7 @@
   cursor: default;
 }
 .selectize-dropdown .active {
+  /*Where you change the selected option*/
   background-color: #f5fafd;
   color: #495c68;
 }

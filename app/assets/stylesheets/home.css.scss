@@ -11,7 +11,7 @@
 .project-feed-list {
   list-style: none;
   padding-left: 0;
-  max-width: 815px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -62,7 +62,7 @@
 
 .project-type-nav {
   height: 100px;
-  width: 94%;
+  width: 55%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 65px;
@@ -71,7 +71,7 @@
 
 .project-type-container {
   height: 100px;
-  width: 46%;
+  width: 100%;
   display: inline-block;
 }
 
@@ -133,27 +133,33 @@
 }
 
 .selectize-control.multi {
-  width: 0%;
+  width: 0;
   opacity: 0;
-  max-width: 475px;
+  position: fixed;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 155px;
+  top: 100px;
+  z-index: 10;
 }
 
 .selectize-input {
-  min-height: 38px !important;
-  line-height: 1.85 !important;
+  border-radius: 18px !important;
+  padding-left: 12px !important;
+}
+
+.selectize-dropdown-content {
+  max-height: 110px !important;
 }
 
 
 .lang-selection-list {
-  width: 100%;
-  height: 50px;
-  position: relative;
-  top: 150px;
-  padding-left: 0;
-  z-index: 1050;
+  position: fixed;
+  top: 65px;
+  height: 100%;
+  padding-left: auto;
+  padding-right: auto;
+  padding-top: 15px;
+  overflow:scroll;
 }
 
 .lang-selection {
@@ -161,4 +167,18 @@
   width: 50px;
   border-radius: 25px;
   background-color: #23527c;
+  margin: 12px;
+  list-style-type: none;
+  display: inline-block;
+  position: relative;
 }
+
+#add-lang-selection {
+
+}
+
+//#langSelectionListContainer {
+//  ::-webkit-scrollbar {
+//    display: none;
+//  }
+//}

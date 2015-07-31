@@ -10,6 +10,7 @@ define(['jquery',
     'views/home/lang-selection-list',
     'stache!views/home/index-view',
     'selectize',
+    'velocity',
     'backbone-eventbroker'], function ($,
      Backbone,
      _,
@@ -33,7 +34,8 @@ define(['jquery',
                 'handleFetchGHProject': 'handleFetchGHProject',
                 'handleCreateProject': 'handleCreateProject',
                 'getAllUserRepos': 'getAllUserRepos',
-                'pullFromIdeas': 'pullFromIdeas'
+                'pullFromIdeas': 'pullFromIdeas',
+                'showLangFrameSelection': 'showLangFrameSelection'
             }, this);
             this.osInitialize();
             master = this;
@@ -43,6 +45,8 @@ define(['jquery',
             this.licenses = [];
             this.privacy = [];
             this.forcedItems = [];
+            this.gotLanguages = false;
+            this.selectizeOpenDuration = 290;
 		},
 
         ebTesting: function () {
@@ -58,32 +62,53 @@ define(['jquery',
             'click #toggleFiltersBtn': 'toggleFilters'
         },
 
-        toggleFilters: function () {
-            if (!this.filtersShown) {
-                this.showFilters();
-            } else {
-                this.hideFilters();
-            }
-            this.filtersShown = !this.filtersShown;
-        },
+        //toggleFilters: function () {
+        //    if (!this.filtersShown) {
+        //        this.showFilters();
+        //    } else {
+        //        this.hideFilters();
+        //    }
+        //    this.filtersShown = !this.filtersShown;
+        //},
+        //
+        //showFilters: function () {
+        //    this.$el.find('.selectize-control.multi').show();
+        //    this.$el.find('.filters-container').animate({height: 250}, 300);
+        //    this.$el.find('.selectize-control.multi').animate({opacity: 1}, 5);
+        //    this.$el.find('.selectize-control.multi').animate({width: 470}, 330);
+        //},
+        //
+        //hideFilters: function () {
+        //    var self = this;
+        //    this.$el.find('.filters-container').animate({height: 0}, 300);
+        //    this.$el.find('.selectize-control.multi').animate({width: 0}, 305);
+        //    this.$el.find('.selectize-control.multi').animate({opacity: 0}, 50);
+        //    setTimeout(function () {
+        //        self.$el.find('.selectize-control.multi').hide();
+        //    }, 100);
+        //},
 
-        showFilters: function () {
-            this.$el.find('.selectize-control.multi').show();
-            this.$el.find('#langSelectionListContainer').show();
-            this.$el.find('.filters-container').animate({height: 250}, 300);
-            this.$el.find('.selectize-control.multi').animate({opacity: 1}, 5);
-            this.$el.find('.selectize-control.multi').animate({width: 470}, 330);
-        },
-
-        hideFilters: function () {
+        showLangFrameSelection: function () {
             var self = this;
-            this.$el.find('.filters-container').animate({height: 0}, 300);
-            this.$el.find('.selectize-control.multi').animate({width: 0}, 305);
-            this.$el.find('.selectize-control.multi').animate({opacity: 0}, 50);
+            console.log('heard');
+            this.$el.find('.selectize-control.multi').show();
+            this.$el.find('.selectize-control.multi').css('opacity', 1);
+            this.$el.find('.selectize-control.multi').animate({ width: self.langFrameWidth - 20 }, {duration: self.selectizeOpenDuration, queue: false});
+            this.$el.find('.selectize-control.multi').animate({ left: 10 }, {duration: self.selectizeOpenDuration, queue: false});
+            this.$el.find('.lang-selection-list').animate({ top: 240 }, {duration: self.selectizeOpenDuration, queue: false});
+            setTimeout(function(){
+                master.selectize.focus();
+            }, self.selectizeOpenDuration);
+        },
+
+        hideLangFrameSelection: function () {
+            var self = this;
+            this.$el.find('.selectize-control.multi').velocity({ width: 0 }, { duration: self.selectizeOpenDuration, queue: false });
+            this.$el.find('.selectize-control.multi').velocity({ left: (self.langFrameWidth/2) }, { duration: self.selectizeOpenDuration, queue: false });
+            this.$el.find('.selectize-control.multi').velocity({ opacity: 0 }, { duration: self.selectizeOpenDuration, queue: false });
             setTimeout(function () {
                 self.$el.find('.selectize-control.multi').hide();
-                self.$el.find('#langSelectionListContainer').hide();
-            }, 100);
+            }, self.selectizeOpenDuration + 5);
         },
 
         clickedLaunchProject: function () {
@@ -151,6 +176,10 @@ define(['jquery',
 
             var $select = master.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
+            master.gotLanguages = true;
+            if (master.langFrameWidth) {
+                master.$el.find('.selectize-control.multi').css('left', (master.langFrameWidth/2) + 'px');
+            }
             selectize.on('item_add', function (value, $item) {
                 /* if you just entered the framework as a lang/frame filter, but haven't entered the language that framework
                 goes with, then we'll go ahead and add that for you */
@@ -171,6 +200,7 @@ define(['jquery',
                 master.langsFramesValue = selectize.getValue();
                 master.getFilters();
             });
+            master.selectize = selectize;
         },
 
         getFilters: function () {
@@ -372,6 +402,14 @@ define(['jquery',
             }
         },
 
+        setLangFrameWidth: function (width) {
+            var self = this;
+            this.langFrameWidth = width;
+            if (this.gotLanguages) {
+                this.$el.find('.selectize-control.multi').css('left', (this.langFrameWidth/2) + 'px');
+            }
+        },
+
 		render: function () {
 			var self = this;
 
@@ -389,6 +427,8 @@ define(['jquery',
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer'
             });
+
+            this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
 
             this.langSelectionList.render();
 

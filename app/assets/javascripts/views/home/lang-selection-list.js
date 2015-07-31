@@ -3,7 +3,8 @@ define(['jquery',
 	'underscore',
     'views/home/lang-selection-view',
     'stache!views/home/lang-selection-list',
-    'velocity'
+    'velocity',
+    'backbone-eventbroker'
 ], function ($,
      Backbone,
      _,
@@ -18,9 +19,15 @@ define(['jquery',
             this.baseX = -1*((window.innerWidth/2)-25);
             this.itemDiameter = 50;
             this.collapsed = false;
-		},
+        },
 
 		events: {
+            'click #addLangSelection': 'handleAddBtnClick'
+        },
+
+        handleAddBtnClick: function () {
+            var self = this;
+            Backbone.EventBroker.trigger('showLangFrameSelection');
         },
 
         getItemSlidePos: function () {
@@ -45,14 +52,14 @@ define(['jquery',
         },
 
         prepareItemForEntrance: function (el) {
-            el.style.display = 'inline-block';
             el.style.listStyleType = 'none';
+            el.style.display = 'inline-block';
             el.style.position = 'relative';
-            el.style.right = -1 * (window.innerWidth - (this.$el.find('.lang-selection-list').length * this.itemDiameter)) + 'px';
+            el.style.top = window.innerHeight + 'px';
         },
 
         slideItemIn: function (el, newRight) {
-            $(el).velocity({ right: newRight}, 900, [100, 15]);
+            $(el).velocity({ top: 0}, 900, [100, 15]);
         },
 
         toggleCollapse: function () {
@@ -67,23 +74,16 @@ define(['jquery',
             this.collapsed = !this.collapsed;
         },
 
-		render: function () {
+        setSelfSize: function (width) {
+            this.$el.find('.lang-selection-list')[0].style.width = this.langFrameWidth + 'px';
+        },
+
+		render: function (width) {
 			var self = this;
             this.$el.html(LangSelectionListTpl());
-
-            var $header = this.$el.find(".lang-selection-list");
-            $(window).scroll(function(e){
-                var scrollTop = $(window).scrollTop();
-                if (scrollTop > 195 && $header.css('position') != 'fixed'){
-                    $header.css({'position': 'fixed', 'top': '65px'});
-                    self.toggleCollapse();
-                }
-                if (scrollTop < 255 && $header.css('position') == 'fixed')
-                {
-                    $header.css({'position': 'relative', 'top': '150px'});
-                }
-            });
-
+            this.langFrameWidth = ((window.innerWidth-800)/2);
+            this.setSelfSize(width);
+            this.trigger('langFrameWidth', this.langFrameWidth);
 		}
 	});
 

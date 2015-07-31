@@ -48,6 +48,10 @@ footer p {
     margin-bottom: 15px;
 }
 
+.copyright {
+    text-align: center;
+}
+
 .footer-menu {
     padding: 0;
     margin: 0;
