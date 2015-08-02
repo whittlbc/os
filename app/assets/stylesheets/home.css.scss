@@ -133,7 +133,7 @@
 }
 
 .selectize-control.multi {
-  width: 0;
+  height: 0;
   opacity: 0;
   position: fixed;
   margin-left: auto;
@@ -143,18 +143,22 @@
 }
 
 .selectize-input {
+  height: 0;
+  opacity: 0;
   border-radius: 18px !important;
-  padding-left: 12px !important;
+  padding-left: 15px !important;
 }
 
 .selectize-dropdown-content {
-  max-height: 110px !important;
+  max-height: 130px !important;
+  opacity: 0;
+  z-index: 10;
 }
 
 
 .lang-selection-list {
   position: fixed;
-  top: 65px;
+  top: 270px;
   height: 100%;
   padding-left: auto;
   padding-right: auto;
@@ -166,7 +170,7 @@
   height: 50px;
   width: 50px;
   border-radius: 25px;
-  background-color: #23527c;
+  background-color: blue;
   margin: 12px;
   list-style-type: none;
   display: inline-block;
@@ -182,3 +186,93 @@
 //    display: none;
 //  }
 //}
+
+
+#nonLangFiltersMaster {
+  position: fixed;
+  top: 65px;
+  right: 0px;
+  height: 0;
+  padding-left: auto;
+  padding-right: auto;
+  overflow: hidden;
+}
+
+#licenseFilterContainer {
+  width: 100%;
+  height: 200px;
+  margin-top: 35px;
+}
+
+#privacyFilterContainer {
+  width: 100%;
+  height: 200px;
+}
+
+.nonLangFilterHeader {
+  height: 40px;
+  padding-top: 5px;
+  width: 100%;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.licenseFilters {
+  width: 100%;
+  height: 160px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.privacyFilters {
+  width: 100%;
+  height: 160px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.licenseFilterBtn,
+.privacyFilterBtn
+{
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.licenseFilterBtn > p,
+.privacyFilterBtn > p {
+  padding-right: 17px;
+}
+
+.fa.fa-circle {
+  color: white;
+  font-size: 11px;
+  float: left;
+  opacity: 0;
+  padding-left: 8px;
+  line-height: 30px;
+}
+
+.licenseFilterBtnSelected,
+.privacyFilterBtnSelected
+{
+  background-color: blue;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

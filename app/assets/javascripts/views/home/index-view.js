@@ -8,6 +8,7 @@ define(['jquery',
     'models/user',
     'models/language',
     'views/home/lang-selection-list',
+    'views/home/non-lang-filters-view',
     'stache!views/home/index-view',
     'selectize',
     'velocity',
@@ -21,6 +22,7 @@ define(['jquery',
      User,
      Language,
      LangSelectionList,
+     NonLangFiltersView,
      IndexViewTpl
      ) {
 	'use strict';
@@ -35,7 +37,7 @@ define(['jquery',
                 'handleCreateProject': 'handleCreateProject',
                 'getAllUserRepos': 'getAllUserRepos',
                 'pullFromIdeas': 'pullFromIdeas',
-                'showLangFrameSelection': 'showLangFrameSelection'
+                'showFilters': 'showLangFrameSelection'
             }, this);
             this.osInitialize();
             master = this;
@@ -46,9 +48,13 @@ define(['jquery',
             this.privacy = [];
             this.forcedItems = [];
             this.gotLanguages = false;
+            this.showLangFrameSelectionDuration = 350;
             this.selectizeOpenDuration = 290;
-            this.zipUpDuration = 250;
+            this.zipUpDuration = 140;
             this.zipDownDuration = 250;
+            this.zipDownCount = 0;
+            this.ulSlideDownDuration = 500;
+            this.ulSlideUpDuration = 550;
             this.langsFramesDropdownShown = false;
         },
 
@@ -67,26 +73,24 @@ define(['jquery',
 
         showLangFrameSelection: function () {
             var self = this;
-            this.$el.find('.selectize-control.multi').show();
-            this.$el.find('.selectize-control.multi').css('opacity', 1);
-            this.$el.find('.selectize-control.multi').animate({ width: self.langFrameWidth - 20 }, {duration: self.selectizeOpenDuration, queue: false});
-            this.$el.find('.selectize-control.multi').animate({ left: 10 }, {duration: self.selectizeOpenDuration, queue: false});
-            this.$el.find('.lang-selection-list').velocity({ top: 240 }, 500, [200, 20]);
-            //this.$el.find('.lang-selection-list').animate({ top: 240 }, {duration: self.selectizeOpenDuration, queue: false});
-            setTimeout(function(){
-                self.selectize.focus();
-                self.langsFramesDropdownShown = true;
-            }, self.selectizeOpenDuration);
-        },
-
-        hideLangFrameSelection: function () {
-            var self = this;
-            this.$el.find('.selectize-control.multi').velocity({ width: 0 }, { duration: self.selectizeOpenDuration, queue: false });
-            this.$el.find('.selectize-control.multi').velocity({ left: (self.langFrameWidth/2) }, { duration: self.selectizeOpenDuration, queue: false });
-            this.$el.find('.selectize-control.multi').velocity({ opacity: 0 }, { duration: self.selectizeOpenDuration, queue: false });
-            setTimeout(function () {
-                self.$el.find('.selectize-control.multi').hide();
-            }, self.selectizeOpenDuration + 5);
+            this.langsFramesDropdownShown = true;
+            this.selectize.focus(true);
+            this.$el.find('.selectize-control.multi').animate({opacity: 1}, {
+                duration: this.showLangFrameSelectionDuration,
+                queue: false
+            });
+            this.$el.find('.selectize-input').animate({opacity: 1}, {
+                duration: this.showLangFrameSelectionDuration,
+                queue: false
+            });
+            this.$el.find('.selectize-control.multi').animate({height: 35}, {
+                duration: this.showLangFrameSelectionDuration,
+                queue: false
+            });
+            this.$el.find('.selectize-input').animate({height: 35}, {
+                duration: this.showLangFrameSelectionDuration,
+                queue: false
+            });
         },
 
         clickedLaunchProject: function () {
@@ -101,7 +105,7 @@ define(['jquery',
 
         successfullyLaunchProject: function (resp) {
             // master
-            console.log(resp)
+            console.log(resp);
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -134,7 +138,6 @@ define(['jquery',
         handleAllLanguages: function (resp) {
             master.all_langs = resp.all_langs;
             master.all_frames = resp.all_frames;
-
             var options = {
                 theme: 'links',
                 maxItems: null,
@@ -162,10 +165,10 @@ define(['jquery',
 
             var $select = master.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
+            master.selectize = selectize;
+            master.selectize.zipUp(0);
             master.gotLanguages = true;
-            if (master.langFrameWidth) {
-                master.$el.find('.selectize-control.multi').css('left', (master.langFrameWidth/2) + 'px');
-            }
+            master.setLangFrameInputProps();
             selectize.on('item_add', function (value, $item) {
                 /* if you just entered the framework as a lang/frame filter, but haven't entered the language that framework
                 goes with, then we'll go ahead and add that for you */
@@ -187,21 +190,23 @@ define(['jquery',
                 master.getFilters();
             });
 
-            master.selectize = selectize;
         },
 
         zipUpDropdown: function () {
             var self = this;
-            this.$el.find('.lang-selection-list').velocity({ top: 130 }, 450, [230, 20]);
             this.selectize.zipUp(this.zipUpDuration);
-            //this.$el.find('.lang-selection-list').animate({ top: 130 }, this.zipUpDuration);
+            this.langSelectionList.$el.find('.lang-selection-list').velocity({ top: 130 }, this.ulSlideUpDuration, [230, 20]);
         },
 
         zipDownDropdown: function () {
             var self = this;
-            this.selectize.zipDown(this.zipDownDuration);
-            this.$el.find('.lang-selection-list').velocity({ top: 240 }, 500, [230, 20]);
-            //this.$el.find('.lang-selection-list').animate({ top: 240 }, this.zipDownDuration);
+            this.zipDownCount++;
+            var duration = this.zipDownDuration;
+            if (this.zipDownCount == 1){
+                duration += 350;
+            }
+            this.selectize.zipDown(duration);
+            this.langSelectionList.$el.find('.lang-selection-list').velocity({ top: 270 }, this.ulSlideDownDuration, [230, 20]);
         },
 
         getFilters: function () {
@@ -238,6 +243,12 @@ define(['jquery',
             if (!any) {
                 self.filters = null;
             }
+        },
+
+        setLangFrameInputProps: function () {
+            this.$el.find('.selectize-control.multi').css('width', (this.langFrameWidth-40) + 'px');
+            this.$el.find('.selectize-control.multi').css('left', '20px');
+            this.$el.find('.selectize-dropdown-content').height(140);
         },
 
         getFilteredFeed: function (obj) {
@@ -406,9 +417,8 @@ define(['jquery',
         setLangFrameWidth: function (width) {
             var self = this;
             this.langFrameWidth = width;
-            if (this.gotLanguages) {
-                this.$el.find('.selectize-control.multi').css('left', (this.langFrameWidth/2) + 'px');
-            }
+            this.nonLangFiltersView.$el.find('#nonLangFiltersMaster').css('width', this.langFrameWidth + 'px');
+            this.getLanguages();
         },
 
 		render: function () {
@@ -417,13 +427,17 @@ define(['jquery',
             this.$el.html(IndexViewTpl({
             }));
 
-            this.getLanguages();
-
             this.projectFeedView = new ProjectFeedView({
                 el: '#project-feed'
             });
 
             this.projectFeedView.render();
+
+            this.nonLangFiltersView = new NonLangFiltersView({
+                el: '#nonLangFiltersContainer'
+            });
+
+            this.nonLangFiltersView.render();
 
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer'

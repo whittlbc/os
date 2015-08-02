@@ -64,7 +64,7 @@
   border-right: 0 none;
 }
 .selectize-dropdown.plugin-optgroup_columns .optgroup:before {
-  display: none;
+  /*display: none;*/
 }
 .selectize-dropdown.plugin-optgroup_columns .optgroup-header {
   border-top: 0 none;
@@ -205,7 +205,7 @@
   box-shadow: none !important;
 }
 .selectize-input > input::-ms-clear {
-  display: none;
+  /*display: none;*/
 }
 .selectize-input > input:focus {
   outline: none !important;

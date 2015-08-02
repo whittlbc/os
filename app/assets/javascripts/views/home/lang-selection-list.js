@@ -27,7 +27,16 @@ define(['jquery',
 
         handleAddBtnClick: function () {
             var self = this;
-            Backbone.EventBroker.trigger('showLangFrameSelection');
+            this.hideFiltersBtn();
+            Backbone.EventBroker.trigger('showFilters');
+        },
+
+        hideFiltersBtn: function () {
+            var self = this;
+            this.$el.find('#addLangSelection').css('opacity', 100);
+            setTimeout(function () {
+                self.$el.find('#addLangSelection').hide();
+            },100);
         },
 
         getItemSlidePos: function () {
