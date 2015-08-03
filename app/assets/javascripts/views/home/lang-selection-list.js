@@ -39,6 +39,10 @@ define(['jquery',
             },100);
         },
 
+        setColorsAndInitials: function (colors_and_initials) {
+            this.colors_and_initials = colors_and_initials;
+        },
+
         getItemSlidePos: function () {
             var itemLength = this.LANG_ITEMS.length;
             var roundedDisplacement = Math.ceil(itemLength/2);
@@ -48,23 +52,49 @@ define(['jquery',
             return newRight;
         },
 
-        addItem: function () {
+        addItem: function (value) {
             var newRight = this.getItemSlidePos();
             var langSelection = new LangSelectionView({
                 tagName: 'li'
             });
+            langSelection.passName(value);
             langSelection.render();
-            this.prepareItemForEntrance(langSelection.el);
+            this.addHoverListener(langSelection);
+            this.prepareItemForEntrance(langSelection.el, value);
             this.$el.find('.lang-selection-list').append(langSelection.el);
             this.LANG_ITEMS.push(langSelection);
             this.slideItemIn(langSelection.el, newRight);
         },
 
-        prepareItemForEntrance: function (el) {
+        addHoverListener: function (view) {
+            var self = this;
+            view.$el.hover(function(){
+                    view.showClose();
+                }, function () {
+                    view.hideClose();
+                }
+            );
+            view.$el.find('.filter-close-btn').click(function(){
+
+            });
+        },
+
+        prepareItemForEntrance: function (el, value) {
+            var self = this;
             el.style.listStyleType = 'none';
             el.style.display = 'inline-block';
             el.style.position = 'relative';
             el.style.top = window.innerHeight + 'px';
+            //Here's the color:   self.colors_and_initials[value]["color"]  do something with it maybe?
+            //el.firstChild.style.color = self.colors_and_initials[value]["color"];
+            var firstLetter = value[0] == '.' ? value[1].toUpperCase() : value[0].toUpperCase();
+            $(el.firstChild).html(firstLetter);
+            var $p = $(el).children().eq(1);
+            $p.html(value);
+            if (value.length > 11) {
+                $(el).children().eq(1)[0].style.fontSize = '11px';
+            }
+            // also set the initial to self.colors_and_initials[value]["initials"];
         },
 
         slideItemIn: function (el, newRight) {

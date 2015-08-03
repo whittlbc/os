@@ -130,12 +130,16 @@ define(['jquery',
         },
 
         getLanguages: function () {
-            var self = this;
-            self.handleAllLanguages(AllLangs.getAll());
+
+            //var language = new Language();
+            //language.getAll({success: self.handleAllLanguages});
+
+            this.handleAllLanguages(AllLangs.getAll());
         },
 
         handleAllLanguages: function (resp) {
-            master.all_langs = resp.all_langs;
+            master.colors_and_initials = resp.colors_and_initials;
+            master.langSelectionList.setColorsAndInitials(master.colors_and_initials);
             master.all_frames = resp.all_frames;
             var options = {
                 theme: 'links',
@@ -181,7 +185,7 @@ define(['jquery',
                     master.getFilters();
                 }
 
-                master.langSelectionList.addItem();
+                master.langSelectionList.addItem(value);
 
             });
             selectize.on('item_remove', function (value, $item) {
@@ -259,7 +263,6 @@ define(['jquery',
         },
 
         handleFilteredFeed: function (resp) {
-            console.log(resp);
             master.projectFeedView.populateFeed(resp)
         },
 
