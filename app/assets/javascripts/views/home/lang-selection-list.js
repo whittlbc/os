@@ -87,12 +87,23 @@ define(['jquery',
             this.$el.find('.lang-selection-list')[0].style.width = this.langFrameWidth + 'px';
         },
 
+        showFiltersBtn: function () {
+            var self = this;
+            var $filtersBtn = this.$el.find('#addLangSelection');
+            $filtersBtn.css('opacity', 0);
+            $filtersBtn.show();
+            $filtersBtn.animate({ opacity: 1 }, 200);
+        },
+
 		render: function (width) {
 			var self = this;
             this.$el.html(LangSelectionListTpl());
             this.langFrameWidth = ((window.innerWidth-800)/2);
             this.setSelfSize(width);
             this.trigger('langFrameWidth', this.langFrameWidth);
+            this.$el.find('.lang-selection-list').scroll(function(){
+                self.$el.find('.lang-selection-list')[0].style.marginTop = '15px';
+            });
 		}
 	});
 

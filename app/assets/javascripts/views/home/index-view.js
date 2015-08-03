@@ -6,7 +6,7 @@ define(['jquery',
     'views/home/project-feed-view',
     'models/project',
     'models/user',
-    'models/language',
+    'models/all-langs',
     'views/home/lang-selection-list',
     'views/home/non-lang-filters-view',
     'stache!views/home/index-view',
@@ -20,7 +20,7 @@ define(['jquery',
      ProjectFeedView,
      Project,
      User,
-     Language,
+     AllLangs,
      LangSelectionList,
      NonLangFiltersView,
      IndexViewTpl
@@ -131,8 +131,7 @@ define(['jquery',
 
         getLanguages: function () {
             var self = this;
-            var language = new Language();
-            language.getAll({success: self.handleAllLanguages});
+            self.handleAllLanguages(AllLangs.getAll());
         },
 
         handleAllLanguages: function (resp) {
@@ -189,6 +188,8 @@ define(['jquery',
                 master.langsFramesValue = selectize.getValue();
                 master.getFilters();
             });
+
+            master.langSelectionList.showFiltersBtn();
 
         },
 

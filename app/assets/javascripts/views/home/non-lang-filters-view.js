@@ -37,9 +37,10 @@ define(['jquery',
             $(target).addClass('z-depth-1-half');
         },
 
-        addSelectedClass: function (target) {
+        addSelectedClass: function (target, filterTypeClass) {
             $(target.firstChild).css('opacity', 1);
             $(target).addClass('selectedFilter');
+            $(target).addClass(filterTypeClass);
         },
 
         removeSelectedClass: function (target) {
@@ -50,7 +51,7 @@ define(['jquery',
 
         handleSelectLicenseFilter: function (e) {
             if (!this.hasSelectedClass(e.currentTarget)) {
-                this.addSelectedClass(e.currentTarget);
+                this.addSelectedClass(e.currentTarget, 'licenseFilterBtnSelected');
             } else {
                 this.removeSelectedClass(e.currentTarget);
                 this.removeHoverClass(e.currentTarget, 'licenseFilterBtnSelected')
@@ -59,7 +60,7 @@ define(['jquery',
 
         handleSelectPrivacyFilter: function (e) {
             if (!this.hasSelectedClass(e.currentTarget)) {
-                this.addSelectedClass(e.currentTarget);
+                this.addSelectedClass(e.currentTarget, 'privacyFilterBtnSelected');
             } else {
                 this.removeSelectedClass(e.currentTarget);
                 this.removeHoverClass(e.currentTarget, 'privacyFilterBtnSelected')
