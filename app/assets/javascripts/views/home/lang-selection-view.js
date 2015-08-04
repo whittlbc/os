@@ -19,9 +19,6 @@ define(['jquery',
         passName: function (name) {
             this.realName = name;
             this.name = name.replace(/ /g,'').replace(/\+/g,'plus').replace(/#/g,'sharp').replace(/\./g,'dot');
-            this.$el.find('.filter-close-btn').click(function(){
-                console.log('heard remove');
-            });
         },
 
         showClose: function () {

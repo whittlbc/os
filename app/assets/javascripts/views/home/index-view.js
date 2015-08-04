@@ -37,7 +37,8 @@ define(['jquery',
                 'handleCreateProject': 'handleCreateProject',
                 'getAllUserRepos': 'getAllUserRepos',
                 'pullFromIdeas': 'pullFromIdeas',
-                'showFilters': 'showLangFrameSelection'
+                'showFilters': 'showLangFrameSelection',
+                'deleteLangFilter': 'deleteLangFilter'
             }, this);
             this.osInitialize();
             master = this;
@@ -56,6 +57,32 @@ define(['jquery',
             this.ulSlideDownDuration = 500;
             this.ulSlideUpDuration = 550;
             this.langsFramesDropdownShown = false;
+        },
+
+        deleteLangFilter: function (name) {
+            this.selectize.deleteFuckingSelection(name);
+            //var self = this;
+            //var obj = {
+            //    id: name,
+            //    title: name
+            //};
+            //var originalIndex = 1;
+            //for (var i = 0; i < this.dropdown_items.length; i++) {
+            //    if (this.dropdown_items[i].id == name){
+            //        originalIndex = i+1;
+            //    }
+            //}
+            //obj.$order = originalIndex;
+            //this.selectize.addFuckingOption(obj);
+            //var newDiv = document.createElement('div');
+            //newDiv.setAttribute('data-value', name);
+            //newDiv.setAttribute('data-selectable', '');
+            //newDiv.classList.add('option');
+            //newDiv.classList.add('title');
+            //newDiv.innerHTML = name;
+            //$('.selectize-dropdown-content').prepend($(newDiv));
+            //this.selectize.refreshOptions(false);
+
         },
 
         ebTesting: function () {
@@ -139,6 +166,7 @@ define(['jquery',
 
         handleAllLanguages: function (resp) {
             master.colors_and_initials = resp.colors_and_initials;
+            master.dropdown_items = resp.dropdown_items;
             master.langSelectionList.setColorsAndInitials(master.colors_and_initials);
             master.all_frames = resp.all_frames;
             var options = {
@@ -146,7 +174,7 @@ define(['jquery',
                 maxItems: null,
                 valueField: 'id',
                 searchField: 'title',
-                options: resp.dropdown_items,
+                options: master.dropdown_items,
                 selectOnTab: true,
                 onFocus: function () {
                     if (master.langsFramesDropdownShown) {
