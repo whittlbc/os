@@ -162,7 +162,7 @@
   padding-left: auto;
   padding-right: auto;
   padding-top: 15px;
-  bottom: 10px;
+  bottom: 40px;
   overflow:scroll;
 }
 
@@ -295,10 +295,24 @@
   color: white;
 }
 
+#clearLangFiltersBtnContainer {
+  position: fixed;
+  bottom: 10px;
+  height: 30px;
+  left: 0px;
+}
 
-
-
-
+#clearLangFiltersBtn {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  color: #bbb;
+  cursor: pointer;
+  font-size: 12px;
+}
 
 
 

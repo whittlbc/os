@@ -22,7 +22,8 @@ define(['jquery',
         },
 
 		events: {
-            'click #addLangSelection': 'handleAddBtnClick'
+            'click #addLangSelection': 'handleAddBtnClick',
+            'click #clearLangFiltersBtn': 'clearLangFilters'
         },
 
         handleAddBtnClick: function () {
@@ -57,6 +58,18 @@ define(['jquery',
             }
             this.LANG_ITEMS = tempArray;
             Backbone.EventBroker.trigger('deleteLangFilter', view.realName);
+        },
+
+        clearLangFilters: function () {
+            var self = this;
+            var $filtersUL = this.$el.find('.lang-selection-list');
+            $filtersUL.empty();
+            var langNamesArray = [];
+            for (var i = 0; i < this.LANG_ITEMS.length; i++) {
+                langNamesArray.push(self.LANG_ITEMS[i].realName);
+            }
+            this.LANG_ITEMS = [];
+            Backbone.EventBroker.trigger('clearLangFilters', langNamesArray);
         },
 
         setColorsAndInitials: function (colors_and_initials) {

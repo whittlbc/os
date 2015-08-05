@@ -38,7 +38,8 @@ define(['jquery',
                 'getAllUserRepos': 'getAllUserRepos',
                 'pullFromIdeas': 'pullFromIdeas',
                 'showFilters': 'showLangFrameSelection',
-                'deleteLangFilter': 'deleteLangFilter'
+                'deleteLangFilter': 'deleteLangFilter',
+                'clearLangFilters': 'clearLangFilters'
             }, this);
             this.osInitialize();
             master = this;
@@ -61,28 +62,10 @@ define(['jquery',
 
         deleteLangFilter: function (name) {
             this.selectize.deleteFuckingSelection(name);
-            //var self = this;
-            //var obj = {
-            //    id: name,
-            //    title: name
-            //};
-            //var originalIndex = 1;
-            //for (var i = 0; i < this.dropdown_items.length; i++) {
-            //    if (this.dropdown_items[i].id == name){
-            //        originalIndex = i+1;
-            //    }
-            //}
-            //obj.$order = originalIndex;
-            //this.selectize.addFuckingOption(obj);
-            //var newDiv = document.createElement('div');
-            //newDiv.setAttribute('data-value', name);
-            //newDiv.setAttribute('data-selectable', '');
-            //newDiv.classList.add('option');
-            //newDiv.classList.add('title');
-            //newDiv.innerHTML = name;
-            //$('.selectize-dropdown-content').prepend($(newDiv));
-            //this.selectize.refreshOptions(false);
+        },
 
+        clearLangFilters: function (langNamesArray) {
+            this.selectize.deleteFuckingSelection(langNamesArray);
         },
 
         ebTesting: function () {
@@ -450,6 +433,7 @@ define(['jquery',
             var self = this;
             this.langFrameWidth = width;
             this.nonLangFiltersView.$el.find('#nonLangFiltersMaster').css('width', this.langFrameWidth + 'px');
+            this.langSelectionList.$el.find('#clearLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
             this.getLanguages();
         },
 

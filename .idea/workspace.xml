@@ -3,10 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="86b4e102-76bf-4781-a2f3-6e5f7dc4808e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="os.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,21 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index-view.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js">
+      <file leaf-file-name="home.css.scss" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.555555">
-              <caret line="213" column="17" selection-start-line="213" selection-start-column="17" selection-end-line="213" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.43217665">
+              <caret line="164" column="12" selection-start-line="164" selection-start-column="12" selection-end-line="164" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="all-langs.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/models/all-langs.js">
+      <file leaf-file-name="index-view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-36.703705">
-              <caret line="1297" column="22" selection-start-line="1297" selection-start-column="22" selection-end-line="1297" selection-end-column="22" />
+            <state vertical-scroll-proportion="-10.592592">
+              <caret line="449" column="42" selection-start-line="449" selection-start-column="42" selection-end-line="449" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -54,21 +54,31 @@
       <file leaf-file-name="lang-selection-list.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.222222">
-              <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
+            <state vertical-scroll-proportion="-5.0">
+              <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="selectize.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lang-selection-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.5">
+              <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="selectize.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/assets/selectize.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.009933775">
-              <caret line="2589" column="59" selection-start-line="2589" selection-start-column="59" selection-end-line="2589" selection-end-column="59" />
+            <state vertical-scroll-proportion="-2.8888888">
+              <caret line="2961" column="10" selection-start-line="2961" selection-start-column="10" selection-end-line="2961" selection-end-column="10" />
               <folding>
-                <marker date="1438671820000" expanded="true" signature="96947:97023" placeholder="..." />
-                <marker date="1438671820000" expanded="true" signature="97037:97060" placeholder="..." />
+                <marker date="1438755508000" expanded="true" signature="97084:97160" placeholder="..." />
+                <marker date="1438755508000" expanded="true" signature="97174:97197" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -98,7 +108,7 @@
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/os.view.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="53" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="53" />
+              <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -109,16 +119,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="10" column="50" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lang-selection-view.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-view.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.25">
-              <caret line="2" column="28" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -171,18 +171,18 @@
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/non-lang-filters-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/non-lang-filters-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/models/language.js" />
         <option value="$PROJECT_DIR$/app/controllers/languages_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-view.html" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/project-feed-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/models/all-langs.js" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/selectize.css" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" />
         <option value="$PROJECT_DIR$/public/assets/selectize.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" />
       </list>
     </option>
   </component>
@@ -1105,34 +1105,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="1" column="37" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.25">
           <caret line="2" column="28" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9324547">
-          <caret line="193" column="19" selection-start-line="193" selection-start-column="19" selection-end-line="193" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/os.view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="53" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="53" />
           <folding />
         </state>
       </provider>
@@ -1177,14 +1153,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.222222">
-          <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/models/all-langs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-36.703705">
@@ -1193,22 +1161,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/os.view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.555555">
-          <caret line="213" column="17" selection-start-line="213" selection-start-column="17" selection-end-line="213" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/assets/selectize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.009933775">
-          <caret line="2589" column="59" selection-start-line="2589" selection-start-column="59" selection-end-line="2589" selection-end-column="59" />
+        <state vertical-scroll-proportion="-2.8888888">
+          <caret line="2961" column="10" selection-start-line="2961" selection-start-column="10" selection-end-line="2961" selection-end-column="10" />
           <folding>
-            <marker date="1438671820000" expanded="true" signature="96947:97023" placeholder="..." />
-            <marker date="1438671820000" expanded="true" signature="97037:97060" placeholder="..." />
+            <marker date="1438755508000" expanded="true" signature="97084:97160" placeholder="..." />
+            <marker date="1438755508000" expanded="true" signature="97174:97197" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.0">
+          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.592592">
+          <caret line="449" column="42" selection-start-line="449" selection-start-column="42" selection-end-line="449" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/home/lang-selection-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43217665">
+          <caret line="164" column="12" selection-start-line="164" selection-start-column="12" selection-end-line="164" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
