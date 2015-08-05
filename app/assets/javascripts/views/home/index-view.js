@@ -39,15 +39,20 @@ define(['jquery',
                 'pullFromIdeas': 'pullFromIdeas',
                 'showFilters': 'showLangFrameSelection',
                 'deleteLangFilter': 'deleteLangFilter',
-                'clearLangFilters': 'clearLangFilters'
+                'clearLangFilters': 'clearLangFilters',
+                'addLicenseFilter': 'addLicenseFilter',
+                'removeLicenseFilter': 'removeLicenseFilter',
+                'addPrivacyFilter': 'addPrivacyFilter',
+                'removePrivacyFilter': 'removePrivacyFilter',
+                'clearNonLangFilters': 'clearNonLangFilters'
             }, this);
             this.osInitialize();
             master = this;
             this.filters = null;
             this.filtersShown = false;
             this.langsFramesValue = [];
-            this.licenses = [];
-            this.privacy = [];
+            this.licenseFilters = [];
+            this.privacyFilters = [];
             this.forcedItems = [];
             this.gotLanguages = false;
             this.showLangFrameSelectionDuration = 350;
@@ -66,6 +71,12 @@ define(['jquery',
 
         clearLangFilters: function (langNamesArray) {
             this.selectize.deleteFuckingSelection(langNamesArray);
+        },
+
+        clearNonLangFilters: function () {
+            this.licenseFilters = [];
+            this.privacyFilters = [];
+            this.getFilters();
         },
 
         ebTesting: function () {
@@ -101,6 +112,7 @@ define(['jquery',
                 duration: this.showLangFrameSelectionDuration,
                 queue: false
             });
+            this.langSelectionList.showClearAllBtn();
         },
 
         clickedLaunchProject: function () {
@@ -205,7 +217,6 @@ define(['jquery',
             });
 
             master.langSelectionList.showFiltersBtn();
-
         },
 
         zipUpDropdown: function () {
@@ -239,16 +250,16 @@ define(['jquery',
                 obj.filters.langs_and_frames = self.langsFramesValue;
                 any = true;
             }
-            if (!_.isEmpty(self.privacy) && self.privacy.length < 2) {
-                obj.filters.privacy = self.privacy;
+            if (!_.isEmpty(self.privacyFilters) && self.privacyFilters.length < 2) {
+                obj.filters.privacy = self.privacyFilters;
                 any = true;
             }
             if (anon) {
                 obj.filters.anon = anon;
                 any = true;
             }
-            if (!_.isEmpty(self.licenses) && self.licenses.length < 3) {
-                obj.filters.license = self.licenses;
+            if (!_.isEmpty(self.licenseFilters) && self.licenseFilters.length < 3) {
+                obj.filters.license = self.licenseFilters;
                 any = true;
             }
 
@@ -340,50 +351,36 @@ define(['jquery',
             this.gh_username = data.gh_username;
         },
 
-        createLicenseAndPrivacyDropdown: function () {
+        addLicenseFilter: function (type) {
             var self = this;
+            if (!_.contains(this.licenseFilters)) {
+                this.licenseFilters.push(type);
+            }
+            self.getFilters();
+        },
 
-            var genericOptions = {
-                theme: 'links',
-                valueField: 'id',
-                maxItems: null,
-                searchField: 'title',
-                render: {
-                    option: function (data, escape) {
-                        return '<div class="option title">' + escape(data.title) + '</div>';
-                    },
-                    item: function (data, escape) {
-                        return '<div class="item">' + escape(data.title) + '</div>';
-                    }
-                }
-            };
+        removeLicenseFilter: function (type) {
+            var self = this;
+            if (!_.contains(this.licenseFilters)) {
+                this.licenseFilters.splice(this.licenseFilters.indexOf(type), 1);
+            }
+            self.getFilters();
+        },
 
-            var licenseOptions = genericOptions;
-            licenseOptions.options = [
-                {id: 'MIT', title: 'MIT'},
-                {id: 'GPL', title: 'GPL'},
-                {id: 'BSD', title: 'BSD'}
-            ];
+        addPrivacyFilter: function (type) {
+            var self = this;
+            if (!_.contains(this.privacyFilters)) {
+                this.privacyFilters.push(type);
+            }
+            self.getFilters();
+        },
 
-            var $licenseSelect = this.$el.find('#filters-license-dropdown').selectize(licenseOptions);
-            var licenseSelectize = $licenseSelect[0].selectize;
-            licenseSelectize.on('change', function () {
-                self.licenses = licenseSelectize.getValue();
-                self.getFilters();
-            });
-
-            var privacyOptions = genericOptions;
-            privacyOptions.options = [
-                {id: 'open', title: 'Open'},
-                {id: 'request', title: 'Request to join'}
-            ];
-
-            var $privacySelect = this.$el.find('#filters-privacy-dropdown').selectize(privacyOptions);
-            var privacySelectize = $privacySelect[0].selectize;
-            privacySelectize.on('change', function () {
-                self.privacy = privacySelectize.getValue();
-                self.getFilters();
-            });
+        removePrivacyFilter: function (type) {
+            var self = this;
+            if (!_.contains(this.privacyFilters)) {
+                this.privacyFilters.splice(this.privacyFilters.indexOf(type), 1);
+            }
+            self.getFilters();
         },
 
         onShowPopup: function () {
@@ -433,6 +430,7 @@ define(['jquery',
             var self = this;
             this.langFrameWidth = width;
             this.nonLangFiltersView.$el.find('#nonLangFiltersMaster').css('width', this.langFrameWidth + 'px');
+            this.nonLangFiltersView.$el.find('#clearNonLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
             this.langSelectionList.$el.find('#clearLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
             this.getLanguages();
         },
@@ -462,8 +460,6 @@ define(['jquery',
             this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
 
             this.langSelectionList.render();
-
-            this.createLicenseAndPrivacyDropdown();
         }
 	});
 

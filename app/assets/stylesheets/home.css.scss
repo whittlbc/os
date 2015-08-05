@@ -312,8 +312,28 @@
   color: #bbb;
   cursor: pointer;
   font-size: 12px;
+  opacity: 0;
 }
 
+#clearNonLangFiltersBtnContainer {
+  position: fixed;
+  bottom: 10px;
+  height: 30px;
+  right: 0px;
+}
+
+#clearNonLangFiltersBtn {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  color: #bbb;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0;
+}
 
 
 

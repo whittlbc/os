@@ -149,6 +149,15 @@ define(['jquery',
             $filtersBtn.animate({ opacity: 1 }, 200);
         },
 
+        showClearAllBtn: function () {
+            var self = this;
+            this.$el.find('#clearLangFiltersBtnContainer').show();
+            this.$el.find('#clearLangFiltersBtn').animate({ opacity: 1 }, {
+                duration: 300,
+                queue: false
+            });
+        },
+
 		render: function (width) {
 			var self = this;
             this.$el.html(LangSelectionListTpl());

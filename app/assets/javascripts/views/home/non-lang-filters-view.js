@@ -20,7 +20,8 @@ define(['jquery',
 
 		events: {
             'click .licenseFilterBtn': 'handleSelectLicenseFilter',
-            'click .privacyFilterBtn': 'handleSelectPrivacyFilter'
+            'click .privacyFilterBtn': 'handleSelectPrivacyFilter',
+            'click #clearNonLangFiltersBtn': 'clearNonLangFilters'
         },
 
         hasSelectedClass: function (target) {
@@ -52,18 +53,37 @@ define(['jquery',
         handleSelectLicenseFilter: function (e) {
             if (!this.hasSelectedClass(e.currentTarget)) {
                 this.addSelectedClass(e.currentTarget, 'licenseFilterBtnSelected');
+                Backbone.EventBroker.trigger('addLicenseFilter', e.currentTarget.id);
             } else {
                 this.removeSelectedClass(e.currentTarget);
-                this.removeHoverClass(e.currentTarget, 'licenseFilterBtnSelected')
+                this.removeHoverClass(e.currentTarget, 'licenseFilterBtnSelected');
+                Backbone.EventBroker.trigger('removeLicenseFilter', e.currentTarget.id);
             }
         },
 
         handleSelectPrivacyFilter: function (e) {
             if (!this.hasSelectedClass(e.currentTarget)) {
                 this.addSelectedClass(e.currentTarget, 'privacyFilterBtnSelected');
+                Backbone.EventBroker.trigger('addPrivacyFilter', e.currentTarget.id);
             } else {
                 this.removeSelectedClass(e.currentTarget);
-                this.removeHoverClass(e.currentTarget, 'privacyFilterBtnSelected')
+                this.removeHoverClass(e.currentTarget, 'privacyFilterBtnSelected');
+                Backbone.EventBroker.trigger('removePrivacyFilter', e.currentTarget.id);
+            }
+        },
+
+        clearNonLangFilters: function () {
+            var self = this;
+            Backbone.EventBroker.trigger('clearNonLangFilters');
+            var $licenseFilterChildren = this.$el.find('.licenseFilters').children();
+            var $privacyFilterChildren = this.$el.find('.privacyFilters').children();
+            for (var i = 0; i < $licenseFilterChildren.length; i++) {
+                self.removeSelectedClass($licenseFilterChildren[i]);
+                self.removeHoverClass($licenseFilterChildren[i], 'licenseFilterBtnSelected');
+            }
+            for (var i = 0; i < $privacyFilterChildren.length; i++) {
+                self.removeSelectedClass($privacyFilterChildren[i]);
+                self.removeHoverClass($privacyFilterChildren[i], 'privacyFilterBtnSelected');
             }
         },
 
@@ -71,6 +91,11 @@ define(['jquery',
             var self = this;
             this.$el.find('#nonLangFiltersMaster').animate({ height: 400 }, {
                 duration: this.openFilterDuration,
+                queue: false
+            });
+            this.$el.find('#clearNonLangFiltersBtnContainer').show();
+            this.$el.find('#clearNonLangFiltersBtn').animate({ opacity: 1 }, {
+                duration: 300,
                 queue: false
             });
             setTimeout(function(){
