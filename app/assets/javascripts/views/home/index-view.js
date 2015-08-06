@@ -62,7 +62,7 @@ define(['jquery',
             this.zipDownCount = 0;
             this.ulSlideDownDuration = 500;
             this.ulSlideUpDuration = 550;
-            this.tabSliderDuration = 225;
+            this.tabSliderDuration = 255;
             this.langsFramesDropdownShown = false;
         },
 
