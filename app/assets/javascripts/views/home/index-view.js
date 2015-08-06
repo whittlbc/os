@@ -62,6 +62,7 @@ define(['jquery',
             this.zipDownCount = 0;
             this.ulSlideDownDuration = 500;
             this.ulSlideUpDuration = 550;
+            this.tabSliderDuration = 225;
             this.langsFramesDropdownShown = false;
         },
 
@@ -89,7 +90,49 @@ define(['jquery',
             'click #submit-filters': 'getFilters',
             'click #filters-anon-checkbox': 'getFilters',
             'click #launchProject': 'clickedLaunchProject',
-            'click #toggleFiltersBtn': 'toggleFilters'
+            'click #toggleFiltersBtn': 'toggleFilters',
+            'click .project-type': 'handleSelectProjectTypeTab'
+        },
+
+        setActiveTabIndex: function (index) {
+            var self = this;
+            this.activeTabIndex = index;
+            var $tabSlider = this.$el.find('.tab-slider');
+            $tabSlider.css('left', (index-1)*$tabSlider.width());
+            $tabSlider.animate({opacity: 1}, 100);
+        },
+
+        handleSelectProjectTypeTab: function (e) {
+            var self = this;
+            var selectedIndex = OSUtil.NAV_TABS.indexOf(e.currentTarget.id);
+            if (selectedIndex == -1 || selectedIndex == this.activeTabIndex) {
+                e.preventDefault();
+                return;
+            } else {
+                var $tabSlider = this.$el.find('.tab-slider');
+                var tabWidth = $tabSlider.width();
+                var strLeft = $tabSlider.css('left');
+                var currentLeft = Number(strLeft.slice(0, strLeft.length-2));
+                if (!isNaN(currentLeft)) {
+                    // slide LEFT
+                    if (selectedIndex < this.activeTabIndex) {
+                        $tabSlider.velocity({"left": currentLeft - ((this.activeTabIndex - selectedIndex) * tabWidth)}, {
+                            duration: self.tabSliderDuration,
+                            queue: false,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                    // slide RIGHT
+                    else {
+                        $tabSlider.velocity({"left": currentLeft + ((selectedIndex - this.activeTabIndex) * tabWidth)}, {
+                            duration: self.tabSliderDuration,
+                            queue: false,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                    this.activeTabIndex = selectedIndex;
+                }
+            }
         },
 
         showLangFrameSelection: function () {

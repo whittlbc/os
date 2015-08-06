@@ -17,7 +17,7 @@ define(['jquery',
 
 		events: {
             'click .vote-arrow': 'handleVote',
-            'click .project-post-title': 'openProjectDetails'
+            'click .project-post-view': 'openProjectDetails',
         },
 
         errorHandler: function(resp, status, xhr) {

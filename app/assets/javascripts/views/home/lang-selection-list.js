@@ -18,7 +18,6 @@ define(['jquery',
             this.LANG_ITEMS = [];
             this.baseX = -1*((window.innerWidth/2)-25);
             this.itemDiameter = 50;
-            this.collapsed = false;
         },
 
 		events: {
@@ -109,32 +108,16 @@ define(['jquery',
             el.style.display = 'inline-block';
             el.style.position = 'relative';
             el.style.top = animate ? (window.innerHeight + 'px') : '0px';
-            //Here's the color:   self.colors_and_initials[value]["color"]  do something with it maybe?
-            //el.firstChild.style.color = self.colors_and_initials[value]["color"];
-            var firstLetter = value[0] == '.' ? value[1].toUpperCase() : value[0].toUpperCase();
-            $(el.firstChild).html(firstLetter);
+            $(el.firstChild).html(self.colors_and_initials[value]["initials"]);
             var $p = $(el).children().eq(1);
             $p.html(value);
             if (value.length > 11) {
                 $(el).children().eq(1)[0].style.fontSize = '11px';
             }
-            // also set the initial to self.colors_and_initials[value]["initials"];
         },
 
         slideItemIn: function (el) {
             $(el).velocity({ top: 0}, 900, [100, 15]);
-        },
-
-        toggleCollapse: function () {
-            if (this.collapsed) {
-                console.log('expand');
-                //for (var i = 0; i < this.LANG_ITEMS.length; i++) {
-                //    console.log(this.LANG_ITEMS[i].el.style.right);
-                //}
-            } else {
-                console.log('collapse');
-            }
-            this.collapsed = !this.collapsed;
         },
 
         setSelfSize: function (width) {

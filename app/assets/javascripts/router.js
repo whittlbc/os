@@ -116,6 +116,7 @@ define(["backbone",
             shouldStartRoute: function() {
                 this.initializeHome();
                 this.indexView.showShouldStartFeed(OSUtil.SHOULD_START.num);
+                this.indexView.setActiveTabIndex(0);
             },
 
             startingRoute: function() {
@@ -124,12 +125,14 @@ define(["backbone",
                 } else {
                     this.initializeHome();
                     this.indexView.showStartingFeed(OSUtil.STARTING.num);
+                    this.indexView.setActiveTabIndex(1);
                 }
             },
 
             startedRoute: function() {
                 this.initializeHome();
                 this.indexView.showStartedFeed(OSUtil.STARTED.num);
+                this.indexView.setActiveTabIndex(2);
             },
 
             initializeHome: function () {

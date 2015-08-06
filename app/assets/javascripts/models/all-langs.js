@@ -7,1240 +7,1640 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             return {
                 "colors_and_initials": {
                     "ABAP": {
-                        "color": "#E8274B"
+                        "color": "#E8274B",
+                        "initials": 'A'
                     },
                     "AGS Script": {
-                        "color": "#B9D9FF"
+                        "color": "#B9D9FF",
+                        "initials": 'A'
                     },
                     "AMPL": {
-                        "color": "#E6EFBB"
+                        "color": "#E6EFBB",
+                        "initials": 'A'
                     },
                     "ANTLR": {
-                        "color": "#9DC3FF"
+                        "color": "#9DC3FF",
+                        "initials": 'A'
                     },
                     "API Blueprint": {
-                        "color": "#2ACCA8"
+                        "color": "#2ACCA8",
+                        "initials": 'A'
                     },
                     "APL": {
-                        "color": "#5A8164"
+                        "color": "#5A8164",
+                        "initials": 'APL'
                     },
                     "ASP": {
-                        "color": "#6a40fd"
+                        "color": "#6a40fd",
+                        "initials": 'ASP'
                     },
                     "ATS": {
-                        "color": "#1ac620"
+                        "color": "#1ac620",
+                        "initials": 'ATS'
                     },
                     "ActionScript": {
-                        "color": "#882B0F"
+                        "color": "#882B0F",
+                        "initials": 'AS'
                     },
                     "Ada": {
-                        "color": "#02f88c"
+                        "color": "#02f88c",
+                        "initials": 'Ada'
                     },
                     "Agda": {
-                        "color": "#315665"
+                        "color": "#315665",
+                        "initials": 'A'
                     },
                     "Alloy": {
-                        "color": "#cc5c24"
+                        "color": "#cc5c24",
+                        "initials": 'A'
                     },
                     "Ant Build System": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'ABS'
                     },
                     "ApacheConf": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'AC'
                     },
                     "Apex": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'A'
                     },
                     "AppleScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'AS'
                     },
                     "Arc": {
-                        "color": "#aa2afe"
+                        "color": "#aa2afe",
+                        "initials": 'Arc'
                     },
                     "Arduino": {
-                        "color": "#bd79d1"
+                        "color": "#bd79d1",
+                        "initials": 'Ard'
                     },
                     "AsciiDoc": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'A'
                     },
                     "AspectJ": {
-                        "color": "#a957b0"
+                        "color": "#a957b0",
+                        "initials": 'AJ'
                     },
                     "Assembly": {
-                        "color": "#6E4C13"
+                        "color": "#6E4C13",
+                        "initials": 'A'
                     },
                     "Augeas": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'A'
                     },
                     "AutoHotkey": {
-                        "color": "#6594b9"
+                        "color": "#6594b9",
+                        "initials": 'AHk'
                     },
                     "AutoIt": {
-                        "color": "#1C3552"
+                        "color": "#1C3552",
+                        "initials": 'AIT'
                     },
                     "Awk": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Awk'
                     },
                     "Batchfile": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'B'
                     },
                     "Befunge": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'B'
                     },
                     "Bison": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'B'
                     },
                     "BitBake": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'B'
                     },
                     "BlitzBasic": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'B'
                     },
                     "BlitzMax": {
-                        "color": "#cd6400"
+                        "color": "#cd6400",
+                        "initials": 'BM'
                     },
                     "Bluespec": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'B'
                     },
                     "Boo": {
-                        "color": "#d4bec1"
+                        "color": "#d4bec1",
+                        "initials": 'Boo'
                     },
                     "Brainfuck": {
-                        "color": "#2F2530"
+                        "color": "#2F2530",
+                        "initials": 'Bf'
                     },
                     "Brightscript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Bs'
                     },
                     "Bro": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Bro'
                     },
                     "C": {
-                        "color": "#555555"
+                        "color": "#555555",
+                        "initials": 'C'
                     },
                     "C#": {
-                        "color": "#178600"
+                        "color": "#178600",
+                        "initials": 'C#'
                     },
                     ".NET": {
-                        "color": "#178600"
+                        "color": "#178600",
+                        "initials": '.NET'
                     },
                     "C++": {
-                        "color": "#f34b7d"
+                        "color": "#f34b7d",
+                        "initials": 'C++'
                     },
                     "C-ObjDump": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "C2hs Haskell": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C2H'
                     },
                     "CLIPS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "CMake": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'CMk'
                     },
                     "COBOL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "CSS": {
-                        "color": "#563d7c"
+                        "color": "#563d7c",
+                        "initials": 'CSS'
                     },
                     "Blueprint": {
-                        "color": "#563d7c"
+                        "color": "#563d7c",
+                        "initials": 'B'
                     },
                     "YAML": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Y'
                     },
                     "Sass": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "Cap'n Proto": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "CartoCSS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Ceylon": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Chapel": {
-                        "color": "#8dc63f"
+                        "color": "#8dc63f",
+                        "initials": 'C'
                     },
                     "ChucK": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Cirru": {
-                        "color": "#ccccff"
+                        "color": "#ccccff",
+                        "initials": 'C'
                     },
                     "Clarion": {
-                        "color": "#db901e"
+                        "color": "#db901e",
+                        "initials": 'C'
                     },
                     "Clean": {
-                        "color": "#3F85AF"
+                        "color": "#3F85AF",
+                        "initials": 'C'
                     },
                     "Clojure": {
-                        "color": "#db5855"
+                        "color": "#db5855",
+                        "initials": 'Cj'
                     },
                     "CoffeeScript": {
-                        "color": "#244776"
+                        "color": "#244776",
+                        "initials": 'CS'
                     },
                     "ColdFusion": {
-                        "color": "#ed2cd6"
+                        "color": "#ed2cd6",
+                        "initials": 'CF'
                     },
                     "ColdFusion CFC": {
-                        "color": "#ed2cd6"
+                        "color": "#ed2cd6",
+                        "initials": 'C'
                     },
                     "Common Lisp": {
-                        "color": "#3fb68b"
+                        "color": "#3fb68b",
+                        "initials": 'CL'
                     },
                     "Component Pascal": {
-                        "color": "#b0ce4e"
+                        "color": "#b0ce4e",
+                        "initials": 'C'
                     },
                     "Cool": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Coq": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Coq'
                     },
                     "Cpp-ObjDump": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Creole": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Crystal": {
-                        "color": "#776791"
+                        "color": "#776791",
+                        "initials": 'C'
                     },
                     "Cucumber": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Cuda": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Cycript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "Cython": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'C'
                     },
                     "D": {
-                        "color": "#fcd46d"
+                        "color": "#fcd46d",
+                        "initials": 'D'
                     },
                     "D-ObjDump": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'D'
                     },
                     "DIGITAL Command Language": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'DCL'
                     },
                     "DM": {
-                        "color": "#447265"
+                        "color": "#447265",
+                        "initials": 'DM'
                     },
                     "DTrace": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'DT'
                     },
                     "Darcs Patch": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'DP'
                     },
                     "Dart": {
-                        "color": "#00B4AB"
+                        "color": "#00B4AB",
+                        "initials": 'D'
                     },
                     "Diff": {
-                        "color": "#88dddd"
+                        "color": "#88dddd",
+                        "initials": 'D'
                     },
                     "Dockerfile": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'D'
                     },
                     "Dogescript": {
-                        "color": "#cca760"
+                        "color": "#cca760",
+                        "initials": 'Ds'
                     },
                     "Dylan": {
-                        "color": "#6c616e"
+                        "color": "#6c616e",
+                        "initials": 'D'
                     },
                     "E": {
-                        "color": "#ccce35"
+                        "color": "#ccce35",
+                        "initials": 'E'
                     },
                     "ECL": {
-                        "color": "#8a1267"
+                        "color": "#8a1267",
+                        "initials": 'ECL'
                     },
                     "Eagle": {
-                        "color": "#814C05"
+                        "color": "#814C05",
+                        "initials": 'E'
                     },
                     "Ecere Projects": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'EP'
                     },
                     "Eiffel": {
-                        "color": "#946d57"
+                        "color": "#946d57",
+                        "initials": 'E'
                     },
                     "Elixir": {
-                        "color": "#6e4a7e"
+                        "color": "#6e4a7e",
+                        "initials": 'E'
                     },
                     "Elm": {
-                        "color": "#60B5CC"
+                        "color": "#60B5CC",
+                        "initials": 'ES'
                     },
                     "Emacs Lisp": {
-                        "color": "#c065db"
+                        "color": "#c065db",
+                        "initials": 'E'
                     },
                     "EmberScript": {
-                        "color": "#FFF4F3"
+                        "color": "#FFF4F3",
+                        "initials": 'E'
                     },
                     "Erlang": {
-                        "color": "#B83998"
+                        "color": "#B83998",
+                        "initials": 'Elg'
                     },
                     "F#": {
-                        "color": "#b845fc"
+                        "color": "#b845fc",
+                        "initials": 'F#'
                     },
                     "FLUX": {
-                        "color": "#88ccff"
+                        "color": "#88ccff",
+                        "initials": 'F'
                     },
                     "FORTRAN": {
-                        "color": "#4d41b1"
+                        "color": "#4d41b1",
+                        "initials": 'F'
                     },
                     "Factor": {
-                        "color": "#636746"
+                        "color": "#636746",
+                        "initials": 'F'
                     },
                     "Fancy": {
-                        "color": "#7b9db4"
+                        "color": "#7b9db4",
+                        "initials": 'F'
                     },
                     "Fantom": {
-                        "color": "#dbded5"
+                        "color": "#dbded5",
+                        "initials": 'F'
                     },
                     "Filterscript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Fs'
                     },
                     "Formatted": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'F'
                     },
                     "Forth": {
-                        "color": "#341708"
+                        "color": "#341708",
+                        "initials": 'F'
                     },
                     "Frege": {
-                        "color": "#00cafe"
+                        "color": "#00cafe",
+                        "initials": 'F'
                     },
                     "G-code": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Gc'
                     },
                     "GAMS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "GAP": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'GAP'
                     },
                     "GAS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'GAS'
                     },
                     "GDScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'GDS'
                     },
                     "GLSL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Game Maker Language": {
-                        "color": "#8fb200"
+                        "color": "#8fb200",
+                        "initials": 'GML'
                     },
                     "Genshi": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Gentoo Ebuild": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Gentoo Eclass": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Gettext Catalog": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'GC'
                     },
                     "Glyph": {
-                        "color": "#e4cc98"
+                        "color": "#e4cc98",
+                        "initials": 'G'
                     },
                     "Gnuplot": {
-                        "color": "#f0a9f0"
+                        "color": "#f0a9f0",
+                        "initials": 'G'
                     },
                     "Go": {
-                        "color": "#375eab"
+                        "color": "#375eab",
+                        "initials": 'Go'
                     },
                     "Golo": {
-                        "color": "#88562A"
+                        "color": "#88562A",
+                        "initials": 'G'
                     },
                     "Gosu": {
-                        "color": "#82937f"
+                        "color": "#82937f",
+                        "initials": 'G'
                     },
                     "Grace": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Gradle": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Grammatical Framework": {
-                        "color": "#79aa7a"
+                        "color": "#79aa7a",
+                        "initials": 'GF'
                     },
                     "Graph Modeling Language": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'GML'
                     },
                     "Graphviz (DOT)": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Groff": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'G'
                     },
                     "Groovy": {
-                        "color": "#e69f56"
+                        "color": "#e69f56",
+                        "initials": 'G'
                     },
                     "Groovy Server Pages": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'GSP'
                     },
                     "HTML": {
-                        "color": "#e44b23"
+                        "color": "#e44b23",
+                        "initials": 'H'
                     },
                     "HTML+Django": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'H'
                     },
                     "HTML+ERB": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'H'
                     },
                     "HTML+PHP": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'H'
                     },
                     "HTTP": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'H'
                     },
                     "Hack": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Hck'
                     },
                     "Haml": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'H'
                     },
                     "Handlebars": {
-                        "color": "#01a9d6"
+                        "color": "#01a9d6",
+                        "initials": 'Hbs'
                     },
                     "Harbour": {
-                        "color": "#0e60e3"
+                        "color": "#0e60e3",
+                        "initials": 'H'
                     },
                     "Haskell": {
-                        "color": "#29b544"
+                        "color": "#29b544",
+                        "initials": 'H'
                     },
                     "Haxe": {
-                        "color": "#df7900"
+                        "color": "#df7900",
+                        "initials": 'Hx'
                     },
                     "Hy": {
-                        "color": "#7790B2"
+                        "color": "#7790B2",
+                        "initials": 'Hy'
                     },
                     "HyPhy": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'HP'
                     },
                     "IDL": {
-                        "color": "#a3522f"
+                        "color": "#a3522f",
+                        "initials": 'IDL'
                     },
                     "IGOR Pro": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'IP'
                     },
                     "INI": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'INI'
                     },
                     "IRC log": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'IRC'
                     },
                     "Idris": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'I'
                     },
                     "Inform 7": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'I7'
                     },
                     "Inno Setup": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'IS'
                     },
                     "Io": {
-                        "color": "#a9188d"
+                        "color": "#a9188d",
+                        "initials": 'Io'
                     },
                     "Ioke": {
-                        "color": "#078193"
+                        "color": "#078193",
+                        "initials": 'I'
                     },
                     "Isabelle": {
-                        "color": "#FEFE00"
+                        "color": "#FEFE00",
+                        "initials": 'I'
                     },
                     "Isabelle ROOT": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'IR'
                     },
                     "J": {
-                        "color": "#9EEDFF"
+                        "color": "#9EEDFF",
+                        "initials": 'J'
                     },
                     "JFlex": {
-                        "color": "#DBCA00"
+                        "color": "#DBCA00",
+                        "initials": 'JF'
                     },
                     "JSON": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'J'
                     },
                     "JSON5": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'J'
                     },
                     "JSONLD": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'J'
                     },
                     "JSONiq": {
-                        "color": "#40d47e"
+                        "color": "#40d47e",
+                        "initials": 'J'
                     },
                     "Jade": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'J'
                     },
                     "Jasmin": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'J'
                     },
                     "Java Server Pages": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'JSP'
                     },
                     "JavaScript": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'JS'
                     },
                     "Express": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'Exp'
                     },
                     "Backbone": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'Bb'
                     },
                     "Angular": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'A'
                     },
                     "Node": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'N'
                     },
                     "React": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'R'
                     },
                     "Ember": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'E'
                     },
                     "Famo.us": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'F'
                     },
                     "Protoype": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'P'
                     },
                     "ExtJS": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'E'
                     },
                     "Mootools": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'M'
                     },
                     "Spry": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'S'
                     },
                     "script.aculo.us": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'S'
                     },
                     "ASP.NET": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'A.N'
                     },
                     "Dojo": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'D'
                     },
                     "MochiKit": {
-                        "color": "#f1e05a"
+                        "color": "#f1e05a",
+                        "initials": 'M'
                     },
                     "Julia": {
-                        "color": "#a270ba"
+                        "color": "#a270ba",
+                        "initials": 'J'
                     },
                     "KRL": {
-                        "color": "#28431f"
+                        "color": "#28431f",
+                        "initials": 'KRL'
                     },
                     "KiCad": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'KC'
                     },
                     "Kit": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Kit'
                     },
                     "Kotlin": {
-                        "color": "#F18E33"
+                        "color": "#F18E33",
+                        "initials": 'K'
                     },
                     "LFE": {
-                        "color": "#004200"
+                        "color": "#004200",
+                        "initials": 'LFE'
                     },
                     "LLVM": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "LOLCODE": {
-                        "color": "#cc9900"
+                        "color": "#cc9900",
+                        "initials": 'L'
                     },
                     "LSL": {
-                        "color": "#3d9970"
+                        "color": "#3d9970",
+                        "initials": 'LSL'
                     },
                     "LabVIEW": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'LV'
                     },
                     "Lasso": {
-                        "color": "#999999"
+                        "color": "#999999",
+                        "initials": 'L'
                     },
                     "Latte": {
-                        "color": "#A8FF97"
+                        "color": "#A8FF97",
+                        "initials": 'L'
                     },
                     "Lean": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Less": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Lex": {
-                        "color": "#DBCA00"
+                        "color": "#DBCA00",
+                        "initials": 'Lex'
                     },
                     "LilyPond": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Limbo": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Linker Script": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Linux Kernel Module": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'LKM'
                     },
                     "Liquid": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Literate Agda": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'LA'
                     },
                     "Literate CoffeeScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'LC'
                     },
                     "Literate Haskell": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'LH'
                     },
                     "LiveScript": {
-                        "color": "#499886"
+                        "color": "#499886",
+                        "initials": 'L'
                     },
                     "Logos": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Logtalk": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "LookML": {
-                        "color": "#652B81"
+                        "color": "#652B81",
+                        "initials": 'L'
                     },
                     "LoomScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'L'
                     },
                     "Lua": {
-                        "color": "#000080"
+                        "color": "#000080",
+                        "initials": 'Lua'
                     },
                     "M": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "MTML": {
-                        "color": "#b7e1f4"
+                        "color": "#b7e1f4",
+                        "initials": 'M'
                     },
                     "MUF": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'MUF'
                     },
                     "Makefile": {
-                        "color": "#427819"
+                        "color": "#427819",
+                        "initials": 'Mk'
                     },
                     "Mako": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "Markdown": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Md'
                     },
                     "Mask": {
-                        "color": "#f97732"
+                        "color": "#f97732",
+                        "initials": 'M'
                     },
                     "Mathematica": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "Matlab": {
-                        "color": "#bb92ac"
+                        "color": "#bb92ac",
+                        "initials": 'M'
                     },
                     "Maven POM": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'MP'
                     },
                     "Max": {
-                        "color": "#c4a79c"
+                        "color": "#c4a79c",
+                        "initials": 'Max'
                     },
                     "MediaWiki": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'MW'
                     },
                     "Mercury": {
-                        "color": "#ff2b2b"
+                        "color": "#ff2b2b",
+                        "initials": 'M'
                     },
                     "MiniD": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "Mirah": {
-                        "color": "#c7a938"
+                        "color": "#c7a938",
+                        "initials": 'M'
                     },
                     "Modelica": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "Modula-2": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M2'
                     },
                     "Module Management System": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'MMS'
                     },
                     "Monkey": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "Moocode": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "MoonScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'MS'
                     },
                     "Myghty": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "NCL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'NCL'
                     },
                     "NL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'NL'
                     },
                     "NSIS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'N'
                     },
                     "Nemerle": {
-                        "color": "#3d3c6e"
+                        "color": "#3d3c6e",
+                        "initials": 'N'
                     },
                     "NetLinx": {
-                        "color": "#0aa0ff"
+                        "color": "#0aa0ff",
+                        "initials": 'N'
                     },
                     "NetLinx+ERB": {
-                        "color": "#747faa"
+                        "color": "#747faa",
+                        "initials": 'N'
                     },
                     "NetLogo": {
-                        "color": "#ff6375"
+                        "color": "#ff6375",
+                        "initials": 'N'
                     },
                     "NewLisp": {
-                        "color": "#87AED7"
+                        "color": "#87AED7",
+                        "initials": 'N'
                     },
                     "Nginx": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'N'
                     },
                     "Nimrod": {
-                        "color": "#37775b"
+                        "color": "#37775b",
+                        "initials": 'N'
                     },
                     "Ninja": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'N'
                     },
                     "Nit": {
-                        "color": "#009917"
+                        "color": "#009917",
+                        "initials": 'Nit'
                     },
                     "Nix": {
-                        "color": "#7e7eff"
+                        "color": "#7e7eff",
+                        "initials": 'Nix'
                     },
                     "Nu": {
-                        "color": "#c9df40"
+                        "color": "#c9df40",
+                        "initials": 'Nu'
                     },
                     "NumPy": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'NP'
                     },
                     "OCaml": {
-                        "color": "#3be133"
+                        "color": "#3be133",
+                        "initials": 'O'
                     },
                     "ObjDump": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'OD'
                     },
                     "Objective-C": {
-                        "color": "#438eff"
+                        "color": "#438eff",
+                        "initials": 'OC'
                     },
                     "Objective-C++": {
-                        "color": "#6866fb"
+                        "color": "#6866fb",
+                        "initials": 'O'
                     },
                     "Objective-J": {
-                        "color": "#ff0c5a"
+                        "color": "#ff0c5a",
+                        "initials": 'OJ'
                     },
                     "Omgrofl": {
-                        "color": "#cabbff"
+                        "color": "#cabbff",
+                        "initials": 'O'
                     },
                     "Opa": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Opa'
                     },
                     "Opal": {
-                        "color": "#f7ede0"
+                        "color": "#f7ede0",
+                        "initials": 'O'
                     },
                     "OpenCL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'O'
                     },
                     "OpenEdge ABL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'O'
                     },
                     "OpenSCAD": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'O'
                     },
                     "Org": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Org'
                     },
                     "Ox": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Ox'
                     },
                     "Oxygene": {
-                        "color": "#cdd0e3"
+                        "color": "#cdd0e3",
+                        "initials": 'Oxy'
                     },
                     "Oz": {
-                        "color": "#fab738"
+                        "color": "#fab738",
+                        "initials": 'Oz'
                     },
                     "PAWN": {
-                        "color": "#dbb284"
+                        "color": "#dbb284",
+                        "initials": 'P'
                     },
                     "PHP": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'PHP'
                     },
                     "Zend": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'Z'
                     },
                     "CakePHP": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'C'
                     },
                     "Symfony": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'S'
                     },
                     "CodeIgniter": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'CI'
                     },
                     "Akelos": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'A'
                     },
                     "Agavi": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'A'
                     },
                     "Prado": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'P'
                     },
                     "Barebones": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'B'
                     },
                     "Laravel": {
-                        "color": "#4F5D95"
+                        "color": "#4F5D95",
+                        "initials": 'L'
                     },
                     "PLSQL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "PLpgSQL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "Pan": {
-                        "color": "#cc0000"
+                        "color": "#cc0000",
+                        "initials": 'P'
                     },
                     "Papyrus": {
-                        "color": "#6600cc"
+                        "color": "#6600cc",
+                        "initials": 'P'
                     },
                     "Parrot": {
-                        "color": "#f3ca0a"
+                        "color": "#f3ca0a",
+                        "initials": 'P'
                     },
                     "Parrot Assembly": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'PA'
                     },
                     "Parrot Internal Representation": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'PIR'
                     },
                     "Pascal": {
-                        "color": "#b0ce4e"
+                        "color": "#b0ce4e",
+                        "initials": 'P'
                     },
                     "Perl": {
-                        "color": "#0298c3"
+                        "color": "#0298c3",
+                        "initials": 'P'
                     },
                     "Perl6": {
-                        "color": "#0000fb"
+                        "color": "#0000fb",
+                        "initials": 'P'
                     },
                     "PicoLisp": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "PigLatin": {
-                        "color": "#fcd7de"
+                        "color": "#fcd7de",
+                        "initials": 'P'
                     },
                     "Pike": {
-                        "color": "#005390"
+                        "color": "#005390",
+                        "initials": 'P'
                     },
                     "Pod": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "PogoScript": {
-                        "color": "#d80074"
+                        "color": "#d80074",
+                        "initials": 'P'
                     },
                     "PostScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "PowerShell": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "Processing": {
-                        "color": "#0096D8"
+                        "color": "#0096D8",
+                        "initials": 'P'
                     },
                     "Prolog": {
-                        "color": "#74283c"
+                        "color": "#74283c",
+                        "initials": 'P'
                     },
                     "Propeller Spin": {
-                        "color": "#7fa2a7"
+                        "color": "#7fa2a7",
+                        "initials": 'PS'
                     },
                     "Protocol Buffer": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'PB'
                     },
                     "Public Key": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'PK'
                     },
                     "Puppet": {
-                        "color": "#332A77"
+                        "color": "#332A77",
+                        "initials": 'P'
                     },
                     "Pure Data": {
-                        "color": "#91de79"
+                        "color": "#91de79",
+                        "initials": 'PD'
                     },
                     "PureBasic": {
-                        "color": "#5a6986"
+                        "color": "#5a6986",
+                        "initials": 'PB'
                     },
                     "PureScript": {
-                        "color": "#1D222D"
+                        "color": "#1D222D",
+                        "initials": 'P'
                     },
                     "Python": {
-                        "color": "#3572A5"
+                        "color": "#3572A5",
+                        "initials": 'Py'
                     },
                     "Django": {
-                        "color": "#3572A5"
+                        "color": "#3572A5",
+                        "initials": 'Dj'
                     },
                     "Flask": {
-                        "color": "#3572A5"
+                        "color": "#3572A5",
+                        "initials": 'F'
                     },
                     "Pylons": {
-                        "color": "#3572A5"
+                        "color": "#3572A5",
+                        "initials": 'P'
                     },
                     "TurboGears": {
-                        "color": "#3572A5"
+                        "color": "#3572A5",
+                        "initials": 'TG'
                     },
                     "Gluon": {
-                        "color": "#3572A5"
+                        "color": "#3572A5",
+                        "initials": 'G'
                     },
                     "Python traceback": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'P'
                     },
                     "QML": {
-                        "color": "#44a51c"
+                        "color": "#44a51c",
+                        "initials": 'QML'
                     },
                     "QMake": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'QM'
                     },
                     "R": {
-                        "color": "#198ce7"
+                        "color": "#198ce7",
+                        "initials": 'R'
                     },
                     "RAML": {
-                        "color": "#77d9fb"
+                        "color": "#77d9fb",
+                        "initials": 'R'
                     },
                     "RDoc": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'R'
                     },
                     "REALbasic": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'R'
                     },
                     "RHTML": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'R'
                     },
                     "RMarkdown": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'RM'
                     },
                     "Racket": {
-                        "color": "#22228f"
+                        "color": "#22228f",
+                        "initials": 'R'
                     },
                     "Ragel in Ruby Host": {
-                        "color": "#9d5200"
+                        "color": "#9d5200",
+                        "initials": 'R'
                     },
                     "Raw token data": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Rtd'
                     },
                     "Rebol": {
-                        "color": "#358a5b"
+                        "color": "#358a5b",
+                        "initials": 'R'
                     },
                     "Red": {
-                        "color": "#ee0000"
+                        "color": "#ee0000",
+                        "initials": 'R'
                     },
                     "Redcode": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'R'
                     },
                     "RenderScript": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'RS'
                     },
                     "RobotFramework": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'RF'
                     },
                     "Rouge": {
-                        "color": "#cc0088"
+                        "color": "#cc0088",
+                        "initials": 'R'
                     },
                     "Ruby": {
-                        "color": "#701516"
+                        "color": "#701516",
+                        "initials": 'Rb'
                     },
                     "Rails": {
-                        "color": "#701516"
+                        "color": "#701516",
+                        "initials": 'R'
                     },
                     "Nitro": {
-                        "color": "#701516"
+                        "color": "#701516",
+                        "initials": 'N'
                     },
                     "Camping": {
-                        "color": "#701516"
+                        "color": "#701516",
+                        "initials": 'C'
                     },
                     "Ramaze": {
-                        "color": "#701516"
+                        "color": "#701516",
+                        "initials": 'R'
                     },
                     "Rust": {
-                        "color": "#dea584"
+                        "color": "#dea584",
+                        "initials": 'R'
                     },
                     "SAS": {
-                        "color": "#B34936"
+                        "color": "#B34936",
+                        "initials": 'SAS'
                     },
                     "SCSS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "SMT": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'SMT'
                     },
                     "SPARQL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "SQF": {
-                        "color": "#3F3F3F"
+                        "color": "#3F3F3F",
+                        "initials": 'SQF'
                     },
                     "SQL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'SQL'
                     },
                     "SQLPL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "STON": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "SVG": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'SVG'
                     },
                     "Sage": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "SaltStack": {
-                        "color": "#646464"
+                        "color": "#646464",
+                        "initials": 'S'
                     },
                     "Scala": {
-                        "color": "#7dd3b0"
+                        "color": "#7dd3b0",
+                        "initials": 'S'
                     },
                     "Scaml": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "Scheme": {
-                        "color": "#1e4aec"
+                        "color": "#1e4aec",
+                        "initials": 'S'
                     },
                     "Scilab": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "Self": {
-                        "color": "#0579aa"
+                        "color": "#0579aa",
+                        "initials": 'S'
                     },
                     "Shell": {
-                        "color": "#89e051"
+                        "color": "#89e051",
+                        "initials": 'S'
                     },
                     "Bash": {
-                        "color": "#89e051"
+                        "color": "#89e051",
+                        "initials": 'B'
                     },
                     "ShellSession": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "Shen": {
-                        "color": "#120F14"
+                        "color": "#120F14",
+                        "initials": 'S'
                     },
                     "Slash": {
-                        "color": "#007eff"
+                        "color": "#007eff",
+                        "initials": 'S'
                     },
                     "Slim": {
-                        "color": "#ff8f77"
+                        "color": "#ff8f77",
+                        "initials": 'S'
                     },
                     "Smali": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "Smalltalk": {
-                        "color": "#596706"
+                        "color": "#596706",
+                        "initials": 'S'
                     },
                     "Smarty": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "SourcePawn": {
-                        "color": "#5c7611"
+                        "color": "#5c7611",
+                        "initials": 'S'
                     },
                     "Squirrel": {
-                        "color": "#800000"
+                        "color": "#800000",
+                        "initials": 'S'
                     },
                     "Standard ML": {
-                        "color": "#dc566d"
+                        "color": "#dc566d",
+                        "initials": 'SM'
                     },
                     "Stata": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "Stylus": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'S'
                     },
                     "SuperCollider": {
-                        "color": "#46390b"
+                        "color": "#46390b",
+                        "initials": 'SC'
                     },
                     "Swift": {
-                        "color": "#ffac45"
+                        "color": "#ffac45",
+                        "initials": 'S'
                     },
                     "SystemVerilog": {
-                        "color": "#DAE1C2"
-                    },
-                    "TOML": {
-                        "color": "#FFFFFF"
-                    },
-                    "TXL": {
-                        "color": "#FFFFFF"
+                        "color": "#DAE1C2",
+                        "initials": 'SV'
                     },
                     "Tcl": {
-                        "color": "#e4cc98"
+                        "color": "#e4cc98",
+                        "initials": 'T'
                     },
                     "Tcsh": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "TeX": {
-                        "color": "#3D6117"
+                        "color": "#3D6117",
+                        "initials": 'T'
                     },
                     "Tea": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "Text": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "Textile": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "Thrift": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "Turing": {
-                        "color": "#45f715"
+                        "color": "#45f715",
+                        "initials": 'T'
                     },
                     "Turtle": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "Twig": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'T'
                     },
                     "TypeScript": {
-                        "color": "#2b7489"
+                        "color": "#2b7489",
+                        "initials": 'TS'
                     },
                     "Unified Parallel C": {
-                        "color": "#4e3617"
+                        "color": "#4e3617",
+                        "initials": 'UPC'
                     },
                     "Unity3D Asset": {
-                        "color": "#ab69a1"
+                        "color": "#ab69a1",
+                        "initials": 'U3D'
                     },
                     "UnrealScript": {
-                        "color": "#a54c4d"
+                        "color": "#a54c4d",
+                        "initials": 'US'
                     },
                     "VCL": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'VCL'
                     },
                     "VHDL": {
-                        "color": "#adb2cb"
+                        "color": "#adb2cb",
+                        "initials": 'V'
                     },
                     "Vala": {
-                        "color": "#fbe5cd"
+                        "color": "#fbe5cd",
+                        "initials": 'V'
                     },
                     "Verilog": {
-                        "color": "#b2b7f8"
+                        "color": "#b2b7f8",
+                        "initials": 'V'
                     },
                     "VimL": {
-                        "color": "#199f4b"
+                        "color": "#199f4b",
+                        "initials": 'V'
                     },
                     "Visual Basic": {
-                        "color": "#945db7"
+                        "color": "#945db7",
+                        "initials": 'VB'
                     },
                     "Volt": {
-                        "color": "#1F1F1F"
+                        "color": "#1F1F1F",
+                        "initials": 'V'
                     },
                     "Web Ontology Language": {
-                        "color": "#9cc9dd"
-                    },
-                    "WebIDL": {
-                        "color": "#FFFFFF"
+                        "color": "#9cc9dd",
+                        "initials": 'WOL'
                     },
                     "XC": {
-                        "color": "#99DA07"
+                        "color": "#99DA07",
+                        "initials": 'XC'
                     },
                     "XML": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'XML'
                     },
                     "XProc": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'XP'
                     },
                     "XQuery": {
-                        "color": "#5232e7"
+                        "color": "#5232e7",
+                        "initials": 'XQ'
                     },
                     "XS": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'XS'
                     },
                     "XSLT": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'X'
                     },
                     "Xojo": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'X'
                     },
                     "Xtend": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Xt'
                     },
                     "Yacc": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Y'
                     },
                     "Zephir": {
-                        "color": "#118f9e"
+                        "color": "#118f9e",
+                        "initials": 'Z'
                     },
                     "Zimpl": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'Z'
                     },
                     "desktop": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'D'
                     },
                     "eC": {
-                        "color": "#913960"
+                        "color": "#913960",
+                        "initials": 'E'
                     },
                     "edn": {
-                        "color": "#db5855"
+                        "color": "#db5855",
+                        "initials": 'E'
                     },
                     "fish": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'F'
                     },
                     "mupad": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'M'
                     },
                     "nesC": {
-                        "color": "#94B0C7"
+                        "color": "#94B0C7",
+                        "initials": 'N'
                     },
                     "ooc": {
-                        "color": "#b0b77e"
+                        "color": "#b0b77e",
+                        "initials": 'O'
                     },
                     "reStructuredText": {
-                        "color": "#FFFFFF"
+                        "color": "#FFFFFF",
+                        "initials": 'rST'
                     },
                     "wisp": {
-                        "color": "#7582D1"
+                        "color": "#7582D1",
+                        "initials": 'W'
                     },
                     "xBase": {
-                        "color": "#403a40"
+                        "color": "#403a40",
+                        "initials": 'xB'
                     },
                     "Java": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'J'
                     },
                     "Android": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'A'
                     },
                     "Spring": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'S'
                     },
                     "GWT": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'G'
                     },
                     "Cocoon": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'C'
                     },
                     "Aranea": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'A'
                     },
                     "JSF": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'JSP'
                     },
                     "AppFuse": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'AF'
                     },
                     "Struts": {
-                        "color": "#b07219"
+                        "color": "#b07219",
+                        "initials": 'S'
                     }
                 },
                 "all_frames": {

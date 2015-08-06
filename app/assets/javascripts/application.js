@@ -3,6 +3,9 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
     // Document On Ready Shit
     $(document).ready(function(){
 
+        var headerShadowOn = false;
+        var headerShadow = '0 5px 8px 0 rgba(0, 0, 0, 0.075)';
+
 
         //// If you want one part of the site to "catch" when it reaches the top of the page on scroll
         //(function() {
@@ -12,6 +15,15 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
         //        $header.css("top", Math.max(0, 165 - $wnd.scrollTop())+'px');
         //    });
         //})();
+
+        $(window).scroll(function () {
+            var pos = $(window).scrollTop();
+            if (pos < 5 && $('.header').css('box-shadow') != 'none') {
+                $('.header').css('box-shadow', 'none');
+            } else if (pos >= 5 && $('.header').css('box-shadow') != headerShadow) {
+                $('.header').css('box-shadow', headerShadow);
+            }
+        });
 
         //// Highlight the current Project Type based on the initial has upon site entrance
         var initialPath = window.location.hash;

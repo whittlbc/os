@@ -20,6 +20,8 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             num: 2
         },
 
+        NAV_TABS: ['shouldStartType', 'startingType', 'startedType'],
+
         customMethodMap: {
             'create': {
                 verb: 'POST',
