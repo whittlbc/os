@@ -249,7 +249,8 @@ class ProjectsController < ApplicationController
         anon: proj.anon,
         langs_and_frames: proj.langs_and_frames,
         license: proj.license,
-        privacy: proj.privacy
+        privacy: proj.privacy,
+        search_result: true
       }
     }
     render :json => projects

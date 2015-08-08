@@ -53,12 +53,15 @@ define(['jquery',
             this.uuid = data.uuid;
             this.vote_count = data.vote_count;
             this.commentCount = 5;  // actually connect this later
-            this.contributorCount = data.contributors.length;
+            this.contributorCount = data.contributors ? data.contributors.length : 0;
             //this.license = _.isEmpty(data.license) ? null : data.license[0];
             //this.privacy = _.isEmpty(data.privacy) ? null : data.privacy[0];
             //this.langs_and_frames = data.langs_and_frames;
             this.license = 'MIT';
             this.privacy = 'open';
+            this.status = data.status;
+            this.projectType = OSUtil.PROJECT_TYPES[self.status];
+            this.searchResult = data.search_result;
             this.langs_and_frames = ['HTML', 'Ruby'];
         },
 
@@ -103,7 +106,10 @@ define(['jquery',
                 contributorCount: self.contributorCount,
                 license: self.license,
                 requestToJoin: self.privacy == OSUtil.REQUEST_PRIVACY,
-                open: self.privacy == OSUtil.OPEN_PRIVACY
+                open: self.privacy == OSUtil.OPEN_PRIVACY,
+                shouldStartType: self.status == OSUtil.SHOULD_START.num,
+                searchResult: self.searchResult,
+                projectType: self.projectType
             }));
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
