@@ -1,5 +1,44 @@
-<div class="project-post-view span12" style="color: white;">
-    {{vote_count}}
-    <div class="vote-arrow" style="height: 25px; width: 25px; background-color: white; cursor: pointer;"></div>
-    <p class="project-post-title">{{title}}</p>
+<div class="project-post-view span12">
+    <div class="vote-master-container">
+        <div class="arrow-container">
+            <div class="arrow">
+                <i class="fa fa-angle-up"></i>
+            </div>
+        </div>
+        <div class="vote-count-container">{{vote_count}}</div>
+    </div>{{
+    }}<div class="title-tag-container">
+        <div class="title-container"><span class="project-post-title-text">{{title}}</span></div>
+        <div class="tag-container"></div>
+    </div>{{
+    }}<div class="project-extra-details-container">
+        <div class="main-three-details-container">
+            <div class="main-three-sub-container">
+                <div class="project-post-user-container">
+                    <img class="project-post-user-pic" src="https://avatars.githubusercontent.com/u/6496306?v=3"/>
+                </div>{{
+                }}<div class="project-post-contributors-container">
+                    <div class="project-post-contributors">
+                        <i class="fa fa-user"></i>&nbsp;&nbsp;<span class="project-post-num-contributors">{{contributorCount}}</span>
+                    </div>
+                </div>{{
+                }}<div class="project-post-comments-container">
+                    <div class="project-post-comments">
+                        <i class="fa fa-comment"></i>&nbsp;&nbsp;<span class="project-post-num-comments">{{commentCount}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-license-privacy-container">
+                <div class="project-post-license-container">
+                    <div class="project-post-license">{{license}}</div>
+                </div>{{
+                }}<div class="project-post-privacy-container">
+                    <div class="project-post-privacy">
+                        {{#requestToJoin}}<i class="fa fa-lock"></i>{{/requestToJoin}}
+                        {{#open}}<i class="fa fa-users"></i>{{/open}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

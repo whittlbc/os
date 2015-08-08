@@ -3,6 +3,9 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
 
     var OSUtil = {
 
+        REQUEST_PRIVACY: 'request',
+        OPEN_PRIVACY: 'open',
+
         hidePopupTimeout: 400,
 
         SHOULD_START: {

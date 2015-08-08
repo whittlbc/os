@@ -30,6 +30,10 @@ define(['jquery',
             console.log('AJAX ERROR: ', xhr, resp);
         },
 
+        passColorsAndInitials: function (data) {
+            this.colors_and_initials = data;
+        },
+
 		handleFetchProjects: function (resp, status, xhr) {
             view.populateFeed(resp);
 		},
@@ -44,6 +48,7 @@ define(['jquery',
                 for (var i = 0; i < this.POST_VIEWS.length; i++) {
                     var projectPostView = this.POST_VIEWS[i];
                     projectPostView.setData(this.POST_VIEWS[i].data);
+                    this.setProjectListeners(projectPostView);
                     projectPostView.render();
                     this.$el.find('.project-feed-list').append(projectPostView.el);
                     newViewsArray.push(projectPostView);
@@ -57,6 +62,7 @@ define(['jquery',
                 tagName: 'li'
             });
             projectPostView.setData(data);
+            this.setProjectListeners(projectPostView);
             this.POST_VIEWS.unshift(projectPostView);
         },
 
@@ -74,9 +80,32 @@ define(['jquery',
                 tagName: 'li'
             });
             projectPostView.setData(data);
+            this.setProjectListeners(projectPostView);
             projectPostView.render();
             this.$el.find('.project-feed-list').append(projectPostView.el);
             this.POST_VIEWS.push(projectPostView);
+        },
+
+        setProjectListeners: function (projectPostView) {
+            var self = this;
+            this.listenTo(projectPostView, 'addTags', function(postView) {
+                self.colorsForTags(postView);
+            });
+        },
+
+        colorsForTags: function (postView) {
+            var self = this;
+            var namesAndColorsArray = [];
+            for (var i = 0; i < postView.langs_and_frames.length; i++) {
+                var entry = self.colors_and_initials[postView.langs_and_frames[i]];
+                if (entry) {
+                    namesAndColorsArray.push({
+                        name: postView.langs_and_frames[i],
+                        color: entry["color"]
+                    });
+                }
+            }
+            postView.addTags(namesAndColorsArray);
         },
 
 		events: {

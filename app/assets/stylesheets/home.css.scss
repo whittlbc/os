@@ -20,11 +20,259 @@
   background-color: #F4F6F8;
 }
 
+.project-feed-list > li {
+  position: relative;
+}
+
 .project-post-view {
   height: 150px;
   border-bottom: 1px solid #ccc;
+  display: block;
+}
+
+.arrow-container {
+  height: 60px;
+  width: 100%;
+}
+
+.arrow {
+  height: 30px;
+  width: 40%;
+  line-height: 30px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 26px;
   cursor: pointer;
 }
+
+.fa.fa-angle-up {
+  color: rgb(198,200,202);
+  font-size: 32px;
+}
+
+.vote-master-container {
+  display: inline-block;
+  width: 10%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.vote-count-container {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  color: black;
+  font-size: 20px;
+  font-family: 'Helvetica Neue';
+}
+
+.title-tag-container {
+  display: inline-block;
+  width: 59%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 10%;
+}
+
+.title-container {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: black;
+  margin-top: 35px;
+  font-size: 16px;
+  font-weight: 500;
+  padding-left: 5px;
+}
+
+.project-post-title-text {
+  cursor: pointer;
+}
+
+.tag-container {
+  width: 90%;
+  height: auto;
+  color: black;
+  padding-left: 5px;
+}
+
+.project-extra-details-container {
+  display: inline-block;
+  width: 31%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.main-three-details-container {
+  width: 100%;
+  height: 40px;
+  margin-top: 55px;
+}
+
+.main-three-sub-container {
+  width: 90%;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.project-post-user-container {
+  width: 33.3%;
+  height: 40px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.project-post-user-pic {
+  margin-left: 24px;
+  width: 25px;
+  height: 25px;
+  margin-top: 7.5px;
+  border-radius: 12.5px;
+}
+
+.project-post-contributors-container {
+  width: 33.3%;
+  height: 40px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 33.3%;
+}
+
+.project-post-contributors {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  text-align: center;
+}
+
+.project-post-num-contributors {
+  font-size: 15px;
+  color: black;
+  line-height: 40px;
+}
+
+.fa.fa-user {
+  color: black;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.project-post-comments-container {
+  width: 33.3%;
+  height: 40px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.project-post-comments {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  text-align: center;
+}
+
+.project-post-num-comments {
+  font-size: 15px;
+  color: black;
+  line-height: 40px;
+}
+
+.fa.fa-comment {
+  color: black;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.post-license-privacy-container {
+  width: 50%;
+  height: 40px;
+  margin-top: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-post-license-container {
+  width: 50%;
+  height: 40px;
+  display: inline-block;
+}
+
+.project-post-license {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 12px;
+  font-family: 'Helvetica Neue';
+  color: rgb(175,177,179);
+  opacity: 0;
+}
+
+.project-post-privacy-container {
+  width: 50%;
+  height: 40px;
+  display: inline-block;
+}
+
+.project-post-privacy {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  opacity: 0;
+}
+
+.fa.fa-lock {
+  color: rgb(175,177,179);
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.fa.fa-users {
+  color: rgb(175,177,179);
+  font-size: 14px;
+  line-height: 40px;
+}
+
+.post-tag {
+  display: inline-block;
+  max-width: 120px;
+  height: 28px;
+  line-height: 24px;
+  border-radius: 9px;
+  padding-left: 8px;
+  padding-right: 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color: white;
+  font-family: 'Helvetica Neue';
+  font-size: 13px;
+  text-align: center;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  margin-top: 3px;
+}
+
 
 .hidden-popup {
   display: none;

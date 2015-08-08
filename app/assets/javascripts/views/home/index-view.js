@@ -203,6 +203,8 @@ define(['jquery',
         },
 
         handleAllLanguages: function (resp) {
+            master.projectFeedView.passColorsAndInitials(resp.colors_and_initials);
+            master.projectFeedView.render();
             master.colors_and_initials = resp.colors_and_initials;
             master.dropdown_items = resp.dropdown_items;
             master.langSelectionList.setColorsAndInitials(master.colors_and_initials);
@@ -386,7 +388,6 @@ define(['jquery',
 
         passUserInfo: function (data) {
             var self = this;
-            console.log(data);
             $('.header-user-pic').attr('src', data.pic);
             this.user_uuid = data.user_uuid;
             this.userID = data.id;
@@ -484,17 +485,15 @@ define(['jquery',
             this.$el.html(IndexViewTpl({
             }));
 
-            this.projectFeedView = new ProjectFeedView({
-                el: '#project-feed'
-            });
-
-            this.projectFeedView.render();
-
             this.nonLangFiltersView = new NonLangFiltersView({
                 el: '#nonLangFiltersContainer'
             });
 
             this.nonLangFiltersView.render();
+
+            this.projectFeedView = new ProjectFeedView({
+                el: '#project-feed'
+            });
 
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer'
@@ -503,6 +502,7 @@ define(['jquery',
             this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
 
             this.langSelectionList.render();
+
         }
 	});
 
