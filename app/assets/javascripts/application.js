@@ -45,8 +45,13 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
             }
         });
 
+
         // CreateNewProjectPopup --> Set the top positioning
-        $('#createNewProjectModal').css('margin-top', '20px');
+        // DO NOT FUCK WITH THESE NUMBERS
+        var currentTopPos = 70; // just eyeballing from default Modal Positioning
+        var createNewProjectModalHeight = 536;
+        var createNewProjectModalMarginTop = ((window.innerHeight - createNewProjectModalHeight - currentTopPos) / 2);
+        $('#createNewProjectModal').css('margin-top', createNewProjectModalMarginTop + 'px');
         $('#createNewProjectModalContentContainer').width(750);
         $('#createNewProjectModalContentContainer').css('left', '-75px');
     });

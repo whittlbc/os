@@ -12,14 +12,15 @@ define(['jquery',
 	var CreateNewProjectPopup = Backbone.View.extend({
 
 		initialize: function () {
+            this.popupHeight = 450;
 		},
 
 		events: {},
 
         setSizeForPopup: function () {
             var self = this;
-            this.$el.find('#createNewProjectModalBody').height(window.innerHeight-200);
-            this.$popup.height(this.$el.find('#createNewProjectModalBody').height()-50);
+            this.$el.find('#createNewProjectModalBody').height(this.popupHeight);
+            this.$popup.height(this.popupHeight-50);
         },
 
 		render: function () {
