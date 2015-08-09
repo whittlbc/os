@@ -16,10 +16,17 @@ define(['jquery',
 
 		events: {},
 
+        setSizeForPopup: function () {
+            var self = this;
+            this.$el.find('#createNewProjectModalBody').height(window.innerHeight-200);
+            this.$popup.height(this.$el.find('#createNewProjectModalBody').height()-50);
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(IndexViewTpl());
-            this.$el.find("#owl-example").owlCarousel({
+            this.$popup = this.$el.find("#popup-owl");
+            this.$popup.owlCarousel({
                 autoPlay: false,
                 rewindNav: false,
                 autoHeight: false,
@@ -33,6 +40,7 @@ define(['jquery',
                 pagination: false,
                 navigationText:false
             });
+            this.setSizeForPopup();
         }
 	});
 

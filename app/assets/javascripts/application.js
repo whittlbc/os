@@ -6,16 +6,6 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
         var headerShadowOn = false;
         var headerShadow = '0 5px 8px 0 rgba(0, 0, 0, 0.075)';
 
-
-        //// If you want one part of the site to "catch" when it reaches the top of the page on scroll
-        //(function() {
-        //    var $wnd = $(window),
-        //        $header = $(".lang-selection-list");
-        //    $wnd.on("scroll", function() {
-        //        $header.css("top", Math.max(0, 165 - $wnd.scrollTop())+'px');
-        //    });
-        //})();
-
         $(window).scroll(function () {
             var pos = $(window).scrollTop();
             if (pos < 5 && $('.header').css('box-shadow') != 'none') {
@@ -55,6 +45,10 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
             }
         });
 
+        // CreateNewProjectPopup --> Set the top positioning
+        $('#createNewProjectModal').css('margin-top', '20px');
+        $('#createNewProjectModalContentContainer').width(750);
+        $('#createNewProjectModalContentContainer').css('left', '-75px');
     });
 
     // Actual Backbone App
