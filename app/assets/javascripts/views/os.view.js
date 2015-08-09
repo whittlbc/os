@@ -4,12 +4,14 @@ define(['jquery',
     'models/os.util',
     'sifter.min',
     'models/project',
+    'views/add-project/create-new-project-popup',
     'backbone-eventbroker'], function ($,
      Backbone,
      _,
      OSUtil,
      Sifter,
-     Project) {
+     Project,
+     CreateNewProjectPopup) {
 	'use strict';
 
     var master;
@@ -41,6 +43,13 @@ define(['jquery',
                 $('#universal-searchbox-input').keyup(function(e){
                     master.universalSearch($(e.currentTarget).val());
                 });
+
+                var createNewProjectPopup = new CreateNewProjectPopup({
+                    el: '#createNewProjectModalContent'
+                });
+
+                createNewProjectPopup.render();
+
                 loadedAllProjects = true;
             }
 

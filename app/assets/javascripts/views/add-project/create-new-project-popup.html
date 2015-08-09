@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">New Project</h4>
+</div>
+<div class="modal-body" style="height: 300px; width: 400px;">
+    <select id="project-type-selection-dropdown">
+        <option value="shouldStart">Should Start</option>
+        <option value="starting" selected="selected">Starting</option>
+        <option value="started">Started</option>
+    </select>
+    <select id="privacy-selection-dropdown">
+        <option value="open">Open</option>
+        <option value="request" selected="selected">Request</option>
+    </select>
+    <input id="projectTitleField" type="text" placeholder="Title"/>
+    <textarea id="projectDescriptionField" row="1" placeholder="Description"></textarea>
+    <!--<div data-field="langsAndFrames" id="langsAndFrames"></div>-->
+    <!--<div data-field="license" id="license"></div>-->
+    <input id="langsAndFrames" type="text" placeholder="Languages and Frameworks"/>
+    <input id="license" type="text" placeholder="License"/>
+    <input id="anonCheckbox" type="checkbox" name="Post anonymously"/>Anonymous
+    <input id="repoName" type="text" placeholder="Github repo name"/>
+    <div id="getAllRepos">Get all your Repos</div>
+    <div id="pullFromIdeas">Pull from Ideas</div>
+    <div id="fetchGHProject">Import from Github</div>
+    <div id="submitNewProject">Create</div>
+</div>

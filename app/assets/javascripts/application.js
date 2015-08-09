@@ -57,7 +57,6 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
 
     });
 
-
     // Actual Backbone App
     var App = {};
     App.start = function() {
@@ -78,5 +77,6 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
     })(Backbone.sync);
 
     App.start();
+
     return App;
 });

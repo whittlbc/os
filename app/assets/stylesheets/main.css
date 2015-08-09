@@ -205,6 +205,10 @@ footer p {
     margin-top: 7%;
 }
 
+.modal-backdrop.in {
+    opacity: 0.375;
+}
+
 .z-depth-half {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 2px 10px 0 rgba(0, 0, 0, 0.08); }
 
