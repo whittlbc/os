@@ -18,7 +18,7 @@ define(['jquery',
 	var CreateNewProjectPopup = Backbone.View.extend({
 
 		initialize: function () {
-            this.popupContainerHeight = 450;
+            this.popupContainerHeight = 370;
             this.popupHeight = this.popupContainerHeight - 50;
 
             // Type Choices
@@ -30,9 +30,45 @@ define(['jquery',
             this.source1 = 'import-from-gh';
             this.source2 = 'scratch';
             this.source3 = 'pull-from-ideas';
+
+            this.bottomNavDuration = 200;
+
+            this.slideIndex = 0;
+            this.slidesVisited = [0];
 		},
 
-		events: {},
+		events: {
+            'click .bottom-nav-back': 'handleBack',
+            'click .bottom-nav-next': 'handleNext',
+        },
+
+        handleBack: function () {
+            console.log(this.slideIndex, this.checkIfBackBtnShown());
+            if (this.slideIndex > 0 && this.checkIfBackBtnShown()) {
+                this.owl.goTo(this.slideIndex - 1);
+                this.slideIndex--;
+                var backOpacity = (this.slideIndex == 0) ? 0 : 1;
+                this.toggleBottomNav(backOpacity, this.checkIfShowNextBtn());
+            }
+        },
+
+        handleNext: function () {
+            var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
+            if (this.slideIndex < (numSlides - 1) && this.checkIfNextBtnShown()) {
+                this.owl.goTo(this.slideIndex + 1);
+                this.slideIndex++;
+                this.slidesVisited.push(this.slideIndex);
+                this.toggleBottomNav(1, this.checkIfShowNextBtn());
+            }
+        },
+
+        checkIfBackBtnShown: function () {
+            return this.$el.find('.bottom-nav-back').css('opacity') == 1;
+        },
+
+        checkIfNextBtnShown: function () {
+            return this.$el.find('.bottom-nav-next').css('opacity') == 1;
+        },
 
         setSizeForPopup: function () {
             var self = this;
@@ -46,21 +82,41 @@ define(['jquery',
             this.panel3.setHeight(this.popupHeight);
         },
 
+        checkIfShowNextBtn: function () {
+            return _.contains(this.slidesVisited, this.slideIndex+1) ? 1 : 0;
+        },
+
         handleTypeSelected: function (type) {
             var self = this;
             console.log(type);
-            type == this.type1 ? this.panel2.hideSelection3() : this.panel2.showSelection3();
-            this.owl.goTo(1);
+            type == this.type2 ? this.panel2.showSelection3() : this.panel2.hideSelection3();
+            this.slideIndex = 1;
+            this.owl.goTo(this.slideIndex);
+            this.slidesVisited.push(this.slideIndex);
+            this.toggleBottomNav(1, this.checkIfShowNextBtn());
         },
 
         handleSourceSelected: function (source) {
             var self = this;
-            this.owl.goTo(2);
+            this.slideIndex = 2;
+            this.owl.goTo(this.slideIndex);
+            this.slidesVisited.push(this.slideIndex);
+            this.toggleBottomNav(1, 0);
         },
 
         handleCreateProject: function (data) {
             var self = this;
+            this.toggleBottomNav(0, 0);
+            this.slidesVisited = [0];
+        },
 
+        toggleBottomNav: function (backOpacity, nextOpacity) {
+            var $backBtn = this.$el.find('.bottom-nav-back');
+            var $nextBtn = this.$el.find('.bottom-nav-next');
+            $backBtn.animate({opacity: backOpacity}, {duration: ((backOpacity == 0) ? 0 : this.bottomNavDuration), queue: false});
+            $nextBtn.animate({opacity: nextOpacity}, {duration: ((nextOpacity == 0) ? 0 : this.bottomNavDuration), queue: false});
+            backOpacity == 0 ? $backBtn.hide() : $backBtn.show();
+            nextOpacity == 0 ? $nextBtn.hide() : $nextBtn.show();
         },
 
         addPubSubListeners: function () {
@@ -89,7 +145,7 @@ define(['jquery',
                 items: 1,
                 itemsDesktopSmall: [1199, 1],
                 itemsTablet: [977, 1],
-                mouseDrag: true,
+                mouseDrag: false,
                 navigation: false,
                 pagination: false,
                 navigationText:false

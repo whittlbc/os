@@ -82,3 +82,35 @@
 .no-pull-from-ideas {
   width: 50%;
 }
+
+.modal-footer {
+  height: 80px !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+}
+
+.bottom-nav-back,
+.bottom-nav-next {
+  width: 100px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 10px;
+  color: white;
+  background-color: blue;
+  font-size: 20px;
+  font-family: 'Helvetica Neue';
+  text-align: center;
+  margin-top: 17.5px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.bottom-nav-back {
+  float: left;
+  margin-left: 17.5px;
+}
+
+.bottom-nav-next {
+  float: right;
+  margin-right: 17.5px;
+}
