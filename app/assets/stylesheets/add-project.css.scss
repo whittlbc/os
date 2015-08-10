@@ -2,3 +2,83 @@
 #popup-owl {
   width: 100%;
 }
+
+.select-project-type-view {
+  width: 100%;
+  position: relative;
+}
+
+.select-project-source-view {
+  width: 100%;
+  position: relative;
+}
+
+.add-project-details-view {
+  width: 100%;
+  position: relative;
+}
+
+.project-source-selection-container,
+.project-type-selection-container {
+  width: 100%;
+  position: absolute;
+  top: 100px;
+  height: 200px;
+  display: block;
+}
+
+.project-source-selection,
+.project-type-selection {
+  display: inline-block;
+  height: 200px;
+  width: 33.33%;
+  cursor: pointer;
+}
+
+#import-from-gh {
+}
+
+#scratch {
+}
+
+#pull-from-ideas {
+}
+
+.project-source-selection-text,
+.project-type-selection-text {
+  height: 50px;
+  width: 100%;
+  color: black;
+  text-align: center;
+  line-height: 50px;
+  font-family: 'Helvetica Neue';
+  font-size: 16px;
+  position: relative;
+  top: 150px;
+}
+
+.select-project-source-text,
+.select-project-type-text{
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  position: absolute;
+  top: 30px;
+  color: black;
+  text-align: center;
+  font-family: 'Helvetica Neue';
+  font-size: 13px;
+}
+
+#up-for-grabs {
+}
+
+#on-the-fence {
+}
+
+#launched {
+}
+
+.no-pull-from-ideas {
+  width: 50%;
+}
