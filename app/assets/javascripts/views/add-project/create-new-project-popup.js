@@ -34,8 +34,18 @@ define(['jquery',
             this.bottomNavDuration = 200;
 
             this.slideIndex = 0;
-            this.slidesVisited = [0];
+            this.projectSource = null;
+            this.projectType = null;
 		},
+
+        resetFlow: function () {
+            var self = this;
+            this.toggleBottomNav(0, 0);
+            this.owl.jumpTo(0);
+            this.slideIndex = 0;
+            this.projectType = null;
+            this.projectSource = null;
+        },
 
 		events: {
             'click .bottom-nav-back': 'handleBack',
@@ -43,12 +53,11 @@ define(['jquery',
         },
 
         handleBack: function () {
-            console.log(this.slideIndex, this.checkIfBackBtnShown());
             if (this.slideIndex > 0 && this.checkIfBackBtnShown()) {
                 this.owl.goTo(this.slideIndex - 1);
                 this.slideIndex--;
                 var backOpacity = (this.slideIndex == 0) ? 0 : 1;
-                this.toggleBottomNav(backOpacity, this.checkIfShowNextBtn());
+                this.toggleBottomNav(backOpacity, 1);
             }
         },
 
@@ -56,9 +65,12 @@ define(['jquery',
             var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
             if (this.slideIndex < (numSlides - 1) && this.checkIfNextBtnShown()) {
                 this.owl.goTo(this.slideIndex + 1);
+                var nextOpacity = 0;
+                if (this.slideIndex == 0 && this.projectSource != null) {
+                    nextOpacity = 1;
+                }
+                this.toggleBottomNav(1, nextOpacity);
                 this.slideIndex++;
-                this.slidesVisited.push(this.slideIndex);
-                this.toggleBottomNav(1, this.checkIfShowNextBtn());
             }
         },
 
@@ -82,32 +94,30 @@ define(['jquery',
             this.panel3.setHeight(this.popupHeight);
         },
 
-        checkIfShowNextBtn: function () {
-            return _.contains(this.slidesVisited, this.slideIndex+1) ? 1 : 0;
+        checkIfProjectSourceSelected: function () {
+            return (this.projectSource == null) ? 0 : 1;
         },
 
         handleTypeSelected: function (type) {
             var self = this;
-            console.log(type);
             type == this.type2 ? this.panel2.showSelection3() : this.panel2.hideSelection3();
             this.slideIndex = 1;
             this.owl.goTo(this.slideIndex);
-            this.slidesVisited.push(this.slideIndex);
-            this.toggleBottomNav(1, this.checkIfShowNextBtn());
+            this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
+            this.projectType = type;
         },
 
         handleSourceSelected: function (source) {
             var self = this;
             this.slideIndex = 2;
             this.owl.goTo(this.slideIndex);
-            this.slidesVisited.push(this.slideIndex);
             this.toggleBottomNav(1, 0);
+            this.projectSource = source;
         },
 
         handleCreateProject: function (data) {
             var self = this;
-            this.toggleBottomNav(0, 0);
-            this.slidesVisited = [0];
+            this.resetFlow();
         },
 
         toggleBottomNav: function (backOpacity, nextOpacity) {
