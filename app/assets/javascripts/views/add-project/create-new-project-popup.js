@@ -4,6 +4,7 @@ define(['jquery',
     'views/add-project/select-project-type-view',
     'views/add-project/select-project-source-view',
     'views/add-project/add-project-details-view',
+    'views/add-project/breadcrumb-view',
     'stache!views/add-project/create-new-project-popup',
     'owl-carousel'
     ], function ($,
@@ -12,6 +13,7 @@ define(['jquery',
      SelectProjectTypeView,
      SelectProjectSourceView,
      AddProjectDetailsView,
+     BreadCrumbView,
      IndexViewTpl) {
 	'use strict';
 
@@ -24,8 +26,13 @@ define(['jquery',
             this.bottomNavDuration = 200;
 
             this.slideIndex = 0;
-
             this.type2 = 'on-the-fence';
+
+            this.panelMap = {
+                'type-panel': 0,
+                'source-panel': 1,
+                'data-panel': 2
+            };
 
             this.typeMap = {
                 'up-for-grabs': 'type1',
@@ -89,6 +96,7 @@ define(['jquery',
             this.toggleBottomNav(0, 0);
             this.owl.jumpTo(0);
             this.slideIndex = 0;
+            this.renderBreadCrumbView();
         },
 
 		events: {
@@ -100,11 +108,8 @@ define(['jquery',
             if (this.slideIndex > 0 && this.checkIfBackBtnShown()) {
                 this.owl.goTo(this.slideIndex - 1);
                 this.slideIndex--;
-                var backOpacity = 1;
-                if (this.slideIndex == 0) {
-                    backOpacity = 0;
-                }
-                this.toggleBottomNav(backOpacity, 1);
+                this.toggleBottomNav(this.getBackBtnOpacity(), 1);
+                this.renderBreadCrumbView();
             }
         },
 
@@ -112,11 +117,8 @@ define(['jquery',
             var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
             if (this.slideIndex < (numSlides - 1) && this.checkIfNextBtnShown()) {
                 this.owl.goTo(this.slideIndex + 1);
-                var nextOpacity = 0;
-                if (this.slideIndex == 0 && this.checkIfProjectSourceSelected()) {
-                    nextOpacity = 1;
-                }
-                this.toggleBottomNav(1, nextOpacity);
+                this.toggleBottomNav(1, this.getNextBtnOpacity());
+                this.renderBreadCrumbView();
                 this.slideIndex++;
             }
         },
@@ -142,13 +144,11 @@ define(['jquery',
         },
 
         checkIfProjectSourceSelected: function () {
-            var sourceSelected = false;
-            for(var key in this.masterMap) {
-                if (key != 'selectedType' && this.masterMap[key]['selectedSource'] != null) {
-                    sourceSelected = true;
-                }
+            var sourceSelected = 0;
+            if (this.masterMap['selectedType'] != null && this.masterMap[this.masterMap['selectedType']]['selectedSource'] != null) {
+                sourceSelected = 1;
             }
-            return sourceSelected ? 1 : 0;
+            return sourceSelected;
         },
 
         // will return 'source1', 'source2', or 'source3'
@@ -161,23 +161,22 @@ define(['jquery',
             var options = {};
             type == this.type2 ? options.showPullFromIdeas = true : options.showPullFromIdeas = false;
             this.slideIndex = 1;
-            this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
             this.masterMap['selectedType'] = this.typeMap[type];
             var selectedSource = this.getSourceForType(this.typeMap[type]);
-            console.log(selectedSource);
             options.selectedSource = (selectedSource == null) ? null : selectedSource;
             this.panel2.render(options);
             this.owl.goTo(this.slideIndex);
-            console.log(this.masterMap);
+            this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
+            this.renderBreadCrumbView();
         },
 
         handleSourceSelected: function (source) {
             var self = this;
             this.slideIndex = 2;
             this.owl.goTo(this.slideIndex);
-            this.toggleBottomNav(1, 0);
             this.masterMap[this.masterMap['selectedType']]['selectedSource'] = this.sourceMap[source];
-            console.log(this.masterMap);
+            this.toggleBottomNav(1, 0);
+            this.renderBreadCrumbView();
         },
 
         handleCreateProject: function (data) {
@@ -207,7 +206,23 @@ define(['jquery',
             });
         },
 
-		render: function () {
+        getBackBtnOpacity: function () {
+            return this.slideIndex == 0 ? 0 : 1;
+        },
+
+        getNextBtnOpacity: function () {
+            return (this.slideIndex == 0 && !!this.checkIfProjectSourceSelected()) ? 1 : 0;
+        },
+
+        renderBreadCrumbView: function () {
+            this.breadCrumbView.render({
+                breadCrumb1Clickable: this.masterMap['selectedType'] != null,
+                breadCrumb2Clickable: this.masterMap['selectedType'] != null,
+                breadCrumb3Clickable: !!this.checkIfProjectSourceSelected()
+            });
+        },
+
+        render: function () {
 			var self = this;
             this.$el.html(IndexViewTpl());
             this.$popup = this.$el.find("#popup-owl");
@@ -227,6 +242,29 @@ define(['jquery',
             });
 
             this.owl = this.$popup.data('owlCarousel');
+
+            this.breadCrumbView = new BreadCrumbView({
+                el: '#createProjectBreadCrumbView'
+            });
+            this.listenTo(this.breadCrumbView, 'breadCrumbNav', function (id) {
+                self.renderBreadCrumbView();
+                var indexEnd = self.panelMap[id];
+                if (indexEnd == self.slideIndex) {
+                    return;
+                } else if (indexEnd > self.slideIndex) {
+                    // FORWARD
+                    self.toggleBottomNav(1, self.getNextBtnOpacity());
+                    self.slideIndex = indexEnd;
+                } else if (indexEnd < self.slideIndex) {
+                    // BACK
+                    self.slideIndex = indexEnd;
+                    self.toggleBottomNav(self.getBackBtnOpacity(), 1);
+                }
+                self.renderBreadCrumbView();
+                self.owl.goTo(indexEnd);
+            });
+
+            this.renderBreadCrumbView();
 
             this.panel1 = new SelectProjectTypeView({
                 el: '#newProjectPanel1'

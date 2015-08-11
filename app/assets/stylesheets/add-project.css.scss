@@ -122,3 +122,33 @@
 .selected-source > div.project-source-selection-text {
   color: blue;
 }
+
+.modal-header {
+  padding: 0 !important;
+}
+
+.create-project-modal-header-container {
+  width: 90%;
+  height: 56px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.create-project-breadcrumb {
+  width: 33.33%;
+  height: 56px;
+  display: inline-block;
+}
+
+#type-panel,
+#source-panel,
+#data-panel{
+  line-height: 56px;
+  text-align: center;
+  font-size: 21px;
+  font-family: 'Helvetica Neue';
+}
+
+.breadcrumb-clickable {
+  cursor: pointer;
+}
