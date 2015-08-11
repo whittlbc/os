@@ -29,7 +29,10 @@ define(['jquery',
             this.$el.html(BreadCrumbViewTpl({
                 breadCrumb1Clickable: options.breadCrumb1Clickable,
                 breadCrumb2Clickable: options.breadCrumb2Clickable,
-                breadCrumb3Clickable: options.breadCrumb3Clickable
+                breadCrumb3Clickable: options.breadCrumb3Clickable,
+                breadCrumb1Done: options.breadCrumb1Done,
+                breadCrumb2Done: options.breadCrumb2Done,
+                breadCrumb3Done: options.breadCrumb3Done
             }));
 		}
 	});

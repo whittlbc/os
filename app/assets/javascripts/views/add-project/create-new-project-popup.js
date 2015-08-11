@@ -228,7 +228,10 @@ define(['jquery',
             this.breadCrumbView.render({
                 breadCrumb1Clickable: this.masterMap['selectedType'] != null,
                 breadCrumb2Clickable: this.masterMap['selectedType'] != null,
-                breadCrumb3Clickable: !!this.checkIfProjectSourceSelected()
+                breadCrumb3Clickable: !!this.checkIfProjectSourceSelected(),
+                breadCrumb1Done: this.masterMap['selectedType'] != null,
+                breadCrumb2Done: this.masterMap['selectedType'] != null && this.masterMap[this.masterMap['selectedType']]['selectedSource'] != null,
+                breadCrumb3Done: false // set this later once you have data to use
             });
         },
 
