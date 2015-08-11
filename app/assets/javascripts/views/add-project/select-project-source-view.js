@@ -19,14 +19,12 @@ define(['jquery',
 
         showSelection3: function () {
             var self = this;
-            console.log('show selection');
             this.showPullFromIdeas = true;
             this.render();
         },
 
         hideSelection3: function () {
             var self = this;
-            console.log('hide selection');
             this.showPullFromIdeas = false;
             this.render();
         },

@@ -21,21 +21,67 @@ define(['jquery',
             this.popupContainerHeight = 370;
             this.popupHeight = this.popupContainerHeight - 50;
 
-            // Type Choices
-            this.type1 = 'up-for-grabs';
-            this.type2 = 'on-the-fence';
-            this.type3 = 'launched';
-
-            // Source Choices
-            this.source1 = 'import-from-gh';
-            this.source2 = 'scratch';
-            this.source3 = 'pull-from-ideas';
-
             this.bottomNavDuration = 200;
 
             this.slideIndex = 0;
-            this.projectSource = null;
-            this.projectType = null;
+
+            this.typeMap = {
+                'up-for-grabs': 'type1',
+                'on-the-fence': 'type2',
+                'launched': 'type3'
+            };
+
+            this.sourceMap = {
+                'gh': 'source1',
+                'scratch': 'source2',
+                'pull-from-ideas': 'source3'
+            };
+
+            this.masterMap = {
+
+                'selectedType': null,
+
+                // Up for Grabs
+                'type1': {
+                    'selectedSource': 'source1',
+                    // Scratch
+                    'source1': {
+
+                    }
+                },
+
+                // On the Fence
+                'type2': {
+                    'selectedSource': null,
+                    // GH
+                    'source1': {
+
+                    },
+                    //Scratch
+                    'source2': {
+
+                    },
+                    // Pull from Ideas
+                    'source3': {
+
+                    }
+                },
+
+                //Launched
+                'type3':{
+                    'selectedSource': null,
+                    // GH
+                    'source1': {
+
+                    },
+                    // Scratch
+                    'source2': {
+
+                    }
+                }
+            };
+
+            console.log(this.getType2());
 		},
 
         resetFlow: function () {
@@ -43,13 +89,19 @@ define(['jquery',
             this.toggleBottomNav(0, 0);
             this.owl.jumpTo(0);
             this.slideIndex = 0;
-            this.projectType = null;
-            this.projectSource = null;
         },
 
 		events: {
             'click .bottom-nav-back': 'handleBack',
             'click .bottom-nav-next': 'handleNext',
+        },
+
+        getType2: function () {
+            for(var key in this.typeMap) {
+                if (this.typeMap[key] == 'type2') {
+                    return key;
+                }
+            }
         },
 
         handleBack: function () {
@@ -66,7 +118,7 @@ define(['jquery',
             if (this.slideIndex < (numSlides - 1) && this.checkIfNextBtnShown()) {
                 this.owl.goTo(this.slideIndex + 1);
                 var nextOpacity = 0;
-                if (this.slideIndex == 0 && this.projectSource != null) {
+                if (this.slideIndex == 0 && this.checkIfProjectSourceSelected()) {
                     nextOpacity = 1;
                 }
                 this.toggleBottomNav(1, nextOpacity);
@@ -95,16 +147,22 @@ define(['jquery',
         },
 
         checkIfProjectSourceSelected: function () {
-            return (this.projectSource == null) ? 0 : 1;
+            var sourceSelected = false;
+            for(var key in this.masterMap) {
+                if (key != 'selectedType' && this.masterMap[key]['selectedSource'] != null) {
+                    sourceSelected = true;
+                }
+            }
+            return sourceSelected ? 1 : 0;
         },
 
         handleTypeSelected: function (type) {
             var self = this;
-            type == this.type2 ? this.panel2.showSelection3() : this.panel2.hideSelection3();
+            type == this.getType2() ? this.panel2.showSelection3() : this.panel2.hideSelection3();
             this.slideIndex = 1;
             this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
-            this.projectType = type;
+            this.masterMap['selectedType'] = this.typeMap[type];
         },
 
         handleSourceSelected: function (source) {
@@ -112,7 +170,7 @@ define(['jquery',
             this.slideIndex = 2;
             this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, 0);
-            this.projectSource = source;
+            this.masterMap[this.masterMap['selectedType']]['selectedSource'] = this.sourceMap[source];
         },
 
         handleCreateProject: function (data) {
