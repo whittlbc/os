@@ -38,11 +38,17 @@ define(['jquery',
             if (options && options.selectedSource !== undefined) {
                 this.selectedSource = options.selectedSource;
             }
+            var upForGrabsType = false;
+            if (options && options.upForGrabsType) {
+                upForGrabsType = true;
+            }
+
             this.$el.html(SelectProjectSourceViewTpl({
-                showPullFromIdeas: this.showPullFromIdeas,
+                showPullFromIdeas: this.showPullFromIdeas && !upForGrabsType,
                 ghSelected: this.selectedSource == this.sourceMap['gh'],
                 scratchSelected: this.selectedSource == this.sourceMap['scratch'],
-                ideasSelected: this.selectedSource == this.sourceMap['pull-from-ideas']
+                ideasSelected: this.selectedSource == this.sourceMap['pull-from-ideas'],
+                upForGrabsType: upForGrabsType
             }));
 		}
 	});

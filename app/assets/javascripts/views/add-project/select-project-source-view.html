@@ -1,10 +1,11 @@
 <div class="select-project-source-view">
     <div class="select-project-source-text">Select your project source</div>
     <div class="project-source-selection-container">
+        {{^upForGrabsType}}
         <div class="project-source-selection {{^showPullFromIdeas}}no-pull-from-ideas{{/showPullFromIdeas}} {{#ghSelected}}selected-source{{/ghSelected}}" id="gh">
             <div class="project-source-selection-text">Import from Github</div>
-        </div>{{
-        }}<div class="project-source-selection {{^showPullFromIdeas}}no-pull-from-ideas{{/showPullFromIdeas}} {{#scratchSelected}}selected-source{{/scratchSelected}}" id="scratch">
+        </div>{{/upForGrabsType}}{{
+        }}<div class="project-source-selection {{^showPullFromIdeas}}no-pull-from-ideas{{/showPullFromIdeas}} {{#scratchSelected}}selected-source{{/scratchSelected}} {{#upForGrabsType}}up-for-grabs-type-selected{{/upForGrabsType}}" id="scratch">
             <div class="project-source-selection-text">Create from Scratch</div>
         </div>{{
             }}{{#showPullFromIdeas}}<div class="project-source-selection {{#ideasSelected}}selected-source{{/ideasSelected}}" id="pull-from-ideas">

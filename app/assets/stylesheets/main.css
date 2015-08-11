@@ -242,6 +242,9 @@ footer p {
     float: right;
 }
 
+#createNewProjectModalContentContainer {
+    border-radius: 9px;
+}
 
 
 

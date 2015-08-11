@@ -26,7 +26,9 @@ define(['jquery',
             this.bottomNavDuration = 200;
 
             this.slideIndex = 0;
+            this.type1 = 'up-for-grabs';
             this.type2 = 'on-the-fence';
+            this.source2 = 'scratch';
 
             this.panelMap = {
                 'type-panel': 0,
@@ -52,7 +54,7 @@ define(['jquery',
 
                 // Up for Grabs
                 'type1': {
-                    'selectedSource': 'source1',
+                    'selectedSource': 'source2',
                     // Scratch
                     'source1': {
 
@@ -118,8 +120,8 @@ define(['jquery',
             if (this.slideIndex < (numSlides - 1) && this.checkIfNextBtnShown()) {
                 this.owl.goTo(this.slideIndex + 1);
                 this.toggleBottomNav(1, this.getNextBtnOpacity());
-                this.renderBreadCrumbView();
                 this.slideIndex++;
+                this.renderBreadCrumbView();
             }
         },
 
@@ -159,9 +161,17 @@ define(['jquery',
         handleTypeSelected: function (type) {
             var self = this;
             var options = {};
+            this.masterMap['selectedType'] = this.typeMap[type];
+            if (type == this.type1) {
+                // if it's type "up-for-grabs", the source is already known --> 'scratch',
+                // so skip step 2 and go straight to step 3
+                this.panel2.selectedSource = this.masterMap['type1']['selectedSource'];
+                this.panel2.render({upForGrabsType: true});
+                this.handleSourceSelected(this.source2);
+                return;
+            }
             type == this.type2 ? options.showPullFromIdeas = true : options.showPullFromIdeas = false;
             this.slideIndex = 1;
-            this.masterMap['selectedType'] = this.typeMap[type];
             var selectedSource = this.getSourceForType(this.typeMap[type]);
             options.selectedSource = (selectedSource == null) ? null : selectedSource;
             this.panel2.render(options);
