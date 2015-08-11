@@ -11,26 +11,17 @@ define(['jquery',
 	var SelectProjectSourceView = Backbone.View.extend({
 
 		initialize: function (){
+            // this.sourceMap is set from CreateNewProjectPopup
         },
 
 		events: {
             'click .project-source-selection': 'handleSourceSelected'
         },
 
-        showSelection3: function () {
-            var self = this;
-            this.showPullFromIdeas = true;
-            this.render();
-        },
-
-        hideSelection3: function () {
-            var self = this;
-            this.showPullFromIdeas = false;
-            this.render();
-        },
-
         handleSourceSelected: function (e) {
             var self = this;
+            this.selectedSource = this.sourceMap[e.currentTarget.id];
+            this.render();
             this.trigger('source:selected', e.currentTarget.id);
         },
 
@@ -39,10 +30,19 @@ define(['jquery',
             this.$el.find('.select-project-source-view').height(height);
         },
 
-		render: function () {
+		render: function (options) {
 			var self = this;
+            if (options && options.showPullFromIdeas !== undefined) {
+                this.showPullFromIdeas = options.showPullFromIdeas;
+            }
+            if (options && options.selectedSource !== undefined) {
+                this.selectedSource = options.selectedSource;
+            }
             this.$el.html(SelectProjectSourceViewTpl({
-                showPullFromIdeas: this.showPullFromIdeas
+                showPullFromIdeas: this.showPullFromIdeas,
+                ghSelected: this.selectedSource == this.sourceMap['gh'],
+                scratchSelected: this.selectedSource == this.sourceMap['scratch'],
+                ideasSelected: this.selectedSource == this.sourceMap['pull-from-ideas']
             }));
 		}
 	});

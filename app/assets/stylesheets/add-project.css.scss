@@ -114,3 +114,11 @@
   float: right;
   margin-right: 17.5px;
 }
+
+.selected-type > div.project-type-selection-text {
+  color: blue;
+}
+
+.selected-source > div.project-source-selection-text {
+  color: blue;
+}

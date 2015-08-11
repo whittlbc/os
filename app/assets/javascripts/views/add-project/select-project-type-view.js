@@ -19,7 +19,8 @@ define(['jquery',
 
         handleTypeSelected: function (e) {
             var self = this;
-            console.log(e.currentTarget.id);
+            this.selectedType = this.typeMap[e.currentTarget.id];
+            this.render();
             this.trigger('type:selected', e.currentTarget.id);
         },
 
@@ -31,6 +32,9 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(SelectProjectTypeViewTpl({
+                upForGrabsSelected: this.selectedType == this.typeMap['up-for-grabs'],
+                onTheFenceSelected: this.selectedType == this.typeMap['on-the-fence'],
+                launchedSelected: this.selectedType == this.typeMap['launched'],
             }));
 		}
 	});
