@@ -35,7 +35,7 @@ define(['jquery',
             Backbone.EventBroker.register({
                 'handleFetchGHProject': 'handleFetchGHProject',
                 'handleCreateProject': 'handleCreateProject',
-                'getAllUserRepos': 'getAllUserRepos',
+                //'getAllUserRepos': 'getAllUserRepos',
                 'pullFromIdeas': 'pullFromIdeas',
                 'showFilters': 'showLangFrameSelection',
                 'deleteLangFilter': 'deleteLangFilter',
@@ -343,17 +343,17 @@ define(['jquery',
             // master
             console.log(resp);
         },
-
-        getAllUserRepos: function () {
-            var self = this;
-            var user = new User();
-            user.getAllUserRepos({gh_username: self.gh_username, password: self.ghAccessToken}, {success: self.handleAllReposResponse, error: self.errorHandler});
-        },
-
-        handleAllReposResponse: function (resp) {
-            var self = this;
-            console.log(resp);
-        },
+        //
+        //getAllUserRepos: function () {
+        //    var self = this;
+        //    var user = new User();
+        //    user.getAllUserRepos({gh_username: self.gh_username, password: self.ghAccessToken}, {success: self.handleAllReposResponse, error: self.errorHandler});
+        //},
+        //
+        //handleAllReposResponse: function (resp) {
+        //    var self = this;
+        //    console.log(resp);
+        //},
 
         handleCreateProject: function () {
             var self = this;
@@ -389,10 +389,12 @@ define(['jquery',
         passUserInfo: function (data) {
             var self = this;
             $('.header-user-pic').attr('src', data.pic);
+            this.userData = data;
             this.user_uuid = data.user_uuid;
             this.userID = data.id;
             this.ghAccessToken = data.password;
             this.gh_username = data.gh_username;
+            this.passUserInfoToParent(this.userData);
         },
 
         addLicenseFilter: function (type) {

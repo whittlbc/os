@@ -56,12 +56,13 @@ define(['jquery',
 
         passUserInfo: function (data) {
             var self = this;
-            console.log(data);
             $('.header-user-pic').attr('src', data.pic);
+            this.userData = data;
             this.user_uuid = data.user_uuid;
             this.userID = data.id;
             this.ghAccessToken = data.password;
             this.gh_username = data.gh_username;
+            this.passUserInfoToParent(this.userData);
         },
 
         addListeners: function () {

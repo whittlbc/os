@@ -115,6 +115,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'launch': {
                 verb: 'POST',
                 action: 'create'
+            },
+            'getRepoDetails': {
+                verb: 'GET',
+                action: 'read'
             }
         },
 

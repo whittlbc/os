@@ -44,11 +44,11 @@ define(['jquery',
                     master.universalSearch($(e.currentTarget).val());
                 });
 
-                var createNewProjectPopup = new CreateNewProjectPopup({
+                master.createNewProjectPopup = new CreateNewProjectPopup({
                     el: '#createNewProjectModalContent'
                 });
 
-                createNewProjectPopup.render();
+                master.createNewProjectPopup.render();
 
                 loadedAllProjects = true;
             }
@@ -74,6 +74,11 @@ define(['jquery',
         },
 
         events: {},
+
+        passUserInfoToParent: function (userData) {
+            this.userData = userData;
+            this.createNewProjectPopup.userData = this.userData;
+        },
 
         getUniversalSearchData: function () {
             var self = this;

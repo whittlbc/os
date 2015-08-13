@@ -124,12 +124,23 @@ class UsersController < ApplicationController
   end
 
   def get_all_user_repos
-    client = Octokit::Client.new(:access_token => params[:password])
+    user = User.find_by_gh_username(params[:gh_username])
+    client = Octokit::Client.new(:access_token => user.password)
     repo_list = []
     repos = client.repositories(:user => params[:gh_username]).each { |repo|
       repo_list.push(repo.name)
     }
     render :json => {:repos => repo_list}
+  end
+
+  def get_repo_details
+    user = User.find_by_gh_username(params[:gh_username])
+    client = Octokit::Client.new(:access_token => user.password)
+    repo_map = {}
+    repo = client.repository(:user => params[:gh_username], :repo => params[:repo_name]).each { |detail|
+      repo_map[detail[0]] = detail[1]
+    }
+    render :json => repo_map
   end
 
   private

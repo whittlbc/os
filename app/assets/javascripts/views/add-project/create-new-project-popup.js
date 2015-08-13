@@ -5,6 +5,7 @@ define(['jquery',
     'views/add-project/select-project-source-view',
     'views/add-project/add-project-details-view',
     'views/add-project/breadcrumb-view',
+    'models/user',
     'stache!views/add-project/create-new-project-popup',
     'owl-carousel'
     ], function ($,
@@ -14,6 +15,7 @@ define(['jquery',
      SelectProjectSourceView,
      AddProjectDetailsView,
      BreadCrumbView,
+     User,
      IndexViewTpl) {
 	'use strict';
 
@@ -25,9 +27,12 @@ define(['jquery',
 
             this.bottomNavDuration = 200;
 
+            this.repos = null;
+
             this.slideIndex = 0;
             this.type1 = 'up-for-grabs';
             this.type2 = 'on-the-fence';
+            this.source1 = 'gh';
             this.source2 = 'scratch';
 
             this.panelMap = {
@@ -183,8 +188,15 @@ define(['jquery',
         handleSourceSelected: function (source) {
             var self = this;
             this.slideIndex = 2;
-            this.owl.goTo(this.slideIndex);
             this.masterMap[this.masterMap['selectedType']]['selectedSource'] = this.sourceMap[source];
+            var options = {
+              selectedSource: this.sourceMap[source]
+            };
+            this.panel3.render(options);
+            if (source == this.source1) {
+                this.getGHRepos();
+            }
+            this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, 0);
             this.renderBreadCrumbView();
         },
@@ -201,6 +213,29 @@ define(['jquery',
             $nextBtn.animate({opacity: nextOpacity}, {duration: ((nextOpacity == 0) ? 0 : this.bottomNavDuration), queue: false});
             backOpacity == 0 ? $backBtn.hide() : $backBtn.show();
             nextOpacity == 0 ? $nextBtn.hide() : $nextBtn.show();
+        },
+
+        getGHRepos: function () {
+            var self = this;
+            if (this.repos == null) {
+                var user = new User();
+                user.getAllUserRepos({gh_username: self.userData.gh_username}, {
+                    success: function(data) {
+                        self.handleUserRepos(data.repos);
+                    }, error: function() {
+                        console.log('Error getting all user repos');
+                    }
+                });
+            } else {
+                console.log('else');
+                this.panel3.populateUIRepoList();
+            }
+        },
+
+        handleUserRepos: function (repoNamesArray) {
+            console.log(this.repos);
+            this.repos = repoNamesArray;
+            this.panel3.passUserRepos(this.repos);
         },
 
         addPubSubListeners: function () {
@@ -222,6 +257,23 @@ define(['jquery',
 
         getNextBtnOpacity: function () {
             return (this.slideIndex == 0 && !!this.checkIfProjectSourceSelected()) ? 1 : 0;
+        },
+
+        getRepoDetails: function (repoName) {
+            var self = this;
+            var user = new User();
+            user.getRepoDetails({gh_username: self.userData.gh_username, repo_name: repoName}, {
+                success: function(data) {
+                    self.handleRepoDetails(data);
+                }, error: function() {
+                    console.log('Error getting repo details');
+                }
+            });
+        },
+
+        handleRepoDetails: function (data) {
+            var self = this;
+            console.log(data);
         },
 
         renderBreadCrumbView: function () {
@@ -294,7 +346,12 @@ define(['jquery',
             this.panel3 = new AddProjectDetailsView({
                 el: '#newProjectPanel3'
             });
+            this.panel3.sourceMap = this.sourceMap;
             this.panel3.render();
+
+            this.listenTo(this.panel3, 'repo:getDetails', function (name) {
+                self.getRepoDetails(name);
+            });
 
             this.setSizeForPopup();
 

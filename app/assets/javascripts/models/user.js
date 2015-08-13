@@ -37,6 +37,17 @@ define(['jquery',
             return this.sync('getAllUserRepos', this, requestInfo);
         },
 
+        getRepoDetails: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getRepoDetails',
+                data: info
+            });
+
+            return this.sync('getRepoDetails', this, requestInfo);
+        },
+
         getByGHUsername: function(info, options){
             var requestInfo = options || {};
 
