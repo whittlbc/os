@@ -163,3 +163,59 @@
 }
 
 
+.add-project-details-scroll-container {
+  width: 100%;
+  height: 370px;
+  overflow: scroll;
+}
+
+.add-project-details-inside-container {
+  width: 100%;
+  height: auto;
+}
+
+#addNewProjectRepoList {
+
+}
+
+.add-project-title-container {
+  width: 100%;
+  height: 40px;
+}
+
+input[name="add-project-title"] {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 35px;
+  padding: 6px;
+  font-size: 14px;
+  font-family: 'Helvetica Neue'
+}
+
+.add-project-description-container {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+textarea[name="add-project-description"] {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 60px;
+  padding: 6px;
+  font-size: 14px;
+  font-family: 'Helvetica Neue';
+  resize: none;
+}
+
+.add-project-langs-frames-container {
+
+}
+
+#add-project-langs-frames-selection {
+
+}

@@ -56,8 +56,32 @@ define(['jquery',
         },
 
         setHeight: function (height) {
-            var self = this;
             this.$el.find('.add-project-details-view').height(height);
+        },
+
+        initLangFramesDropdown: function () {
+            var self = this;
+            var options = {
+                theme: 'links',
+                maxItems: null,
+                valueField: 'id',
+                searchField: 'title',
+                options: this.dropdown_items,
+                normal: true,
+                selectOnTab: true,
+                render: {
+                    option: function (data, escape) {
+                        return '<div class="option title">' + escape(data.title) + '</div>';
+                    },
+                    item: function (data, escape) {
+                        return '<div class="item">' + escape(data.title) + '</div>';
+                    }
+                }
+            };
+
+            var $langFrameSelect= this.$el.find('#filters-langs-frames').selectize(options);
+            var langFrameSelectize = $langFrameSelect[0].selectize;
+            this.langFrameSelectize = langFrameSelectize;
         },
 
 		render: function (options) {

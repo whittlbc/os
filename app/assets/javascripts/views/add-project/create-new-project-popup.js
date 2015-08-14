@@ -146,8 +146,8 @@ define(['jquery',
             this.panel1.setHeight(this.popupHeight);
             this.panel2.$el.height(this.popupHeight);
             this.panel2.setHeight(this.popupHeight);
-            this.panel3.$el.height(this.popupHeight);
-            this.panel3.setHeight(this.popupHeight);
+            this.panel3.$el.height(this.popupContainerHeight);
+            this.panel3.setHeight(this.popupContainerHeight);
         },
 
         checkIfProjectSourceSelected: function () {

@@ -1,9 +1,20 @@
 <div class="add-project-details-view">
-    {{#gh}}
-    <ul id="createNewProjectRepoList"></ul>
-    {{/gh}}
-    {{#scratch}}
-    {{/scratch}}
-    {{#ideas}}
-    {{/ideas}}
+    <div class="add-project-details-scroll-container">
+        <div class="add-project-details-inside-container">
+            {{#gh}}
+            <div class="add-project-gh-repo-list">
+                <ul id="addNewProjectRepoList"></ul>
+            </div>
+            {{/gh}}
+            <div class="add-project-title-container">
+                <input name="add-project-title" placeholder="Title" type="text"/>
+            </div>
+            <div class="add-project-description-container">
+                <textarea name="add-project-description" placeholder="Description"></textarea>
+            </div>
+            <div class="add-project-langs-frames-container">
+                <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
+            </div>
+        </div>
+    </div>
 </div>
