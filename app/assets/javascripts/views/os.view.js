@@ -80,6 +80,14 @@ define(['jquery',
             this.createNewProjectPopup.userData = this.userData;
         },
 
+        passLangDataToParent: function (data) {
+            this.createNewProjectPopup.passLangData(data);
+        },
+
+        passTagsToParent: function (data) {
+            this.createNewProjectPopup.passTags(data);
+        },
+
         getUniversalSearchData: function () {
             var self = this;
             var project = new Project();

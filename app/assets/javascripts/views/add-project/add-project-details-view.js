@@ -2,8 +2,9 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'views/add-project/repo-list-item',
-	'stache!views/add-project/add-project-details-view'
-    ], function ($,
+	'stache!views/add-project/add-project-details-view',
+    'selectize'
+], function ($,
      Backbone,
      _,
      RepoListItem,
@@ -59,6 +60,18 @@ define(['jquery',
             this.$el.find('.add-project-details-view').height(height);
         },
 
+        passLangDropdownItems: function (data) {
+            var self = this;
+            this.dropdownItems = data;
+            this.initLangFramesDropdown();
+        },
+
+        passTags: function (data) {
+            var self = this;
+            this.tags = data;
+            this.initTagsDropdown();
+        },
+
         initLangFramesDropdown: function () {
             var self = this;
             var options = {
@@ -66,7 +79,7 @@ define(['jquery',
                 maxItems: null,
                 valueField: 'id',
                 searchField: 'title',
-                options: this.dropdown_items,
+                options: this.dropdownItems,
                 normal: true,
                 selectOnTab: true,
                 render: {
@@ -79,9 +92,34 @@ define(['jquery',
                 }
             };
 
-            var $langFrameSelect= this.$el.find('#filters-langs-frames').selectize(options);
+            var $langFrameSelect = this.$el.find('#add-project-langs-frames-selection').selectize(options);
             var langFrameSelectize = $langFrameSelect[0].selectize;
             this.langFrameSelectize = langFrameSelectize;
+        },
+
+        initTagsDropdown: function () {
+            var self = this;
+            var options = {
+                theme: 'links',
+                maxItems: null,
+                valueField: 'id',
+                searchField: 'title',
+                options: this.tags,
+                normal: true,
+                selectOnTab: true,
+                render: {
+                    option: function (data, escape) {
+                        return '<div class="option title">' + escape(data.title) + '</div>';
+                    },
+                    item: function (data, escape) {
+                        return '<div class="item">' + escape(data.title) + '</div>';
+                    }
+                }
+            };
+
+            var $tagsSelect = this.$el.find('#add-project-tags-selection').selectize(options);
+            var tagsSelectize = $tagsSelect[0].selectize;
+            this.tagsSelectize = tagsSelectize;
         },
 
 		render: function (options) {
@@ -95,6 +133,24 @@ define(['jquery',
                 scratch: this.selectedSource == this.sourceMap['scratch'],
                 ideas: this.selectedSource == this.sourceMap['pull-from-ideas'],
             }));
+            if (this.dropdownItems) {
+                this.initLangFramesDropdown();
+            }
+
+            this.tags = [
+                {
+                    "id": "iOS",
+                    "title": "iOS"
+                },
+                {
+                    "id": "Boss Shit",
+                    "title": "Boss Shit"
+                }
+            ];
+
+            if (this.tags) {
+                this.initTagsDropdown();
+            }
 		}
 	});
 

@@ -205,6 +205,7 @@ define(['jquery',
         handleAllLanguages: function (resp) {
             master.projectFeedView.passColorsAndInitials(resp.colors_and_initials);
             master.projectFeedView.render();
+            master.passLangDataToParent(resp.dropdown_items);
             master.colors_and_initials = resp.colors_and_initials;
             master.dropdown_items = resp.dropdown_items;
             master.langSelectionList.setColorsAndInitials(master.colors_and_initials);

@@ -276,6 +276,18 @@ define(['jquery',
             console.log(data);
         },
 
+        passLangData: function (data) {
+            var self = this;
+            this.dropdownItems = data;
+            this.panel3.passLangDropdownItems(data);
+        },
+
+        passTags: function (data) {
+            var self = this;
+            this.tags = data;
+            this.panel3.passTags(data);
+        },
+
         renderBreadCrumbView: function () {
             this.breadCrumbView.render({
                 breadCrumb1Clickable: this.masterMap['selectedType'] != null,
