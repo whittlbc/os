@@ -14,7 +14,8 @@ define(['jquery',
 	var AddProjectDetailsView = Backbone.View.extend({
 
 		initialize: function () {
-		},
+            this.langsFramesValue = [];
+        },
 
 		events: {},
 
@@ -62,7 +63,8 @@ define(['jquery',
 
         passLangDropdownItems: function (data) {
             var self = this;
-            this.dropdownItems = data;
+            this.dropdownItems = data.dropdown_items;
+            this.allFrames = data.all_frames;
             this.initLangFramesDropdown();
         },
 
@@ -91,10 +93,21 @@ define(['jquery',
                     }
                 }
             };
-
             var $langFrameSelect = this.$el.find('#add-project-langs-frames-selection').selectize(options);
             var langFrameSelectize = $langFrameSelect[0].selectize;
             this.langFrameSelectize = langFrameSelectize;
+            this.langFrameSelectize.original = true;
+            this.langFrameSelectize.on('item_add', function (value, $item) {
+                if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
+                    self.langsFramesValue = self.langFrameSelectize.getValue();
+                    self.langFrameSelectize.addItem(self.allFrames[value]);
+                } else {
+                    self.langsFramesValue = self.langFrameSelectize.getValue();
+                }
+            });
+            this.langFrameSelectize.on('item_remove', function (value, $item) {
+                self.langsFramesValue = self.langFrameSelectize.getValue();
+            });
         },
 
         initTagsDropdown: function () {
@@ -120,6 +133,7 @@ define(['jquery',
             var $tagsSelect = this.$el.find('#add-project-tags-selection').selectize(options);
             var tagsSelectize = $tagsSelect[0].selectize;
             this.tagsSelectize = tagsSelectize;
+            this.tagsSelectize.original = true;
         },
 
 		render: function (options) {

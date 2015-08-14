@@ -205,7 +205,7 @@ define(['jquery',
         handleAllLanguages: function (resp) {
             master.projectFeedView.passColorsAndInitials(resp.colors_and_initials);
             master.projectFeedView.render();
-            master.passLangDataToParent(resp.dropdown_items);
+            master.passLangDataToParent(resp);
             master.colors_and_initials = resp.colors_and_initials;
             master.dropdown_items = resp.dropdown_items;
             master.langSelectionList.setColorsAndInitials(master.colors_and_initials);
@@ -238,6 +238,7 @@ define(['jquery',
             var $select = master.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
             master.selectize = selectize;
+            master.selectize.original = false;
             master.selectize.zipUp(0);
             master.gotLanguages = true;
             master.setLangFrameInputProps();
