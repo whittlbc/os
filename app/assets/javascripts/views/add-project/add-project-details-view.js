@@ -31,7 +31,6 @@ define(['jquery',
             this.REPOS = [];
             this.$el.find('#addNewProjectRepoList').empty();
             for (var i = 0; i < this.repos.length; i++) {
-                console.log('add list item');
                 this.addRepoToList(this.repos[i]);
             }
         },
@@ -136,8 +135,21 @@ define(['jquery',
             this.tagsSelectize.original = true;
         },
 
-        checkIfShowGHURLAndLicense: function () {
+        checkIfShowRepoNameAndLicense: function () {
             return ((this.selectedType == this.typeMap['on-the-fence'] && this.selectedSource != this.sourceMap['pull-from-ideas']) || this.selectedType == this.typeMap['launched']);
+        },
+
+        passRepoInfo: function (data) {
+            var self = this;
+            this.repoData = data;
+            this.setRepoInfo();
+        },
+
+        setRepoInfo: function () {
+            var self = this;
+            console.log(this.repoData.description);
+            this.$el.find('[name=add-project-title]').val(this.repoData.description);
+            this.$el.find('[name=add-project-repo-name]').val(this.repoData.name);
         },
 
 		render: function (options) {
@@ -150,7 +162,7 @@ define(['jquery',
                 gh: this.selectedSource == this.sourceMap['gh'],
                 scratch: this.selectedSource == this.sourceMap['scratch'],
                 ideas: this.selectedSource == this.sourceMap['pull-from-ideas'],
-                onTheFenceOrLaunchedNoPullFromIdeas: this.checkIfShowGHURLAndLicense(),
+                onTheFenceOrLaunchedNoPullFromIdeas: this.checkIfShowRepoNameAndLicense(),
                 launched: this.selectedType == this.typeMap['launched']
             }));
             if (this.dropdownItems) {

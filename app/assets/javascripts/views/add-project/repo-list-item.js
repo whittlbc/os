@@ -27,7 +27,6 @@ define(['jquery',
         },
 
 		render: function () {
-            console.log('render');
 			var self = this;
             this.$el.html(RepoListItemTpl({
                 name: this.name

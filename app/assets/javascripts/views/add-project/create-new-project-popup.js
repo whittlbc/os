@@ -273,8 +273,7 @@ define(['jquery',
         },
 
         handleRepoDetails: function (data) {
-            var self = this;
-            console.log(data);
+            this.panel3.passRepoInfo(data);
         },
 
         passLangData: function (data) {

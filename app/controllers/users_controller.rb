@@ -140,6 +140,11 @@ class UsersController < ApplicationController
     repo = client.repository(:user => params[:gh_username], :repo => params[:repo_name]).each { |detail|
       repo_map[detail[0]] = detail[1]
     }
+
+    # Need to also make call for License
+
+    # Need to also make call for Languages
+
     render :json => repo_map
   end
 
