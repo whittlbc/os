@@ -27,7 +27,7 @@ define(['jquery',
         populateUIRepoList: function () {
             var self = this;
             this.REPOS = [];
-            this.$el.find('#createNewProjectRepoList').empty();
+            this.$el.find('#addNewProjectRepoList').empty();
             for (var i = 0; i < this.repos.length; i++) {
                 console.log('add list item');
                 this.addRepoToList(this.repos[i]);
@@ -44,7 +44,7 @@ define(['jquery',
             repoListItem.setData(data);
             this.setItemListeners(repoListItem);
             repoListItem.render();
-            this.$el.find('#createNewProjectRepoList').append(repoListItem.el);
+            this.$el.find('#addNewProjectRepoList').append(repoListItem.el);
             this.REPOS.push(repoListItem);
         },
 
