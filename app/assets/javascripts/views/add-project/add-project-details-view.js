@@ -136,6 +136,10 @@ define(['jquery',
             this.tagsSelectize.original = true;
         },
 
+        checkIfShowGHURLAndLicense: function () {
+            return ((this.selectedType == this.typeMap['on-the-fence'] && this.selectedSource != this.sourceMap['pull-from-ideas']) || this.selectedType == this.typeMap['launched']);
+        },
+
 		render: function (options) {
 			var self = this;
             if (options && options.selectedSource) {
@@ -146,6 +150,8 @@ define(['jquery',
                 gh: this.selectedSource == this.sourceMap['gh'],
                 scratch: this.selectedSource == this.sourceMap['scratch'],
                 ideas: this.selectedSource == this.sourceMap['pull-from-ideas'],
+                onTheFenceOrLaunchedNoPullFromIdeas: this.checkIfShowGHURLAndLicense(),
+                launched: this.selectedType == this.typeMap['launched']
             }));
             if (this.dropdownItems) {
                 this.initLangFramesDropdown();

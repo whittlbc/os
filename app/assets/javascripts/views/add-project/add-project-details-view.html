@@ -18,6 +18,7 @@
             <div class="add-project-tags-container">
                 <select id="add-project-tags-selection" placeholder="Additional Tags"></select>
             </div>
+            {{#onTheFenceOrLaunchedNoPullFromIdeas}}
             <div class="add-project-gh-url-container">
                 <input name="add-project-gh-url" placeholder="Github URL" type="text"/>
             </div>
@@ -28,12 +29,15 @@
                     <option id="GPL" value="GPL">GPL</option>
                 </select>
             </div>
+            {{/onTheFenceOrLaunchedNoPullFromIdeas}}
+            {{#launched}}
             <div class="add-project-privacy-container">
                 <select id="add-project-privacy-selection">
                     <option id="request" value="Request to Join">Request to Join</option>
                     <option id="open" value="Open">Open</option>
                 </select>
             </div>
+            {{/launched}}
         </div>
     </div>
 </div>

@@ -167,6 +167,7 @@ define(['jquery',
             var self = this;
             var options = {};
             this.masterMap['selectedType'] = this.typeMap[type];
+            this.panel3.selectedType = this.typeMap[type];
             if (type == this.type1) {
                 // if it's type "up-for-grabs", the source is already known --> 'scratch',
                 // so skip step 2 and go straight to step 3
@@ -359,6 +360,7 @@ define(['jquery',
                 el: '#newProjectPanel3'
             });
             this.panel3.sourceMap = this.sourceMap;
+            this.panel3.typeMap = this.typeMap;
             this.panel3.render();
 
             this.listenTo(this.panel3, 'repo:getDetails', function (name) {
