@@ -2,12 +2,14 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'views/add-project/repo-list-item',
+    'view/add-project/repos-loading-view',
 	'stache!views/add-project/add-project-details-view',
     'selectize'
 ], function ($,
      Backbone,
      _,
      RepoListItem,
+     ReposLoadingView,
      AddProjectDetailsViewTpl) {
 	'use strict';
 
@@ -150,6 +152,12 @@ define(['jquery',
             console.log(this.repoData.description);
             this.$el.find('[name=add-project-title]').val(this.repoData.description);
             this.$el.find('[name=add-project-repo-name]').val(this.repoData.name);
+            for (var i = 0; i < this.repoData.langsFrames.length; i++) {
+                this.langFrameSelectize.addItem(this.repoData.langsFrames[i]);
+            }
+            if (this.repoData.license) {
+                this.$el.find('#add-project-license-selection').select(this.repoData.license);
+            }
         },
 
 		render: function (options) {
@@ -165,6 +173,19 @@ define(['jquery',
                 onTheFenceOrLaunchedNoPullFromIdeas: this.checkIfShowRepoNameAndLicense(),
                 launched: this.selectedType == this.typeMap['launched']
             }));
+
+            this.reposLoadingView = new ReposLoadingView({
+                el: '#reposLoadingView'
+            });
+            this.reposLoadingView.setMessage('Fetching your repositories');
+            this.reposLoadingView.render();
+
+            options && options.showReposLoadingView ? this.reposLoadingView.show() : this.reposLoadingView.hide();
+
+            if (this.repos && this.selectedSource == this.sourceMap['gh']) {
+                this.populateUIRepoList();
+            }
+
             if (this.dropdownItems) {
                 this.initLangFramesDropdown();
             }
@@ -183,7 +204,7 @@ define(['jquery',
             if (this.tags) {
                 this.initTagsDropdown();
             }
-		}
+        }
 	});
 
 	return AddProjectDetailsView;

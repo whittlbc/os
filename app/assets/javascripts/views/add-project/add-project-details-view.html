@@ -4,6 +4,7 @@
             {{#gh}}
             <div class="add-project-gh-repo-list">
                 <ul id="addNewProjectRepoList"></ul>
+                <div id="reposLoadingView" hidden></div>
             </div>
             {{/gh}}
             <div class="add-project-title-container">
@@ -24,6 +25,7 @@
             </div>
             <div class="add-project-license-container">
                 <select id="add-project-license-selection">
+                    <option id="none" value="none" selected="selected"></option>
                     <option id="MIT" value="MIT">MIT</option>
                     <option id="BSD" value="BSD">BSD</option>
                     <option id="GPL" value="GPL">GPL</option>

@@ -193,10 +193,11 @@ define(['jquery',
             var options = {
               selectedSource: this.sourceMap[source]
             };
-            this.panel3.render(options);
-            if (source == this.source1) {
+            if (source == this.source1 && this.repos == null) {
+                options.showReposLoadingView = true;
                 this.getGHRepos();
             }
+            this.panel3.render(options);
             this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, 0);
             this.renderBreadCrumbView();
@@ -218,19 +219,14 @@ define(['jquery',
 
         getGHRepos: function () {
             var self = this;
-            if (this.repos == null) {
-                var user = new User();
-                user.getAllUserRepos({gh_username: self.userData.gh_username}, {
-                    success: function(data) {
-                        self.handleUserRepos(data.repos);
-                    }, error: function() {
-                        console.log('Error getting all user repos');
-                    }
-                });
-            } else {
-                console.log('else');
-                this.panel3.populateUIRepoList();
-            }
+            var user = new User();
+            user.getAllUserRepos({gh_username: self.userData.gh_username}, {
+                success: function(data) {
+                    self.handleUserRepos(data.repos);
+                }, error: function() {
+                    console.log('Error getting all user repos');
+                }
+            });
         },
 
         handleUserRepos: function (repoNamesArray) {
