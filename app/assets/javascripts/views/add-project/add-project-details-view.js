@@ -33,7 +33,7 @@ define(['jquery',
         },
 
         setHeight: function (height) {
-            this.$el.find('.add-project-details-inside-container').height(height);
+            //this.$el.find('.add-project-details-inside-container').height(height);
         },
 
         passLangDropdownItems: function (data) {
@@ -52,6 +52,12 @@ define(['jquery',
 
         passType: function (type) {
             this.selectedType = type;
+        },
+
+        scrollToDetailsView: function () {
+            var self = this;
+            var top = this.detailsView.$el.offset().top;
+            this.$el.find('.add-project-details-scroll-container').scrollTop(top);
         },
 
 		render: function (options) {
@@ -97,6 +103,9 @@ define(['jquery',
             this.listenTo(this.repoListView, 'repo:selected', function (name) {
                 self.trigger('repo:getDetails', name);
                 self.detailsView.render({hideDetailsView: false});
+                setTimeout(function () {
+                    self.scrollToDetailsView();
+                }, 10);
             });
             if (this.repos) {
                 this.repoListView.passUserRepos(this.repos);

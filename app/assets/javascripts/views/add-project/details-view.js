@@ -117,11 +117,17 @@ define(['jquery',
                 this.selectedSource = options.selectedSource;
             }
 
+            var hideDetailsView = options && options.hideDetailsView;
+
             this.$el.html(DetailsViewTpl({
                 onTheFenceOrLaunchedNoPullFromIdeas: this.checkIfShowRepoNameAndLicense(),
                 launched: this.selectedType == this.typeMap['launched'],
-                hideDetailsView: options && options.hideDetailsView
+                hideDetailsView: hideDetailsView
             }));
+
+            if (!hideDetailsView) {
+                this.$el.css('min-height', '370px');
+            }
 
             if (this.dropdownItems && options && !options.hideDetailsView) {
                 this.initLangFramesDropdown();
@@ -141,6 +147,7 @@ define(['jquery',
             if (this.tags && options && !options.hideDetailsView) {
                 this.initTagsDropdown();
             }
+
 		}
 	});
 
