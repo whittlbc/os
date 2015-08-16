@@ -2,7 +2,8 @@ define(['jquery',
 	'backbone',
 	'underscore',
 	'stache!views/add-project/details-view',
-    'selectize'
+    'selectize',
+    'velocity'
     ], function ($,
      Backbone,
      _,
@@ -12,9 +13,23 @@ define(['jquery',
 	var DetailsView = Backbone.View.extend({
 
 		initialize: function () {
+            this.toggleDescriptionSizeDuration = 275;
 		},
 
-		events: {},
+		events: {
+            'focus [name=add-project-description]': 'expandDescription',
+            'blur [name=add-project-description]': 'contractDescription'
+        },
+
+        expandDescription: function (e) {
+            var self = this;
+            $(e.currentTarget).velocity({height: 250}, {duration: self.toggleDescriptionSizeDuration});
+        },
+
+        contractDescription: function (e) {
+            var self = this;
+            $(e.currentTarget).velocity({height: 90}, {duration: self.toggleDescriptionSizeDuration});
+        },
 
         initLangFramesDropdown: function () {
             var self = this;

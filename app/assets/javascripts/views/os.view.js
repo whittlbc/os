@@ -44,11 +44,12 @@ define(['jquery',
                     master.universalSearch($(e.currentTarget).val());
                 });
 
-                master.createNewProjectPopup = new CreateNewProjectPopup({
-                    el: '#createNewProjectModalContent'
-                });
-
-                master.createNewProjectPopup.render();
+                if (!master.createNewProjectPopup) {
+                    master.createNewProjectPopup = new CreateNewProjectPopup({
+                        el: '#createNewProjectModalContent'
+                    });
+                    master.createNewProjectPopup.render();
+                }
 
                 loadedAllProjects = true;
             }
@@ -77,15 +78,21 @@ define(['jquery',
 
         passUserInfoToParent: function (userData) {
             this.userData = userData;
-            this.createNewProjectPopup.userData = this.userData;
+            if (this.createNewProjectPopup) {
+                this.createNewProjectPopup.userData = this.userData;
+            }
         },
 
         passLangDataToParent: function (data) {
-            this.createNewProjectPopup.passLangData(data);
+            if (this.createNewProjectPopup) {
+                this.createNewProjectPopup.passLangData(data);
+            }
         },
 
         passTagsToParent: function (data) {
-            this.createNewProjectPopup.passTags(data);
+            if (this.createNewProjectPopup) {
+                this.createNewProjectPopup.passTags(data);
+            }
         },
 
         getUniversalSearchData: function () {
