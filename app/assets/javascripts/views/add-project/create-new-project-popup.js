@@ -167,7 +167,7 @@ define(['jquery',
             var self = this;
             var options = {};
             this.masterMap['selectedType'] = this.typeMap[type];
-            this.panel3.selectedType = this.typeMap[type];
+            this.panel3.passType(this.typeMap[type]);
             if (type == this.type1) {
                 // if it's type "up-for-grabs", the source is already known --> 'scratch',
                 // so skip step 2 and go straight to step 3
@@ -230,7 +230,6 @@ define(['jquery',
         },
 
         handleUserRepos: function (repoNamesArray) {
-            console.log(this.repos);
             this.repos = repoNamesArray;
             this.panel3.passUserRepos(this.repos);
         },

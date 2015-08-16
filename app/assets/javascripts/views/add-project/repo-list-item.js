@@ -14,7 +14,7 @@ define(['jquery',
 		},
 
 		events: {
-            'click .repo-list-item-container': 'handleClick'
+            'click .repo-list-item': 'handleClick'
         },
 
         handleClick: function () {

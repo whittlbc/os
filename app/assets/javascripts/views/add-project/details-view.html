@@ -1,0 +1,35 @@
+{{^hideDetailsView}}
+<div class="enter-details-message">Enter project details</div>
+<div class="add-project-title-container">
+    <input name="add-project-title" placeholder="Title" type="text"/>
+</div>
+<div class="add-project-description-container">
+    <textarea name="add-project-description" placeholder="Description"></textarea>
+</div>
+<div class="add-project-langs-frames-container">
+    <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
+</div>
+<div class="add-project-tags-container">
+    <select id="add-project-tags-selection" placeholder="Additional Tags"></select>
+</div>
+{{#onTheFenceOrLaunchedNoPullFromIdeas}}
+<div class="add-project-repo-name-container">
+    <input name="add-project-repo-name" placeholder="Github Repo Name" type="text"/>
+</div>
+<div class="add-project-license-container">
+    <select id="add-project-license-selection">
+        <option id="MIT" value="MIT">MIT</option>
+        <option id="BSD" value="BSD">BSD</option>
+        <option id="GPL" value="GPL">GPL</option>
+    </select>
+</div>
+{{/onTheFenceOrLaunchedNoPullFromIdeas}}
+{{#launched}}
+<div class="add-project-privacy-container">
+    <select id="add-project-privacy-selection">
+        <option id="request" value="Request to Join">Request to Join</option>
+        <option id="open" value="Open">Open</option>
+    </select>
+</div>
+{{/launched}}
+{{/hideDetailsView}}

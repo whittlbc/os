@@ -1,10 +1,12 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-	'stache!views/home/index-view'
+    'views/widgets/spinner-chasing-dots',
+	'stache!views/add-project/repos-loading-view'
     ], function ($,
      Backbone,
      _,
+     Spinner,
      ReposLoadingViewTpl) {
 	'use strict';
 
@@ -19,24 +21,12 @@ define(['jquery',
             this.message = message;
         },
 
-        startSpinner: function () {
-            var self = this;
-
-        },
-
-        stopSpinner: function () {
-            var self = this;
-
-        },
-
         show: function () {
-            this.startSpinner();
             this.$el.show();
         },
 
         hide: function () {
             this.$el.hide();
-            this.stopSpinner();
         },
 
 		render: function () {
@@ -45,7 +35,13 @@ define(['jquery',
                 message: this.message
             }));
 
-            this.$spinner = this.$el.find('.repos-loading-spinner');
+            this.spinner = new Spinner({
+                el: '#reposLoadingSpinner',
+                width: '70px',
+                height: '70px'
+            });
+
+            this.spinner.render();
 		}
 	});
 
