@@ -56,8 +56,9 @@ define(['jquery',
 
         scrollToDetailsView: function () {
             var self = this;
-            var top = this.detailsView.$el.offset().top;
-            this.$el.find('.add-project-details-scroll-container').scrollTop(top);
+            var $scrollContainer = this.$el.find('.add-project-details-scroll-container');
+            var reposViewHeight = this.repoListView.$el.height();
+            $scrollContainer.animate({scrollTop: reposViewHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
         },
 
 		render: function (options) {
