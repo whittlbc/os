@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="86b4e102-76bf-4781-a2f3-6e5f7dc4808e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/add-project.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/add-project.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="os.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,20 +55,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add-project.css.scss" pinned="false" current-in-tab="false">
+      <file leaf-file-name="add-project.css.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/add-project.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1960783">
-              <caret line="555" column="42" selection-start-line="555" selection-start-column="42" selection-end-line="555" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.33278418">
+              <caret line="183" column="30" selection-start-line="183" selection-start-column="30" selection-end-line="183" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="details-view.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="details-view.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38034865">
+            <state vertical-scroll-proportion="-8.888889">
               <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
@@ -195,8 +195,8 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" />
         <option value="$PROJECT_DIR$/public/assets/selectize.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.html" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/add-project.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.js" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/add-project.css.scss" />
       </list>
     </option>
   </component>
@@ -1273,6 +1273,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.888889">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.791667">
@@ -1283,16 +1291,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/add-project.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1960783">
-          <caret line="555" column="42" selection-start-line="555" selection-start-column="42" selection-end-line="555" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/details-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38034865">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33278418">
+          <caret line="183" column="30" selection-start-line="183" selection-start-column="30" selection-end-line="183" selection-end-column="30" />
           <folding />
         </state>
       </provider>
