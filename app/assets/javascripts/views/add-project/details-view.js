@@ -32,12 +32,29 @@ define(['jquery',
 
 		events: {
             'focus [name=add-project-description]': 'expandDescription',
-            'blur [name=add-project-description]': 'contractDescription'
+            'blur [name=add-project-description]': 'contractDescription',
+            'click .add-project-privacy-choice': 'handlePrivacySelection'
+        },
+
+        handlePrivacySelection: function (e) {
+            if (!$(e.currentTarget).hasClass('active-privacy')) {
+                ($(e.currentTarget).attr('name') == 'request') ? this.switchToRequest() : this.switchToOpen();
+            }
+        },
+
+        switchToOpen: function () {
+            this.$el.find('[name=request]').removeClass('active-privacy');
+            this.$el.find('[name=open]').addClass('active-privacy');
+        },
+
+        switchToRequest: function () {
+            this.$el.find('[name=open]').removeClass('active-privacy');
+            this.$el.find('[name=request]').addClass('active-privacy');
         },
 
         expandDescription: function (e) {
             var self = this;
-            $(e.currentTarget).velocity({height: 250}, {duration: self.toggleDescriptionSizeDuration});
+            $(e.currentTarget).velocity({height: 220}, {duration: self.toggleDescriptionSizeDuration});
         },
 
         contractDescription: function (e) {

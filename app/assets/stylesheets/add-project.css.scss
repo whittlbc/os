@@ -487,12 +487,16 @@ textarea[name="add-project-description"] {
 }
 
 .add-project-repo-name-text,
-.add-project-license-text,
-.add-project-privacy-text {
+.add-project-license-text {
   width: 60%;
 }
+
 .add-project-langs-frames-text {
   width: 50%;
+}
+
+.add-project-privacy-text {
+  width: 70%;
 }
 
 .add-project-langs-frames-selection-container,
@@ -507,14 +511,16 @@ textarea[name="add-project-description"] {
 }
 
 .add-project-repo-name-input-container,
-.add-project-license-selection-container,
-.add-project-privacy-choices {
+.add-project-license-selection-container {
   width: 40%;
 }
 
 .add-project-langs-frames-selection-container {
-  min-height: 75px;
   width: 50%;
+}
+
+.add-project-privacy-choices {
+  width: 30%;
 }
 
 input[name="add-project-repo-name"] {
@@ -538,26 +544,33 @@ input[name="add-project-repo-name"] {
   height: 45px;
   margin-top: 15px;
   padding-top: 10px;
-  width: 80%;
+  width: 100%;
   text-align: center;
-  color: black;
+  color: lightgray;
   font-size: 15px;
   font-family: 'Helvetica Neue';
+  background-color: white;
+  cursor: pointer;
+}
+
+.add-project-privacy-choice.active-privacy {
+  color: white;
+  background-color: #00A6C9;
+  border-color: #00A6C9 !important;
 }
 
 #add-project-privacy-request {
-  margin-left: 20%;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
-  border: 1px solid black;
+  border: 2px solid lightgray;
 }
 
 #add-project-privacy-open {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  border-right: 1px solid black;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-right: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+  border-bottom: 2px solid lightgray;
 }
 
 .fa-info-circle {
