@@ -120,6 +120,8 @@ define(['jquery',
             if (this.repos && this.selectedSource == this.sourceMap['gh']) {
                 this.populateUIRepoList();
             }
+
+            $('[data-toggle="tooltip"]').tooltip();
         }
 	});
 

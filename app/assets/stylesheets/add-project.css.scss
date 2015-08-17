@@ -1,4 +1,19 @@
 
+textarea {
+  outline: none;
+  box-shadow: none;
+}
+
+input {
+  box-shadow: none;
+  outline: none;
+}
+
+
+.modal-body {
+  padding-bottom: 0 !important;
+}
+
 #popup-owl {
   width: 100%;
 }
@@ -162,11 +177,29 @@
   color: green;
 }
 
-
 .add-project-details-scroll-container {
   width: 100%;
   height: 370px;
   overflow: scroll;
+}
+
+.add-project-details-scroll-container::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.add-project-details-scroll-container::-webkit-scrollbar:vertical {
+  width: 10px;
+}
+
+.add-project-details-scroll-container::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid white; /* should match background, can't be transparent */
+  background-color: #00A6C9;
+}
+
+.add-project-details-scroll-container::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 8px;
 }
 
 .add-project-details-inside-container {
@@ -180,41 +213,37 @@
 }
 
 input[name="add-project-title"] {
-  width: 90%;
+  width: 95%;
   margin-left: auto;
   margin-right: auto;
   display: block;
   height: 35px;
   padding: 6px;
   font-size: 14px;
-  font-family: 'Helvetica Neue'
+  font-family: 'Helvetica Neue';
+  border: 1px solid #C2C2CB;
+  border-radius: 4px;
 }
 
 .add-project-description-container {
   width: 100%;
   height: auto;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 textarea[name="add-project-description"] {
-  width: 90%;
+  width: 95%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 30px;
   display: block;
   height: 90px;
   padding: 6px;
   font-size: 14px;
   font-family: 'Helvetica Neue';
   resize: none;
-}
-
-.add-project-langs-frames-container {
-
-}
-
-#add-project-langs-frames-selection {
-
+  border: 1px solid #C2C2CB;
+  border-radius: 4px;
 }
 
 .add-project-gh-repo-list{
@@ -286,6 +315,7 @@ textarea[name="add-project-description"] {
   color: black;
   text-align: center;
   font-family: 'Helvetica Neue';
+  margin-bottom: 16px;
 }
 
 .sk-circle {
@@ -409,3 +439,146 @@ textarea[name="add-project-description"] {
       transform: scale(1);
     }
 }
+
+
+#detailsView {
+
+  .selectize-control.single,
+  .selectize-control.multi {
+    top: 19px;
+  }
+
+  .selectize-dropdown-content {
+    max-height: 95px !important;
+  }
+}
+
+
+.add-project-langs-frames-container,
+.add-project-repo-name-container,
+.add-project-license-container,
+.add-project-privacy-container {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 75px;
+  display: block;
+  position: relative;
+}
+
+.add-project-langs-frames-container {
+  min-height: 75px;
+}
+
+.add-project-langs-frames-text,
+.add-project-repo-name-text,
+.add-project-license-text,
+.add-project-privacy-text {
+  height: 70px;
+  display: inline-block;
+  padding-top: 26px;
+  padding-left: 5px;
+  font-size: 15px;
+  color: black;
+  font-family: 'Helvetica Neue';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.add-project-repo-name-text,
+.add-project-license-text,
+.add-project-privacy-text {
+  width: 60%;
+}
+.add-project-langs-frames-text {
+  width: 50%;
+}
+
+.add-project-langs-frames-selection-container,
+.add-project-repo-name-input-container,
+.add-project-license-selection-container,
+.add-project-privacy-choices {
+  height: 75px;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.add-project-repo-name-input-container,
+.add-project-license-selection-container,
+.add-project-privacy-choices {
+  width: 40%;
+}
+
+.add-project-langs-frames-selection-container {
+  min-height: 75px;
+  width: 50%;
+}
+
+input[name="add-project-repo-name"] {
+  width: 100%;
+  line-height: 31px;
+  border-radius: 4px;
+  border: 1px solid #C2C2CB;
+  margin-top: 19px;
+  padding-left: 6px;
+  font-size: 13px;
+  font-family: 'Helvetica Neue';
+}
+
+.add-project-privacy-choice-container {
+  width: 50%;
+  display: inline-block;
+  height: 75px;
+}
+
+.add-project-privacy-choice {
+  height: 45px;
+  margin-top: 15px;
+  padding-top: 10px;
+  width: 80%;
+  text-align: center;
+  color: black;
+  font-size: 15px;
+  font-family: 'Helvetica Neue';
+}
+
+#add-project-privacy-request {
+  margin-left: 20%;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border: 1px solid black;
+}
+
+#add-project-privacy-open {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.fa-info-circle {
+  color: #D1CFCF;
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+.fa-info-circle:hover {
+  color: #00A6C9;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-width: 5px 5px 0;
+  border-top-color: #00A6C9;
+}
+
+.tooltip > .tooltip-inner {
+  background-color: #00A6C9;
+  color: white;
+  font-family: 'Helvetica Neue';
+  margin-left: 30px;
+}
+

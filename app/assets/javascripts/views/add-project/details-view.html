@@ -1,35 +1,64 @@
 {{^hideDetailsView}}
 <div class="enter-details-message">Enter project details</div>
+
+<!--Title-->
 <div class="add-project-title-container">
     <input name="add-project-title" placeholder="Title" type="text"/>
 </div>
+
+<!--Description-->
 <div class="add-project-description-container">
     <textarea name="add-project-description" placeholder="Description"></textarea>
 </div>
+
+<!--Languages and Frameworks-->
 <div class="add-project-langs-frames-container">
-    <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
+    <div class="add-project-langs-frames-text">
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Blah Blah Blah
+    </div>{{
+    }}<div class="add-project-langs-frames-selection-container">
+        <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
+    </div>
 </div>
-<div class="add-project-tags-container">
-    <select id="add-project-tags-selection" placeholder="Additional Tags"></select>
-</div>
+
 {{#onTheFenceOrLaunchedNoPullFromIdeas}}
+<!--Repo Name-->
 <div class="add-project-repo-name-container">
-    <input name="add-project-repo-name" placeholder="Github Repo Name" type="text"/>
+    <div class="add-project-repo-name-text">
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Blah Blah Blah
+    </div>{{
+    }}<div class="add-project-repo-name-input-container">
+        <input name="add-project-repo-name" placeholder="Github Repo Name" type="text"/>
+    </div>
 </div>
+
+<!--License-->
 <div class="add-project-license-container">
-    <select id="add-project-license-selection">
-        <option id="MIT" value="MIT">MIT</option>
-        <option id="BSD" value="BSD">BSD</option>
-        <option id="GPL" value="GPL">GPL</option>
-    </select>
+    <div class="add-project-license-text">
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Blah Blah Blah
+    </div>{{
+    }}<div class="add-project-license-selection-container">
+        <select id="add-project-license-selection" placeholder="License"></select>
+    </div>
 </div>
 {{/onTheFenceOrLaunchedNoPullFromIdeas}}
+
 {{#launched}}
+<!--Privacy-->
 <div class="add-project-privacy-container">
-    <select id="add-project-privacy-selection">
-        <option id="request" value="Request to Join">Request to Join</option>
-        <option id="open" value="Open">Open</option>
-    </select>
+    <div class="add-project-privacy-text">
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Blah Blah Blah
+    </div>{{
+    }}<div class="add-project-privacy-choices">
+        <div class="add-project-privacy-choice-container">
+            <div id="add-project-privacy-request" name="request" class="add-project-privacy-choice active">Request</div>
+        </div>{{
+        }}<div class="add-project-privacy-choice-container">
+            <div id="add-project-privacy-open" name="open" class="add-project-privacy-choice">Open</div>
+        </div>
+    </div>
 </div>
 {{/launched}}
 {{/hideDetailsView}}
+
+

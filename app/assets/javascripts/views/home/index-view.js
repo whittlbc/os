@@ -216,7 +216,8 @@ define(['jquery',
                 valueField: 'id',
                 searchField: 'title',
                 options: master.dropdown_items,
-                selectOnTab: true,
+                original: false,
+                selectOnTab: false,
                 onFocus: function () {
                     if (master.langsFramesDropdownShown) {
                         master.zipDownDropdown();
@@ -238,7 +239,6 @@ define(['jquery',
             var $select = master.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
             master.selectize = selectize;
-            master.selectize.original = false;
             master.selectize.zipUp(0);
             master.gotLanguages = true;
             master.setLangFrameInputProps();
