@@ -72,10 +72,6 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                 verb: 'GET',
                 action: 'read'
             },
-            'createByGH': {
-                verb: 'POST',
-                action: 'create'
-            },
             'getAllUserRepos': {
                 verb: 'GET',
                 action: 'read'

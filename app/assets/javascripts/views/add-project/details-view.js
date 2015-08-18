@@ -40,11 +40,13 @@ define(['jquery',
         },
 
         handleTitleBlur: function (e) {
-            Backbone.EventBroker.trigger('title:updated', $(e.currentTarget).val());
+            this.title = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('title:updated', this.title);
         },
 
         handleRepoNameBlur: function (e) {
-            Backbone.EventBroker.trigger('repoName:updated', $(e.currentTarget).val());
+            this.repoName = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('repoName:updated', this.repoName);
         },
 
         handlePrivacySelection: function (e) {
@@ -56,13 +58,15 @@ define(['jquery',
         switchToOpen: function () {
             this.$el.find('[name=request]').removeClass('active-privacy');
             this.$el.find('[name=open]').addClass('active-privacy');
-            Backbone.EventBroker.trigger('privacy:updated', 'open');
+            this.privacy = 'open';
+            Backbone.EventBroker.trigger('privacy:updated', this.privacy);
         },
 
         switchToRequest: function () {
             this.$el.find('[name=open]').removeClass('active-privacy');
             this.$el.find('[name=request]').addClass('active-privacy');
-            Backbone.EventBroker.trigger('privacy:updated', 'request');
+            this.privacy = 'request';
+            Backbone.EventBroker.trigger('privacy:updated', this.privacy);
         },
 
         expandDescription: function (e) {
@@ -73,7 +77,8 @@ define(['jquery',
         contractDescription: function (e) {
             var self = this;
             $(e.currentTarget).velocity({height: 90}, {duration: self.toggleDescriptionSizeDuration});
-            Backbone.EventBroker.trigger('description:updated', $(e.currentTarget).val());
+            this.description = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('description:updated', this.description);
         },
 
         adjustHeightOfParent: function () {
@@ -90,7 +95,8 @@ define(['jquery',
                 searchField: 'title',
                 options: this.dropdownItems,
                 onBlur: function () {
-                    Backbone.EventBroker.trigger('langsFrames:updated', self.langFrameSelectize.getValue());
+                    self.langsFrames = self.langFrameSelectize.getValue();
+                    Backbone.EventBroker.trigger('langsFrames:updated', self.langsFrames);
                 },
                 selectOnTab: false,
                 render: {
@@ -129,7 +135,8 @@ define(['jquery',
                 searchField: 'title',
                 options: this.licenseItems,
                 onBlur: function () {
-                    Backbone.EventBroker.trigger('license:updated', self.licenseSelectize.getValue());
+                    self.license = self.licenseSelectize.getValue();
+                    Backbone.EventBroker.trigger('license:updated', self.license);
                 },
                 selectOnTab: false,
                 render: {
@@ -195,6 +202,9 @@ define(['jquery',
             for (var i = 0; i < data.languages.length; i++) {
                 this.langFrameSelectize.addItem(data.languages[i]);
             }
+            this.title = data.description; // most relevant actually to be the title
+            this.langsFrames = data.languages;
+            this.repoName = data.name;
         },
 
         passLangDropdownItems: function (data) {
@@ -210,6 +220,22 @@ define(['jquery',
             this.selectedType = type;
         },
 
+        allowCreate: function () {
+            // will need to show validation shit if not everything filled in
+            return true;
+        },
+
+        getData: function () {
+            return {
+                title: this.title,
+                description: this.description,
+                langsFrames: this.langsFrames,
+                repoName: this.repoName,
+                license: this.license,
+                privacy: this.privacy
+            };
+        },
+
         render: function (options) {
 			var self = this;
 
@@ -222,7 +248,10 @@ define(['jquery',
             this.langsFrames = (options && options.projectData) ? options.projectData.langsFrames : null;
             this.repoName = (options && options.projectData) ? options.projectData.repoName : null;
             this.license = (options && options.projectData) ? options.projectData.license : null;
-            this.privacy = (options && options.projectData) ? options.projectData.privacy : null;
+            this.privacy = (options && options.projectData) ? options.projectData.privacy : 'request';
+            if (this.privacy == null) {
+                this.privacy = 'request';
+            }
 
             var hideDetailsView = options && options.hideDetailsView;
 
@@ -245,10 +274,18 @@ define(['jquery',
 
             if (this.dropdownItems && options && !options.hideDetailsView) {
                 this.initLangFramesDropdown();
+                if (this.langsFrames != null) {
+                    for (var i = 0; i < this.langsFrames.length; i++) {
+                        this.langFrameSelectize.addItem(this.langsFrames[i]);
+                    }
+                }
             }
 
             if (options && !options.hideDetailsView && showRepoNameAndLicense) {
                 this.initLicenseDropdown();
+                if (this.license != null) {
+                    this.licenseSelectize.addItem(this.license);
+                }
             }
 
             //this.tags = [

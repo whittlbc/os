@@ -6,6 +6,7 @@ define(['jquery',
     'views/add-project/add-project-details-view',
     'views/add-project/breadcrumb-view',
     'models/user',
+    'models/project',
     'stache!views/add-project/create-new-project-popup',
     'owl-carousel',
     'backbone-eventbroker'
@@ -17,6 +18,7 @@ define(['jquery',
      AddProjectDetailsView,
      BreadCrumbView,
      User,
+     Project,
      IndexViewTpl) {
 	'use strict';
 
@@ -218,9 +220,23 @@ define(['jquery',
         },
 
         handleCreate: function () {
-            if (this.panel3.allowCreate()) {
-                this.newProjectData = this.panel3.getData();
-                console.log(this.newProjectData);
+            if (this.panel3.detailsView.allowCreate()) {
+                this.newProjectData = this.panel3.detailsView.getData();
+                var projectData = {
+                    gh_username: this.userData.gh_username,
+                    title: this.newProjectData.title,
+                    repo_name: this.newProjectData.repoName,
+                    description: this.newProjectData.description,
+                    license: [this.newProjectData.license],
+                    status: this.masterMap['selectedType'],
+                    langs_and_frames: this.newProjectData.langsFrames,
+                    anon: false, // do something about this
+                    privacy: [this.newProjectData.privacy]
+                };
+                var project = new Project();
+                project.create(projectData, {success: function () {
+                    console.log('SUCCESSFULLY CREATED PROJECT!');
+                }});
             }
         },
 
@@ -327,11 +343,6 @@ define(['jquery',
             this.renderBreadCrumbView();
         },
 
-        handleCreateProject: function (data) {
-            var self = this;
-            this.resetFlow();
-        },
-
         showCreateBtn: function () {
             var $createBtn = this.$el.find('.bottom-nav-create-btn');
             var $nextBtn = this.$el.find('.bottom-nav-next');
@@ -381,9 +392,6 @@ define(['jquery',
             });
             this.listenTo(this.panel2, 'source:selected', function (source) {
                 self.handleSourceSelected(source);
-            });
-            this.listenTo(this.panel3, 'project:create', function () {
-                self.handleCreateProject();
             });
         },
 
