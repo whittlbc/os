@@ -61,6 +61,16 @@ define(['jquery',
             $scrollContainer.animate({scrollTop: reposViewHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
         },
 
+        allowCreate: function () {
+            var self = this;
+
+        },
+
+        getData: function () {
+            var self = this;
+
+        },
+
 		render: function (options) {
 			var self = this;
 

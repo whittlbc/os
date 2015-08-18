@@ -33,7 +33,18 @@ define(['jquery',
 		events: {
             'focus [name=add-project-description]': 'expandDescription',
             'blur [name=add-project-description]': 'contractDescription',
-            'click .add-project-privacy-choice': 'handlePrivacySelection'
+            'click .add-project-privacy-choice': 'handlePrivacySelection',
+            'blur [name=add-project-title]': 'handleTitleBlur',
+            'blur [name=add-project-repo-name]': 'handleRepoNameBlur',
+
+        },
+
+        handleTitleBlur: function (e) {
+            Backbone.EventBroker.trigger('title:updated', $(e.currentTarget).val());
+        },
+
+        handleRepoNameBlur: function (e) {
+            Backbone.EventBroker.trigger('repoName:updated', $(e.currentTarget).val());
         },
 
         handlePrivacySelection: function (e) {
@@ -45,11 +56,13 @@ define(['jquery',
         switchToOpen: function () {
             this.$el.find('[name=request]').removeClass('active-privacy');
             this.$el.find('[name=open]').addClass('active-privacy');
+            Backbone.EventBroker.trigger('privacy:updated', 'open');
         },
 
         switchToRequest: function () {
             this.$el.find('[name=open]').removeClass('active-privacy');
             this.$el.find('[name=request]').addClass('active-privacy');
+            Backbone.EventBroker.trigger('privacy:updated', 'request');
         },
 
         expandDescription: function (e) {
@@ -60,6 +73,7 @@ define(['jquery',
         contractDescription: function (e) {
             var self = this;
             $(e.currentTarget).velocity({height: 90}, {duration: self.toggleDescriptionSizeDuration});
+            Backbone.EventBroker.trigger('description:updated', $(e.currentTarget).val());
         },
 
         adjustHeightOfParent: function () {
@@ -75,6 +89,9 @@ define(['jquery',
                 valueField: 'id',
                 searchField: 'title',
                 options: this.dropdownItems,
+                onBlur: function () {
+                    Backbone.EventBroker.trigger('langsFrames:updated', self.langFrameSelectize.getValue());
+                },
                 selectOnTab: false,
                 render: {
                     option: function (data, escape) {
@@ -111,6 +128,9 @@ define(['jquery',
                 valueField: 'id',
                 searchField: 'title',
                 options: this.licenseItems,
+                onBlur: function () {
+                    Backbone.EventBroker.trigger('license:updated', self.licenseSelectize.getValue());
+                },
                 selectOnTab: false,
                 render: {
                     option: function (data, escape) {
@@ -197,12 +217,26 @@ define(['jquery',
                 this.selectedSource = options.selectedSource;
             }
 
+            this.title = (options && options.projectData) ? options.projectData.title : null;
+            this.description = (options && options.projectData) ? options.projectData.description : null;
+            this.langsFrames = (options && options.projectData) ? options.projectData.langsFrames : null;
+            this.repoName = (options && options.projectData) ? options.projectData.repoName : null;
+            this.license = (options && options.projectData) ? options.projectData.license : null;
+            this.privacy = (options && options.projectData) ? options.projectData.privacy : null;
+
             var hideDetailsView = options && options.hideDetailsView;
 
+            var showRepoNameAndLicense = this.checkIfShowRepoNameAndLicense();
+
             this.$el.html(DetailsViewTpl({
-                onTheFenceOrLaunchedNoPullFromIdeas: this.checkIfShowRepoNameAndLicense(),
+                onTheFenceOrLaunchedNoPullFromIdeas: showRepoNameAndLicense,
                 launched: this.selectedType == this.typeMap['launched'],
-                hideDetailsView: hideDetailsView
+                hideDetailsView: hideDetailsView,
+                title: this.title,
+                description: this.description,
+                repoName: this.repoName,
+                requestPrivacy: this.privacy != 'open',
+                openPrivacy: this.privacy == 'open'
             }));
 
             if (!hideDetailsView) {
@@ -213,7 +247,7 @@ define(['jquery',
                 this.initLangFramesDropdown();
             }
 
-            if (options && !options.hideDetailsView) {
+            if (options && !options.hideDetailsView && showRepoNameAndLicense) {
                 this.initLicenseDropdown();
             }
 

@@ -7,7 +7,8 @@ define(['jquery',
     'views/add-project/breadcrumb-view',
     'models/user',
     'stache!views/add-project/create-new-project-popup',
-    'owl-carousel'
+    'owl-carousel',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -22,7 +23,17 @@ define(['jquery',
 	var CreateNewProjectPopup = Backbone.View.extend({
 
 		initialize: function () {
-            this.popupContainerHeight = 370;
+
+            Backbone.EventBroker.register({
+                'title:updated': 'handleTitleUpdate',
+                'description:updated': 'handleDescriptionUpdate',
+                'langsFrames:updated': 'handleLangsFramesUpdate',
+                'repoName:updated': 'handleRepoNameUpdate',
+                'license:updated': 'handleLicenseUpdate',
+                'privacy:updated': 'handlePrivacyUpdate'
+            }, this);
+
+            this.popupContainerHeight = 400;
             this.popupHeight = this.popupContainerHeight - 50;
 
             this.bottomNavDuration = 200;
@@ -61,8 +72,13 @@ define(['jquery',
                 'type1': {
                     'selectedSource': 'source2',
                     // Scratch
-                    'source1': {
-
+                    'source2': {
+                       'title': null,
+                        'description': null,
+                        'langsFrames': null,
+                        'repoName': null,
+                        'license': null,
+                        'privacy': null
                     }
                 },
 
@@ -71,15 +87,30 @@ define(['jquery',
                     'selectedSource': null,
                     // GH
                     'source1': {
-
+                        'title': null,
+                        'description': null,
+                        'langsFrames': null,
+                        'repoName': null,
+                        'license': null,
+                        'privacy': null
                     },
                     //Scratch
                     'source2': {
-
+                        'title': null,
+                        'description': null,
+                        'langsFrames': null,
+                        'repoName': null,
+                        'license': null,
+                        'privacy': null
                     },
                     // Pull from Ideas
                     'source3': {
-
+                        'title': null,
+                        'description': null,
+                        'langsFrames': null,
+                        'repoName': null,
+                        'license': null,
+                        'privacy': null
                     }
                 },
 
@@ -88,14 +119,88 @@ define(['jquery',
                     'selectedSource': null,
                     // GH
                     'source1': {
-
+                        'title': null,
+                        'description': null,
+                        'langsFrames': null,
+                        'repoName': null,
+                        'license': null,
+                        'privacy': null
                     },
                     // Scratch
                     'source2': {
-
+                        'title': null,
+                        'description': null,
+                        'langsFrames': null,
+                        'repoName': null,
+                        'license': null,
+                        'privacy': null
                     }
                 }
             };
+        },
+
+        getSelectedSourceObj: function () {
+            var selectedType = this.masterMap['selectedType'];
+            if (selectedType == null) {
+                return null;
+            }
+            var typeObj = this.masterMap[selectedType];
+            if (typeObj == null) {
+                return null;
+            }
+            var selectedSource = typeObj['selectedSource'];
+            if (selectedSource == null) {
+                return null;
+            }
+            return typeObj[selectedSource];
+        },
+
+        handleTitleUpdate: function (title) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['title'] = title;
+            }
+            console.log(this.masterMap);
+        },
+
+        handleDescriptionUpdate: function (description) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['description'] = description;
+            }
+            console.log(this.masterMap);
+        },
+
+        handleLangsFramesUpdate: function (langsFrames) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['langsFrames'] = langsFrames;
+            }
+            console.log(this.masterMap);
+        },
+
+        handleRepoNameUpdate: function (repoName) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['repoName'] = repoName;
+            }
+            console.log(this.masterMap);
+        },
+
+        handleLicenseUpdate: function (license) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['license'] = license;
+            }
+            console.log(this.masterMap);
+        },
+
+        handlePrivacyUpdate: function (privacy) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['privacy'] = privacy;
+            }
+            console.log(this.masterMap);
         },
 
         resetFlow: function () {
@@ -109,6 +214,14 @@ define(['jquery',
 		events: {
             'click .bottom-nav-back': 'handleBack',
             'click .bottom-nav-next': 'handleNext',
+            'click .bottom-nav-create-btn': 'handleCreate'
+        },
+
+        handleCreate: function () {
+            if (this.panel3.allowCreate()) {
+                this.newProjectData = this.panel3.getData();
+                console.log(this.newProjectData);
+            }
         },
 
         handleBack: function () {
@@ -116,6 +229,7 @@ define(['jquery',
                 this.owl.goTo(this.slideIndex - 1);
                 this.slideIndex--;
                 this.toggleBottomNav(this.getBackBtnOpacity(), 1);
+                this.hideCreateBtn();
                 this.renderBreadCrumbView();
             }
         },
@@ -126,6 +240,7 @@ define(['jquery',
                 this.owl.goTo(this.slideIndex + 1);
                 this.toggleBottomNav(1, this.getNextBtnOpacity());
                 this.slideIndex++;
+                this.checkIfNeedToShowCreateBtn();
                 this.renderBreadCrumbView();
             }
         },
@@ -136,6 +251,13 @@ define(['jquery',
 
         checkIfNextBtnShown: function () {
             return this.$el.find('.bottom-nav-next').css('opacity') == 1;
+        },
+
+        checkIfNeedToShowCreateBtn: function () {
+            var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
+            if (this.slideIndex == numSlides - 1) {
+                this.showCreateBtn();
+            }
         },
 
         setSizeForPopup: function () {
@@ -182,6 +304,7 @@ define(['jquery',
             this.panel2.render(options);
             this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
+            this.showModalFooterTopBorder();
             this.renderBreadCrumbView();
         },
 
@@ -190,7 +313,8 @@ define(['jquery',
             this.slideIndex = 2;
             this.masterMap[this.masterMap['selectedType']]['selectedSource'] = this.sourceMap[source];
             var options = {
-              selectedSource: this.sourceMap[source]
+                selectedSource: this.sourceMap[source],
+                projectData: this.getSelectedSourceObj()
             };
             if (source == this.source1 && this.repos == null) {
                 options.showReposLoadingView = true;
@@ -199,6 +323,7 @@ define(['jquery',
             this.panel3.render(options);
             this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, 0);
+            this.showCreateBtn();
             this.renderBreadCrumbView();
         },
 
@@ -207,11 +332,27 @@ define(['jquery',
             this.resetFlow();
         },
 
+        showCreateBtn: function () {
+            var $createBtn = this.$el.find('.bottom-nav-create-btn');
+            var $nextBtn = this.$el.find('.bottom-nav-next');
+            $nextBtn.animate({opacity: 0}, {duration: 0, queue: false});
+            $nextBtn.hide();
+            $createBtn.animate({opacity: 1}, {duration: this.bottomNavDuration, queue: false});
+            $createBtn.show();
+        },
+
+        hideCreateBtn: function () {
+            var $createBtn = this.$el.find('.bottom-nav-create-btn');
+            $createBtn.animate({opacity: 0}, {duration: 0, queue: false});
+            $createBtn.hide();
+        },
+
         toggleBottomNav: function (backOpacity, nextOpacity) {
             var $backBtn = this.$el.find('.bottom-nav-back');
             var $nextBtn = this.$el.find('.bottom-nav-next');
+            var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
             $backBtn.animate({opacity: backOpacity}, {duration: ((backOpacity == 0) ? 0 : this.bottomNavDuration), queue: false});
-            $nextBtn.animate({opacity: nextOpacity}, {duration: ((nextOpacity == 0) ? 0 : this.bottomNavDuration), queue: false});
+            $nextBtn.animate({opacity: nextOpacity}, {duration: ((nextOpacity == 0 || this.slideIndex == numSlides - 2) ? 0 : this.bottomNavDuration), queue: false});
             backOpacity == 0 ? $backBtn.hide() : $backBtn.show();
             nextOpacity == 0 ? $nextBtn.hide() : $nextBtn.show();
         },
@@ -282,6 +423,14 @@ define(['jquery',
             this.panel3.passTags(data);
         },
 
+        hideModalFooterTopBorder: function () {
+            this.$el.find('.fake-top-border').hide();
+        },
+
+        showModalFooterTopBorder: function () {
+            this.$el.find('.fake-top-border').show();
+        },
+
         renderBreadCrumbView: function () {
             this.breadCrumbView.render({
                 breadCrumb1Clickable: this.masterMap['selectedType'] != null,
@@ -326,10 +475,12 @@ define(['jquery',
                     // FORWARD
                     self.toggleBottomNav(1, self.getNextBtnOpacity());
                     self.slideIndex = indexEnd;
+                    self.checkIfNeedToShowCreateBtn();
                 } else if (indexEnd < self.slideIndex) {
                     // BACK
                     self.slideIndex = indexEnd;
                     self.toggleBottomNav(self.getBackBtnOpacity(), 1);
+                    self.hideCreateBtn();
                 }
                 self.renderBreadCrumbView();
                 self.owl.goTo(indexEnd);
