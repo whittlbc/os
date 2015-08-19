@@ -1,17 +1,18 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/os.util',
 	'stache!views/add-project/select-project-source-view'
     ], function ($,
      Backbone,
      _,
+     OSUtil,
      SelectProjectSourceViewTpl) {
 	'use strict';
 
 	var SelectProjectSourceView = Backbone.View.extend({
 
 		initialize: function (){
-            // this.sourceMap is set from CreateNewProjectPopup
         },
 
 		events: {
@@ -20,7 +21,7 @@ define(['jquery',
 
         handleSourceSelected: function (e) {
             var self = this;
-            this.selectedSource = this.sourceMap[e.currentTarget.id];
+            this.selectedSource = OSUtil.SOURCE_MAP[e.currentTarget.id];
             this.render();
             this.trigger('source:selected', e.currentTarget.id);
         },
@@ -45,9 +46,9 @@ define(['jquery',
 
             this.$el.html(SelectProjectSourceViewTpl({
                 showPullFromIdeas: this.showPullFromIdeas && !upForGrabsType,
-                ghSelected: this.selectedSource == this.sourceMap['gh'],
-                scratchSelected: this.selectedSource == this.sourceMap['scratch'],
-                ideasSelected: this.selectedSource == this.sourceMap['pull-from-ideas'],
+                ghSelected: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
+                scratchSelected: this.selectedSource == OSUtil.SOURCE_MAP['scratch'],
+                ideasSelected: this.selectedSource == OSUtil.SOURCE_MAP['pull-from-ideas'],
                 upForGrabsType: upForGrabsType
             }));
 		}

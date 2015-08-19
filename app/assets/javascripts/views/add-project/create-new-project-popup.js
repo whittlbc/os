@@ -7,6 +7,7 @@ define(['jquery',
     'views/add-project/breadcrumb-view',
     'models/user',
     'models/project',
+    'models/os.util',
     'stache!views/add-project/create-new-project-popup',
     'owl-carousel',
     'backbone-eventbroker'
@@ -19,6 +20,7 @@ define(['jquery',
      BreadCrumbView,
      User,
      Project,
+     OSUtil,
      IndexViewTpl) {
 	'use strict';
 
@@ -32,7 +34,8 @@ define(['jquery',
                 'langsFrames:updated': 'handleLangsFramesUpdate',
                 'repoName:updated': 'handleRepoNameUpdate',
                 'license:updated': 'handleLicenseUpdate',
-                'privacy:updated': 'handlePrivacyUpdate'
+                'privacy:updated': 'handlePrivacyUpdate',
+                'anon:updated': 'handleAnonUpdate'
             }, this);
 
             this.popupContainerHeight = 400;
@@ -43,27 +46,15 @@ define(['jquery',
             this.repos = null;
 
             this.slideIndex = 0;
-            this.type1 = 'up-for-grabs';
-            this.type2 = 'on-the-fence';
-            this.source1 = 'gh';
-            this.source2 = 'scratch';
+            this.type1 = OSUtil.REVERSE_TYPE_MAP['type1'];
+            this.type2 = OSUtil.REVERSE_TYPE_MAP['type2'];
+            this.source1 = OSUtil.REVERSE_SOURCE_MAP['source1'];
+            this.source2 = OSUtil.REVERSE_SOURCE_MAP['source2'];
 
             this.panelMap = {
                 'type-panel': 0,
                 'source-panel': 1,
                 'data-panel': 2
-            };
-
-            this.typeMap = {
-                'up-for-grabs': 'type1',
-                'on-the-fence': 'type2',
-                'launched': 'type3'
-            };
-
-            this.sourceMap = {
-                'gh': 'source1',
-                'scratch': 'source2',
-                'pull-from-ideas': 'source3'
             };
 
             this.masterMap = {
@@ -80,7 +71,8 @@ define(['jquery',
                         'langsFrames': null,
                         'repoName': null,
                         'license': null,
-                        'privacy': null
+                        'privacy': null,
+                        anon: false
                     }
                 },
 
@@ -162,7 +154,6 @@ define(['jquery',
             if (sourceObj != null) {
                 sourceObj['title'] = title;
             }
-            console.log(this.masterMap);
         },
 
         handleDescriptionUpdate: function (description) {
@@ -170,7 +161,6 @@ define(['jquery',
             if (sourceObj != null) {
                 sourceObj['description'] = description;
             }
-            console.log(this.masterMap);
         },
 
         handleLangsFramesUpdate: function (langsFrames) {
@@ -178,7 +168,6 @@ define(['jquery',
             if (sourceObj != null) {
                 sourceObj['langsFrames'] = langsFrames;
             }
-            console.log(this.masterMap);
         },
 
         handleRepoNameUpdate: function (repoName) {
@@ -186,7 +175,6 @@ define(['jquery',
             if (sourceObj != null) {
                 sourceObj['repoName'] = repoName;
             }
-            console.log(this.masterMap);
         },
 
         handleLicenseUpdate: function (license) {
@@ -194,7 +182,6 @@ define(['jquery',
             if (sourceObj != null) {
                 sourceObj['license'] = license;
             }
-            console.log(this.masterMap);
         },
 
         handlePrivacyUpdate: function (privacy) {
@@ -202,7 +189,13 @@ define(['jquery',
             if (sourceObj != null) {
                 sourceObj['privacy'] = privacy;
             }
-            console.log(this.masterMap);
+        },
+
+        handleAnonUpdate: function (anon) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['anon'] = anon;
+            }
         },
 
         resetFlow: function () {
@@ -228,9 +221,9 @@ define(['jquery',
                     repo_name: this.newProjectData.repoName,
                     description: this.newProjectData.description,
                     license: [this.newProjectData.license],
-                    status: this.masterMap['selectedType'],
+                    status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
                     langs_and_frames: this.newProjectData.langsFrames,
-                    anon: false, // do something about this
+                    anon: this.newProjectData.anon, // do something about this
                     privacy: [this.newProjectData.privacy]
                 };
                 var project = new Project();
@@ -303,8 +296,8 @@ define(['jquery',
         handleTypeSelected: function (type) {
             var self = this;
             var options = {};
-            this.masterMap['selectedType'] = this.typeMap[type];
-            this.panel3.passType(this.typeMap[type]);
+            this.masterMap['selectedType'] = OSUtil.TYPE_MAP[type];
+            this.panel3.passType(OSUtil.TYPE_MAP[type]);
             if (type == this.type1) {
                 // if it's type "up-for-grabs", the source is already known --> 'scratch',
                 // so skip step 2 and go straight to step 3
@@ -315,7 +308,7 @@ define(['jquery',
             }
             type == this.type2 ? options.showPullFromIdeas = true : options.showPullFromIdeas = false;
             this.slideIndex = 1;
-            var selectedSource = this.getSourceForType(this.typeMap[type]);
+            var selectedSource = this.getSourceForType(OSUtil.TYPE_MAP[type]);
             options.selectedSource = (selectedSource == null) ? null : selectedSource;
             this.panel2.render(options);
             this.owl.goTo(this.slideIndex);
@@ -327,9 +320,9 @@ define(['jquery',
         handleSourceSelected: function (source) {
             var self = this;
             this.slideIndex = 2;
-            this.masterMap[this.masterMap['selectedType']]['selectedSource'] = this.sourceMap[source];
+            this.masterMap[this.masterMap['selectedType']]['selectedSource'] = OSUtil.SOURCE_MAP[source];
             var options = {
-                selectedSource: this.sourceMap[source],
+                selectedSource: OSUtil.SOURCE_MAP[source],
                 projectData: this.getSelectedSourceObj()
             };
             if (source == this.source1 && this.repos == null) {
@@ -446,7 +439,10 @@ define(['jquery',
                 breadCrumb3Clickable: !!this.checkIfProjectSourceSelected(),
                 breadCrumb1Done: this.masterMap['selectedType'] != null,
                 breadCrumb2Done: this.masterMap['selectedType'] != null && this.masterMap[this.masterMap['selectedType']]['selectedSource'] != null,
-                breadCrumb3Done: false // set this later once you have data to use
+                breadCrumb3Done: false, // set this later once you have data to use,
+                breadCrumb1Current: this.slideIndex == 0,
+                breadCrumb2Current: this.slideIndex == 1,
+                breadCrumb3Current: this.slideIndex == 2
             });
         },
 
@@ -499,20 +495,16 @@ define(['jquery',
             this.panel1 = new SelectProjectTypeView({
                 el: '#newProjectPanel1'
             });
-            this.panel1.typeMap = this.typeMap;
             this.panel1.render();
 
             this.panel2 = new SelectProjectSourceView({
                 el: '#newProjectPanel2'
             });
-            this.panel2.sourceMap = this.sourceMap;
             this.panel2.render();
 
             this.panel3 = new AddProjectDetailsView({
                 el: '#newProjectPanel3'
             });
-            this.panel3.sourceMap = this.sourceMap;
-            this.panel3.typeMap = this.typeMap;
             this.panel3.render();
 
             this.listenTo(this.panel3, 'repo:getDetails', function (name) {

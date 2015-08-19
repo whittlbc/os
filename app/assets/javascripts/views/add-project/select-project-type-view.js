@@ -1,10 +1,12 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/os.util',
 	'stache!views/add-project/select-project-type-view'
     ], function ($,
      Backbone,
      _,
+     OSUtil,
      SelectProjectTypeViewTpl) {
 	'use strict';
 
@@ -19,7 +21,7 @@ define(['jquery',
 
         handleTypeSelected: function (e) {
             var self = this;
-            this.selectedType = this.typeMap[e.currentTarget.id];
+            this.selectedType = OSUtil.TYPE_MAP[e.currentTarget.id];
             this.render();
             this.trigger('type:selected', e.currentTarget.id);
         },
@@ -32,9 +34,9 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(SelectProjectTypeViewTpl({
-                upForGrabsSelected: this.selectedType == this.typeMap['up-for-grabs'],
-                onTheFenceSelected: this.selectedType == this.typeMap['on-the-fence'],
-                launchedSelected: this.selectedType == this.typeMap['launched'],
+                upForGrabsSelected: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
+                onTheFenceSelected: this.selectedType == OSUtil.TYPE_MAP['on-the-fence'],
+                launchedSelected: this.selectedType == OSUtil.TYPE_MAP['launched'],
             }));
 		}
 	});

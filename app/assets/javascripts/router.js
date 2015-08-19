@@ -21,11 +21,11 @@ define(["backbone",
             lastHash: '',
 
             routes: {
-                'shouldStart': 'shouldStartRoute',
-                'starting': 'startingRoute',
-                'started': 'startedRoute',
+                'up-for-grabs': 'upForGrabsRoute',
+                'on-the-fence': 'onTheFenceRoute',
+                'launched': 'launchedRoute',
                 'projects/:id': 'projectRoute',
-                '': 'startingRoute'
+                '': 'onTheFenceRoute'
             },
 
             projectRoute: function (id) {
@@ -33,27 +33,27 @@ define(["backbone",
             },
 
             wasOnHome: function () {
-                return (this.lastHash == '#shouldStart' || this.lastHash == '#starting' || this.lastHash == '#started');
+                return (this.lastHash == '#up-for-grabs' || this.lastHash == '#on-the-fence' || this.lastHash == '#launched');
             },
 
             amOnHome: function () {
-                return (window.location.hash == '#shouldStart' || window.location.hash == '#starting' || window.location.hash == '#started');
+                return (window.location.hash == '#up-for-grabs' || window.location.hash == '#on-the-fence' || window.location.hash == '#launched');
             },
 
             emptyHash: function () {
                 return (window.location.hash == "");
             },
 
-            setShouldStartHash: function () {
-                window.location.hash = "#shouldStart";
+            setUpForGrabsHash: function () {
+                window.location.hash = "#up-for-grabs";
             },
 
-            setStartingHash: function () {
-                window.location.hash = "#starting";
+            setOnTheFenceHash: function () {
+                window.location.hash = "#on-the-fence";
             },
 
-            setStartedHash: function () {
-                window.location.hash = "#started";
+            setLaunchedHash: function () {
+                window.location.hash = "#launched";
             },
 
             determineEntry: function () {
@@ -113,25 +113,25 @@ define(["backbone",
                 }
             },
 
-            shouldStartRoute: function() {
+            upForGrabsRoute: function() {
                 this.initializeHome();
-                this.indexView.showShouldStartFeed(OSUtil.SHOULD_START.num);
+                this.indexView.showUpForGrabsFeed(0);
                 this.indexView.setActiveTabIndex(0);
             },
 
-            startingRoute: function() {
+            onTheFenceRoute: function() {
                 if (this.emptyHash() && window.location.pathname == '/') {
-                    this.setStartingHash();
+                    this.setOnTheFenceHash();
                 } else {
                     this.initializeHome();
-                    this.indexView.showStartingFeed(OSUtil.STARTING.num);
+                    this.indexView.showOnTheFenceFeed(1);
                     this.indexView.setActiveTabIndex(1);
                 }
             },
 
-            startedRoute: function() {
+            launchedRoute: function() {
                 this.initializeHome();
-                this.indexView.showStartedFeed(OSUtil.STARTED.num);
+                this.indexView.showLaunchedFeed(2);
                 this.indexView.setActiveTabIndex(2);
             },
 

@@ -1,5 +1,30 @@
 <div class="create-project-modal-header-container">
-    <div class="create-project-breadcrumb {{#breadCrumb1Clickable}}breadcrumb-clickable{{/breadCrumb1Clickable}} {{#breadCrumb1Done}}breadcrumb-done{{/breadCrumb1Done}}" id="type-panel">Type</div>{{
-    }}<div class="create-project-breadcrumb {{#breadCrumb2Clickable}}breadcrumb-clickable{{/breadCrumb2Clickable}} {{#breadCrumb2Done}}breadcrumb-done{{/breadCrumb2Done}}" id="source-panel">Source</div>{{
-    }}<div class="create-project-breadcrumb {{#breadCrumb3Clickable}}breadcrumb-clickable{{/breadCrumb3Clickable}} {{#breadCrumb3Done}}breadcrumb-done{{/breadCrumb3Done}}" id="data-panel">Info</div>
+    <div class="create-project-breadcrumb {{#breadCrumb1Current}}breadcrumb-current{{/breadCrumb1Current}} {{#breadCrumb1Clickable}}breadcrumb-clickable{{/breadCrumb1Clickable}}" id="type-panel">{{#breadCrumb1Done}}{{^breadCrumb1Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb1Current}}{{/breadCrumb1Done}}1.&nbsp;&nbsp;Type
+    </div>{{
+    }}<div class="create-project-breadcrumb {{#breadCrumb2Current}}breadcrumb-current{{/breadCrumb2Current}} {{#breadCrumb2Clickable}}breadcrumb-clickable{{/breadCrumb2Clickable}}" id="source-panel">
+    <div class="step-inside-container">
+        {{#breadCrumb1Current}}
+        <div class="selected-arrow-div"></div>{{
+        }}<div class="title-div">{{#breadCrumb2Done}}{{^breadCrumb2Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb2Current}}{{/breadCrumb2Done}}2.&nbsp;&nbsp;Source</div>
+        {{/breadCrumb1Current}}
+        {{^breadCrumb1Current}}
+        <div class="back-arrow-div"></div>{{
+        }}<div class="cover-arrow-div"></div>{{
+        }}<div class="title-div">{{#breadCrumb2Done}}{{^breadCrumb2Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb2Current}}{{/breadCrumb2Done}}2.&nbsp;&nbsp;Source</div>
+        {{/breadCrumb1Current}}
+    </div>
+</div>{{
+    }}<div class="create-project-breadcrumb {{#breadCrumb3Current}}breadcrumb-current{{/breadCrumb3Current}} {{#breadCrumb3Clickable}}breadcrumb-clickable{{/breadCrumb3Clickable}}" id="data-panel">
+    <div class="step-inside-container">
+        {{#breadCrumb2Current}}
+        <div class="selected-arrow-div"></div>{{
+        }}<div class="title-div">{{#breadCrumb3Done}}{{^breadCrumb3Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb3Current}}{{/breadCrumb3Done}}3.&nbsp;&nbsp;Details</div>
+        {{/breadCrumb2Current}}
+        {{^breadCrumb2Current}}
+        <div class="back-arrow-div"></div>{{
+        }}<div class="cover-arrow-div"></div>{{
+        }}<div class="title-div">{{#breadCrumb3Done}}{{^breadCrumb3Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb3Current}}{{/breadCrumb3Done}}3.&nbsp;&nbsp;Details</div>
+        {{/breadCrumb2Current}}
+    </div>
+</div>
 </div>

@@ -33,10 +33,6 @@ define(['jquery',
 
 		initialize: function () {
             Backbone.EventBroker.register({
-                'handleFetchGHProject': 'handleFetchGHProject',
-                'handleCreateProject': 'handleCreateProject',
-                //'getAllUserRepos': 'getAllUserRepos',
-                'pullFromIdeas': 'pullFromIdeas',
                 'showFilters': 'showLangFrameSelection',
                 'deleteLangFilter': 'deleteLangFilter',
                 'clearLangFilters': 'clearLangFilters',
@@ -104,7 +100,7 @@ define(['jquery',
 
         handleSelectProjectTypeTab: function (e) {
             var self = this;
-            var selectedIndex = OSUtil.NAV_TABS.indexOf(e.currentTarget.id);
+            var selectedIndex = OSUtil.PROJECT_TYPES.indexOf(e.currentTarget.id);
             if (selectedIndex == -1 || selectedIndex == this.activeTabIndex) {
                 e.preventDefault();
                 return;
@@ -345,47 +341,9 @@ define(['jquery',
             // master
             console.log(resp);
         },
-        //
-        //getAllUserRepos: function () {
-        //    var self = this;
-        //    var user = new User();
-        //    user.getAllUserRepos({gh_username: self.gh_username, password: self.ghAccessToken}, {success: self.handleAllReposResponse, error: self.errorHandler});
-        //},
-        //
-        //handleAllReposResponse: function (resp) {
-        //    var self = this;
-        //    console.log(resp);
-        //},
-
-        handleCreateProject: function () {
-            var self = this;
-            var project = new Project();
-            project.create(this.getCreateProjectData(), {success: self.showNewProject, error: self.errorHandler});
-        },
 
         showNewProject: function (resp) {
             master.projectFeedView.handleShowNewProject(resp.new_project);
-        },
-
-        handleFetchGHProject: function () {
-            var self = this;
-            var project = new Project();
-            project.createByGH(this.getCreateProjectData(), {success: self.showNewProject, error: self.errorHandler});
-        },
-
-        getCreateProjectData: function () {
-            var self = this;
-            return {
-                title: $('#projectTitleField').val(),
-                user_uuid: self.user_uuid,
-                repo_name: $('#repoName').val(),
-                description: $('#projectDescriptionField').val(),
-                license: $('#license').val(),
-                status: OSUtil.getProjectIntStatus($('#project-type-selection-dropdown').find(':selected').val()),
-                langs_and_frames: [$('#langsAndFrames').val()],
-                anon: $('#anonCheckbox').is(':checked'),
-                privacy: $('#privacy-selection-dropdown').find(':selected').val()
-            }
         },
 
         passUserInfo: function (data) {
@@ -435,7 +393,7 @@ define(['jquery',
             this.showLoginPopup();
         },
 
-        showShouldStartFeed: function (status) {
+        showUpForGrabsFeed: function (status) {
             var self = this;
             var project = new Project();
             this.projectTypeStatus = status; // int value
@@ -448,7 +406,7 @@ define(['jquery',
             }
         },
 
-        showStartingFeed: function (status) {
+        showOnTheFenceFeed: function (status) {
             var self = this;
             var project = new Project();
             this.projectTypeStatus = status; // int value
@@ -461,7 +419,7 @@ define(['jquery',
             }
         },
 
-        showStartedFeed: function (status) {
+        showLaunchedFeed: function (status) {
             var self = this;
             var project = new Project();
             this.projectTypeStatus = status; // int value

@@ -1,12 +1,14 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/os.util',
 	'stache!views/add-project/details-view',
     'selectize',
     'velocity'
     ], function ($,
      Backbone,
      _,
+     OSUtil,
      DetailsViewTpl) {
 	'use strict';
 
@@ -36,7 +38,7 @@ define(['jquery',
             'click .add-project-privacy-choice': 'handlePrivacySelection',
             'blur [name=add-project-title]': 'handleTitleBlur',
             'blur [name=add-project-repo-name]': 'handleRepoNameBlur',
-
+            'click .add-project-anon-choice': 'handleAnonSelection',
         },
 
         handleTitleBlur: function (e) {
@@ -51,22 +53,42 @@ define(['jquery',
 
         handlePrivacySelection: function (e) {
             if (!$(e.currentTarget).hasClass('active-privacy')) {
-                ($(e.currentTarget).attr('name') == 'request') ? this.switchToRequest() : this.switchToOpen();
+                ($(e.currentTarget).attr('name') == OSUtil.REQUEST_PRIVACY) ? this.switchToRequest() : this.switchToOpen();
+            }
+        },
+
+        handleAnonSelection: function (e) {
+            if (!$(e.currentTarget).hasClass('active-anon')) {
+                ($(e.currentTarget).attr('name') == 'anon-yes') ? this.switchToAnon() : this.switchToKnown();
             }
         },
 
         switchToOpen: function () {
             this.$el.find('[name=request]').removeClass('active-privacy');
             this.$el.find('[name=open]').addClass('active-privacy');
-            this.privacy = 'open';
+            this.privacy = OSUtil.OPEN_PRIVACY;
             Backbone.EventBroker.trigger('privacy:updated', this.privacy);
         },
 
         switchToRequest: function () {
             this.$el.find('[name=open]').removeClass('active-privacy');
             this.$el.find('[name=request]').addClass('active-privacy');
-            this.privacy = 'request';
+            this.privacy = OSUtil.REQUEST_PRIVACY;
             Backbone.EventBroker.trigger('privacy:updated', this.privacy);
+        },
+
+        switchToKnown: function () {
+            this.$el.find('[name=anon-yes]').removeClass('active-anon');
+            this.$el.find('[name=anon-no]').addClass('active-anon');
+            this.anon = false;
+            Backbone.EventBroker.trigger('anon:updated', this.anon);
+        },
+
+        switchToAnon: function () {
+            this.$el.find('[name=anon-no]').removeClass('active-anon');
+            this.$el.find('[name=anon-yes]').addClass('active-anon');
+            this.anon = true;
+            Backbone.EventBroker.trigger('anon:updated', this.anon);
         },
 
         expandDescription: function (e) {
@@ -186,7 +208,7 @@ define(['jquery',
         //},
 
         checkIfShowRepoNameAndLicense: function () {
-            return ((this.selectedType == this.typeMap['on-the-fence'] && this.selectedSource != this.sourceMap['pull-from-ideas']) || this.selectedType == this.typeMap['launched']);
+            return ((this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] && this.selectedSource != OSUtil.SOURCE_MAP['pull-from-ideas']) || this.selectedType == OSUtil.TYPE_MAP['launched']);
         },
 
         resetInfo: function () {
@@ -232,7 +254,8 @@ define(['jquery',
                 langsFrames: this.langsFrames,
                 repoName: this.repoName,
                 license: this.license,
-                privacy: this.privacy
+                privacy: this.privacy,
+                anon: this.anon
             };
         },
 
@@ -248,10 +271,11 @@ define(['jquery',
             this.langsFrames = (options && options.projectData) ? options.projectData.langsFrames : null;
             this.repoName = (options && options.projectData) ? options.projectData.repoName : null;
             this.license = (options && options.projectData) ? options.projectData.license : null;
-            this.privacy = (options && options.projectData) ? options.projectData.privacy : 'request';
+            this.privacy = (options && options.projectData) ? options.projectData.privacy : OSUtil.REQUEST_PRIVACY;
             if (this.privacy == null) {
-                this.privacy = 'request';
+                this.privacy = OSUtil.REQUEST_PRIVACY;
             }
+            this.anon = (options && options.projectData) ? options.projectData.anon : false;
 
             var hideDetailsView = options && options.hideDetailsView;
 
@@ -259,18 +283,16 @@ define(['jquery',
 
             this.$el.html(DetailsViewTpl({
                 onTheFenceOrLaunchedNoPullFromIdeas: showRepoNameAndLicense,
-                launched: this.selectedType == this.typeMap['launched'],
+                launched: this.selectedType == OSUtil.TYPE_MAP['launched'],
                 hideDetailsView: hideDetailsView,
                 title: this.title,
                 description: this.description,
                 repoName: this.repoName,
-                requestPrivacy: this.privacy != 'open',
-                openPrivacy: this.privacy == 'open'
+                requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
+                openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
+                showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
+                postAnon: this.anon
             }));
-
-            if (!hideDetailsView) {
-                this.$el.css('min-height', '370px');
-            }
 
             if (this.dropdownItems && options && !options.hideDetailsView) {
                 this.initLangFramesDropdown();

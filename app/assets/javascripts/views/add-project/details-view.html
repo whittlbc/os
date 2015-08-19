@@ -21,6 +21,22 @@
     </div>
 </div>
 
+{{#showAnon}}
+<div class="add-project-anon-container">
+    <div class="add-project-anon-text">
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Blah Blah Blah
+    </div>{{
+    }}<div class="add-project-anon-choices">
+        <div class="add-project-anon-choice-container">
+            <div id="add-project-anon-yes" name="anon-yes" class="add-project-anon-choice {{#postAnon}}active-anon{{/postAnon}}">Yes</div>
+        </div>{{
+        }}<div class="add-project-anon-choice-container">
+            <div id="add-project-anon-no" name="anon-no" class="add-project-anon-choice {{^postAnon}}active-anon{{/postAnon}}">No</div>
+        </div>
+    </div>
+</div>
+{{/showAnon}}
+
 {{#onTheFenceOrLaunchedNoPullFromIdeas}}
 <!--Repo Name-->
 <div class="add-project-repo-name-container">

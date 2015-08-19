@@ -12,27 +12,27 @@
         <div class="tag-container"></div>
     </div>{{
     }}<div class="project-extra-details-container">
-        {{#shouldStartType}}
+        {{#upForGrabsType}}
         <div class="grab-btn"><i class="fa fa-plus"></i></div>
-        {{/shouldStartType}}
+        {{/upForGrabsType}}
         {{#searchResult}}
         <div class="project-status-container">
             <div class="project-status">{{projectType}}</div>
         </div>
         {{/searchResult}}
         <div class="main-three-details-container {{^searchResult}}main-three-no-search-result{{/searchResult}}">
-            <div class="main-three-sub-container {{#shouldStartType}}main-three-sub-container-no-contrib{{/shouldStartType}}">
-                <div class="project-post-user-container {{#shouldStartType}}only-two-of-main-three{{/shouldStartType}}">
-                    <img class="project-post-user-pic {{#shouldStartType}}user-pic-no-contrib{{/shouldStartType}}" src="https://avatars.githubusercontent.com/u/6496306?v=3"/>
+            <div class="main-three-sub-container {{#upForGrabsType}}main-three-sub-container-no-contrib{{/upForGrabsType}}">
+                <div class="project-post-user-container {{#upForGrabsType}}only-two-of-main-three{{/upForGrabsType}}">
+                    <img class="project-post-user-pic {{#upForGrabsType}}user-pic-no-contrib{{/upForGrabsType}}" src="https://avatars.githubusercontent.com/u/6496306?v=3"/>
                 </div>
-                {{^shouldStartType}}
+                {{^upForGrabsType}}
                 <div class="project-post-contributors-container">
                     <div class="project-post-contributors">
                         <i class="fa fa-user"></i>&nbsp;&nbsp;<span class="project-post-num-contributors">{{contributorCount}}</span>
                     </div>
                 </div>
-                {{/shouldStartType}}
-                <div class="project-post-comments-container {{#shouldStartType}}only-two-of-main-three{{/shouldStartType}}">
+                {{/upForGrabsType}}
+                <div class="project-post-comments-container {{#upForGrabsType}}only-two-of-main-three{{/upForGrabsType}}">
                     <div class="project-post-comments">
                         <i class="fa fa-comment"></i>&nbsp;&nbsp;<span class="project-post-num-comments">{{commentCount}}</span>
                     </div>

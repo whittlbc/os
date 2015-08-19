@@ -28,18 +28,6 @@ define(['jquery',
 
         erbEvents: function () {
             if (!loadedAllProjects) {
-                $('#fetchGHProject').click(function() {
-                    Backbone.EventBroker.trigger('handleFetchGHProject');
-                });
-                $('#submitNewProject').click(function() {
-                    Backbone.EventBroker.trigger('handleCreateProject');
-                });
-                $('#getAllRepos').click(function() {
-                    Backbone.EventBroker.trigger('getAllUserRepos');
-                });
-                $('#pullFromIdeas').click(function() {
-                    Backbone.EventBroker.trigger('pullFromIdeas');
-                });
                 $('#universal-searchbox-input').keyup(function(e){
                     master.universalSearch($(e.currentTarget).val());
                 });

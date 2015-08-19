@@ -32,7 +32,10 @@ define(['jquery',
                 breadCrumb3Clickable: options.breadCrumb3Clickable,
                 breadCrumb1Done: options.breadCrumb1Done,
                 breadCrumb2Done: options.breadCrumb2Done,
-                breadCrumb3Done: options.breadCrumb3Done
+                breadCrumb3Done: options.breadCrumb3Done,
+                breadCrumb1Current: options.breadCrumb1Current,
+                breadCrumb2Current: options.breadCrumb2Current,
+                breadCrumb3Current: options.breadCrumb3Current
             }));
 		}
 	});

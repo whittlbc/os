@@ -17,38 +17,38 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
 
         //// Highlight the current Project Type based on the initial has upon site entrance
         var initialPath = window.location.hash;
-        if (initialPath == '#shouldStart'){
-            $('#shouldStartType').addClass('selected-project-type');
-        } else if (initialPath == '#starting') {
-            $('#startingType').addClass('selected-project-type');
-        } else if (initialPath == '#started') {
-            $('#startedType').addClass('selected-project-type');
+        if (initialPath == '#up-for-grabs'){
+            $('#upForGrabsType').addClass('selected-project-type');
+        } else if (initialPath == '#on-the-fence') {
+            $('#onTheFenceType').addClass('selected-project-type');
+        } else if (initialPath == '#launched') {
+            $('#launchedType').addClass('selected-project-type');
         } else {
-            $('#startingType').addClass('selected-project-type');
+            $('#onTheFenceType').addClass('selected-project-type');
         }
 
         // Switch the highlighted project type based on hash changes once you're already in the site
         $(window).on('hashchange', function() {
             var path = window.location.hash;
-            if (path == '#shouldStart'){
-                $('#shouldStartType').addClass('selected-project-type');
-                $('#startingType').removeClass('selected-project-type');
-                $('#startedType').removeClass('selected-project-type');
-            } else if (path == '#starting') {
-                $('#startingType').addClass('selected-project-type');
-                $('#shouldStartType').removeClass('selected-project-type');
-                $('#startedType').removeClass('selected-project-type');
-            } else if (path == '#started') {
-                $('#startedType').addClass('selected-project-type');
-                $('#shouldStartType').removeClass('selected-project-type');
-                $('#startingType').removeClass('selected-project-type');
+            if (path == '#up-for-grabs'){
+                $('#upForGrabsType').addClass('selected-project-type');
+                $('#onTheFenceType').removeClass('selected-project-type');
+                $('#launchedType').removeClass('selected-project-type');
+            } else if (path == '#on-the-fence') {
+                $('#onTheFenceType').addClass('selected-project-type');
+                $('#upForGrabsType').removeClass('selected-project-type');
+                $('#launchedType').removeClass('selected-project-type');
+            } else if (path == '#launched') {
+                $('#launchedType').addClass('selected-project-type');
+                $('#upForGrabsType').removeClass('selected-project-type');
+                $('#onTheFenceType').removeClass('selected-project-type');
             }
         });
 
 
         // CreateNewProjectPopup --> Set the top positioning
         // DO NOT FUCK WITH THESE NUMBERS
-        var currentTopPos = 120; // just eyeballing from default Modal Positioning
+        var currentTopPos = 135; // just eyeballing from default Modal Positioning
         var createNewProjectModalHeight = 486;
         var createNewProjectModalMarginTop = ((window.innerHeight - createNewProjectModalHeight - currentTopPos) / 2);
         $('#createNewProjectModal').css('margin-top', createNewProjectModalMarginTop + 'px');

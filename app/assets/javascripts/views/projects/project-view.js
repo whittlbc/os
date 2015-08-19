@@ -3,6 +3,7 @@ define(['jquery',
     'underscore',
     'views/os.view',
     'models/project',
+    'models/os.util',
     'views/projects/project-details-view',
     'views/projects/details-chat-feed-view',
     'stache!views/projects/project-view',
@@ -12,6 +13,7 @@ define(['jquery',
      _,
      OSView,
      Project,
+     OSUtil,
      ProjectDetailsView,
      DetailsChatFeedView,
      ProjectViewTpl) {
@@ -77,7 +79,7 @@ define(['jquery',
 
         checkProjectPrivacy: function () {
             if (!this.isContributor()) {
-                this.privacy == 'open' ? this.joinProject() : this.requestToJoin();
+                this.privacy == OSUtil.OPEN_PRIVACY ? this.joinProject() : this.requestToJoin();
             }
         },
 

@@ -3,12 +3,14 @@ define(['jquery',
 	'underscore',
     'views/add-project/repo-list-view',
     'views/add-project/details-view',
+    'models/os.util',
     'stache!views/add-project/add-project-details-view'
 ], function ($,
      Backbone,
      _,
      RepoListView,
      DetailsView,
+     OSUtil,
      AddProjectDetailsViewTpl) {
 	'use strict';
 
@@ -33,7 +35,6 @@ define(['jquery',
         },
 
         setHeight: function (height) {
-            //this.$el.find('.add-project-details-inside-container').height(height);
         },
 
         passLangDropdownItems: function (data) {
@@ -74,7 +75,7 @@ define(['jquery',
 		render: function (options) {
 			var self = this;
 
-            if (options && options.selectedSource == this.sourceMap['gh'] && selectedRepo == null) {
+            if (options && options.selectedSource == OSUtil.SOURCE_MAP['gh'] && selectedRepo == null) {
                 options.hideDetailsView = (this.selectedSource == options.selectedSource) ? false : true;
             }
 
@@ -83,20 +84,18 @@ define(['jquery',
             }
 
             var selectedRepo = null;
-            if (this.selectedSource == this.sourceMap['gh'] && this.repoListView) {
+            if (this.selectedSource == OSUtil.SOURCE_MAP['gh'] && this.repoListView) {
                 selectedRepo = this.repoListView.getSelectedRepo();
             }
 
             this.$el.html(AddProjectDetailsViewTpl({
-                showReposView: this.selectedSource == this.sourceMap['gh']
+                showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh']
             }));
 
             this.detailsView = new DetailsView({
                 el: '#detailsView'
             });
 
-            this.detailsView.typeMap = this.typeMap;
-            this.detailsView.sourceMap = this.sourceMap;
             if (this.selectedType) {
                 this.detailsView.passType(this.selectedType);
             }
@@ -127,7 +126,7 @@ define(['jquery',
             }
             this.repoListView.render(repoListViewOptions);
 
-            if (this.repos && this.selectedSource == this.sourceMap['gh']) {
+            if (this.repos && this.selectedSource == OSUtil.SOURCE_MAP['gh']) {
                 this.populateUIRepoList();
             }
 

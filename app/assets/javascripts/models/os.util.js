@@ -6,30 +6,34 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
         REQUEST_PRIVACY: 'request',
         OPEN_PRIVACY: 'open',
 
-        hidePopupTimeout: 400,
-
-        PROJECT_TYPES: [
-            'Up for Grabs',
-            'On the Fence',
-            'Launched'
-        ],
-
-        SHOULD_START: {
-            str: 'shouldStart',
-            num: 0
+        TYPE_MAP: {
+            'up-for-grabs': 'type1',
+            'on-the-fence': 'type2',
+            'launched': 'type3'
         },
 
-        STARTING: {
-            str: 'starting',
-            num: 1
+        REVERSE_TYPE_MAP: {
+            'type1': 'up-for-grabs',
+            'type2': 'on-the-fence',
+            'type3': 'launched'
         },
 
-        STARTED: {
-            str: 'started',
-            num: 2
+        TYPE_ARRAY: ['type1', 'type2', 'type3'],
+
+        SOURCE_MAP: {
+            'gh': 'source1',
+            'scratch': 'source2',
+            'pull-from-ideas': 'source3'
         },
 
-        NAV_TABS: ['shouldStartType', 'startingType', 'startedType'],
+        REVERSE_SOURCE_MAP: {
+            'source1': 'gh',
+            'source2': 'scratch',
+            'source3': 'pull-from-ideas'
+        },
+
+        PROJECT_TYPES: ['up-for-grabs', 'on-the-fence', 'launched'],
+        GRAMMATICAL_PROJECT_TYPES: ['Up for Grabs', 'On the Fence', 'Launched'],
 
         customMethodMap: {
             'create': {
@@ -116,18 +120,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                 verb: 'GET',
                 action: 'read'
             }
-        },
-
-        getProjectIntStatus: function (textType) {
-            var self = this;
-            if (textType == this.SHOULD_START.str) {
-                return 0
-            } else if (textType == this.STARTED.str) {
-                return 2
-            } else {
-                return 1;
-            }
-        },
+        }
 
     };
 

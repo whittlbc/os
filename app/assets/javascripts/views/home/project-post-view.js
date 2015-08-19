@@ -58,9 +58,9 @@ define(['jquery',
             //this.privacy = _.isEmpty(data.privacy) ? null : data.privacy[0];
             //this.langs_and_frames = data.langs_and_frames;
             this.license = 'MIT';
-            this.privacy = 'open';
+            this.privacy = OSUtil.OPEN_PRIVACY;
             this.status = data.status;
-            this.projectType = OSUtil.PROJECT_TYPES[self.status];
+            this.projectType = OSUtil.GRAMMATICAL_PROJECT_TYPES[self.status];
             this.searchResult = data.search_result;
             this.langs_and_frames = ['HTML', 'Ruby'];
         },
@@ -107,7 +107,7 @@ define(['jquery',
                 license: self.license,
                 requestToJoin: self.privacy == OSUtil.REQUEST_PRIVACY,
                 open: self.privacy == OSUtil.OPEN_PRIVACY,
-                shouldStartType: self.status == OSUtil.SHOULD_START.num,
+                upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
                 searchResult: self.searchResult,
                 projectType: self.projectType
             }));
