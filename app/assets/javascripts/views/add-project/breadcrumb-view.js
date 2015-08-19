@@ -26,10 +26,11 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
+            var allDone = options.breadCrumb1Done && options.breadCrumb2Done && options.breadCrumb3Done;
             this.$el.html(BreadCrumbViewTpl({
-                breadCrumb1Clickable: options.breadCrumb1Clickable,
-                breadCrumb2Clickable: options.breadCrumb2Clickable,
-                breadCrumb3Clickable: options.breadCrumb3Clickable,
+                breadCrumb1Clickable: !allDone && options.breadCrumb1Clickable,
+                breadCrumb2Clickable: !allDone && options.breadCrumb2Clickable,
+                breadCrumb3Clickable: !allDone && options.breadCrumb3Clickable,
                 breadCrumb1Done: options.breadCrumb1Done,
                 breadCrumb2Done: options.breadCrumb2Done,
                 breadCrumb3Done: options.breadCrumb3Done,

@@ -1,10 +1,15 @@
 <div class="add-project-details-view">
     <div class="add-project-details-scroll-container">
         <div class="add-project-details-inside-container">
+            {{^showCreatingProjectView}}
             {{#showReposView}}
             <div id="reposView"></div>
             {{/showReposView}}
             <div id="detailsView"></div>
+            {{/showCreatingProjectView}}
+            {{#showCreatingProjectView}}
+            <div id="creatingProjectView"></div>
+            {{/showCreatingProjectView}}
         </div>
     </div>
 </div>

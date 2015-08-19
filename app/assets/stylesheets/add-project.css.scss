@@ -369,14 +369,6 @@ textarea[name="add-project-description"] {
   cursor: pointer;
 }
 
-#reposLoadingView {
-
-}
-
-.repos-loading-container {
-
-}
-
 #reposLoadingSpinner {
   width: auto;
   height: auto;
@@ -436,7 +428,7 @@ textarea[name="add-project-description"] {
   margin: 0 auto;
   width: 15%;
   height: 15%;
-  background-color: #333;
+  background-color: #00A6C9;
   border-radius: 100%;
   -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
   animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
@@ -716,5 +708,23 @@ input[name="add-project-repo-name"] {
   margin-left: 30px;
 }
 
+#creatingProjectSpinner {
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 42px;
+}
+
+.creating-project-message {
+  width: 100%;
+  margin-top: -50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: black;
+  font-size: 17px;
+  font-family: 'Helvetica Neue';
+}
 
 

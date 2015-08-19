@@ -14,16 +14,16 @@
         {{/breadCrumb1Current}}
     </div>
 </div>{{
-    }}<div class="create-project-breadcrumb {{#breadCrumb3Current}}breadcrumb-current{{/breadCrumb3Current}} {{#breadCrumb3Clickable}}breadcrumb-clickable{{/breadCrumb3Clickable}}" id="data-panel">
+    }}<div class="create-project-breadcrumb {{#breadCrumb3Current}}{{^breadCrumb3Done}}breadcrumb-current{{/breadCrumb3Done}}{{/breadCrumb3Current}} {{#breadCrumb3Clickable}}breadcrumb-clickable{{/breadCrumb3Clickable}}" id="data-panel">
     <div class="step-inside-container">
         {{#breadCrumb2Current}}
         <div class="selected-arrow-div"></div>{{
-        }}<div class="title-div">{{#breadCrumb3Done}}{{^breadCrumb3Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb3Current}}{{/breadCrumb3Done}}3.&nbsp;&nbsp;Details</div>
+        }}<div class="title-div">{{#breadCrumb3Done}}<i class="fa fa-check-circle"></i>{{/breadCrumb3Done}}3.&nbsp;&nbsp;Details</div>
         {{/breadCrumb2Current}}
         {{^breadCrumb2Current}}
         <div class="back-arrow-div"></div>{{
         }}<div class="cover-arrow-div"></div>{{
-        }}<div class="title-div">{{#breadCrumb3Done}}{{^breadCrumb3Current}}<i class="fa fa-check-circle"></i>{{/breadCrumb3Current}}{{/breadCrumb3Done}}3.&nbsp;&nbsp;Details</div>
+        }}<div class="title-div">{{#breadCrumb3Done}}<i class="fa fa-check-circle"></i>{{/breadCrumb3Done}}3.&nbsp;&nbsp;Details</div>
         {{/breadCrumb2Current}}
     </div>
 </div>

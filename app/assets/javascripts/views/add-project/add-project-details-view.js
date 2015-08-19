@@ -3,6 +3,7 @@ define(['jquery',
 	'underscore',
     'views/add-project/repo-list-view',
     'views/add-project/details-view',
+    'views/add-project/creating-project-view',
     'models/os.util',
     'stache!views/add-project/add-project-details-view'
 ], function ($,
@@ -10,6 +11,7 @@ define(['jquery',
      _,
      RepoListView,
      DetailsView,
+     CreatingProjectView,
      OSUtil,
      AddProjectDetailsViewTpl) {
 	'use strict';
@@ -67,14 +69,13 @@ define(['jquery',
 
         },
 
-        getData: function () {
-            var self = this;
-
+        showCreatingProjectView: function () {
+            this.creatingProjectView.show();
         },
 
 		render: function (options) {
 			var self = this;
-
+            var showCreatingProjectView = false;
             if (options && options.selectedSource == OSUtil.SOURCE_MAP['gh'] && selectedRepo == null) {
                 options.hideDetailsView = (this.selectedSource == options.selectedSource) ? false : true;
             }
@@ -83,13 +84,18 @@ define(['jquery',
                 this.selectedSource = options.selectedSource;
             }
 
+            if (options && options.showCreatingProjectView) {
+                showCreatingProjectView = true;
+            }
+
             var selectedRepo = null;
             if (this.selectedSource == OSUtil.SOURCE_MAP['gh'] && this.repoListView) {
                 selectedRepo = this.repoListView.getSelectedRepo();
             }
 
             this.$el.html(AddProjectDetailsViewTpl({
-                showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh']
+                showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
+                showCreatingProjectView: showCreatingProjectView
             }));
 
             this.detailsView = new DetailsView({
@@ -105,7 +111,10 @@ define(['jquery',
             if (this.tags) {
                 this.detailsView.passTags(this.tags);
             }
-            this.detailsView.render(options);
+
+            if (!showCreatingProjectView) {
+                this.detailsView.render(options);
+            }
 
             this.repoListView = new RepoListView({
                 el: '#reposView'
@@ -128,6 +137,14 @@ define(['jquery',
 
             if (this.repos && this.selectedSource == OSUtil.SOURCE_MAP['gh']) {
                 this.populateUIRepoList();
+            }
+
+            if (showCreatingProjectView) {
+                this.creatingProjectView = new CreatingProjectView({
+                    el: '#creatingProjectView'
+                });
+                this.creatingProjectView.setMessage('Creating project...');
+                this.creatingProjectView.render();
             }
 
             $('[data-toggle="tooltip"]').tooltip();

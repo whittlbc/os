@@ -64,7 +64,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_data)
     @project.save
 
-    render :json => {:new_project => @project}
+    render :json => @project
   end
 
   def feed

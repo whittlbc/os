@@ -37,8 +37,8 @@ define(['jquery',
 
             this.spinner = new Spinner({
                 el: '#reposLoadingSpinner',
-                width: '70px',
-                height: '70px'
+                width: '95px',
+                height: '95px'
             });
 
             this.spinner.render();

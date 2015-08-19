@@ -77,7 +77,7 @@ define(['jquery',
             this.reposLoadingView = new ReposLoadingView({
                 el: '#reposLoadingView'
             });
-            this.reposLoadingView.setMessage('Fetching your repositories');
+            this.reposLoadingView.setMessage('Fetching your repositories...');
             this.reposLoadingView.render();
 
             options && options.showReposLoadingView ? this.reposLoadingView.show() : this.reposLoadingView.hide();

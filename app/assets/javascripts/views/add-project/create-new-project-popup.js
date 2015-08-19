@@ -198,14 +198,6 @@ define(['jquery',
             }
         },
 
-        resetFlow: function () {
-            var self = this;
-            this.toggleBottomNav(0, 0);
-            this.owl.jumpTo(0);
-            this.slideIndex = 0;
-            this.renderBreadCrumbView();
-        },
-
 		events: {
             'click .bottom-nav-back': 'handleBack',
             'click .bottom-nav-next': 'handleNext',
@@ -213,8 +205,14 @@ define(['jquery',
         },
 
         handleCreate: function () {
+            var self = this;
             if (this.panel3.detailsView.allowCreate()) {
                 this.newProjectData = this.panel3.detailsView.getData();
+                this.renderBreadCrumbView(true);
+                this.panel3.render({showCreatingProjectView: true});
+                this.toggleBottomNav(0, 0);
+                this.hideCreateBtn();
+                this.hideModalFooterTopBorder();
                 var projectData = {
                     gh_username: this.userData.gh_username,
                     title: this.newProjectData.title,
@@ -223,14 +221,66 @@ define(['jquery',
                     license: [this.newProjectData.license],
                     status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
                     langs_and_frames: this.newProjectData.langsFrames,
-                    anon: this.newProjectData.anon, // do something about this
+                    anon: this.newProjectData.anon,
                     privacy: [this.newProjectData.privacy]
                 };
                 var project = new Project();
-                project.create(projectData, {success: function () {
+                project.create(projectData, {success: function (project) {
                     console.log('SUCCESSFULLY CREATED PROJECT!');
+                    self.disableAddProjectBtn();
+                    self.showProjectCreationSuccess(project);
+                }, error: function () {
+                    console.log('ERROR CREATING PROJECT');
+                    self.showProjectCreationError();
                 }});
             }
+        },
+
+        hideModal: function () {
+            $('#createNewProjectModal').modal('hide');
+        },
+
+        showProjectCreationSuccess: function (project) {
+            var self = this;
+            setTimeout(function () {
+                self.hideModal();
+                window.location.hash = '#projects/' + project.id;
+                setTimeout(function () {
+                    self.resetPopup();
+                }, 300);
+            }, 500);
+        },
+
+        showProjectCreationError: function () {
+            var self = this;
+            setTimeout(function () {
+                self.renderBreadCrumbView(true);
+                var options = {
+                    selectedSource: OSUtil.SOURCE_MAP[source],
+                    projectData: self.getSelectedSourceObj()
+                };
+                self.panel3.render(options);
+                self.toggleBottomNav(1, 0);
+                self.showCreateBtn();
+                self.showModalFooterTopBorder();
+            }, 500);
+        },
+
+        resetPopup: function () {
+            var self = this;
+            this.toggleBottomNav(0, 0);
+            this.owl.jumpTo(0);
+            this.slideIndex = 0;
+            this.renderBreadCrumbView();
+            this.enableAddProjectBtn();
+        },
+
+        disableAddProjectBtn: function () {
+
+        },
+
+        enableAddProjectBtn: function () {
+
         },
 
         handleBack: function () {
@@ -432,14 +482,14 @@ define(['jquery',
             this.$el.find('.fake-top-border').show();
         },
 
-        renderBreadCrumbView: function () {
+        renderBreadCrumbView: function (creatingProject) {
             this.breadCrumbView.render({
                 breadCrumb1Clickable: this.masterMap['selectedType'] != null,
                 breadCrumb2Clickable: this.masterMap['selectedType'] != null,
                 breadCrumb3Clickable: !!this.checkIfProjectSourceSelected(),
                 breadCrumb1Done: this.masterMap['selectedType'] != null,
                 breadCrumb2Done: this.masterMap['selectedType'] != null && this.masterMap[this.masterMap['selectedType']]['selectedSource'] != null,
-                breadCrumb3Done: false, // set this later once you have data to use,
+                breadCrumb3Done: creatingProject, // set this later once you have data to use,
                 breadCrumb1Current: this.slideIndex == 0,
                 breadCrumb2Current: this.slideIndex == 1,
                 breadCrumb3Current: this.slideIndex == 2
