@@ -727,4 +727,65 @@ input[name="add-project-repo-name"] {
   font-family: 'Helvetica Neue';
 }
 
+.project-creation-error-message-container {
+
+  width: 100%;
+  margin-top: 130px;
+
+  .fa-refresh {
+    font-size: 50px;
+    color: black;
+  }
+
+}
+
+.project-creation-error-message {
+  width: 100%;
+  color: black;
+  text-align: center;
+  display: block;
+  font-size: 15px;
+  line-height: 25px;
+  font-family: 'Lato';
+}
+
+.project-creation-error-retry-container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: 80px;
+  height: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.project-creation-error-retry-container:hover {
+
+  .fa-refresh,
+  .project-creation-error-retry-text {
+    color: #00A6C9;
+  }
+
+}
+
+.project-creation-error-retry-icon {
+  width: 70px;
+  height: 56px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  line-height: 70px;
+}
+
+.project-creation-error-retry-text {
+  text-align: center;
+  line-height: 30px;
+  font-size: 15px;
+  color: black;
+  width: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
 

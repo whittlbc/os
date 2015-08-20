@@ -5,6 +5,7 @@ define(['jquery',
     'views/add-project/details-view',
     'views/add-project/creating-project-view',
     'models/os.util',
+    'views/add-project/project-creation-error-view',
     'stache!views/add-project/add-project-details-view'
 ], function ($,
      Backbone,
@@ -13,6 +14,7 @@ define(['jquery',
      DetailsView,
      CreatingProjectView,
      OSUtil,
+     ProjectCreationErrorView,
      AddProjectDetailsViewTpl) {
 	'use strict';
 
@@ -76,6 +78,7 @@ define(['jquery',
 		render: function (options) {
 			var self = this;
             var showCreatingProjectView = false;
+            var showProjectCreationError = false;
             if (options && options.selectedSource == OSUtil.SOURCE_MAP['gh'] && selectedRepo == null) {
                 options.hideDetailsView = (this.selectedSource == options.selectedSource) ? false : true;
             }
@@ -88,6 +91,10 @@ define(['jquery',
                 showCreatingProjectView = true;
             }
 
+            if (options && options.showProjectCreationError) {
+                showProjectCreationError = true;
+            }
+
             var selectedRepo = null;
             if (this.selectedSource == OSUtil.SOURCE_MAP['gh'] && this.repoListView) {
                 selectedRepo = this.repoListView.getSelectedRepo();
@@ -95,7 +102,8 @@ define(['jquery',
 
             this.$el.html(AddProjectDetailsViewTpl({
                 showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
-                showCreatingProjectView: showCreatingProjectView
+                showCreatingProjectView: showCreatingProjectView,
+                showProjectCreationError: showProjectCreationError
             }));
 
             this.detailsView = new DetailsView({
@@ -112,7 +120,7 @@ define(['jquery',
                 this.detailsView.passTags(this.tags);
             }
 
-            if (!showCreatingProjectView) {
+            if (!showCreatingProjectView && !showProjectCreationError) {
                 this.detailsView.render(options);
             }
 
@@ -145,6 +153,16 @@ define(['jquery',
                 });
                 this.creatingProjectView.setMessage('Creating project...');
                 this.creatingProjectView.render();
+            }
+
+            if (showProjectCreationError) {
+                this.projectCreationErrorShown = true;
+                this.projectCreationErrorView = new ProjectCreationErrorView({
+                    el: '#projectCreationError'
+                });
+                this.projectCreationErrorView.render();
+            } else {
+                this.projectCreationErrorShown = false;
             }
 
             $('[data-toggle="tooltip"]').tooltip();

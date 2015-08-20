@@ -35,7 +35,8 @@ define(['jquery',
                 'repoName:updated': 'handleRepoNameUpdate',
                 'license:updated': 'handleLicenseUpdate',
                 'privacy:updated': 'handlePrivacyUpdate',
-                'anon:updated': 'handleAnonUpdate'
+                'anon:updated': 'handleAnonUpdate',
+                'create-project:retry': 'handleCreate'
             }, this);
 
             this.popupContainerHeight = 400;
@@ -133,6 +134,20 @@ define(['jquery',
             };
         },
 
+        getSelectedSource: function () {
+            var selectedType = this.masterMap['selectedType'];
+            if (selectedType == null) {
+                return null;
+            }
+            var typeObj = this.masterMap[selectedType];
+            if (typeObj == null) {
+                return null;
+            }
+            var selectedSource = typeObj['selectedSource'];
+            return (selectedSource != null) ? selectedSource : null;
+        },
+
+
         getSelectedSourceObj: function () {
             var selectedType = this.masterMap['selectedType'];
             if (selectedType == null) {
@@ -210,9 +225,7 @@ define(['jquery',
                 this.newProjectData = this.panel3.detailsView.getData();
                 this.renderBreadCrumbView(true);
                 this.panel3.render({showCreatingProjectView: true});
-                this.toggleBottomNav(0, 0);
-                this.hideCreateBtn();
-                this.hideModalFooterTopBorder();
+                this.hideFooter();
                 var projectData = {
                     gh_username: this.userData.gh_username,
                     title: this.newProjectData.title,
@@ -225,14 +238,14 @@ define(['jquery',
                     privacy: [this.newProjectData.privacy]
                 };
                 var project = new Project();
-                project.create(projectData, {success: function (project) {
-                    console.log('SUCCESSFULLY CREATED PROJECT!');
-                    self.disableAddProjectBtn();
-                    self.showProjectCreationSuccess(project);
-                }, error: function () {
-                    console.log('ERROR CREATING PROJECT');
+                //project.create(projectData, {success: function (project) {
+                //    console.log('SUCCESSFULLY CREATED PROJECT!');
+                //    self.disableAddProjectBtn();
+                //    self.showProjectCreationSuccess(project);
+                //}, error: function () {
+                //    console.log('ERROR CREATING PROJECT');
                     self.showProjectCreationError();
-                }});
+                //}});
             }
         },
 
@@ -254,15 +267,10 @@ define(['jquery',
         showProjectCreationError: function () {
             var self = this;
             setTimeout(function () {
-                self.renderBreadCrumbView(true);
-                var options = {
-                    selectedSource: OSUtil.SOURCE_MAP[source],
-                    projectData: self.getSelectedSourceObj()
-                };
-                self.panel3.render(options);
-                self.toggleBottomNav(1, 0);
-                self.showCreateBtn();
-                self.showModalFooterTopBorder();
+                self.renderBreadCrumbView();
+                self.hideCreateBtn();
+                self.showFooter();
+                self.panel3.render({showProjectCreationError: true});
             }, 500);
         },
 
@@ -273,6 +281,14 @@ define(['jquery',
             this.slideIndex = 0;
             this.renderBreadCrumbView();
             this.enableAddProjectBtn();
+        },
+
+        showFooter: function () {
+            this.$el.find('.modal-footer').css('visibility', 'visible');
+        },
+
+        hideFooter: function () {
+            this.$el.find('.modal-footer').css('visibility', 'hidden');
         },
 
         disableAddProjectBtn: function () {
@@ -296,11 +312,30 @@ define(['jquery',
         handleNext: function () {
             var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
             if (this.slideIndex < (numSlides - 1) && this.checkIfNextBtnShown()) {
+                if (this.slideIndex == numSlides - 2) {
+                    this.hideErrorViewIfShown();
+                }
                 this.owl.goTo(this.slideIndex + 1);
                 this.toggleBottomNav(1, this.getNextBtnOpacity());
                 this.slideIndex++;
                 this.checkIfNeedToShowCreateBtn();
                 this.renderBreadCrumbView();
+            }
+        },
+
+        hideErrorViewIfShown: function () {
+            var self = this;
+            if (this.panel3.projectCreationErrorShown) {
+                var source = this.getSelectedSource();
+                var options = {
+                    selectedSource: source,
+                    projectData: this.getSelectedSourceObj()
+                };
+                if (source == this.source1 && this.repos == null) {
+                    options.showReposLoadingView = true;
+                    this.getGHRepos();
+                }
+                this.panel3.render(options);
             }
         },
 
@@ -396,7 +431,9 @@ define(['jquery',
         },
 
         hideCreateBtn: function () {
+            console.log('hideCreateBtn');
             var $createBtn = this.$el.find('.bottom-nav-create-btn');
+            console.log($createBtn);
             $createBtn.animate({opacity: 0}, {duration: 0, queue: false});
             $createBtn.hide();
         },
@@ -482,6 +519,31 @@ define(['jquery',
             this.$el.find('.fake-top-border').show();
         },
 
+        handleBreadCrumbNav: function (id) {
+            var self = this;
+            var numSlides = this.$el.find('#popup-owl > .owl-wrapper-outer > .owl-wrapper').children().length;
+            self.renderBreadCrumbView();
+            var indexEnd = self.panelMap[id];
+            if (indexEnd == self.slideIndex) {
+                return;
+            } else if (indexEnd > self.slideIndex) {
+                // FORWARD
+                self.toggleBottomNav(1, self.getNextBtnOpacity());
+                self.slideIndex = indexEnd;
+                self.checkIfNeedToShowCreateBtn();
+                if (self.slideIndex == numSlides - 1) {
+                    self.hideErrorViewIfShown();
+                }
+            } else if (indexEnd < self.slideIndex) {
+                // BACK
+                self.slideIndex = indexEnd;
+                self.toggleBottomNav(self.getBackBtnOpacity(), 1);
+                self.hideCreateBtn();
+            }
+            self.renderBreadCrumbView();
+            self.owl.goTo(indexEnd);
+        },
+
         renderBreadCrumbView: function (creatingProject) {
             this.breadCrumbView.render({
                 breadCrumb1Clickable: this.masterMap['selectedType'] != null,
@@ -521,23 +583,7 @@ define(['jquery',
                 el: '#createProjectBreadCrumbView'
             });
             this.listenTo(this.breadCrumbView, 'breadCrumbNav', function (id) {
-                self.renderBreadCrumbView();
-                var indexEnd = self.panelMap[id];
-                if (indexEnd == self.slideIndex) {
-                    return;
-                } else if (indexEnd > self.slideIndex) {
-                    // FORWARD
-                    self.toggleBottomNav(1, self.getNextBtnOpacity());
-                    self.slideIndex = indexEnd;
-                    self.checkIfNeedToShowCreateBtn();
-                } else if (indexEnd < self.slideIndex) {
-                    // BACK
-                    self.slideIndex = indexEnd;
-                    self.toggleBottomNav(self.getBackBtnOpacity(), 1);
-                    self.hideCreateBtn();
-                }
-                self.renderBreadCrumbView();
-                self.owl.goTo(indexEnd);
+                self.handleBreadCrumbNav(id);
             });
 
             this.renderBreadCrumbView();
