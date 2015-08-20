@@ -296,6 +296,7 @@ define(['jquery',
             this.resetMasterMap(this.masterMap);
             this.renderPanels();
             this.renderBreadCrumbView();
+            this.passLangData(this.dropdownItems);
         },
 
         showFooter: function () {
@@ -488,6 +489,9 @@ define(['jquery',
             this.listenTo(this.panel2, 'source:selected', function (source) {
                 self.handleSourceSelected(source);
             });
+            this.listenTo(this.panel3, 'repo:getDetails', function (name) {
+                self.getRepoDetails(name);
+            });
         },
 
         getBackBtnOpacity: function () {
@@ -590,9 +594,8 @@ define(['jquery',
             });
             this.panel3.render();
 
-            this.listenTo(this.panel3, 'repo:getDetails', function (name) {
-                self.getRepoDetails(name);
-            });
+            this.setSizeForPopup();
+            this.addPubSubListeners();
         },
 
         render: function () {
@@ -626,29 +629,6 @@ define(['jquery',
             this.renderBreadCrumbView();
 
             this.renderPanels();
-
-            this.panel1 = new SelectProjectTypeView({
-                el: '#newProjectPanel1'
-            });
-            this.panel1.render();
-
-            this.panel2 = new SelectProjectSourceView({
-                el: '#newProjectPanel2'
-            });
-            this.panel2.render();
-
-            this.panel3 = new AddProjectDetailsView({
-                el: '#newProjectPanel3'
-            });
-            this.panel3.render();
-
-            this.listenTo(this.panel3, 'repo:getDetails', function (name) {
-                self.getRepoDetails(name);
-            });
-
-            this.setSizeForPopup();
-
-            this.addPubSubListeners();
 
         }
 	});
