@@ -73,7 +73,7 @@ define(['jquery',
                         'repoName': null,
                         'license': null,
                         'privacy': null,
-                        anon: false
+                        'anon': false
                     }
                 },
 
@@ -132,6 +132,16 @@ define(['jquery',
                     }
                 }
             };
+        },
+
+        resetMasterMap: function (obj) {
+            for (var key in obj) {
+                (typeof(obj[key]) === 'object' && !Array.isArray(obj[key])) ? this.resetMasterMap(obj[key]) : obj[key] = null;
+            }
+
+            // these were set by default in the beginning, so set them again
+            this.masterMap['type1']['selectedSource'] = 'source2';
+            this.masterMap['type1']['source2']['anon'] = false;
         },
 
         getSelectedSource: function () {
@@ -237,15 +247,15 @@ define(['jquery',
                     anon: this.newProjectData.anon,
                     privacy: [this.newProjectData.privacy]
                 };
+                this.disableAddProjectBtn();
                 var project = new Project();
-                //project.create(projectData, {success: function (project) {
-                //    console.log('SUCCESSFULLY CREATED PROJECT!');
-                //    self.disableAddProjectBtn();
-                //    self.showProjectCreationSuccess(project);
-                //}, error: function () {
-                //    console.log('ERROR CREATING PROJECT');
+                project.create(projectData, {success: function (project) {
+                    console.log('SUCCESSFULLY CREATED PROJECT!');
+                    self.showProjectCreationSuccess(project);
+                }, error: function () {
+                    console.log('ERROR CREATING PROJECT');
                     self.showProjectCreationError();
-                //}});
+                }});
             }
         },
 
@@ -267,6 +277,7 @@ define(['jquery',
         showProjectCreationError: function () {
             var self = this;
             setTimeout(function () {
+                self.enableAddProjectBtn();
                 self.renderBreadCrumbView();
                 self.hideCreateBtn();
                 self.showFooter();
@@ -275,12 +286,16 @@ define(['jquery',
         },
 
         resetPopup: function () {
-            var self = this;
             this.toggleBottomNav(0, 0);
+            this.hideCreateBtn();
+            this.hideModalFooterTopBorder();
             this.owl.jumpTo(0);
             this.slideIndex = 0;
-            this.renderBreadCrumbView();
+            this.showFooter();
             this.enableAddProjectBtn();
+            this.resetMasterMap(this.masterMap);
+            this.renderPanels();
+            this.renderBreadCrumbView();
         },
 
         showFooter: function () {
@@ -292,11 +307,11 @@ define(['jquery',
         },
 
         disableAddProjectBtn: function () {
-
+            $('.add-project-btn')[0].style.pointerEvents = 'none';
         },
 
         enableAddProjectBtn: function () {
-
+            $('.add-project-btn')[0].style.pointerEvents = 'auto';
         },
 
         handleBack: function () {
@@ -558,6 +573,28 @@ define(['jquery',
             });
         },
 
+        renderPanels: function () {
+            var self = this;
+            this.panel1 = new SelectProjectTypeView({
+                el: '#newProjectPanel1'
+            });
+            this.panel1.render();
+
+            this.panel2 = new SelectProjectSourceView({
+                el: '#newProjectPanel2'
+            });
+            this.panel2.render();
+
+            this.panel3 = new AddProjectDetailsView({
+                el: '#newProjectPanel3'
+            });
+            this.panel3.render();
+
+            this.listenTo(this.panel3, 'repo:getDetails', function (name) {
+                self.getRepoDetails(name);
+            });
+        },
+
         render: function () {
 			var self = this;
             this.$el.html(IndexViewTpl());
@@ -587,6 +624,8 @@ define(['jquery',
             });
 
             this.renderBreadCrumbView();
+
+            this.renderPanels();
 
             this.panel1 = new SelectProjectTypeView({
                 el: '#newProjectPanel1'
