@@ -244,6 +244,10 @@ class ProjectsController < ApplicationController
 
   end
 
+  def get_up_for_grabs
+    hard_coded_projects = Project.where(:status => params[:status])
+    render :json => hard_coded_projects
+  end
 
   private
 

@@ -142,6 +142,18 @@ define(['jquery',
             });
 
             return this.sync('launch', this, requestInfo);
+        },
+
+        getUpForGrabs: function(info, options) {
+            var requestInfo = options || {};
+            info.status = 0; // only getting up-for-grabs projects here
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getUpForGrabs',
+                data: info
+            });
+
+            return this.sync('getUpForGrabs', this, requestInfo);
         }
 
     });

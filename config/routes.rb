@@ -16,6 +16,7 @@ Backboneworld::Application.routes.draw do
       post :add_comment, :path => '/addComment'
       post :join, :path => '/join'
       post :launch, :path => '/launch'
+      get :get_up_for_grabs, :path => '/getUpForGrabs'
     end
   end
 

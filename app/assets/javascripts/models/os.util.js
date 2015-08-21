@@ -119,6 +119,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'getRepoDetails': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'getUpForGrabs': {
+                verb: 'GET',
+                action: 'read'
             }
         }
 
