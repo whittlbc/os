@@ -61,11 +61,11 @@ define(['jquery',
             this.selectedType = type;
         },
 
-        scrollToDetailsView: function () {
+        scrollToDetailsView: function (repos) {
             var self = this;
             var $scrollContainer = this.$el.find('.add-project-details-scroll-container');
-            var reposViewHeight = this.repoListView.$el.height();
-            $scrollContainer.animate({scrollTop: reposViewHeight + 15}, {duration: 500, specialEasing: 'easeInOutCubic'});
+            var viewHeight = repos ? this.repoListView.$el.height() : this.pullFromIdeasView.$el.height();
+            $scrollContainer.animate({scrollTop: viewHeight + 15}, {duration: 500, specialEasing: 'easeInOutCubic'});
         },
 
         allowCreate: function () {
@@ -153,7 +153,7 @@ define(['jquery',
                 self.trigger('repo:getDetails', name);
                 self.detailsView.render({hideDetailsView: false});
                 setTimeout(function () {
-                    self.scrollToDetailsView();
+                    self.scrollToDetailsView(true);
                 }, 10);
             });
             if (this.repos) {
@@ -172,6 +172,16 @@ define(['jquery',
             if (showPullFromIdeasView) {
                 this.pullFromIdeasView = new PullFromIdeasView({
                     el: '#pullFromIdeasView'
+                });
+                this.listenTo(this.pullFromIdeasView, 'project:selected', function (data) {
+                    var options = {
+                        hideDetailsView: false,
+                        projectData: data
+                    };
+                    self.detailsView.render(options);
+                    setTimeout(function () {
+                        self.scrollToDetailsView(false);
+                    }, 10);
                 });
                 this.pullFromIdeasView.render();
             }

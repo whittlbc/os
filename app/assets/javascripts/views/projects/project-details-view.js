@@ -38,9 +38,9 @@ define(['jquery',
                 status: data.status,
                 anon: data.anon,
                 langs_and_frames: data.langs_and_frames,
-                contributors: data.contributors.length > 0 ? 'exists' : 'none',
-                license: data.license.length > 0 ? 'exists' : 'none',
-                privacy: data.privacy.length > 0 ? 'exists' : 'none'
+                contributors: data.contributors && data.contributors.length > 0 ? 'exists' : 'none',
+                license: data.license && data.license.length > 0 ? 'exists' : 'none',
+                privacy: data.privacy && data.privacy.length > 0 ? 'exists' : 'none'
             }));
 		}
 	});

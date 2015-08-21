@@ -219,7 +219,7 @@ define(['jquery',
         //},
 
         checkIfShowRepoNameAndLicense: function () {
-            return ((this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] && this.selectedSource != OSUtil.SOURCE_MAP['pull-from-ideas']) || this.selectedType == OSUtil.TYPE_MAP['launched']);
+            return ((this.selectedType == OSUtil.TYPE_MAP['on-the-fence']) || this.selectedType == OSUtil.TYPE_MAP['launched']);
         },
 
         resetInfo: function () {

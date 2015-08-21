@@ -54,8 +54,7 @@ define(['jquery',
             var pullFromIdeasSearchResult = new PullFromIdeasSearchResult({
                 tagName: 'li'
             });
-            pullFromIdeasSearchResult.setData(data);
-            pullFromIdeasSearchResult.render();
+            pullFromIdeasSearchResult.render(data);
             this.addItemListeners(pullFromIdeasSearchResult);
             this.$el.find('#pullFromIdeasSearchResults').append(pullFromIdeasSearchResult.el);
             this.RESULTS.push(pullFromIdeasSearchResult);
@@ -63,7 +62,8 @@ define(['jquery',
 
         addItemListeners: function (view) {
             var self = this;
-            this.listenTo(view, 'something', function () {
+            this.listenTo(view, 'project:selected', function (data) {
+                self.trigger('project:selected', data);
             });
         },
 

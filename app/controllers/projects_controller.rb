@@ -245,7 +245,15 @@ class ProjectsController < ApplicationController
   end
 
   def get_up_for_grabs
-    hard_coded_projects = Project.where(:status => params[:status])
+    hard_coded_projects = Project.where(:status => params[:status]).map { |project|
+      owner = User.find_by(id: project.user_id)
+      {
+          :title => project.title,
+          :description => project.description,
+          :langsFrames => project.langs_and_frames,
+          :userPic => owner.pic
+      }
+    }
     render :json => hard_coded_projects
   end
 

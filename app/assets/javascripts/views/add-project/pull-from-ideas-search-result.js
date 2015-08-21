@@ -13,17 +13,18 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
-
-        setData: function (data) {
-            this.title = data.title;
-        },
-
-		render: function () {
+		render: function (data) {
 			var self = this;
+            this.data = data;
             this.$el.html(PullFromIdeasSearchResultTpl({
-                title: this.title
+                title: data.title,
+                userPic: data.userPic
             }));
+
+            this.$el.click(function () {
+                self.trigger('project:selected', data);
+            });
+
 		}
 	});
 
