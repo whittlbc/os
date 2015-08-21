@@ -422,7 +422,6 @@ textarea[name="add-project-description"] {
   font-family: 'Helvetica Neue';
   margin-bottom: 15px;
   margin-top: 10px;
-
 }
 
 .enter-details-message {
@@ -809,4 +808,35 @@ input[name="add-project-repo-name"] {
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+.add-project-pull-from-ideas-container {
+  width: 100%;
+  display: block;
+}
+
+.pull-from-ideas-header-text {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  color: black;
+  text-align: center;
+  font-family: 'Helvetica Neue';
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+#searchUpForGrabsInput {
+  width: 82%;
+  line-height: 33px;
+  border-radius: 17px;
+  border: 1px solid #C2C2CB;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  font-size: 13px;
+  display: block;
+  font-family: 'Helvetica Neue';
 }

@@ -6,6 +6,7 @@ define(['jquery',
     'views/add-project/creating-project-view',
     'models/os.util',
     'views/add-project/project-creation-error-view',
+    'views/add-project/pull-from-ideas-view',
     'stache!views/add-project/add-project-details-view'
 ], function ($,
      Backbone,
@@ -15,6 +16,7 @@ define(['jquery',
      CreatingProjectView,
      OSUtil,
      ProjectCreationErrorView,
+     PullFromIdeasView,
      AddProjectDetailsViewTpl) {
 	'use strict';
 
@@ -85,8 +87,14 @@ define(['jquery',
 			var self = this;
             var showCreatingProjectView = false;
             var showProjectCreationError = false;
+            var showPullFromIdeasView = false;
             if (options && options.selectedSource == OSUtil.SOURCE_MAP['gh'] && selectedRepo == null) {
                 options.hideDetailsView = (this.selectedSource == options.selectedSource) ? false : true;
+            }
+
+            if (options && options.selectedSource == OSUtil.SOURCE_MAP['pull-from-ideas']) {
+                options.hideDetailsView = true;
+                showPullFromIdeasView = true;
             }
 
             if (options && options.selectedSource) {
@@ -108,6 +116,7 @@ define(['jquery',
 
             this.$el.html(AddProjectDetailsViewTpl({
                 showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
+                showPullFromIdeasView: showPullFromIdeasView,
                 showCreatingProjectView: showCreatingProjectView,
                 showProjectCreationError: showProjectCreationError
             }));
@@ -158,6 +167,13 @@ define(['jquery',
 
             if (this.repos && this.selectedSource == OSUtil.SOURCE_MAP['gh']) {
                 this.populateUIRepoList();
+            }
+
+            if (showPullFromIdeasView) {
+                this.pullFromIdeasView = new PullFromIdeasView({
+                    el: '#pullFromIdeasView'
+                });
+                this.pullFromIdeasView.render();
             }
 
             if (showCreatingProjectView) {
