@@ -36,10 +36,10 @@ define(['jquery',
                 'license:updated': 'handleLicenseUpdate',
                 'privacy:updated': 'handlePrivacyUpdate',
                 'anon:updated': 'handleAnonUpdate',
-                'create-project:retry': 'handleCreate'
+                'create-project:retry': 'handleRetry'
             }, this);
 
-            this.popupContainerHeight = 400;
+            this.popupContainerHeight = 410;
             this.popupHeight = this.popupContainerHeight - 50;
 
             this.bottomNavDuration = 200;
@@ -229,34 +229,75 @@ define(['jquery',
             'click .bottom-nav-create-btn': 'handleCreate'
         },
 
+        handleRetry: function () {
+            this.bypassDoubleClickRequirement = true;
+            this.handleCreate();
+        },
+
         handleCreate: function () {
             var self = this;
+
+            // Someone clicked 'Retry'. fuck everything else and keep going
+            if (this.bypassDoubleClickRequirement) {
+                this.createProject();
+                return;
+            }
+
             if (this.panel3.detailsView.allowCreate()) {
-                this.newProjectData = this.panel3.detailsView.getData();
-                this.renderBreadCrumbView(true);
-                this.panel3.render({showCreatingProjectView: true});
-                this.hideFooter();
-                var projectData = {
-                    gh_username: this.userData.gh_username,
-                    title: this.newProjectData.title,
-                    repo_name: this.newProjectData.repoName,
-                    description: this.newProjectData.description,
-                    license: [this.newProjectData.license],
-                    status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
-                    langs_and_frames: this.newProjectData.langsFrames,
-                    anon: this.newProjectData.anon,
-                    privacy: [this.newProjectData.privacy]
-                };
-                this.disableAddProjectBtn();
-                var project = new Project();
-                project.create(projectData, {success: function (project) {
+                this.createBtnClickCount++;
+                if (this.createBtnClickCount == 2) {
+                    this.createProject();
+                } else {
+                    this.showSlideOutConfirmCreateMessage();
+                }
+            }
+        },
+
+        createProject: function () {
+            var self = this;
+            this.createBtnClickCount = 0;
+            this.hideSlideOutConfirmCreateMessage();
+            this.newProjectData = this.panel3.detailsView.getData();
+            this.renderBreadCrumbView(true);
+            this.panel3.render({showCreatingProjectView: true});
+            this.hideFooter();
+            var projectData = {
+                gh_username: this.userData.gh_username,
+                title: this.newProjectData.title,
+                repo_name: this.newProjectData.repoName,
+                description: this.newProjectData.description,
+                license: [this.newProjectData.license],
+                status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
+                langs_and_frames: this.newProjectData.langsFrames,
+                anon: this.newProjectData.anon,
+                privacy: [this.newProjectData.privacy]
+            };
+            this.disableAddProjectBtn();
+            var project = new Project();
+            project.create(projectData, {
+                success: function (project) {
                     console.log('SUCCESSFULLY CREATED PROJECT!');
                     self.showProjectCreationSuccess(project);
                 }, error: function () {
                     console.log('ERROR CREATING PROJECT');
                     self.showProjectCreationError();
-                }});
-            }
+                }
+            });
+        },
+
+        showSlideOutConfirmCreateMessage: function () {
+            this.$el.find('.bottom-nav-create-btn').html('Yes');
+            var $confirmMessage = this.$el.find('.create-project-confirm-message');
+            $confirmMessage.show();
+            $confirmMessage.animate({opacity: 1}, 250);
+        },
+
+        hideSlideOutConfirmCreateMessage: function () {
+            this.$el.find('.bottom-nav-create-btn').html('Create');
+            this.createBtnClickCount = 0;
+            var $confirmMessage = this.$el.find('.create-project-confirm-message');
+            $confirmMessage.hide();
+            $confirmMessage.css('opacity', 0);
         },
 
         hideModal: function () {
@@ -270,7 +311,7 @@ define(['jquery',
                 window.location.hash = '#projects/' + project.id;
                 setTimeout(function () {
                     self.resetPopup();
-                }, 300);
+                }, 200);
             }, 500);
         },
 
@@ -297,6 +338,7 @@ define(['jquery',
             this.renderPanels();
             this.renderBreadCrumbView();
             this.passLangData(this.dropdownItems);
+            this.handleUserRepos(this.repos);
         },
 
         showFooter: function () {
@@ -438,6 +480,7 @@ define(['jquery',
         },
 
         showCreateBtn: function () {
+            this.createBtnClickCount = 0;
             var $createBtn = this.$el.find('.bottom-nav-create-btn');
             var $nextBtn = this.$el.find('.bottom-nav-next');
             $nextBtn.animate({opacity: 0}, {duration: 0, queue: false});
@@ -447,6 +490,7 @@ define(['jquery',
         },
 
         hideCreateBtn: function () {
+            this.createBtnClickCount = 0;
             console.log('hideCreateBtn');
             var $createBtn = this.$el.find('.bottom-nav-create-btn');
             console.log($createBtn);
@@ -563,6 +607,13 @@ define(['jquery',
             self.owl.goTo(indexEnd);
         },
 
+        listenToConfirmCancel: function () {
+            var self = this;
+            this.$el.find('.create-project-confirm-message > .fa-times-circle').click(function () {
+                self.hideSlideOutConfirmCreateMessage();
+            });
+        },
+
         renderBreadCrumbView: function (creatingProject) {
             this.breadCrumbView.render({
                 breadCrumb1Clickable: this.masterMap['selectedType'] != null,
@@ -630,6 +681,7 @@ define(['jquery',
 
             this.renderPanels();
 
+            this.listenToConfirmCancel();
         }
 	});
 

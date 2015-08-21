@@ -63,7 +63,7 @@ define(['jquery',
             var self = this;
             var $scrollContainer = this.$el.find('.add-project-details-scroll-container');
             var reposViewHeight = this.repoListView.$el.height();
-            $scrollContainer.animate({scrollTop: reposViewHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
+            $scrollContainer.animate({scrollTop: reposViewHeight + 15}, {duration: 500, specialEasing: 'easeInOutCubic'});
         },
 
         allowCreate: function () {
@@ -73,6 +73,12 @@ define(['jquery',
 
         showCreatingProjectView: function () {
             this.creatingProjectView.show();
+        },
+
+        blurAllInputs: function () {
+            if (this.detailsView) {
+                this.detailsView.blurAllInputs();
+            }
         },
 
 		render: function (options) {
@@ -108,6 +114,13 @@ define(['jquery',
 
             this.detailsView = new DetailsView({
                 el: '#detailsView'
+            });
+
+            this.listenTo(this.detailsView, 'scroll:bottom', function () {
+                setTimeout(function () {
+                    var $container = self.$el.find('.add-project-details-scroll-container');
+                    $container.scrollTop($container[0].scrollHeight);
+                }, 50);
             });
 
             if (this.selectedType) {

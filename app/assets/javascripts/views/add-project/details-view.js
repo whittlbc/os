@@ -105,7 +105,11 @@ define(['jquery',
 
         adjustHeightOfParent: function () {
             var inputHeight = this.$el.find('.selectize-control.multi').height();
-            this.$el.find('.add-project-langs-frames-container').height(inputHeight+38);
+            if (inputHeight > 40) {
+                this.$el.find('.add-project-langs-frames-container').height(inputHeight + 22);
+            } else {
+                this.$el.find('.add-project-langs-frames-container').height(60);
+            }
         },
 
         initLangFramesDropdown: function () {
@@ -160,6 +164,9 @@ define(['jquery',
                     self.license = self.licenseSelectize.getValue();
                     Backbone.EventBroker.trigger('license:updated', self.license);
                 },
+                onFocus: function () {
+                    self.trigger('scroll:bottom');
+                },
                 selectOnTab: false,
                 render: {
                     option: function (data, escape) {
@@ -179,6 +186,10 @@ define(['jquery',
             this.licenseSelectize.on('item_remove', function () {
                 self.licenseValue = self.licenseSelectize.getValue();
             });
+        },
+
+        scrollToBottom: function () {
+
         },
 
         //initTagsDropdown: function () {
@@ -257,6 +268,19 @@ define(['jquery',
                 privacy: this.privacy,
                 anon: this.anon
             };
+        },
+
+        blurAllInputs: function () {
+            this.$el.find('[name=add-project-repo-title]').blur();
+            this.$el.find('[name=add-project-repo-description]').blur();
+            this.$el.find('[name=add-project-repo-name]').blur();
+
+            if (this.licenseSelectize) {
+                this.licenseSelectize.blur();
+            }
+            if (this.langFrameSelectize) {
+                this.langFrameSelectize.blur();
+            }
         },
 
         render: function (options) {

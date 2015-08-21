@@ -48,8 +48,8 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
 
         // CreateNewProjectPopup --> Set the top positioning
         // DO NOT FUCK WITH THESE NUMBERS
-        var currentTopPos = 135; // just eyeballing from default Modal Positioning
-        var createNewProjectModalHeight = 486;
+        var currentTopPos = 125; // just eyeballing from default Modal Positioning
+        var createNewProjectModalHeight = 496;
         var createNewProjectModalMarginTop = ((window.innerHeight - createNewProjectModalHeight - currentTopPos) / 2);
         $('#createNewProjectModal').css('margin-top', createNewProjectModalMarginTop + 'px');
         $('#createNewProjectModalContentContainer').width(750);
