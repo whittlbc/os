@@ -312,7 +312,7 @@ define(['jquery',
                 setTimeout(function () {
                     self.resetPopup();
                 }, 200);
-            }, 500);
+            }, 1000);
         },
 
         showProjectCreationError: function () {
@@ -513,7 +513,9 @@ define(['jquery',
             var user = new User();
             user.getAllUserRepos({gh_username: self.userData.gh_username}, {
                 success: function(data) {
-                    self.handleUserRepos(data.repos);
+                    setTimeout(function () {
+                        self.handleUserRepos(data.repos);
+                    }, 500);
                 }, error: function() {
                     console.log('Error getting all user repos');
                 }
