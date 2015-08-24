@@ -17,7 +17,19 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+            'click .info-evolution-toggle-btn': 'handleClickToggleBtn'
+        },
+
+        handleClickToggleBtn: function (e) {
+            var self = this;
+            var $flipper = this.$el.find('#minorInfoEvolutionFlipper');
+            if (e.currentTarget.id == 'info' && $flipper.hasClass('flipped')) {
+                $flipper.removeClass('flipped');
+            } else if (e.currentTarget.id == 'evolution' && !$flipper.hasClass('flipped')) {
+                $flipper.addClass('flipped');
+            }
+        },
 
 		render: function () {
 			var self = this;
@@ -32,14 +44,6 @@ define(['jquery',
                 el: '#evolutionView'
             });
             this.evolutionView.render();
-
-            this.$el.find('#minorInfoEvolutionContainer').click(function(){
-                $(this).find('#minorInfoEvolutionFlipper').addClass('flipped').mouseleave(function(){
-                    $(this).removeClass('flipped');
-                });
-                return false;
-            });
-
 		}
 	});
 
