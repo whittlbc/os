@@ -9,26 +9,49 @@
 
 #projectMajorView {
   width: 76%;
-  background-color: green;
   display: inline-block;
 }
 
 #majorInfoView {
   height: 330px;
   width: 100%;
-  background: purple;
+}
+
+.major-info-container-view {
+  height: 100%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+}
+
+.major-info-project-title {
+  width: 100%;
+  font-size: 30px;
+}
+
+.major-info-project-subtitle {
+  width: 100%;
+  height: 30px;
+  font-size: 18px;
+  line-height: 30px;
+  margin-top: 10px;
+}
+
+.major-info-project-description {
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 #communicationView {
   width: 100%;
-  background-color: blue;
 }
 
 .communication-tabs-container {
   width: 100%;
   display: block;
   height: 40px;
-  background-color: lightgray;
 }
 
 .communication-tab {
@@ -80,7 +103,6 @@
 #projectMinorView {
   width: 24%;
   height: 100%;
-  background-color: blue;
   display: inline-block;
   position: absolute;
   top: 65px;
@@ -89,7 +111,6 @@
 #minorJoinFollowContainer {
   width: 100%;
   height: 100px;
-  background-color: yellow;
   position: absolute;
   top: 0;
 }
@@ -133,7 +154,7 @@
   width: 100%;
   height: 100%;
   -webkit-transform-style: preserve-3d;
-  -webkit-transition: 0.45s;
+  -webkit-transition: 0.425s;
 }
 
 #minorInfoEvolutionFlipper .face {

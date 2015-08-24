@@ -42,10 +42,12 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(CommunicationViewTpl({
-                showGeneral: this.activeTab == 0,
-                showSuggestions: this.activeTab == 1,
-                showTeam: this.activeTab == 2,
-                showAdmin: this.activeTab == 3
+                showTeam: false,
+                showAdmin: false,
+                generalActive: this.activeTab == 0,
+                suggestionsActive: this.activeTab == 1,
+                teamActive: this.activeTab == 2,
+                adminActive: this.activeTab == 3
             }));
 
             this.generalFeedContainerView = new GeneralFeedContainerView({

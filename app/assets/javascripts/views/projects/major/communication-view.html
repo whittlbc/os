@@ -1,12 +1,12 @@
 <div class="communication-tabs-container">
-    <div index="0" class="communication-tab {{#showGeneral}}active{{/showGeneral}}">General</div>{{
-    }}<div index="1" class="communication-tab {{#showSuggestions}}active{{/showSuggestions}}">Feature Suggestions</div>{{
-    }}<div index="2" class="communication-tab {{#showTeam}}active{{/showTeam}}">Team</div>{{
-    }}<div index="3" class="communication-tab {{#showAdmin}}active{{/showAdmin}}">Admin</div>
+    <div index="0" class="communication-tab {{#generalActive}}active{{/generalActive}}">General</div>{{
+    }}<div index="1" class="communication-tab {{#suggestionsActive}}active{{/suggestionsActive}}">Feature Suggestions</div>{{
+    }}{{#showTeam}}<div index="2" class="communication-tab {{#teamActive}}active{{/teamActive}}">Team</div>{{/showTeam}}{{
+    }}{{#showAdmin}}<div index="3" class="communication-tab {{#adminActive}}active{{/adminActive}}">Admin</div>{{/showAdmin}}
 </div>
-<div id="communicationFeedContainer">{{#showGeneral}}
-    <div id="generalFeedContainerView"></div>{{/showGeneral}}{{
-    }}{{#showSuggestions}}<div id="suggestionsFeedContainerView"></div>{{/showSuggestions}}{{
-    }}{{#showTeam}}<div id="teamFeedContainerView"></div>{{/showTeam}}{{
-    }}{{#showAdmin}}<div id="adminFeedContainerView"></div>{{/showAdmin}}
+<div id="communicationFeedContainer">{{#generalActive}}
+    <div id="generalFeedContainerView"></div>{{/generalActive}}{{
+    }}{{#suggestionsActive}}<div id="suggestionsFeedContainerView"></div>{{/suggestionsActive}}{{
+    }}{{#teamActive}}<div id="teamFeedContainerView"></div>{{/teamActive}}{{
+    }}{{#adminActive}}<div id="adminFeedContainerView"></div>{{/adminActive}}
 </div>
