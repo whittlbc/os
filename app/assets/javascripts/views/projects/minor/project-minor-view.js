@@ -1,10 +1,12 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'views/projects/minor/minor-info-evolution-view',
 	'stache!views/projects/minor/project-minor-view'
     ], function ($,
      Backbone,
      _,
+     MinorInfoEvolutionView,
      ProjectMinorViewTpl) {
 	'use strict';
 
@@ -18,6 +20,10 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(ProjectMinorViewTpl());
+            this.minorInfoEvolutionView = new MinorInfoEvolutionView({
+                el: '#minorInfoEvolutionView'
+            });
+            this.minorInfoEvolutionView.render();
 		}
 	});
 

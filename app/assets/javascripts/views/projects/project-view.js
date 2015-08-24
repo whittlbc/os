@@ -4,8 +4,8 @@ define(['jquery',
     'views/os.view',
     'models/project',
     'models/os.util',
-    'views/projects/project-details-view',
-    'views/projects/details-chat-feed-view',
+    'views/projects/major/project-major-view',
+    'views/projects/minor/project-minor-view',
     'stache!views/projects/project-view',
     'selectize'
 ], function ($,
@@ -14,8 +14,8 @@ define(['jquery',
      OSView,
      Project,
      OSUtil,
-     ProjectDetailsView,
-     DetailsChatFeedView,
+     ProjectMajorView,
+     ProjectMinorView,
      ProjectViewTpl) {
     'use strict';
 
@@ -69,8 +69,6 @@ define(['jquery',
 
         addListeners: function () {
             var self = this;
-            this.listenTo(this.projectDetailsView, 'comment:add', self.handleAddComment);
-            this.listenTo(this.projectDetailsView, 'project:join', self.checkProjectPrivacy);
         },
 
         isContributor: function () {
@@ -104,14 +102,6 @@ define(['jquery',
 
         handleAddComment: function (text) {
             var self = this;
-            var commentObj = {
-                text: text,
-                user_uuid: self.user_uuid,
-                project_id: self.projectID
-            };
-            this.detailsChatFeedView.addComment(commentObj);
-            var project = new Project();
-            project.addComment(commentObj);
         },
 
         render: function (data) {
@@ -122,19 +112,15 @@ define(['jquery',
 
             this.$el.html(ProjectViewTpl());
 
-            this.projectDetailsView = new ProjectDetailsView({
-                el: '#projectDetailsView'
+            this.projectMajorView = new ProjectMajorView({
+                el: '#projectMajorView'
             });
+            this.projectMajorView.render();
 
-            this.projectDetailsView.render(data.project);
-
-            this.detailsChatFeedView = new DetailsChatFeedView({
-                el: '#detailsChatFeedView'
+            this.projectMinorView = new ProjectMinorView({
+                el: '#projectMinorView'
             });
-
-            this.detailsChatFeedView.render(data.comments);
-
-            this.addListeners();
+            this.projectMinorView.render();
 
             window.scrollTo(0, 0);
 

@@ -1,10 +1,12 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-	'stache!views/projects/major/team-feed/team-feed-view'
+    'views/projects/major/team-feed/team-feed-item-view',
+    'stache!views/projects/major/team-feed/team-feed-view'
     ], function ($,
      Backbone,
      _,
+     TeamFeedItemView,
      TeamFeedVIewTpl) {
 	'use strict';
 

@@ -1,10 +1,12 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'views/projects/major/suggestions-feed/suggestions-feed-item-view',
 	'stache!views/projects/major/suggestions-feed/suggestions-feed-view'
     ], function ($,
      Backbone,
      _,
+     SuggestionsFeedItemView,
      SuggestionsFeedViewTpl) {
 	'use strict';
 

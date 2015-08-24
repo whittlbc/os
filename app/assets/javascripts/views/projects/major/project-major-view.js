@@ -1,10 +1,14 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-	'stache!views/projects/major/project-major-view'
+    'views/projects/major/major-info-view',
+    'views/projects/major/communication-view',
+	'stache!views/projects/major/project-major-view',
     ], function ($,
      Backbone,
      _,
+     MajorInfoView,
+     CommunicationView,
      ProjectMajorViewTpl) {
 	'use strict';
 
@@ -18,6 +22,16 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(ProjectMajorViewTpl());
+
+            this.majorInfoView = new MajorInfoView({
+                el: '#majorInfoView'
+            });
+            this.majorInfoView.render();
+
+            this.communicationView = new CommunicationView({
+                el: '#communicationView'
+            });
+            this.communicationView.render();
 		}
 	});
 
