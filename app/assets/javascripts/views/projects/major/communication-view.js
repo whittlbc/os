@@ -42,8 +42,8 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(CommunicationViewTpl({
-                showTeam: false,
-                showAdmin: false,
+                showTeam: true,
+                showAdmin: true,
                 generalActive: this.activeTab == 0,
                 suggestionsActive: this.activeTab == 1,
                 teamActive: this.activeTab == 2,

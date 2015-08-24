@@ -110,7 +110,7 @@
 
 #minorJoinFollowContainer {
   width: 100%;
-  height: 100px;
+  height: 115px;
   position: absolute;
   top: 0;
 }
@@ -118,7 +118,7 @@
 #minorInfoEvolutionView {
   width: 100%;
   position: absolute;
-  top: 100px;
+  top: 115px;
   bottom: 0;
 }
 
@@ -168,12 +168,96 @@
 #minorInfoView {
   position: absolute;
   z-index: 1;
-  background: black;
-  color: white;
+  background-color: white;
 }
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
-  background: lightgray;
-  color: black;
+  background-color: black;
 }
 
+.join-project-btn {
+  width: 50%;
+  margin-left: 25%;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  background-color: #00A6C9;
+  color: white;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.follow-project-btn {
+  width: 50%;
+  margin-left: 25%;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  background-color: #00A6C9;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.project-minor-vote-arrow-container {
+  height: 35px;
+  width: 100%;
+}
+
+.project-minor-vote-arrow {
+  height: 30px;
+  width: 40%;
+  line-height: 30px;
+  text-align: center;
+  margin-left: 30%;
+  cursor: pointer;
+}
+
+.project-minor-vote-count {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  color: black;
+  font-size: 20px;
+  font-family: 'Helvetica Neue';
+}
+
+#contributorsView {
+  display: block;
+}
+
+#contributorsListView {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.contributors-item-view {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  margin: 3px;
+  border-radius: 17.5px;
+  background-color: black;
+}
+
+.contributors-item-view.owner {
+  border: 1px solid #00A6C9;
+}
+
+#minorInfoDateContainer {
+
+}
+
+#minorInfoRepoURLContainer {
+
+}
+
+#minorInfoSlackURLContainer {
+
+}

@@ -16,19 +16,21 @@ define(['jquery',
 		},
 
 		events: {},
+        //
+        //setHeight: function () {
+        //    this.$el.find('#minorInfoEvolutionView').height($(document).height() - this.$el.find('#minorJoinFollowContainer').height());
+        //},
 
-        setHeight: function () {
-            this.$el.find('#minorInfoEvolutionView').height($(document).height() - this.$el.find('#minorJoinFollowContainer').height());
-        },
-
-		render: function (windowHeight) {
+		render: function (options) {
+            console.log(options);
 			var self = this;
-            this.$el.html(ProjectMinorViewTpl());
+            this.$el.html(ProjectMinorViewTpl({
+                voteCount: options && options.vote_count ? options.vote_count : '-'
+            }));
             this.minorInfoEvolutionView = new MinorInfoEvolutionView({
                 el: '#minorInfoEvolutionView'
             });
             this.minorInfoEvolutionView.render();
-            //this.setHeight();
 		}
 	});
 

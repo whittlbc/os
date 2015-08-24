@@ -47,9 +47,9 @@ define(['jquery',
             self.contributors = data.project.contributors;
         },
 
-        handleFetchedDetails: function (resp) {
-            master.setProjectProperties(resp);
-            master.render(resp);
+        handleFetchedDetails: function (data) {
+            master.setProjectProperties(data);
+            master.render(data);
         },
 
         cacheFeedBeforeSearch: function () {
@@ -115,12 +115,12 @@ define(['jquery',
             this.projectMajorView = new ProjectMajorView({
                 el: '#projectMajorView'
             });
-            this.projectMajorView.render();
+            this.projectMajorView.render(data);
 
             this.projectMinorView = new ProjectMinorView({
                 el: '#projectMinorView'
             });
-            this.projectMinorView.render();
+            this.projectMinorView.render(data.project);
 
             window.scrollTo(0, 0);
 

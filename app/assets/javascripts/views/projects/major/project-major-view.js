@@ -19,14 +19,14 @@ define(['jquery',
 
 		events: {},
 
-		render: function () {
+		render: function (options) {
 			var self = this;
             this.$el.html(ProjectMajorViewTpl());
 
             this.majorInfoView = new MajorInfoView({
                 el: '#majorInfoView'
             });
-            this.majorInfoView.render();
+            this.majorInfoView.render(options.project);
 
             var majorInfoHeight = window.innerHeight - this.$el.find('#majorInfoView').height(); // adding 10 because of the stupid margin-top: -10px you had to do for some reason
 
@@ -34,7 +34,7 @@ define(['jquery',
                 el: '#communicationView',
                 height: majorInfoHeight
             });
-            this.communicationView.render();
+            this.communicationView.render(options.comments);
 		}
 	});
 

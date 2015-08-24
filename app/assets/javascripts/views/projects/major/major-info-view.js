@@ -15,12 +15,13 @@ define(['jquery',
 
 		events: {},
 
-		render: function () {
+		render: function (options) {
+            console.log(options);
 			var self = this;
             this.$el.html(MajorInfoViewTpl({
-                title: "My Awesome Project",
+                title: options && options.title ? options.title : '',
                 subtitle: "A JavaScript library designed to be so much better than your ordinary JS library",
-                description: ";alskdfj;askdjf; ;ask falksdjf a;sldkjf a;alskdj;kf lsk lsk lskdjflak;dj ;a ljs;alskjd;flkaj ;alksdjf; asdjf;alksjdf;a ;lskdjf a;lksjd;f alksdjf; a;skdjf;a ;lskdjf; alskdjf ;askldjf; asldkf a;sldk a;sdkfj a;sdkf sdlf sldfkj sdlfjsldkf."
+                description: options && options.description ? options.description : '',
             }));
 		}
 	});
