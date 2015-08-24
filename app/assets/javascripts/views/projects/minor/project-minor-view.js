@@ -18,7 +18,7 @@ define(['jquery',
 		events: {},
 
         setHeight: function () {
-            this.$el.find('#minorInfoEvolutionView').height(window.innerHeight - this.$el.find('#minorJoinFollowContainer').height());
+            this.$el.find('#minorInfoEvolutionView').height($(document).height() - this.$el.find('#minorJoinFollowContainer').height());
         },
 
 		render: function (windowHeight) {
@@ -28,7 +28,7 @@ define(['jquery',
                 el: '#minorInfoEvolutionView'
             });
             this.minorInfoEvolutionView.render();
-            this.setHeight();
+            //this.setHeight();
 		}
 	});
 

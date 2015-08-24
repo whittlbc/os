@@ -33,6 +33,13 @@ define(['jquery',
             });
             this.evolutionView.render();
 
+            this.$el.find('#minorInfoEvolutionContainer').click(function(){
+                $(this).find('#minorInfoEvolutionFlipper').addClass('flipped').mouseleave(function(){
+                    $(this).removeClass('flipped');
+                });
+                return false;
+            });
+
 		}
 	});
 
