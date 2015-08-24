@@ -21,7 +21,6 @@
 
 #communicationView {
   width: 100%;
-  margin-top: -10px;
   background-color: blue;
 }
 
@@ -50,33 +49,31 @@
 
 #communicationFeedContainer {
   width: 100%;
-  margin-top: -10px;
 }
 
-#generalFeedContainerView {
+#generalFeedContainerView,
+#suggestionsFeedContainerView,
+#teamFeedContainerView,
+#adminFeedContainerView,
+#generalFeedView,
+#suggestionsFeedView,
+#teamFeedView,
+#adminFeedView,
+#generalFeedListView,
+#suggestionsFeedListView,
+#teamFeedListView,
+#adminFeedListView {
   width: 100%;
-  background-color: pink;
   height: 100%;
 }
 
-#suggestionsFeedContainerView {
-  width: 100%;
-  background-color: blue;
-  height: 100%;
+#generalFeedListView,
+#suggestionsFeedListView,
+#teamFeedListView,
+#adminFeedListView {
+  list-style-type: none;
+  padding-left: 0;
 }
-
-#teamFeedContainerView {
-  width: 100%;
-  background-color: green;
-  height: 100%;
-}
-
-#adminFeedContainerView {
-  width: 100%;
-  background-color: black;
-  height: 100%;
-}
-
 
 // PROJECT MINOR VIEW
 

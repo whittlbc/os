@@ -36,7 +36,7 @@ define(['jquery',
         },
 
         setHeight: function () {
-            this.$el.find('#communicationFeedContainer').height(this.height);
+            this.$el.find('#communicationFeedContainer').css('min-height', this.height);
         },
 
 		render: function () {
