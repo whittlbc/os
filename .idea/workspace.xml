@@ -2,45 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86b4e102-76bf-4781-a2f3-6e5f7dc4808e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-container-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-container-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-container-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-container-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-item-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-item-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-container-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-container-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-container-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-container-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-item-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-container-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-container-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-container-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-container-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-item-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/suggestions-feed/suggestions-feed-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-container-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-container-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-container-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-container-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-item-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-view.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="os.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,7 +39,88 @@
     <favorites_list name="os" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="communication-view.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.36809817">
+              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="communication-view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.25">
+              <caret line="2" column="45" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="projects.css.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.843137">
+              <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project-major-view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project-major-view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="22" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project-minor-view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project-minor-view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="33" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project-view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -91,13 +141,7 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/team-feed/team-feed-item-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-item-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.html" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.html" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-container-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-container-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/general-feed/general-feed-view.html" />
@@ -118,7 +162,6 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-item-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-container-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/admin-feed/admin-feed-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.js" />
@@ -129,6 +172,13 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-view.html" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-view.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/evolution/evolution-feed-item-view.html" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.html" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js" />
       </list>
     </option>
   </component>
@@ -753,17 +803,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="723" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.64765626" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.64375" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="7.8125E-4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24921875" sideWeight="0.8877551" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14296874" sideWeight="0.8877551" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17265625" sideWeight="0.1122449" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.35234374" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.35625" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -890,66 +940,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33282208">
-          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39110428">
-          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02388535">
-          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0690184">
           <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02388535">
-          <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07165605">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11942675">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20705521">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
           <folding />
         </state>
       </provider>
@@ -1114,22 +1108,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20705521">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02388535">
-          <caret line="1" column="27" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.07165605">
@@ -1214,6 +1192,78 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="28" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="33" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="22" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="2" column="45" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.843137">
+          <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36809817">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>

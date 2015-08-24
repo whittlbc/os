@@ -28,8 +28,11 @@ define(['jquery',
             });
             this.majorInfoView.render();
 
+            var majorInfoHeight = window.innerHeight - this.$el.find('#majorInfoView').height() + 10; // adding 10 because of the stupid margin-top: -10px you had to do for some reason
+
             this.communicationView = new CommunicationView({
-                el: '#communicationView'
+                el: '#communicationView',
+                height: majorInfoHeight
             });
             this.communicationView.render();
 		}

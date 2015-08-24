@@ -1,23 +1,108 @@
 
 .project-body {
-  min-height: 700px;
   width: 100%;
+  display: block;
+  margin-top: 65px;
 }
 
-#projectDetailsView {
-  height: 250px;
+// PROJECT MAJOR VIEW
+
+#projectMajorView {
+  width: 76%;
+  background-color: green;
+  display: inline-block;
 }
 
-#detailsChatFeedView {
-  min-height: 700px;
+#majorInfoView {
+  height: 330px;
+  width: 100%;
+  background: purple;
 }
 
-.details-chat-list {
-  list-style: none;
-}
-
-.details-chat-message {
-  height: 100px;
+#communicationView {
+  width: 100%;
+  margin-top: -10px;
   background-color: blue;
-  border-bottom: 1px solid white;
 }
+
+.communication-tabs-container {
+  width: 100%;
+  display: block;
+  height: 40px;
+  background-color: lightgray;
+}
+
+.communication-tab {
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  text-align: center;
+  display: inline-block;
+  border-right: 1px solid black;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.communication-tab.active {
+  color: blue;
+}
+
+#communicationFeedContainer {
+  width: 100%;
+  margin-top: -10px;
+}
+
+#generalFeedContainerView {
+  width: 100%;
+  background-color: pink;
+  height: 100%;
+}
+
+#suggestionsFeedContainerView {
+  width: 100%;
+  background-color: blue;
+  height: 100%;
+}
+
+#teamFeedContainerView {
+  width: 100%;
+  background-color: green;
+  height: 100%;
+}
+
+#adminFeedContainerView {
+  width: 100%;
+  background-color: black;
+  height: 100%;
+}
+
+
+// PROJECT MINOR VIEW
+
+#projectMinorView {
+  width: 24%;
+  background-color: blue;
+  display: inline-block;
+  position: fixed;
+  top: 0;
+}
+
+#minorJoinFollowContainer {
+  width: 100%;
+  height: 180px;
+  background-color: yellow;
+  position: absolute;
+  top: 0;
+}
+
+#minorInfoEvolutionView {
+  width: 100%;
+  position: absolute;
+  top: 180px;
+  bottom: 0px;
+  background-color: red;
+}
+
+
+
