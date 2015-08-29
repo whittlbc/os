@@ -382,12 +382,14 @@
 .project-type {
   height: 80px;
   width: 33.33%;
-  display: inline-block;
-  color: black;
-  text-align: center;
   margin-top: 10px;
-  line-height: 80px;
   cursor: pointer;
+
+  a {
+    padding-top: 40px;
+    color: black;
+  }
+
 }
 
 .tab-slider {

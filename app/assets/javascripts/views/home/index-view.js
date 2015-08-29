@@ -12,7 +12,9 @@ define(['jquery',
     'stache!views/home/index-view',
     'selectize',
     'velocity',
-    'backbone-eventbroker'], function ($,
+    'backbone-eventbroker',
+    'tabs'
+], function ($,
      Backbone,
      _,
      OSView,
@@ -464,6 +466,8 @@ define(['jquery',
             this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
 
             this.langSelectionList.render();
+
+            $('ul.tabs').tabs();
 
         }
 	});

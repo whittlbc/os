@@ -25,7 +25,7 @@ define(['jquery',
             console.log(options);
 			var self = this;
             this.$el.html(ProjectMinorViewTpl({
-                voteCount: options && options.vote_count ? options.vote_count : '-'
+                voteCount: options && options.hasOwnProperty('vote_count') ? options.vote_count : '-'
             }));
             this.minorInfoEvolutionView = new MinorInfoEvolutionView({
                 el: '#minorInfoEvolutionView'

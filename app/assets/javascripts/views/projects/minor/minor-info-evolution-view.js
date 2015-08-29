@@ -3,7 +3,8 @@ define(['jquery',
 	'underscore',
     'views/projects/minor/minor-info/minor-info-view',
     'views/projects/minor/evolution/evolution-view',
-	'stache!views/projects/minor/minor-info-evolution-view'
+	'stache!views/projects/minor/minor-info-evolution-view',
+    'tabs'
     ], function ($,
      Backbone,
      _,
@@ -57,7 +58,8 @@ define(['jquery',
                 el: '#evolutionView'
             });
             this.evolutionView.render();
-		}
+
+        }
 	});
 
 	return MinorInfoEvolutionView;
