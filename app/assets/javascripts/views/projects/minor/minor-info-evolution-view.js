@@ -45,19 +45,19 @@ define(['jquery',
             }, 400);
         },
 
-		render: function () {
+		render: function (options) {
 			var self = this;
             this.$el.html(MinorInfoEvolutionViewTpl());
 
             this.minorInfoView = new MinorInfoView({
                 el: '#minorInfoView'
             });
-            this.minorInfoView.render();
+            this.minorInfoView.render(options);
 
             this.evolutionView = new EvolutionView({
                 el: '#evolutionView'
             });
-            this.evolutionView.render();
+            this.evolutionView.render(options);
 
         }
 	});

@@ -45,9 +45,11 @@ define(['jquery',
             self.repo_name = data.project.repo_name;
             self.uuid = data.project.uuid;
             self.contributors = data.project.contributors;
+            self.owner_gh_username = data.project.owner_gh_username;
         },
 
         handleFetchedDetails: function (data) {
+            console.log(data);
             master.setProjectProperties(data);
             master.render(data);
         },

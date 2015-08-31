@@ -5,7 +5,9 @@ define(['jquery',
     'views/projects/major/suggestions-feed/suggestions-feed-container-view',
     'views/projects/major/team-feed/team-feed-container-view',
     'views/projects/major/admin-feed/admin-feed-container-view',
-    'stache!views/projects/major/communication-view'
+    'stache!views/projects/major/communication-view',
+    'velocity',
+    'tabs'
     ], function ($,
      Backbone,
      _,
@@ -24,7 +26,7 @@ define(['jquery',
         },
 
 		events: {
-            'click .communication-tab': 'handleTabClick'
+            //'click .communication-tab': 'handleTabClick'
         },
 
         handleTabClick: function (e) {
@@ -71,6 +73,9 @@ define(['jquery',
             this.adminFeedContainerView.render();
 
             this.setHeight();
+
+            this.$el.find('ul.tabs').tabs();
+
         }
 	});
 

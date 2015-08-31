@@ -16,13 +16,8 @@ define(['jquery',
 		},
 
 		events: {},
-        //
-        //setHeight: function () {
-        //    this.$el.find('#minorInfoEvolutionView').height($(document).height() - this.$el.find('#minorJoinFollowContainer').height());
-        //},
 
 		render: function (options) {
-            console.log(options);
 			var self = this;
             this.$el.html(ProjectMinorViewTpl({
                 voteCount: options && options.hasOwnProperty('vote_count') ? options.vote_count : '-'
@@ -30,7 +25,7 @@ define(['jquery',
             this.minorInfoEvolutionView = new MinorInfoEvolutionView({
                 el: '#minorInfoEvolutionView'
             });
-            this.minorInfoEvolutionView.render();
+            this.minorInfoEvolutionView.render(options);
 		}
 	});
 

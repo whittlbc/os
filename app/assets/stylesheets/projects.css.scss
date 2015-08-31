@@ -3,7 +3,7 @@
 // Variables
 
 $project-minor: white;
-
+$major-info-project-type: #CECECE;
 
 // Styling
 
@@ -27,15 +27,65 @@ $project-minor: white;
 
 .major-info-container-view {
   height: 100%;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 87%;
+  margin-left: 5%;
   padding-top: 35px;
 }
 
 .major-info-project-title {
   width: 100%;
   font-size: 30px;
+}
+
+.major-info-project-type-divider {
+  font-size: 21px;
+  font-weight: 100;
+  color: $major-info-project-type;
+  margin-left: 13px;
+  position: relative;
+  top: -3px;
+}
+
+.major-info-project-type {
+  display: inline-block;
+  font-size: 12px;
+  font-family: 'Helvetica Neue';
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-left: 7px;
+  height: 30px;
+  line-height: 28px;
+  border-radius: 6px;
+  //border: 2px solid $major-info-project-type;
+  color: $major-info-project-type;
+  text-align: center;
+  position: relative;
+  top: -5px;
+}
+
+.major-info-tag-container {
+  width: 60%;
+  height: auto;
+  margin-top: 12px;
+}
+
+.major-info-tag {
+  display: inline-block;
+  max-width: 120px;
+  height: 28px;
+  line-height: 25px;
+  border-radius: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color: white;
+  font-family: 'Helvetica Neue';
+  font-size: 13px;
+  text-align: center;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  margin-top: 3px;
 }
 
 .major-info-project-subtitle {
@@ -48,8 +98,21 @@ $project-minor: white;
 
 .major-info-project-description {
   width: 100%;
-  font-size: 14px;
   margin-top: 10px;
+  margin-bottom: 10px;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.see-all-description {
+  color: #00A6C9;
+  cursor: pointer;
+}
+
+.see-all-description:hover {
+  color: #00A6C9;
 }
 
 #communicationView {
@@ -60,22 +123,52 @@ $project-minor: white;
   width: 100%;
   display: block;
   height: 40px;
+  
+  .indicator {
+    border-right: 10px solid white;
+    border-left: 10px solid white;
+    bottom: -5px !important;
+  }
+}
+
+.communication-panels-ul {
+  max-width: 94% !important;
+  margin-left: 10px !important;
 }
 
 .communication-tab {
   height: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  text-align: center;
-  display: inline-block;
-  border-right: 1px solid black;
   cursor: pointer;
-  min-width: 100px;
-}
+  width: 22% !important;
+  position: relative;
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
 
-.communication-tab.active {
-  color: blue;
+  span {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+    line-height: 40px;
+  }
+  a:hover {
+    color: #00A6C9;
+  }
+
+  a.active {
+    color: #00A6C9;
+  }
+
+  a[index="0"],
+  a[index="1"],
+  a[index="2"] {
+    border-right: 1px solid #CCC;
+  }
+
 }
 
 #communicationFeedContainer {
@@ -251,21 +344,26 @@ $project-minor: white;
   width: 95%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 8px;
+  margin-top: 4px;
   padding-left: 0;
   list-style-type: none;
 }
 
-.contributors-item-view {
+.contributors-item-view-container {
   display: inline-block;
   width: 35px;
   height: 35px;
   margin: 3px;
-  border-radius: 17.5px;
-  background-color: black;
+
 }
 
-.contributors-item-view.owner {
+.contributors-item-view-pic {
+  border-radius: 17.5px;
+  height: 35px;
+  width: 35px;
+}
+
+.contributors-item-view-pic.admin {
   border: 1px solid #00A6C9;
 }
 
@@ -384,9 +482,7 @@ $project-minor: white;
     float: left;
     text-align: center;
     height: 100%;
-    padding: 0 20px;
     margin: 0;
-    width: 15%;
     cursor: pointer;
     
     a {
@@ -408,7 +504,4 @@ $project-minor: white;
     will-change: left, right;
   }
 }
-
-.tabs .tab { padding: 0; }
-
 

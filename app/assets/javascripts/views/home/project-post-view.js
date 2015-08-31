@@ -87,8 +87,7 @@ define(['jquery',
         addTags: function (namesAndColorsArray) {
             for (var i = 0; i < namesAndColorsArray.length; i++) {
                 var $tag = $('<div>', {
-                    class: 'post-tag',
-                    content: namesAndColorsArray[i].name
+                    class: 'post-tag'
                 });
                 $tag.html(namesAndColorsArray[i].name);
                 $tag.css('color', namesAndColorsArray[i].color);

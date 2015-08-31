@@ -17,15 +17,17 @@ define(['jquery',
 
 		events: {},
 
-		render: function () {
+		render: function (options) {
 			var self = this;
+            var repoName = 'github.com/' + options.owner_gh_username + '/' + options.repo_name;
             this.$el.html(MinorInfoViewTpl({
-                postDate: '1 day ago',
-                repoName: 'github.com/whittlbc/slack-ruby',
-                repoURL: 'https://github.com/whittlbc/slack-ruby',
+                postDate: options.post_date,
+                repoName: repoName,
+                repoURL: 'https://' + repoName,
+                numContrib: options.contributors ? '(' + options.contributors.length + ')' : '',
                 slackTeamName: 'pulsehr.slack.com',
                 slackTeamURL: 'https://pulsehr.slack.com',
-                license: 'MIT',
+                license: options.license ? options.license[0] : '',
                 lastCommit: '4 hours ago',
                 openPR: '24',
                 closedPR: '211',
@@ -38,7 +40,7 @@ define(['jquery',
             this.contributorsView = new ContributorsView({
                 el: '#contributorsView'
             });
-            this.contributorsView.render();
+            this.contributorsView.render(options.contributors);
 		}
 	});
 

@@ -14,8 +14,34 @@ class ProjectsController < ApplicationController
   def fetch_details
     project = Project.find_by(id: params[:id])
     if !project.blank?
+      project_details = {
+        :anon => project.anon,
+        :post_date => project.get_general_date,
+        :description => project.description,
+        :id => project.id,
+        :langs_and_frames => project.langs_and_frames,
+        :license => project.license,
+        :privacy => project.privacy,
+        :repo_name => project.repo_name,
+        :status => project.status,
+        :title => project.title,
+        :user_id => project.user_id,
+        :uuid => project.uuid,
+        :vote_count => project.vote_count,
+        :owner_gh_username => project.get_owner_gh_username
+      }
+      puts "FUCK #{project.get_owner_gh_username}"
       comments = Comment.where(project_id: params[:id])
-      render :json => {:project => project, :comments => comments}
+      project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
+        {
+            :name => contrib.name,
+            :pic => contrib.try(:user).try(:pic),
+            :admin => contrib.admin,
+            :owner => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+        }
+      }.sort_by { |hash| hash[:owner] || hash[:admin] || hash[:name] }
+
+      render :json => {:project => project_details, :comments => comments}
     else
       render :json => {:message => "Can't find project from id that was passed"}
     end
@@ -58,11 +84,19 @@ class ProjectsController < ApplicationController
         :langs_and_frames => params[:langs_and_frames],
         :anon => params[:anon],
         :privacy => params[:privacy]
-
     }
-
     @project = Project.new(project_data)
     @project.save
+
+    contrib_data = {
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :name => @user.name,
+        :project_id => @project.id,
+        :user_id => @user.id,
+        :admin => true
+    }
+    contributor = Contributor.new(contrib_data)
+    contributor.save
 
     render :json => @project
   end

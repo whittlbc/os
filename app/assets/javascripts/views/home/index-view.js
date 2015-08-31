@@ -467,7 +467,7 @@ define(['jquery',
 
             this.langSelectionList.render();
 
-            $('ul.tabs').tabs();
+            this.$el.find('ul.tabs').tabs();
 
         }
 	});
