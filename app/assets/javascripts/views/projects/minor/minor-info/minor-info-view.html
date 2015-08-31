@@ -1,7 +1,11 @@
 <div id="minorInfoDateContainer">posted {{postDate}}</div>
-<div id="minorInfoLicenseContainer"><span class="highlighted-minor-info">{{license}}</span> license</div>
-<div id="minorInfoRepoURLContainer"><a target="_blank" href="{{repoURL}}">{{repoName}}</a></div>
-<div class="minor-info-subsection-title">Contributors {{numContrib}}</div>
+{{#showLicense}}
+<div id="minorInfoLicenseContainer">{{^licenseSpecified}}<span class="minor-info-unspecified">License unspecified</span>{{/licenseSpecified}}{{#licenseSpecified}}<span class="highlighted-minor-info">{{license}}</span> license{{/licenseSpecified}}</div>
+{{/showLicense}}
+{{#showRepoName}}
+<div id="minorInfoRepoURLContainer">{{^linkRepoName}}<span class="minor-info-unspecified">No Github repository</span>{{/linkRepoName}}{{#linkRepoName}}<a target="_blank" href="{{repoURL}}">{{repoName}}</a>{{/linkRepoName}}</div>
+{{/showRepoName}}
+<div class="minor-info-subsection-title" id="contributorsSubsectionTitle">Contributors {{numContrib}}</div>
 <div id="contributorsView"></div>
 <div class="minor-info-subsection-title">Team Communication</div>
 <div id="minorInfoSlackURLContainer">

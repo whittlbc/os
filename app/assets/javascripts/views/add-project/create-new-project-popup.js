@@ -515,7 +515,7 @@ define(['jquery',
                 success: function(data) {
                     setTimeout(function () {
                         self.handleUserRepos(data.repos);
-                    }, 500);
+                    }, 200);
                 }, error: function() {
                     console.log('Error getting all user repos');
                 }

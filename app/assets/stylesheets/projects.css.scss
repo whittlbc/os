@@ -374,7 +374,7 @@ $major-info-project-type: #CECECE;
   height: 100%;
   text-align: center;
   cursor: pointer;
-  border: 2px solid #CFD1DC;
+  border: 2px solid $major-info-project-type;
   background-color: white;
   line-height: 11px;
   padding-top: 5px;
@@ -382,7 +382,7 @@ $major-info-project-type: #CECECE;
   bottom: 0px;
   right: 4px;
   font-size: 11px;
-  color: #CFD1DC;
+  color: $major-info-project-type;
 }
 
 .see-all-contribs-btn:hover {
@@ -482,6 +482,11 @@ $major-info-project-type: #CECECE;
   text-overflow: ellipsis;
 }
 
+#contributorsSubsectionTitle:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 #minorInfoRepoInfo {
 
   div {
@@ -491,6 +496,11 @@ $major-info-project-type: #CECECE;
     border-bottom: 1px solid #DDD;
   }
 
+}
+
+.minor-info-unspecified {
+  color: $major-info-project-type;
+  font-style: italic;
 }
 
 // TABS - Courtesy of Materialize :)
