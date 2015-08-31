@@ -93,6 +93,30 @@ class ProjectsController < ApplicationController
               'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
               'admin' => true,
               'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => true,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => true,
+              'owner' => false
           }
       ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
 

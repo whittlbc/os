@@ -13,16 +13,29 @@ define(['jquery',
 	var ContributorsView = Backbone.View.extend({
 
 		initialize: function () {
+            this.maxShownContribs = 13;
 		},
 
 		events: {},
 
-        populate: function (data) {
+        populate: function () {
             var self = this;
             this.CONTRIBUTORS = [];
             this.$el.find('#contributorsListView').empty();
-            for (var i = 0; i < data.length; i++) {
-                this.addContrib(data[i]);
+            for (var i = 0; i < this.shownContributors.length; i++) {
+                this.addContrib(this.shownContributors[i]);
+            }
+            if (this.allContributors.length > this.maxShownContribs) {
+                var $seeAllContribsBtn = $('<li>', {
+                    class: 'see-all-contribs-btn'
+                });
+                $seeAllContribsBtn.html('See All');
+                this.$el.find('#contributorsListView').append($seeAllContribsBtn);
+                //$seeAllContribsBtn.hover(function () {
+                //    $seeAllContribsBtn.css('border', '2px solid #00A6C9');
+                //}, function () {
+                //
+                //});
             }
         },
 
@@ -38,10 +51,12 @@ define(['jquery',
             this.CONTRIBUTORS.push(contribItemView);
         },
 
-		render: function (options) {
+		render: function (data) {
 			var self = this;
             this.$el.html(ContributorsViewTpl());
-            this.populate(options);
+            this.allContributors = data;
+            this.shownContributors = data.slice(0, this.maxShownContribs);
+            this.populate();
 		}
 	});
 
