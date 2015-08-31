@@ -96,13 +96,15 @@ define(['jquery',
         colorsForTags: function (postView) {
             var self = this;
             var namesAndColorsArray = [];
-            for (var i = 0; i < postView.langs_and_frames.length; i++) {
-                var entry = self.colors_and_initials[postView.langs_and_frames[i]];
-                if (entry) {
-                    namesAndColorsArray.push({
-                        name: postView.langs_and_frames[i],
-                        color: entry["color"]
-                    });
+            if (Array.isArray(postView.langs_and_frames)) {
+                for (var i = 0; i < postView.langs_and_frames.length; i++) {
+                    var entry = self.colors_and_initials[postView.langs_and_frames[i]];
+                    if (entry) {
+                        namesAndColorsArray.push({
+                            name: postView.langs_and_frames[i],
+                            color: entry["color"]
+                        });
+                    }
                 }
             }
             postView.addTags(namesAndColorsArray);

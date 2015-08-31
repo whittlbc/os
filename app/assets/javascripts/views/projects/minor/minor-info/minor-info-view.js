@@ -19,18 +19,33 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
+            this.options = options;
             var repoName;
-            var showRepoName = true;
-            var showLicense = true;
+            var showRepoName = false;
+            var showLicense = false;
             var license;
-            // project is an "Up for Grabs" type
-            if (options.status === 0) {
-                showRepoName = false;
-                showLicense = false;
-            } else {
+            var showTeamCommunication = false;
+            var hasSlack = false;
+            var showIntegrations = false;
+            var slackObj = null;
+
+            // project is NOT an "Up for Grabs" type
+            if (options.status !== 0) {
                 repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
                 license = (options.hasOwnProperty('license') && options.license[0]) ? options.license[0] : null;
             }
+
+            if (Array.isArray(options.integrations)) {
+                for (var i = 0; i < options.integrations.length; i++) {
+                    showIntegrations = true;
+                    if (options.integrations[i].service == 'Slack') {
+                        hasSlack = true;
+                        slackObj = options.integrations[i];
+                        showTeamCommunication = true;
+                    }
+                }
+            }
+
             this.$el.html(MinorInfoViewTpl({
                 postDate: options.post_date ? options.post_date : '',
                 showRepoName: showRepoName,
@@ -38,18 +53,23 @@ define(['jquery',
                 repoURL: 'https://' + repoName,
                 linkRepoName: repoName != null,
                 numContrib: options.contributors ? '(' + options.contributors.length + ')' : '',
-                slackTeamName: 'pulsehr.slack.com',
-                slackTeamURL: 'https://pulsehr.slack.com',
+                showTeamCommunication: showTeamCommunication,
+                hasSlack: hasSlack,
+                isContributor: true,
+                slackTeamName: hasSlack ? slackObj.url.replace('https://', '').replace('http://', '') : null,
+                slackTeamURL: hasSlack ? slackObj.url : null,
                 showLicense: showLicense,
                 license: license,
                 licenseSpecified: license != null,
+                showRepoStats: !!options.repo_name,
                 lastCommit: '4 hours ago',
                 openPR: '24',
                 closedPR: '211',
                 openIssues: '13',
                 releases: '4',
                 forks: '10',
-                clones: '100'
+                clones: '100',
+                showIntegrations: showIntegrations
             }));
 
             this.contributorsView = new ContributorsView({

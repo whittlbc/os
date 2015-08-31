@@ -396,7 +396,7 @@ $major-info-project-type: #CECECE;
 
 #minorInfoDateContainer {
   height: 40px;
-  padding-left: 5px;
+  padding-left: 10px;
   line-height: 40px;
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
@@ -404,7 +404,7 @@ $major-info-project-type: #CECECE;
 
 #minorInfoLicenseContainer {
   height: 40px;
-  padding-left: 5px;
+  padding-left: 10px;
   line-height: 40px;
   border-bottom: 1px solid #DDD;
 }
@@ -415,12 +415,14 @@ $major-info-project-type: #CECECE;
 
 #minorInfoRepoURLContainer {
   height: 40px;
-  padding-left: 5px;
+  padding-left: 10px;
   line-height: 40px;
 
   a {
     color: black;
     font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   a:hover {
     color: #00A6C9;
@@ -447,11 +449,16 @@ $major-info-project-type: #CECECE;
   a:hover {
     color: #00A6C9;
   }
+
+  .fa-check {
+    font-size: 17px;
+    color: #00A6C9;
+  }
 }
 
 .minor-info-slack-logo {
   max-height: 40px;
-  margin-left: -3px;
+  margin-left: 2px;
 }
 
 .slack-team-url-container {
@@ -491,7 +498,7 @@ $major-info-project-type: #CECECE;
 
   div {
     height: 40px;
-    padding-left: 5px;
+    padding-left: 10px;
     line-height: 40px;
     border-bottom: 1px solid #DDD;
   }

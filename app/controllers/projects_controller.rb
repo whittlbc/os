@@ -1,12 +1,13 @@
 class ProjectsController < ApplicationController
-
-  require "slack"
-  require "net/http"
-  require "net/https"
-  require "uri"
-  require "json"
-  require "cgi"
-  require "ostruct"
+  require 'slack'
+  require 'net/http'
+  require 'net/https'
+  require 'uri'
+  require 'json'
+  require 'cgi'
+  require 'ostruct'
+  require 'rest-client'
+  require 'json'
 
   def index
     render :index, :layout => 'layouts/application'
@@ -29,7 +30,8 @@ class ProjectsController < ApplicationController
         :user_id => project.user_id,
         :uuid => project.uuid,
         :vote_count => project.vote_count,
-        :owner_gh_username => project.get_owner_gh_username
+        :owner_gh_username => project.get_owner_gh_username,
+        :integrations => project.integrations
       }
       comments = Comment.where(project_id: params[:id])
 
@@ -120,6 +122,10 @@ class ProjectsController < ApplicationController
           }
       ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
 
+      response = RestClient.get("https://api.github.com/repos/cosmicexplorer/imposters/contributors", :accept => :json)
+      body = JSON.parse(response.body)
+      puts "FUCK FUCK FUCK #{body}"
+
       # project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
       #   {
       #       'name' => contrib.name,
@@ -128,6 +134,7 @@ class ProjectsController < ApplicationController
       #       'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
       #   }
       # }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+
 
       render :json => {:project => project_details, :comments => comments}
     else

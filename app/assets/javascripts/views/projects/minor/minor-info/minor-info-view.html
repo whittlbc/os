@@ -7,15 +7,17 @@
 {{/showRepoName}}
 <div class="minor-info-subsection-title" id="contributorsSubsectionTitle">Contributors {{numContrib}}</div>
 <div id="contributorsView"></div>
+{{#showTeamCommunication}}
 <div class="minor-info-subsection-title">Team Communication</div>
+{{#hasSlack}}
 <div id="minorInfoSlackURLContainer">
     <div class="minor-info-slack-logo-container">
-        <img class="minor-info-slack-logo" src="assets/slack_logo.png">|<span><a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a></span>
+        <img class="minor-info-slack-logo" src="assets/slack_logo.png">|<span>{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>{{/isContributor}}</span>
     </div>
-    <!--}}<div class="slack-team-url-container">-->
-        <!--<a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>-->
-    <!--</div>-->
 </div>
+{{/hasSlack}}
+{{/showTeamCommunication}}
+{{#showRepoStats}}
 <div class="minor-info-subsection-title">Repo Stats</div>
 <div id="minorInfoRepoInfo">
     <div id="minorInfoLastCommitContainer">last commit was <span class="highlighted-minor-info">{{lastCommit}}</span></div>
@@ -26,3 +28,4 @@
     <div id="minorInfoForksContainer"><span class="highlighted-minor-info">{{forks}}</span> forks</div>
     <div id="minorInfoClonesContainer"><span class="highlighted-minor-info">{{clones}}</span> clones</div>
 </div>
+{{/showRepoStats}}
