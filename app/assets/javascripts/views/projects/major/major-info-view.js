@@ -25,21 +25,7 @@ define(['jquery',
         },
 
         handleToggleDescriptionSize: function () {
-            var self = this;
-            if (this.$descriptionContainer.hasClass('is-truncated')) {
-                this.$descriptionContainer.trigger('destroy');
-                this.$descriptionContainer.removeClass('is-truncated');
-                this.$el.find('.major-info-project-description > p').css('display', 'inline');
-                this.$el.find('.see-all-description').html('See Less');
-                this.$el.find('.see-all-description').css('margin-left', '8px');
-            } else {
-                this.$descriptionContainer.dotdotdot({
-                    height: this.descriptionMaxHeight,
-                    after: '.see-all-description'
-                });
-                this.$el.find('.see-all-description').html('See All');
-                this.$el.find('.see-all-description').css('margin-left', '0');
-            }
+            this.$descriptionContainer.hasClass('is-truncated') ? this.showMoreDescription() : this.showLessDescription();
             //this.$descriptionContainer.height(this.descriptionMaxHeight);
             //this.$descriptionContainer.css('overflow', 'hidden');
             //this.$el.find('.major-info-project-description > p').height(this.descriptionMaxHeight);
@@ -52,6 +38,23 @@ define(['jquery',
             //    self.$el.find('.see-all-description').css('margin-left', '8px');
                 //self.$descriptionContainer.animate({height: self.originalDescriptionHeight}, {duration: 300});
             //}, 5);
+        },
+
+        showMoreDescription: function () {
+            this.$descriptionContainer.trigger('destroy');
+            this.$descriptionContainer.removeClass('is-truncated');
+            this.$el.find('.major-info-project-description > p').css('display', 'inline');
+            this.$el.find('.see-all-description').html('See Less');
+            this.$el.find('.see-all-description').css('margin-left', '8px');
+        },
+
+        showLessDescription: function () {
+            this.$descriptionContainer.dotdotdot({
+                height: this.descriptionMaxHeight,
+                after: '.see-all-description'
+            });
+            this.$el.find('.see-all-description').html('See All');
+            this.$el.find('.see-all-description').css('margin-left', '0');
         },
 
         addTags: function (langsFrames) {

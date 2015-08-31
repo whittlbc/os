@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   require "uri"
   require "json"
   require "cgi"
+  require "ostruct"
 
   def index
     render :index, :layout => 'layouts/application'
@@ -30,16 +31,79 @@ class ProjectsController < ApplicationController
         :vote_count => project.vote_count,
         :owner_gh_username => project.get_owner_gh_username
       }
-      puts "FUCK #{project.get_owner_gh_username}"
       comments = Comment.where(project_id: params[:id])
-      project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
-        {
-            :name => contrib.name,
-            :pic => contrib.try(:user).try(:pic),
-            :admin => contrib.admin,
-            :owner => contrib.try(:user).try(:id) == project.try(:user).try(:id)
-        }
-      }.sort_by { |hash| hash[:owner] || hash[:admin] || hash[:name] }
+
+      project_details[:contributors] = [
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => true,
+              'owner' => true
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Andrew',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => true,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => false,
+              'owner' => false
+          },
+          {
+              'name' => 'Ben Whittle',
+              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+              'admin' => true,
+              'owner' => false
+          }
+      ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+
+      # project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
+      #   {
+      #       'name' => contrib.name,
+      #       'pic' => contrib.try(:user).try(:pic),
+      #       'admin' => contrib.admin,
+      #       'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+      #   }
+      # }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
 
       render :json => {:project => project_details, :comments => comments}
     else

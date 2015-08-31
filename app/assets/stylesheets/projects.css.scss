@@ -347,24 +347,33 @@ $major-info-project-type: #CECECE;
   margin-top: 4px;
   padding-left: 0;
   list-style-type: none;
+
+  li {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    margin: 4px;
+  }
+
 }
 
 .contributors-item-view-container {
-  display: inline-block;
-  width: 35px;
-  height: 35px;
-  margin: 3px;
-
+  //display: inline-block;
+  //width: 35px;
+  //height: 35px;
+  //margin: 3px;
+  width: 100%;
+  height: 100%;
 }
 
 .contributors-item-view-pic {
-  border-radius: 17.5px;
-  height: 35px;
-  width: 35px;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
 }
 
 .contributors-item-view-pic.admin {
-  border: 1px solid #00A6C9;
+  border: 2px solid #00A6C9;
 }
 
 #minorInfoDateContainer {
