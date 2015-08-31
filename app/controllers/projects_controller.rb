@@ -125,16 +125,14 @@ class ProjectsController < ApplicationController
       #     }
       # ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
 
-      if !project_details[:getting_contribs_from_gh]
-        project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
-          {
-              'name' => contrib.name,
-              'pic' => contrib.try(:user).try(:pic),
-              'admin' => contrib.admin,
-              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
-          }
-        }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
-      end
+      project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
+        {
+            'name' => contrib.name,
+            'pic' => contrib.try(:user).try(:pic),
+            'admin' => contrib.admin,
+            'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+        }
+      }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
 
       render :json => {:project => project_details, :comments => comments}
     else
