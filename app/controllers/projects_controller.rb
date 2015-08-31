@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
 
   def fetch_details
     project = Project.find_by(id: params[:id])
+    owner_gh_username = project.get_owner_gh_username
     if !project.blank?
       project_details = {
         :anon => project.anon,
@@ -25,122 +26,143 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
+        :getting_contribs_from_gh => !project.repo_name.blank? && !owner_gh_username.blank?,
         :status => project.status,
         :title => project.title,
         :user_id => project.user_id,
         :uuid => project.uuid,
         :vote_count => project.vote_count,
-        :owner_gh_username => project.get_owner_gh_username,
-        :integrations => project.integrations
+        :owner_gh_username => owner_gh_username,
+        :integrations => project.integrations,
+        :contributors => []
       }
       comments = Comment.where(project_id: params[:id])
 
-      project_details[:contributors] = [
+      # project_details[:contributors] = [
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => true,
+      #         'owner' => true
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Andrew',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => true,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => true,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => true,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => false,
+      #         'owner' => false
+      #     },
+      #     {
+      #         'name' => 'Ben Whittle',
+      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
+      #         'admin' => true,
+      #         'owner' => false
+      #     }
+      # ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+
+      if !project_details[:getting_contribs_from_gh]
+        project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
           {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => true,
-              'owner' => true
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Andrew',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => true,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => true,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => true,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => false,
-              'owner' => false
-          },
-          {
-              'name' => 'Ben Whittle',
-              'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-              'admin' => true,
-              'owner' => false
+              'name' => contrib.name,
+              'pic' => contrib.try(:user).try(:pic),
+              'admin' => contrib.admin,
+              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
           }
-      ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
-
-      response = RestClient.get("https://api.github.com/repos/cosmicexplorer/imposters/contributors", :accept => :json)
-      body = JSON.parse(response.body)
-      puts "FUCK FUCK FUCK #{body}"
-
-      # project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
-      #   {
-      #       'name' => contrib.name,
-      #       'pic' => contrib.try(:user).try(:pic),
-      #       'admin' => contrib.admin,
-      #       'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
-      #   }
-      # }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
-
+        }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+      end
 
       render :json => {:project => project_details, :comments => comments}
     else
-      render :json => {:message => "Can't find project from id that was passed"}
+      render :json => {:message => 'Can not find project from id that was passed'}
     end
 
+  end
+
+  def fetch_contributors_and_repo_data
+    # response = RestClient.get("https://api.github.com/repos/#{params[:owner_gh_username]}/#{params[:repo_name]}/contributors", :accept => :json)
+    # contributors = Contributor.includes(:user).where(project_id: params[:project_id]).map { |contrib|
+    #   {
+    #       'name' => contrib.name,
+    #       'pic' => contrib.try(:user).try(:pic),
+    #       'admin' => contrib.admin,
+    #       'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+    #   }
+    # }
+    # JSON.parse(response.body).each { |contrib|
+    #   if ()
+    #   {
+    #       'name' => contrib['login'],
+    #       'pic' => contrib['avatar_url'],
+    #       'admin' => admin_arr.include?(contrib['login']),
+    #       'owner' => contrib['login'] == params[:owner_gh_username]
+    #   }
+    # }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+    # render :json => contributors
   end
 
   def launch

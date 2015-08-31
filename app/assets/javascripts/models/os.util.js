@@ -123,6 +123,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'getUpForGrabs': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'fetchContributorsAndRepoData': {
+                verb: 'GET',
+                action: 'read'
             }
         }
 

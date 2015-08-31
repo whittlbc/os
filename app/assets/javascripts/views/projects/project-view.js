@@ -50,8 +50,21 @@ define(['jquery',
 
         handleFetchedDetails: function (data) {
             console.log(data);
+            //if (data.project.getting_contribs_from_gh && data.project.repo_name && data.project.owner_gh_username) {
+            //    var params = {
+            //        repo_name: data.project.repo_name,
+            //        owner_gh_username: data.project.owner_gh_username,
+            //        project_id: data.project.id
+            //    };
+            //    var project = new Project();
+            //    project.fetchContributorsAndRepoData(params, {success: master.handleFetchedGHRepoData, error: master.errorHandler});
+            //}
             master.setProjectProperties(data);
             master.render(data);
+        },
+
+        handleFetchedGHRepoData: function (data) {
+            console.log(data);
         },
 
         cacheFeedBeforeSearch: function () {

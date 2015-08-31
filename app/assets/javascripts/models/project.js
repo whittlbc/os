@@ -154,6 +154,17 @@ define(['jquery',
             });
 
             return this.sync('getUpForGrabs', this, requestInfo);
+        },
+
+        fetchContributorsAndRepoData: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/fetchContributorsAndRepoData',
+                data: info
+            });
+
+            return this.sync('fetchContributorsAndRepoData', this, requestInfo);
         }
 
     });
