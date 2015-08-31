@@ -25,14 +25,33 @@ define(['jquery',
         },
 
         handleToggleDescriptionSize: function () {
-            this.$descriptionContainer.trigger('destroy');
-            this.$descriptionContainer.removeClass('is-truncated');
-            this.$descriptionContainer.height(this.descriptionMaxHeight);
-            this.$descriptionContainer.css('overflow', 'hidden');
-            this.$el.find('.major-info-project-description > p').css('display', 'inline');
-            this.$el.find('.see-all-description').html('See Less');
-            this.$el.find('.see-all-description').css('margin-left', '8px');
-            this.$descriptionContainer.animate({height: this.originalDescriptionHeight}, {duration: 200});
+            var self = this;
+            if (this.$descriptionContainer.hasClass('is-truncated')) {
+                this.$descriptionContainer.trigger('destroy');
+                this.$descriptionContainer.removeClass('is-truncated');
+                this.$el.find('.major-info-project-description > p').css('display', 'inline');
+                this.$el.find('.see-all-description').html('See Less');
+                this.$el.find('.see-all-description').css('margin-left', '8px');
+            } else {
+                this.$descriptionContainer.dotdotdot({
+                    height: this.descriptionMaxHeight,
+                    after: '.see-all-description'
+                });
+                this.$el.find('.see-all-description').html('See All');
+                this.$el.find('.see-all-description').css('margin-left', '0');
+            }
+            //this.$descriptionContainer.height(this.descriptionMaxHeight);
+            //this.$descriptionContainer.css('overflow', 'hidden');
+            //this.$el.find('.major-info-project-description > p').height(this.descriptionMaxHeight);
+            //this.$el.find('.major-info-project-description > p').css('overflow', 'hidden');
+            //setTimeout(function () {
+            //    self.$descriptionContainer.trigger('destroy');
+            //    self.$descriptionContainer.removeClass('is-truncated');
+            //    self.$el.find('.major-info-project-description > p').css('display', 'inline');
+            //    self.$el.find('.see-all-description').html('See Less');
+            //    self.$el.find('.see-all-description').css('margin-left', '8px');
+                //self.$descriptionContainer.animate({height: self.originalDescriptionHeight}, {duration: 300});
+            //}, 5);
         },
 
         addTags: function (langsFrames) {

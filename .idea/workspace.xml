@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="86b4e102-76bf-4781-a2f3-6e5f7dc4808e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/communication-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-item-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-item-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-item-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/contributors-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info-evolution-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/minor-info/minor-info-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/minor/project-minor-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/project-post-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/project-post-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/project.rb" afterPath="$PROJECT_DIR$/app/models/project.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/projects_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/projects_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/requirejs.yml" afterPath="$PROJECT_DIR$/config/requirejs.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="os.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,8 +37,8 @@
       <file leaf-file-name="projects.css.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.875">
-              <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+            <state vertical-scroll-proportion="-3.9215686">
+              <caret line="98" column="33" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -127,18 +107,18 @@
       <file leaf-file-name="major-info-view.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4708589">
-              <caret line="62" column="51" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.62116563">
+              <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="os.util.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/models/os.util.js">
+      <file leaf-file-name="project-major-view.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+              <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -1141,14 +1121,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35582823">
-          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1375,6 +1347,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/project-major-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.625">
@@ -1385,16 +1365,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/projects.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875">
-          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+        <state vertical-scroll-proportion="-3.9215686">
+          <caret line="98" column="33" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/projects/major/major-info-view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4708589">
-          <caret line="62" column="51" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.62116563">
+          <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
           <folding />
         </state>
       </provider>
