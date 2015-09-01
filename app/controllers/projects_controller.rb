@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   require 'ostruct'
   require 'rest-client'
   require 'json'
+  require 'date'
 
   def index
     render :index, :layout => 'layouts/application'
@@ -16,17 +17,19 @@ class ProjectsController < ApplicationController
   def fetch_details
     project = Project.find_by(id: params[:id])
     owner_gh_username = project.get_owner_gh_username
+    # general_date_formatter_svc = GeneralDateFormatterService.new(project.created_at)
+    # general_date_formatter_svc.perform
     if !project.blank?
       project_details = {
         :anon => project.anon,
-        :post_date => project.get_general_date,
+        :post_date => get_general_date(project.created_at),
         :description => project.description,
         :id => project.id,
         :langs_and_frames => project.langs_and_frames,
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        :getting_contribs_from_gh => !project.repo_name.blank? && !owner_gh_username.blank?,
+        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
         :status => project.status,
         :title => project.title,
         :user_id => project.user_id,
@@ -167,13 +170,14 @@ class ProjectsController < ApplicationController
     repo_body = JSON.parse(repo_response.body)
     pr_body = JSON.parse(pr_response.body)
     # releases_body = JSON.parse(releases_response.body)
+    puts "Date #{repo_body['updated_at']}"
 
     stats_hash = {
-        :last_updated => repo_body['updated_at'],
+        :last_updated => get_general_date(Time.strptime(repo_body['updated_at'], "%Y-%m-%dT%H:%M:%SZ")),
         :open_issues_count => repo_body['open_issues_count'],
         :forks_count => repo_body['forks_count'],
-        :stars => repo_body['stargazers_count'],
-        :watching => repo_body['subscribers_count'],
+        :star_count => repo_body['stargazers_count'],
+        :watch_count => repo_body['subscribers_count'],
         :open_pr_count => pr_body.select { |pr| pr['state'] == 'open' }.count,
         :closed_pr_count => pr_body.select { |pr| pr['state'] == 'closed' }.count,
         # :releases => releases_body.count --> still need to figure out most efficient way to get this
@@ -182,6 +186,27 @@ class ProjectsController < ApplicationController
 
     render :json => stats_hash
 
+  end
+
+
+  def get_general_date(date)
+    min_diff = (Time.now - date) / 60
+    if min_diff > 60
+      hour_diff = min_diff / 60
+      if hour_diff > 24
+        day_diff = hour_diff / 24
+        if day_diff > 365
+          year_diff = day_diff / 365
+          year_diff.floor == 1 ? '1 year ago' : "#{year_diff.floor} years ago"
+        else
+          day_diff.floor == 1 ? '1 day ago' : "#{day_diff.floor} days ago"
+        end
+      else
+        hour_diff.floor == 1 ? '1 hour ago' : "#{hour_diff.floor} hours ago"
+      end
+    else
+      min_diff.ceil == 1 ? '1 minute ago' : "#{min_diff.ceil} minutes ago"
+    end
   end
 
   def launch

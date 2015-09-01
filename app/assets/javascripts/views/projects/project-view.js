@@ -49,7 +49,7 @@ define(['jquery',
 
         handleFetchedDetails: function (data) {
             console.log(data);
-            if (data.project.getting_contribs_from_gh && data.project.repo_name && data.project.owner_gh_username) {
+            if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
                 var params = {
                     //repo_name: data.project.repo_name,
                     //owner_gh_username: data.project.owner_gh_username,
@@ -73,7 +73,7 @@ define(['jquery',
         },
 
         handleFetchedGHRepoStats: function (data) {
-            console.log(data)
+            master.projectMinorView.lazyLoadRepoStats(data);
         },
 
         cacheFeedBeforeSearch: function () {

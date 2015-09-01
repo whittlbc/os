@@ -1,0 +1,14 @@
+{{^showSpinner}}
+<div id="minorInfoRepoInfo">
+    <div id="minorInfoLastCommitContainer">last updated <span class="highlighted-minor-info">{{lastUpdated}}</span></div>
+    <div id="minorInfoStarCountContainer"><span class="highlighted-minor-info">{{starCount}}</span> stars</div>
+    <div id="minorInfoWatchCountContainer"><span class="highlighted-minor-info">{{watchCount}}</span> watching</div>
+    <div id="minorInfoOpenPRContainer"><span class="highlighted-minor-info">{{openPR}} open</span> pull requests</div>
+    <div id="minorInfoClosedPRContainer"><span class="highlighted-minor-info">{{closedPR}} closed</span> pull requests</div>
+    <div id="minorInfoOpenIssuesContainer"><span class="highlighted-minor-info">{{openIssues}}</span> open issues</div>
+    <div id="minorInfoForksContainer"><span class="highlighted-minor-info">{{forks}}</span> forks</div>
+</div>
+{{/showSpinner}}
+{{#showSpinner}}
+<div id="repoStatsLoading"></div>
+{{/showSpinner}}

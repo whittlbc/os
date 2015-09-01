@@ -2,11 +2,13 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'views/projects/minor/minor-info/contributors-view',
+    'views/projects/minor/minor-info/repo-stats-view',
 	'stache!views/projects/minor/minor-info/minor-info-view'
     ], function ($,
      Backbone,
      _,
      ContributorsView,
+     RepoStatsView,
      MinorInfoViewTpl) {
 	'use strict';
 
@@ -25,7 +27,14 @@ define(['jquery',
             this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + contribs.length + ')')
         },
 
-		render: function (options) {
+        lazyLoadRepoStats: function (data) {
+            this.repoStatsView.render({
+                repoData: data,
+                showSpinner: false
+            });
+        },
+
+        render: function (options) {
 			var self = this;
             this.options = options;
             var repoName;
@@ -60,7 +69,7 @@ define(['jquery',
                 repoName: repoName,
                 repoURL: 'https://' + repoName,
                 linkRepoName: repoName != null,
-                numContrib: options.contributors && !options.getting_contribs_from_gh ? '(' + options.contributors.length + ')' : '',
+                numContrib: options.contributors && !options.getting_repo_data ? '(' + options.contributors.length + ')' : '',
                 showTeamCommunication: showTeamCommunication,
                 hasSlack: hasSlack,
                 isContributor: true,
@@ -70,13 +79,6 @@ define(['jquery',
                 license: license,
                 licenseSpecified: license != null,
                 showRepoStats: !!options.repo_name,
-                lastCommit: '4 hours ago',
-                openPR: '24',
-                closedPR: '211',
-                openIssues: '13',
-                releases: '4',
-                forks: '10',
-                clones: '100',
                 showIntegrations: showIntegrations
             }));
 
@@ -85,7 +87,14 @@ define(['jquery',
             });
             this.contributorsView.render({
                 contributors: options.contributors,
-                showSpinner: options.getting_contribs_from_gh
+                showSpinner: options.getting_repo_data
+            });
+
+            this.repoStatsView = new RepoStatsView({
+                el: '#repoStatsView'
+            });
+            this.repoStatsView.render({
+                showSpinner: options.getting_repo_data
             });
 		}
 	});
