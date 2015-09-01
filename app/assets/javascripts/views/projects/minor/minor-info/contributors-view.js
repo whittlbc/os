@@ -2,11 +2,13 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'views/projects/minor/minor-info/contributors-item-view',
+    'views/widgets/spinner-chasing-dots',
     'stache!views/projects/minor/minor-info/contributors-view'
     ], function ($,
      Backbone,
      _,
      ContributorsItemView,
+     Spinner,
      ContributorsViewTpl) {
 	'use strict';
 
@@ -46,12 +48,29 @@ define(['jquery',
             this.CONTRIBUTORS.push(contribItemView);
         },
 
-		render: function (data) {
+		render: function (options) {
 			var self = this;
-            this.$el.html(ContributorsViewTpl());
-            this.allContributors = data;
-            this.shownContributors = data.slice(0, this.maxShownContribs);
-            this.populate();
+
+            this.$el.html(ContributorsViewTpl({
+                showSpinner: options.showSpinner
+            }));
+            if (options.showSpinner) {
+                this.spinner = new Spinner({
+                    el: '#contribsLoading',
+                    width: '35px',
+                    height: '35px'
+                });
+
+                // Don't show the spinner timeout unless it's been loading for more than 300 ms
+                setTimeout(function () {
+                    self.spinner.render();
+                }, 300);
+
+            } else {
+                this.allContributors = options.contributors;
+                this.shownContributors = options.contributors.slice(0, this.maxShownContribs);
+                this.populate();
+            }
 		}
 	});
 

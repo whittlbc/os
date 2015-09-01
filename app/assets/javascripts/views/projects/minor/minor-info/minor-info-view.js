@@ -18,7 +18,10 @@ define(['jquery',
 		events: {},
 
         lazyLoadContribs: function (contribs) {
-            this.contributorsView.render(contribs);
+            this.contributorsView.render({
+                contributors: contribs,
+                showSpinner: false
+            });
             this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + contribs.length + ')')
         },
 
@@ -80,9 +83,10 @@ define(['jquery',
             this.contributorsView = new ContributorsView({
                 el: '#contributorsView'
             });
-            if (!options.getting_contribs_from_gh) {
-                this.contributorsView.render(options.contributors);
-            }
+            this.contributorsView.render({
+                contributors: options.contributors,
+                showSpinner: options.getting_contribs_from_gh
+            });
 		}
 	});
 

@@ -279,7 +279,6 @@ $major-info-project-type: #CECECE;
   background-color: $project-minor;
 
   div {
-    background-color: $project-minor;
   }
 }
 #evolutionView {
@@ -550,3 +549,9 @@ $major-info-project-type: #CECECE;
   }
 }
 
+#contribsLoading {
+  .sk-circle {
+    margin: 0 !important;
+    margin-left: 45% !important;
+  }
+}
