@@ -13,15 +13,15 @@ class Project < ActiveRecord::Base
         day_diff = hour_diff / 24
         if day_diff > 365
           year_diff = day_diff / 365
-          "#{year_diff.floor} years ago"
+          year_diff.floor == 1 ? '1 year ago' : "#{year_diff.floor} years ago"
         else
-          "#{day_diff.floor} days ago"
+          day_diff.floor == 1 ? '1 day ago' : "#{day_diff.floor} days ago"
         end
       else
-        "#{hour_diff.floor} hours ago"
+        hour_diff.floor == 1 ? '1 hour ago' : "#{hour_diff.floor} hours ago"
       end
     else
-      "#{min_diff.floor} minutes ago"
+      min_diff.ceil == 1 ? '1 minute ago' : "#{min_diff.ceil} minutes ago"
     end
   end
 
