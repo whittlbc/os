@@ -124,9 +124,13 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                 verb: 'GET',
                 action: 'read'
             },
-            'fetchContributorsAndRepoData': {
+            'fetchGHContributors': {
                 verb: 'POST',
                 action: 'create'
+            },
+            'fetchGHRepoStats': {
+                verb: 'GET',
+                action: 'read'
             }
         }
 

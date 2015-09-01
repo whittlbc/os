@@ -53,13 +53,14 @@ define(['jquery',
                 var params = {
                     //repo_name: data.project.repo_name,
                     //owner_gh_username: data.project.owner_gh_username,
-                    repo_name: 'imposters',
-                    owner_gh_username: 'cosmicexplorer',
+                    repo_name: 'medium-editor',
+                    owner_gh_username: 'yabwe',
                     project_id: data.project.id,
                     app_contributors: data.project.contributors
                 };
                 var project = new Project();
-                project.fetchContributorsAndRepoData(params, {success: master.handleFetchedGHRepoData, error: master.errorHandler});
+                project.fetchGHContributors(params, {success: master.handleFetchedGHContribs, error: master.errorHandler});
+                project.fetchGHRepoStats({repoPath: 'yabwe/medium-editor'}, {success: master.handleFetchedGHRepoStats, error: master.errorHandler});
             } else {
                 master.contributors = data.project.contributors;
             }
@@ -67,8 +68,12 @@ define(['jquery',
             master.render(data);
         },
 
-        handleFetchedGHRepoData: function (data) {
+        handleFetchedGHContribs: function (data) {
             master.projectMinorView.lazyLoadContribs(data);
+        },
+
+        handleFetchedGHRepoStats: function (data) {
+            console.log(data)
         },
 
         cacheFeedBeforeSearch: function () {

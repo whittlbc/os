@@ -156,16 +156,27 @@ define(['jquery',
             return this.sync('getUpForGrabs', this, requestInfo);
         },
 
-        fetchContributorsAndRepoData: function(info, options) {
+        fetchGHContributors: function(info, options) {
             var requestInfo = options || {};
 
             _.extend(requestInfo, {
-                url: this.extension + '/fetchContributorsAndRepoData',
+                url: this.extension + '/fetchGHContributors',
                 data: info
             });
 
-            return this.sync('fetchContributorsAndRepoData', this, requestInfo);
-        }
+            return this.sync('fetchGHContributors', this, requestInfo);
+        },
+
+        fetchGHRepoStats: function (info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/fetchGHRepoStats',
+                data: info
+            });
+
+            return this.sync('fetchGHRepoStats', this, requestInfo);
+        },
 
     });
 

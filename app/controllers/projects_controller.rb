@@ -140,7 +140,7 @@ class ProjectsController < ApplicationController
 
   end
 
-  def fetch_contributors_and_repo_data
+  def fetch_gh_contributors
     response = RestClient.get("https://api.github.com/repos/#{params[:owner_gh_username]}/#{params[:repo_name]}/contributors", :accept => :json)
     contrib_gh_usernames = params[:app_contributors].map { |contrib| contrib[:gh_username] }
     gh_only_contributors = []
@@ -158,6 +158,30 @@ class ProjectsController < ApplicationController
     gh_only_contributors = gh_only_contributors.sort_by { |obj| obj['name'] }
     final_contributors = params[:app_contributors] + gh_only_contributors
     render :json => final_contributors
+  end
+
+  def fetch_gh_repo_stats
+    repo_response = RestClient.get("https://api.github.com/repos/#{params[:repoPath]}", :accept => :json)
+    pr_response = RestClient.get("https://api.github.com/repos/#{params[:repoPath]}/pulls", :accept => :json)
+    # releases_response = RestClient.get("https://api.github.com/repos/#{params[:repoPath]}/tags", :accept => :json)
+    repo_body = JSON.parse(repo_response.body)
+    pr_body = JSON.parse(pr_response.body)
+    # releases_body = JSON.parse(releases_response.body)
+
+    stats_hash = {
+        :last_updated => repo_body['updated_at'],
+        :open_issues_count => repo_body['open_issues_count'],
+        :forks_count => repo_body['forks_count'],
+        :stars => repo_body['stargazers_count'],
+        :watching => repo_body['subscribers_count'],
+        :open_pr_count => pr_body.select { |pr| pr['state'] == 'open' }.count,
+        :closed_pr_count => pr_body.select { |pr| pr['state'] == 'closed' }.count,
+        # :releases => releases_body.count --> still need to figure out most efficient way to get this
+        # :downloads => num_downloads --> same here
+    }
+
+    render :json => stats_hash
+
   end
 
   def launch
