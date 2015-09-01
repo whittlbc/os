@@ -17,6 +17,11 @@ define(['jquery',
 
 		events: {},
 
+        lazyLoadContribs: function (contribs) {
+            this.contributorsView.render(contribs);
+            this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + contribs.length + ')')
+        },
+
 		render: function (options) {
 			var self = this;
             this.options = options;
@@ -52,7 +57,7 @@ define(['jquery',
                 repoName: repoName,
                 repoURL: 'https://' + repoName,
                 linkRepoName: repoName != null,
-                numContrib: options.contributors ? '(' + options.contributors.length + ')' : '',
+                numContrib: options.contributors && !options.getting_contribs_from_gh ? '(' + options.contributors.length + ')' : '',
                 showTeamCommunication: showTeamCommunication,
                 hasSlack: hasSlack,
                 isContributor: true,
@@ -75,7 +80,9 @@ define(['jquery',
             this.contributorsView = new ContributorsView({
                 el: '#contributorsView'
             });
-            this.contributorsView.render(options.contributors);
+            if (!options.getting_contribs_from_gh) {
+                this.contributorsView.render(options.contributors);
+            }
 		}
 	});
 

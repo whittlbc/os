@@ -33,92 +33,91 @@ class ProjectsController < ApplicationController
         :uuid => project.uuid,
         :vote_count => project.vote_count,
         :owner_gh_username => owner_gh_username,
-        :integrations => project.integrations,
-        :contributors => []
+        :integrations => project.integrations
       }
       comments = Comment.where(project_id: params[:id])
 
       # project_details[:contributors] = [
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => true,
       #         'owner' => true
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Andrew',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => true,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => true,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => true,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => false,
       #         'owner' => false
       #     },
       #     {
-      #         'name' => 'Ben Whittle',
+      #         'gh_username' => 'whittlbc',
       #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
       #         'admin' => true,
       #         'owner' => false
@@ -127,12 +126,12 @@ class ProjectsController < ApplicationController
 
       project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
         {
-            'name' => contrib.name,
+            'gh_username' => contrib.try(:user).try(:gh_username),
             'pic' => contrib.try(:user).try(:pic),
             'admin' => contrib.admin,
             'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
         }
-      }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+      }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['gh_username']] }
 
       render :json => {:project => project_details, :comments => comments}
     else
@@ -142,25 +141,23 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_contributors_and_repo_data
-    # response = RestClient.get("https://api.github.com/repos/#{params[:owner_gh_username]}/#{params[:repo_name]}/contributors", :accept => :json)
-    # contributors = Contributor.includes(:user).where(project_id: params[:project_id]).map { |contrib|
-    #   {
-    #       'name' => contrib.name,
-    #       'pic' => contrib.try(:user).try(:pic),
-    #       'admin' => contrib.admin,
-    #       'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
-    #   }
-    # }
-    # JSON.parse(response.body).each { |contrib|
-    #   if ()
-    #   {
-    #       'name' => contrib['login'],
-    #       'pic' => contrib['avatar_url'],
-    #       'admin' => admin_arr.include?(contrib['login']),
-    #       'owner' => contrib['login'] == params[:owner_gh_username]
-    #   }
-    # }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
-    # render :json => contributors
+    response = RestClient.get("https://api.github.com/repos/#{params[:owner_gh_username]}/#{params[:repo_name]}/contributors", :accept => :json)
+    contrib_gh_usernames = params[:app_contributors].map { |contrib| contrib[:gh_username] }
+    gh_only_contributors = []
+    JSON.parse(response.body).each { |contrib|
+      # 'login' in this case is the gh_username of the gh contributor
+      if !contrib_gh_usernames.include?(contrib['login'])
+        gh_only_contributors.push({
+            'name' => contrib['login'],
+            'pic' => contrib['avatar_url'],
+            'admin' => false,
+            'owner' => false
+        })
+      end
+    }
+    gh_only_contributors = gh_only_contributors.sort_by { |obj| obj['name'] }
+    final_contributors = params[:app_contributors] + gh_only_contributors
+    render :json => final_contributors
   end
 
   def launch

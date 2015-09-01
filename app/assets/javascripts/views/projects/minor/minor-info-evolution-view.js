@@ -45,6 +45,10 @@ define(['jquery',
             }, 400);
         },
 
+        lazyLoadContribs: function (contribs) {
+            this.minorInfoView.lazyLoadContribs(contribs);
+        },
+
 		render: function (options) {
 			var self = this;
             this.$el.html(MinorInfoEvolutionViewTpl());

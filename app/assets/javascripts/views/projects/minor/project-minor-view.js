@@ -17,7 +17,11 @@ define(['jquery',
 
 		events: {},
 
-		render: function (options) {
+        lazyLoadContribs: function (contribs) {
+            this.minorInfoEvolutionView.lazyLoadContribs(contribs);
+        },
+
+        render: function (options) {
 			var self = this;
             this.$el.html(ProjectMinorViewTpl({
                 voteCount: options && options.hasOwnProperty('vote_count') ? options.vote_count : '-'

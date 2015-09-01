@@ -31,11 +31,6 @@ define(['jquery',
                 });
                 $seeAllContribsBtn.html('See All');
                 this.$el.find('#contributorsListView').append($seeAllContribsBtn);
-                //$seeAllContribsBtn.hover(function () {
-                //    $seeAllContribsBtn.css('border', '2px solid #00A6C9');
-                //}, function () {
-                //
-                //});
             }
         },
 

@@ -125,8 +125,8 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                 action: 'read'
             },
             'fetchContributorsAndRepoData': {
-                verb: 'GET',
-                action: 'read'
+                verb: 'POST',
+                action: 'create'
             }
         }
 

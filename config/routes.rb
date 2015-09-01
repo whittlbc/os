@@ -17,7 +17,7 @@ Backboneworld::Application.routes.draw do
       post :join, :path => '/join'
       post :launch, :path => '/launch'
       get :get_up_for_grabs, :path => '/getUpForGrabs'
-      get :fetch_contributors_and_repo_data, :path => '/fetchContributorsAndRepoData'
+      post :fetch_contributors_and_repo_data, :path => '/fetchContributorsAndRepoData'
     end
   end
 

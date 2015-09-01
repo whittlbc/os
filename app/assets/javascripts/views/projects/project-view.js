@@ -44,27 +44,31 @@ define(['jquery',
             self.owner_id = data.project.user_id;
             self.repo_name = data.project.repo_name;
             self.uuid = data.project.uuid;
-            self.contributors = data.project.contributors;
             self.owner_gh_username = data.project.owner_gh_username;
         },
 
         handleFetchedDetails: function (data) {
             console.log(data);
-            //if (data.project.getting_contribs_from_gh && data.project.repo_name && data.project.owner_gh_username) {
-            //    var params = {
-            //        repo_name: data.project.repo_name,
-            //        owner_gh_username: data.project.owner_gh_username,
-            //        project_id: data.project.id
-            //    };
-            //    var project = new Project();
-            //    project.fetchContributorsAndRepoData(params, {success: master.handleFetchedGHRepoData, error: master.errorHandler});
-            //}
+            if (data.project.getting_contribs_from_gh && data.project.repo_name && data.project.owner_gh_username) {
+                var params = {
+                    //repo_name: data.project.repo_name,
+                    //owner_gh_username: data.project.owner_gh_username,
+                    repo_name: 'imposters',
+                    owner_gh_username: 'cosmicexplorer',
+                    project_id: data.project.id,
+                    app_contributors: data.project.contributors
+                };
+                var project = new Project();
+                project.fetchContributorsAndRepoData(params, {success: master.handleFetchedGHRepoData, error: master.errorHandler});
+            } else {
+                master.contributors = data.project.contributors;
+            }
             master.setProjectProperties(data);
             master.render(data);
         },
 
         handleFetchedGHRepoData: function (data) {
-            console.log(data);
+            master.projectMinorView.lazyLoadContribs(data);
         },
 
         cacheFeedBeforeSearch: function () {
