@@ -17,8 +17,7 @@ class ProjectsController < ApplicationController
   def fetch_details
     project = Project.find_by(id: params[:id])
     owner_gh_username = project.get_owner_gh_username
-    # general_date_formatter_svc = GeneralDateFormatterService.new(project.created_at)
-    # general_date_formatter_svc.perform
+
     if !project.blank?
       project_details = {
         :anon => project.anon,
@@ -29,7 +28,8 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
         :user_id => project.user_id,
@@ -38,94 +38,8 @@ class ProjectsController < ApplicationController
         :owner_gh_username => owner_gh_username,
         :integrations => project.integrations
       }
-      comments = Comment.where(project_id: params[:id])
 
-      # project_details[:contributors] = [
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => true,
-      #         'owner' => true
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => true,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => true,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => true,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => false,
-      #         'owner' => false
-      #     },
-      #     {
-      #         'gh_username' => 'whittlbc',
-      #         'pic' => "https://avatars.githubusercontent.com/u/6496306?v=3",
-      #         'admin' => true,
-      #         'owner' => false
-      #     }
-      # ].sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['name']] }
+      comments = Comment.where(project_id: params[:id])
 
       project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
         {
