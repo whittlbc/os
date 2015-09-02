@@ -48,6 +48,7 @@ define(['jquery',
 
             // project is NOT an "Up for Grabs" type
             if (options.status !== 0) {
+                showRepoName = true;
                 repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
                 license = (options.hasOwnProperty('license') && options.license[0]) ? options.license[0] : null;
             }
