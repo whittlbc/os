@@ -332,7 +332,7 @@ $major-info-project-type: #CECECE;
   height: 100%;
   min-height: 558px;
   position: relative;
-  background-color: black;
+  background-color: #3E4446;
 }
 
 #infoEvolutionToggleContainer {
@@ -407,7 +407,7 @@ $major-info-project-type: #CECECE;
 }
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
-  background-color: lightslategray;
+  background-color: white;
 }
 
 .follow-project-btn {
