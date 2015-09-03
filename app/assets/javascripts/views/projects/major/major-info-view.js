@@ -2,6 +2,7 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'models/os.util',
+    'models/project',
     'models/all-langs',
 	'stache!views/projects/major/major-info-view',
     'dotdotdot'
@@ -9,6 +10,7 @@ define(['jquery',
      Backbone,
      _,
      OSUtil,
+     Project,
      AllLangs,
      MajorInfoViewTpl) {
 	'use strict';
@@ -21,7 +23,16 @@ define(['jquery',
 		},
 
 		events: {
-            'click .see-all-description': 'handleToggleDescriptionSize'
+            'click .see-all-description': 'handleToggleDescriptionSize',
+            'click .project-page-vote-container': 'handleVote'
+        },
+
+        handleVote: function() {
+            var self = this;
+            var oldVote = Number(this.$el.find('.project-page-vote-count').html());
+            this.$el.find('.project-page-vote-count').html(oldVote + 1);
+            var project = new Project();
+            project.vote({uuid: self.uuid});
         },
 
         handleToggleDescriptionSize: function () {
@@ -76,11 +87,15 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
+
+            this.uuid = options ? options.uuid : null;
+
             this.$el.html(MajorInfoViewTpl({
                 title: options && options.title ? options.title : '',
                 projectType: options && options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
                 subtitle: "A JavaScript library designed to be so much better than your ordinary JS library",
                 description: options && options.description ? options.description : '',
+                voteCount: options && options.hasOwnProperty('vote_count') ? options.vote_count : '-'
             }));
             this.addTags(options.langs_and_frames);
             this.$descriptionContainer = this.$el.find('.major-info-project-description');

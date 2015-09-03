@@ -37,12 +37,7 @@ define(['jquery',
             self.vote_count++;
             self.render();
             var project = new Project();
-            project.vote({uuid: self.uuid}, {success: self.voteSuccess, error: self.errorHandler});
-        },
-
-        voteSuccess: function (resp) {
-            var self = this;
-            console.log(resp);
+            project.vote({uuid: self.uuid});
         },
 
         setData: function (data) {
