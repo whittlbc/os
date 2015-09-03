@@ -66,8 +66,8 @@ define(['jquery',
         },
 
         hoverOn: function () {
-            this.$licenseContainer.animate({opacity: 1}, {duration: 80, queue: false});
-            this.$privacyContainer.animate({opacity: 1}, {duration: 80, queue: false});
+            this.$licenseContainer.css('opacity', '1');
+            this.$privacyContainer.css('opacity', '1');        
         },
 
         hoverOff: function () {
