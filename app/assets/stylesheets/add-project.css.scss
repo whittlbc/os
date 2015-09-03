@@ -95,15 +95,6 @@ input {
   font-size: 13px;
 }
 
-#up-for-grabs {
-}
-
-#on-the-fence {
-}
-
-#launched {
-}
-
 .no-pull-from-ideas {
   width: 50%;
 }
@@ -284,12 +275,12 @@ input {
 
 #type-panel {
   border-left: 1px solid #00A6C9;
-  border-top-left-radius: 6px;
+  border-top-left-radius: 0px;
 }
 
 #data-panel {
   border-right: 1px solid #00A6C9;
-  border-top-right-radius: 6px;
+  border-top-right-radius: 0px;
 }
 
 .add-project-details-scroll-container {

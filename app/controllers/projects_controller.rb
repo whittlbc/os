@@ -190,7 +190,6 @@ class ProjectsController < ApplicationController
 
     contrib_data = {
         :uuid => UUIDTools::UUID.random_create.to_s,
-        :name => @user.name,
         :project_id => @project.id,
         :user_id => @user.id,
         :admin => true

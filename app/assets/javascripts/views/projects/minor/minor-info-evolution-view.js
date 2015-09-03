@@ -26,12 +26,24 @@ define(['jquery',
             var self = this;
             var $flipper = this.$el.find('#minorInfoEvolutionFlipper');
             if (e.currentTarget.id == 'info' && $flipper.hasClass('flipped')) {
+                this.infoBtnActive();
                 $flipper.removeClass('flipped');
                 this.voidToggleClicks();
             } else if (e.currentTarget.id == 'evolution' && !$flipper.hasClass('flipped')) {
+                this.evolutionBtnActive();
                 $flipper.addClass('flipped');
                 this.voidToggleClicks();
             }
+        },
+
+        infoBtnActive: function () {
+            this.$el.find('#info').addClass('active');
+            this.$el.find('#evolution').removeClass('active');
+        },
+
+        evolutionBtnActive: function () {
+            this.$el.find('#evolution').addClass('active');
+            this.$el.find('#info').removeClass('active');
         },
 
         voidToggleClicks: function () {

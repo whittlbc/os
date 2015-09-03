@@ -21,9 +21,10 @@ define(['jquery',
 
         handleTypeSelected: function (e) {
             var self = this;
-            this.selectedType = OSUtil.TYPE_MAP[e.currentTarget.id];
+            var type = $(e.currentTarget).attr('data-project-type-index');
+            this.selectedType = OSUtil.TYPE_MAP[type];
             this.render();
-            this.trigger('type:selected', e.currentTarget.id);
+            this.trigger('type:selected', type);
         },
 
         setHeight: function (height) {

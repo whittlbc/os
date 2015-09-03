@@ -38,12 +38,14 @@ $major-info-project-type: #CECECE;
 }
 
 .major-info-project-type-divider {
-  font-size: 21px;
-  font-weight: 100;
-  color: $major-info-project-type;
+  display: inline-block;
+  height: 26px;
+  width: 1px;
+  background-color: #DDD;
   margin-left: 13px;
   position: relative;
-  top: -3px;
+  top: 2px;
+  z-index: 1;
 }
 
 .major-info-project-type {
@@ -211,7 +213,7 @@ $major-info-project-type: #CECECE;
   width: 25%;
   height: 100%;
   display: inline-block;
-  //position: relative;
+  position: absolute;
   top: 65px;
 }
 
@@ -226,7 +228,7 @@ $major-info-project-type: #CECECE;
 #minorInfoEvolutionView {
   width: 100%;
   position: absolute;
-  top: 85px;
+  top: 30px;
   bottom: 0;
 }
 
@@ -234,7 +236,7 @@ $major-info-project-type: #CECECE;
   -webkit-perspective: 800;
   width: 100%;
   height: 100%;
-  min-height: 500px;
+  min-height: 558px;
   position: relative;
   background-color: black;
 }
@@ -243,11 +245,7 @@ $major-info-project-type: #CECECE;
   width: 100%;
   height: 40px;
   display: block;
-
-  li {
-    width: 50%;
-  }
-
+  position: relative;
 }
 
 .info-evolution-toggle-btn {
@@ -258,6 +256,32 @@ $major-info-project-type: #CECECE;
   line-height: 40px;
   background-color: $project-minor;
   cursor: pointer;
+  position: absolute;
+  top: 0;
+}
+
+.info-evolution-toggle-btn.active {
+  color: #00A6C9;
+  font-weight: 500;
+}
+
+#infoEvolutionTabSeparator {
+  display: inline-block;
+  background-color: #DDD;
+  height: 67%;
+  width: 1px;
+  position: absolute;
+  top: 6px;
+  left: 49.9%;
+  z-index: 1;
+}
+
+#info {
+  left: 0;
+}
+
+#evolution {
+  right: 0;
 }
 
 #minorInfoEvolutionFlipper.flipped {
