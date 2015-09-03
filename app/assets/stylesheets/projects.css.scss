@@ -5,7 +5,22 @@
 $project-minor: white;
 $major-info-project-type: #CECECE;
 
+
 // Styling
+
+
+.z-depth-half {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 2px 10px 0 rgba(0, 0, 0, 0.08); }
+
+.z-depth-1 {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.z-depth-1-half {
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15); }
+
+.z-depth-2 {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+
 
 .project-body {
   width: 100%;
@@ -32,9 +47,88 @@ $major-info-project-type: #CECECE;
   padding-top: 35px;
 }
 
-.major-info-project-title {
+.title-action-container {
   width: 100%;
+  display: block;
+  height: 44px;
+  position: relative;
+}
+
+.major-info-project-title {
+  width: 70%;
   font-size: 30px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.project-action-container {
+  width: 30%;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.join-btn {
+  @extend .z-depth-1;
+  transition: box-shadow .3s ease-out, background-color .3s ease-out;
+  margin-top: 10px;
+  margin-right: 5px;
+  height: 34px;
+  min-width: 120px;
+  padding: 0 14px;
+  line-height: 34px;
+  border-radius: 2px;
+  background-color: #00A6C9;
+  color: white;
+  text-align: center;
+  float: right;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.join-btn:hover {
+  @extend .z-depth-1-half;
+  background-color: #00B3D7;
+}
+
+.project-page-vote-container {
+  display: inline-block;
+  float: right;
+  width: 50px;
+  height: 50px;
+  margin-top: -7px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.project-page-vote-container:hover {
+  .fa-angle-up {
+    color: #00A6C9;
+  }
+}
+
+.project-page-vote-arrow {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+
+  .fa-angle-up {
+    font-size: 32px;
+    color: #DDD;
+  }
+}
+
+.project-page-vote-count {
+  width: 100%;
+  height: 20px;
+  line-height: 11px;
+  text-align: center;
+  font-size: 20px;
 }
 
 .major-info-project-type-divider {
@@ -314,19 +408,6 @@ $major-info-project-type: #CECECE;
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
   background-color: lightslategray;
-}
-
-.join-project-btn {
-  width: 50%;
-  margin-left: 25%;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 15px;
-  text-align: center;
-  background-color: #00A6C9;
-  color: white;
-  margin-top: 40px;
-  cursor: pointer;
 }
 
 .follow-project-btn {

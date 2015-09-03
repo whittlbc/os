@@ -21,7 +21,7 @@ define(['jquery',
 
 		events: {
             'click .arrow': 'handleVote',
-            'click .project-post-title-text': 'openProjectDetails',
+            'click .project-post-view': 'openProjectDetails'
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -67,7 +67,7 @@ define(['jquery',
 
         hoverOn: function () {
             this.$licenseContainer.css('opacity', '1');
-            this.$privacyContainer.css('opacity', '1');        
+            this.$privacyContainer.css('opacity', '1');
         },
 
         hoverOff: function () {
