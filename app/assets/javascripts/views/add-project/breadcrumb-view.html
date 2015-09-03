@@ -1,16 +1,16 @@
 <div class="create-project-modal-header-container">
-    <div class="create-project-breadcrumb {{#breadCrumb1Current}}breadcrumb-current{{/breadCrumb1Current}} {{#breadCrumb1Clickable}}breadcrumb-clickable{{/breadCrumb1Clickable}}" id="type-panel">{{#breadCrumb1Done}}<i class="fa fa-check-circle {{#breadCrumb1Current}}current{{/breadCrumb1Current}}"></i>{{/breadCrumb1Done}}1.&nbsp;&nbsp;Type
+    <div class="create-project-breadcrumb {{#breadCrumb1Current}}breadcrumb-current{{/breadCrumb1Current}} {{#breadCrumb1Clickable}}breadcrumb-clickable{{/breadCrumb1Clickable}}" id="type-panel">{{^breadCrumb1Current}}{{#breadCrumb1Done}}<i class="fa fa-check-circle"></i>{{/breadCrumb1Done}}{{/breadCrumb1Current}}1.&nbsp;&nbsp;Type
     </div>{{
     }}<div class="create-project-breadcrumb {{#breadCrumb2Current}}breadcrumb-current{{/breadCrumb2Current}} {{#breadCrumb2Clickable}}breadcrumb-clickable{{/breadCrumb2Clickable}}" id="source-panel">
     <div class="step-inside-container">
         {{#breadCrumb1Current}}
         <div class="selected-arrow-div"></div>{{
-        }}<div class="title-div">{{#breadCrumb2Done}}<i class="fa fa-check-circle {{#breadCrumb2Current}}current{{/breadCrumb2Current}}"></i>{{/breadCrumb2Done}}2.&nbsp;&nbsp;Source</div>
+        }}<div class="title-div">{{^breadCrumb2Current}}{{#breadCrumb2Done}}<i class="fa fa-check-circle"></i>{{/breadCrumb2Done}}{{/breadCrumb2Current}}2.&nbsp;&nbsp;Source</div>
         {{/breadCrumb1Current}}
         {{^breadCrumb1Current}}
         <div class="back-arrow-div"></div>{{
         }}<div class="cover-arrow-div"></div>{{
-        }}<div class="title-div">{{#breadCrumb2Done}}<i class="fa fa-check-circle {{#breadCrumb2Current}}current{{/breadCrumb2Current}}"></i>{{/breadCrumb2Done}}2.&nbsp;&nbsp;Source</div>
+        }}<div class="title-div">{{^breadCrumb2Current}}{{#breadCrumb2Done}}<i class="fa fa-check-circle"></i>{{/breadCrumb2Done}}{{/breadCrumb2Current}}2.&nbsp;&nbsp;Source</div>
         {{/breadCrumb1Current}}
     </div>
 </div>{{
