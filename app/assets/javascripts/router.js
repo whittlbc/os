@@ -14,6 +14,7 @@ define(["backbone",
                 'on-the-fence': 'onTheFenceRoute',
                 'launched': 'launchedRoute',
                 'projects/:id': 'projectRoute',
+                'set-user/:id': 'setUserCookieRoute', // :id is gh_username just obtained from GH
                 '': 'onTheFenceRoute'
             },
 
@@ -22,7 +23,7 @@ define(["backbone",
             },
 
             onTheFenceRoute: function() {
-                _.isEmpty(window.location.hash) && window.location.pathname == '/' ? window.location.hash = "#on-the-fence" : this.updateHomeView(1);
+                _.isEmpty(window.location.hash) && window.location.pathname == '/' ? this.redirectHome() : this.updateHomeView(1);
             },
 
             launchedRoute: function() {
@@ -71,6 +72,15 @@ define(["backbone",
                     this.mainView.passCookieUser(this.getCookie());
                     this.mainView.switchProject(id);
                 }
+            },
+
+            redirectHome: function () {
+                window.location.hash = "#on-the-fence";
+            },
+
+            setUserCookieRoute: function (gh_username) {
+                self.setCookie('gh_username', gh_username, 7); // expires in 7 days
+                this.redirectHome();
             },
 
             setCookie: function (cname, cvalue, exdays) {

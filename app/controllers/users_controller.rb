@@ -55,24 +55,27 @@ class UsersController < ApplicationController
       :client_secret => User::GH::CLIENT_SECRET,
       :code => params[:code]
     }
+
     response = RestClient.post('https://github.com/login/oauth/access_token', data, :accept => :json)
     body = JSON.parse(response.body)
-    if body["access_token"]
-      login_or_create(body["access_token"])
+
+    if body['access_token']
+      upsert_user(body['access_token'])
+      redirect_to "/#set-user/#{body['login']}"
     else
-      render :json => {:status => 'Error getting access token'}
+      redirect_to '/#on-the-fence'
     end
   end
 
 
   # GH login - If user's not there, create him
-  def login_or_create(access_token)
+  def upsert_user(access_token)
     response = RestClient.get("https://api.github.com/user?access_token=#{access_token}", :accept => :json)
     body = JSON.parse(response.body)
-    gh_username = body["login"]
-    name = body["name"]
-    email = body["email"]
-    pic = body["avatar_url"]
+    gh_username = body['login']
+    name = body['name']
+    email = body['email']
+    pic = body['avatar_url']
     old_user = User.find_by_gh_username(gh_username)
     json_response = {
         :gh_username => gh_username,
@@ -82,6 +85,7 @@ class UsersController < ApplicationController
         :password => access_token
     }
 
+    # CAN TOTALLY USE find_or_initialize_by here
     if old_user.nil?
       # Create new User
       @user = User.new(:uuid => UUIDTools::UUID.random_create.to_s,
