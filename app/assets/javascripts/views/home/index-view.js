@@ -102,9 +102,7 @@ define(['jquery',
 
         handleSelectProjectTypeTab: function (e) {
             var self = this;
-            console.log($(e.currentTarget).attr('href').replace('/#', ''));
             var selectedIndex = OSUtil.PROJECT_TYPES.indexOf($(e.currentTarget).attr('href').replace('/#', ''));
-
             if (selectedIndex == -1 || selectedIndex == this.activeTabIndex) {
                 e.preventDefault();
                 return;
@@ -207,7 +205,7 @@ define(['jquery',
 
         handleAllLanguages: function (resp) {
             master.projectFeedView.passColorsAndInitials(resp.colors_and_initials);
-            master.projectFeedView.render();
+            //master.projectFeedView.render();
             master.passLangDataToParent(resp);
             master.colors_and_initials = resp.colors_and_initials;
             master.dropdown_items = resp.dropdown_items;
@@ -400,33 +398,46 @@ define(['jquery',
             this.showLoginPopup();
         },
 
-        showUpForGrabsFeed: function (status) {
-            var self = this;
-            var project = new Project();
-            this.projectTypeStatus = status; // int value
-            this.projectFeedView.setProjectTypeStatus(status);
-            if (self.filters == null) {
-                project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
-            } else {
-                self.filters.filters.status = status;
-                self.getFilteredFeed(self.filters);
-            }
-        },
+        //showUpForGrabsFeed: function (status) {
+        //    var self = this;
+        //    var project = new Project();
+        //    this.projectTypeStatus = status; // int value
+        //    this.projectFeedView.setProjectTypeStatus(status);
+        //    if (self.filters == null) {
+        //        project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+        //    } else {
+        //        self.filters.filters.status = status;
+        //        self.getFilteredFeed(self.filters);
+        //    }
+        //},
+        //
+        //showOnTheFenceFeed: function (status) {
+        //    var self = this;
+        //    var project = new Project();
+        //    this.projectTypeStatus = status; // int value
+        //    this.projectFeedView.setProjectTypeStatus(status);
+        //    if (self.filters == null) {
+        //        project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+        //    } else {
+        //        self.filters.filters.status = status;
+        //        self.getFilteredFeed(self.filters);
+        //    }
+        //},
+        //
+        //showLaunchedFeed: function (status) {
+        //    var self = this;
+        //    var project = new Project();
+        //    this.projectTypeStatus = status; // int value
+        //    this.projectFeedView.setProjectTypeStatus(status);
+        //    if (self.filters == null) {
+        //        project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+        //    } else {
+        //        self.filters.filters.status = status;
+        //        self.getFilteredFeed(self.filters);
+        //    }
+        //},
 
-        showOnTheFenceFeed: function (status) {
-            var self = this;
-            var project = new Project();
-            this.projectTypeStatus = status; // int value
-            this.projectFeedView.setProjectTypeStatus(status);
-            if (self.filters == null) {
-                project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
-            } else {
-                self.filters.filters.status = status;
-                self.getFilteredFeed(self.filters);
-            }
-        },
-
-        showLaunchedFeed: function (status) {
+        populateProjectFeed: function (status) {
             var self = this;
             var project = new Project();
             this.projectTypeStatus = status; // int value
@@ -448,21 +459,32 @@ define(['jquery',
             this.getLanguages();
         },
 
-		render: function () {
+		render: function (options) {
 			var self = this;
 
+            var upForGrabsActive = options && options.hasOwnProperty('index') ? options.index == 0 : false;
+            var onTheFenceActive = options && options.hasOwnProperty('index') ? options.index == 1 : true;
+            var launchedActive = options && options.hasOwnProperty('index') ? options.index == 2 : false;
+
             this.$el.html(IndexViewTpl({
+                upForGrabsActive: upForGrabsActive,
+                onTheFenceActive: onTheFenceActive,
+                launchedActive: launchedActive
             }));
+
+            this.projectFeedView = new ProjectFeedView({
+                el: '#project-feed'
+            });
+            this.projectFeedView.render();
+
+            var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;
+            this.populateProjectFeed(projectTypeStatus);
 
             this.nonLangFiltersView = new NonLangFiltersView({
                 el: '#nonLangFiltersContainer'
             });
 
             this.nonLangFiltersView.render();
-
-            this.projectFeedView = new ProjectFeedView({
-                el: '#project-feed'
-            });
 
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer'

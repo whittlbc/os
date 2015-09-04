@@ -3,6 +3,9 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
 
     var OSUtil = {
 
+        HOME_PAGE: 'home',
+        PROJECT_PAGE: 'project',
+
         REQUEST_PRIVACY: 'request',
         OPEN_PRIVACY: 'open',
 

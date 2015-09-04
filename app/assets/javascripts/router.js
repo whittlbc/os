@@ -1,14 +1,12 @@
 define(["backbone",
         "events",
-        "views/home/index-view",
-        "views/projects/project-view",
+        'views/main-view',
         "views/login/login-view",
         'models/os.util',
         "models/user"],
     function (Backbone,
               Events,
-              IndexView,
-              ProjectView,
+              MainView,
               LoginView,
               OSUtil,
               User) {
@@ -28,9 +26,66 @@ define(["backbone",
                 '': 'onTheFenceRoute'
             },
 
-            projectRoute: function (id) {
-                this.initializeProject(id);
+            upForGrabsRoute: function() {
+                this.updateHomeView(0);
             },
+
+            onTheFenceRoute: function() {
+                _.isEmpty(window.location.hash) && window.location.pathname == '/' ? window.location.hash = "#on-the-fence" : this.updateHomeView(1);
+            },
+
+            launchedRoute: function() {
+                this.updateHomeView(2);
+            },
+
+            updateHomeView: function (index) {
+                if (!this.mainView) {
+                    this.mainView = new MainView({
+                        el: '#mainView'
+                    });
+                    this.mainView.render({
+                        view: OSUtil.HOME_PAGE,
+                        index: index
+                    });
+                } else {
+                    this.mainView.changeHomeFeedType(index);
+                }
+            },
+
+            projectRoute: function (id) {
+                this.updateProjectView(id);
+            },
+
+            updateProjectView: function (id) {
+                if (!this.mainView) {
+                    this.mainView = new MainView({
+                        el: '#mainView'
+                    });
+                    this.mainView.render({
+                        view: OSUtil.PROJECT_PAGE,
+                        id: id
+                    });
+                } else {
+                    this.mainView.switchProject(id);
+                }
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             wasOnHome: function () {
                 return (this.lastHash == '#up-for-grabs' || this.lastHash == '#on-the-fence' || this.lastHash == '#launched');
@@ -40,24 +95,7 @@ define(["backbone",
                 return (window.location.hash == '#up-for-grabs' || window.location.hash == '#on-the-fence' || window.location.hash == '#launched');
             },
 
-            emptyHash: function () {
-                return (window.location.hash == "");
-            },
-
-            setUpForGrabsHash: function () {
-                window.location.hash = "#up-for-grabs";
-            },
-
-            setOnTheFenceHash: function () {
-                window.location.hash = "#on-the-fence";
-            },
-
-            setLaunchedHash: function () {
-                window.location.hash = "#launched";
-            },
-
             determineEntry: function () {
-                this.authed = false;
                 var self = this;
                 var user = new User();
 
@@ -113,27 +151,7 @@ define(["backbone",
                 }
             },
 
-            upForGrabsRoute: function() {
-                this.initializeHome();
-                this.indexView.showUpForGrabsFeed(0);
-                this.indexView.setActiveTabIndex(0);
-            },
 
-            onTheFenceRoute: function() {
-                if (this.emptyHash() && window.location.pathname == '/') {
-                    this.setOnTheFenceHash();
-                } else {
-                    this.initializeHome();
-                    this.indexView.showOnTheFenceFeed(1);
-                    this.indexView.setActiveTabIndex(1);
-                }
-            },
-
-            launchedRoute: function() {
-                this.initializeHome();
-                this.indexView.showLaunchedFeed(2);
-                this.indexView.setActiveTabIndex(2);
-            },
 
             initializeHome: function () {
 
