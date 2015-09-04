@@ -1,12 +1,10 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-    'views/os.view',
     'models/os.util',
     'views/home/project-feed-view',
     'models/project',
     'models/user',
-    'models/all-langs',
     'views/home/lang-selection-list',
     'views/home/non-lang-filters-view',
     'stache!views/home/index-view',
@@ -17,21 +15,17 @@ define(['jquery',
 ], function ($,
      Backbone,
      _,
-     OSView,
      OSUtil,
      ProjectFeedView,
      Project,
      User,
-     AllLangs,
      LangSelectionList,
      NonLangFiltersView,
      IndexViewTpl
      ) {
 	'use strict';
 
-    var master;
-
-	var IndexView = OSView.extend({
+	var IndexView = Backbone.View.extend({
 
 		initialize: function () {
             Backbone.EventBroker.register({
@@ -45,14 +39,12 @@ define(['jquery',
                 'clearNonLangFilters': 'clearNonLangFilters'
             }, this);
             this.osInitialize();
-            master = this;
             this.filters = null;
             this.filtersShown = false;
             this.langsFramesValue = [];
             this.licenseFilters = [];
             this.privacyFilters = [];
             this.forcedItems = [];
-            this.gotLanguages = false;
             this.showLangFrameSelectionDuration = 350;
             this.selectizeOpenDuration = 290;
             this.zipUpDuration = 140;
@@ -170,7 +162,6 @@ define(['jquery',
         },
 
         successfullyLaunchProject: function (resp) {
-            // master
             console.log(resp);
         },
 
@@ -195,37 +186,31 @@ define(['jquery',
             this.projectFeedView.populateFeed(projects);
         },
 
-        getLanguages: function () {
-
-            //var language = new Language();
-            //language.getAll({success: self.handleAllLanguages});
-
-            this.handleAllLanguages(AllLangs.getAll());
+        passLanguages: function (data) {
+            this.projectFeedView.passColorsAndInitials(data.colors_and_initials);
+            this.colors_and_initials = data.colors_and_initials;
+            this.dropdown_items = data.dropdown_items;
+            this.langSelectionList.setColorsAndInitials(data.colors_and_initials);
+            this.all_frames = data.all_frames;
         },
 
-        handleAllLanguages: function (resp) {
-            master.projectFeedView.passColorsAndInitials(resp.colors_and_initials);
-            //master.projectFeedView.render();
-            master.passLangDataToParent(resp);
-            master.colors_and_initials = resp.colors_and_initials;
-            master.dropdown_items = resp.dropdown_items;
-            master.langSelectionList.setColorsAndInitials(master.colors_and_initials);
-            master.all_frames = resp.all_frames;
+        createLangsFilterDropdown: function (resp) {
+            var self = this;
             var options = {
                 theme: 'links',
                 maxItems: null,
                 valueField: 'id',
                 searchField: 'title',
-                options: master.dropdown_items,
+                options: this.dropdown_items,
                 original: false,
                 selectOnTab: false,
                 onFocus: function () {
-                    if (master.langsFramesDropdownShown) {
-                        master.zipDownDropdown();
+                    if (self.langsFramesDropdownShown) {
+                        self.zipDownDropdown();
                     }
                 },
                 onBlur: function() {
-                    master.zipUpDropdown();
+                    self.zipUpDropdown();
                 },
                 render: {
                     option: function (data, escape) {
@@ -237,34 +222,33 @@ define(['jquery',
                 }
             };
 
-            var $select = master.$el.find('#filters-langs-frames').selectize(options);
+            var $select = this.$el.find('#filters-langs-frames').selectize(options);
             var selectize = $select[0].selectize;
-            master.selectize = selectize;
-            master.selectize.zipUp(0);
-            master.gotLanguages = true;
-            master.setLangFrameInputProps();
+            this.selectize = selectize;
+            this.selectize.zipUp(0);
+            this.setLangFrameInputProps();
             selectize.on('item_add', function (value, $item) {
                 /* if you just entered the framework as a lang/frame filter, but haven't entered the language that framework
                 goes with, then we'll go ahead and add that for you */
-                if (master.all_frames[value] && !_.contains(master.langsFramesValue, master.all_frames[value])){
-                    master.langsFramesValue = selectize.getValue();
+                if (self.all_frames[value] && !_.contains(self.langsFramesValue, self.all_frames[value])){
+                    self.langsFramesValue = selectize.getValue();
                     selectize.lastQuery = null;
                     selectize.setTextboxValue('');
-                    selectize.addItem(master.all_frames[value]);
+                    selectize.addItem(self.all_frames[value]);
                 } else {
-                    master.langsFramesValue = selectize.getValue();
-                    master.getFilters();
+                    self.langsFramesValue = selectize.getValue();
+                    self.getFilters();
                 }
 
-                master.langSelectionList.addItem(value);
+                self.langSelectionList.addItem(value);
 
             });
             selectize.on('item_remove', function (value, $item) {
-                master.langsFramesValue = selectize.getValue();
-                master.getFilters();
+                self.langsFramesValue = selectize.getValue();
+                self.getFilters();
             });
 
-            master.langSelectionList.showFiltersBtn();
+            this.langSelectionList.showFiltersBtn();
         },
 
         zipUpDropdown: function () {
@@ -329,31 +313,29 @@ define(['jquery',
         getFilteredFeed: function (obj) {
             var self = this;
             var project = new Project();
-            project.filteredFeed(obj, {success: self.handleFilteredFeed});
+            project.filteredFeed(obj, {success: function (data) {
+                self.handleFilteredFeed(data);
+            }});
         },
 
         handleFilteredFeed: function (resp) {
-            master.projectFeedView.populateFeed(resp)
+            this.projectFeedView.populateFeed(resp)
         },
 
         pullFromIdeas: function () {
             var self = this;
             var project = new Project();
-            project.pullFromIdeas({success: self.handlePullFromIdeas});
+            project.pullFromIdeas({success: function (data) {
+                self.handlePullFromIdeas(data);
+            }});
         },
 
         handlePullFromIdeas: function (resp) {
-            // master
             console.log(resp);
-        },
-
-        showNewProject: function (resp) {
-            master.projectFeedView.handleShowNewProject(resp.new_project);
         },
 
         passUserInfo: function (data) {
             var self = this;
-            $('.header-user-pic').attr('src', data.pic);
             this.userData = data;
             this.user_uuid = data.user_uuid;
             this.userID = data.id;
@@ -394,49 +376,6 @@ define(['jquery',
             self.getFilters();
         },
 
-        onShowPopup: function () {
-            this.showLoginPopup();
-        },
-
-        //showUpForGrabsFeed: function (status) {
-        //    var self = this;
-        //    var project = new Project();
-        //    this.projectTypeStatus = status; // int value
-        //    this.projectFeedView.setProjectTypeStatus(status);
-        //    if (self.filters == null) {
-        //        project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
-        //    } else {
-        //        self.filters.filters.status = status;
-        //        self.getFilteredFeed(self.filters);
-        //    }
-        //},
-        //
-        //showOnTheFenceFeed: function (status) {
-        //    var self = this;
-        //    var project = new Project();
-        //    this.projectTypeStatus = status; // int value
-        //    this.projectFeedView.setProjectTypeStatus(status);
-        //    if (self.filters == null) {
-        //        project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
-        //    } else {
-        //        self.filters.filters.status = status;
-        //        self.getFilteredFeed(self.filters);
-        //    }
-        //},
-        //
-        //showLaunchedFeed: function (status) {
-        //    var self = this;
-        //    var project = new Project();
-        //    this.projectTypeStatus = status; // int value
-        //    this.projectFeedView.setProjectTypeStatus(status);
-        //    if (self.filters == null) {
-        //        project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
-        //    } else {
-        //        self.filters.filters.status = status;
-        //        self.getFilteredFeed(self.filters);
-        //    }
-        //},
-
         populateProjectFeed: function (status) {
             var self = this;
             var project = new Project();
@@ -456,7 +395,6 @@ define(['jquery',
             this.nonLangFiltersView.$el.find('#nonLangFiltersMaster').css('width', this.langFrameWidth + 'px');
             this.nonLangFiltersView.$el.find('#clearNonLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
             this.langSelectionList.$el.find('#clearLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
-            this.getLanguages();
         },
 
 		render: function (options) {
