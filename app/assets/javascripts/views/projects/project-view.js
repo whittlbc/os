@@ -22,7 +22,6 @@ define(['jquery',
 
         initialize: function (options) {
             var self = this;
-            this.osInitialize();
             var project = new Project();
             self.projectID = options.id;
             project.fetchDetails({id: options.id}, {success: function (data) {

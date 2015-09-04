@@ -4,6 +4,7 @@ define(['jquery',
     'views/home/index-view',
     'views/projects/project-view',
     'models/os.util',
+    'models/project',
     'views/add-project/create-new-project-popup',
     'models/all-langs',
     'models/user',
@@ -13,6 +14,7 @@ define(['jquery',
      Backbone,
      _,
      IndexView,
+     Project,
      ProjectView,
      OSUtil,
      CreateNewProjectPopup,
@@ -38,7 +40,6 @@ define(['jquery',
                 el: this.$el.find('#projectViewContainer'),
                 id: id
             });
-            this.projectView.render();
         },
 
         passCookieUser: function (cookieGHUsername) {
@@ -107,7 +108,9 @@ define(['jquery',
             var searchBox = $('.searchbox');
             inputBox.focus(function(){
                 if(!isOpen) {
-                    self.cacheFeedBeforeSearch();
+                    if (self.homeView) {
+                        self.homeView.cacheFeedBeforeSearch();
+                    }
                     self.getUniversalSearchData();
                     searchBox.addClass('searchbox-open');
                     isOpen = true;
@@ -208,7 +211,6 @@ define(['jquery',
                     el: this.$el.find('#projectViewContainer'),
                     id: options ? options.id : null
                 });
-                //this.projectView.render();
             }
 
             this.allLangs ? this.handleAllLanguages(this.allLangs) : this.getAllLanguages();

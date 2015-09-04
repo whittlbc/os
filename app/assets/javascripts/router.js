@@ -63,15 +63,13 @@ define(["backbone",
                     this.listenTo(this.masterView, 'cookie:set', function () {
                         self.setCookie('gh_username', response.gh_username, 7); // expires in 7 days
                     });
-                    this.mainView.passCookieUser(this.getCookie());
-                    this.mainView.render({
-                        view: OSUtil.PROJECT_PAGE,
-                        id: id
-                    });
-                } else {
-                    this.mainView.passCookieUser(this.getCookie());
-                    this.mainView.switchProject(id);
+
                 }
+                this.mainView.passCookieUser(this.getCookie());
+                this.mainView.render({
+                    view: OSUtil.PROJECT_PAGE,
+                    id: id
+                });
             },
 
             redirectHome: function () {

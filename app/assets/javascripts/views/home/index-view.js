@@ -38,7 +38,6 @@ define(['jquery',
                 'removePrivacyFilter': 'removePrivacyFilter',
                 'clearNonLangFilters': 'clearNonLangFilters'
             }, this);
-            this.osInitialize();
             this.filters = null;
             this.filtersShown = false;
             this.langsFramesValue = [];
