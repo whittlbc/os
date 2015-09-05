@@ -88,7 +88,6 @@ define(['jquery',
             this.userID = data.id;
             this.ghAccessToken = data.password;
             this.gh_username = data.gh_username;
-            this.passUserInfoToParent(this.userData);
         },
 
         passLanguages: function (data) {

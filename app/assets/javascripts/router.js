@@ -39,14 +39,13 @@ define(["backbone",
                     this.listenTo(this.masterView, 'cookie:set', function (gh_username) {
                         self.setCookie('gh_username', gh_username, 7); // expires in 7 days
                     });
-                    this.mainView.passCookieUser(this.getCookie());
+                    this.mainView.passCookieUser(this.getCookie('gh_username'));
                     this.mainView.render({
                         view: OSUtil.HOME_PAGE,
                         index: index
                     });
                 } else {
-                    this.mainView.passCookieUser(this.getCookie());
-                    this.mainView.changeHomeFeedType(index);
+                    this.mainView.showHomeView ? this.mainView.changeHomeFeedType(index) : this.mainView.render({view: OSUtil.HOME_PAGE, index: index});
                 }
             },
 

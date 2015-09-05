@@ -140,6 +140,7 @@ define(['jquery',
         },
 
         universalSearch: function (query) {
+            var self = this;
             if (query) {
                 var results = this.universalSearchSifter.search(query, {
                     fields: ['title', 'owner_gh_username'],
@@ -151,7 +152,7 @@ define(['jquery',
 
                     var projectResults = [];
                     _.map(results.items, function(item) {
-                        projectResults.push(this.allProjects[item.id]);
+                        projectResults.push(self.allProjects[item.id]);
                     });
 
                     var sortedProjectResults = projectResults.sort(function(a, b){
@@ -189,15 +190,15 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
-            var showHomeView = options && options.view == OSUtil.HOME_PAGE;
-            var showProjectView = options && options.view == OSUtil.PROJECT_PAGE;
+            this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
+            this.showProjectView = options && options.view == OSUtil.PROJECT_PAGE;
 
             this.$el.html(MainViewTpl({
-                showHomeView: showHomeView,
-                showProjectView: showProjectView
+                showHomeView: this.showHomeView,
+                showProjectView: this.showProjectView
             }));
 
-            if (showHomeView) {
+            if (this.showHomeView) {
                 this.homeView = new IndexView({
                     el: this.$el.find('#homeViewContainer')
                 });
@@ -206,7 +207,7 @@ define(['jquery',
                     index: options && options.index ? options.index : 1
                 });
             }
-            if (showProjectView) {
+            if (this.showProjectView) {
                 this.projectView = new ProjectView({
                     el: this.$el.find('#projectViewContainer'),
                     id: options ? options.id : null
