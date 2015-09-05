@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="86b4e102-76bf-4781-a2f3-6e5f7dc4808e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/home/index-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/main-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/main-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/projects_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/projects_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/views/add-project/repo-list-view.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/add-project/repo-list-view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/router.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="os.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,21 +65,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="router.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="router.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.111111">
-              <caret line="55" column="46" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.5008">
+              <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="repo-list-view.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="repo-list-view.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/repo-list-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29907975">
-              <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -177,8 +172,8 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/projects/project-view.js" />
         <option value="$PROJECT_DIR$/app/controllers/projects_controller.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/main-view.js" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/router.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/views/add-project/repo-list-view.js" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/router.js" />
       </list>
     </option>
   </component>
@@ -1207,18 +1202,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/router.js">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/repo-list-view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.111111">
-          <caret line="55" column="46" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/views/add-project/repo-list-view.js">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/router.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29907975">
-          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.5008">
+          <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
           <folding />
         </state>
       </provider>

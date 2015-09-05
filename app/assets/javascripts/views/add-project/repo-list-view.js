@@ -1,4 +1,4 @@
-fdefine(['jquery',
+define(['jquery',
 	'backbone',
 	'underscore',
     'views/add-project/repo-list-item',

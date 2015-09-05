@@ -64,7 +64,7 @@ define(["backbone",
                     });
 
                 }
-                this.mainView.passCookieUser(this.getCookie());
+                this.mainView.passCookieUser(this.getCookie('gh_username'));
                 this.mainView.render({
                     view: OSUtil.PROJECT_PAGE,
                     id: id
