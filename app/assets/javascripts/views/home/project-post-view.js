@@ -4,6 +4,7 @@ define(['jquery',
     'models/project',
     'models/os.util',
     'models/all-langs',
+    'views/widgets/user-info-bubble',
 	'stache!views/home/project-post-view'
     ], function ($,
      Backbone,
@@ -11,6 +12,7 @@ define(['jquery',
      Project,
      OSUtil,
      AllLangs,
+     UserInfoBubble,
      ProjectPostViewTpl) {
 	'use strict';
 
@@ -109,7 +111,13 @@ define(['jquery',
             this.$licenseContainer = this.$el.find('.project-post-license');
             this.$privacyContainer = this.$el.find('.project-post-privacy');
             this.addHoverListener();
-		}
+
+            this.userInfoBubble = new UserInfoBubble({
+                el: this.$el.find('.user-info-bubble')
+            });
+            this.userInfoBubble.render();
+
+        }
 	});
 
 	return ProjectPostView;
