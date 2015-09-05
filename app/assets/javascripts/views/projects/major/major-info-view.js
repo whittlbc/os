@@ -5,8 +5,9 @@ define(['jquery',
     'models/project',
     'models/all-langs',
 	'stache!views/projects/major/major-info-view',
-    'dotdotdot'
-    ], function ($,
+    'dotdotdot',
+    'backbone-eventbroker'
+], function ($,
      Backbone,
      _,
      OSUtil,
@@ -24,7 +25,12 @@ define(['jquery',
 
 		events: {
             'click .see-all-description': 'handleToggleDescriptionSize',
-            'click .project-page-vote-container': 'handleVote'
+            'click .project-page-vote-container': 'handleVote',
+            'click .join-btn': 'handleJoin'
+        },
+
+        handleJoin: function () {
+            Backbone.EventBroker.trigger('project:join');
         },
 
         handleVote: function() {

@@ -1,17 +1,16 @@
 define(['jquery',
     'backbone',
     'underscore',
-    'views/os.view',
     'models/project',
     'models/os.util',
     'views/projects/major/project-major-view',
     'views/projects/minor/project-minor-view',
     'stache!views/projects/project-view',
-    'selectize'
+    'selectize',
+    'backbone-eventbroker'
 ], function ($,
      Backbone,
      _,
-     OSView,
      Project,
      OSUtil,
      ProjectMajorView,
@@ -19,17 +18,19 @@ define(['jquery',
      ProjectViewTpl) {
     'use strict';
 
-    var master;
-
-    var ProjectView = OSView.extend({
+    var ProjectView = Backbone.View.extend({
 
         initialize: function (options) {
             var self = this;
-            master = this;
-            this.osInitialize();
             var project = new Project();
             self.projectID = options.id;
-            project.fetchDetails({id: options.id}, {success: self.handleFetchedDetails, error: self.errorHandler});
+            project.fetchDetails({id: options.id}, {success: function (data) {
+                self.handleFetchedDetails(data);
+            }});
+
+            Backbone.EventBroker.register({
+                'project:join': 'checkProjectPrivacy'
+            }, this);
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -48,7 +49,7 @@ define(['jquery',
         },
 
         handleFetchedDetails: function (data) {
-            console.log(data);
+            var self = this;
             if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
                 var params = {
                     //repo_name: data.project.repo_name,
@@ -59,44 +60,38 @@ define(['jquery',
                     app_contributors: data.project.contributors
                 };
                 var project = new Project();
-                project.fetchGHContributors(params, {success: master.handleFetchedGHContribs, error: master.errorHandler});
-                project.fetchGHRepoStats({repoPath: 'yabwe/medium-editor'}, {success: master.handleFetchedGHRepoStats, error: master.errorHandler});
+                project.fetchGHContributors(params, {success: function (data) {
+                    self.handleFetchedGHContribs(data);
+                }});
+                project.fetchGHRepoStats({repoPath: 'yabwe/medium-editor'}, {success: function () {
+                    self.handleFetchedGHRepoStats();
+                }});
             } else {
-                master.contributors = data.project.contributors;
+                this.contributors = data.project.contributors;
             }
-            master.setProjectProperties(data);
-            master.render(data);
+            this.setProjectProperties(data);
+            this.render(data);
         },
 
         handleFetchedGHContribs: function (data) {
-            master.projectMinorView.lazyLoadContribs(data);
+            this.projectMinorView.lazyLoadContribs(data);
         },
 
         handleFetchedGHRepoStats: function (data) {
-            master.projectMinorView.lazyLoadRepoStats(data);
-        },
-
-        cacheFeedBeforeSearch: function () {
-        // just putting this here so that it's defined to be called by os.view
+            this.projectMinorView.lazyLoadRepoStats(data);
         },
 
         passUserInfo: function (data) {
             var self = this;
-            $('.header-user-pic').attr('src', data.pic);
             this.userData = data;
             this.user_uuid = data.user_uuid;
             this.userID = data.id;
             this.ghAccessToken = data.password;
             this.gh_username = data.gh_username;
-            this.passUserInfoToParent(this.userData);
         },
 
-        addListeners: function () {
-            var self = this;
-        },
-
-        isContributor: function () {
-            return _.contains(this.contributors, this.userID);
+        passLanguages: function (data) {
+            // not actually using this rn, but might utilize in future, so keep it
         },
 
         checkProjectPrivacy: function () {
@@ -105,8 +100,8 @@ define(['jquery',
             }
         },
 
-        requestToJoin: function () {
-            // send an email I guess and store it in their messages box somewhere
+        isContributor: function () {
+            return _.contains(this.contributors, this.userID);
         },
 
         joinProject: function () {
@@ -117,10 +112,16 @@ define(['jquery',
                 owner_id: self.owner_id,
                 joiner_uuid: self.user_uuid
             };
-            project.join(obj, {success: self.handleJoinProjectSuccess});
+            project.join(obj, {success: function (data) {
+                self.handleJoinProjectSuccess(data);
+            }});
         },
 
-        handleJoinProjectSuccess: function (resp) {
+        requestToJoin: function () {
+            // send an email I guess and store it in their messages box somewhere
+        },
+
+        handleJoinProjectSuccess: function (data) {
             console.log('Successfully joined project');
         },
 

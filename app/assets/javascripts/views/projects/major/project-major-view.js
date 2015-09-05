@@ -26,6 +26,7 @@ define(['jquery',
             this.majorInfoView = new MajorInfoView({
                 el: '#majorInfoView'
             });
+
             this.majorInfoView.render(options.project);
 
             var majorInfoHeight = window.innerHeight - this.$el.find('#majorInfoView').height(); // adding 10 because of the stupid margin-top: -10px you had to do for some reason
