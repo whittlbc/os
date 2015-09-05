@@ -14,9 +14,9 @@ define(['jquery',
      Backbone,
      _,
      IndexView,
-     Project,
      ProjectView,
      OSUtil,
+     Project,
      CreateNewProjectPopup,
      AllLangs,
      User,
@@ -46,6 +46,7 @@ define(['jquery',
             var self = this;
             if (_.isEmpty(cookieGHUsername)) {
                 // user cookie wan't set
+                console.log('user cookie wasnt set');
             } else {
                 var user = new User();
                 user.getByGHUsername({gh_username: cookieGHUsername}, {success: function (user) {
@@ -188,7 +189,6 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
-
             var showHomeView = options && options.view == OSUtil.HOME_PAGE;
             var showProjectView = options && options.view == OSUtil.PROJECT_PAGE;
 
@@ -201,7 +201,7 @@ define(['jquery',
                 this.homeView = new IndexView({
                     el: this.$el.find('#homeViewContainer')
                 });
-                this.listenTo(this.homeView, 'languages:all')
+                this.listenTo(this.homeView, 'languages:all');
                 this.homeView.render({
                     index: options && options.index ? options.index : 1
                 });
