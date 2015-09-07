@@ -6,6 +6,8 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
         HOME_PAGE: 'home',
         PROJECT_PAGE: 'project',
 
+        NO_USER_PIC: '',
+
         REQUEST_PRIVACY: 'request',
         OPEN_PRIVACY: 'open',
 

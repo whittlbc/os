@@ -8,4 +8,8 @@ class Project < ActiveRecord::Base
     self.try(:user).try(:gh_username)
   end
 
+  def get_owner_pic
+    self.try(:user).try(:pic)
+  end
+
 end

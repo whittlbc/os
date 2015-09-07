@@ -38,33 +38,33 @@ define(['jquery',
             view.populateFeed(resp);
 		},
 
-        handleShowNewProject: function (data) {
-            // only immediately show the newly created project if the type of project they created matches the others in the current feed
-            if (data.status == this.projectTypeStatus) {
-                var self = this;
-                this.$el.find('.project-feed-list').empty();
-                this.unshiftNewPostToPostViews(data);
-                var newViewsArray = [];
-                for (var i = 0; i < this.POST_VIEWS.length; i++) {
-                    var projectPostView = this.POST_VIEWS[i];
-                    projectPostView.setData(this.POST_VIEWS[i].data);
-                    this.setProjectListeners(projectPostView);
-                    projectPostView.render();
-                    this.$el.find('.project-feed-list').append(projectPostView.el);
-                    newViewsArray.push(projectPostView);
-                }
-                this.POST_VIEWS = newViewsArray;
-            }
-        },
+        //handleShowNewProject: function (data) {
+        //    // only immediately show the newly created project if the type of project they created matches the others in the current feed
+        //    if (data.status == this.projectTypeStatus) {
+        //        var self = this;
+        //        this.$el.find('.project-feed-list').empty();
+        //        this.unshiftNewPostToPostViews(data);
+        //        var newViewsArray = [];
+        //        for (var i = 0; i < this.POST_VIEWS.length; i++) {
+        //            var projectPostView = this.POST_VIEWS[i];
+        //            projectPostView.setData(this.POST_VIEWS[i].data);
+        //            this.setProjectListeners(projectPostView);
+        //            projectPostView.render();
+        //            this.$el.find('.project-feed-list').append(projectPostView.el);
+        //            newViewsArray.push(projectPostView);
+        //        }
+        //        this.POST_VIEWS = newViewsArray;
+        //    }
+        //},
 
-        unshiftNewPostToPostViews: function(data) {
-            var projectPostView = new ProjectPostView({
-                tagName: 'li'
-            });
-            projectPostView.setData(data);
-            this.setProjectListeners(projectPostView);
-            this.POST_VIEWS.unshift(projectPostView);
-        },
+        //unshiftNewPostToPostViews: function(data) {
+        //    var projectPostView = new ProjectPostView({
+        //        tagName: 'li'
+        //    });
+        //    projectPostView.setData(data);
+        //    this.setProjectListeners(projectPostView);
+        //    this.POST_VIEWS.unshift(projectPostView);
+        //},
 
         populateFeed: function (projects) {
             var self = this;

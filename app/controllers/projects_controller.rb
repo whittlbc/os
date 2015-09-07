@@ -201,8 +201,22 @@ class ProjectsController < ApplicationController
   end
 
   def feed
-    all_projects = special_sort(Project.where(:status => params[:status]))
-    render :json => all_projects
+    projects_of_type = Project.includes(:user).where(:status => params[:status]).map { |project|
+      {
+          :title => project.title,
+          :id => project.id,
+          :uuid => project.uuid,
+          :vote_count => project.vote_count,
+          :contributors => project.contributors,
+          :license => project.license,
+          :privacy => project.privacy,
+          :langs_and_frames => project.langs_and_frames,
+          :owner_gh_username => project.get_owner_gh_username,
+          :owner_pic => project.get_owner_pic
+      }
+    }
+    results = special_sort(projects_of_type)
+    render :json => results
   end
 
   def update

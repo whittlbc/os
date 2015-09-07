@@ -1,10 +1,10 @@
 
 .user-info-bubble {
-  width: 150px;
+  width: 110px;
   z-index: 10;
   position: absolute;
-  top: -68px;
-  right: 125px;
+  top: -44px;
+  right: 145px;
 }
 
 .bubble-container {
@@ -16,14 +16,50 @@
     font-size: 28px;
     color: black;
     bottom: -16px;
-    left: 67px;
+    left: 47.5px;
   }
 }
 
 .bubble-content-container {
   width: 100%;
-  height: 125px;
+  height: 100px;
   background-color: black;
   border-radius: 10px;
 }
 
+.user-bubble-pic-container {
+  padding-top: 1px;
+}
+
+.user-bubble-pic {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  width: 45px;
+  height: 45px;
+  border-radius: 22.5px;
+}
+
+.user-bubble-gh-username-container {
+
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 10px;
+
+  a {
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  p {
+    font-style: italic;
+    color: gray;
+    font-size: 12px;
+    text-align: center;
+  }
+
+}

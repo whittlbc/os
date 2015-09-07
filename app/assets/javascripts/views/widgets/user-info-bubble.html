@@ -1,4 +1,16 @@
 <div class="bubble-container">
-    <div class="bubble-content-container"></div>
+    <div class="bubble-content-container">
+        <div class="user-bubble-pic-container">
+            <img class="user-bubble-pic" src="{{userPic}}"/>
+        </div>
+        <div class="user-bubble-gh-username-container">
+            {{#showLink}}
+            <a href="{{userProfile}}" target="_blank">{{ghUsername}}</a>
+            {{/showLink}}
+            {{^showLink}}
+            <p>No Github Profile</p>
+            {{/showLink}}
+        </div>
+    </div>
     <i class="fa fa-caret-down"></i>
 </div>

@@ -60,6 +60,8 @@ define(['jquery',
             this.projectType = OSUtil.GRAMMATICAL_PROJECT_TYPES[self.status];
             this.searchResult = data.search_result;
             this.langs_and_frames = ['HTML', 'Ruby'];
+            this.ownerPic = data.owner_pic;
+            this.ownerGHUsername = data.owner_gh_username
         },
 
         hoverOn: function () {
@@ -72,13 +74,37 @@ define(['jquery',
             this.$privacyContainer.css('opacity', '0');
         },
 
-        addHoverListener: function () {
+        addHoverListeners: function () {
             var self = this;
             this.$el.hover(function() {
                 self.hoverOn();
             }, function () {
                 self.hoverOff();
             });
+
+            //this.$el.find('.project-post-user-pic').hover(function () {
+            //    if (!self.bubbleShown) {
+            //        self.$el.find('.user-info-bubble').show();
+            //        self.bubbleShown = true;
+            //    }
+            //}, function () {
+            //    if (self.bubbleShown) {
+            //        self.$el.find('.user-info-bubble').hide();
+            //        self.bubbleShown = false;
+            //    }
+            //});
+            //
+            //this.$el.find('.user-info-bubble').hover(function () {
+            //    if (!self.bubbleShown) {
+            //        self.$el.find('.user-info-bubble').show();
+            //        self.bubbleShown = true;
+            //    }
+            //}, function () {
+            //    if (self.bubbleShown) {
+            //        self.$el.find('.user-info-bubble').hide();
+            //        self.bubbleShown = false;
+            //    }
+            //});
         },
 
         addTags: function (namesAndColorsArray) {
@@ -95,6 +121,7 @@ define(['jquery',
 
         render: function () {
 			var self = this;
+
             this.$el.html(ProjectPostViewTpl({
                 title: self.title,
                 vote_count: self.vote_count,
@@ -105,17 +132,21 @@ define(['jquery',
                 open: self.privacy == OSUtil.OPEN_PRIVACY,
                 upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
                 searchResult: self.searchResult,
-                projectType: self.projectType
+                projectType: self.projectType,
+                userPic: this.ownerPic
             }));
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
             this.$privacyContainer = this.$el.find('.project-post-privacy');
-            this.addHoverListener();
+            this.addHoverListeners();
 
             this.userInfoBubble = new UserInfoBubble({
                 el: this.$el.find('.user-info-bubble')
             });
-            this.userInfoBubble.render();
+            this.userInfoBubble.render({
+                userPic: this.ownerPic,
+                ghUsername: this.ownerGHUsername
+            });
 
         }
 	});
