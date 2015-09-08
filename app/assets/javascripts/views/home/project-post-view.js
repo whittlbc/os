@@ -13,7 +13,7 @@ define(['jquery',
      OSUtil,
      AllLangs,
      UserInfoBubble,
-     ProjectPostViewTpl) {
+     ProjectPostViewTpl) {8
 	'use strict';
 
 	var ProjectPostView = Backbone.View.extend({
@@ -23,7 +23,7 @@ define(['jquery',
 
 		events: {
             'click .arrow': 'handleVote',
-            'click .project-post-view': 'openProjectDetails'
+            'click .project-post-title-text': 'openProjectDetails'
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -82,29 +82,29 @@ define(['jquery',
                 self.hoverOff();
             });
 
-            //this.$el.find('.project-post-user-pic').hover(function () {
-            //    if (!self.bubbleShown) {
-            //        self.$el.find('.user-info-bubble').show();
-            //        self.bubbleShown = true;
-            //    }
-            //}, function () {
-            //    if (self.bubbleShown) {
-            //        self.$el.find('.user-info-bubble').hide();
-            //        self.bubbleShown = false;
-            //    }
-            //});
-            //
-            //this.$el.find('.user-info-bubble').hover(function () {
-            //    if (!self.bubbleShown) {
-            //        self.$el.find('.user-info-bubble').show();
-            //        self.bubbleShown = true;
-            //    }
-            //}, function () {
-            //    if (self.bubbleShown) {
-            //        self.$el.find('.user-info-bubble').hide();
-            //        self.bubbleShown = false;
-            //    }
-            //});
+            this.$el.find('.project-post-user-pic').hover(function () {
+                if (!self.bubbleShown) {
+                    self.$el.find('.user-info-bubble').show();
+                    self.bubbleShown = true;
+                }
+            }, function () {
+                if (self.bubbleShown) {
+                    self.$el.find('.user-info-bubble').hide();
+                    self.bubbleShown = false;
+                }
+            });
+
+            this.$el.find('.user-info-bubble').hover(function () {
+                if (!self.bubbleShown) {
+                    self.$el.find('.user-info-bubble').show();
+                    self.bubbleShown = true;
+                }
+            }, function () {
+                if (self.bubbleShown) {
+                    self.$el.find('.user-info-bubble').hide();
+                    self.bubbleShown = false;
+                }
+            });
         },
 
         addTags: function (namesAndColorsArray) {
@@ -133,7 +133,7 @@ define(['jquery',
                 upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
                 searchResult: self.searchResult,
                 projectType: self.projectType,
-                userPic: this.ownerPic
+                userPic: self.ownerPic
             }));
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
@@ -144,8 +144,8 @@ define(['jquery',
                 el: this.$el.find('.user-info-bubble')
             });
             this.userInfoBubble.render({
-                userPic: this.ownerPic,
-                ghUsername: this.ownerGHUsername
+                userPic: self.ownerPic,
+                ghUsername: self.ownerGHUsername
             });
 
         }

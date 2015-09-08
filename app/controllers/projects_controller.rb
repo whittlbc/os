@@ -28,8 +28,8 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-        :getting_repo_data => false,
+        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        # :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
         :user_id => project.user_id,
@@ -65,7 +65,7 @@ class ProjectsController < ApplicationController
       # 'login' in this case is the gh_username of the gh contributor
       if !contrib_gh_usernames.include?(contrib['login'])
         gh_only_contributors.push({
-            'name' => contrib['login'],
+            'gh_username' => contrib['login'],
             'pic' => contrib['avatar_url'],
             'admin' => false,
             'owner' => false
@@ -359,8 +359,8 @@ class ProjectsController < ApplicationController
         title: proj.title,
         description: proj.description,
         contributors: proj.contributors,
-        owner: proj.user,
-        owner_gh_username: proj.user.gh_username,
+        :owner_gh_username => proj.get_owner_gh_username,
+        :owner_pic => proj.get_owner_pic,
         created_at: proj.created_at,
         repo_name: proj.repo_name,
         vote_count: proj.vote_count,

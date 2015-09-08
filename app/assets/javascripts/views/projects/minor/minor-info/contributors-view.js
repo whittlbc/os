@@ -25,7 +25,7 @@ define(['jquery',
             this.CONTRIBUTORS = [];
             this.$el.find('#contributorsListView').empty();
             for (var i = 0; i < this.shownContributors.length; i++) {
-                this.addContrib(this.shownContributors[i]);
+                this.addContrib(this.shownContributors[i], i);
             }
             if (this.allContributors.length > this.maxShownContribs) {
                 var $seeAllContribsBtn = $('<li>', {
@@ -36,12 +36,13 @@ define(['jquery',
             }
         },
 
-        addContrib: function(data) {
+        addContrib: function(data, i) {
             var contribItemView = new ContributorsItemView({
                 tagName: 'li',
-                name: data.name,
+                ghUsername: data.gh_username,
                 admin: data.admin,
-                pic: data.pic
+                pic: data.pic,
+                index: i
             });
             contribItemView.render();
             this.$el.find('#contributorsListView').append(contribItemView.el);

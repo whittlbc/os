@@ -1,10 +1,25 @@
 
-.user-info-bubble {
-  width: 110px;
-  z-index: 10;
-  position: absolute;
-  top: -44px;
-  right: 145px;
+
+
+.contributors-item-view-container {
+
+  .contributor-info-bubble {
+    width: 110px;
+    z-index: 10;
+    position: absolute;
+  }
+
+}
+
+.project-extra-details-container {
+
+  .user-info-bubble {
+    width: 110px;
+    z-index: 10;
+    position: absolute;
+    top: -44px;
+    right: 145px;
+  }
 }
 
 .bubble-container {
@@ -46,11 +61,11 @@
   width: 100%;
   padding-left: 5px;
   padding-right: 5px;
-  padding-top: 10px;
+  padding-top: 9px;
+  text-align: center;
 
   a {
     font-size: 12px;
-    text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -58,8 +73,10 @@
   p {
     font-style: italic;
     color: gray;
-    font-size: 12px;
+    font-size: 11px;
+    padding-top: 2px;
     text-align: center;
+    cursor: default;
   }
 
 }
