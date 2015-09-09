@@ -12,10 +12,6 @@ define(['jquery',
 	var NonLangFiltersView = Backbone.View.extend({
 
 		initialize: function () {
-            Backbone.EventBroker.register({
-                'showFilters': 'showFilters'
-            }, this);
-            this.openFilterDuration = 625;
 		},
 
 		events: {
@@ -85,22 +81,6 @@ define(['jquery',
                 self.removeSelectedClass($privacyFilterChildren[i]);
                 self.removeHoverClass($privacyFilterChildren[i], 'privacyFilterBtnSelected');
             }
-        },
-
-        showFilters: function () {
-            var self = this;
-            this.$el.find('#nonLangFiltersMaster').animate({ height: 400 }, {
-                duration: this.openFilterDuration,
-                queue: false
-            });
-            this.$el.find('#clearNonLangFiltersBtnContainer').show();
-            this.$el.find('#clearNonLangFiltersBtn').animate({ opacity: 1 }, {
-                duration: 300,
-                queue: false
-            });
-            setTimeout(function(){
-                self.$el.find('#nonLangFiltersMaster').css('overflow', 'scroll');
-            }, self.openFilterDuration);
         },
 
         addClassListeners: function () {

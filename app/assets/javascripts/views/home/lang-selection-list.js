@@ -21,22 +21,7 @@ define(['jquery',
         },
 
 		events: {
-            'click #addLangSelection': 'handleAddBtnClick',
             'click #clearLangFiltersBtn': 'clearLangFilters'
-        },
-
-        handleAddBtnClick: function () {
-            var self = this;
-            this.hideFiltersBtn();
-            Backbone.EventBroker.trigger('showFilters');
-        },
-
-        hideFiltersBtn: function () {
-            var self = this;
-            this.$el.find('#addLangSelection').css('opacity', 100);
-            setTimeout(function () {
-                self.$el.find('#addLangSelection').hide();
-            },100);
         },
 
         handleDeleteLangFilter: function(view) {
@@ -122,23 +107,6 @@ define(['jquery',
 
         setSelfSize: function (width) {
             this.$el.find('.lang-selection-list')[0].style.width = this.langFrameWidth + 'px';
-        },
-
-        showFiltersBtn: function () {
-            var self = this;
-            var $filtersBtn = this.$el.find('#addLangSelection');
-            $filtersBtn.css('opacity', 0);
-            $filtersBtn.show();
-            $filtersBtn.animate({ opacity: 1 }, 200);
-        },
-
-        showClearAllBtn: function () {
-            var self = this;
-            this.$el.find('#clearLangFiltersBtnContainer').show();
-            this.$el.find('#clearLangFiltersBtn').animate({ opacity: 1 }, {
-                duration: 300,
-                queue: false
-            });
         },
 
 		render: function (width) {

@@ -62,7 +62,7 @@ define(['jquery',
         },
 
         getRightPos: function () {
-            return this.firstColRightPos - (this.index % 7) * 39;
+            return this.firstColRightPos - (this.index % 7) * 43;
         },
 
 		render: function () {

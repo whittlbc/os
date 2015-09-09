@@ -17,6 +17,11 @@ define(['jquery',
 
 		events: {},
 
+        setData: function () {
+            var self = this;
+
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(GeneralFeedItemViewTpl());

@@ -225,6 +225,9 @@ define(['jquery',
                 if (this.userData) {
                     this.createNewProjectPopup.userData = this.userData;
                 }
+                if (this.allLangs) {
+                    this.createNewProjectPopup.passLangData(this.allLangs);
+                }
                 this.createNewProjectPopup.render();
             }
 		}

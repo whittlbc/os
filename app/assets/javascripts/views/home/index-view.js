@@ -29,7 +29,6 @@ define(['jquery',
 
 		initialize: function () {
             Backbone.EventBroker.register({
-                'showFilters': 'showLangFrameSelection',
                 'deleteLangFilter': 'deleteLangFilter',
                 'clearLangFilters': 'clearLangFilters',
                 'addLicenseFilter': 'addLicenseFilter',
@@ -48,7 +47,6 @@ define(['jquery',
             this.selectizeOpenDuration = 290;
             this.zipUpDuration = 140;
             this.zipDownDuration = 250;
-            this.zipDownCount = 0;
             this.ulSlideDownDuration = 500;
             this.ulSlideUpDuration = 550;
             this.tabSliderDuration = 255;
@@ -69,11 +67,6 @@ define(['jquery',
             this.getFilters();
         },
 
-        ebTesting: function () {
-            var self = this;
-            console.log('heard event');
-        },
-
         events: {
             'click [data-trigger=popup]': 'onShowPopup',
             'click #submit-filters': 'getFilters',
@@ -81,14 +74,6 @@ define(['jquery',
             'click #launchProject': 'clickedLaunchProject',
             'click #toggleFiltersBtn': 'toggleFilters',
             'mousedown .project-type > a': 'handleSelectProjectTypeTab'
-        },
-
-        setActiveTabIndex: function (index) {
-            var self = this;
-            this.activeTabIndex = index;
-            var $tabSlider = this.$el.find('.tab-slider');
-            $tabSlider.css('left', (index-1)*$tabSlider.width());
-            $tabSlider.animate({opacity: 1}, 100);
         },
 
         handleSelectProjectTypeTab: function (e) {
@@ -101,53 +86,6 @@ define(['jquery',
                 this.activeTabIndex = selectedIndex;
                 window.location = $(e.currentTarget).attr('href');
             }
-            //    var $tabSlider = this.$el.find('.tab-slider');
-            //    var tabWidth = $tabSlider.width();
-            //    var strLeft = $tabSlider.css('left');
-            //    var currentLeft = Number(strLeft.slice(0, strLeft.length-2));
-            //    if (!isNaN(currentLeft)) {
-            //        // slide LEFT
-            //        if (selectedIndex < this.activeTabIndex) {
-            //            $tabSlider.velocity({"left": currentLeft - ((this.activeTabIndex - selectedIndex) * tabWidth)}, {
-            //                duration: self.tabSliderDuration,
-            //                queue: false,
-            //                easing: 'easeOutQuad'
-            //            });
-            //        }
-            //        // slide RIGHT
-            //        else {
-            //            $tabSlider.velocity({"left": currentLeft + ((selectedIndex - this.activeTabIndex) * tabWidth)}, {
-            //                duration: self.tabSliderDuration,
-            //                queue: false,
-            //                easing: 'easeOutQuad'
-            //            });
-            //        }
-            //        this.activeTabIndex = selectedIndex;
-            //    }
-            //}
-        },
-
-        showLangFrameSelection: function () {
-            var self = this;
-            this.langsFramesDropdownShown = true;
-            this.selectize.focus(true);
-            this.$el.find('.selectize-control.multi').animate({opacity: 1}, {
-                duration: this.showLangFrameSelectionDuration,
-                queue: false
-            });
-            this.$el.find('.selectize-input').animate({opacity: 1}, {
-                duration: this.showLangFrameSelectionDuration,
-                queue: false
-            });
-            this.$el.find('.selectize-control.multi').animate({height: 35}, {
-                duration: this.showLangFrameSelectionDuration,
-                queue: false
-            });
-            this.$el.find('.selectize-input').animate({height: 35}, {
-                duration: this.showLangFrameSelectionDuration,
-                queue: false
-            });
-            this.langSelectionList.showClearAllBtn();
         },
 
         clickedLaunchProject: function () {
@@ -204,12 +142,14 @@ define(['jquery',
                 original: false,
                 selectOnTab: false,
                 onFocus: function () {
-                    if (self.langsFramesDropdownShown) {
+                    if (!self.langsFramesDropdownShown) {
                         self.zipDownDropdown();
                     }
                 },
                 onBlur: function() {
-                    self.zipUpDropdown();
+                    if (self.langsFramesDropdownShown) {
+                        self.zipUpDropdown();
+                    }
                 },
                 render: {
                     option: function (data, escape) {
@@ -246,25 +186,21 @@ define(['jquery',
                 self.langsFramesValue = selectize.getValue();
                 self.getFilters();
             });
-
-            this.langSelectionList.showFiltersBtn();
         },
 
         zipUpDropdown: function () {
             var self = this;
             this.selectize.zipUp(this.zipUpDuration);
             this.langSelectionList.$el.find('.lang-selection-list').velocity({ top: 130 }, this.ulSlideUpDuration, [230, 20]);
+            this.langsFramesDropdownShown = false;
         },
 
         zipDownDropdown: function () {
             var self = this;
-            this.zipDownCount++;
             var duration = this.zipDownDuration;
-            if (this.zipDownCount == 1){
-                duration += 350;
-            }
             this.selectize.zipDown(duration);
             this.langSelectionList.$el.find('.lang-selection-list').velocity({ top: 270 }, this.ulSlideDownDuration, [230, 20]);
+            this.langsFramesDropdownShown = true;
         },
 
         getFilters: function () {

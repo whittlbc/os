@@ -271,7 +271,8 @@ $major-info-project-type: #CECECE;
   width: 93%;
   margin-top: 14px;
   margin-left: 3.5%;
-  background-color: #F1F1F9;
+  // need to set this dynamically instead based on if there are comments?
+  //background-color: #F1F1F9;
   min-height: 300px;
 }
 
@@ -675,4 +676,11 @@ $major-info-project-type: #CECECE;
     margin: 0 !important;
     margin-left: 45% !important;
   }
+}
+
+.general-feed-item-container {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #DDD;
+  height: 90px;
 }

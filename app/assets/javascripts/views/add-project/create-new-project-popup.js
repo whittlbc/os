@@ -567,7 +567,9 @@ define(['jquery',
         passLangData: function (data) {
             var self = this;
             this.dropdownItems = data;
-            this.panel3.passLangDropdownItems(data);
+            if (this.panel3) {
+                this.panel3.passLangDropdownItems(data);
+            }
         },
 
         passTags: function (data) {
@@ -645,6 +647,9 @@ define(['jquery',
             this.panel3 = new AddProjectDetailsView({
                 el: '#newProjectPanel3'
             });
+            if (this.dropdownItems) {
+                this.panel3.passLangDropdownItems(this.dropdownItems);
+            }
             this.panel3.render();
 
             this.setSizeForPopup();
