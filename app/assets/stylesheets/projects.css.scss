@@ -697,11 +697,12 @@ $major-info-project-type: #CECECE;
   min-width: 30px;
   float: left;
 
-  img {
+  .comment-poster-pic {
     width: 30px;
     height: 30px;
     border-radius: 15px;
     margin-top: 15px;
+    cursor: pointer;
   }
 
 }
@@ -742,6 +743,42 @@ $major-info-project-type: #CECECE;
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.comment-vote-count-container {
+  margin-left: -13px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.comment-vote-count-container:hover {
+
+ .fa-angle-up {
+   color: #00A6C9;
+ }
+
+}
+
+.comment-vote-arrow {
+  text-align: center;
+  position: relative;
+  top: 5px;
+
+  .fa-angle-up {
+    color: #DDD;
+    font-size: 20px;
+  }
+
+}
+
+.comment-vote-count {
+  text-align: center;
+  font-size: 15px;
+}
+
+.poster-pic-container {
+  position: relative;
+}
+
 //
 //.comment-vote-container {
 //  float: left;
