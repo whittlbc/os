@@ -271,8 +271,7 @@ $major-info-project-type: #CECECE;
   width: 93%;
   margin-top: 14px;
   margin-left: 3.5%;
-  // need to set this dynamically instead based on if there are comments?
-  //background-color: #F1F1F9;
+  background-color: #F1F1F9;
   min-height: 300px;
 }
 
@@ -289,6 +288,7 @@ $major-info-project-type: #CECECE;
 .communication-feed-list-view {
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 0;
 }
 
 .no-comments {
@@ -668,7 +668,7 @@ $major-info-project-type: #CECECE;
     background-color: #00A6C9;
     will-change: left, right;
   }
-}
+}2
 
 #contribsLoading,
 #repoStatsLoading {
@@ -682,5 +682,35 @@ $major-info-project-type: #CECECE;
   width: 100%;
   background-color: white;
   border-bottom: 1px solid #DDD;
-  height: 90px;
+  min-height: 100px;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.poster-pic-container {
+  display: inline-block;
+  height: 100%;
+  float: left;
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    margin-top: 15px;
+  }
+
+}
+
+.comment-details-container {
+  display: inline-block;
+  height: 100%;
+  margin-top: 15px;
+  margin-left: 12px;
+  float: left;
+}
+
+.poster-name {
+  width: 100%;
+  font-weight: 500;
 }
