@@ -17,7 +17,14 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+            'click .comment-vote-count-container': 'handleCommentVote'
+        },
+
+        handleCommentVote: function () {
+            var self = this;
+            this.$el.find('.comment-vote-count').html(Number(this.$el.find('.comment-vote-count').html())+1);
+        },
 
         setData: function () {
             var self = this;
