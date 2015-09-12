@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150901022626) do
+ActiveRecord::Schema.define(version: 20150912200304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20150901022626) do
     t.integer "project_id"
     t.integer "user_id"
     t.integer "vote_count"
+    t.string  "feed"
+    t.integer "parent_id"
   end
 
   create_table "contributors", force: true do |t|
