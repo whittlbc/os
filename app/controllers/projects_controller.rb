@@ -383,13 +383,27 @@ class ProjectsController < ApplicationController
           :text => params[:text],
           :project_id => params[:project_id],
           :user_id => user.id,
-          :vote_count => 0
+          :vote_count => 0,
+          :feed => params[:feed],
+          :parent_id => params[:parent_id]
       }
       comment = Comment.new(comment_info)
       comment.save
-    end
 
-    render :json => {:message => 'Successfully created comment'}
+      all_comments_of_feed_type = comments_for_feed(params[:feed])
+      render :json => comment
+    else
+      render :json => {:status => 500}
+    end
+  end
+
+  def fetch_comments
+    comments = comments_for_feed(0)
+    render :json => comments
+  end
+
+  def comments_for_feed(feed_status)
+
   end
 
   def get_up_for_grabs

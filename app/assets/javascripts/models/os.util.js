@@ -140,6 +140,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'postNewComment': {
                 verb: 'POST',
                 action: 'create'
+            },
+            'fetchComments': {
+                verb: 'GET',
+                action: 'read'
             }
         }
 

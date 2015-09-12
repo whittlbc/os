@@ -6,6 +6,7 @@ define(['jquery',
     'views/projects/major/communication/team/team-feed-container-view',
     'views/projects/major/communication/admin/admin-feed-container-view',
     'stache!views/projects/major/communication/communication-panels-view',
+    'backbone-eventbroker'
 ], function ($,
      Backbone,
      _,
@@ -21,7 +22,25 @@ define(['jquery',
         initialize: function () {
         },
 
-        events: {},
+        events: {
+            'click .add-comment-btn': 'handleAddComment'
+        },
+
+        handleAddComment: function () {
+            var self = this;
+            var text = this.$el.find('.comment-textarea').val();
+            var data = {
+                text: text,
+                feed: this.activeFeedIndex,
+                parent_id: null
+            };
+            Backbone.EventBroker.trigger('comment:add', data);
+        },
+
+        showNewComment: function (data) {
+            var self = this;
+            console.log('SHOW NEW COMMENT: ', data);
+        },
 
         render: function (options) {
             var self = this;
@@ -58,6 +77,8 @@ define(['jquery',
 
             if (options && options.hasOwnProperty('activePanel')) {
 
+                this.activeFeedIndex = options.activePanel;
+
                 switch (options.activePanel) {
                     case 0:
                         this.generalFeedContainerView.render();
@@ -75,6 +96,7 @@ define(['jquery',
                         this.generalFeedContainerView.render();
                 }
             } else {
+                this.activeFeedIndex = 0;
                 this.generalFeedContainerView.render();
             }
         }

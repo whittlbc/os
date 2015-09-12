@@ -29,7 +29,8 @@ define(['jquery',
             }});
 
             Backbone.EventBroker.register({
-                'project:join': 'checkProjectPrivacy'
+                'project:join': 'checkProjectPrivacy',
+                'comment:add': 'handleAddComment'
             }, this);
         },
 
@@ -38,6 +39,33 @@ define(['jquery',
         },
 
         events: {},
+
+        handleAddComment: function (data) {
+            var self = this;
+
+            var obj = {
+                text: data.text,
+                //poster_uuid: this.user_uuid,
+                poster_uuid: '35e982e1-c95d-43ac-ae60-a532596c5495',
+                project_id: this.projectID,
+                feed: data.feed,
+                parent_id: data.parent_id
+            };
+
+            if (!_.isEmpty(obj.text)) {
+                var project = new Project();
+                project.postNewComment(obj, {success: function (comment) {
+                    self.projectMajorView.showNewComment(comment);
+                }, error: function () {
+                    self.errorPostingComment();
+                }});
+            }
+        },
+
+        errorPostingComment: function () {
+            var self = this;
+            console.log('Error Posting Comment');
+        },
 
         setProjectProperties: function (data) {
             var self = this;
@@ -69,8 +97,22 @@ define(['jquery',
             } else {
                 this.contributors = data.project.contributors;
             }
+            this.fetchComments();
             this.setProjectProperties(data);
             this.render(data);
+        },
+
+        fetchComments: function () {
+            var self = this;
+            var project = new Project();
+            project.fetchComments({project_id: self.projectID}, {success: function (comments) {
+                self.handleFetchedComments(comments);
+            }});
+        },
+
+        handleFetchedComments: function (comments) {
+            var self = this;
+            console.log(comments);
         },
 
         handleFetchedGHContribs: function (data) {
@@ -123,10 +165,6 @@ define(['jquery',
 
         handleJoinProjectSuccess: function (data) {
             console.log('Successfully joined project');
-        },
-
-        handleAddComment: function (text) {
-            var self = this;
         },
 
         render: function (data) {

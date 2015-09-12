@@ -111,17 +111,6 @@ define(['jquery',
             return this.sync('fetchDetails', this, requestInfo);
         },
 
-        addComment: function(info, options) {
-            var requestInfo = options || {};
-
-            _.extend(requestInfo, {
-                url: this.extension + '/addComment',
-                data: info
-            });
-
-            return this.sync('addComment', this, requestInfo);
-        },
-
         join: function(info, options) {
             var requestInfo = options || {};
 
@@ -187,6 +176,17 @@ define(['jquery',
             });
 
             return this.sync('postNewComment', this, requestInfo);
+        },
+
+        fetchComments: function (info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/fetchComments',
+                data: info
+            });
+
+            return this.sync('fetchComments', this, requestInfo);
         }
 
     });

@@ -28,6 +28,11 @@ define(['jquery',
             });
         },
 
+        showNewComment: function (comment) {
+            var self = this;
+            self.communicationPanelsView.showNewComment(comment);
+        },
+
 		render: function () {
 			var self = this;
 

@@ -19,6 +19,11 @@ define(['jquery',
 
 		events: {},
 
+        showNewComment: function (comment) {
+            var self = this;
+            self.communicationView.showNewComment(comment);
+        },
+
 		render: function (options) {
 			var self = this;
             this.$el.html(ProjectMajorViewTpl());
