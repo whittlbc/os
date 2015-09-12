@@ -215,7 +215,7 @@ class ProjectsController < ApplicationController
           :owner_pic => project.get_owner_pic
       }
     }
-    results = special_sort(projects_of_type)
+    results = special_sort(projects_of_type).slice(0, 30)
     render :json => results
   end
 
@@ -375,20 +375,21 @@ class ProjectsController < ApplicationController
     render :json => projects
   end
 
-  def add_comment
-    user = User.find_by(uuid: params[:user_uuid])
-    comment_info = {
-        :uuid => UUIDTools::UUID.random_create.to_s,
-        :text => params[:text],
-        :project_id => params[:project_id],
-        :user_id => user.id,
-        :vote_count => 0
-    }
-    comment = Comment.new(comment_info)
-    comment.save
+  def post_new_comment
+    user = User.find_by(uuid: params[:poster_uuid])
+    if !user.nil?
+      comment_info = {
+          :uuid => UUIDTools::UUID.random_create.to_s,
+          :text => params[:text],
+          :project_id => params[:project_id],
+          :user_id => user.id,
+          :vote_count => 0
+      }
+      comment = Comment.new(comment_info)
+      comment.save
+    end
 
     render :json => {:message => 'Successfully created comment'}
-
   end
 
   def get_up_for_grabs

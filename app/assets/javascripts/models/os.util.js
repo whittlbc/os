@@ -136,6 +136,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'fetchGHRepoStats': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'postNewComment': {
+                verb: 'POST',
+                action: 'create'
             }
         }
 

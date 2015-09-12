@@ -38,13 +38,12 @@ define(['jquery',
             this.COMMENTS.push(generalFeedItemView);
         },
 
-
         render: function () {
 			var self = this;
             this.$el.html(GeneralFeedViewTpl({
-                showNoComments: false
+                showNoComments: true
             }));
-            this.populateComments();
+            //this.populateComments();
         }
 	});
 

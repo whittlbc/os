@@ -178,6 +178,17 @@ define(['jquery',
             return this.sync('fetchGHRepoStats', this, requestInfo);
         },
 
+        postNewComment: function (info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/postNewComment',
+                data: info
+            });
+
+            return this.sync('postNewComment', this, requestInfo);
+        }
+
     });
 
     return Project;
