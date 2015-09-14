@@ -24,8 +24,9 @@ define(['jquery',
 
         handleCommentVote: function () {
             var self = this;
-            var newVoteCount = Number(this.$el.find('#comment-vote-count-' + this.commentNumber).html())+1;
-            this.$el.find('#comment-vote-count-' + this.commentNumber).html(newVoteCount);
+            var $voteCountEl = this.$el.find('#comment-' + this.commentNumber + ' .comment-vote-count');
+            var newVoteCount = Number($voteCountEl.html())+1;
+            $voteCountEl.html(newVoteCount);
             var project = new Project();
             project.commentVote({id: this.id, new_vote_count: newVoteCount});
         },
@@ -41,11 +42,12 @@ define(['jquery',
             this.commentNumber = data.commentNumber;
         },
 
-        addHoverListeners: function () {
+        addListeners: function () {
             var self = this;
-            var $infoBubble = this.$el.find('#poster-info-bubble-' + this.commentNumber);
+            var $infoBubble = this.$el.find('#comment-' + this.commentNumber + ' .poster-info-bubble');
 
-            this.$el.find('#comment-pic-' + this.commentNumber).hover(function () {
+            // Hover listener for user info bubble
+            this.$el.find('#comment-' + this.commentNumber + ' .comment-poster-pic').hover(function () {
                 if (!self.bubbleShown) {
                     $infoBubble.show();
                     self.bubbleShown = true;
@@ -57,7 +59,7 @@ define(['jquery',
                 }
             });
 
-            this.$el.find('#poster-info-bubble-' + this.commentNumber).hover(function () {
+            $infoBubble.hover(function () {
                 if (!self.bubbleShown) {
                     $infoBubble.show();
                     self.bubbleShown = true;
@@ -67,10 +69,20 @@ define(['jquery',
                     $infoBubble.hide();
                     self.bubbleShown = false;
                 }
+            });
+
+            // Comment Voting
+            this.$el.find('#comment-' + this.commentNumber + ' .comment-vote-count-container').click(function () {
+                self.handleCommentVote();
+            });
+
+            // Reply Btn Click
+            this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn > span').click(function () {
+                self.render({showReplyInput: true});
             });
         },
 
-		render: function () {
+		render: function (options) {
 			var self = this;
             this.$el.html(GeneralFeedItemViewTpl({
                 userPic: this.userPic,
@@ -78,16 +90,14 @@ define(['jquery',
                 voteCount: this.voteCount,
                 postTime: this.postTime,
                 text: this.text,
-                commentNumber: this.commentNumber
+                commentNumber: this.commentNumber,
+                showReplyInput: options && options.showReplyInput
             }));
-            this.addHoverListeners();
 
-            this.$el.find('#comment-vote-btn-' + this.commentNumber).click(function () {
-                self.handleCommentVote();
-            });
+            this.addListeners();
 
             this.userInfoBubble = new UserInfoBubble({
-                el: this.$el.find('#poster-info-bubble-' + this.commentNumber)
+                el: this.$el.find('#comment-' + this.commentNumber + ' .poster-info-bubble')
             });
 
             this.userInfoBubble.render({

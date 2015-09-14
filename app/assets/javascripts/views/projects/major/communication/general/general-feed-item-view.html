@@ -1,11 +1,11 @@
-<div class="general-feed-item-container">
+<div class="general-feed-item-container" id="comment-{{commentNumber}}">
     <div class="poster-pic-container">
-        <img class="comment-poster-pic" id="comment-pic-{{commentNumber}}" src="{{userPic}}">
-        <div class="comment-vote-count-container" id="comment-vote-btn-{{commentNumber}}">
+        <img class="comment-poster-pic" src="{{userPic}}">
+        <div class="comment-vote-count-container">
             <div class="comment-vote-arrow"><i class="fa fa-angle-up"></i></div>
-            <div class="comment-vote-count" id="comment-vote-count-{{commentNumber}}">{{voteCount}}</div>
+            <div class="comment-vote-count">{{voteCount}}</div>
         </div>
-        <div class="poster-info-bubble" id="poster-info-bubble-{{commentNumber}}" hidden></div>
+        <div class="poster-info-bubble" hidden></div>
     </div>{{
     }}<div class="comment-details-container">
         <div class="poster-name-post-time-container">
@@ -13,5 +13,16 @@
             <div class="comment-post-time-ago">{{postTime}}</div>
         </div>
         <div class="comment-text">{{text}}</div>
+        {{^showReplyInput}}
+        <div class="comment-reply-btn"><span>Reply</span></div>
+        {{/showReplyInput}}
     </div>
 </div>
+{{#showReplyInput}}
+<div class="comment-reply-container">
+    <textarea class="comment-textarea" placeholder="Add Comment"></textarea>{{
+    }}<div class="add-comment-btn-container">
+    <div class="add-comment-btn">Post</div>
+</div>
+</div>
+{{/showReplyInput}}
