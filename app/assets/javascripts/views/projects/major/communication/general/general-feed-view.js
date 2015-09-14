@@ -19,8 +19,17 @@ define(['jquery',
 
 		events: {},
 
+        hideAllReplyAreas: function (commentView) {
+            var self = this;
+            for (var i = 0; i < this.ALL_COMMENTS.length; i++) {
+                this.ALL_COMMENTS[i].hideReplyArea();
+            }
+            commentView.showReplyArea();
+        },
+
         populateComments: function (comments) {
             var self = this;
+            this.ALL_COMMENTS = [];
             var $mainCommentList = this.$el.find('#generalFeedListView');
             $mainCommentList.empty();
             this.commentNumber = 0;
@@ -35,10 +44,13 @@ define(['jquery',
             var generalFeedItemView = new GeneralFeedItemView({
                 tagName: 'li'
             });
-            console.log(this.commentNumber);
             data.comment.commentNumber = this.commentNumber;
             generalFeedItemView.setData(data.comment);
+            this.listenTo(generalFeedItemView, 'all-reply-areas:hide', function (commentView) {
+                self.hideAllReplyAreas(commentView);
+            });
             generalFeedItemView.render();
+            this.ALL_COMMENTS.push(generalFeedItemView);
             $list.append(generalFeedItemView.el);
             if (data.children && data.children.length > 0) {
                 this.addChildComments(generalFeedItemView, data.children);

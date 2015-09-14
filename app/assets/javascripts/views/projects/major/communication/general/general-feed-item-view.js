@@ -78,13 +78,18 @@ define(['jquery',
 
             // Reply Btn Click
             this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn > span').click(function () {
-                self.showReplyArea();
+                self.trigger('all-reply-areas:hide', self);
             });
         },
 
         showReplyArea: function () {
             this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn').hide();
             this.$el.find('#reply-comment-' + this.commentNumber).show();
+        },
+
+        hideReplyArea: function () {
+            this.$el.find('#reply-comment-' + this.commentNumber).hide();
+            this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn').show();
         },
 
 		render: function () {
