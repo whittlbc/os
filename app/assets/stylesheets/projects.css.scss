@@ -849,3 +849,50 @@ $major-info-project-type: #CECECE;
     cursor: pointer;
   }
 }
+
+.comment-reply-container {
+  margin-top: 21px;
+  margin-bottom: 5px;
+  width: 100%;
+
+  .reply-textarea {
+    display: inline-block;
+    width: 85%;
+    resize: none;
+    float: left;
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #30313C;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 5px;
+    max-height: 29px;
+  }
+
+  .reply-comment-btn-container {
+    display: inline-block;
+    width: 15%;
+    height: 28px;
+    float: left;
+
+    .reply-comment-btn {
+      height: 100%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      line-height: 28px;
+      border-radius: 4px;
+      font-family: 'Helvetica Neue';
+      font-size: 14px;
+      background-color: #00A6C9;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+}
