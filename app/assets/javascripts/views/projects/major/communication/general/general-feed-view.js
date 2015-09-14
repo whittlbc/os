@@ -21,21 +21,41 @@ define(['jquery',
 
         populateComments: function (comments) {
             var self = this;
-            this.COMMENTS = [];
-            this.$el.find('#generalFeedListView').empty();
+            var $mainCommentList = this.$el.find('#generalFeedListView');
+            $mainCommentList.empty();
             for (var i = 0; i < comments.length; i++) {
-                this.prePopulateComment(comments[i].comment);
+                this.addComment($mainCommentList, comments[i]);
             }
         },
 
-        prePopulateComment: function(data) {
+        addComment: function($list, data) {
+            var self = this;
             var generalFeedItemView = new GeneralFeedItemView({
                 tagName: 'li'
             });
-            generalFeedItemView.setData(data);
+            generalFeedItemView.setData(data.comment);
             generalFeedItemView.render();
-            this.$el.find('#generalFeedListView').append(generalFeedItemView.el);
-            this.COMMENTS.push(generalFeedItemView);
+            $list.append(generalFeedItemView.el);
+            if (data.children && data.children.length > 0) {
+                this.addChildComments(generalFeedItemView, data.children);
+            }
+        },
+
+        addChildComments: function (commentView, children) {
+            var self = this;
+
+            // create new nested <ul> for child comments
+            var $newUL = $('<ul>', {
+                class: 'child-comment-list'
+            });
+
+            // append it under the appropriate parent comment
+            commentView.$el.append($newUL);
+
+            // add all the child comments
+            for (var i = 0; i < children.length; i++) {
+                this.addComment($newUL, children[i]);
+            }
         },
 
         passComments: function (comments) {
