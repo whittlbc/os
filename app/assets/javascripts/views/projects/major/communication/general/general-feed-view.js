@@ -29,6 +29,9 @@ define(['jquery',
 
         populateComments: function (comments) {
             var self = this;
+            if (this.noCommentsShown) {
+                this.render();
+            }
             this.ALL_COMMENTS = [];
             var $mainCommentList = this.$el.find('#generalFeedListView');
             $mainCommentList.empty();
@@ -80,8 +83,9 @@ define(['jquery',
 
         render: function (options) {
 			var self = this;
+            this.noCommentsShown = options && options.showNoComments;
             this.$el.html(GeneralFeedViewTpl({
-                showNoComments: options && options.showNoComments
+                showNoComments: this.noCommentsShown
             }));
         }
 	});
