@@ -33,6 +33,7 @@ define(['jquery',
             var generalFeedItemView = new GeneralFeedItemView({
                 tagName: 'li'
             });
+            console.log(data.comment.id);
             generalFeedItemView.setData(data.comment);
             generalFeedItemView.render();
             $list.append(generalFeedItemView.el);

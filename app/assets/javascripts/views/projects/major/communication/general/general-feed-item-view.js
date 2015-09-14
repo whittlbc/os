@@ -20,7 +20,6 @@ define(['jquery',
 		},
 
 		events: {
-            'click .comment-vote-count-container': 'handleCommentVote'
         },
 
         handleCommentVote: function () {
@@ -28,6 +27,7 @@ define(['jquery',
             var newVoteCount = Number(this.$el.find('.comment-vote-count').html())+1;
             this.$el.find('.comment-vote-count').html(newVoteCount);
             var project = new Project();
+            console.log(this.id);
             project.commentVote({id: this.id, new_vote_count: newVoteCount});
         },
 
@@ -79,6 +79,10 @@ define(['jquery',
                 text: this.text
             }));
             this.addHoverListeners();
+
+            this.$el.find('.comment-vote-count-container').click(function () {
+                self.handleCommentVote();
+            });
 
             this.userInfoBubble = new UserInfoBubble({
                 el: this.$el.find('.poster-info-bubble')
