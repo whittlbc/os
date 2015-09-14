@@ -100,11 +100,13 @@ define(['jquery',
         showReplyArea: function () {
             this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn').hide();
             this.$el.find('#reply-comment-' + this.commentNumber).show();
+            this.$el.find('#comment-' + this.commentNumber).addClass('reply-container-shown');
         },
 
         hideReplyArea: function () {
             this.$el.find('#reply-comment-' + this.commentNumber).hide();
             this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn').show();
+            this.$el.find('#comment-' + this.commentNumber).removeClass('reply-container-shown');
         },
 
 		render: function () {

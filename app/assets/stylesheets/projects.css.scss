@@ -691,6 +691,11 @@ $major-info-project-type: #CECECE;
   padding-bottom: 13px;
 }
 
+.general-feed-item-container.reply-container-shown {
+  border-bottom: none;
+}
+
+
 .poster-pic-container {
   display: inline-block;
   height: 100%;
@@ -852,6 +857,11 @@ $major-info-project-type: #CECECE;
 
 .comment-reply-container {
   width: 100%;
+  padding: 8px;
+  padding-top: none;
+  float: left;
+  border-bottom: 1px solid #DDD;
+  background-color: white;
 
   .reply-textarea {
     display: inline-block;
@@ -861,7 +871,6 @@ $major-info-project-type: #CECECE;
     box-shadow: none;
     outline: none;
     border: 1px solid #DDD;
-    border-top: none;
     border-radius: 4px;
     font-size: 13px;
     color: #30313C;
@@ -874,9 +883,10 @@ $major-info-project-type: #CECECE;
 
   .reply-comment-btn-container {
     display: inline-block;
-    width: 15%;
+    width: 14%;
     height: 28px;
     float: left;
+    margin-left: 1%;
 
     .reply-comment-btn {
       height: 100%;
