@@ -39,7 +39,7 @@ define(['jquery',
 
         showNewComment: function (data) {
             var self = this;
-            console.log('SHOW NEW COMMENT: ', data);
+            this.activePanel.passComments(data);
         },
 
         passComments: function (comments) {
