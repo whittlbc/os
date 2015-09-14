@@ -81,8 +81,6 @@ define(['jquery',
                 ghUsername: self.ghUsername
             });
 
-            console.log(this.index, this.getTopPos(), this.getRightPos());
-
             this.$el.find('.contributor-info-bubble')[0].style.top = this.getTopPos() + 'px';
             this.$el.find('.contributor-info-bubble')[0].style.right = this.getRightPos() + 'px';
 

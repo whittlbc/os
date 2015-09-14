@@ -15,6 +15,7 @@ define(['jquery',
 	var GeneralFeedView = CommunicationFeedView.extend({
 
 		initialize: function () {
+            this.childCommentListCount = 0;
 		},
 
 		events: {},
@@ -43,11 +44,13 @@ define(['jquery',
 
         addComment: function($list, data) {
             var self = this;
+            var hasChildren = data.children && data.children.length > 0;
             this.commentNumber++;
             var generalFeedItemView = new GeneralFeedItemView({
                 tagName: 'li'
             });
             data.comment.commentNumber = this.commentNumber;
+            data.comment.hasChildren = hasChildren;
             generalFeedItemView.setData(data.comment);
             this.listenTo(generalFeedItemView, 'all-reply-areas:hide', function (commentView) {
                 self.hideAllReplyAreas(commentView);
@@ -55,7 +58,7 @@ define(['jquery',
             generalFeedItemView.render();
             this.ALL_COMMENTS.push(generalFeedItemView);
             $list.append(generalFeedItemView.el);
-            if (data.children && data.children.length > 0) {
+            if (hasChildren) {
                 this.addChildComments(generalFeedItemView, data.children);
             }
         },
@@ -65,8 +68,12 @@ define(['jquery',
 
             // create new nested <ul> for child comments
             var $newUL = $('<ul>', {
-                class: 'child-comment-list'
+                class: 'child-comment-list',
+                id: 'child-comment-list-' + this.childCommentListCount
             });
+
+            this.childCommentListCount++;
+
 
             // append it under the appropriate parent comment
             commentView.$el.append($newUL);

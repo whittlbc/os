@@ -42,6 +42,7 @@ define(['jquery',
             this.id = data.id;
             this.parentID = data.parentID;
             this.feed = data.feed;
+            this.hasChildren = data.hasChildren;
             this.commentNumber = data.commentNumber;
         },
 
@@ -95,6 +96,34 @@ define(['jquery',
                     });
                 }
             });
+
+            // Toggle expand children button
+
+            this.$el.find('#comment-' + this.commentNumber + ' .toggle-show-children-btn').click(function () {
+                var $icon = self.$el.find('#comment-' + self.commentNumber + ' .toggle-show-children-btn > i');
+
+                //// COLLAPSE CHILDREN
+                //if ($icon.hasClass('fa-caret-down')) {
+                //    $icon.removeClass('fa-caret-down').addClass('fa-caret-right');
+                //    self.collapseChildren();
+                //}
+                //
+                //// EXPAND CHILDREN
+                //else {
+                //    $icon.removeClass('fa-caret-right').addClass('fa-caret-down');
+                //    self.expandChildren();
+                //}
+            });
+        },
+
+        collapseChildren: function () {
+            var self = this;
+
+        },
+
+        expandChildren: function () {
+            var self = this;
+
         },
 
         showReplyArea: function () {
@@ -117,6 +146,7 @@ define(['jquery',
                 voteCount: this.voteCount,
                 postTime: this.postTime,
                 text: this.text,
+                hasChildren: this.hasChildren,
                 commentNumber: this.commentNumber
             }));
 
