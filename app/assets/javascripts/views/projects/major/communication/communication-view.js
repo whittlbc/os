@@ -33,7 +33,12 @@ define(['jquery',
             self.communicationPanelsView.showNewComment(comment);
         },
 
-		render: function () {
+        passComments: function (comments) {
+            var self = this;
+            self.communicationPanelsView.passComments(comments);
+        },
+
+        render: function () {
 			var self = this;
 
             this.$el.html(CommunicationViewTpl({

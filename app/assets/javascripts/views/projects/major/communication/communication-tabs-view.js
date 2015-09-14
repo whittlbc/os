@@ -2,6 +2,7 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'stache!views/projects/major/communication/communication-tabs-view',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -24,6 +25,7 @@ define(['jquery',
             if (this.activeTab != selectedIndex) {
                 this.activeTab = selectedIndex;
                 this.trigger('tab:selected', this.activeTab);
+                Backbone.EventBroker.trigger('comments:fetch', this.activeTab);
             }
         },
 

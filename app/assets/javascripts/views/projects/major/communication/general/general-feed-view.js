@@ -19,12 +19,12 @@ define(['jquery',
 
 		events: {},
 
-        populateComments: function () {
+        populateComments: function (comments) {
             var self = this;
             this.COMMENTS = [];
             this.$el.find('#generalFeedListView').empty();
-            for (var i = 0; i < 10; i++) {
-                this.prePopulateComment();
+            for (var i = 0; i < comments.length; i++) {
+                this.prePopulateComment(comments[i].comment);
             }
         },
 
@@ -38,12 +38,15 @@ define(['jquery',
             this.COMMENTS.push(generalFeedItemView);
         },
 
-        render: function () {
+        passComments: function (comments) {
+            comments.length > 0 ? this.populateComments(comments) : this.render({showNoComments: true});
+        },
+
+        render: function (options) {
 			var self = this;
             this.$el.html(GeneralFeedViewTpl({
-                showNoComments: true
+                showNoComments: options && options.showNoComments
             }));
-            //this.populateComments();
         }
 	});
 

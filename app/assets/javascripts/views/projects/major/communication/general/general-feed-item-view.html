@@ -1,19 +1,17 @@
 <div class="general-feed-item-container">
     <div class="poster-pic-container">
-        <img class="comment-poster-pic" src="https://avatars.githubusercontent.com/u/6496306?v=3">
+        <img class="comment-poster-pic" src="{{userPic}}">
         <div class="comment-vote-count-container">
             <div class="comment-vote-arrow"><i class="fa fa-angle-up"></i></div>
-            <div class="comment-vote-count">8</div>
+            <div class="comment-vote-count">{{voteCount}}</div>
         </div>
         <div class="poster-info-bubble" hidden></div>
     </div>{{
     }}<div class="comment-details-container">
         <div class="poster-name-post-time-container">
-            <div class="poster-name">whittlbc</div>
-            <div class="comment-post-time-ago">3 min ago</div>
+            <div class="poster-name">{{posterGHUsername}}</div>
+            <div class="comment-post-time-ago">{{postTime}}</div>
         </div>
-        <div class="comment-text">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam nibh. Nunc varius facilisis eros. Sed erat. In in velit quis arcu ornare laoreet. Curabitur adipiscing luctus massa. Integer ut purus ac augue commodo commodo. Nunc nec mi eu justo tempor consectetuer. Etiam vitae nisl. In dignissim lacus ut ante. Cras elit lectus, bibendum a, adipiscing vitae, commodo et, dui. Ut tincidunt tortor.
-        </div>
+        <div class="comment-text">{{text}}</div>
     </div>
 </div>

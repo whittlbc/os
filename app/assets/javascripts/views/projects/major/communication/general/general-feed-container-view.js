@@ -19,7 +19,12 @@ define(['jquery',
 
 		events: {},
 
-		render: function () {
+        passComments: function (comments) {
+            var self = this;
+            this.generalFeedView.passComments(comments);
+        },
+
+        render: function () {
 			var self = this;
             this.$el.html(GeneralFeedContainerViewTpl());
 

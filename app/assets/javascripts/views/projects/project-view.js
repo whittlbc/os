@@ -30,7 +30,8 @@ define(['jquery',
 
             Backbone.EventBroker.register({
                 'project:join': 'checkProjectPrivacy',
-                'comment:add': 'handleAddComment'
+                'comment:add': 'handleAddComment',
+                'comments:fetch': 'fetchComments'
             }, this);
         },
 
@@ -97,22 +98,22 @@ define(['jquery',
             } else {
                 this.contributors = data.project.contributors;
             }
-            this.fetchComments();
+            this.fetchComments(0);
             this.setProjectProperties(data);
             this.render(data);
         },
 
-        fetchComments: function () {
+        fetchComments: function (feedStatus) {
             var self = this;
             var project = new Project();
-            project.fetchComments({project_id: self.projectID}, {success: function (comments) {
+            project.fetchComments({project_id: self.projectID, feed: feedStatus}, {success: function (comments) {
                 self.handleFetchedComments(comments);
             }});
         },
 
         handleFetchedComments: function (comments) {
             var self = this;
-            console.log(comments);
+            self.projectMajorView.passComments(comments);
         },
 
         handleFetchedGHContribs: function (data) {

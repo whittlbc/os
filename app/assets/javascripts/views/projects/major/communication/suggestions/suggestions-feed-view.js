@@ -19,6 +19,10 @@ define(['jquery',
 
 		events: {},
 
+        passComments: function (comments) {
+            console.log(comments);
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(SuggestionsFeedViewTpl());

@@ -26,8 +26,14 @@ define(['jquery',
             this.$el.find('.comment-vote-count').html(Number(this.$el.find('.comment-vote-count').html())+1);
         },
 
-        setData: function () {
-            var self = this;
+        setData: function (data) {
+            this.userPic = data.userPic;
+            this.posterGHUsername = data.posterGHUsername;
+            this.voteCount = data.voteCount;
+            this.postTime = data.postTime;
+            this.text = data.text;
+            this.id = data.id;
+            this.parentID = data.parentID;
         },
 
         addHoverListeners: function () {
@@ -60,7 +66,13 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
-            this.$el.html(GeneralFeedItemViewTpl());
+            this.$el.html(GeneralFeedItemViewTpl({
+                userPic: this.userPic,
+                posterGHUsername: this.posterGHUsername,
+                voteCount: this.voteCount,
+                postTime: this.postTime,
+                text: this.text
+            }));
             this.addHoverListeners();
 
             this.userInfoBubble = new UserInfoBubble({
@@ -68,8 +80,8 @@ define(['jquery',
             });
 
             this.userInfoBubble.render({
-                userPic: 'https://avatars.githubusercontent.com/u/6496306?v=3',
-                ghUsername: 'whittlbc'
+                userPic: this.userPic,
+                ghUsername: this.posterGHUsername
             });
         }
 	});

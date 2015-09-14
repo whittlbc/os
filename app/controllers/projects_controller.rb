@@ -398,7 +398,7 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_comments
-    comments = comments_for_feed(params[:project_id], 0)
+    comments = comments_for_feed(params[:project_id], params[:feed])
     render :json => comments
   end
 
@@ -406,7 +406,15 @@ class ProjectsController < ApplicationController
     comments = []
     Comment.includes(:user).top_level(project_id, feed_status).vote_and_time_sort.each { |comment|
       comment_obj = {
-          :comment => comment,
+          :comment => {
+            :userPic => comment.try(:user).try(:pic),
+            :posterGHUsername => comment.try(:user).try(:gh_username),
+            :voteCount => comment.vote_count,
+            :postTime => get_general_date(comment.created_at),
+            :text => comment.text,
+            :id => comment.id,
+            :parentID => comment.parent_id
+          },
           :children => get_comment_children(comment)
       }
       comments.push(comment_obj)
@@ -421,7 +429,15 @@ class ProjectsController < ApplicationController
       comments = []
       comment.children.vote_and_time_sort.each { |child|
         comment_obj = {
-            :comment => child,
+            :comment => {
+                :userPic => child.try(:user).try(:pic),
+                :posterGHUsername => child.try(:user).try(:gh_username),
+                :voteCount => child.vote_count,
+                :postTime => get_general_date(child.created_at),
+                :text => child.text,
+                :id => child.id,
+                :parentID => child.parent_id
+            },
             :children => get_comment_children(child)
         }
         comments.push(comment_obj)

@@ -19,6 +19,11 @@ define(['jquery',
 
 		events: {},
 
+        passComments: function (comments) {
+            var self = this;
+            this.teamFeedView.passComments(comments);
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(TeamFeedContainerViewTpl());

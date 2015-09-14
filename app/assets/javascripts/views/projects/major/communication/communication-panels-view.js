@@ -42,6 +42,11 @@ define(['jquery',
             console.log('SHOW NEW COMMENT: ', data);
         },
 
+        passComments: function (comments) {
+            var self = this;
+            this.activePanel.passComments(comments);
+        },
+
         render: function (options) {
             var self = this;
             var generalActive;
@@ -82,21 +87,27 @@ define(['jquery',
                 switch (options.activePanel) {
                     case 0:
                         this.generalFeedContainerView.render();
+                        this.activePanel = this.generalFeedContainerView;
                         break;
                     case 1:
                         this.suggestionsFeedContainerView.render();
+                        this.activePanel = this.suggestionsFeedContainerView;
                         break;
                     case 2:
                         this.teamFeedContainerView.render();
+                        this.activePanel = this.teamFeedContainerView;
                         break;
                     case 3:
                         this.adminFeedContainerView.render();
+                        this.activePanel = this.adminFeedContainerView;
                         break;
                     default:
                         this.generalFeedContainerView.render();
+                        this.activePanel = this.generalFeedContainerView;
                 }
             } else {
                 this.activeFeedIndex = 0;
+                this.activePanel = this.generalFeedContainerView;
                 this.generalFeedContainerView.render();
             }
         }

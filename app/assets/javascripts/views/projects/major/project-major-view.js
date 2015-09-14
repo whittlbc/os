@@ -24,6 +24,11 @@ define(['jquery',
             self.communicationView.showNewComment(comment);
         },
 
+        passComments: function (comments) {
+            var self = this;
+            self.communicationView.passComments(comments);
+        },
+
 		render: function (options) {
 			var self = this;
             this.$el.html(ProjectMajorViewTpl());
