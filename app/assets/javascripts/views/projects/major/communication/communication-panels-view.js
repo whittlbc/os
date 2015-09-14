@@ -35,6 +35,7 @@ define(['jquery',
                 parent_id: null
             };
             Backbone.EventBroker.trigger('comment:add', data);
+            var text = this.$el.find('.comment-textarea').val('');
         },
 
         showNewComment: function (data) {
