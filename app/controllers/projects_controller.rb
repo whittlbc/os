@@ -446,6 +446,12 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def comment_vote
+    comment = Comment.find_by(id: params[:id])
+    comment.update_attributes(:vote_count => params[:new_vote_count])
+    render :json => {:status => 200}
+  end
+
   def get_up_for_grabs
     hard_coded_projects = Project.where(:status => params[:status]).map { |project|
       owner = User.find_by(id: project.user_id)

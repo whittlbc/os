@@ -17,7 +17,8 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+        },
 
         passComments: function (comments) {
             var self = this;

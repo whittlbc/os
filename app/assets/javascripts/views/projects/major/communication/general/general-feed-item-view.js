@@ -3,12 +3,14 @@ define(['jquery',
 	'underscore',
     'views/projects/major/communication/communication-feed-item-view',
     'views/widgets/user-info-bubble',
+    'models/project',
     'stache!views/projects/major/communication/general/general-feed-item-view'
     ], function ($,
      Backbone,
      _,
      CommunicationFeedItemView,
      UserInfoBubble,
+     Project,
      GeneralFeedItemViewTpl) {
 	'use strict';
 
@@ -23,7 +25,10 @@ define(['jquery',
 
         handleCommentVote: function () {
             var self = this;
-            this.$el.find('.comment-vote-count').html(Number(this.$el.find('.comment-vote-count').html())+1);
+            var newVoteCount = Number(this.$el.find('.comment-vote-count').html())+1;
+            this.$el.find('.comment-vote-count').html(newVoteCount);
+            var project = new Project();
+            project.commentVote({id: this.id, new_vote_count: newVoteCount});
         },
 
         setData: function (data) {

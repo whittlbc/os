@@ -20,6 +20,7 @@ Backboneworld::Application.routes.draw do
       get :fetch_gh_repo_stats, :path => '/fetchGHRepoStats'
       post :post_new_comment, :path => '/postNewComment'
       get :fetch_comments, :path => '/fetchComments'
+      put :comment_vote, :path => '/commentVote'
     end
   end
 

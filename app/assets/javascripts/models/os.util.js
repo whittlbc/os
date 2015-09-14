@@ -144,6 +144,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'fetchComments': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'commentVote': {
+                verb: 'PUT',
+                action: 'update'
             }
         }
 

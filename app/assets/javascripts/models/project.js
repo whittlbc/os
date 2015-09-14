@@ -187,6 +187,17 @@ define(['jquery',
             });
 
             return this.sync('fetchComments', this, requestInfo);
+        },
+
+        commentVote: function (info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/commentVote',
+                data: info
+            });
+
+            return this.sync('commentVote', this, requestInfo);
         }
 
     });
