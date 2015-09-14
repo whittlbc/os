@@ -851,8 +851,6 @@ $major-info-project-type: #CECECE;
 }
 
 .comment-reply-container {
-  margin-top: 21px;
-  margin-bottom: 5px;
   width: 100%;
 
   .reply-textarea {
@@ -863,6 +861,7 @@ $major-info-project-type: #CECECE;
     box-shadow: none;
     outline: none;
     border: 1px solid #DDD;
+    border-top: none;
     border-radius: 4px;
     font-size: 13px;
     color: #30313C;

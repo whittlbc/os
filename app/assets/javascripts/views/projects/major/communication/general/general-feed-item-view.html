@@ -13,16 +13,12 @@
             <div class="comment-post-time-ago">{{postTime}}</div>
         </div>
         <div class="comment-text">{{text}}</div>
-        {{^showReplyInput}}
         <div class="comment-reply-btn"><span>Reply</span></div>
-        {{/showReplyInput}}
     </div>
 </div>
-{{#showReplyInput}}
-<div class="comment-reply-container">
+<div class="comment-reply-container" id="reply-comment-{{commentNumber}}" hidden>
     <textarea class="reply-textarea" placeholder="Add Comment"></textarea>{{
     }}<div class="reply-comment-btn-container">
-    <div class="reply-comment-btn">Reply</div>
+        <div class="reply-comment-btn">Reply</div>
+    </div>
 </div>
-</div>
-{{/showReplyInput}}

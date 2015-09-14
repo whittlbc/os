@@ -78,11 +78,16 @@ define(['jquery',
 
             // Reply Btn Click
             this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn > span').click(function () {
-                self.render({showReplyInput: true});
+                self.showReplyArea();
             });
         },
 
-		render: function (options) {
+        showReplyArea: function () {
+            this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn').hide();
+            this.$el.find('#reply-comment-' + this.commentNumber).show();
+        },
+
+		render: function () {
 			var self = this;
             this.$el.html(GeneralFeedItemViewTpl({
                 userPic: this.userPic,
@@ -90,8 +95,7 @@ define(['jquery',
                 voteCount: this.voteCount,
                 postTime: this.postTime,
                 text: this.text,
-                commentNumber: this.commentNumber,
-                showReplyInput: options && options.showReplyInput
+                commentNumber: this.commentNumber
             }));
 
             this.addListeners();
