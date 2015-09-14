@@ -390,20 +390,44 @@ class ProjectsController < ApplicationController
       comment = Comment.new(comment_info)
       comment.save
 
-      all_comments_of_feed_type = comments_for_feed(params[:feed])
-      render :json => comment
+      all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed])
+      render :json => all_comments_of_feed_type
     else
       render :json => {:status => 500}
     end
   end
 
   def fetch_comments
-    comments = comments_for_feed(0)
+    comments = comments_for_feed(params[:project_id], 0)
     render :json => comments
   end
 
-  def comments_for_feed(feed_status)
+  def comments_for_feed(project_id, feed_status)
+    comments = []
+    Comment.includes(:user).top_level(project_id, feed_status).vote_and_time_sort.each { |comment|
+      comment_obj = {
+          :comment => comment,
+          :children => get_comment_children(comment)
+      }
+      comments.push(comment_obj)
+    }
+    comments
+  end
 
+  def get_comment_children(comment)
+    if comment.children.empty?
+      []
+    else
+      comments = []
+      comment.children.vote_and_time_sort.each { |child|
+        comment_obj = {
+            :comment => child,
+            :children => get_comment_children(child)
+        }
+        comments.push(comment_obj)
+      }
+      comments
+    end
   end
 
   def get_up_for_grabs
