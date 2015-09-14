@@ -413,7 +413,8 @@ class ProjectsController < ApplicationController
             :postTime => get_general_date(comment.created_at),
             :text => comment.text,
             :id => comment.id,
-            :parentID => comment.parent_id
+            :parentID => comment.parent_id,
+            :feed => comment.feed
           },
           :children => get_comment_children(comment)
       }
@@ -436,7 +437,8 @@ class ProjectsController < ApplicationController
                 :postTime => get_general_date(child.created_at),
                 :text => child.text,
                 :id => child.id,
-                :parentID => child.parent_id
+                :parentID => child.parent_id,
+                :feed => child.feed
             },
             :children => get_comment_children(child)
         }

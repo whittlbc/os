@@ -4,7 +4,8 @@ define(['jquery',
     'views/projects/major/communication/communication-feed-item-view',
     'views/widgets/user-info-bubble',
     'models/project',
-    'stache!views/projects/major/communication/general/general-feed-item-view'
+    'stache!views/projects/major/communication/general/general-feed-item-view',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -17,6 +18,7 @@ define(['jquery',
 	var GeneralFeedItemView = CommunicationFeedItemView.extend({
 
 		initialize: function () {
+
 		},
 
 		events: {
@@ -39,6 +41,7 @@ define(['jquery',
             this.text = data.text;
             this.id = data.id;
             this.parentID = data.parentID;
+            this.feed = data.feed;
             this.commentNumber = data.commentNumber;
         },
 
@@ -76,9 +79,21 @@ define(['jquery',
                 self.handleCommentVote();
             });
 
-            // Reply Btn Click
+            // Reply Btn Click - Show Comment Area
             this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn > span').click(function () {
                 self.trigger('all-reply-areas:hide', self);
+            });
+
+            // Reply Btn Click - Submit Reply Comment
+            this.$el.find('#reply-comment-' + this.commentNumber + ' .reply-comment-btn').click(function () {
+                var text = self.$el.find('#reply-comment-' + self.commentNumber + ' .reply-textarea').val();
+                if (!_.isEmpty(text)) {
+                    Backbone.EventBroker.trigger('comment:add', {
+                        text: text,
+                        feed: self.feed,
+                        parent_id: self.id
+                    });
+                }
             });
         },
 
