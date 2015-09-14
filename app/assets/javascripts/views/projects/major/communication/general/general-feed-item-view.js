@@ -24,10 +24,9 @@ define(['jquery',
 
         handleCommentVote: function () {
             var self = this;
-            var newVoteCount = Number(this.$el.find('.comment-vote-count').html())+1;
-            this.$el.find('.comment-vote-count').html(newVoteCount);
+            var newVoteCount = Number(this.$el.find('#comment-vote-count-' + this.commentNumber).html())+1;
+            this.$el.find('#comment-vote-count-' + this.commentNumber).html(newVoteCount);
             var project = new Project();
-            console.log(this.id);
             project.commentVote({id: this.id, new_vote_count: newVoteCount});
         },
 
@@ -39,31 +38,33 @@ define(['jquery',
             this.text = data.text;
             this.id = data.id;
             this.parentID = data.parentID;
+            this.commentNumber = data.commentNumber;
         },
 
         addHoverListeners: function () {
             var self = this;
+            var $infoBubble = this.$el.find('#poster-info-bubble-' + this.commentNumber);
 
-            this.$el.find('.comment-poster-pic').hover(function () {
+            this.$el.find('#comment-pic-' + this.commentNumber).hover(function () {
                 if (!self.bubbleShown) {
-                    self.$el.find('.poster-info-bubble').show();
+                    $infoBubble.show();
                     self.bubbleShown = true;
                 }
             }, function () {
                 if (self.bubbleShown) {
-                    self.$el.find('.poster-info-bubble').hide();
+                    $infoBubble.hide();
                     self.bubbleShown = false;
                 }
             });
 
-            this.$el.find('.poster-info-bubble').hover(function () {
+            this.$el.find('#poster-info-bubble-' + this.commentNumber).hover(function () {
                 if (!self.bubbleShown) {
-                    self.$el.find('.poster-info-bubble').show();
+                    $infoBubble.show();
                     self.bubbleShown = true;
                 }
             }, function () {
                 if (self.bubbleShown) {
-                    self.$el.find('.poster-info-bubble').hide();
+                    $infoBubble.hide();
                     self.bubbleShown = false;
                 }
             });
@@ -76,16 +77,17 @@ define(['jquery',
                 posterGHUsername: this.posterGHUsername,
                 voteCount: this.voteCount,
                 postTime: this.postTime,
-                text: this.text
+                text: this.text,
+                commentNumber: this.commentNumber
             }));
             this.addHoverListeners();
 
-            this.$el.find('.comment-vote-count-container').click(function () {
+            this.$el.find('#comment-vote-btn-' + this.commentNumber).click(function () {
                 self.handleCommentVote();
             });
 
             this.userInfoBubble = new UserInfoBubble({
-                el: this.$el.find('.poster-info-bubble')
+                el: this.$el.find('#poster-info-bubble-' + this.commentNumber)
             });
 
             this.userInfoBubble.render({

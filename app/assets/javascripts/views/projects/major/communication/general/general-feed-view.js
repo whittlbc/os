@@ -23,6 +23,7 @@ define(['jquery',
             var self = this;
             var $mainCommentList = this.$el.find('#generalFeedListView');
             $mainCommentList.empty();
+            this.commentNumber = 0;
             for (var i = 0; i < comments.length; i++) {
                 this.addComment($mainCommentList, comments[i]);
             }
@@ -30,10 +31,12 @@ define(['jquery',
 
         addComment: function($list, data) {
             var self = this;
+            this.commentNumber++;
             var generalFeedItemView = new GeneralFeedItemView({
                 tagName: 'li'
             });
-            console.log(data.comment.id);
+            console.log(this.commentNumber);
+            data.comment.commentNumber = this.commentNumber;
             generalFeedItemView.setData(data.comment);
             generalFeedItemView.render();
             $list.append(generalFeedItemView.el);
