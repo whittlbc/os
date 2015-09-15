@@ -779,13 +779,12 @@ $major-info-project-type: #CECECE;
     outline: none;
     border: 1px solid #DDD;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 14px;
     color: #30313C;
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 6px;
-    padding-bottom: 5px;
-    max-height: 31px;
+    padding-top: 5px;
+    padding-bottom: 4px;
   }
 
   .add-comment-btn-container {
@@ -838,19 +837,18 @@ $major-info-project-type: #CECECE;
     outline: none;
     border: 1px solid #DDD;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 14px;
     color: #30313C;
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 6px;
-    padding-bottom: 5px;
-    max-height: 29px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   .reply-comment-btn-container {
     display: inline-block;
     width: 14%;
-    height: 28px;
+    height: 29px;
     float: left;
     margin-left: 1%;
 
@@ -860,7 +858,7 @@ $major-info-project-type: #CECECE;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
-      line-height: 28px;
+      line-height: 29px;
       border-radius: 4px;
       font-family: 'Helvetica Neue';
       font-size: 14px;
@@ -928,4 +926,5 @@ $major-info-project-type: #CECECE;
   }
 
 }
+
 

@@ -57,6 +57,10 @@ define(['jquery',
             return this.$el.find('#reply-comment-' + this.commentNumber);
         },
 
+        getReplyTextarea: function () {
+            return this.$el.find('#reply-comment-' + this.commentNumber + ' textarea');
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(GeneralFeedItemViewTpl({
@@ -79,6 +83,7 @@ define(['jquery',
                 userPic: this.userPic,
                 ghUsername: this.posterGHUsername
             });
+
         }
 	});
 

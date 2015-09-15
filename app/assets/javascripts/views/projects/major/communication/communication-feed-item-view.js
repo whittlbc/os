@@ -45,7 +45,7 @@ define(['jquery',
             var $voteCountContainer = this.getVoteCountContainerEl();
             var $replyBtn = this.getReplyBtnEl();
             var $submitReplyBtn = this.getSubmitReplyBtn();
-
+            var $replyTextarea = this.getReplyTextarea();
 
             // Hover listener for user info bubble
             $posterPic.hover(function () {
@@ -93,6 +93,11 @@ define(['jquery',
                         parent_id: self.id
                     });
                 }
+            });
+
+            // Auto-resize reply textarea
+            $replyTextarea.on('keyup input', function() {
+                $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight + 2);
             });
         },
 

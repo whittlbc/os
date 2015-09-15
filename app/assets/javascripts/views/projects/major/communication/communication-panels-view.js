@@ -28,14 +28,16 @@ define(['jquery',
 
         handleAddComment: function () {
             var self = this;
-            var text = this.$el.find('.comment-textarea').val();
+            var $textarea = this.$el.find('.comment-textarea');
+            var text = $textarea.val();
             var data = {
                 text: text,
                 feed: this.activeFeedIndex,
                 parent_id: null
             };
             Backbone.EventBroker.trigger('comment:add', data);
-            var text = this.$el.find('.comment-textarea').val('');
+            var text = $textarea.val('');
+            $textarea.css('height', '31px');
         },
 
         showNewComment: function (data) {
@@ -46,6 +48,15 @@ define(['jquery',
         passComments: function (comments) {
             var self = this;
             this.activePanel.passComments(comments);
+        },
+
+        addListeners: function () {
+            var self = this;
+
+            // Auto-resize comment textarea
+            this.$el.find('.comment-textarea').on('keyup input', function() {
+                $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);
+            });
         },
 
         render: function (options) {
@@ -111,6 +122,8 @@ define(['jquery',
                 this.activePanel = this.generalFeedContainerView;
                 this.generalFeedContainerView.render();
             }
+
+            this.addListeners();
         }
     });
 
