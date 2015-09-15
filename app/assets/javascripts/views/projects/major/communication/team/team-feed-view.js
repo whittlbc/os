@@ -9,7 +9,7 @@ define(['jquery',
      _,
      CommunicationFeedView,
      TeamFeedItemView,
-     TeamFeedVIewTpl) {
+     TeamFeedViewTpl) {
 	'use strict';
 
 	var TeamFeedVIew = CommunicationFeedView.extend({
@@ -19,14 +19,23 @@ define(['jquery',
 
 		events: {},
 
-        passComments: function (comments) {
-            console.log(comments);
+        getMainListElement: function () {
+            return this.$el.find('#teamFeedListView');
         },
 
-		render: function () {
-			var self = this;
-            this.$el.html(TeamFeedVIewTpl());
-		}
+        getFeedItemView: function () {
+            return new TeamFeedItemView({
+                tagName: 'li'
+            });
+        },
+
+        render: function (options) {
+            var self = this;
+            this.noCommentsShown = options && options.showNoComments;
+            this.$el.html(TeamFeedViewTpl({
+                showNoComments: this.noCommentsShown
+            }));
+        }
 	});
 
 	return TeamFeedVIew;

@@ -19,14 +19,23 @@ define(['jquery',
 
 		events: {},
 
-        passComments: function (comments) {
-            console.log(comments);
+        getMainListElement: function () {
+            return this.$el.find('#suggestionsFeedListView');
         },
 
-		render: function () {
-			var self = this;
-            this.$el.html(SuggestionsFeedViewTpl());
-		}
+        getFeedItemView: function () {
+            return new SuggestionsFeedItemView({
+                tagName: 'li'
+            });
+        },
+
+        render: function (options) {
+            var self = this;
+            this.noCommentsShown = options && options.showNoComments;
+            this.$el.html(SuggestionsFeedViewTpl({
+                showNoComments: this.noCommentsShown
+            }));
+        }
 	});
 
 	return SuggestionsFeedView;

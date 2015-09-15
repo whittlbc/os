@@ -1,1 +1,23 @@
-<div class="team-feed-item-container"></div>
+<div class="team-feed-item-container" id="comment-{{commentNumber}}">
+    <div class="poster-pic-container">
+        <img class="comment-poster-pic" src="{{userPic}}">
+        <div class="poster-info-bubble" hidden></div>
+    </div>{{
+    }}<div class="comment-details-container">
+        <div class="poster-name-post-time-container">
+            <div class="poster-name">{{posterGHUsername}}</div>
+            <div class="comment-post-time-ago">{{postTime}}</div>
+        </div>
+        <div class="comment-text">{{text}}</div>
+        <div class="comment-actions-container">
+            <div class="comment-vote-count-container"><i class="fa fa-caret-up"></i><span>{{voteCount}}</span></div>
+            <div class="comment-reply-btn"><span>Reply</span></div>
+        </div>
+    </div>
+</div>
+<div class="comment-reply-container" id="reply-comment-{{commentNumber}}" hidden>
+    <textarea class="reply-textarea" placeholder="Add Comment"></textarea>{{
+    }}<div class="reply-comment-btn-container">
+        <div class="reply-comment-btn">Reply</div>
+    </div>
+</div>

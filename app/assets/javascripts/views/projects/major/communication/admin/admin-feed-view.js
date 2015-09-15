@@ -19,14 +19,23 @@ define(['jquery',
 
 		events: {},
 
-        passComments: function (comments) {
-            console.log(comments);
+        getMainListElement: function () {
+            return this.$el.find('#adminFeedListView');
         },
 
-		render: function () {
-			var self = this;
-            this.$el.html(AdminFeedViewTpl());
-		}
+        getFeedItemView: function () {
+            return new AdminFeedItemView({
+                tagName: 'li'
+            });
+        },
+
+        render: function (options) {
+            var self = this;
+            this.noCommentsShown = options && options.showNoComments;
+            this.$el.html(AdminFeedViewTpl({
+                showNoComments: this.noCommentsShown
+            }));
+        }
 	});
 
 	return AdminFeedView;
