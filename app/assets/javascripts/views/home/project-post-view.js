@@ -5,7 +5,8 @@ define(['jquery',
     'models/os.util',
     'models/all-langs',
     'views/widgets/user-info-bubble',
-	'stache!views/home/project-post-view'
+	'stache!views/home/project-post-view',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -23,7 +24,7 @@ define(['jquery',
 
 		events: {
             'click .arrow': 'handleVote',
-            'click .project-post-title-text': 'openProjectDetails'
+            'click .project-post-title-text': 'openProjectDetails',
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -60,7 +61,7 @@ define(['jquery',
             this.projectType = OSUtil.GRAMMATICAL_PROJECT_TYPES[self.status];
             this.searchResult = data.search_result;
             this.langs_and_frames = ['HTML', 'Ruby'];
-            this.ownerPic = data.owner_pic;
+            this.owner_pic = data.owner_pic;
             this.ownerGHUsername = data.owner_gh_username
         },
 
@@ -74,7 +75,7 @@ define(['jquery',
             this.$privacyContainer.css('opacity', '0');
         },
 
-        addHoverListeners: function () {
+        addListeners: function () {
             var self = this;
             this.$el.hover(function() {
                 self.hoverOn();
@@ -105,6 +106,10 @@ define(['jquery',
                     self.bubbleShown = false;
                 }
             });
+
+            this.$el.find('.grab-btn').click(function () {
+                Backbone.EventBroker.trigger('pull-project', self.id);
+            });
         },
 
         addTags: function (namesAndColorsArray) {
@@ -133,20 +138,22 @@ define(['jquery',
                 upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
                 searchResult: self.searchResult,
                 projectType: self.projectType,
-                userPic: self.ownerPic
+                userPic: self.owner_pic
             }));
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
             this.$privacyContainer = this.$el.find('.project-post-privacy');
-            this.addHoverListeners();
+            this.addListeners();
 
             this.userInfoBubble = new UserInfoBubble({
                 el: this.$el.find('.user-info-bubble')
             });
             this.userInfoBubble.render({
-                userPic: self.ownerPic,
+                userPic: self.owner_pic,
                 ghUsername: self.ownerGHUsername
             });
+
+
 
         }
 	});

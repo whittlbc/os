@@ -51,6 +51,7 @@ define(['jquery',
             this.type2 = OSUtil.REVERSE_TYPE_MAP['type2'];
             this.source1 = OSUtil.REVERSE_SOURCE_MAP['source1'];
             this.source2 = OSUtil.REVERSE_SOURCE_MAP['source2'];
+            this.source3 = OSUtil.REVERSE_SOURCE_MAP['source3'];
 
             this.panelMap = {
                 'type-panel': 0,
@@ -142,6 +143,12 @@ define(['jquery',
             // these were set by default in the beginning, so set them again
             this.masterMap['type1']['selectedSource'] = 'source2';
             this.masterMap['type1']['source2']['anon'] = false;
+        },
+
+        formatForPullProject: function (id) {
+            var self = this;
+            this.projectIDToPullFrom = id;
+            this.autoSelectPanelsOneAndTwo();
         },
 
         getSelectedSource: function () {
@@ -304,6 +311,10 @@ define(['jquery',
             $('#createNewProjectModal').modal('hide');
         },
 
+        showModal: function () {
+            $('#createNewProjectModal').modal('show');
+        },
+
         showProjectCreationSuccess: function (project) {
             var self = this;
             setTimeout(function () {
@@ -335,6 +346,8 @@ define(['jquery',
             this.showFooter();
             this.enableAddProjectBtn();
             this.resetMasterMap(this.masterMap);
+            this.panel1.setUpForGrabsToggle(false);
+            this.panel1.setOnlyOnTheFenceToggle(false);
             this.renderPanels();
             this.renderBreadCrumbView();
             this.passLangData(this.dropdownItems);
@@ -630,6 +643,17 @@ define(['jquery',
                 breadCrumb2Current: this.slideIndex == 1,
                 breadCrumb3Current: this.slideIndex == 2
             });
+        },
+
+        autoSelectPanelsOneAndTwo: function () {
+            var self = this;
+            this.panel1.setOnlyOnTheFenceToggle(true);
+            this.panel1.autoSelectType();
+            this.handleTypeSelected(this.type2);
+            this.panel2.setOnlyPullFromIdeasToggle(true);
+            this.panel2.autoSelectSource();
+            this.handleSourceSelected(this.source3);
+            this.panel3.autoSelectUpForGrabsProject(this.projectIDToPullFrom);
         },
 
         renderPanels: function () {

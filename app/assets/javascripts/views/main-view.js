@@ -9,8 +9,9 @@ define(['jquery',
     'models/all-langs',
     'models/user',
     'sifter.min',
-    'stache!views/main-view'
-    ], function ($,
+    'stache!views/main-view',
+    'backbone-eventbroker'
+], function ($,
      Backbone,
      _,
      IndexView,
@@ -27,9 +28,21 @@ define(['jquery',
 	var MainView = Backbone.View.extend({
 
 		initialize: function () {
+            Backbone.EventBroker.register({
+                'pull-project': 'showCreateModalOnPullProject'
+            }, this);
 		},
 
 		events: {},
+
+        showCreateModalOnPullProject: function (id) {
+            var self = this;
+            this.createNewProjectPopup.resetPopup();
+            this.createNewProjectPopup.formatForPullProject(id);
+            setTimeout(function () {
+                self.createNewProjectPopup.showModal();
+            }, 10)
+        },
 
         changeHomeFeedType: function (index) {
             this.homeView.populateProjectFeed(index);

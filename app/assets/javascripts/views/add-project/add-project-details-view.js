@@ -5,6 +5,7 @@ define(['jquery',
     'views/add-project/details-view',
     'views/add-project/creating-project-view',
     'models/os.util',
+    'models/project',
     'views/add-project/project-creation-error-view',
     'views/add-project/pull-from-ideas-view',
     'stache!views/add-project/add-project-details-view'
@@ -15,6 +16,7 @@ define(['jquery',
      DetailsView,
      CreatingProjectView,
      OSUtil,
+     Project,
      ProjectCreationErrorView,
      PullFromIdeasView,
      AddProjectDetailsViewTpl) {
@@ -61,11 +63,33 @@ define(['jquery',
             this.selectedType = type;
         },
 
-        scrollToDetailsView: function (repos) {
+        scrollToDetailsView: function (repos, duration) {
             var self = this;
             var $scrollContainer = this.$el.find('.add-project-details-scroll-container');
             var viewHeight = repos ? this.repoListView.$el.height() : this.pullFromIdeasView.$el.height();
-            $scrollContainer.animate({scrollTop: viewHeight + 15}, {duration: 500, specialEasing: 'easeInOutCubic'});
+            if (duration == 0) {
+                $scrollContainer.scrollTop(viewHeight + 15);
+            } else {
+                $scrollContainer.animate({scrollTop: viewHeight + 15}, {
+                    duration: duration,
+                    specialEasing: 'easeInOutCubic'
+                });
+            }
+        },
+
+        autoSelectUpForGrabsProject: function (projectID) {
+            var self = this;
+            var project = new Project();
+            project.getUpForGrabsDetails({id: projectID}, {success: function (data) {
+                var options = {
+                    hideDetailsView: false,
+                    projectData: data
+                };
+                self.detailsView.render(options);
+                setTimeout(function () {
+                    self.scrollToDetailsView(false, 0);
+                }, 150);
+            }});
         },
 
         allowCreate: function () {
@@ -153,7 +177,7 @@ define(['jquery',
                 self.trigger('repo:getDetails', name);
                 self.detailsView.render({hideDetailsView: false});
                 setTimeout(function () {
-                    self.scrollToDetailsView(true);
+                    self.scrollToDetailsView(true, 500);
                 }, 10);
             });
             if (this.repos) {
@@ -180,7 +204,7 @@ define(['jquery',
                     };
                     self.detailsView.render(options);
                     setTimeout(function () {
-                        self.scrollToDetailsView(false);
+                        self.scrollToDetailsView(false, 500);
                     }, 10);
                 });
                 this.pullFromIdeasView.render();

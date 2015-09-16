@@ -148,6 +148,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'commentVote': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'getUpForGrabsDetails': {
+                verb: 'GET',
+                action: 'read'
             }
         }
 

@@ -52,6 +52,16 @@ input {
   display: block;
 }
 
+.project-type-selection-container.only-two-choices,
+.project-source-selection-container.only-two-choices {
+  margin-left: 10%;
+}
+
+.project-type-selection-container.only-one-choice,
+.project-source-selection-container.only-one-choice {
+  margin-left: 20%;
+}
+
 .project-source-selection,
 .project-type-selection {
   display: inline-block;
@@ -60,13 +70,14 @@ input {
   cursor: pointer;
 }
 
-#gh {
+.project-type-selection.only-two-choices,
+.project-source-selection.only-two-choices {
+    width: 40%;
 }
 
-#scratch {
-}
-
-#pull-from-ideas {
+.project-type-selection.only-one-choice,
+.project-source-selection.only-one-choice {
+  width: 60%;
 }
 
 .project-source-selection-text,

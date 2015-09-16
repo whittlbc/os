@@ -683,7 +683,6 @@ $major-info-project-type: #CECECE;
 .suggestions-feed-item-container,
 .team-feed-item-container,
 .admin-feed-item-container {
-
   width: 100%;
   float: left;
   background-color: white;
@@ -816,6 +815,14 @@ $major-info-project-type: #CECECE;
   margin-left: 40px;
   padding-left: 0;
   list-style-type: none;
+
+  .general-feed-item-container,
+  .suggestions-feed-item-container,
+  .team-feed-item-container,
+  .admin-feed-item-container {
+    //border-left: 1px solid #DDD;
+  }
+
 }
 
 .comment-reply-container {

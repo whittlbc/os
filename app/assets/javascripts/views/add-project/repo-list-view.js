@@ -23,8 +23,10 @@ define(['jquery',
         populate: function () {
             this.REPOS = [];
             this.$el.find('#addNewProjectRepoList').empty();
-            for (var i = 0; i < this.repos.length; i++) {
-                this.addRepoToList(this.repos[i]);
+            if (Array.isArray(this.repos)) {
+                for (var i = 0; i < this.repos.length; i++) {
+                    this.addRepoToList(this.repos[i]);
+                }
             }
         },
 

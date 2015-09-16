@@ -50,6 +50,12 @@ define(['jquery',
             this.activePanel.passComments(comments);
         },
 
+        scrollToNewComment: function () {
+            var self = this;
+            var feedContainerHeight = this.$el.find('#communicationFeedContainer').height();
+            $('html, body').animate({scrollTop: feedContainerHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
+        },
+
         addListeners: function () {
             var self = this;
 

@@ -27,9 +27,23 @@ define(['jquery',
             this.trigger('type:selected', type);
         },
 
+        autoSelectType: function () {
+            var self = this;
+            this.selectedType = OSUtil.TYPE_MAP['on-the-fence'];
+            this.render();
+        },
+
         setHeight: function (height) {
             var self = this;
             this.$el.find('.select-project-type-view').height(height);
+        },
+
+        setUpForGrabsToggle: function (bool) {
+            this.hideUpForGrabs = bool;
+        },
+
+        setOnlyOnTheFenceToggle: function (bool) {
+            this.onlyOnTheFence = bool;
         },
 
 		render: function () {
@@ -38,6 +52,8 @@ define(['jquery',
                 upForGrabsSelected: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
                 onTheFenceSelected: this.selectedType == OSUtil.TYPE_MAP['on-the-fence'],
                 launchedSelected: this.selectedType == OSUtil.TYPE_MAP['launched'],
+                hideUpForGrabs: this.hideUpForGrabs,
+                onlyOnTheFence: this.onlyOnTheFence
             }));
 		}
 	});

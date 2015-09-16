@@ -26,9 +26,19 @@ define(['jquery',
             this.trigger('source:selected', e.currentTarget.id);
         },
 
+        autoSelectSource: function () {
+            var self = this;
+            this.selectedSource = OSUtil.SOURCE_MAP['pull-from-ideas'];
+            this.render();
+        },
+
         setHeight: function (height) {
             var self = this;
             this.$el.find('.select-project-source-view').height(height);
+        },
+
+        setOnlyPullFromIdeasToggle: function (bool) {
+            this.onlyPullFromIdeas = bool
         },
 
 		render: function (options) {
@@ -49,7 +59,8 @@ define(['jquery',
                 ghSelected: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
                 scratchSelected: this.selectedSource == OSUtil.SOURCE_MAP['scratch'],
                 ideasSelected: this.selectedSource == OSUtil.SOURCE_MAP['pull-from-ideas'],
-                upForGrabsType: upForGrabsType
+                upForGrabsType: upForGrabsType,
+                onlyPullFromIdeas: this.onlyPullFromIdeas
             }));
 		}
 	});

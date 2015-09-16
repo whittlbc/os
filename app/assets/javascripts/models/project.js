@@ -198,6 +198,17 @@ define(['jquery',
             });
 
             return this.sync('commentVote', this, requestInfo);
+        },
+
+        getUpForGrabsDetails: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getUpForGrabsDetails',
+                data: info
+            });
+
+            return this.sync('getUpForGrabsDetails', this, requestInfo);
         }
 
     });

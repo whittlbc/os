@@ -212,7 +212,8 @@ class ProjectsController < ApplicationController
           :privacy => project.privacy,
           :langs_and_frames => project.langs_and_frames,
           :owner_gh_username => project.get_owner_gh_username,
-          :owner_pic => project.get_owner_pic
+          :owner_pic => project.get_owner_pic,
+          :status => project.status
       }
     }
     results = special_sort(projects_of_type).slice(0, 30)
@@ -359,8 +360,8 @@ class ProjectsController < ApplicationController
         title: proj.title,
         description: proj.description,
         contributors: proj.contributors,
-        :owner_gh_username => proj.get_owner_gh_username,
-        :owner_pic => proj.get_owner_pic,
+        owner_gh_username: proj.get_owner_gh_username,
+        owner_pic: proj.get_owner_pic,
         created_at: proj.created_at,
         repo_name: proj.repo_name,
         vote_count: proj.vote_count,
@@ -465,6 +466,21 @@ class ProjectsController < ApplicationController
       }
     }
     render :json => hard_coded_projects
+  end
+
+  def get_up_for_grabs_details
+    project = Project.find_by(id: params[:id])
+    if !project.nil?
+      data = {
+          :title => project.title,
+          :description => project.description,
+          :langsFrames => project.langs_and_frames
+      }
+      render :json => data
+    else
+      render :json => {:status => 500, :message => 'Cant find that project based on the passed ID'}
+    end
+
   end
 
   private

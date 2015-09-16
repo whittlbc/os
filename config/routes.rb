@@ -21,6 +21,7 @@ Backboneworld::Application.routes.draw do
       post :post_new_comment, :path => '/postNewComment'
       get :fetch_comments, :path => '/fetchComments'
       put :comment_vote, :path => '/commentVote'
+      get :get_up_for_grabs_details, :path => 'getUpForGrabsDetails'
     end
   end
 
