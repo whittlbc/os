@@ -79,6 +79,7 @@ define(['jquery',
 
         autoSelectUpForGrabsProject: function (projectID) {
             var self = this;
+            this.oldPullFromIdeasID = projectID;
             var project = new Project();
             project.getUpForGrabsDetails({id: projectID}, {success: function (data) {
                 var options = {
@@ -105,6 +106,10 @@ define(['jquery',
             if (this.detailsView) {
                 this.detailsView.blurAllInputs();
             }
+        },
+
+        getOldPullFromIdeasID: function () {
+            return this.oldPullFromIdeasID;
         },
 
 		render: function (options) {
@@ -198,6 +203,7 @@ define(['jquery',
                     el: '#pullFromIdeasView'
                 });
                 this.listenTo(this.pullFromIdeasView, 'project:selected', function (data) {
+                    self.oldPullFromIdeasID = data.id;
                     var options = {
                         hideDetailsView: false,
                         projectData: data

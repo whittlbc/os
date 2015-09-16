@@ -317,6 +317,9 @@ define(['jquery',
 
         showProjectCreationSuccess: function (project) {
             var self = this;
+            if (this.masterMap[this.masterMap['selectedType']]['selectedSource'] == OSUtil.SOURCE_MAP['pull-from-ideas']) {
+                this.inactivateOldUpForGrabsProject();
+            }
             setTimeout(function () {
                 self.hideModal();
                 window.location.hash = '#projects/' + project.id;
@@ -352,6 +355,15 @@ define(['jquery',
             this.renderBreadCrumbView();
             this.passLangData(this.dropdownItems);
             this.handleUserRepos(this.repos);
+        },
+
+        inactivateOldUpForGrabsProject: function () {
+            var self = this;
+            var projectID = this.panel3.getOldPullFromIdeasID();
+            if (Number.isInteger(projectID) && projectID >= 0) {
+                var project = new Project();
+                project.pullProject({id: projectID});
+            }
         },
 
         showFooter: function () {

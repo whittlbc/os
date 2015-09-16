@@ -152,6 +152,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'getUpForGrabsDetails': {
                 verb: 'GET',
                 action: 'read'
+            },
+            'pullProject': {
+                verb: 'PUT',
+                action: 'update'
             }
         }
 

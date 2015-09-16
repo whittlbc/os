@@ -472,6 +472,7 @@ class ProjectsController < ApplicationController
     project = Project.find_by(id: params[:id])
     if !project.nil?
       data = {
+          :id => project.id,
           :title => project.title,
           :description => project.description,
           :langsFrames => project.langs_and_frames
@@ -480,8 +481,24 @@ class ProjectsController < ApplicationController
     else
       render :json => {:status => 500, :message => 'Cant find that project based on the passed ID'}
     end
-
   end
+
+
+  def pull_project
+    project = Project.find_by(id: params[:id])
+    project.update_attributes(:was_pulled => true)
+    render :json => {:status => 200}
+  end
+
+
+
+
+
+
+
+
+
+
 
   private
 

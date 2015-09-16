@@ -22,6 +22,7 @@ Backboneworld::Application.routes.draw do
       get :fetch_comments, :path => '/fetchComments'
       put :comment_vote, :path => '/commentVote'
       get :get_up_for_grabs_details, :path => 'getUpForGrabsDetails'
+      put :pull_project, :path => '/pullProject'
     end
   end
 

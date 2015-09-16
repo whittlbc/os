@@ -209,6 +209,17 @@ define(['jquery',
             });
 
             return this.sync('getUpForGrabsDetails', this, requestInfo);
+        },
+
+        pullProject: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/pullProject',
+                data: info
+            });
+
+            return this.sync('pullProject', this, requestInfo);
         }
 
     });
