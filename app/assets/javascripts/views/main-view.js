@@ -5,7 +5,7 @@ define(['jquery',
     'views/projects/project-view',
     'models/os.util',
     'models/project',
-    'views/add-project/create-new-project-popup',
+    'views/modals/create-project-modal',
     'models/all-langs',
     'models/user',
     'sifter.min',
@@ -18,7 +18,7 @@ define(['jquery',
      ProjectView,
      OSUtil,
      Project,
-     CreateNewProjectPopup,
+     CreateProjectModal,
      AllLangs,
      User,
      Sifter,
@@ -37,10 +37,10 @@ define(['jquery',
 
         showCreateModalOnPullProject: function (id) {
             var self = this;
-            this.createNewProjectPopup.resetPopup();
-            this.createNewProjectPopup.formatForPullProject(id);
+            this.createProjectModal.resetPopup();
+            this.createProjectModal.formatForPullProject(id);
             setTimeout(function () {
-                self.createNewProjectPopup.showModal();
+                self.createProjectModal.showModal();
             }, 10)
         },
 
@@ -71,8 +71,8 @@ define(['jquery',
         setUserFromResponse: function(user) {
             this.userData = user;
             this.setUserHeaderPic(user.pic);
-            if (this.createNewProjectPopup) {
-                this.createNewProjectPopup.userData = user;
+            if (this.createProjectModal) {
+                this.createProjectModal.passUserData(user);
             }
             this.trigger('cookie:set', user.gh_username);
             this.passUserToNestedViews(user);
@@ -196,8 +196,8 @@ define(['jquery',
             if (this.projectView) {
                 this.projectView.passLanguages(data);
             }
-            if (this.createNewProjectPopup) {
-                this.createNewProjectPopup.passLangData(data);
+            if (this.createProjectModal) {
+                this.createProjectModal.passLangData(data);
             }
         },
 
@@ -231,17 +231,17 @@ define(['jquery',
 
             this.enableUniversalSearchBar();
 
-            if (!this.createNewProjectPopup) {
-                this.createNewProjectPopup = new CreateNewProjectPopup({
-                    el: '#createNewProjectModalContent'
+            if (!this.createProjectModal) {
+                this.createProjectModal = new CreateProjectModal({
+                    el: this.$el.find('#modalCreateProject')
                 });
                 if (this.userData) {
-                    this.createNewProjectPopup.userData = this.userData;
+                    this.createProjectModal.passUserData(this.userData);
                 }
                 if (this.allLangs) {
-                    this.createNewProjectPopup.passLangData(this.allLangs);
+                    this.createProjectModal.passLangData(this.allLangs);
                 }
-                this.createNewProjectPopup.render();
+                this.createProjectModal.render();
             }
 		}
 
