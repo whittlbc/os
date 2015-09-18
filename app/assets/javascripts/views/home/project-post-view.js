@@ -28,8 +28,7 @@ define(['jquery',
         },
 
         checkIfUserAuthed: function () {
-            var self = this;
-            Backbone.EventBroker.trigger('project:vote', self);
+            Backbone.EventBroker.trigger('project:vote', this);
         },
 
         errorHandler: function(resp, status, xhr) {

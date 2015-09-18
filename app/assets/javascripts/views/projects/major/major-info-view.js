@@ -25,12 +25,16 @@ define(['jquery',
 
 		events: {
             'click .see-all-description': 'handleToggleDescriptionSize',
-            'click .project-page-vote-container': 'handleVote',
+            'click .project-page-vote-container': 'checkIfUserAuthed',
             'click .join-btn': 'handleJoin'
         },
 
         handleJoin: function () {
             Backbone.EventBroker.trigger('project:join');
+        },
+
+        checkIfUserAuthed: function () {
+            Backbone.EventBroker.trigger('project:vote', this);
         },
 
         handleVote: function() {

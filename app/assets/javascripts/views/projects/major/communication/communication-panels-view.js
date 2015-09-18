@@ -23,7 +23,16 @@ define(['jquery',
         },
 
         events: {
-            'click .add-comment-btn': 'handleAddComment'
+            'click .add-comment-btn': 'checkIfUserAuthedOnPostClick',
+            'click .comment-textarea': 'checkIfUserAuthedOnInputClick'
+        },
+
+        checkIfUserAuthedOnPostClick: function () {
+            Backbone.EventBroker.trigger('post-comment:click', this);
+        },
+
+        checkIfUserAuthedOnInputClick: function () {
+            Backbone.EventBroker.trigger('comment-input:click', this);
         },
 
         handleAddComment: function () {

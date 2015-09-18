@@ -32,7 +32,11 @@ define(['jquery',
 		initialize: function () {
             Backbone.EventBroker.register({
                 'pull-project': 'showCreateModalOnPullProject',
-                'project:vote': 'loginOrVote',
+                'project:vote': 'loginOrProjectVote',
+                'comment:vote': 'loginOrCommentVote',
+                'comment:reply': 'loginOrReplyToComment',
+                'post-comment:click': 'loginOrPostComment',
+                'comment-input:click': 'loginOrAllowCommentInput',
                 'login:gh': 'loginWithGH'
             }, this);
             this.userAuthed = false;
@@ -68,12 +72,50 @@ define(['jquery',
         },
 
         // either show the login modal or vote on the passed projectPostView
-        loginOrVote: function (projectPostView) {
+        loginOrProjectVote: function (view) {
             var self = this;
-            if (!this.userAuthed) {
-                projectPostView.handleVote();
+            if (this.userAuthed) {
+                view.handleVote();
             } else {
                 this.loginModal.setMessage('You must be logged in to vote on projects.');
+                this.loginModal.showModal();
+            }
+        },
+
+        loginOrCommentVote: function (view) {
+            var self = this;
+            if (this.userAuthed) {
+                view.handleVote();
+            } else {
+                this.loginModal.setMessage('You must be logged in to vote on comments.');
+                this.loginModal.showModal();
+            }
+        },
+
+        loginOrReplyToComment: function (view) {
+            var self = this;
+            if (this.userAuthed) {
+                view.handleShowReplyInput();
+            } else {
+                this.loginModal.setMessage('You must be logged in to participate in the discussion.');
+                this.loginModal.showModal();
+            }
+        },
+
+        loginOrPostComment: function (view) {
+            var self = this;
+            if (this.userAuthed) {
+                view.handleAddComment();
+            } else {
+                this.loginModal.setMessage('You must be logged in to participate in the discussion.');
+                this.loginModal.showModal();
+            }
+        },
+
+        loginOrAllowCommentInput: function (view) {
+            var self = this;
+            if (!this.userAuthed) {
+                this.loginModal.setMessage('You must be logged in to participate in the discussion.');
                 this.loginModal.showModal();
             }
         },

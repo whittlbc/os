@@ -16,7 +16,11 @@ define(['jquery',
 
         events: {},
 
-        handleCommentVote: function () {
+        checkIfUserAuthed: function (channel) {
+            Backbone.EventBroker.trigger(channel, this);
+        },
+
+        handleVote: function () {
             var self = this;
             var $voteCountEl = this.getVoteCountEl();
             var newVoteCount = Number($voteCountEl.html())+1;
@@ -36,6 +40,10 @@ define(['jquery',
             this.feed = data.feed;
             this.hasChildren = data.hasChildren;
             this.commentNumber = data.commentNumber;
+        },
+
+        handleShowReplyInput: function () {
+            this.trigger('all-reply-areas:hide', this);
         },
 
         addListeners: function () {
@@ -74,12 +82,12 @@ define(['jquery',
 
             // Comment Voting
             $voteCountContainer.click(function () {
-                self.handleCommentVote();
+                self.checkIfUserAuthed('comment:vote');
             });
 
             // Reply Btn Click - Show Comment Area
             $replyBtn.click(function () {
-                self.trigger('all-reply-areas:hide', self);
+                self.checkIfUserAuthed('comment:reply');
             });
 
             // Reply Btn Click - Submit Reply Comment
