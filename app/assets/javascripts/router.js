@@ -14,7 +14,7 @@ define(["backbone",
                 'on-the-fence': 'onTheFenceRoute',
                 'launched': 'launchedRoute',
                 'projects/:id': 'projectRoute',
-                'set-user/:id': 'setUserCookieRoute', // :id is gh_username just obtained from GH
+                'login/:id': 'setUserCookieRoute', // :id is gh_username just obtained from GH
                 '': 'onTheFenceRoute'
             },
 
@@ -23,7 +23,7 @@ define(["backbone",
             },
 
             onTheFenceRoute: function() {
-                _.isEmpty(window.location.hash) && window.location.pathname == '/' ? this.redirectHome() : this.updateHomeView(1);
+                (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? this.redirectHome() : this.updateHomeView(1);
             },
 
             launchedRoute: function() {
@@ -36,7 +36,7 @@ define(["backbone",
                     this.mainView = new MainView({
                         el: '#mainView'
                     });
-                    this.listenTo(this.masterView, 'cookie:set', function (gh_username) {
+                    this.listenTo(this.mainView, 'cookie:set', function (gh_username) {
                         self.setCookie('gh_username', gh_username, 7); // expires in 7 days
                     });
                     this.mainView.passCookieUser(this.getCookie('gh_username'));
@@ -47,6 +47,7 @@ define(["backbone",
                 } else {
                     this.mainView.showHomeView ? this.mainView.changeHomeFeedType(index) : this.mainView.render({view: OSUtil.HOME_PAGE, index: index});
                 }
+                this.mainView.passActiveHomeIndex(index);
             },
 
             projectRoute: function (id) {
@@ -59,8 +60,8 @@ define(["backbone",
                     this.mainView = new MainView({
                         el: '#mainView'
                     });
-                    this.listenTo(this.masterView, 'cookie:set', function () {
-                        self.setCookie('gh_username', response.gh_username, 7); // expires in 7 days
+                    this.listenTo(this.mainView, 'cookie:set', function (gh_username) {
+                        self.setCookie('gh_username', gh_username, 7); // expires in 7 days
                     });
 
                 }
@@ -76,8 +77,9 @@ define(["backbone",
             },
 
             setUserCookieRoute: function (gh_username) {
-                self.setCookie('gh_username', gh_username, 7); // expires in 7 days
-                this.redirectHome();
+                this.setCookie('gh_username', gh_username, 7); // expires in 7 days
+                var destination = window.location.hash.slice(window.location.hash.indexOf('?') + 1);
+                window.location.hash = '#' + destination;
             },
 
             setCookie: function (cname, cvalue, exdays) {

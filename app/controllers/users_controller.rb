@@ -47,66 +47,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-  # Get GH access token from returned code give provide you after OAuth login
-  def gh_code
-    data = {
-      :client_id => User::GH::CLIENT_ID,
-      :client_secret => User::GH::CLIENT_SECRET,
-      :code => params[:code]
-    }
-
-    response = RestClient.post('https://github.com/login/oauth/access_token', data, :accept => :json)
-    body = JSON.parse(response.body)
-
-    if body['access_token']
-      upsert_user(body['access_token'])
-      redirect_to "/#set-user/#{body['login']}"
-    else
-      redirect_to '/#on-the-fence'
-    end
-  end
-
-
-  # GH login - If user's not there, create him
-  def upsert_user(access_token)
-    response = RestClient.get("https://api.github.com/user?access_token=#{access_token}", :accept => :json)
-    body = JSON.parse(response.body)
-    gh_username = body['login']
-    name = body['name']
-    email = body['email']
-    pic = body['avatar_url']
-    old_user = User.find_by_gh_username(gh_username)
-    json_response = {
-        :gh_username => gh_username,
-        :name => name,
-        :pic => pic,
-        :email => email,
-        :password => access_token
-    }
-
-    # CAN TOTALLY USE find_or_initialize_by here
-    if old_user.nil?
-      # Create new User
-      @user = User.new(:uuid => UUIDTools::UUID.random_create.to_s,
-                       :gh_username => gh_username,
-                       :name => name,
-                       :pic => pic,
-                       :email => email,
-                       :password => access_token)
-      @user.save
-      json_response[:user_uuid] = @user.uuid
-      json_response[:id] = @user.id
-    else
-      old_user.update_attributes(:password => access_token)
-      json_response[:user_uuid] = old_user.uuid
-      json_response[:id] = old_user.id
-    end
-
-    render :json => json_response
-  end
-
-
   # Get user by gh_username --> Most likely pulled from cookie
   def get_by_gh_username
 

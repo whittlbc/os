@@ -13,10 +13,24 @@ define(['jquery',
 	var LoginView = Backbone.View.extend({
 
 		initialize: function () {
+            this.popupContainerHeight = 300;
 		},
+
+        events: {
+            'blur [name=username]': 'checkUsername',
+            'click .login-btn': 'onLoginClicked',
+            'click .signup-btn': 'onSignUpClicked',
+            'click .gh-login-btn': 'onGHLogin',
+            'click button': 'hidePopup'
+        },
 
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
+        },
+
+        setSizeForPopup: function () {
+            var self = this;
+            this.$el.find('.login-modal-body').height(this.popupContainerHeight);
         },
 
         onLoginSuccess: function(resp, status, xhr) {
@@ -34,14 +48,6 @@ define(['jquery',
 
         checkUsernameResponse: function (resp, status, xhr){
             console.log(resp);
-        },
-
-		events: {
-            'blur [name=username]': 'checkUsername',
-            'click .login-btn': 'onLoginClicked',
-            'click .signup-btn': 'onSignUpClicked',
-            'click [name=gh-login]': 'onGHLogin',
-            'click button': 'hidePopup'
         },
 
         hidePopup: function () {
@@ -99,11 +105,18 @@ define(['jquery',
 
         onGHLogin: function () {
             var self = this;
-            window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&redirect_uri=http://localhost:3000&scope=public_repo'
+            Backbone.EventBroker.trigger('login:gh');
         },
 
-		render: function () {
-            this.$el.html(LoginViewTpl());
+		render: function (options) {
+            var self = this;
+            options = options || {};
+
+            this.$el.html(LoginViewTpl({
+                message: options.message ? options.message : 'You need to be logged in to perform this action.'
+            }));
+
+            this.setSizeForPopup();
 		}
 	});
 

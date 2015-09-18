@@ -9,6 +9,7 @@ define(['jquery',
     'models/all-langs',
     'models/user',
     'sifter.min',
+    'views/modals/login-modal',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -22,6 +23,7 @@ define(['jquery',
      AllLangs,
      User,
      Sifter,
+     LoginModal,
      MainViewTpl) {
 	'use strict';
 
@@ -29,11 +31,52 @@ define(['jquery',
 
 		initialize: function () {
             Backbone.EventBroker.register({
-                'pull-project': 'showCreateModalOnPullProject'
+                'pull-project': 'showCreateModalOnPullProject',
+                'project:vote': 'loginOrVote',
+                'login:gh': 'loginWithGH'
             }, this);
+            this.userAuthed = false;
 		},
 
 		events: {},
+
+        passActiveHomeIndex: function (index) {
+            this.activeHomeIndex = index;
+        },
+
+        loginWithGH: function () {
+            var self = this;
+            var state;
+
+            if (this.showHomeView) {
+                switch (this.activeHomeIndex) {
+                    case 0:
+                        state = OSUtil.UP_FOR_GRABS_STATE;
+                        break;
+                    case 1:
+                        state = OSUtil.ON_THE_FENCE_STATE;
+                        break;
+                    case 2:
+                        state = OSUtil.LAUNCHED_STATE;
+                        break;
+                }
+            } else {
+                state = OSUtil.PROJECT_STATE + 'num' + this.projectView.projectID;
+            }
+
+            window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&scope=public_repo&state=' + state;
+        },
+
+        // either show the login modal or vote on the passed projectPostView
+        loginOrVote: function (projectPostView) {
+            var self = this;
+            if (!this.userAuthed) {
+                projectPostView.handleVote();
+            } else {
+                this.loginModal.setMessage('You must be logged in to vote on projects.');
+                this.loginModal.showModal();
+            }
+        },
 
         showCreateModalOnPullProject: function (id) {
             var self = this;
@@ -61,6 +104,7 @@ define(['jquery',
                 // user cookie wan't set
                 console.log('user cookie wasnt set');
             } else {
+                this.userAuthed = true;
                 var user = new User();
                 user.getByGHUsername({gh_username: cookieGHUsername}, {success: function (user) {
                     self.setUserFromResponse(user);
@@ -88,7 +132,7 @@ define(['jquery',
         },
 
         setUserHeaderPic: function (url) {
-            $('.header-user-pic').attr('src', url);
+            $('#header-user-pic').attr('src', url);
         },
 
         // Was used to take into account when GH API redirects you back
@@ -201,6 +245,18 @@ define(['jquery',
             }
         },
 
+        addProjectBtnListener: function () {
+            var self = this;
+            $('#headerAddProjectBtn').click(function () {
+                if (!self.userAuthed) {
+                    self.createProjectModal.showModal();
+                } else {
+                    self.loginModal.setMessage('You must be logged in to add a project.');
+                    self.loginModal.showModal();
+                }
+            });
+        },
+
 		render: function (options) {
 			var self = this;
             this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -210,6 +266,8 @@ define(['jquery',
                 showHomeView: this.showHomeView,
                 showProjectView: this.showProjectView
             }));
+
+            this.addProjectBtnListener();
 
             if (this.showHomeView) {
                 this.homeView = new IndexView({
@@ -242,6 +300,13 @@ define(['jquery',
                     this.createProjectModal.passLangData(this.allLangs);
                 }
                 this.createProjectModal.render();
+            }
+
+            if (!this.loginModal) {
+                this.loginModal = new LoginModal({
+                   el: this.$el.find('#modalLogin')
+                });
+                this.loginModal.render();
             }
 		}
 

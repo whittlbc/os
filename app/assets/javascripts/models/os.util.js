@@ -40,6 +40,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
         PROJECT_TYPES: ['up-for-grabs', 'on-the-fence', 'launched'],
         GRAMMATICAL_PROJECT_TYPES: ['Up for Grabs', 'On the Fence', 'Launched'],
 
+        UP_FOR_GRABS_STATE: '924bcad2-2e31-4522-9157-ca239c6e5b3b',
+        ON_THE_FENCE_STATE: 'ecbc2679-5789-4ce8-aa82-155f4f964d20',
+        LAUNCHED_STATE: 'fc68f489-fa29-4431-a8b0-e2e9f818107e',
+        PROJECT_STATE: 'eb339bbc-d93f-4c21-a9d2-a43dc249d5fc',
+
         customMethodMap: {
             'create': {
                 verb: 'POST',

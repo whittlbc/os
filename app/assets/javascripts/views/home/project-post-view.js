@@ -23,8 +23,13 @@ define(['jquery',
 		},
 
 		events: {
-            'click .arrow': 'handleVote',
+            'click .arrow': 'checkIfUserAuthed',
             'click .project-post-title-text': 'openProjectDetails',
+        },
+
+        checkIfUserAuthed: function () {
+            var self = this;
+            Backbone.EventBroker.trigger('project:vote', self);
         },
 
         errorHandler: function(resp, status, xhr) {

@@ -117,7 +117,7 @@ footer p {
     width: 75%;
 }
 
-.header-user-pic {
+#header-user-pic {
     height: 40px;
     width: 40px;
     border-radius: 20px;
@@ -231,7 +231,7 @@ footer p {
     box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22); }
 
 
-.add-project-btn {
+#headerAddProjectBtn {
     width: 15%;
     height: 65px;
     line-height: 67px;

@@ -1,6 +1,7 @@
 Backboneworld::Application.routes.draw do
 
   get '/' => 'home#index'
+  get '/login/ghLoginCB' => 'login#gh_login_cb'
   root :to => "home#index"
   get '/languages/getAll' => 'languages#get_all'
 
@@ -30,7 +31,6 @@ Backboneworld::Application.routes.draw do
     collection do
       get :login, :path => '/login'
       get :username_test, :path => '/checkUsername'
-      post :gh_code, :path => '/postGHCode'
       get :get_by_gh_username, :path => '/getByGHUsername'
       get :get_all_user_repos, :path => '/getAllUserRepos'
       get :get_repo_details, :path => '/getRepoDetails'
