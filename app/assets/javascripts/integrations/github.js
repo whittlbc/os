@@ -1,9 +1,11 @@
 define(['jquery',
 	'backbone',
-	'underscore'
+	'underscore',
+    'models/os.util'
     ], function ($,
      Backbone,
-     _) {
+     _,
+     OSUtil) {
 	'use strict';
 
 	var Github = {
@@ -42,8 +44,15 @@ define(['jquery',
             var headers = {
                 'Content-Type': 'application/json'
             };
+            // First try authed call with user if they are authed
+            // Fall back to unauthed call from user
+            // If user has 0 GH API requests left, use my personal token to make an authed call
+            // From there, you're fucked and will just have to wait for your X-RateLimit-Reset time to elapse
             if (this.token) {
                 headers['Authorization'] = this.headerToken;
+            }
+            if (this.requestsRemaining === 0) {
+                headers['Authorization'] = OSUtil.MY_GH_HEADER_TOKEN;
             }
             return headers;
         },
@@ -55,12 +64,12 @@ define(['jquery',
 
         fetchAsset: function (url, cb) {
             var self = this;
-
             $.ajax({
                 type: 'GET',
                 headers: self.getHeaders(),
                 url: url
             }).done(function (data) {
+                self.requestsRemaining = Number(request.getResponseHeader('X-RateLimit-Remaining'));
                 cb(data);
             });
         },
@@ -71,7 +80,10 @@ define(['jquery',
                 type: 'GET',
                 headers: self.getHeaders(),
                 url: url
-            }).done(function(data) { cb(data); });
+            }).done(function(data) {
+                self.requestsRemaining = Number(request.getResponseHeader('X-RateLimit-Remaining'));
+                cb(data);
+            });
         },
 
         fetchTotalAssetCount: function (url, cb) {
@@ -81,6 +93,7 @@ define(['jquery',
                 headers: self.getHeaders(),
                 url: url
             }).done(function (data) {
+                self.requestsRemaining = Number(request.getResponseHeader('X-RateLimit-Remaining'));
                 var linkHeader = request.getResponseHeader('Link');
                 if (linkHeader) {
                     var lastPageNum = self.getLastPageNum(linkHeader);
@@ -102,6 +115,7 @@ define(['jquery',
                 headers: self.getHeaders(),
                 url: url
             }).done(function (data) {
+                self.requestsRemaining = Number(request.getResponseHeader('X-RateLimit-Remaining'));
                 var linkHeader = request.getResponseHeader('Link');
                 if (linkHeader) {
                     var pageCount = Number(url.slice(url.length-1));

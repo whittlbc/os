@@ -45,6 +45,8 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
         LAUNCHED_STATE: 'fc68f489-fa29-4431-a8b0-e2e9f818107e',
         PROJECT_STATE: 'eb339bbc-d93f-4c21-a9d2-a43dc249d5fc',
 
+        MY_GH_HEADER_TOKEN: '202171c69b06bbe92b666e1a5e3a9b7981a6fced',
+
         customMethodMap: {
             'create': {
                 verb: 'POST',
