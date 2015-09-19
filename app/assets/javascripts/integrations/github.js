@@ -150,6 +150,70 @@ define(['jquery',
             var self = this;
             var url = this.getURLFor('closedPRs', username, repo);
             this.fetchTotalAssetCount(url, cb);
+        },
+
+        resetStatsObj: function () {
+            var self = this;
+            if (!this.statsObj) {
+                this.statsObj = {
+                    last_updated: null,
+                    star_count: null,
+                    watch_count: null,
+                    open_pr_count: null,
+                    closed_pr_count: null,
+                    open_issues_count: null,
+                    forks_count: null
+                };
+            } else {
+                for (var key in this.statsObj) {
+                    this.statsObj[key] = null;
+                }
+            }
+        },
+
+        doneFetchingRepoStats: function () {
+            var self = this;
+            var done = true;
+            for (var key in this.statsObj) {
+                if (this.statsObj[key] == null) {
+                    done = false;
+                }
+            }
+            return done;
+        },
+
+        fetchRepoStats: function (username, repo, cb) {
+            var self = this;
+            this.doneFetchingStats = false;
+            this.resetStatsObj();
+
+            this.getRepo(username, repo, function (data) {
+                self.statsObj.last_updated = data.updated_at;
+                self.statsObj.open_issues_count = data.open_issues_count;
+                self.statsObj.forks_count = data.forks_count;
+                self.statsObj.star_count = data.stargazers_count;
+                self.statsObj.watch_count = data.subscribers_count;
+                if (!self.doneFetchingStats && self.doneFetchingRepoStats()) {
+                    self.doneFetchingStats = true;
+                    cb(self.statsObj);
+                }
+            });
+
+            this.getOpenPRCount(username, repo, function (count) {
+                self.statsObj.open_pr_count = count;
+                if (!self.doneFetchingStats && self.doneFetchingRepoStats()) {
+                    self.doneFetchingStats = true;
+                    cb(self.statsObj);
+                }
+            });
+
+            this.getClosedPRCount(username, repo, function (count) {
+                self.statsObj.closed_pr_count = count;
+                if (!self.doneFetchingStats && self.doneFetchingRepoStats()) {
+                    self.doneFetchingStats = true;
+                    cb(self.statsObj);
+                }
+            });
         }
 
 	};
