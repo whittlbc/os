@@ -28,14 +28,14 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-        :getting_repo_data => false,
+        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
         :status => project.status,
         :title => project.title,
         :user_id => project.user_id,
         :uuid => project.uuid,
         :vote_count => project.vote_count,
         :owner_gh_username => owner_gh_username,
+        :admin => Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) },
         :integrations => project.integrations
       }
 
@@ -56,77 +56,6 @@ class ProjectsController < ApplicationController
     end
 
   end
-
-  def fetch_gh_contributors
-    response = RestClient.get("https://api.github.com/repos/#{params[:owner_gh_username]}/#{params[:repo_name]}/contributors", :accept => :json)
-    contrib_gh_usernames = params[:app_contributors].map { |contrib| contrib[:gh_username] }
-    gh_only_contributors = []
-    JSON.parse(response.body).each { |contrib|
-      # 'login' in this case is the gh_username of the gh contributor
-      if !contrib_gh_usernames.include?(contrib['login'])
-        gh_only_contributors.push({
-            'gh_username' => contrib['login'],
-            'pic' => contrib['avatar_url'],
-            'admin' => false,
-            'owner' => false
-        })
-      end
-    }
-    gh_only_contributors = gh_only_contributors.sort_by { |obj| obj['name'] }
-    final_contributors = params[:app_contributors] + gh_only_contributors
-    render :json => final_contributors
-  end
-
-  def fetch_gh_repo_stats
-    repo_response = RestClient.get("https://api.github.com/repos/#{params[:repoPath]}", :accept => :json)
-    open_pr_count = get_gh_total("https://api.github.com/repos/#{params[:repoPath]}/pulls", 'state=open')
-    closed_pr_count = get_gh_total("https://api.github.com/repos/#{params[:repoPath]}/pulls", 'state=closed')
-
-    repo_body = JSON.parse(repo_response.body)
-
-    stats_hash = {
-        :last_updated => get_general_date(Time.strptime(repo_body['updated_at'], "%Y-%m-%dT%H:%M:%SZ")),
-        :open_issues_count => repo_body['open_issues_count'],
-        :forks_count => repo_body['forks_count'],
-        :star_count => repo_body['stargazers_count'],
-        :watch_count => repo_body['subscribers_count'],
-        :open_pr_count => open_pr_count,
-        :closed_pr_count => closed_pr_count,
-    }
-
-    render :json => stats_hash
-
-  end
-
-  # Hit GH API and return TOTAL results of a stat, regardless of if it's paginated
-  # Keep in mind that GH returns 30 results/page
-  def get_gh_total(url, str_params)
-    params = str_params ? '?' + str_params + '&' : '?'
-    first_page_response = RestClient.get(url + params + 'page=1', :accept => :json)
-    first_page_body = JSON.parse(first_page_response.body)
-    if first_page_response.headers[:link].blank?
-      first_page_body.count
-    else
-      last_page = nil
-      first_page_response.headers[:link].split(',').each { |rel_info|
-        if rel_info.include?('rel="last"')
-          start_index = rel_info.index('page=') + 5
-          end_index = rel_info.index('>')
-          last_page = rel_info.slice(start_index, end_index - start_index)
-        end
-      }
-      if last_page.nil?
-        first_page_body.count
-      else
-        last_page_response = RestClient.get(url + params + 'page=' + last_page, :accept => :json)
-        last_page_body = JSON.parse(last_page_response)
-        total = first_page_body.count + ((last_page.to_i - 2) * 30) + last_page_body.count
-        total
-      end
-    end
-
-  end
-
 
   def get_general_date(date)
     min_diff = (Time.now.utc - date.utc) / 60

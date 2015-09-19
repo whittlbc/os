@@ -10,13 +10,6 @@ define(['jquery',
 
         endpoint: 'https://api.github.com/',
 
-        paramsForAsset: {
-            'contributors': '?page=',
-            'allContributors': '&page=',
-            'openPRs': '&page=',
-            'closedPRs': '&page='
-        },
-
         getURLFor: function (asset, username, repo) {
             var self = this;
 
@@ -28,9 +21,6 @@ define(['jquery',
                     return this.endpoint + 'repos/' + username + '/' + repo;
                     break;
                 case 'contributors':
-                    return this.endpoint + 'repos/' + username + '/' + repo + '/contributors';
-                    break;
-                case 'allContributors':
                     return this.endpoint + 'repos/' + username + '/' + repo + '/contributors?per_page=100&page=1';
                     break;
                 case 'openPRs':
@@ -84,7 +74,7 @@ define(['jquery',
             }).done(function(data) { cb(data); });
         },
 
-        fetchTotalAssetCount: function (url, asset, cb) {
+        fetchTotalAssetCount: function (url, cb) {
             var self = this;
             var request = $.ajax({
                 type: 'GET',
@@ -92,23 +82,15 @@ define(['jquery',
                 url: url
             }).done(function (data) {
                 var linkHeader = request.getResponseHeader('Link');
-
                 if (linkHeader) {
                     var lastPageNum = self.getLastPageNum(linkHeader);
-                    var params = self.paramsForAsset[asset] + lastPageNum;
+                    var params = '&page=' + lastPageNum;
                     self.fetchLastPage(url + params, function (lastPageData) {
-                        var returnData = {
-                            data: (asset === 'contributors') ? data : null,
-                            totalCount: 30 * (lastPageNum - 1) + lastPageData.length
-                        };
-                        cb(returnData);
+                        var totalCount = 30 * (lastPageNum - 1) + lastPageData.length;
+                        cb(totalCount);
                     });
                 } else {
-                    var returnData = {
-                        data: (asset === 'contributors') ? data : null,
-                        totalCount: data.length
-                    };
-                    cb(returnData);
+                    cb(data.length);
                 }
             });
         },
@@ -143,12 +125,6 @@ define(['jquery',
         getContributors: function (username, repo, cb) {
             var self = this;
             var url = this.getURLFor('contributors', username, repo);
-            this.fetchTotalAssetCount(url, 'contributors', cb);
-        },
-
-        getAllContributors: function (username, repo, cb) {
-            var self = this;
-            var url = this.getURLFor('allContributors', username, repo);
             this.fetchTotalAssets(url, [], null, cb);
         },
 
@@ -167,13 +143,13 @@ define(['jquery',
         getOpenPRCount: function (username, repo, cb) {
             var self = this;
             var url = this.getURLFor('openPRs', username, repo);
-            this.fetchTotalAssetCount(url, 'openPRs', cb);
+            this.fetchTotalAssetCount(url, cb);
         },
 
         getClosedPRCount: function (username, repo, cb) {
             var self = this;
             var url = this.getURLFor('closedPRs', username, repo);
-            this.fetchTotalAssetCount(url, 'closedPRs', cb);
+            this.fetchTotalAssetCount(url, cb);
         }
 
 	};

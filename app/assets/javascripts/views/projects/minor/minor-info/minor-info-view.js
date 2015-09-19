@@ -19,12 +19,12 @@ define(['jquery',
 
 		events: {},
 
-        lazyLoadContribs: function (contribs) {
+        lazyLoadContribs: function (data) {
             this.contributorsView.render({
-                contributors: contribs,
+                contributors: data,
                 showSpinner: false
             });
-            this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + contribs.length + ')')
+            this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + data.length + ')')
         },
 
         lazyLoadRepoStats: function (data) {

@@ -85,25 +85,16 @@ define(['jquery',
 
         handleFetchedDetails: function (data) {
             var self = this;
-            //if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-            //    var params = {
-            //        //repo_name: data.project.repo_name,
-            //        //owner_gh_username: data.project.owner_gh_username,
-            //        repo_name: 'medium-editor',
-            //        owner_gh_username: 'yabwe',
-            //        project_id: data.project.id,
-            //        app_contributors: data.project.contributors
-            //    };
-            //    var project = new Project();
-            //    project.fetchGHContributors(params, {success: function (data) {
-            //        self.handleFetchedGHContribs(data);
-            //    }});
-            //    project.fetchGHRepoStats({repoPath: 'yabwe/medium-editor'}, {success: function () {
-            //        self.handleFetchedGHRepoStats();
-            //    }});
-            //} else {
+            if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
+                this.github.getContributors('yabwe', 'medium-editor', function (data) {
+                    self.handleFetchedGHContribs(data, data.admin, data.owner_gh_username);
+                });
+                //this.github.fetchRepoStats('yabwe', 'medium-editor', function (data) {
+                //    self.handleFetchedGHRepoStats(data);
+                //});
+            } else {
                 this.contributors = data.project.contributors;
-            //}
+            }
             this.fetchComments(0);
             this.setProjectProperties(data);
             this.render(data);
@@ -122,12 +113,37 @@ define(['jquery',
             self.projectMajorView.passComments(comments);
         },
 
-        handleFetchedGHContribs: function (data) {
-            this.projectMinorView.lazyLoadContribs(data);
+        handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
+            var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
+            this.projectMinorView.lazyLoadContribs(sortedContribs);
         },
 
         handleFetchedGHRepoStats: function (data) {
             this.projectMinorView.lazyLoadRepoStats(data);
+        },
+
+        sortContribs: function (contribs, admin, owner_gh_username) {
+            var owner = [];
+            var adminNotOwner = [];
+            var others = [];
+            for (var i = 0; i < contribs.length; i++) {
+                if (contribs[i].login === owner_gh_username) {
+                    contribs[i].admin = true;
+                    owner.push(contribs[i]);
+                } else if (_.contains(admin, contribs[i].login)) {
+                    contribs[i].admin = true;
+                    adminNotOwner.push(contribs[i]);
+                } else {
+                    others.push(contribs[i]);
+                }
+            }
+            adminNotOwner = adminNotOwner.sort(function (a, b) {
+                return (a.login > b.login) ? 1 : ((b.login > a.login) ? -1 : 0);
+            });
+            others = others.sort(function (a, b) {
+                return (a.login > b.login) ? 1 : ((b.login > a.login) ? -1 : 0);
+            });
+            return _.union(owner, adminNotOwner, others);
         },
 
         passUserInfo: function (data) {

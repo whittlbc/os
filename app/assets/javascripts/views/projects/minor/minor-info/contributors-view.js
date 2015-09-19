@@ -39,9 +39,9 @@ define(['jquery',
         addContrib: function(data, i) {
             var contribItemView = new ContributorsItemView({
                 tagName: 'li',
-                ghUsername: data.gh_username,
+                ghUsername: data.login,
                 admin: data.admin,
-                pic: data.pic,
+                pic: data.avatar_url,
                 index: i
             });
             contribItemView.render();
