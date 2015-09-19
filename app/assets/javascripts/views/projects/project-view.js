@@ -3,6 +3,7 @@ define(['jquery',
     'underscore',
     'models/project',
     'models/os.util',
+    'integrations/github',
     'views/projects/major/project-major-view',
     'views/projects/minor/project-minor-view',
     'stache!views/projects/project-view',
@@ -13,6 +14,7 @@ define(['jquery',
      _,
      Project,
      OSUtil,
+     Github,
      ProjectMajorView,
      ProjectMinorView,
      ProjectViewTpl) {
@@ -33,6 +35,10 @@ define(['jquery',
                 'comment:add': 'handleAddComment',
                 'comments:fetch': 'fetchComments'
             }, this);
+
+            this.github = Github;
+            this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
+
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -79,25 +85,25 @@ define(['jquery',
 
         handleFetchedDetails: function (data) {
             var self = this;
-            if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-                var params = {
-                    //repo_name: data.project.repo_name,
-                    //owner_gh_username: data.project.owner_gh_username,
-                    repo_name: 'medium-editor',
-                    owner_gh_username: 'yabwe',
-                    project_id: data.project.id,
-                    app_contributors: data.project.contributors
-                };
-                var project = new Project();
-                project.fetchGHContributors(params, {success: function (data) {
-                    self.handleFetchedGHContribs(data);
-                }});
-                project.fetchGHRepoStats({repoPath: 'yabwe/medium-editor'}, {success: function () {
-                    self.handleFetchedGHRepoStats();
-                }});
-            } else {
+            //if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
+            //    var params = {
+            //        //repo_name: data.project.repo_name,
+            //        //owner_gh_username: data.project.owner_gh_username,
+            //        repo_name: 'medium-editor',
+            //        owner_gh_username: 'yabwe',
+            //        project_id: data.project.id,
+            //        app_contributors: data.project.contributors
+            //    };
+            //    var project = new Project();
+            //    project.fetchGHContributors(params, {success: function (data) {
+            //        self.handleFetchedGHContribs(data);
+            //    }});
+            //    project.fetchGHRepoStats({repoPath: 'yabwe/medium-editor'}, {success: function () {
+            //        self.handleFetchedGHRepoStats();
+            //    }});
+            //} else {
                 this.contributors = data.project.contributors;
-            }
+            //}
             this.fetchComments(0);
             this.setProjectProperties(data);
             this.render(data);
