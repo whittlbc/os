@@ -64,7 +64,7 @@ define(['jquery',
 
         fetchAsset: function (url, cb) {
             var self = this;
-            $.ajax({
+            var request = $.ajax({
                 type: 'GET',
                 headers: self.getHeaders(),
                 url: url
@@ -202,7 +202,8 @@ define(['jquery',
             this.resetStatsObj();
 
             this.getRepo(username, repo, function (data) {
-                self.statsObj.last_updated = data.updated_at;
+                var updatedAtDateUTC = OSUtil.dateToUTC(new Date(data.updated_at));
+                self.statsObj.last_updated = OSUtil.getTimeDiff(updatedAtDateUTC);
                 self.statsObj.open_issues_count = data.open_issues_count;
                 self.statsObj.forks_count = data.forks_count;
                 self.statsObj.star_count = data.stargazers_count;
