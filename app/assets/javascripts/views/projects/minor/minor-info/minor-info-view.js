@@ -29,6 +29,7 @@ define(['jquery',
 
         lazyLoadRepoStats: function (data) {
             this.repoStatsView.render({
+                repoURL: this.repoURL,
                 repoData: data,
                 showSpinner: false
             });
@@ -65,11 +66,13 @@ define(['jquery',
                 }
             }
 
+            this.repoURL = 'https://' + repoName;
+
             this.$el.html(MinorInfoViewTpl({
                 postDate: options.post_date ? options.post_date : '',
                 showRepoName: showRepoName,
                 repoName: repoName,
-                repoURL: 'https://' + repoName,
+                repoURL: this.repoURL,
                 linkRepoName: repoName != null,
                 numContrib: options.contributors && !options.getting_repo_data ? '(' + options.contributors.length + ')' : '',
                 showTeamCommunication: showTeamCommunication,
@@ -96,6 +99,7 @@ define(['jquery',
                 el: '#repoStatsView'
             });
             this.repoStatsView.render({
+                repoURL: this.repoURL,
                 showSpinner: options.getting_repo_data
             });
 		}
