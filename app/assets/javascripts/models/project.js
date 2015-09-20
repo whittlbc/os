@@ -220,6 +220,17 @@ define(['jquery',
             });
 
             return this.sync('pullProject', this, requestInfo);
+        },
+
+        getEvolution: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getEvolution',
+                data: info
+            });
+
+            return this.sync('getEvolution', this, requestInfo);
         }
 
     });

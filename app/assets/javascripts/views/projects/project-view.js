@@ -33,7 +33,8 @@ define(['jquery',
             Backbone.EventBroker.register({
                 'project:join': 'checkProjectPrivacy',
                 'comment:add': 'handleAddComment',
-                'comments:fetch': 'fetchComments'
+                'comments:fetch': 'fetchComments',
+                'evolution:fetch': 'fetchProjectEvolution'
             }, this);
 
             this.github = Github;
@@ -46,6 +47,14 @@ define(['jquery',
         },
 
         events: {},
+
+        fetchProjectEvolution: function () {
+            var self = this;
+            var project = new Project();
+            project.getEvolution({id: this.projectID}, {success: function (data) {
+                Backbone.EventBroker.trigger('evolution:pass', data);
+            }});
+        },
 
         handleAddComment: function (data) {
             var self = this;

@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   has_many :contributors
   has_many :integrations
   has_many :comments
+  has_many :evolutions
 
   def get_owner_gh_username
     self.try(:user).try(:gh_username)

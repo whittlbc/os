@@ -410,6 +410,7 @@ $major-info-project-type: #CECECE;
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
   background-color: white;
+  border-top: 1px solid #DDD;
 }
 
 .follow-project-btn {
@@ -946,5 +947,59 @@ $major-info-project-type: #CECECE;
 }
 
 
+
+#evolutionFeedListView {
+  list-style-type: none;
+  padding-left: 0;
+  float: left;
+  width: 100%;
+
+  li {
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #DDD;
+  }
+
+  .evolution-feed-item-container {
+    float: left;
+    width: 100%;
+
+    .evolution-item-header {
+      height: 30px;
+      width: 100%;
+      float: left;
+      line-height: 30px;
+      display: block;
+      padding-left: 10px;
+      padding-right: 15px;
+
+      .property {
+        display: inline-block;
+        float: left;
+        font-size: 13px;
+      }
+
+      .date {
+        font-size: 10px;
+        font-family: 'Helvetica Neue';
+        font-weight: 300;
+        color: #C4C5CA;
+        float: right;
+        display: inline-block;
+      }
+
+    }
+
+    .newValue {
+      min-height: 50px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 14px;
+    }
+  }
+
+}
 
 

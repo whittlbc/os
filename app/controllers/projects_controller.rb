@@ -145,6 +145,14 @@ class ProjectsController < ApplicationController
     contributor = Contributor.new(contrib_data)
     contributor.save
 
+    evolution_data = {
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :project_id => @project.id,
+        :property => 'Creation'
+    }
+    evolution = Evolution.new(evolution_data)
+    evolution.save
+
     render :json => @project
   end
 
@@ -438,11 +446,15 @@ class ProjectsController < ApplicationController
     render :json => {:status => 200}
   end
 
+  def get_evolution
+    project = Project.find_by(id: params[:id])
 
-
-
-
-
+    if !project.nil?
+      render :json => project.evolutions.order(:created_at)
+    else
+      render :json => {:status => 500, :message => 'Could not find project by id'}
+    end
+  end
 
 
 

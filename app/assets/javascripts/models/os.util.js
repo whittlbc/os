@@ -189,7 +189,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'pullProject': {
                 verb: 'PUT',
                 action: 'update'
-            }
+            },
+            'getEvolution': {
+                verb: 'GET',
+                action: 'read'
+            },
         }
 
     };

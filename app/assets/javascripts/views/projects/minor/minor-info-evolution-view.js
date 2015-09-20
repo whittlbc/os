@@ -4,7 +4,8 @@ define(['jquery',
     'views/projects/minor/minor-info/minor-info-view',
     'views/projects/minor/evolution/evolution-view',
 	'stache!views/projects/minor/minor-info-evolution-view',
-    'tabs'
+    'tabs',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -30,6 +31,7 @@ define(['jquery',
                 $flipper.removeClass('flipped');
                 this.voidToggleClicks();
             } else if (e.currentTarget.id == 'evolution' && !$flipper.hasClass('flipped')) {
+                Backbone.EventBroker.trigger('evolution:fetch');
                 this.evolutionBtnActive();
                 $flipper.addClass('flipped');
                 this.voidToggleClicks();
