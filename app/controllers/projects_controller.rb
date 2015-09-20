@@ -450,14 +450,30 @@ class ProjectsController < ApplicationController
     project = Project.find_by(id: params[:id])
 
     if !project.nil?
-      render :json => project.evolutions.order(:created_at)
+
+      fake_data = [
+        {
+            :created_at => '2015-09-20 05:31:12.130724',
+            :property => 'Creation'
+        },
+        {
+            :created_at => '2015-09-20 05:31:12.130724',
+            :property => 'description',
+            :new_value => 'My New Description!'
+        },
+        {
+            :created_at => '2015-09-20 05:31:12.130724',
+            :property => 'langs_and_frames',
+            :new_value => ['Ruby','HTML','CSS','JavaScript']
+        }
+      ]
+
+      render :json => fake_data
+      # render :json => project.evolutions.order(:created_at)
     else
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end
   end
-
-
-
 
 
   private

@@ -17,6 +17,10 @@ define(['jquery',
 
 		events: {},
 
+        capitalize: function (string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+
         setData: function (data) {
             var self = this;
             this.data = data;
@@ -25,6 +29,14 @@ define(['jquery',
             this.data.date = OSUtil.getTimeDiff(utcDate);
             if (this.data.property === 'Creation') {
                 this.data.new_value = 'Project was created.'
+            } else if (this.data.property === 'langs_and_frames') {
+                this.data.property = 'Languages and Frameworks'
+            } else {
+                this.data.property = this.capitalize(this.data.property);
+            }
+
+            if (Array.isArray(this.data.new_value)) {
+                this.data.new_value = this.data.new_value.join(', ');
             }
         },
 
