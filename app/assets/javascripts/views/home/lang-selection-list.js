@@ -92,8 +92,9 @@ define(['jquery',
             el.style.listStyleType = 'none';
             el.style.display = 'inline-block';
             el.style.position = 'relative';
+            el.firstChild.style.backgroundColor = self.colors_and_initials[value]['color'];
             el.style.top = animate ? (window.innerHeight + 'px') : '0px';
-            $(el.firstChild).html(self.colors_and_initials[value]["initials"]);
+            $(el.firstChild).html(self.colors_and_initials[value]['initials']);
             var $p = $(el).children().eq(1);
             $p.html(value);
             if (value.length > 11) {
