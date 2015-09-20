@@ -48,6 +48,7 @@ class ProjectsController < ApplicationController
       Contributor.includes(:user).where(project_id: params[:id]).each { |contrib|
         obj = {
             'login' => contrib.try(:user).try(:gh_username),
+            'html_url' => "https://github.com/#{contrib.try(:user).try(:gh_username)}",
             'avatar_url' => contrib.try(:user).try(:pic),
             'admin' => contrib.admin,
             'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
