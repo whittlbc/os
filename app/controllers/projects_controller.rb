@@ -28,7 +28,8 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
         :user_id => project.user_id,
@@ -41,14 +42,32 @@ class ProjectsController < ApplicationController
 
       comments = Comment.where(project_id: params[:id])
 
-      project_details[:contributors] = Contributor.includes(:user).where(project_id: params[:id]).map { |contrib|
-        {
-            'gh_username' => contrib.try(:user).try(:gh_username),
-            'pic' => contrib.try(:user).try(:pic),
+      owner = []
+      admin = []
+      others = []
+      Contributor.includes(:user).where(project_id: params[:id]).each { |contrib|
+        obj = {
+            'login' => contrib.try(:user).try(:gh_username),
+            'avatar_url' => contrib.try(:user).try(:pic),
             'admin' => contrib.admin,
             'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
         }
-      }.sort_by { |obj| [(obj['owner'] ? 0 : 1), (obj['admin'] ? 0 : 1), obj['gh_username']] }
+        if obj['owner']
+          owner.push(obj)
+        elsif obj['admin']
+          admin.push(obj)
+        else
+          others.push(obj)
+        end
+      }
+
+      admin = admin.sort_by { |obj| obj['login'].downcase }
+      others = others.sort_by { |obj| obj['login'].downcase }
+
+      project_details[:contributors] = {
+          :admin => owner + admin,
+          :others => others
+      }
 
       render :json => {:project => project_details, :comments => comments}
     else

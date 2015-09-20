@@ -39,6 +39,7 @@ define(['jquery',
             this.$el.html(ContributorsFeedItemViewTpl({
                 ghUsername: this.data.login,
                 pic: this.data.avatar_url,
+                showContributions: this.data.hasOwnProperty('contributions'),
                 contributions: this.data.contributions,
                 singular: this.data.contributions == 1
             }));

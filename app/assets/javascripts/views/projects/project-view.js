@@ -97,6 +97,7 @@ define(['jquery',
                 });
             } else {
                 this.contributors = data.project.contributors;
+                data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
             }
             this.fetchComments(0);
             this.setProjectProperties(data);
@@ -119,7 +120,6 @@ define(['jquery',
         handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
             var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
             this.contributors = sortedContribs;
-            console.log(this.contributors.others);
             this.projectMinorView.lazyLoadContribs(_.union(sortedContribs.admin, sortedContribs.others));
         },
 
