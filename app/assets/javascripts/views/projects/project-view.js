@@ -119,6 +119,7 @@ define(['jquery',
         handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
             var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
             this.contributors = sortedContribs;
+            console.log(this.contributors.others);
             this.projectMinorView.lazyLoadContribs(_.union(sortedContribs.admin, sortedContribs.others));
         },
 
@@ -142,10 +143,18 @@ define(['jquery',
                 }
             }
             adminNotOwner = adminNotOwner.sort(function (a, b) {
-                return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
+                if (a.contributions === b.contributions) {
+                    return (a.login.toLowerCase() > b.login.toLowerCase()) ? 1 : ((b.login.toLowerCase() > a.login.toLowerCase()) ? -1 : 0);
+                } else {
+                    return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
+                }
             });
             others = others.sort(function (a, b) {
-                return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
+                if (a.contributions === b.contributions) {
+                    return (a.login.toLowerCase() > b.login.toLowerCase()) ? 1 : ((b.login.toLowerCase() > a.login.toLowerCase()) ? -1 : 0);
+                } else {
+                    return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
+                }
             });
             return {
                 admin: _.union(owner, adminNotOwner),

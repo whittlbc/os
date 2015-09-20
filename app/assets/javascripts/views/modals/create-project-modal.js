@@ -24,6 +24,9 @@ define(['jquery',
         passUserData: function (data) {
             var self = this;
             this.userData = data;
+            if (this.createNewProjectPopup) {
+                this.createNewProjectPopup.passUserData(data);
+            }
         },
 
         passLangData: function (data) {

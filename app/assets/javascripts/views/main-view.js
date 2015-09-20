@@ -125,7 +125,7 @@ define(['jquery',
 
         loginOrAllowCommentInput: function (view) {
             var self = this;
-            if (!this.userAuthed) {
+            if (this.userAuthed) {
                 this.loginModal.setMessage('You must be logged in to participate in the discussion.');
                 this.loginModal.showModal();
             }
@@ -301,7 +301,7 @@ define(['jquery',
         addProjectBtnListener: function () {
             var self = this;
             $('#headerAddProjectBtn').click(function () {
-                if (!self.userAuthed) {
+                if (self.userAuthed) {
                     self.createProjectModal.showModal();
                 } else {
                     self.loginModal.setMessage('You must be logged in to add a project.');

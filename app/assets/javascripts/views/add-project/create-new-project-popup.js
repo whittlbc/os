@@ -135,6 +135,10 @@ define(['jquery',
             };
         },
 
+        passUserData: function (data) {
+            this.userData = data;
+        },
+
         resetMasterMap: function (obj) {
             for (var key in obj) {
                 (typeof(obj[key]) === 'object' && !Array.isArray(obj[key])) ? this.resetMasterMap(obj[key]) : obj[key] = null;
