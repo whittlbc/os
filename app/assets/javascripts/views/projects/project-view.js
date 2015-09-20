@@ -86,10 +86,13 @@ define(['jquery',
         handleFetchedDetails: function (data) {
             var self = this;
             if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-                this.github.getContributors('yabwe', 'medium-editor', function (data) {
-                    self.handleFetchedGHContribs(data, data.admin, data.owner_gh_username);
+                //this.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
+                //    self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
+                //});
+                this.github.getContributors('yabwe', 'medium-editor', function (contribData) {
+                    self.handleFetchedGHContribs(contribData, data.project.admin, 'yabwe');
                 });
-                this.github.fetchRepoStats('yabwe', 'medium-editor', function (data) {
+                this.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
                     self.handleFetchedGHRepoStats(data);
                 });
             } else {
@@ -115,7 +118,8 @@ define(['jquery',
 
         handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
             var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
-            this.projectMinorView.lazyLoadContribs(sortedContribs);
+            this.contributors = sortedContribs;
+            this.projectMinorView.lazyLoadContribs(_.union(sortedContribs.admin, sortedContribs.others));
         },
 
         handleFetchedGHRepoStats: function (data) {
@@ -138,12 +142,15 @@ define(['jquery',
                 }
             }
             adminNotOwner = adminNotOwner.sort(function (a, b) {
-                return (a.login > b.login) ? 1 : ((b.login > a.login) ? -1 : 0);
+                return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
             });
             others = others.sort(function (a, b) {
-                return (a.login > b.login) ? 1 : ((b.login > a.login) ? -1 : 0);
+                return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
             });
-            return _.union(owner, adminNotOwner, others);
+            return {
+                admin: _.union(owner, adminNotOwner),
+                others: others
+            };
         },
 
         passUserInfo: function (data) {

@@ -3,7 +3,8 @@ define(['jquery',
 	'underscore',
     'views/projects/minor/minor-info/contributors-view',
     'views/projects/minor/minor-info/repo-stats-view',
-	'stache!views/projects/minor/minor-info/minor-info-view'
+	'stache!views/projects/minor/minor-info/minor-info-view',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -17,7 +18,13 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+            'click #contributorsSubsectionTitle': 'showContribsModal'
+        },
+
+        showContribsModal: function () {
+            Backbone.EventBroker.trigger('contribs-modal:show');
+        },
 
         lazyLoadContribs: function (data) {
             this.contributorsView.render({
@@ -102,7 +109,7 @@ define(['jquery',
                 repoURL: this.repoURL,
                 showSpinner: options.getting_repo_data
             });
-		}
+        }
 	});
 
 	return MinorInfoView;

@@ -10,6 +10,7 @@ define(['jquery',
     'models/user',
     'sifter.min',
     'views/modals/login-modal',
+    'views/modals/contributors-modal',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -24,6 +25,7 @@ define(['jquery',
      User,
      Sifter,
      LoginModal,
+     ContributorsModal,
      MainViewTpl) {
 	'use strict';
 
@@ -37,12 +39,21 @@ define(['jquery',
                 'comment:reply': 'loginOrReplyToComment',
                 'post-comment:click': 'loginOrPostComment',
                 'comment-input:click': 'loginOrAllowCommentInput',
-                'login:gh': 'loginWithGH'
+                'login:gh': 'loginWithGH',
+                'contribs-modal:show': 'showContribsModal'
             }, this);
             this.userAuthed = false;
 		},
 
 		events: {},
+
+        showContribsModal: function () {
+            var self = this;
+            if (this.projectView && this.projectView.contributors) {
+                this.contribsModal.populate(this.projectView.contributors);
+                this.contribsModal.showModal();
+            }
+        },
 
         passActiveHomeIndex: function (index) {
             this.activeHomeIndex = index;
@@ -349,6 +360,13 @@ define(['jquery',
                    el: this.$el.find('#modalLogin')
                 });
                 this.loginModal.render();
+            }
+
+            if (!this.contribsModal) {
+                this.contribsModal = new ContributorsModal({
+                    el: this.$el.find('#modalContribs')
+                });
+                this.contribsModal.render();
             }
 		}
 

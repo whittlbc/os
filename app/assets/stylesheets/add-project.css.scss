@@ -9,13 +9,16 @@ input {
   outline: none;
 }
 
-.modal-body {
-  padding-top: 5px !important;
-  padding-bottom: 0 !important;
-}
+#createNewProjectModal {
 
-.modal-header {
-  border-bottom: none !important;
+  .modal-body {
+    padding-top: 5px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .modal-header {
+    border-bottom: none !important;
+  }
 }
 
 #closeAddProjectBtn {

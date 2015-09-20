@@ -32,6 +32,9 @@ define(['jquery',
                     class: 'see-all-contribs-btn'
                 });
                 $seeAllContribsBtn.html('See All');
+                $seeAllContribsBtn.click(function () {
+                    Backbone.EventBroker.trigger('contribs-modal:show');
+                });
                 this.$el.find('#contributorsListView').append($seeAllContribsBtn);
             }
         },
