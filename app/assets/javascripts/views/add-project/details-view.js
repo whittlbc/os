@@ -315,7 +315,8 @@ define(['jquery',
                 requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
                 openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
                 showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
-                postAnon: this.anon
+                postAnon: this.anon,
+                showIntegrations: this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] || this.selectedType == OSUtil.TYPE_MAP['launched']
             }));
 
             if (this.dropdownItems && options && !options.hideDetailsView) {

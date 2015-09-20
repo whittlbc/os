@@ -90,7 +90,7 @@ define(['jquery',
                 showLicense: showLicense,
                 license: license,
                 licenseSpecified: license != null,
-                showRepoStats: !!options.repo_name,
+                showRepoStats: !!options.getting_repo_data,
                 showIntegrations: showIntegrations
             }));
 
