@@ -32,6 +32,7 @@ class ProjectsController < ApplicationController
         :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
+        :subtitle => project.subtitle,
         :user_id => project.user_id,
         :uuid => project.uuid,
         :vote_count => project.vote_count,
@@ -123,6 +124,7 @@ class ProjectsController < ApplicationController
 
     project_data = {
         :title => params[:title],
+        :subtitle => params[:subtitle],
         :user_id => @user.id,
         :uuid => UUIDTools::UUID.random_create.to_s,
         :repo_name => params[:repo_name],
@@ -187,6 +189,7 @@ class ProjectsController < ApplicationController
     projects_of_type = Project.includes(:user).where(:status => params[:status]).map { |project|
       {
           :title => project.title,
+          :subtitle => project.subtitle,
           :id => project.id,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
@@ -341,6 +344,7 @@ class ProjectsController < ApplicationController
         uuid: proj.uuid,
         id: proj.id,
         title: proj.title,
+        subtitle: proj.subtitle,
         description: proj.description,
         contributors: proj.contributors,
         owner_gh_username: proj.get_owner_gh_username,
@@ -443,6 +447,7 @@ class ProjectsController < ApplicationController
       owner = User.find_by(id: project.user_id)
       {
           :title => project.title,
+          :subtitle => project.subtitle,
           :description => project.description,
           :langsFrames => project.langs_and_frames,
           :userPic => owner.pic
@@ -457,6 +462,7 @@ class ProjectsController < ApplicationController
       data = {
           :id => project.id,
           :title => project.title,
+          :subtitle => project.subtitle,
           :description => project.description,
           :langsFrames => project.langs_and_frames
       }
@@ -506,7 +512,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [])
+    params.require(:project).permit(:title, :subtitle, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [])
   end
 
 

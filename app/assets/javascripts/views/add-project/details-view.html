@@ -6,6 +6,11 @@
     <input name="add-project-title" placeholder="Title" type="text" value="{{title}}"/>
 </div>
 
+<!--Subtitle-->
+<div class="add-project-subtitle-container">
+    <input name="add-project-subtitle" placeholder="Subtitle" type="text" value="{{subtitle}}"/>
+</div>
+
 <!--Description-->
 <div class="add-project-description-container">
     <textarea name="add-project-description" placeholder="Description" value="{{description}}">{{description}}</textarea>
@@ -21,6 +26,7 @@
     </div>
 </div>
 
+<!--Anon-->
 {{#showAnon}}
 <div class="add-project-anon-container">
     <div class="add-project-anon-text">
@@ -77,10 +83,12 @@
 {{/launched}}
 
 {{#showIntegrations}}
+<!--Integrations-->
 <div class="add-project-integrations-container">
     <div class="question">
         <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Any team communication forums?
     </div>
+    <!--Slack-->
     <div class="integration-container">
         <div class="logo-container">
             <img id="slack" src="assets/slack_logo.png"/>
@@ -91,6 +99,7 @@
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
     </div>
+    <!--HipChat-->
     <div class="integration-container">
         <div class="logo-container">
             <img id="hipchat" src="assets/hipchat.png"/>
@@ -101,6 +110,7 @@
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
     </div>
+    <!--IRC-->
     <div class="integration-container">
         <div class="irc">IRC</div>
         <div id="ircChannel" class="forum-link-container">

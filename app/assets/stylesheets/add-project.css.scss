@@ -329,12 +329,15 @@ input {
   height: auto;
 }
 
-.add-project-title-container {
+.add-project-title-container,
+.add-project-subtitle-container {
   width: 100%;
   height: 40px;
+  margin-bottom: 6px;
 }
 
-input[name="add-project-title"] {
+input[name="add-project-title"],
+input[name="add-project-subtitle"] {
   width: 95%;
   margin-left: auto;
   margin-right: auto;
@@ -350,7 +353,6 @@ input[name="add-project-title"] {
 .add-project-description-container {
   width: 100%;
   height: auto;
-  margin-top: 16px;
   margin-bottom: 3px;
 }
 

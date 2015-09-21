@@ -37,6 +37,7 @@ define(['jquery',
             'blur [name=add-project-description]': 'contractDescription',
             'click .add-project-privacy-choice': 'handlePrivacySelection',
             'blur [name=add-project-title]': 'handleTitleBlur',
+            'blur [name=add-project-subtitle]': 'handleSubtitleBlur',
             'blur [name=add-project-repo-name]': 'handleRepoNameBlur',
             'blur [name=slack]': 'handleSlackBlur',
             'blur [name=hipchat]': 'handleHipChatBlur',
@@ -62,6 +63,11 @@ define(['jquery',
         handleTitleBlur: function (e) {
             this.title = $(e.currentTarget).val();
             Backbone.EventBroker.trigger('title:updated', this.title);
+        },
+
+        handleSubtitleBlur: function (e) {
+            this.subtitle = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('subtitle:updated', this.subtitle);
         },
 
         handleRepoNameBlur: function (e) {
@@ -281,6 +287,7 @@ define(['jquery',
         getData: function () {
             return {
                 title: this.title,
+                subtitle: this.subtitle,
                 description: this.description,
                 langsFrames: this.langsFrames,
                 repoName: this.repoName,
@@ -294,8 +301,9 @@ define(['jquery',
         },
 
         blurAllInputs: function () {
-            this.$el.find('[name=add-project-repo-title]').blur();
-            this.$el.find('[name=add-project-repo-description]').blur();
+            this.$el.find('[name=add-project-title]').blur();
+            this.$el.find('[name=add-project-subtitle]').blur();
+            this.$el.find('[name=add-project-description]').blur();
             this.$el.find('[name=add-project-repo-name]').blur();
 
             if (this.licenseSelectize) {
@@ -304,6 +312,10 @@ define(['jquery',
             if (this.langFrameSelectize) {
                 this.langFrameSelectize.blur();
             }
+
+            this.$el.find('[name=slack]').blur();
+            this.$el.find('[name=hipchat]').blur();
+            this.$el.find('[name=irc]').blur();
         },
 
         render: function (options) {
@@ -315,6 +327,7 @@ define(['jquery',
             }
 
             this.title = (options.projectData) ? options.projectData.title : null;
+            this.subtitle = (options.projectData) ? options.projectData.subtitle : null;
             this.description = (options.projectData) ? options.projectData.description : null;
             this.langsFrames = (options.projectData) ? options.projectData.langsFrames : null;
             this.repoName = (options.projectData) ? options.projectData.repoName : null;
@@ -337,6 +350,7 @@ define(['jquery',
                 launched: this.selectedType == OSUtil.TYPE_MAP['launched'],
                 hideDetailsView: hideDetailsView,
                 title: this.title,
+                subtitle: this.subtitle,
                 description: this.description,
                 repoName: this.repoName,
                 requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,

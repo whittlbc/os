@@ -30,6 +30,7 @@ define(['jquery',
 
             Backbone.EventBroker.register({
                 'title:updated': 'handleTitleUpdate',
+                'subtitle:updated': 'handleSubtitleUpdate',
                 'description:updated': 'handleDescriptionUpdate',
                 'langsFrames:updated': 'handleLangsFramesUpdate',
                 'repoName:updated': 'handleRepoNameUpdate',
@@ -72,6 +73,7 @@ define(['jquery',
                     // Scratch
                     'source2': {
                        'title': null,
+                        'subtitle': null,
                         'description': null,
                         'langsFrames': null,
                         'repoName': null,
@@ -87,6 +89,7 @@ define(['jquery',
                     // GH
                     'source1': {
                         'title': null,
+                        'subtitle': null,
                         'description': null,
                         'langsFrames': null,
                         'repoName': null,
@@ -99,6 +102,7 @@ define(['jquery',
                     //Scratch
                     'source2': {
                         'title': null,
+                        'subtitle': null,
                         'description': null,
                         'langsFrames': null,
                         'repoName': null,
@@ -111,6 +115,7 @@ define(['jquery',
                     // Pull from Ideas
                     'source3': {
                         'title': null,
+                        'subtitle': null,
                         'description': null,
                         'langsFrames': null,
                         'repoName': null,
@@ -128,6 +133,7 @@ define(['jquery',
                     // GH
                     'source1': {
                         'title': null,
+                        'subtitle': null,
                         'description': null,
                         'langsFrames': null,
                         'repoName': null,
@@ -140,6 +146,7 @@ define(['jquery',
                     // Scratch
                     'source2': {
                         'title': null,
+                        'subtitle': null,
                         'description': null,
                         'langsFrames': null,
                         'repoName': null,
@@ -207,6 +214,13 @@ define(['jquery',
             var sourceObj = this.getSelectedSourceObj();
             if (sourceObj != null) {
                 sourceObj['title'] = title;
+            }
+        },
+
+        handleSubtitleUpdate: function (subtitle) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['subtitle'] = subtitle;
             }
         },
 

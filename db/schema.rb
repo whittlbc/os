@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150920045527) do
+ActiveRecord::Schema.define(version: 20150921044039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150920045527) do
     t.string   "license",          default: [],                 array: true
     t.string   "privacy",          default: [],                 array: true
     t.boolean  "was_pulled",       default: false
+    t.text     "subtitle"
   end
 
   add_index "projects", ["anon"], name: "index_projects_on_anon", using: :btree
