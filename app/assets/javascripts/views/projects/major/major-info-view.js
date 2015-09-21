@@ -26,7 +26,24 @@ define(['jquery',
 		events: {
             'click .see-all-description': 'handleToggleDescriptionSize',
             'click .project-page-vote-container': 'checkIfUserAuthed',
-            'click .join-btn': 'handleJoin'
+            'click .join-btn': 'handleJoin',
+            'click .star': 'handleStarProject'
+        },
+
+        handleStarProject: function () {
+            var self = this;
+            var $star = this.$el.find('.star');
+            if ($star.hasClass('starred')) {
+                // unstar
+                Backbone.EventBroker.trigger('project:star', false);
+                $star.removeClass('starred');
+                self.$el.find('.star > .fa').removeClass('fa-star').addClass('fa-star-o');
+            } else {
+                // star
+                Backbone.EventBroker.trigger('project:star', true);
+                $star.addClass('starred');
+                self.$el.find('.star > .fa').addClass('fa-star').removeClass('fa-star-o');
+            }
         },
 
         handleJoin: function () {
@@ -99,15 +116,17 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
+            options = options || {};
 
             this.uuid = options ? options.uuid : null;
 
             this.$el.html(MajorInfoViewTpl({
-                title: options && options.title ? options.title : '',
-                projectType: options && options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
-                subtitle: "A JavaScript library designed to be so much better than your ordinary JS library",
-                description: options && options.description ? options.description : '',
-                voteCount: options && options.hasOwnProperty('vote_count') ? options.vote_count : '-'
+                title: options.title ? options.title : '',
+                projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
+                subtitle: options.subtitle ? options.subtitle : '',
+                description: options.description ? options.description : '',
+                voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
+                starred: options.starred
             }));
             this.addTags(options.langs_and_frames);
             this.$descriptionContainer = this.$el.find('.major-info-project-description');
@@ -120,6 +139,7 @@ define(['jquery',
             if (!isTruncated) {
                 this.$el.find('.see-all-description').hide();
             }
+
 		}
 	});
 

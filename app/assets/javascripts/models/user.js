@@ -121,6 +121,17 @@ define(['jquery',
             });
 
             return this.sync('delete', this, requestInfo);
+        },
+
+        star: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/star',
+                data: info
+            });
+
+            return this.sync('star', this, requestInfo);
         }
     });
 

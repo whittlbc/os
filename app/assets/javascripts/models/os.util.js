@@ -194,6 +194,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                 verb: 'GET',
                 action: 'read'
             },
+            'star': {
+                verb: 'PUT',
+                action: 'update'
+            }
         }
 
     };

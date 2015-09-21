@@ -90,10 +90,36 @@ class UsersController < ApplicationController
     render :json => repo_map
   end
 
+  def star
+    user = User.find_by(uuid: params[:user_uuid])
+    if !user.nil?
+      params[:star] ? user.update_attributes(:starred => user.starred + [params[:project_id]]) :
+          user.update_attributes(:starred => user.starred - [params[:project_id]])
+      render :json => {:status => 200}
+    else
+      render :json => {:status => 500, :message => 'Could not find user by passed ID'}
+    end
+  end
+
+  def upvote
+    user = User.find_by(uuid: params[:user_uuid])
+    if !user.nil?
+      if params[:comment]
+        user.update_attributes(:upvoted_comments => user.upvoted_comments + [params[:comment_id]])
+      else
+        user.update_attributes(:upvoted_projects => user.upvoted_projects + [params[:project_id]])
+      end
+      render :json => {:status => 200}
+    else
+      render :json => {:status => 500, :message => 'Could not find user by passed ID'}
+    end
+  end
+
+
   private
 
   def user_params
-    params.require(:user).permit(:email, :gh_username, :name, :password, :username, :uuid, :pic, :upvoted => [], :following => [])
+    params.require(:user).permit(:email, :gh_username, :name, :password, :username, :uuid, :pic, :upvoted => [], :following => [], :starred => [])
   end
 
 end

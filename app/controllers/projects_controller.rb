@@ -36,6 +36,7 @@ class ProjectsController < ApplicationController
         :user_id => project.user_id,
         :uuid => project.uuid,
         :vote_count => project.vote_count,
+        :starred => project.is_starred?,
         :owner_gh_username => owner_gh_username,
         :admin => Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) },
         :integrations => project.integrations
@@ -120,57 +121,61 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(gh_username: params[:gh_username])
 
-    project_data = {
-        :title => params[:title],
-        :subtitle => params[:subtitle],
-        :user_id => @user.id,
-        :uuid => UUIDTools::UUID.random_create.to_s,
-        :repo_name => params[:repo_name],
-        :description => params[:description],
-        :vote_count => 0,
-        :license => params[:license],
-        :status => params[:status],
-        :langs_and_frames => params[:langs_and_frames],
-        :anon => params[:anon],
-        :privacy => params[:privacy]
-    }
-    @project = Project.new(project_data)
-    @project.save
+    begin
+      @user = User.find_by(gh_username: params[:gh_username])
+      project_data = {
+          :title => params[:title],
+          :subtitle => params[:subtitle],
+          :user_id => @user.id,
+          :uuid => UUIDTools::UUID.random_create.to_s,
+          :repo_name => params[:repo_name],
+          :description => params[:description],
+          :vote_count => 0,
+          :license => params[:license],
+          :status => params[:status],
+          :langs_and_frames => params[:langs_and_frames],
+          :anon => params[:anon],
+          :privacy => params[:privacy]
+      }
+      @project = Project.new(project_data)
+      @project.save
 
-    contrib_data = {
-        :uuid => UUIDTools::UUID.random_create.to_s,
-        :project_id => @project.id,
-        :user_id => @user.id,
-        :admin => true
-    }
-    contributor = Contributor.new(contrib_data)
-    contributor.save
+      contrib_data = {
+          :uuid => UUIDTools::UUID.random_create.to_s,
+          :project_id => @project.id,
+          :user_id => @user.id,
+          :admin => true
+      }
+      contributor = Contributor.new(contrib_data)
+      contributor.save
 
-    evolution_data = {
-        :uuid => UUIDTools::UUID.random_create.to_s,
-        :project_id => @project.id,
-        :property => 'Creation'
-    }
-    evolution = Evolution.new(evolution_data)
-    evolution.save
+      evolution_data = {
+          :uuid => UUIDTools::UUID.random_create.to_s,
+          :project_id => @project.id,
+          :property => 'Creation'
+      }
+      evolution = Evolution.new(evolution_data)
+      evolution.save
 
-    if !params[:slackURL].nil? && !params[:slackURL].empty?
-      slackURL = ensureURL(params[:slackURL])
-      Integration.new(service: 'Slack', project_id: @project.id, url: slackURL).save!
+      if !params[:slackURL].nil? && !params[:slackURL].empty?
+        slackURL = ensureURL(params[:slackURL])
+        Integration.new(service: 'Slack', project_id: @project.id, url: slackURL).save!
+      end
+
+      if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
+        hipChatURL = ensureURL(params[:hipChatURL])
+        Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL).save!
+      end
+
+      if !params[:ircChannel].nil? && !params[:ircChannel].empty?
+        Integration.new(service: 'IRC', project_id: @project.id, url: params[:ircChannel]).save!
+      end
+
+      render :json => @project
+    rescue
+      render :json => {:status => 500}
     end
-
-    if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
-      hipChatURL = ensureURL(params[:hipChatURL])
-      Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL).save!
-    end
-
-    if !params[:ircChannel].nil? && !params[:ircChannel].empty?
-      Integration.new(service: 'IRC', project_id: @project.id, url: params[:ircChannel]).save!
-    end
-
-    render :json => @project
   end
 
   def ensureURL(url)
@@ -507,7 +512,6 @@ class ProjectsController < ApplicationController
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end
   end
-
 
   private
 

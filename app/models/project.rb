@@ -13,4 +13,11 @@ class Project < ActiveRecord::Base
     self.try(:user).try(:pic)
   end
 
+  def is_starred?
+    starred_arr = self.try(:user).try(:starred)
+    if !starred_arr.nil?
+      starred_arr.include?(self.id)
+    end
+  end
+
 end

@@ -35,6 +35,7 @@ Backboneworld::Application.routes.draw do
       get :get_by_gh_username, :path => '/getByGHUsername'
       get :get_all_user_repos, :path => '/getAllUserRepos'
       get :get_repo_details, :path => '/getRepoDetails'
+      put :star, :path => '/star'
     end
   end
 

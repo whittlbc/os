@@ -41,12 +41,20 @@ define(['jquery',
                 'comment-input:click': 'loginOrAllowCommentInput',
                 'login:gh': 'loginWithGH',
                 'contribs-modal:show': 'showContribsModal',
-                'create-project-modal:hide': 'hideCreateProjectModal'
+                'create-project-modal:hide': 'hideCreateProjectModal',
+                'project:star': 'handleStarProject'
             }, this);
             this.userAuthed = false;
-		},
+        },
 
 		events: {},
+
+        handleStarProject: function (bool) {
+            var self = this;
+            var user = new User();
+            console.log('star');
+            user.star({user_uuid: self.userData.user_uuid, project_id: Number(self.projectView.projectID), star: bool});
+        },
 
         hideCreateProjectModal: function () {
             var self = this;
@@ -269,7 +277,7 @@ define(['jquery',
             var self = this;
             if (query) {
                 var results = this.universalSearchSifter.search(query, {
-                    fields: ['title', 'owner_gh_username'],
+                    fields: ['subtitle', 'owner_gh_username'],
                     limit: 100
                 });
                 if (results.items.length == 0 && query != "") {

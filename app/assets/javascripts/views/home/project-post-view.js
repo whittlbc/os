@@ -24,7 +24,7 @@ define(['jquery',
 
 		events: {
             'click .arrow': 'checkIfUserAuthed',
-            'click .project-post-title-text': 'openProjectDetails',
+            'click .project-post-subtitle-text': 'openProjectDetails',
         },
 
         checkIfUserAuthed: function () {
@@ -51,6 +51,7 @@ define(['jquery',
             var self = this;
             this.data = data;
             this.title = data.title;
+            this.subtitle = data.subtitle;
             this.id = data.id;
             this.uuid = data.uuid;
             this.vote_count = data.vote_count;
@@ -132,7 +133,7 @@ define(['jquery',
 			var self = this;
 
             this.$el.html(ProjectPostViewTpl({
-                title: self.title,
+                subtitle: self.subtitle,
                 vote_count: self.vote_count,
                 commentCount: self.commentCount,
                 contributorCount: self.contributorCount,
