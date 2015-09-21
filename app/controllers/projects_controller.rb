@@ -154,7 +154,33 @@ class ProjectsController < ApplicationController
     evolution = Evolution.new(evolution_data)
     evolution.save
 
+    if params[:slackURL]
+      slackURL = ensureURL(params[:slackURL])
+      Integration.new(service: 'Slack', project_id: @project.id, url: slackURL).save!
+    end
+
+    if params[:hipChatURL]
+      hipChatURL = ensureURL(params[:hipChatURL])
+      Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL).save!
+    end
+
+    if params[:ircChannel]
+      Integration.new(service: 'IRC', project_id: @project.id, url: params[:ircChannel]).save!
+    end
+
     render :json => @project
+  end
+
+  def ensureURL(url)
+    uri = URI.parse(url)
+    if uri && uri.kind_of?(URI::HTTP)
+      index = url.index('http') + 4
+      url.insert(index, 's')
+    elsif uri && uri.kind_of(URI::HTTPS)
+      url
+    else
+      "https://#{url}"
+    end
   end
 
   def feed

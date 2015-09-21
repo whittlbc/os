@@ -55,19 +55,19 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'A'
                     },
                     "Ant Build System": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'A'
                     },
                     "ApacheConf": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'A'
                     },
                     "Apex": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'A'
                     },
                     "AppleScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'AS'
                     },
                     "Arc": {
@@ -79,7 +79,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'A'
                     },
                     "AsciiDoc": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'A'
                     },
                     "AspectJ": {
@@ -91,7 +91,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'A'
                     },
                     "Augeas": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'A'
                     },
                     "AutoHotkey": {
@@ -103,27 +103,27 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'A'
                     },
                     "Awk": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'A'
                     },
                     "Batchfile": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "Befunge": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "Bison": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "BitBake": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "BlitzBasic": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "BlitzMax": {
@@ -131,7 +131,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'B'
                     },
                     "Bluespec": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "Boo": {
@@ -143,11 +143,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'B'
                     },
                     "Brightscript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'BS'
                     },
                     "Bro": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'B'
                     },
                     "C": {
@@ -167,23 +167,23 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'C++'
                     },
                     "C-ObjDump": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "C2hs Haskell": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "CLIPS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "CMake": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "COBOL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "CSS": {
@@ -195,23 +195,23 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'B'
                     },
                     "YAML": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'Y'
                     },
                     "Sass": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Cap'n Proto": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "CartoCSS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Ceylon": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Chapel": {
@@ -219,7 +219,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'C'
                     },
                     "ChucK": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Cirru": {
@@ -259,19 +259,19 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'C'
                     },
                     "Cool": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Coq": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Cpp-ObjDump": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Creole": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Crystal": {
@@ -279,19 +279,19 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'C'
                     },
                     "Cucumber": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Cuda": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Cycript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "Cython": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'C'
                     },
                     "D": {
@@ -299,11 +299,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'D'
                     },
                     "D-ObjDump": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'D'
                     },
                     "DIGITAL Command Language": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'D'
                     },
                     "DM": {
@@ -311,11 +311,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'D'
                     },
                     "DTrace": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'D'
                     },
                     "Darcs Patch": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'D'
                     },
                     "Dart": {
@@ -327,7 +327,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'D'
                     },
                     "Dockerfile": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'D'
                     },
                     "Dogescript": {
@@ -351,7 +351,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'E'
                     },
                     "Ecere Projects": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'E'
                     },
                     "Eiffel": {
@@ -403,11 +403,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'F'
                     },
                     "Filterscript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'FS'
                     },
                     "Formatted": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'F'
                     },
                     "Forth": {
@@ -419,27 +419,27 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'F'
                     },
                     "G-code": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "GAMS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "GAP": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "GAS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "GDScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'GS'
                     },
                     "GLSL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Game Maker Language": {
@@ -447,19 +447,19 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'G'
                     },
                     "Genshi": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Gentoo Ebuild": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Gentoo Eclass": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Gettext Catalog": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Glyph": {
@@ -483,11 +483,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'G'
                     },
                     "Grace": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Gradle": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Grammatical Framework": {
@@ -495,15 +495,15 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'G'
                     },
                     "Graph Modeling Language": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Graphviz (DOT)": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Groff": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "Groovy": {
@@ -511,7 +511,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'G'
                     },
                     "Groovy Server Pages": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'G'
                     },
                     "HTML": {
@@ -519,27 +519,27 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'H'
                     },
                     "HTML+Django": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "HTML+ERB": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "HTML+PHP": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "HTTP": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "Hack": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "Haml": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "Handlebars": {
@@ -563,7 +563,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'H'
                     },
                     "HyPhy": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'H'
                     },
                     "IDL": {
@@ -571,27 +571,27 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'I'
                     },
                     "IGOR Pro": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I'
                     },
                     "INI": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I'
                     },
                     "IRC log": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I'
                     },
                     "Idris": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I'
                     },
                     "Inform 7": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I7'
                     },
                     "Inno Setup": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I'
                     },
                     "Io": {
@@ -607,7 +607,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'I'
                     },
                     "Isabelle ROOT": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'I'
                     },
                     "J": {
@@ -619,15 +619,15 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'JF'
                     },
                     "JSON": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'J'
                     },
                     "JSON5": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'J'
                     },
                     "JSONLD": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'J'
                     },
                     "JSONiq": {
@@ -635,15 +635,15 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'J'
                     },
                     "Jade": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'J'
                     },
                     "Jasmin": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'J'
                     },
                     "Java Server Pages": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'J'
                     },
                     "JavaScript": {
@@ -719,11 +719,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'K'
                     },
                     "KiCad": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'K'
                     },
                     "Kit": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'K'
                     },
                     "Kotlin": {
@@ -735,7 +735,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "LLVM": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "LOLCODE": {
@@ -747,7 +747,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "LabVIEW": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Lasso": {
@@ -759,11 +759,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "Lean": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Less": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Lex": {
@@ -771,35 +771,35 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "LilyPond": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Limbo": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Linker Script": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Linux Kernel Module": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Liquid": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Literate Agda": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Literate CoffeeScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Literate Haskell": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "LiveScript": {
@@ -807,11 +807,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "Logos": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Logtalk": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "LookML": {
@@ -819,7 +819,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "LoomScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'L'
                     },
                     "Lua": {
@@ -827,7 +827,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "M": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "MTML": {
@@ -835,7 +835,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'M'
                     },
                     "MUF": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Makefile": {
@@ -843,11 +843,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'Mk'
                     },
                     "Mako": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Markdown": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'Md'
                     },
                     "Mask": {
@@ -855,7 +855,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'M'
                     },
                     "Mathematica": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Matlab": {
@@ -863,7 +863,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'M'
                     },
                     "Maven POM": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Max": {
@@ -871,7 +871,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'M'
                     },
                     "MediaWiki": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Mercury": {
@@ -879,7 +879,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'M'
                     },
                     "MiniD": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Mirah": {
@@ -887,43 +887,43 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'M'
                     },
                     "Modelica": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Modula-2": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Module Management System": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Monkey": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "Moocode": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "MoonScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'MS'
                     },
                     "Myghty": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "NCL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'N'
                     },
                     "NL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'N'
                     },
                     "NSIS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'N'
                     },
                     "Nemerle": {
@@ -947,7 +947,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'N'
                     },
                     "Nginx": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'N'
                     },
                     "Nimrod": {
@@ -955,7 +955,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'N'
                     },
                     "Ninja": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'N'
                     },
                     "Nit": {
@@ -971,7 +971,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'N'
                     },
                     "NumPy": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'N'
                     },
                     "OCaml": {
@@ -979,7 +979,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'O'
                     },
                     "ObjDump": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "Objective-C": {
@@ -999,7 +999,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'O'
                     },
                     "Opa": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "Opal": {
@@ -1007,23 +1007,23 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'O'
                     },
                     "OpenCL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "OpenEdge ABL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "OpenSCAD": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "Org": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "Ox": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'O'
                     },
                     "Oxygene": {
@@ -1079,11 +1079,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'L'
                     },
                     "PLSQL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "PLpgSQL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "Pan": {
@@ -1099,11 +1099,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'P'
                     },
                     "Parrot Assembly": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "Parrot Internal Representation": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "Pascal": {
@@ -1119,7 +1119,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'P'
                     },
                     "PicoLisp": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "PigLatin": {
@@ -1131,7 +1131,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'P'
                     },
                     "Pod": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "PogoScript": {
@@ -1139,11 +1139,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'P'
                     },
                     "PostScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "PowerShell": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "Processing": {
@@ -1159,11 +1159,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'PS'
                     },
                     "Protocol Buffer": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "Public Key": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "Puppet": {
@@ -1207,7 +1207,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'G'
                     },
                     "Python traceback": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'P'
                     },
                     "QML": {
@@ -1215,7 +1215,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'Q'
                     },
                     "QMake": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'Q'
                     },
                     "R": {
@@ -1227,19 +1227,19 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'R'
                     },
                     "RDoc": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "REALbasic": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "RHTML": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "RMarkdown": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "Racket": {
@@ -1251,7 +1251,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'R'
                     },
                     "Raw token data": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "Rebol": {
@@ -1263,15 +1263,15 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'R'
                     },
                     "Redcode": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "RenderScript": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'RS'
                     },
                     "RobotFramework": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "Rouge": {
@@ -1307,15 +1307,15 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "SCSS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SMT": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SPARQL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SQF": {
@@ -1323,23 +1323,23 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "SQL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SQLPL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "STON": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SVG": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Sage": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SaltStack": {
@@ -1351,7 +1351,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "Scaml": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Scheme": {
@@ -1359,7 +1359,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "Scilab": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Self": {
@@ -1375,7 +1375,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'B'
                     },
                     "ShellSession": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Shen": {
@@ -1391,7 +1391,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "Smali": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Smalltalk": {
@@ -1399,7 +1399,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "Smarty": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SourcePawn": {
@@ -1415,11 +1415,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'S'
                     },
                     "Stata": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "Stylus": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'S'
                     },
                     "SuperCollider": {
@@ -1439,7 +1439,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'T'
                     },
                     "Tcsh": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "TeX": {
@@ -1447,19 +1447,19 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'T'
                     },
                     "Tea": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "Text": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "Textile": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "Thrift": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "Turing": {
@@ -1467,11 +1467,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'T'
                     },
                     "Turtle": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "Twig": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'T'
                     },
                     "TypeScript": {
@@ -1491,7 +1491,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'US'
                     },
                     "VCL": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'V'
                     },
                     "VHDL": {
@@ -1527,11 +1527,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'X'
                     },
                     "XML": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'X'
                     },
                     "XProc": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'X'
                     },
                     "XQuery": {
@@ -1539,23 +1539,23 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'X'
                     },
                     "XS": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'X'
                     },
                     "XSLT": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'X'
                     },
                     "Xojo": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'X'
                     },
                     "Xtend": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'X'
                     },
                     "Yacc": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'Y'
                     },
                     "Zephir": {
@@ -1563,11 +1563,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'Z'
                     },
                     "Zimpl": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'Z'
                     },
                     "desktop": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'D'
                     },
                     "eC": {
@@ -1579,11 +1579,11 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'E'
                     },
                     "fish": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'F'
                     },
                     "mupad": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'M'
                     },
                     "nesC": {
@@ -1595,7 +1595,7 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
                         "initials": 'O'
                     },
                     "reStructuredText": {
-                        "color": "#FFFFFF",
+                        "color": "#000",
                         "initials": 'R'
                     },
                     "wisp": {

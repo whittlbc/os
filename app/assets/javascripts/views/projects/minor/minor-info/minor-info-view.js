@@ -51,8 +51,12 @@ define(['jquery',
             var license;
             var showTeamCommunication = false;
             var hasSlack = false;
+            var hasHipChat = false;
+            var hasIRC = false;
             var showIntegrations = false;
             var slackObj = null;
+            var hipChatObj = null;
+            var ircObj = null;
 
             // project is NOT an "Up for Grabs" type
             if (options.status !== 0) {
@@ -69,6 +73,14 @@ define(['jquery',
                         hasSlack = true;
                         slackObj = options.integrations[i];
                         showTeamCommunication = true;
+                    } else if (options.integrations[i].service == 'HipChat') {
+                        hasHipChat = true;
+                        hipChatObj = options.integrations[i];
+                        showTeamCommunication = true;
+                    } else if (options.integrations[i].service == 'IRC') {
+                        hasIRC = true;
+                        ircObj = options.integrations[i];
+                        showTeamCommunication = true;
                     }
                 }
             }
@@ -83,10 +95,15 @@ define(['jquery',
                 linkRepoName: repoName != null,
                 numContrib: options.contributors && !options.getting_repo_data ? '(' + options.contributors.length + ')' : '',
                 showTeamCommunication: showTeamCommunication,
-                hasSlack: hasSlack,
+                hasSlack: false,
+                hasHipChat: true,
+                hasIRC: true,
                 isContributor: true,
                 slackTeamName: hasSlack ? slackObj.url.replace('https://', '').replace('http://', '') : null,
                 slackTeamURL: hasSlack ? slackObj.url : null,
+                hipChatTeamName: hasHipChat ? hipChatObj.url.replace('https://', '').replace('http://', '') : null,
+                hipChatTeamURL: hasHipChat ? hipChatObj.url : null,
+                ircChannel: hasIRC ? ircObj.url : null,
                 showLicense: showLicense,
                 license: license,
                 licenseSpecified: license != null,

@@ -79,6 +79,7 @@ define(['jquery',
         },
 
         addTags: function (langsFrames) {
+            console.log(langsFrames);
             for (var i = 0; i < langsFrames.length; i++) {
                 var $tag = $('<div>', {
                     class: 'major-info-tag'

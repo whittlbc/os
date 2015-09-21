@@ -38,7 +38,25 @@ define(['jquery',
             'click .add-project-privacy-choice': 'handlePrivacySelection',
             'blur [name=add-project-title]': 'handleTitleBlur',
             'blur [name=add-project-repo-name]': 'handleRepoNameBlur',
-            'click .add-project-anon-choice': 'handleAnonSelection',
+            'blur [name=slack]': 'handleSlackBlur',
+            'blur [name=hipchat]': 'handleHipChatBlur',
+            'blur [name=irc]': 'handleIRCBlur',
+            'click .add-project-anon-choice': 'handleAnonSelection'
+        },
+
+        handleSlackBlur: function (e) {
+            this.slackURL = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('slack:updated', this.slackURL);
+        },
+
+        handleHipChatBlur: function (e) {
+            this.hipChatURL = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('hipChat:updated', this.hipChatURL);
+        },
+
+        handleIRCBlur: function (e) {
+            this.ircChannel = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('irc:updated', this.ircChannel);
         },
 
         handleTitleBlur: function (e) {
@@ -135,7 +153,9 @@ define(['jquery',
                 }
             };
             var $langFrameSelect = this.$el.find('#add-project-langs-frames-selection').selectize(options);
-            var langFrameSelectize = $langFrameSelect[0].selectize;
+            if ($langFrameSelect) {
+                var langFrameSelectize = $langFrameSelect[0].selectize;
+            }
             this.langFrameSelectize = langFrameSelectize;
             this.langFrameSelectize.on('item_add', function (value, $item) {
                 if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
@@ -266,7 +286,10 @@ define(['jquery',
                 repoName: this.repoName,
                 license: this.license,
                 privacy: this.privacy,
-                anon: this.anon
+                anon: this.anon,
+                slackURL: this.slackURL,
+                hipChatURL: this.hipChatURL,
+                ircChannel: this.ircChannel
             };
         },
 
@@ -285,24 +308,28 @@ define(['jquery',
 
         render: function (options) {
 			var self = this;
+            options = options || {};
 
-            if (options && options.selectedSource) {
+            if (options.selectedSource) {
                 this.selectedSource = options.selectedSource;
             }
 
-            this.title = (options && options.projectData) ? options.projectData.title : null;
-            this.description = (options && options.projectData) ? options.projectData.description : null;
-            this.langsFrames = (options && options.projectData) ? options.projectData.langsFrames : null;
-            this.repoName = (options && options.projectData) ? options.projectData.repoName : null;
-            this.license = (options && options.projectData) ? options.projectData.license : null;
-            this.privacy = (options && options.projectData) ? options.projectData.privacy : OSUtil.REQUEST_PRIVACY;
+            this.title = (options.projectData) ? options.projectData.title : null;
+            this.description = (options.projectData) ? options.projectData.description : null;
+            this.langsFrames = (options.projectData) ? options.projectData.langsFrames : null;
+            this.repoName = (options.projectData) ? options.projectData.repoName : null;
+            this.license = (options.projectData) ? options.projectData.license : null;
+            this.privacy = (options.projectData) ? options.projectData.privacy : OSUtil.REQUEST_PRIVACY;
             if (this.privacy == null) {
                 this.privacy = OSUtil.REQUEST_PRIVACY;
             }
-            this.anon = (options && options.projectData) ? options.projectData.anon : false;
+            this.anon = (options.projectData) ? options.projectData.anon : false;
 
-            var hideDetailsView = options && options.hideDetailsView;
+            this.slackURL = (options.projectData) ? options.projectData.slackURL : null;
+            this.hipChatURL = (options.projectData) ? options.projectData.hipChatURL : null;
+            this.ircChannel = (options.projectData) ? options.projectData.ircChannel : null;
 
+            var hideDetailsView = options.hideDetailsView;
             var showRepoNameAndLicense = this.checkIfShowRepoNameAndLicense();
 
             this.$el.html(DetailsViewTpl({
@@ -316,10 +343,13 @@ define(['jquery',
                 openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
                 showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
                 postAnon: this.anon,
-                showIntegrations: this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] || this.selectedType == OSUtil.TYPE_MAP['launched']
+                showIntegrations: this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] || this.selectedType == OSUtil.TYPE_MAP['launched'],
+                slackURL: this.slackURL,
+                hipChatURL: this.hipChatURL,
+                ircChannel: this.ircChannel
             }));
 
-            if (this.dropdownItems && options && !options.hideDetailsView) {
+            if (this.dropdownItems && !options.hideDetailsView) {
                 this.initLangFramesDropdown();
                 if (this.langsFrames != null) {
                     for (var i = 0; i < this.langsFrames.length; i++) {
@@ -328,7 +358,7 @@ define(['jquery',
                 }
             }
 
-            if (options && !options.hideDetailsView && showRepoNameAndLicense) {
+            if (!options.hideDetailsView && showRepoNameAndLicense) {
                 this.initLicenseDropdown();
                 if (this.license != null) {
                     this.licenseSelectize.addItem(this.license);

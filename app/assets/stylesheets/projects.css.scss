@@ -544,18 +544,24 @@ $major-info-project-type: #CECECE;
   }
 }
 
-#minorInfoSlackURLContainer {
+.minorInfoIntegrationContainer {
   display: block;
   height: 40px;
 }
 
-.minor-info-slack-logo-container {
+.minor-info-integration-logo-container {
   width: 100%;
   height: 100%;
   display: inline-block;
+  float: left;
+  margin-bottom: 10px;
 
-  span {
+  .integration-link {
     margin-left: 12px;
+  }
+
+  .linebreak {
+    color: #DDD;
   }
 
   a {
@@ -563,6 +569,10 @@ $major-info-project-type: #CECECE;
   }
   a:hover {
     color: #00A6C9;
+  }
+
+  .irc-channel-text {
+    cursor: default;
   }
 
   .fa-check {
@@ -571,26 +581,87 @@ $major-info-project-type: #CECECE;
   }
 }
 
+.minor-info-integration-logo-container.add-top-margin {
+  margin-top: 10px;
+}
+
+#hipChatContainer.add-top-margin {
+  margin-top: 11px;
+}
+
+.last-integration {
+  margin-bottom: 0;
+}
+
 .minor-info-slack-logo {
-  max-height: 40px;
+  width: 85px;
   margin-left: 2px;
+  margin-right: 7px;
 }
 
-.slack-team-url-container {
-  width: 65%;
-  height: 100%;
-  line-height: 100%;
+.minor-info-slack-logo.only-one {
+  margin-right: 0;
+}
+
+.minor-info-hipchat-logo {
+  width: 75px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: -5px;
+}
+
+#hipChatSpan {
   display: inline-block;
+  margin-top: 5px;
+}
 
-  a {
-    color: black;
-    font-weight: bold;
+.minor-info-irc-logo {
+  width: 85px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: 'Helvetica Neue';
+  display: inline-block;
+  float: left;
+  margin-left: 10px;
+  padding-left: 2px;
+
+  .fa {
+    margin-right: 5px;
+    position: relative;
+    top: -1px;
   }
-  a:hover {
-    color: #00A6C9;
+}
+
+.minor-info-irc-logo.only-one {
+  width: 67px;
+}
+
+#ircContainer {
+  .integration-link,
+  .linebreak {
+    position: relative;
+    top: 2px;
   }
+
 
 }
+
+//.slack-team-url-container {
+//  width: 65%;
+//  height: 100%;
+//  line-height: 100%;
+//  display: inline-block;
+//
+//  a {
+//    color: black;
+//    font-weight: bold;
+//  }
+//  a:hover {
+//    color: #00A6C9;
+//  }
+//
+//}
 
 .minor-info-subsection-title {
   color: #00A6C9;

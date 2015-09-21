@@ -10,12 +10,26 @@
 {{#showTeamCommunication}}
 <div class="minor-info-subsection-title">Team Communication</div>
 {{#hasSlack}}
-<div id="minorInfoSlackURLContainer">
-    <div class="minor-info-slack-logo-container">
-        <img class="minor-info-slack-logo" src="assets/slack_logo.png">|<span>{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>{{/isContributor}}</span>
+<div class="minorInfoIntegrationContainer">
+    <div class="minor-info-integration-logo-container">
+        <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="assets/slack_logo.png"><span class="linebreak">|</span><span class="integration-link">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>{{/isContributor}}</span>
     </div>
 </div>
 {{/hasSlack}}
+{{#hasHipChat}}
+<div class="minorInfoIntegrationContainer">
+    <div class="minor-info-integration-logo-container {{^hasSlack}}add-top-margin{{/hasSlack}}" id="hipChatContainer">
+        <img class="minor-info-hipchat-logo" src="assets/hipchat.png"><span class="linebreak">|</span><span class="integration-link" id="hipChatSpan">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>{{/isContributor}}</span>
+    </div>
+</div>
+{{/hasHipChat}}
+{{#hasIRC}}
+<div class="minorInfoIntegrationContainer">
+    <div class="minor-info-integration-logo-container {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}}" id="ircContainer">
+        <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}"><i class="fa fa-comment-o"></i>IRC</div><span class="linebreak">|</span><span class="integration-link">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<span class="irc-channel-text">{{ircChannel}}</span>{{/isContributor}}</span>
+    </div>
+</div>
+{{/hasIRC}}
 {{/showTeamCommunication}}
 {{#showRepoStats}}
 <div class="minor-info-subsection-title">Repo Stats</div>

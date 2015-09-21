@@ -36,6 +36,9 @@ define(['jquery',
                 'license:updated': 'handleLicenseUpdate',
                 'privacy:updated': 'handlePrivacyUpdate',
                 'anon:updated': 'handleAnonUpdate',
+                'slack:updated': 'handleSlackUpdate',
+                'hipChat:updated': 'handleHipChatUpdate',
+                'irc:updated': 'handleIRCUpdate',
                 'create-project:retry': 'handleRetry'
             }, this);
 
@@ -88,7 +91,10 @@ define(['jquery',
                         'langsFrames': null,
                         'repoName': null,
                         'license': null,
-                        'privacy': null
+                        'privacy': null,
+                        'slackURL': null,
+                        'hipChatURL': null,
+                        'ircChannel': null
                     },
                     //Scratch
                     'source2': {
@@ -97,7 +103,10 @@ define(['jquery',
                         'langsFrames': null,
                         'repoName': null,
                         'license': null,
-                        'privacy': null
+                        'privacy': null,
+                        'slackURL': null,
+                        'hipChatURL': null,
+                        'ircChannel': null
                     },
                     // Pull from Ideas
                     'source3': {
@@ -106,7 +115,10 @@ define(['jquery',
                         'langsFrames': null,
                         'repoName': null,
                         'license': null,
-                        'privacy': null
+                        'privacy': null,
+                        'slackURL': null,
+                        'hipChatURL': null,
+                        'ircChannel': null
                     }
                 },
 
@@ -120,7 +132,10 @@ define(['jquery',
                         'langsFrames': null,
                         'repoName': null,
                         'license': null,
-                        'privacy': null
+                        'privacy': null,
+                        'slackURL': null,
+                        'hipChatURL': null,
+                        'ircChannel': null
                     },
                     // Scratch
                     'source2': {
@@ -129,7 +144,10 @@ define(['jquery',
                         'langsFrames': null,
                         'repoName': null,
                         'license': null,
-                        'privacy': null
+                        'privacy': null,
+                        'slackURL': null,
+                        'hipChatURL': null,
+                        'ircChannel': null
                     }
                 }
             };
@@ -234,6 +252,27 @@ define(['jquery',
             }
         },
 
+        handleSlackUpdate: function (slackURL) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['slackURL'] = slackURL;
+            }
+        },
+
+        handleHipChatUpdate: function (hipChatURL) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['hipChatURL'] = hipChatURL;
+            }
+        },
+
+        handleIRCUpdate: function (ircChannel) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['ircChannel'] = ircChannel;
+            }
+        },
+
 		events: {
             'click .bottom-nav-back': 'handleBack',
             'click .bottom-nav-next': 'handleNext',
@@ -281,7 +320,11 @@ define(['jquery',
                 status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
                 langs_and_frames: this.newProjectData.langsFrames,
                 anon: this.newProjectData.anon,
-                privacy: [this.newProjectData.privacy]
+                privacy: [this.newProjectData.privacy],
+                slackURL: this.newProjectData.slackURL,
+                hipChatURL: this.newProjectData.hipChatURL,
+                ircChannel: this.newProjectData.ircChannel
+
             };
             this.disableAddProjectBtn();
             var project = new Project();
@@ -379,11 +422,11 @@ define(['jquery',
         },
 
         disableAddProjectBtn: function () {
-            $('.add-project-btn')[0].style.pointerEvents = 'none';
+            $('#headerAddProjectBtn')[0].style.pointerEvents = 'none';
         },
 
         enableAddProjectBtn: function () {
-            $('.add-project-btn')[0].style.pointerEvents = 'auto';
+            $('#headerAddProjectBtn')[0].style.pointerEvents = 'auto';
         },
 
         handleBack: function () {
@@ -520,9 +563,7 @@ define(['jquery',
 
         hideCreateBtn: function () {
             this.createBtnClickCount = 0;
-            console.log('hideCreateBtn');
             var $createBtn = this.$el.find('.bottom-nav-create-btn');
-            console.log($createBtn);
             $createBtn.animate({opacity: 0}, {duration: 0, queue: false});
             $createBtn.hide();
         },

@@ -41,10 +41,10 @@
 <!--Repo Name-->
 <div class="add-project-repo-name-container">
     <div class="add-project-repo-name-text">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Does your project have a Github repo name?
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;What is the name of your Github repo?
     </div>{{
     }}<div class="add-project-repo-name-input-container">
-        <input name="add-project-repo-name" placeholder="Github Repo Name" type="text" value="{{repoName}}"/>
+        <input name="add-project-repo-name" placeholder="Github repo name" type="text" value="{{repoName}}"/>
     </div>
 </div>
 
@@ -86,7 +86,7 @@
             <img id="slack" src="assets/slack_logo.png"/>
         </div>
         <div class="forum-link-container">
-            <input placeholder="Enter Slack team URL" type="text"/>
+            <input name="slack" placeholder="Enter Slack team URL" type="text" value="{{slackURL}}"/>
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
@@ -96,7 +96,7 @@
             <img id="hipchat" src="assets/hipchat.png"/>
         </div>
         <div class="forum-link-container">
-            <input placeholder="Enter HipChat team URL" type="text"/>
+            <input name="hipchat" placeholder="Enter HipChat team URL" type="text" value="{{hipChatURL}}"/>
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
@@ -104,7 +104,7 @@
     <div class="integration-container">
         <div class="irc">IRC</div>
         <div id="ircChannel" class="forum-link-container">
-            <input placeholder="Enter IRC channel" type="text"/>
+            <input name="irc" placeholder="Enter IRC channel" type="text" value="{{ircChannel}}"/>
         </div>
     </div>
 </div>
