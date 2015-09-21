@@ -152,10 +152,9 @@ define(['jquery',
                     }
                 }
             };
+
             var $langFrameSelect = this.$el.find('#add-project-langs-frames-selection').selectize(options);
-            if ($langFrameSelect) {
-                var langFrameSelectize = $langFrameSelect[0].selectize;
-            }
+            var langFrameSelectize = $langFrameSelect[0].selectize;
             this.langFrameSelectize = langFrameSelectize;
             this.langFrameSelectize.on('item_add', function (value, $item) {
                 if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
@@ -170,6 +169,7 @@ define(['jquery',
                 self.langsFramesValue = self.langFrameSelectize.getValue();
                 self.adjustHeightOfParent();
             });
+
         },
 
         initLicenseDropdown: function () {
@@ -348,6 +348,7 @@ define(['jquery',
                 hipChatURL: this.hipChatURL,
                 ircChannel: this.ircChannel
             }));
+
 
             if (this.dropdownItems && !options.hideDetailsView) {
                 this.initLangFramesDropdown();

@@ -25,7 +25,7 @@
 {{/hasHipChat}}
 {{#hasIRC}}
 <div class="minorInfoIntegrationContainer">
-    <div class="minor-info-integration-logo-container {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}}" id="ircContainer">
+    <div class="minor-info-integration-logo-container last-integration {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}}" id="ircContainer">
         <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}"><i class="fa fa-comment-o"></i>IRC</div><span class="linebreak">|</span><span class="integration-link">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<span class="irc-channel-text">{{ircChannel}}</span>{{/isContributor}}</span>
     </div>
 </div>

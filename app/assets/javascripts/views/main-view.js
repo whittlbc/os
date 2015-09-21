@@ -40,12 +40,28 @@ define(['jquery',
                 'post-comment:click': 'loginOrPostComment',
                 'comment-input:click': 'loginOrAllowCommentInput',
                 'login:gh': 'loginWithGH',
-                'contribs-modal:show': 'showContribsModal'
+                'contribs-modal:show': 'showContribsModal',
+                'create-project-modal:hide': 'hideCreateProjectModal'
             }, this);
             this.userAuthed = false;
 		},
 
 		events: {},
+
+        hideCreateProjectModal: function () {
+            var self = this;
+            this.createProjectModal.hideModal();
+            this.forceHideModalBackdrop();
+        },
+
+        forceHideModalBackdrop: function () {
+            var self = this;
+            var $backdrop = $('.modal-backdrop');
+            $backdrop.animate({opacity: 0}, 400);
+            setTimeout(function () {
+                $backdrop.hide();
+            }, 400)
+        },
 
         showContribsModal: function () {
             var self = this;
@@ -342,32 +358,26 @@ define(['jquery',
 
             this.enableUniversalSearchBar();
 
-            if (!this.createProjectModal) {
-                this.createProjectModal = new CreateProjectModal({
-                    el: this.$el.find('#modalCreateProject')
-                });
-                if (this.userData) {
-                    this.createProjectModal.passUserData(this.userData);
-                }
-                if (this.allLangs) {
-                    this.createProjectModal.passLangData(this.allLangs);
-                }
-                this.createProjectModal.render();
+            this.createProjectModal = new CreateProjectModal({
+                el: this.$el.find('#modalCreateProject')
+            });
+            if (this.userData) {
+                this.createProjectModal.passUserData(this.userData);
             }
+            if (this.allLangs) {
+                this.createProjectModal.passLangData(this.allLangs);
+            }
+            this.createProjectModal.render();
 
-            if (!this.loginModal) {
-                this.loginModal = new LoginModal({
-                   el: this.$el.find('#modalLogin')
-                });
-                this.loginModal.render();
-            }
+            this.loginModal = new LoginModal({
+               el: this.$el.find('#modalLogin')
+            });
+            this.loginModal.render();
 
-            if (!this.contribsModal) {
-                this.contribsModal = new ContributorsModal({
-                    el: this.$el.find('#modalContribs')
-                });
-                this.contribsModal.render();
-            }
+            this.contribsModal = new ContributorsModal({
+                el: this.$el.find('#modalContribs')
+            });
+            this.contribsModal.render();
 		}
 
 	});

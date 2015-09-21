@@ -79,19 +79,20 @@ define(['jquery',
         },
 
         addTags: function (langsFrames) {
-            console.log(langsFrames);
-            for (var i = 0; i < langsFrames.length; i++) {
-                var $tag = $('<div>', {
-                    class: 'major-info-tag'
-                });
-                $tag.html(langsFrames[i]);
-                var colors_and_initials = this.allLangs['colors_and_initials'];
-                var langFrame = colors_and_initials[langsFrames[i]];
-                if (langFrame) {
-                    var color = langFrame['color'];
-                    $tag.css('color', color);
-                    $tag.css('border', '2px solid ' + color);
-                    this.$el.find('.major-info-tag-container').append($tag);
+            if (Array.isArray(langsFrames)) {
+                for (var i = 0; i < langsFrames.length; i++) {
+                    var $tag = $('<div>', {
+                        class: 'major-info-tag'
+                    });
+                    $tag.html(langsFrames[i]);
+                    var colors_and_initials = this.allLangs['colors_and_initials'];
+                    var langFrame = colors_and_initials[langsFrames[i]];
+                    if (langFrame) {
+                        var color = langFrame['color'];
+                        $tag.css('color', color);
+                        $tag.css('border', '2px solid ' + color);
+                        this.$el.find('.major-info-tag-container').append($tag);
+                    }
                 }
             }
         },

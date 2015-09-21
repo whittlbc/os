@@ -328,6 +328,8 @@ define(['jquery',
             };
             this.disableAddProjectBtn();
             var project = new Project();
+
+            console.log(projectData);
             project.create(projectData, {
                 success: function (project) {
                     console.log('SUCCESSFULLY CREATED PROJECT!');
@@ -354,21 +356,13 @@ define(['jquery',
             $confirmMessage.css('opacity', 0);
         },
 
-        hideModal: function () {
-            $('#createNewProjectModal').modal('hide');
-        },
-
-        showModal: function () {
-            $('#createNewProjectModal').modal('show');
-        },
-
         showProjectCreationSuccess: function (project) {
             var self = this;
             if (this.masterMap[this.masterMap['selectedType']]['selectedSource'] == OSUtil.SOURCE_MAP['pull-from-ideas']) {
                 this.inactivateOldUpForGrabsProject();
             }
             setTimeout(function () {
-                self.hideModal();
+                Backbone.EventBroker.trigger('create-project-modal:hide');
                 window.location.hash = '#projects/' + project.id;
                 setTimeout(function () {
                     self.resetPopup();
@@ -398,7 +392,7 @@ define(['jquery',
             this.resetMasterMap(this.masterMap);
             this.panel1.setUpForGrabsToggle(false);
             this.panel1.setOnlyOnTheFenceToggle(false);
-            this.renderPanels();
+            //this.renderPanels();
             this.renderBreadCrumbView();
             this.passLangData(this.dropdownItems);
             this.handleUserRepos(this.repos);

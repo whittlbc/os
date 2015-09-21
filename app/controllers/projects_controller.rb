@@ -154,17 +154,17 @@ class ProjectsController < ApplicationController
     evolution = Evolution.new(evolution_data)
     evolution.save
 
-    if params[:slackURL]
+    if !params[:slackURL].nil? && !params[:slackURL].empty?
       slackURL = ensureURL(params[:slackURL])
       Integration.new(service: 'Slack', project_id: @project.id, url: slackURL).save!
     end
 
-    if params[:hipChatURL]
+    if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
       hipChatURL = ensureURL(params[:hipChatURL])
       Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL).save!
     end
 
-    if params[:ircChannel]
+    if !params[:ircChannel].nil? && !params[:ircChannel].empty?
       Integration.new(service: 'IRC', project_id: @project.id, url: params[:ircChannel]).save!
     end
 
@@ -176,7 +176,7 @@ class ProjectsController < ApplicationController
     if uri && uri.kind_of?(URI::HTTP)
       index = url.index('http') + 4
       url.insert(index, 's')
-    elsif uri && uri.kind_of(URI::HTTPS)
+    elsif uri && uri.kind_of?(URI::HTTPS)
       url
     else
       "https://#{url}"
