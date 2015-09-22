@@ -45,7 +45,7 @@ define(['jquery',
                 el: '#communicationView',
                 height: majorInfoHeight
             });
-            this.communicationView.render(options.comments);
+            this.communicationView.render(options);
 		}
 	});
 

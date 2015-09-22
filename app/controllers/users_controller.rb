@@ -61,6 +61,8 @@ class UsersController < ApplicationController
                  :pic => user.pic,
                  :email => user.email,
                  :password => user.password,
+                 :upvotedProjects => user.upvoted_projects,
+                 :upvotedComments => user.upvoted_comments,
                  :user_uuid => user.uuid,
                  :id => user.id
              }
@@ -100,21 +102,6 @@ class UsersController < ApplicationController
       render :json => {:status => 500, :message => 'Could not find user by passed ID'}
     end
   end
-
-  def upvote
-    user = User.find_by(uuid: params[:user_uuid])
-    if !user.nil?
-      if params[:comment]
-        user.update_attributes(:upvoted_comments => user.upvoted_comments + [params[:comment_id]])
-      else
-        user.update_attributes(:upvoted_projects => user.upvoted_projects + [params[:project_id]])
-      end
-      render :json => {:status => 200}
-    else
-      render :json => {:status => 500, :message => 'Could not find user by passed ID'}
-    end
-  end
-
 
   private
 

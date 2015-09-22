@@ -20,19 +20,24 @@ define(['jquery',
             Backbone.EventBroker.trigger(channel, this);
         },
 
-        handleVote: function () {
+        handleVote: function (userUUID) {
             var self = this;
             var $voteCountEl = this.getVoteCountEl();
             var newVoteCount = Number($voteCountEl.html())+1;
             $voteCountEl.html(newVoteCount);
+            var $voteCountContainer = this.getVoteCountContainerEl();
+            $voteCountContainer.addClass('voted');
             var project = new Project();
-            project.commentVote({id: this.id, new_vote_count: newVoteCount});
+            project.commentVote({id: Number(this.id), new_vote_count: newVoteCount, user_uuid: userUUID}, {success: function (data) {
+                Backbone.EventBroker.trigger('updateUpvotedCommentsArray', data);
+            }});
         },
 
         setData: function (data) {
             this.userPic = data.userPic;
             this.posterGHUsername = data.posterGHUsername;
             this.voteCount = data.voteCount;
+            this.voted = data.voted;
             this.postTime = data.postTime;
             this.text = data.text;
             this.id = data.id;

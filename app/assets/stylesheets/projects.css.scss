@@ -152,6 +152,15 @@ $major-info-project-type: #CECECE;
   font-size: 20px;
 }
 
+.project-page-vote-container.voted {
+
+  .project-page-vote-count,
+  .fa{
+    color: #00A6C9;
+  }
+
+}
+
 .major-info-project-type-divider {
   display: inline-block;
   height: 26px;
@@ -984,6 +993,13 @@ $major-info-project-type: #CECECE;
   }
 
   .comment-vote-count-container:hover {
+    .fa {
+      color: #00A6C9;
+    }
+  }
+
+  .comment-vote-count-container.voted {
+    color: #00A6C9;
     .fa {
       color: #00A6C9;
     }

@@ -70,6 +70,14 @@
   font-family: 'Helvetica Neue';
 }
 
+.vote-master-container.voted {
+
+  .vote-count-container,
+  .fa{
+    color: #00A6C9;
+  }
+}
+
 .subtitle-tag-container {
   display: inline-block;
   width: 59%;

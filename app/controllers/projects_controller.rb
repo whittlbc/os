@@ -15,6 +15,9 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_details
+    if params[:gh_username]
+      user = User.find_by(gh_username: params[:gh_username])
+    end
     project = Project.find_by(id: params[:id])
     owner_gh_username = project.get_owner_gh_username
 
@@ -35,6 +38,7 @@ class ProjectsController < ApplicationController
         :subtitle => project.subtitle,
         :user_id => project.user_id,
         :uuid => project.uuid,
+        :voted => user ? user.voted_on_project(project.id) : nil,
         :vote_count => project.vote_count,
         :starred => project.is_starred?,
         :owner_gh_username => owner_gh_username,
@@ -191,6 +195,9 @@ class ProjectsController < ApplicationController
   end
 
   def feed
+    if params[:gh_username]
+      user = User.find_by(gh_username: params[:gh_username])
+    end
     projects_of_type = Project.includes(:user).where(:status => params[:status]).map { |project|
       {
           :title => project.title,
@@ -204,6 +211,7 @@ class ProjectsController < ApplicationController
           :langs_and_frames => project.langs_and_frames,
           :owner_gh_username => project.get_owner_gh_username,
           :owner_pic => project.get_owner_pic,
+          :voted => user ? user.voted_on_project(project.id) : nil,
           :status => project.status
       }
     }
@@ -338,9 +346,17 @@ class ProjectsController < ApplicationController
 
   # Apply vote
   def vote
-    @project = Project.find_by(uuid: params[:uuid])
-    @project.update_attributes(:vote_count => (@project.vote_count + 1))
-    render :json => {:response => 'Successfully applied vote to project'}
+    @project = Project.find_by(uuid: params[:project_uuid])
+    if !@project.nil?
+      @project.update_attributes(:vote_count => (@project.vote_count + 1))
+      user = User.find_by(uuid: params[:user_uuid])
+      if !user.nil?
+        user.update_attributes(:upvoted_projects => user.upvoted_projects + [@project.id])
+      end
+      render :json => user.upvoted_projects
+    else
+      render :json => {:status => 500, :message => 'Could not find project by UUID'}
+    end
   end
 
   def universal_search
@@ -383,7 +399,7 @@ class ProjectsController < ApplicationController
       comment = Comment.new(comment_info)
       comment.save
 
-      all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed])
+      all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed], user)
       render :json => all_comments_of_feed_type
     else
       render :json => {:status => 500}
@@ -391,11 +407,14 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_comments
-    comments = comments_for_feed(params[:project_id], params[:feed])
+    if params[:gh_username]
+      user = User.find_by(gh_username: params[:gh_username])
+    end
+    comments = comments_for_feed(params[:project_id], params[:feed], user)
     render :json => comments
   end
 
-  def comments_for_feed(project_id, feed_status)
+  def comments_for_feed(project_id, feed_status, user)
     comments = []
     Comment.includes(:user).top_level(project_id, feed_status).vote_and_time_sort.each { |comment|
       comment_obj = {
@@ -403,20 +422,21 @@ class ProjectsController < ApplicationController
             :userPic => comment.try(:user).try(:pic),
             :posterGHUsername => comment.try(:user).try(:gh_username),
             :voteCount => comment.vote_count,
+            :voted => user ? user.voted_on_comment(comment.id) : nil,
             :postTime => get_general_date(comment.created_at),
             :text => comment.text,
             :id => comment.id,
             :parentID => comment.parent_id,
             :feed => comment.feed
           },
-          :children => get_comment_children(comment)
+          :children => get_comment_children(comment, user)
       }
       comments.push(comment_obj)
     }
     comments
   end
 
-  def get_comment_children(comment)
+  def get_comment_children(comment, user)
     if comment.children.empty?
       []
     else
@@ -427,13 +447,14 @@ class ProjectsController < ApplicationController
                 :userPic => child.try(:user).try(:pic),
                 :posterGHUsername => child.try(:user).try(:gh_username),
                 :voteCount => child.vote_count,
+                :voted => user ? user.voted_on_comment(child.id) : nil,
                 :postTime => get_general_date(child.created_at),
                 :text => child.text,
                 :id => child.id,
                 :parentID => child.parent_id,
                 :feed => child.feed
             },
-            :children => get_comment_children(child)
+            :children => get_comment_children(child, user)
         }
         comments.push(comment_obj)
       }
@@ -443,8 +464,16 @@ class ProjectsController < ApplicationController
 
   def comment_vote
     comment = Comment.find_by(id: params[:id])
-    comment.update_attributes(:vote_count => params[:new_vote_count])
-    render :json => {:status => 200}
+    if !comment.nil?
+      comment.update_attributes(:vote_count => params[:new_vote_count])
+      user = User.find_by(uuid: params[:user_uuid])
+      if !user.nil?
+        user.update_attributes(:upvoted_comments => user.upvoted_comments + [params[:id]])
+      end
+      render :json => user.upvoted_comments
+    else
+      render :json => {:status => 500, :message => 'Could not find comment by ID'}
+    end
   end
 
   def get_up_for_grabs

@@ -28,8 +28,15 @@ define(['jquery',
             var self = this;
             var project = new Project();
             self.projectID = options.id;
-            project.fetchDetails({id: options.id}, {success: function (data) {
-                self.handleFetchedDetails(data);
+            self.cookieGHUsername = options.cookieGHUsername;
+            var data = {
+                id: options.id
+            };
+            if (self.cookieGHUsername) {
+                data.gh_username = self.cookieGHUsername;
+            }
+            project.fetchDetails(data, {success: function (projectData) {
+                self.handleFetchedDetails(projectData);
             }});
 
             Backbone.EventBroker.register({
@@ -44,11 +51,18 @@ define(['jquery',
 
         },
 
-        reInitialize: function (id) {
+        reInitialize: function (id, cookieGHUsername) {
             var self = this;
             var project = new Project();
             self.projectID = id;
-            project.fetchDetails({id: id}, {success: function (data) {
+            self.cookieGHUsername = cookieGHUsername;
+            var data = {
+                id: id
+            };
+            if (this.cookieGHUsername) {
+                data.gh_username = this.cookieGHUsername;
+            }
+            project.fetchDetails(data, {success: function (data) {
                 self.handleFetchedDetails(data);
             }});
         },
@@ -127,7 +141,17 @@ define(['jquery',
         fetchComments: function (feedStatus) {
             var self = this;
             var project = new Project();
-            project.fetchComments({project_id: self.projectID, feed: feedStatus}, {success: function (comments) {
+            var data = {
+                project_id: self.projectID,
+                feed: feedStatus
+            };
+            if (this.gh_username) {
+                data.gh_username = this.gh_username;
+            }
+            if (!this.gh_username && this.cookieGHUsername) {
+                data.gh_username = this.cookieGHUsername;
+            }
+            project.fetchComments(data, {success: function (comments) {
                 self.handleFetchedComments(comments);
             }});
         },
@@ -235,6 +259,7 @@ define(['jquery',
             this.projectMajorView = new ProjectMajorView({
                 el: '#projectMajorView'
             });
+
             this.projectMajorView.render(data);
 
             this.projectMinorView = new ProjectMinorView({

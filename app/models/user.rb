@@ -16,4 +16,12 @@ class User < ActiveRecord::Base
     CLIENT_SECRET = '91347eb62e866f7960510aafd81c2f41b2dda2d4'
   end
 
+  def voted_on_project(project_id)
+    self.upvoted_projects.include?(project_id)
+  end
+
+  def voted_on_comment(comment_id)
+    self.upvoted_comments.include?(comment_id)
+  end
+
 end

@@ -10,7 +10,7 @@
         </div>
         <div class="comment-text">{{text}}</div>
         <div class="comment-actions-container">
-            <div class="comment-vote-count-container"><i class="fa fa-caret-up"></i><span>{{voteCount}}</span></div>
+            <div class="comment-vote-count-container {{#voted}}voted{{/voted}}"><i class="fa fa-caret-up"></i><span>{{voteCount}}</span></div>
             <div class="comment-reply-btn"><span>Reply</span></div>
         </div>
     </div>

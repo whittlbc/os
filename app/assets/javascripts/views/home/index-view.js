@@ -58,6 +58,11 @@ define(['jquery',
             this.langsFramesDropdownShown = false;
         },
 
+        passCookieGHUsername: function (cookieGHUsername) {
+            var self = this;
+            this.cookieGHUsername = cookieGHUsername;
+        },
+
         deleteLangFilter: function (name) {
             this.selectize.deleteFuckingSelection(name);
         },
@@ -275,7 +280,6 @@ define(['jquery',
         },
 
         passUserInfo: function (data) {
-            var self = this;
             this.userData = data;
             this.user_uuid = data.user_uuid;
             this.userID = data.id;
@@ -321,7 +325,16 @@ define(['jquery',
             this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status);
             if (self.filters == null) {
-                project.fetchFeedProjects({status: status}, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+                var data = {
+                    status: status
+                };
+                if (this.userData) {
+                    data.gh_username = this.userData.gh_username;
+                }
+                if (!this.userData && this.cookieGHUsername) {
+                    data.gh_username = this.cookieGHUsername;
+                }
+                project.fetchFeedProjects(data, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
             } else {
                 self.filters.filters.status = status;
                 self.getFilteredFeed(self.filters);
@@ -352,6 +365,7 @@ define(['jquery',
             this.projectFeedView = new ProjectFeedView({
                 el: '#project-feed'
             });
+
             this.projectFeedView.render();
 
             var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;

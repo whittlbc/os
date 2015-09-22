@@ -42,12 +42,24 @@ define(['jquery',
                 'login:gh': 'loginWithGH',
                 'contribs-modal:show': 'showContribsModal',
                 'create-project-modal:hide': 'hideCreateProjectModal',
-                'project:star': 'handleStarProject'
+                'project:star': 'handleStarProject',
+                'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
+                'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray'
             }, this);
             this.userAuthed = false;
         },
 
 		events: {},
+
+        updateUpvotedProjectsArray: function (arr) {
+            var self = this;
+            this.userData.upvotedProjects = arr;
+        },
+
+        updateUpvotedCommentsArray: function (arr) {
+            var self = this;
+            this.userData.upvotedComments = arr;
+        },
 
         handleStarProject: function (bool) {
             var self = this;
@@ -106,10 +118,13 @@ define(['jquery',
         },
 
         // either show the login modal or vote on the passed projectPostView
-        loginOrProjectVote: function (view) {
+        loginOrProjectVote: function (data) {
             var self = this;
             if (this.userAuthed) {
-                view.handleVote();
+                if (!_.contains(this.userData.upvotedProjects, data.projectID)) {
+                    this.userData.upvotedProjects.push(data.projectID);
+                    data.view.handleVote(self.userData.user_uuid);
+                }
             } else {
                 this.loginModal.setMessage('You must be logged in to vote on projects.');
                 this.loginModal.showModal();
@@ -119,7 +134,10 @@ define(['jquery',
         loginOrCommentVote: function (view) {
             var self = this;
             if (this.userAuthed) {
-                view.handleVote();
+                if (!_.contains(this.userData.upvotedComments, view.id)) {
+                    this.userData.upvotedComments.push(view.id);
+                    view.handleVote(self.userData.user_uuid);
+                }
             } else {
                 this.loginModal.setMessage('You must be logged in to vote on comments.');
                 this.loginModal.showModal();
@@ -169,6 +187,7 @@ define(['jquery',
 
         passCookieUser: function (cookieGHUsername) {
             var self = this;
+            this.cookieGHUsername = cookieGHUsername;
             if (_.isEmpty(cookieGHUsername)) {
                 // user cookie wan't set
                 console.log('user cookie wasnt set');
@@ -347,6 +366,7 @@ define(['jquery',
                         el: this.$el.find('#homeViewContainer')
                     });
                 }
+                this.homeView.passCookieGHUsername(this.cookieGHUsername);
                 this.listenTo(this.homeView, 'languages:all');
                 this.homeView.render({
                     index: options && options.index ? options.index : 1
@@ -355,11 +375,12 @@ define(['jquery',
             if (this.showProjectView) {
                 if (this.projectView) {
                     this.projectView.$el = this.$el.find('#projectViewContainer');
-                    this.projectView.reInitialize(options.id);
+                    this.projectView.reInitialize(options.id, this.cookieGHUsername);
                 } else {
                     this.projectView = new ProjectView({
                         el: this.$el.find('#projectViewContainer'),
-                        id: options ? options.id : null
+                        id: options ? options.id : null,
+                        cookieGHUsername: this.cookieGHUsername
                     });
                 }
             }

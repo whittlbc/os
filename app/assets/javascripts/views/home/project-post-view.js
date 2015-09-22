@@ -28,7 +28,7 @@ define(['jquery',
         },
 
         checkIfUserAuthed: function () {
-            Backbone.EventBroker.trigger('project:vote', this);
+            Backbone.EventBroker.trigger('project:vote', {view: this, projectID: this.id});
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -39,12 +39,15 @@ define(['jquery',
             window.location.hash = '#projects/' + this.id;
         },
 
-        handleVote: function() {
+        handleVote: function(userUUID) {
             var self = this;
             self.vote_count++;
+            self.voted = true;
             self.render();
             var project = new Project();
-            project.vote({uuid: self.uuid});
+            project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {success: function (data) {
+                Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
+            }});
         },
 
         setData: function (data) {
@@ -55,6 +58,7 @@ define(['jquery',
             this.id = data.id;
             this.uuid = data.uuid;
             this.vote_count = data.vote_count;
+            this.voted = data.voted;
             this.commentCount = 5;  // actually connect this later
             this.contributorCount = data.contributors ? data.contributors.length : 0;
             //this.license = _.isEmpty(data.license) ? null : data.license[0];
@@ -129,6 +133,10 @@ define(['jquery',
             }
         },
 
+        applyAlreadyVoted: function () {
+            this.$el.find('.vote-master-container').addClass('voted');
+        },
+
         render: function () {
 			var self = this;
 
@@ -143,7 +151,8 @@ define(['jquery',
                 upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
                 searchResult: self.searchResult,
                 projectType: self.projectType,
-                userPic: self.owner_pic
+                userPic: self.owner_pic,
+                voted: self.voted
             }));
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
@@ -157,9 +166,6 @@ define(['jquery',
                 userPic: self.owner_pic,
                 ghUsername: self.ownerGHUsername
             });
-
-
-
         }
 	});
 

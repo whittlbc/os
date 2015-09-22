@@ -51,15 +51,18 @@ define(['jquery',
         },
 
         checkIfUserAuthed: function () {
-            Backbone.EventBroker.trigger('project:vote', this);
+            Backbone.EventBroker.trigger('project:vote', {view: this, projectID: this.projectID});
         },
 
-        handleVote: function() {
+        handleVote: function(userUUID) {
             var self = this;
             var oldVote = Number(this.$el.find('.project-page-vote-count').html());
             this.$el.find('.project-page-vote-count').html(oldVote + 1);
+            this.$el.find('.project-page-vote-container').addClass('voted');
             var project = new Project();
-            project.vote({uuid: self.uuid});
+            project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {success: function (data) {
+                Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
+            }});
         },
 
         handleToggleDescriptionSize: function () {
@@ -119,6 +122,7 @@ define(['jquery',
             options = options || {};
 
             this.uuid = options ? options.uuid : null;
+            this.projectID = options ? options.id : null;
 
             this.$el.html(MajorInfoViewTpl({
                 title: options.title ? options.title : '',
@@ -126,7 +130,8 @@ define(['jquery',
                 subtitle: options.subtitle ? options.subtitle : '',
                 description: options.description ? options.description : '',
                 voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
-                starred: options.starred
+                starred: options.starred,
+                voted: options.voted
             }));
             this.addTags(options.langs_and_frames);
             this.$descriptionContainer = this.$el.find('.major-info-project-description');
