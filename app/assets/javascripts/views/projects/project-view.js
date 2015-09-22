@@ -44,6 +44,15 @@ define(['jquery',
 
         },
 
+        reInitialize: function (id) {
+            var self = this;
+            var project = new Project();
+            self.projectID = id;
+            project.fetchDetails({id: id}, {success: function (data) {
+                self.handleFetchedDetails(data);
+            }});
+        },
+
         errorHandler: function(resp, status, xhr) {
             console.log('AJAX ERROR: ', xhr, resp);
         },
@@ -218,9 +227,7 @@ define(['jquery',
         },
 
         render: function (data) {
-
             var self = this;
-
             this.data = data;
 
             this.$el.html(ProjectViewTpl());

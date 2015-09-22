@@ -52,7 +52,6 @@ define(['jquery',
         handleStarProject: function (bool) {
             var self = this;
             var user = new User();
-            console.log('star');
             user.star({user_uuid: self.userData.user_uuid, project_id: Number(self.projectView.projectID), star: bool});
         },
 
@@ -166,13 +165,6 @@ define(['jquery',
 
         changeHomeFeedType: function (index) {
             this.homeView.populateProjectFeed(index);
-        },
-
-        switchProject: function (id) {
-            this.projectView = new ProjectView({
-                el: this.$el.find('#projectViewContainer'),
-                id: id
-            });
         },
 
         passCookieUser: function (cookieGHUsername) {
@@ -347,19 +339,29 @@ define(['jquery',
             this.addProjectBtnListener();
 
             if (this.showHomeView) {
-                this.homeView = new IndexView({
-                    el: this.$el.find('#homeViewContainer')
-                });
+                if (this.homeView) {
+                    this.homeView.$el = this.$el.find('#homeViewContainer');
+                    this.homeView.resetProps();
+                } else {
+                    this.homeView = new IndexView({
+                        el: this.$el.find('#homeViewContainer')
+                    });
+                }
                 this.listenTo(this.homeView, 'languages:all');
                 this.homeView.render({
                     index: options && options.index ? options.index : 1
                 });
             }
             if (this.showProjectView) {
-                this.projectView = new ProjectView({
-                    el: this.$el.find('#projectViewContainer'),
-                    id: options ? options.id : null
-                });
+                if (this.projectView) {
+                    this.projectView.$el = this.$el.find('#projectViewContainer');
+                    this.projectView.reInitialize(options.id);
+                } else {
+                    this.projectView = new ProjectView({
+                        el: this.$el.find('#projectViewContainer'),
+                        id: options ? options.id : null
+                    });
+                }
             }
 
             this.allLangs ? this.handleAllLanguages(this.allLangs) : this.getAllLanguages();

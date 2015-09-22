@@ -37,6 +37,11 @@ define(['jquery',
                 'removePrivacyFilter': 'removePrivacyFilter',
                 'clearNonLangFilters': 'clearNonLangFilters'
             }, this);
+
+            this.resetProps();
+        },
+
+        resetProps: function () {
             this.filters = null;
             this.filtersShown = false;
             this.langsFramesValue = [];
