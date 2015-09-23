@@ -253,8 +253,18 @@ define(['jquery',
             });
 
             return this.sync('destroyProject', this, requestInfo);
-        }
+        },
 
+        edit: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/edit',
+                data: info
+            });
+
+            return this.sync('edit', this, requestInfo);
+        }
     });
 
     return Project;

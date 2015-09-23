@@ -2,8 +2,8 @@
     <div class="title-action-container">
         <div class="major-info-project-title"><div class="star {{#starred}}starred{{/starred}}"><i class="fa {{#starred}}fa-star{{/starred}} {{^starred}}fa-star-o{{/starred}}"></i></div>{{title}}<div class="major-info-project-type-divider"></div><span class="major-info-project-type">{{projectType}}</span></div>{{
         }}<div class="project-action-container">
-            <div class="join-btn">Request to join</div>{{
-            }}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
+            <div class="join-btn">{{^editMode}}{{joinText}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
+            }}{{^editMode}}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
                 <div class="project-page-vote-arrow">
                     <i class="fa fa-angle-up"></i>
                 </div>
@@ -15,6 +15,7 @@
                 {{#isAdmin}}<div class="edit-btn"><i class="fa fa-pencil-square-o"></i></div>{{/isAdmin}}
             </div>
             {{/isAdmin}}
+            {{/editMode}}
         </div>
     </div>
     <div class="major-info-tag-container"></div>

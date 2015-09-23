@@ -43,7 +43,8 @@ define(['jquery',
                 'project:join': 'checkProjectPrivacy',
                 'comment:add': 'handleAddComment',
                 'comments:fetch': 'fetchComments',
-                'evolution:fetch': 'fetchProjectEvolution'
+                'evolution:fetch': 'fetchProjectEvolution',
+                'project:save-edit': 'handleSaveEditProject'
             }, this);
 
             this.github = Github;
@@ -73,6 +74,32 @@ define(['jquery',
 
         events: {},
 
+        handleSaveEditProject: function () {
+            var self = this;
+            var majorProjectData = this.projectMajorView.getSavedEditData();
+            var minorProjectData = this.projectMinorView.getSavedEditData();
+
+            var data = {
+                title: majorProjectData.title,
+                subtitle: majorProjectData.subtitle,
+                description: majorProjectData.description,
+                langs_and_frames: majorProjectData.langs_and_frames,
+                type: majorProjectData.type,
+                privacy: majorProjectData.privacy,
+                license: minorProjectData.license,
+                anon: minorProjectData.anon,
+                integrations: minorProjectData.integrations
+            };
+
+            var project = new Project();
+            project.edit({id: self.projectID, new_info: data}, {success: function (updatedProjectData) {
+                self.handleFetchedDetails(updatedProjectData);
+            }, error: function () {
+                // show something
+            }});
+
+        },
+
         fetchProjectEvolution: function () {
             var self = this;
             var project = new Project();
@@ -95,8 +122,12 @@ define(['jquery',
 
             if (!_.isEmpty(obj.text)) {
                 var project = new Project();
-                project.postNewComment(obj, {success: function (comment) {
-                    self.projectMajorView.showNewComment(comment);
+                project.postNewComment(obj, {success: function (updatedComments) {
+                    var obj = {
+                        comments: updatedComments,
+                        currentUser: self.gh_username || self.cookieGHUsername
+                    };
+                    self.projectMajorView.showNewComment(obj);
                 }, error: function () {
                     self.errorPostingComment();
                 }});
@@ -254,6 +285,12 @@ define(['jquery',
             console.log('Successfully joined project');
         },
 
+        showEditMode: function () {
+            var self = this;
+            this.projectMajorView.showEditMode(this.data);
+            this.projectMinorView.showEditMode(this.data.project);
+        },
+
         render: function (data) {
             var self = this;
             this.data = data;
@@ -262,6 +299,10 @@ define(['jquery',
 
             this.projectMajorView = new ProjectMajorView({
                 el: '#projectMajorView'
+            });
+
+            this.listenTo(this.projectMajorView, 'project:edit', function () {
+                self.showEditMode();
             });
 
             this.projectMajorView.render(data);

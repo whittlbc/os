@@ -19,14 +19,23 @@ define(['jquery',
 
 		events: {},
 
-        showNewComment: function (comment) {
+        showNewComment: function (data) {
             var self = this;
-            self.communicationView.showNewComment(comment);
+            self.communicationView.showNewComment(data);
         },
 
         passComments: function (data) {
             var self = this;
             self.communicationView.passComments(data);
+        },
+
+        showEditMode: function (data) {
+            var self = this;
+            this.majorInfoView.showEditMode(data.project);
+        },
+
+        getSavedEditData: function () {
+            return this.majorInfoView.getSavedEditData();
         },
 
 		render: function (options) {
@@ -35,6 +44,10 @@ define(['jquery',
 
             this.majorInfoView = new MajorInfoView({
                 el: '#majorInfoView'
+            });
+
+            this.listenTo(this.majorInfoView, 'project:edit', function () {
+                self.trigger('project:edit');
             });
 
             this.majorInfoView.render(options.project);

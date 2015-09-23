@@ -26,10 +26,15 @@ define(['jquery',
 		events: {
             'click .see-all-description': 'handleToggleDescriptionSize',
             'click .project-page-vote-container': 'checkIfUserAuthed',
-            'click .join-btn': 'handleJoin',
+            'click .join-btn': 'handleJoinOrSaveEdit',
             'click .star': 'handleStarProject',
             'click .edit-btn': 'handleProjectEdit',
             'click .delete-btn': 'handleProjectDelete'
+        },
+
+        handleJoinOrSaveEdit: function () {
+            var event = this.editMode ? 'project:save-edit' : 'project:join';
+            Backbone.EventBroker.trigger(event);
         },
 
         handleProjectEdit: function () {
@@ -56,10 +61,6 @@ define(['jquery',
                 $star.addClass('starred');
                 self.$el.find('.star > .fa').addClass('fa-star').removeClass('fa-star-o');
             }
-        },
-
-        handleJoin: function () {
-            Backbone.EventBroker.trigger('project:join');
         },
 
         checkIfUserAuthed: function () {
@@ -129,10 +130,29 @@ define(['jquery',
             }
         },
 
+        showEditMode: function (data) {
+            var self = this;
+            data.editMode = true;
+            this.render(data);
+        },
+
+        getSavedEditData: function () {
+            var self = this;
+            return {
+                title: this.$el.find('').val(),
+                subtitle: this.$el.find('').val(),
+                description: this.$el.find('').val(),
+                langs_and_frames: this.langsFramesSelectize.getValue(),
+                type: this.$el.find(':selected').val(),
+                privacy: this.$el.find(':checked').val()
+            };
+        },
+
 		render: function (options) {
 			var self = this;
             options = options || {};
 
+            this.editMode = options.editMode;
             this.uuid = options ? options.uuid : null;
             this.projectID = options ? options.id : null;
 
@@ -142,21 +162,28 @@ define(['jquery',
                 subtitle: options.subtitle ? options.subtitle : '',
                 description: options.description ? options.description : '',
                 voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
+                joinText: options.privacy[0] === OSUtil.OPEN_PRIVACY ? 'Join' : 'Request to Join',
                 starred: options.starred,
                 voted: options.voted,
                 isAdmin: options.is_admin,
-                isOwner: options.is_owner
+                isOwner: options.is_owner,
+                editMode: options.editMode
             }));
-            this.addTags(options.langs_and_frames);
-            this.$descriptionContainer = this.$el.find('.major-info-project-description');
-            this.originalDescriptionHeight = this.$descriptionContainer.height();
-            this.$descriptionContainer.dotdotdot({
-                height: this.descriptionMaxHeight,
-                after: '.see-all-description'
-            });
-            var isTruncated = this.$descriptionContainer.triggerHandler('isTruncated');
-            if (!isTruncated) {
-                this.$el.find('.see-all-description').hide();
+
+            console.log('Re-rendered major info view', options.editMode);
+
+            if (!options.editMode) {
+                this.addTags(options.langs_and_frames);
+                this.$descriptionContainer = this.$el.find('.major-info-project-description');
+                this.originalDescriptionHeight = this.$descriptionContainer.height();
+                this.$descriptionContainer.dotdotdot({
+                    height: this.descriptionMaxHeight,
+                    after: '.see-all-description'
+                });
+                var isTruncated = this.$descriptionContainer.triggerHandler('isTruncated');
+                if (!isTruncated) {
+                    this.$el.find('.see-all-description').hide();
+                }
             }
 
 		}

@@ -42,9 +42,27 @@ define(['jquery',
             });
         },
 
+        showEditMode: function (data) {
+            var self = this;
+            data.editMode = true;
+            this.render(data);
+        },
+
+        getSavedEditData: function () {
+            var self = this;
+            return {
+                license: this.$el.find(':selected').val(),
+                anon: this.$el.find('').is(':checked'),
+                integrations: {
+                    slack: this.$el.find('').val(),
+                    hipchat: this.$el.find('').val(),
+                    irc: this.$el.find('').val()
+                }
+            };
+        },
+
         render: function (options) {
 			var self = this;
-            this.options = options;
             var repoName;
             var showRepoName = false;
             var showLicense = false;
@@ -108,8 +126,11 @@ define(['jquery',
                 license: license,
                 licenseSpecified: license != null,
                 showRepoStats: !!options.getting_repo_data,
-                showIntegrations: showIntegrations
+                showIntegrations: showIntegrations,
+                editMode: options.editMode
             }));
+
+            console.log('Re-render Minor Info View', options.editMode);
 
             this.contributorsView = new ContributorsView({
                 el: '#contributorsView'

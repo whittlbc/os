@@ -28,9 +28,9 @@ define(['jquery',
             });
         },
 
-        showNewComment: function (comment) {
+        showNewComment: function (data) {
             var self = this;
-            self.communicationPanelsView.showNewComment(comment);
+            self.communicationPanelsView.showNewComment(data);
         },
 
         passComments: function (data) {

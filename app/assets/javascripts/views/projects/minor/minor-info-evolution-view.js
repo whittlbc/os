@@ -67,7 +67,16 @@ define(['jquery',
             this.minorInfoView.lazyLoadRepoStats(data);
         },
 
-		render: function (options) {
+        showEditMode: function (data) {
+            var self = this;
+            this.minorInfoView.showEditMode(data);
+        },
+
+        getSavedEditData: function () {
+            return this.minorInfoView.getSavedEditData();
+        },
+
+        render: function (options) {
 			var self = this;
             this.$el.html(MinorInfoEvolutionViewTpl());
 

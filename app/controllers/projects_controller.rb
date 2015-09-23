@@ -580,6 +580,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def edit
+    project = Project.find_by(id: params[:id])
+    if !project.nil?
+      project.update_attributes(params[:new_info])
+      render :json => {:status => 200}
+
+      # in actuality, turn the fetch_details method into a service and call that from here, then return that data
+
+    else
+      render :json => {:status => 500, :message => 'Could not find project by id'}
+    end
+  end
+
   private
 
   def project_params

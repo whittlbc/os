@@ -205,7 +205,12 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'destroyProject': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'edit': {
+                verb: 'PUT',
+                action: 'update'
             }
+
         }
 
     };
