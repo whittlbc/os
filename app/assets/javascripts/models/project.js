@@ -242,6 +242,17 @@ define(['jquery',
             });
 
             return this.sync('destroyComment', this, requestInfo);
+        },
+
+        destroyProject: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/destroyProject',
+                data: info
+            });
+
+            return this.sync('destroyProject', this, requestInfo);
         }
 
     });

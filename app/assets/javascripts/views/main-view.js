@@ -46,6 +46,7 @@ define(['jquery',
                 'contribs-modal:show': 'showContribsModal',
                 'create-project-modal:hide': 'hideCreateProjectModal',
                 'project:star': 'handleStarProject',
+                'project:delete': 'showDeleteProjectModal',
                 'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
                 'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray'
             }, this);
@@ -70,6 +71,21 @@ define(['jquery',
                 feed: self.commentToDeleteOptions.feed
             }, {success: function (comments) {
                 self.projectView.handleFetchedComments(comments);
+            }});
+        },
+
+        showDeleteProjectModal: function () {
+            this.deleteProjectModal.showModal();
+        },
+
+        deleteProject: function () {
+            var self = this;
+            var project = new Project();
+            project.destroyProject({id: self.projectView.projectID}, {success: function () {
+                window.location.hash = '#on-the-fence';
+                // show tiny success popup
+            }, error: function () {
+                // show an error message
             }});
         },
 
@@ -440,6 +456,15 @@ define(['jquery',
                 self.deleteComment();
             });
             this.deleteCommentModal.render();
+
+            this.deleteProjectModal = new BasicQuestionModal({
+                el: this.$el.find('#modalDeleteProject'),
+                message: 'Are you sure you want to delete this project?'
+            });
+            this.listenTo(this.deleteProjectModal, 'confirm', function () {
+                self.deleteProject();
+            });
+            this.deleteProjectModal.render();
 		}
 
 	});

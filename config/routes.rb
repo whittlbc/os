@@ -26,6 +26,7 @@ Backboneworld::Application.routes.draw do
       put :pull_project, :path => '/pullProject'
       get :get_evolution, :path => '/getEvolution'
       put :destroy_comment, :path => '/destroyComment'
+      put :destroy_project, :path => '/destroyProject'
     end
   end
 

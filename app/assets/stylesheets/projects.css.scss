@@ -90,6 +90,38 @@ $major-info-project-type: #CECECE;
   position: absolute;
   top: 0;
   right: 0;
+
+  .admin-action-container {
+    position: absolute;
+    top: 58px;
+    right: 9px;
+    display: block;
+
+    .edit-btn,
+    .delete-btn{
+      display: inline-block;
+      float: right;
+      height: 25px;
+      width: 35px;
+      font-size: 20px;
+      text-align: center;
+      color: #52545B;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover,
+    .delete-btn:hover {
+      color: #888A94;
+    }
+
+    .edit-btn {
+      padding-top: 1px;
+    }
+
+    .delete-btn {
+      margin-right: 7px;
+    }
+  }
 }
 
 .join-btn {

@@ -201,6 +201,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'destroyComment': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'destroyProject': {
+                verb: 'PUT',
+                action: 'update'
             }
         }
 

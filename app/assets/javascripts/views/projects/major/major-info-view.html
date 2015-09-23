@@ -9,6 +9,12 @@
                 </div>
                 <div class="project-page-vote-count">{{voteCount}}</div>
             </div>
+            {{#isAdmin}}
+            <div class="admin-action-container">
+                {{#isOwner}}<div class="delete-btn"><i class="fa fa-trash"></i></div>{{/isOwner}}
+                {{#isAdmin}}<div class="edit-btn"><i class="fa fa-pencil-square-o"></i></div>{{/isAdmin}}
+            </div>
+            {{/isAdmin}}
         </div>
     </div>
     <div class="major-info-tag-container"></div>

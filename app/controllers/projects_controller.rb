@@ -46,6 +46,7 @@ class ProjectsController < ApplicationController
         :admin => admin_arr,
         :integrations => project.integrations,
         :is_admin => user ? admin_arr.include?(user.gh_username) : false,
+        :is_owner => user ? user.gh_username === owner_gh_username : false,
         :is_contributor => false
       }
 
@@ -228,10 +229,10 @@ class ProjectsController < ApplicationController
   end
 
   def destroy_project
-    project = Project.find_by(uuid: params[:uuid])
+    project = Project.find_by(id: params[:id])
     if !project.nil?
       project.update_attributes(is_destroyed: true)
-      redirect_to '/#on-the-fence'
+      render :json => {:status => 200}
     else
       render :json => {:status => 500, :message => 'Couldnt find project by uuid'}
     end

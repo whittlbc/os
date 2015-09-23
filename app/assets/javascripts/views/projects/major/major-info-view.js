@@ -27,7 +27,19 @@ define(['jquery',
             'click .see-all-description': 'handleToggleDescriptionSize',
             'click .project-page-vote-container': 'checkIfUserAuthed',
             'click .join-btn': 'handleJoin',
-            'click .star': 'handleStarProject'
+            'click .star': 'handleStarProject',
+            'click .edit-btn': 'handleProjectEdit',
+            'click .delete-btn': 'handleProjectDelete'
+        },
+
+        handleProjectEdit: function () {
+            var self = this;
+            this.trigger('project:edit');
+        },
+
+        handleProjectDelete: function () {
+            var self = this;
+            Backbone.EventBroker.trigger('project:delete');
         },
 
         handleStarProject: function () {
@@ -131,7 +143,9 @@ define(['jquery',
                 description: options.description ? options.description : '',
                 voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
                 starred: options.starred,
-                voted: options.voted
+                voted: options.voted,
+                isAdmin: options.is_admin,
+                isOwner: options.is_owner
             }));
             this.addTags(options.langs_and_frames);
             this.$descriptionContainer = this.$el.find('.major-info-project-description');
