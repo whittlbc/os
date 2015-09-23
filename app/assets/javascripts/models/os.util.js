@@ -197,6 +197,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'star': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'destroyComment': {
+                verb: 'PUT',
+                action: 'update'
             }
         }
 

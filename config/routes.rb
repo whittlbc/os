@@ -25,6 +25,7 @@ Backboneworld::Application.routes.draw do
       get :get_up_for_grabs_details, :path => '/getUpForGrabsDetails'
       put :pull_project, :path => '/pullProject'
       get :get_evolution, :path => '/getEvolution'
+      put :destroy_comment, :path => '/destroyComment'
     end
   end
 

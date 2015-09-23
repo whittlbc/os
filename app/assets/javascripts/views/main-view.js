@@ -68,8 +68,8 @@ define(['jquery',
                 user_uuid: self.userData.user_uuid,
                 project_id: self.projectView.projectID,
                 feed: self.commentToDeleteOptions.feed
-            }, {success: function () {
-                self.handleFetchedComments(comments);
+            }, {success: function (comments) {
+                self.projectView.handleFetchedComments(comments);
             }});
         },
 

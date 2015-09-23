@@ -231,6 +231,17 @@ define(['jquery',
             });
 
             return this.sync('getEvolution', this, requestInfo);
+        },
+
+        destroyComment: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/destroyComment',
+                data: info
+            });
+
+            return this.sync('destroyComment', this, requestInfo);
         }
 
     });

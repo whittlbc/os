@@ -1,0 +1,54 @@
+
+#basicQuestionModalContentContainer {
+
+  .basic-modal-body {
+    width: 100%;
+  }
+
+  .message {
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 54px;
+    font-size: 15px;
+    font-family: 'Helvetica Neue';
+    text-align: center;
+    display: block;
+    min-height: 64px;
+    font-weight: 500;
+  }
+
+  .action-btn-container {
+    displa: block;
+    width: 100%;
+    height: 65px;
+    border-top: 1px solid #EEE;
+
+    .cancel-btn,
+    .confirm-btn {
+      width: 120px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 17px;
+      text-align: center;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      float: left;
+      margin-left: 70px;
+      background-color: #BEBFC4;
+    }
+
+    .confirm-btn {
+      float: right;
+      margin-right: 70px;
+      background-color: #00A6C9;
+    }
+
+  }
+}
