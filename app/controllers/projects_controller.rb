@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
     end
     project = Project.find_by(id: params[:id])
     owner_gh_username = project.get_owner_gh_username
+    admin_arr = Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) }
 
     if !project.blank?
       project_details = {
@@ -42,8 +43,10 @@ class ProjectsController < ApplicationController
         :vote_count => project.vote_count,
         :starred => project.is_starred?,
         :owner_gh_username => owner_gh_username,
-        :admin => Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) },
-        :integrations => project.integrations
+        :admin => admin_arr,
+        :integrations => project.integrations,
+        :is_admin => user ? admin_arr.include?(user.gh_username) : false,
+        :is_contributor => false
       }
 
       comments = Comment.where(project_id: params[:id])
@@ -65,6 +68,10 @@ class ProjectsController < ApplicationController
           admin.push(obj)
         else
           others.push(obj)
+        end
+
+        if !user.nil? && obj['login'] === user.gh_username
+          project_details[:is_contributor] = true
         end
       }
 
@@ -198,7 +205,7 @@ class ProjectsController < ApplicationController
     if params[:gh_username]
       user = User.find_by(gh_username: params[:gh_username])
     end
-    projects_of_type = Project.includes(:user).where(:status => params[:status]).map { |project|
+    projects_of_type = Project.includes(:user, :comments).where(:status => params[:status]).active.map { |project|
       {
           :title => project.title,
           :subtitle => project.subtitle,
@@ -209,10 +216,11 @@ class ProjectsController < ApplicationController
           :license => project.license,
           :privacy => project.privacy,
           :langs_and_frames => project.langs_and_frames,
-          :owner_gh_username => project.get_owner_gh_username,
+          :owner_gh_username => project.get_owner_gh_username, # the reason for .includes(:user)
           :owner_pic => project.get_owner_pic,
           :voted => user ? user.voted_on_project(project.id) : nil,
-          :status => project.status
+          :status => project.status,
+          :total_comments => project.comments.length
       }
     }
     results = special_sort(projects_of_type).slice(0, 30)
@@ -252,16 +260,41 @@ class ProjectsController < ApplicationController
   end
 
   def filtered_feed
+    if params[:gh_username]
+      user = User.find_by(gh_username: params[:gh_username])
+    end
     filters = params[:filters]
-    filtered_projects = Project.where(status: filters[:status])
-    filters.each { |filter|
-      if filter[1].is_a?(Array)
-        filtered_projects = filtered_projects.where.overlap(filter[0] => filter[1])
-      else
-        filtered_projects = filtered_projects.where(filter[0] => filter[1])
-      end
-    }
-    render :json => special_sort(filtered_projects)
+    if !filters.nil?
+      filtered_projects = Project.includes(:user, :comments).where(status: filters[:status]).active
+      filters.each { |filter|
+        if filter[1].is_a?(Array)
+          filtered_projects = filtered_projects.where.overlap(filter[0] => filter[1])
+        else
+          filtered_projects = filtered_projects.where(filter[0] => filter[1])
+        end
+      }
+      projects = filtered_projects.map { |project|
+        {
+            :title => project.title,
+            :subtitle => project.subtitle,
+            :id => project.id,
+            :uuid => project.uuid,
+            :vote_count => project.vote_count,
+            :contributors => project.contributors,
+            :license => project.license,
+            :privacy => project.privacy,
+            :langs_and_frames => project.langs_and_frames,
+            :owner_gh_username => project.get_owner_gh_username, # the reason for .includes(:user)
+            :owner_pic => project.get_owner_pic,
+            :voted => user ? user.voted_on_project(project.id) : nil,
+            :status => project.status,
+            :total_comments => project.comments.length
+        }
+      }
+      render :json => special_sort(projects).slice(0, 30)
+    else
+      render :json => {:status => 500, :message => 'params[:filters] was nil'}
+    end
   end
 
   def pull_from_ideas

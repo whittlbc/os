@@ -6,11 +6,9 @@
         <li class="tab communication-tab">
             <a index="1" class="{{#suggestionsActive}}active{{/suggestionsActive}}">Feature Suggestions</a>
         </li>
-        {{#showTeam}}
-        <li class="tab communication-tab">
-            <a index="2" class="{{#teamActive}}active{{/teamActive}}">Team</a>
+        <li class="tab communication-tab {{^onTeam}}disabled{{/onTeam}}">
+            <a index="2" class="{{^onTeam}}disabled{{/onTeam}} {{#teamActive}}active{{/teamActive}}">{{^onTeam}}<i class="fa fa-lock"></i>{{/onTeam}}<span>Team</span></a>
         </li>
-        {{/showTeam}}
         {{#showAdmin}}
         <li class="tab communication-tab">
             <a index="3" class="{{#adminActive}}active{{/adminActive}}">Admin</a>

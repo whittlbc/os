@@ -59,17 +59,14 @@ define(['jquery',
             this.uuid = data.uuid;
             this.vote_count = data.vote_count;
             this.voted = data.voted;
-            this.commentCount = 5;  // actually connect this later
+            this.commentCount = data.total_comments;
             this.contributorCount = data.contributors ? data.contributors.length : 0;
-            //this.license = _.isEmpty(data.license) ? null : data.license[0];
-            //this.privacy = _.isEmpty(data.privacy) ? null : data.privacy[0];
-            //this.langs_and_frames = data.langs_and_frames;
-            this.license = 'MIT';
-            this.privacy = OSUtil.OPEN_PRIVACY;
+            this.license = _.isEmpty(data.license) ? null : data.license[0];
+            this.privacy = _.isEmpty(data.privacy) ? null : data.privacy[0];
+            this.langs_and_frames = data.langs_and_frames;
             this.status = data.status;
             this.projectType = OSUtil.GRAMMATICAL_PROJECT_TYPES[self.status];
             this.searchResult = data.search_result;
-            this.langs_and_frames = ['HTML', 'Ruby'];
             this.owner_pic = data.owner_pic;
             this.ownerGHUsername = data.owner_gh_username
         },

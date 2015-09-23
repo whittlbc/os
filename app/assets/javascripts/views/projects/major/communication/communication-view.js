@@ -38,7 +38,7 @@ define(['jquery',
             self.communicationPanelsView.passComments(comments);
         },
 
-        render: function () {
+        render: function (options) {
 			var self = this;
 
             this.$el.html(CommunicationViewTpl({
@@ -48,7 +48,7 @@ define(['jquery',
                 el: '#tabsView'
             });
             this.listenTo(this.communicationTabsView, 'tab:selected', this.handleTabSelected);
-            this.communicationTabsView.render();
+            this.communicationTabsView.render(options);
 
             this.communicationPanelsView = new CommunicationPanelsView({
                 el: '#panelsView'

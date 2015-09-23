@@ -5,6 +5,12 @@ class Project < ActiveRecord::Base
   has_many :comments
   has_many :evolutions
 
+  scope :active, -> { where(:is_destroyed => false, :was_pulled => false) }
+
+  scope :not_pulled, -> { where(:was_pulled => false) }
+
+  scope :not_destroyed, -> { where(:is_destroyed => false) }
+
   def get_owner_gh_username
     self.try(:user).try(:gh_username)
   end

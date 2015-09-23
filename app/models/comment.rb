@@ -11,4 +11,7 @@ class Comment < ActiveRecord::Base
 
   scope :vote_and_time_sort, -> { all(:order => ['vote_count DESC', :updated_at]) }
 
+  scope :not_destroyed, -> { where(:is_destroyed => false) }
+
+
 end

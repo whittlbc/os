@@ -21,19 +21,25 @@ define(['jquery',
 
         handleTabClick: function (e) {
             var self = this;
-            var selectedIndex = Number($(e.currentTarget).attr('index'));
-            if (this.activeTab != selectedIndex) {
-                this.activeTab = selectedIndex;
-                this.trigger('tab:selected', this.activeTab);
-                Backbone.EventBroker.trigger('comments:fetch', this.activeTab);
+            if (!$(e.currentTarget).hasClass('disabled')) {
+                var selectedIndex = Number($(e.currentTarget).attr('index'));
+                if (this.activeTab != selectedIndex) {
+                    this.activeTab = selectedIndex;
+                    this.trigger('tab:selected', this.activeTab);
+                    Backbone.EventBroker.trigger('comments:fetch', this.activeTab);
+                }
             }
         },
 
-		render: function () {
+		render: function (options) {
 			var self = this;
+            options = options || {};
+
             this.$el.html(CommunicationTabsViewTpl({
-                showTeam: true,
-                showAdmin: true,
+                onTeam: options.project ? options.project.is_contributor : false,
+                showAdmin: options.project ? options.project.is_admin : false,
+                //onTeam: false,
+                //showAdmin: false,
                 generalActive: this.activeTab == 0,
                 suggestionsActive: this.activeTab == 1,
                 teamActive: this.activeTab == 2,
