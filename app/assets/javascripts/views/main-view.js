@@ -11,6 +11,7 @@ define(['jquery',
     'sifter.min',
     'views/modals/login-modal',
     'views/modals/contributors-modal',
+    'views/modals/basic-question-modal',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -26,6 +27,7 @@ define(['jquery',
      Sifter,
      LoginModal,
      ContributorsModal,
+     BasicQuestionModal,
      MainViewTpl) {
 	'use strict';
 
@@ -37,6 +39,7 @@ define(['jquery',
                 'project:vote': 'loginOrProjectVote',
                 'comment:vote': 'loginOrCommentVote',
                 'comment:reply': 'loginOrReplyToComment',
+                'comment:delete': 'showDeleteCommentModal',
                 'post-comment:click': 'loginOrPostComment',
                 'comment-input:click': 'loginOrAllowCommentInput',
                 'login:gh': 'loginWithGH',
@@ -50,6 +53,25 @@ define(['jquery',
         },
 
 		events: {},
+
+        showDeleteCommentModal: function (data) {
+            var self = this;
+            this.commentToDeleteOptions = data;
+            this.deleteCommentModal.showModal();
+        },
+
+        deleteComment: function () {
+            var self = this;
+            var project = new Project();
+            project.destroyComment({
+                comment_id: self.commentToDeleteOptions.id,
+                user_uuid: self.userData.user_uuid,
+                project_id: self.projectView.projectID,
+                feed: self.commentToDeleteOptions.feed
+            }, {success: function () {
+                self.handleFetchedComments(comments);
+            }});
+        },
 
         updateUpvotedProjectsArray: function (arr) {
             var self = this;
@@ -409,6 +431,15 @@ define(['jquery',
                 el: this.$el.find('#modalContribs')
             });
             this.contribsModal.render();
+
+            this.deleteCommentModal = new BasicQuestionModal({
+                el: this.$el.find('#modalDeleteComment'),
+                message: 'Are you sure you want to delete this comment?'
+            });
+            this.listenTo(this.deleteCommentModal, 'confirm', function () {
+                self.deleteComment();
+            });
+            this.deleteCommentModal.render();
 		}
 
 	});

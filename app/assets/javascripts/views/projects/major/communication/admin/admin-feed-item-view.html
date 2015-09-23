@@ -7,6 +7,9 @@
         <div class="poster-name-post-time-container">
             <div class="poster-name">{{posterGHUsername}}</div>
             <div class="comment-post-time-ago">{{postTime}}</div>
+            {{#isPoster}}
+            <div class="delete-comment-icon" hidden><i class="fa fa-trash"></i></div>
+            {{/isPoster}}
         </div>
         <div class="comment-text">{{text}}</div>
         <div class="comment-actions-container">

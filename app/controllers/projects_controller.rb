@@ -227,26 +227,28 @@ class ProjectsController < ApplicationController
     render :json => results
   end
 
-  def update
-    @project = Project.find(params[:id])
-
-    if @project.update_attributes(:title => params[:title])
-      render :json => {:response => 'Successfully updated project'}
+  def destroy_project
+    project = Project.find_by(uuid: params[:uuid])
+    if !project.nil?
+      project.update_attributes(is_destroyed: true)
+      redirect_to '/#on-the-fence'
     else
-      render :json => {:response => 'Error updating project'}
+      render :json => {:status => 500, :message => 'Couldnt find project by uuid'}
     end
   end
 
-  def destroy
-    @project = Project.find(params[:id])
-
-    if @project
-      @project.destroy
-      render :json => {:response => 'Successfully deleted project'}
+  def destroy_comment
+    user = User.find_by(uuid: params[:user_uuid])
+    if !user.nil?
+      comment = Comment.find_by(id: params[:comment_id])
+      if !comment.nil?
+        comment.update_attributes(is_destroyed: true)
+        all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed], user)
+        render :json => all_comments_of_feed_type
+      end
     else
-      render :json => {:response => 'Error deleting project'}
+      render :json => {:status => 500}
     end
-
   end
 
   def special_sort(arr)
@@ -449,11 +451,12 @@ class ProjectsController < ApplicationController
 
   def comments_for_feed(project_id, feed_status, user)
     comments = []
-    Comment.includes(:user).top_level(project_id, feed_status).vote_and_time_sort.each { |comment|
+    Comment.includes(:user).top_level(project_id, feed_status).not_destroyed.vote_and_time_sort.each { |comment|
       comment_obj = {
           :comment => {
             :userPic => comment.try(:user).try(:pic),
             :posterGHUsername => comment.try(:user).try(:gh_username),
+            :posterUUID => comment.try(:user).try(:uuid),
             :voteCount => comment.vote_count,
             :voted => user ? user.voted_on_comment(comment.id) : nil,
             :postTime => get_general_date(comment.created_at),
@@ -474,11 +477,12 @@ class ProjectsController < ApplicationController
       []
     else
       comments = []
-      comment.children.vote_and_time_sort.each { |child|
+      comment.children.not_destroyed.vote_and_time_sort.each { |child|
         comment_obj = {
             :comment => {
                 :userPic => child.try(:user).try(:pic),
                 :posterGHUsername => child.try(:user).try(:gh_username),
+                :posterUUID => child.try(:user).try(:uuid),
                 :voteCount => child.vote_count,
                 :voted => user ? user.voted_on_comment(child.id) : nil,
                 :postTime => get_general_date(child.created_at),

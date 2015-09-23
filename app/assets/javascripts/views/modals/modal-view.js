@@ -15,6 +15,7 @@ define(['jquery',
 
         showModal: function () {
             this.$modal.modal('show');
+            console.log(this.$modal);
         },
 
         hideModal: function () {

@@ -19,9 +19,9 @@ define(['jquery',
 
 		events: {},
 
-        passComments: function (comments) {
+        passComments: function (data) {
             var self = this;
-            this.teamFeedView.passComments(comments);
+            this.teamFeedView.passComments(data);
         },
 
 		render: function () {

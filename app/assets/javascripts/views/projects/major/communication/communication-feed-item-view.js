@@ -1,7 +1,8 @@
 define(['jquery',
     'backbone',
     'underscore',
-    'models/project'
+    'models/project',
+    'backbone-eventbroker'
 ], function ($,
      Backbone,
      _,
@@ -36,6 +37,8 @@ define(['jquery',
         setData: function (data) {
             this.userPic = data.userPic;
             this.posterGHUsername = data.posterGHUsername;
+            this.posterUUID = data.posterUUID;  // use this to check against current user when you make the switch to uuids
+            this.isPoster = data.currentUser == data.posterGHUsername;
             this.voteCount = data.voteCount;
             this.voted = data.voted;
             this.postTime = data.postTime;
@@ -53,12 +56,25 @@ define(['jquery',
 
         addListeners: function () {
             var self = this;
+            var $comment = this.getCommentEl();
+            var $trashcan = this.getTrashcanEl();
             var $infoBubble = this.getInfoBubbleEl();
             var $posterPic = this.getPosterPicEl();
             var $voteCountContainer = this.getVoteCountContainerEl();
             var $replyBtn = this.getReplyBtnEl();
             var $submitReplyBtn = this.getSubmitReplyBtn();
             var $replyTextarea = this.getReplyTextarea();
+
+            // Hover listener for user info bubble
+            $comment.hover(function () {
+                if (self.isPoster) {
+                    $trashcan.show();
+                }
+            }, function () {
+                if (self.isPoster) {
+                    $trashcan.hide();
+                }
+            });
 
             // Hover listener for user info bubble
             $posterPic.hover(function () {
@@ -111,6 +127,11 @@ define(['jquery',
             // Auto-resize reply textarea
             $replyTextarea.on('keyup input', function() {
                 $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight + 2);
+            });
+
+            $trashcan.click(function () {
+                console.log('heard click');
+                Backbone.EventBroker.trigger('comment:delete', {id: self.id, feed: self.feed});
             });
         },
 

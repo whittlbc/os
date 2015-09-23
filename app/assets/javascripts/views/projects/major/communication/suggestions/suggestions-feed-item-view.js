@@ -60,6 +60,10 @@ define(['jquery',
             return this.$el.find('#reply-comment-' + this.commentNumber + ' textarea');
         },
 
+        getTrashcanEl: function () {
+            return this.$el.find('#comment-' + this.commentNumber + ' .delete-comment-icon');
+        },
+
         render: function () {
             var self = this;
             this.$el.html(SuggestionsFeedItemViewTpl({
@@ -67,6 +71,7 @@ define(['jquery',
                 posterGHUsername: this.posterGHUsername,
                 voteCount: this.voteCount,
                 voted: this.voted,
+                isPoster: this.isPoster,
                 postTime: this.postTime,
                 text: this.text,
                 hasChildren: this.hasChildren,

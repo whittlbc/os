@@ -60,6 +60,10 @@ define(['jquery',
             return this.$el.find('#reply-comment-' + this.commentNumber + ' textarea');
         },
 
+        getTrashcanEl: function () {
+            return this.$el.find('#comment-' + this.commentNumber + ' .delete-comment-icon');
+        },
+
         render: function () {
             var self = this;
             this.$el.html(AdminFeedItemViewTpl({
@@ -69,6 +73,7 @@ define(['jquery',
                 voted: this.voted,
                 postTime: this.postTime,
                 text: this.text,
+                isPoster: this.isPoster,
                 hasChildren: this.hasChildren,
                 commentNumber: this.commentNumber
             }));

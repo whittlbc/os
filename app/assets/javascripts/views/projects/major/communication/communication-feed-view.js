@@ -22,7 +22,7 @@ define(['jquery',
             commentView.showReplyArea();
         },
 
-        populateComments: function (comments) {
+        populateComments: function (data) {
             var self = this;
             if (this.noCommentsShown) {
                 this.render();
@@ -31,17 +31,18 @@ define(['jquery',
             var $mainCommentList = this.getMainListElement();
             $mainCommentList.empty();
             this.commentNumber = 0;
-            for (var i = 0; i < comments.length; i++) {
-                this.addComment($mainCommentList, comments[i]);
+            for (var i = 0; i < data.comments.length; i++) {
+                this.addComment($mainCommentList, data.comments[i], data.currentUser);
             }
         },
 
-        addComment: function($list, data) {
+        addComment: function($list, data, currentUser) {
             var self = this;
             var hasChildren = data.children && data.children.length > 0;
             this.commentNumber++;
             var itemView = this.getFeedItemView();
             data.comment.commentNumber = this.commentNumber;
+            data.comment.currentUser = currentUser;
             itemView.setData(data.comment);
 
             this.addListeners(itemView);
@@ -52,7 +53,7 @@ define(['jquery',
             $list.append(itemView.el);
 
             if (hasChildren) {
-                this.addChildComments(itemView, data.children);
+                this.addChildComments(itemView, data.children, currentUser);
             }
         },
 
@@ -63,7 +64,7 @@ define(['jquery',
             });
         },
 
-        addChildComments: function (commentView, children) {
+        addChildComments: function (commentView, children, currentUser) {
             var self = this;
 
             // create new nested <ul> for child comments
@@ -79,12 +80,12 @@ define(['jquery',
 
             // add all the child comments
             for (var i = 0; i < children.length; i++) {
-                this.addComment($newUL, children[i]);
+                this.addComment($newUL, children[i], currentUser);
             }
         },
 
-        passComments: function (comments) {
-            comments.length > 0 ? this.populateComments(comments) : this.render({showNoComments: true});
+        passComments: function (data) {
+            data.comments.length > 0 ? this.populateComments(data) : this.render({showNoComments: true});
         }
 
     });

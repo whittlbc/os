@@ -20,9 +20,9 @@ define(['jquery',
 		events: {
         },
 
-        passComments: function (comments) {
+        passComments: function (data) {
             var self = this;
-            this.generalFeedView.passComments(comments);
+            this.generalFeedView.passComments(data);
         },
 
         render: function () {

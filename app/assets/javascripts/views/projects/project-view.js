@@ -158,7 +158,11 @@ define(['jquery',
 
         handleFetchedComments: function (comments) {
             var self = this;
-            self.projectMajorView.passComments(comments);
+            var data = {
+                comments: comments,
+                currentUser: this.gh_username || this.cookieGHUsername
+            };
+            self.projectMajorView.passComments(data);
         },
 
         handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
