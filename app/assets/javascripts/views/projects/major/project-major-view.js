@@ -38,7 +38,14 @@ define(['jquery',
             return this.majorInfoView.getSavedEditData();
         },
 
-		render: function (options) {
+        passLanguages: function (data) {
+            this.allLangData = data;
+            if (this.majorInfoView) {
+                this.majorInfoView.passLanguages(data);
+            }
+        },
+
+        render: function (options) {
 			var self = this;
             this.$el.html(ProjectMajorViewTpl());
 
@@ -49,6 +56,10 @@ define(['jquery',
             this.listenTo(this.majorInfoView, 'project:edit', function () {
                 self.trigger('project:edit');
             });
+
+            if (this.allLangData) {
+                this.majorInfoView.passLanguages(this.allLangData);
+            }
 
             this.majorInfoView.render(options.project);
 

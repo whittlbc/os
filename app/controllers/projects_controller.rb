@@ -244,6 +244,9 @@ class ProjectsController < ApplicationController
       comment = Comment.find_by(id: params[:comment_id])
       if !comment.nil?
         comment.update_attributes(is_destroyed: true)
+        comment.children.map { |child|
+          child.update_attributes(is_destroyed: true)
+        }
         all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed], user)
         render :json => all_comments_of_feed_type
       end

@@ -6,6 +6,7 @@ define(['jquery',
     'models/all-langs',
 	'stache!views/projects/major/major-info-view',
     'dotdotdot',
+    'selectize',
     'backbone-eventbroker'
 ], function ($,
      Backbone,
@@ -142,10 +143,52 @@ define(['jquery',
                 title: this.$el.find('').val(),
                 subtitle: this.$el.find('').val(),
                 description: this.$el.find('').val(),
-                langs_and_frames: this.langsFramesSelectize.getValue(),
-                type: this.$el.find(':selected').val(),
+                langs_and_frames: this.langsFrames,
+                status: Number(this.$el.find(':selected').val()),
                 privacy: this.$el.find(':checked').val()
             };
+        },
+
+
+        passLanguages: function (data) {
+            this.dropdownItems = data.dropdown_items;
+            this.allFrames = data.all_frames;
+        },
+
+        initLangFramesDropdown: function (langFrames) {
+            var self = this;
+            var options = {
+                theme: 'links',
+                maxItems: null,
+                valueField: 'id',
+                searchField: 'title',
+                options: this.dropdownItems,
+                onBlur: function () {
+                    self.langsFrames = self.langFrameSelectize.getValue();
+                },
+                selectOnTab: false,
+                render: {
+                    option: function (data, escape) {
+                        return '<div class="option title">' + escape(data.title) + '</div>';
+                    },
+                    item: function (data, escape) {
+                        return '<div class="item">' + escape(data.title) + '</div>';
+                    }
+                }
+            };
+            var $langFrameSelect = this.$el.find('#editLangFrames').selectize(options);
+            this.langFrameSelectize = $langFrameSelect[0].selectize;
+            for (var i = 0; i < langFrames.length; i++) {
+                this.langFrameSelectize.addItem(langFrames[i]);
+            }
+            this.langFrameSelectize.on('item_add', function (value, $item) {
+                if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
+                    self.langsFramesValue = self.langFrameSelectize.getValue();
+                    self.langFrameSelectize.addItem(self.allFrames[value]);
+                } else {
+                    self.langsFramesValue = self.langFrameSelectize.getValue();
+                }
+            });
         },
 
 		render: function (options) {
@@ -167,12 +210,13 @@ define(['jquery',
                 voted: options.voted,
                 isAdmin: options.is_admin,
                 isOwner: options.is_owner,
-                editMode: options.editMode
+                editMode: options.editMode,
+                selectType0: options.status == 0,
+                selectType1: options.status == 1,
+                selectType2: options.status == 2
             }));
 
-            console.log('Re-rendered major info view', options.editMode);
-
-            if (!options.editMode) {
+            if (!this.editMode) {
                 this.addTags(options.langs_and_frames);
                 this.$descriptionContainer = this.$el.find('.major-info-project-description');
                 this.originalDescriptionHeight = this.$descriptionContainer.height();
@@ -184,6 +228,8 @@ define(['jquery',
                 if (!isTruncated) {
                     this.$el.find('.see-all-description').hide();
                 }
+            } else {
+                this.initLangFramesDropdown(options.langs_and_frames);
             }
 
 		}

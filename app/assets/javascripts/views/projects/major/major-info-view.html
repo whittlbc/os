@@ -1,6 +1,22 @@
 <div class="major-info-container-view">
     <div class="title-action-container">
-        <div class="major-info-project-title"><div class="star {{#starred}}starred{{/starred}}"><i class="fa {{#starred}}fa-star{{/starred}} {{^starred}}fa-star-o{{/starred}}"></i></div>{{title}}<div class="major-info-project-type-divider"></div><span class="major-info-project-type">{{projectType}}</span></div>{{
+        <div class="major-info-project-title">
+            {{^editMode}}
+            <div class="star {{#starred}}starred{{/starred}}">
+                <i class="fa {{#starred}}fa-star{{/starred}} {{^starred}}fa-star-o{{/starred}}"></i>
+            </div>{{title}}{{/editMode}}{{#editMode}}<input type="text" name="edit-title" value="{{title}}"/>{{/editMode}}
+            <div class="major-info-project-type-divider"></div>
+            {{^editMode}}
+            <span class="major-info-project-type">{{projectType}}</span>
+            {{/editMode}}
+            {{#editMode}}
+            <select id="projectTypeSelection">
+                <option value="0" selected="{{#selectType0}}selected{{/selectType0}}">Up for Grabs</option>
+                <option value="1" selected="{{#selectType1}}selected{{/selectType1}}">On the Fence</option>
+                <option value="2" selected="{{#selectType2}}selected{{/selectType2}}">Launched</option>
+            </select>
+            {{/editMode}}
+        </div>{{
         }}<div class="project-action-container">
             <div class="join-btn">{{^editMode}}{{joinText}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
             }}{{^editMode}}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
@@ -18,8 +34,13 @@
             {{/editMode}}
         </div>
     </div>
+    {{^editMode}}
     <div class="major-info-tag-container"></div>
-    <div class="major-info-project-subtitle">{{subtitle}}</div>
+    {{/editMode}}
+    {{#editMode}}
+    <select id="editLangFrames" placeholder="Languages and frameworks"></select>
+    {{/editMode}}
+    <div class="major-info-project-subtitle">{{^editMode}}{{subtitle}}{{/editMode}}{{#editMode}}<input type="text" name="edit-subtitle" value="{{subtitle}}"/>{{/editMode}}</div>
     <div class="major-info-project-description">
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam nibh. Nunc varius facilisis eros. Sed erat. In in velit quis arcu ornare laoreet. Curabitur adipiscing luctus massa. Integer ut purus ac augue commodo commodo. Nunc nec mi eu justo tempor consectetuer. Etiam vitae nisl. In dignissim lacus ut ante. Cras elit lectus, bibendum a, adipiscing vitae, commodo et, dui. Ut tincidunt tortor. Donec nonummy, enim in lacinia pulvinar, velit tellus scelerisque augue, ac posuere libero urna eget neque. Cras ipsum. Vestibulum pretium, lectus nec venenatis volutpat, purus lectus ultrices risus, a condimentum risus mi et quam. Pellentesque auctor fringilla neque. Duis eu massa ut lorem iaculis vestibulum. Maecenas facilisis elit sed justo. Quisque volutpat malesuada velit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam nibh. Nunc varius facilisis eros. Sed erat. In in velit quis arcu ornare laoreet. Curabitur adipiscing luctus massa. Integer ut purus ac augue commodo commodo. Nunc nec mi eu justo tempor consectetuer. Etiam vitae nisl. In dignissim lacus ut ante. Cras elit lectus, bibendum a, adipiscing vitae, commodo et, dui. Ut tincidunt tortor. Donec nonummy, enim in lacinia pulvinar, velit tellus scelerisque augue, ac posuere libero urna eget neque. Cras ipsum. Vestibulum pretium, lectus nec venenatis volutpat, purus lectus ultrices risus, a condimentum risus mi et quam. Pellentesque auctor fringilla neque. Duis eu massa ut lorem iaculis vestibulum. Maecenas facilisis elit sed justo. Quisque volutpat malesuada velit.</p><a class="see-all-description">See All</a>
     </div>

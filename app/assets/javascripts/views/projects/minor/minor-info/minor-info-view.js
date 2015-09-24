@@ -130,8 +130,6 @@ define(['jquery',
                 editMode: options.editMode
             }));
 
-            console.log('Re-render Minor Info View', options.editMode);
-
             this.contributorsView = new ContributorsView({
                 el: '#contributorsView'
             });

@@ -84,7 +84,7 @@ define(['jquery',
                 subtitle: majorProjectData.subtitle,
                 description: majorProjectData.description,
                 langs_and_frames: majorProjectData.langs_and_frames,
-                type: majorProjectData.type,
+                status: majorProjectData.status,
                 privacy: majorProjectData.privacy,
                 license: minorProjectData.license,
                 anon: minorProjectData.anon,
@@ -251,7 +251,10 @@ define(['jquery',
         },
 
         passLanguages: function (data) {
-            // not actually using this rn, but might utilize in future, so keep it
+            this.allLangData = data;
+            if (this.projectMajorView) {
+                this.projectMajorView.passLanguages(data);
+            }
         },
 
         checkProjectPrivacy: function () {
@@ -304,6 +307,10 @@ define(['jquery',
             this.listenTo(this.projectMajorView, 'project:edit', function () {
                 self.showEditMode();
             });
+
+            if (this.allLangData) {
+                this.projectMajorView.passLanguages(this.allLangData);
+            }
 
             this.projectMajorView.render(data);
 
