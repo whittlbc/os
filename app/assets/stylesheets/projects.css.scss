@@ -45,6 +45,7 @@ $major-info-project-type: #CECECE;
   width: 87%;
   margin-left: 5%;
   padding-top: 35px;
+  position: relative;
 
   .selectize-control.multi {
     margin-top: 20px;
@@ -56,7 +57,7 @@ $major-info-project-type: #CECECE;
 
   .selectize-control.multi,
   input[name="edit-subtitle"] {
-    width: 71%;
+    width: 70%;
   }
 
   input[name="edit-title"] {
@@ -70,6 +71,38 @@ $major-info-project-type: #CECECE;
     outline: none;
     border: 1px solid #DDD;
     padding-left: 8px;
+  }
+
+  .edit-privacy {
+    position: absolute;
+    right: 2%;
+    top: 100px;
+  }
+
+  .edit-anon {
+    position: absolute;
+    right: 2%;
+    top: 150px;
+  }
+
+  .bootstrap-switch-handle-on,
+  .bootstrap-switch-handle-off,
+  .bootstrap-switch-label {
+    color: white !important;
+    padding: 0 !important;
+    width: 65px !important;
+    font-size: 13px !important;
+    line-height: 32px !important;
+    -webkit-appearance:none;
+  }
+
+  .bootstrap-switch-handle-on {
+    background-color: #00A6C9 !important;
+  }
+
+  .bootstrap-switch-handle-off {
+    background-color: #D5D5DB !important;
+    color: white !important;
   }
 
 }
@@ -315,7 +348,7 @@ $major-info-project-type: #CECECE;
   font-size: 18px;
   line-height: 30.5px;
   text-align: center;
-  background-color: #00A6C9;
+  background-color: #D5D5DB;
   color: white;
   pointer-events: none;
 }
@@ -677,6 +710,7 @@ $major-info-project-type: #CECECE;
   padding-left: 10px;
   line-height: 40px;
   border-bottom: 1px solid #DDD;
+  position: relative;
 }
 
 .highlighted-minor-info {
@@ -697,6 +731,57 @@ $major-info-project-type: #CECECE;
   a:hover {
     color: #00A6C9;
   }
+
+  input[name="repo-name"] {
+    border-radius: 4px;
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #DDD;
+    padding-left: 8px;
+    margin-left: 2%;
+    margin-top: 6px;
+    width: 71%;
+    line-height: 28px;
+  }
+}
+
+.edit-mode-info-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.edit-mode-info-label.major-info {
+  margin-right: 8px;
+}
+
+#licenseTypeSelection {
+  width: 24%;
+  border: 1px solid #DDD;
+  padding-left: 8px;
+  margin-top: 0;
+  margin-left: 8%;
+  font-size: 14px;
+  outline: none;
+  line-height: 28px;
+  background: white;
+  -webkit-appearance: none;
+}
+
+#licenseTypeSelection + label {
+  position: absolute;
+  top: 5px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  height: 29px;
+  width: 26px;
+  right: 49%;
+  bottom: 0;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: center;
+  background-color: #D5D5DB;
+  color: white;
+  pointer-events: none;
 }
 
 .minorInfoIntegrationContainer {

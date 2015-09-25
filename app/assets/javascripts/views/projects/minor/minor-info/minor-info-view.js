@@ -127,7 +127,11 @@ define(['jquery',
                 licenseSpecified: license != null,
                 showRepoStats: !!options.getting_repo_data,
                 showIntegrations: showIntegrations,
-                editMode: options.editMode
+                editMode: options.editMode,
+                editModeRepoName: options.repo_name,
+                selectType0: license == 'MIT',
+                selectType1: license == 'GPL',
+                selectType2: license == 'BSD'
             }));
 
             this.contributorsView = new ContributorsView({

@@ -50,4 +50,16 @@
         <textarea class="edit-description" placeholder="Description">{{description}}</textarea>
         {{/editMode}}
     </div>
+
+    {{#editMode}}
+    <div class="edit-privacy">
+        <span class="edit-mode-info-label major-info">Privacy:</span><input type="checkbox" name="privacy-edit" {{#open}}checked{{/open}}>
+    </div>
+    {{#upForGrabsType}}
+    <div class="edit-anon">
+        <span class="edit-mode-info-label major-info">Anonymous:</span><input type="checkbox" name="anon-edit" {{#anon}}checked{{/anon}}>
+    </div>
+    {{/upForGrabsType}}
+    {{/editMode}}
+
 </div>

@@ -7,6 +7,7 @@ define(['jquery',
 	'stache!views/projects/major/major-info-view',
     'dotdotdot',
     'selectize',
+    'toggle',
     'backbone-eventbroker'
 ], function ($,
      Backbone,
@@ -211,6 +212,9 @@ define(['jquery',
                 isAdmin: options.is_admin,
                 isOwner: options.is_owner,
                 editMode: options.editMode,
+                upForGrabsType: options.status == 0,
+                open: options.privacy[0] === OSUtil.OPEN_PRIVACY,
+                anon: options.anon === true,
                 selectType0: options.status == 0,
                 selectType1: options.status == 1,
                 selectType2: options.status == 2
@@ -230,6 +234,16 @@ define(['jquery',
                 }
             } else {
                 this.initLangFramesDropdown(options.langs_and_frames);
+                this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
+                    onText: 'Open',
+                    offText: 'Request'
+                });
+                if (options.status == 0) {
+                    this.$el.find('[name="anon-edit"]').bootstrapSwitch({
+                        onText: 'Yes',
+                        offText: 'No'
+                    });
+                }
             }
 
 		}
