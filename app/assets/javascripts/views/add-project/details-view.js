@@ -163,6 +163,8 @@ define(['jquery',
             var langFrameSelectize = $langFrameSelect[0].selectize;
             this.langFrameSelectize = langFrameSelectize;
             this.langFrameSelectize.on('item_add', function (value, $item) {
+                $item.css('background-color', self.colors_and_initials[value]['color']);
+                $item.css('color', 'white');
                 if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
                     self.langsFramesValue = self.langFrameSelectize.getValue();
                     self.langFrameSelectize.addItem(self.allFrames[value]);
@@ -269,6 +271,7 @@ define(['jquery',
         passLangDropdownItems: function (data) {
             this.dropdownItems = data.dropdown_items;
             this.allFrames = data.all_frames;
+            this.colors_and_initials = data.colors_and_initials;
         },
 
         passTags: function (data) {

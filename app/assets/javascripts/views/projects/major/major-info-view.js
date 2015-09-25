@@ -23,6 +23,9 @@ define(['jquery',
 		initialize: function () {
             this.allLangs = AllLangs.getAll();
             this.descriptionMaxHeight = 135;
+            Backbone.EventBroker.register({
+                're-render-for-cancel-edit-mode': 'cancelEditMode'
+            }, this);
 		},
 
 		events: {
@@ -32,10 +35,10 @@ define(['jquery',
             'click .star': 'handleStarProject',
             'click .edit-btn': 'handleProjectEdit',
             'click .delete-btn': 'handleProjectDelete',
-            'click .cancel-edit-mode': 'cancelEditMode'
+            'click .cancel-edit-mode': 'handleCancelEditMode'
         },
 
-        cancelEditMode: function () {
+        handleCancelEditMode: function () {
             var self = this;
             Backbone.EventBroker.trigger('edit-mode:cancel');
         },
@@ -160,10 +163,15 @@ define(['jquery',
             return data;
         },
 
+        cancelEditMode: function (cachedData) {
+            var self = this;
+            this.render(cachedData);
+        },
 
         passLanguages: function (data) {
             this.dropdownItems = data.dropdown_items;
             this.allFrames = data.all_frames;
+            this.colors_and_initials = data.colors_and_initials;
         },
 
         initLangFramesDropdown: function (langFrames) {
@@ -189,17 +197,24 @@ define(['jquery',
             };
             var $langFrameSelect = this.$el.find('#editLangFrames').selectize(options);
             this.langFrameSelectize = $langFrameSelect[0].selectize;
+
+            this.langFrameSelectize.on('item_add', function (value, $item) {
+                $item.css('background-color', self.colors_and_initials[value]['color']);
+                $item.css('color', 'white');
+                if (!self.preventAddingMore && self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
+                    self.langsFrames = self.langFrameSelectize.getValue();
+                    self.langFrameSelectize.addItem(self.allFrames[value]);
+                } else {
+                    self.langsFrames = self.langFrameSelectize.getValue();
+                }
+            });
+
+            this.preventAddingMore = true;
             for (var i = 0; i < langFrames.length; i++) {
                 this.langFrameSelectize.addItem(langFrames[i]);
             }
-            this.langFrameSelectize.on('item_add', function (value, $item) {
-                if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
-                    self.langsFramesValue = self.langFrameSelectize.getValue();
-                    self.langFrameSelectize.addItem(self.allFrames[value]);
-                } else {
-                    self.langsFramesValue = self.langFrameSelectize.getValue();
-                }
-            });
+            this.preventAddingMore = false;
+
             this.langsFrames = this.langFrameSelectize.getValue();
         },
 

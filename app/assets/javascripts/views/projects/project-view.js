@@ -307,9 +307,8 @@ define(['jquery',
         },
 
         cancelEditMode: function () {
-            this.cachedProjectData.editMode = false;
             this.cachedProjectData.project.editMode = false;
-            this.render(this.cachedProjectData);
+            Backbone.EventBroker.trigger('re-render-for-cancel-edit-mode', this.cachedProjectData.project);
         },
 
         render: function (data) {

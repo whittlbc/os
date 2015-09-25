@@ -16,6 +16,9 @@ define(['jquery',
 	var MinorInfoView = Backbone.View.extend({
 
 		initialize: function () {
+            Backbone.EventBroker.register({
+                're-render-for-cancel-edit-mode': 'cancelEditMode'
+            }, this);
 		},
 
 		events: {
@@ -67,6 +70,11 @@ define(['jquery',
             }
 
             return data;
+        },
+
+        cancelEditMode: function (cachedData) {
+            var self = this;
+            this.render(cachedData);
         },
 
         render: function (options) {
