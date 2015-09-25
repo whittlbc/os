@@ -50,15 +50,23 @@ define(['jquery',
 
         getSavedEditData: function () {
             var self = this;
-            return {
-                license: this.$el.find(':selected').val(),
-                anon: this.$el.find('').is(':checked'),
-                integrations: {
-                    slack: this.$el.find('').val(),
-                    hipchat: this.$el.find('').val(),
-                    irc: this.$el.find('').val()
-                }
-            };
+            var data = {};
+
+            if (this.showLicense) {
+                data.license = [this.$el.find('#licenseTypeSelection').val()];
+            }
+            if (this.showRepoName) {
+                data.repo_name = this.$el.find('[name="repo-name"]').val();
+            }
+            if (this.showTeamCommunication) {
+                data.integrations = {
+                    slack: this.$el.find('[name="edit-slack"]').val(),
+                    hipchat: this.$el.find('[name="edit-hipchat"]').val(),
+                    irc: this.$el.find('[name="edit-irc"]').val()
+                };
+            }
+
+            return data;
         },
 
         render: function (options) {
@@ -77,7 +85,7 @@ define(['jquery',
             var ircObj = null;
 
             // project is NOT an "Up for Grabs" type
-            if (options.status !== 0) {
+            if (options.status != 0) {
                 showRepoName = true;
                 showLicense = true;
                 repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
@@ -103,6 +111,9 @@ define(['jquery',
                 }
             }
 
+            this.showTeamCommunication = showTeamCommunication;
+            this.showRepoName = showRepoName;
+            this.showLicense = showLicense;
             this.repoURL = 'https://' + repoName;
 
             if (options.editMode) {
@@ -142,10 +153,7 @@ define(['jquery',
                 showRepoStats: !!options.getting_repo_data,
                 showIntegrations: showIntegrations,
                 editMode: options.editMode,
-                editModeRepoName: options.repo_name,
-                selectType0: license == 'MIT',
-                selectType1: license == 'GPL',
-                selectType2: license == 'BSD'
+                editModeRepoName: options.repo_name
             }));
 
             this.contributorsView = new ContributorsView({
@@ -163,6 +171,10 @@ define(['jquery',
                 repoURL: this.repoURL,
                 showSpinner: options.getting_repo_data
             });
+
+            if (options.editMode && this.showLicense) {
+                this.$el.find('#licenseTypeSelection').val(license);
+            }
         }
 	});
 

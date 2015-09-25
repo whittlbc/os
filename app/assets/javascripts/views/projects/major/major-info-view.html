@@ -11,9 +11,9 @@
             {{/editMode}}
             {{#editMode}}
             <select id="projectTypeSelection">
-                <option value="0" selected="{{#selectType0}}selected{{/selectType0}}">Up for Grabs</option>
-                <option value="1" selected="{{#selectType1}}selected{{/selectType1}}">On the Fence</option>
-                <option value="2" selected="{{#selectType2}}selected{{/selectType2}}">Launched</option>
+                <option value="0">Up for Grabs</option>
+                <option value="1">On the Fence</option>
+                <option value="2">Launched</option>
             </select>
             <label for="projectTypeSelection"><i class="fa fa-caret-down"></i></label>
             {{/editMode}}
@@ -32,6 +32,9 @@
                 {{#isAdmin}}<div class="edit-btn"><i class="fa fa-pencil-square-o"></i></div>{{/isAdmin}}
             </div>
             {{/isAdmin}}
+            {{/editMode}}
+            {{#editMode}}
+            <div class="cancel-edit-mode">Cancel</div>
             {{/editMode}}
         </div>
     </div>

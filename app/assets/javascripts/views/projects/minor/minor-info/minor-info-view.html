@@ -12,9 +12,9 @@
     {{#editMode}}
     <span class="edit-mode-info-label">License:</span>
     <select id="licenseTypeSelection">
-        <option value="MIT" selected="{{#selectType0}}selected{{/selectType0}}">MIT</option>
-        <option value="GPL" selected="{{#selectType1}}selected{{/selectType1}}">GPL</option>
-        <option value="BSD" selected="{{#selectType2}}selected{{/selectType2}}">BSD</option>
+        <option value="MIT">MIT</option>
+        <option value="GPL">GPL</option>
+        <option value="BSD">BSD</option>
     </select>
     <label for="licenseTypeSelection"><i class="fa fa-caret-down"></i></label>
     {{/editMode}}
@@ -99,7 +99,7 @@
         </span>
         {{/editMode}}
         {{#editMode}}
-        <input type="text" name="edit-hipchat" value="{{ircChannel}}"/>
+        <input type="text" name="edit-irc" value="{{ircChannel}}"/>
         {{/editMode}}
     </div>
 </div>

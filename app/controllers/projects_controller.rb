@@ -586,11 +586,75 @@ class ProjectsController < ApplicationController
   def edit
     project = Project.find_by(id: params[:id])
     if !project.nil?
-      project.update_attributes(params[:new_info])
+      attrs_to_update = {}
+      integrations = {}
+      params[:data].each { |key, val|
+        (key == 'integrations') ? (integrations = val) : (attrs_to_update[key] = val)
+      }
+      project.update_attributes(attrs_to_update)
+
+      if !integrations.nil?
+
+        # Slack
+        if !integrations[:slack].nil?
+          slack_integration = project.integrations.where(:service => 'Slack')
+
+          # if the integration exists but the user has passed an empty string as the new url, destroy the integration
+          if !slack_integration.blank? && integrations[:slack].empty?
+            slack_integration.first.destroy!
+          else
+            if slack_integration.blank?
+              slackURL = ensureURL(integrations[:slack])
+              Integration.new(service: 'Slack', project_id: project.id, url: slackURL).save!
+            else
+              slackURL = ensureURL(integrations[:slack])
+              slack_integration.first.update_attributes(url: slackURL)
+            end
+          end
+
+        end
+
+        # HipChat
+        if !integrations[:hipchat].nil?
+          hipchat_integration = project.integrations.where(:service => 'HipChat')
+
+          # if the integration exists but the user has passed an empty string as the new url, destroy the integration
+          if !hipchat_integration.blank? && integrations[:hipchat].empty?
+            hipchat_integration.first.destroy!
+          else
+            if hipchat_integration.blank?
+              hipchatURL = ensureURL(integrations[:hipchat])
+              Integration.new(service: 'HipChat', project_id: project.id, url: hipchatURL).save!
+            else
+              hipchatURL = ensureURL(integrations[:hipchat])
+              hipchat_integration.first.update_attributes(url: hipchatURL)
+            end
+          end
+
+        end
+
+        # IRC
+        if !integrations[:irc].nil?
+          irc_integration = project.integrations.where(:service => 'IRC')
+
+          # if the integration exists but the user has passed an empty string as the new url, destroy the integration
+          if !irc_integration.blank? && integrations[:irc].empty?
+            irc_integration.first.destroy!
+          else
+            if irc_integration.blank?
+              ircChannel = integrations[:irc]
+              Integration.new(service: 'IRC', project_id: project.id, url: ircChannel).save!
+            else
+              ircChannel = integrations[:irc]
+              irc_integration.first.update_attributes(url: ircChannel)
+            end
+          end
+
+        end
+
+      end
+
       render :json => {:status => 200}
-
-      # in actuality, turn the fetch_details method into a service and call that from here, then return that data
-
     else
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end

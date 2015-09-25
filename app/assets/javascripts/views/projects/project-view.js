@@ -44,7 +44,8 @@ define(['jquery',
                 'comment:add': 'handleAddComment',
                 'comments:fetch': 'fetchComments',
                 'evolution:fetch': 'fetchProjectEvolution',
-                'project:save-edit': 'handleSaveEditProject'
+                'project:save-edit': 'handleSaveEditProject',
+                'edit-mode:cancel': 'cancelEditMode'
             }, this);
 
             this.github = Github;
@@ -85,19 +86,29 @@ define(['jquery',
                 description: majorProjectData.description,
                 langs_and_frames: majorProjectData.langs_and_frames,
                 status: majorProjectData.status,
-                privacy: majorProjectData.privacy,
-                license: minorProjectData.license,
-                anon: minorProjectData.anon,
-                integrations: minorProjectData.integrations
+                privacy: majorProjectData.privacy
             };
 
-            var project = new Project();
-            project.edit({id: self.projectID, new_info: data}, {success: function (updatedProjectData) {
-                self.handleFetchedDetails(updatedProjectData);
-            }, error: function () {
-                // show something
-            }});
+            if (majorProjectData.hasOwnProperty('anon')) {
+                data.anon = majorProjectData.anon;
+            }
+            if (minorProjectData.hasOwnProperty('license')) {
+                data.license = minorProjectData.license;
+            }
+            if (minorProjectData.hasOwnProperty('repo_name')) {
+                data.repo_name = minorProjectData.repo_name;
+            }
 
+            if (minorProjectData.hasOwnProperty('integrations')) {
+                data.integrations = minorProjectData.integrations;
+            }
+
+            var project = new Project();
+            project.edit({id: self.projectID, data: data}, {success: function () {
+                window.location.reload();
+            }, error: function () {
+                window.location.reload();
+            }});
         },
 
         fetchProjectEvolution: function () {
@@ -166,6 +177,7 @@ define(['jquery',
             }
             this.fetchComments(0);
             this.setProjectProperties(data);
+            this.cachedProjectData = data;
             this.render(data);
         },
 
@@ -292,6 +304,12 @@ define(['jquery',
             var self = this;
             this.projectMajorView.showEditMode(this.data);
             this.projectMinorView.showEditMode(this.data.project);
+        },
+
+        cancelEditMode: function () {
+            this.cachedProjectData.editMode = false;
+            this.cachedProjectData.project.editMode = false;
+            this.render(this.cachedProjectData);
         },
 
         render: function (data) {

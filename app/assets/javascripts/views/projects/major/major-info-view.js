@@ -31,7 +31,13 @@ define(['jquery',
             'click .join-btn': 'handleJoinOrSaveEdit',
             'click .star': 'handleStarProject',
             'click .edit-btn': 'handleProjectEdit',
-            'click .delete-btn': 'handleProjectDelete'
+            'click .delete-btn': 'handleProjectDelete',
+            'click .cancel-edit-mode': 'cancelEditMode'
+        },
+
+        cancelEditMode: function () {
+            var self = this;
+            Backbone.EventBroker.trigger('edit-mode:cancel');
         },
 
         handleJoinOrSaveEdit: function () {
@@ -140,14 +146,18 @@ define(['jquery',
 
         getSavedEditData: function () {
             var self = this;
-            return {
-                title: this.$el.find('').val(),
-                subtitle: this.$el.find('').val(),
-                description: this.$el.find('').val(),
+            var data = {
+                title: this.$el.find('[name="edit-title"]').val(),
+                subtitle: this.$el.find('[name="edit-subtitle"]').val(),
+                description: this.$el.find('.edit-description').val(),
                 langs_and_frames: this.langsFrames,
-                status: Number(this.$el.find(':selected').val()),
-                privacy: this.$el.find(':checked').val()
+                status: Number(this.$el.find('#projectTypeSelection').val()),
+                privacy: this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY]
             };
+            if (this.upForGrabsType) {
+                data.anon = this.$el.find('[name="anon-edit"]').is(':checked');
+            }
+            return data;
         },
 
 
@@ -190,6 +200,7 @@ define(['jquery',
                     self.langsFramesValue = self.langFrameSelectize.getValue();
                 }
             });
+            this.langsFrames = this.langFrameSelectize.getValue();
         },
 
 		render: function (options) {
@@ -199,6 +210,8 @@ define(['jquery',
             this.editMode = options.editMode;
             this.uuid = options ? options.uuid : null;
             this.projectID = options ? options.id : null;
+
+            this.upForGrabsType = (options.status == 0);
 
             this.$el.html(MajorInfoViewTpl({
                 title: options.title ? options.title : '',
@@ -212,12 +225,9 @@ define(['jquery',
                 isAdmin: options.is_admin,
                 isOwner: options.is_owner,
                 editMode: options.editMode,
-                upForGrabsType: options.status == 0,
+                upForGrabsType: this.upForGrabsType,
                 open: options.privacy[0] === OSUtil.OPEN_PRIVACY,
-                anon: options.anon === true,
-                selectType0: options.status == 0,
-                selectType1: options.status == 1,
-                selectType2: options.status == 2
+                anon: options.anon === true
             }));
 
             if (!this.editMode) {
@@ -238,12 +248,13 @@ define(['jquery',
                     onText: 'Open',
                     offText: 'Request'
                 });
-                if (options.status == 0) {
+                if (this.upForGrabsType) {
                     this.$el.find('[name="anon-edit"]').bootstrapSwitch({
                         onText: 'Yes',
                         offText: 'No'
                     });
                 }
+                this.$el.find('#projectTypeSelection').val(options.status.toString());
             }
 
 		}
