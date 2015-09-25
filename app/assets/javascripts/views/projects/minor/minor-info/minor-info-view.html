@@ -42,21 +42,65 @@
 {{#hasSlack}}
 <div class="minorInfoIntegrationContainer">
     <div class="minor-info-integration-logo-container">
-        <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="assets/slack_logo.png"><span class="linebreak">|</span><span class="integration-link">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>{{/isContributor}}</span>
+        <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="assets/slack_logo.png">
+        <span class="linebreak">|</span>
+        {{^editMode}}
+        <span class="integration-link">
+            {{^isContributor}}
+            <i class="fa fa-check"></i>
+            {{/isContributor}}
+            {{#isContributor}}
+            <a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>
+            {{/isContributor}}
+        </span>
+        {{/editMode}}
+        {{#editMode}}
+        <input type="text" name="edit-slack" value="{{slackTeamName}}"/>
+        {{/editMode}}
     </div>
 </div>
 {{/hasSlack}}
 {{#hasHipChat}}
 <div class="minorInfoIntegrationContainer">
     <div class="minor-info-integration-logo-container {{^hasSlack}}add-top-margin{{/hasSlack}}" id="hipChatContainer">
-        <img class="minor-info-hipchat-logo" src="assets/hipchat.png"><span class="linebreak">|</span><span class="integration-link" id="hipChatSpan">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>{{/isContributor}}</span>
+        <img class="minor-info-hipchat-logo" src="assets/hipchat.png">
+        <span class="linebreak">|</span>
+        {{^editMode}}
+        <span class="integration-link" id="hipChatSpan">
+            {{^isContributor}}
+            <i class="fa fa-check"></i>
+            {{/isContributor}}
+            {{#isContributor}}
+            <a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>
+            {{/isContributor}}
+        </span>
+        {{/editMode}}
+        {{#editMode}}
+        <input type="text" name="edit-hipchat" value="{{hipChatTeamName}}"/>
+        {{/editMode}}
     </div>
 </div>
 {{/hasHipChat}}
 {{#hasIRC}}
 <div class="minorInfoIntegrationContainer">
     <div class="minor-info-integration-logo-container last-integration {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}}" id="ircContainer">
-        <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}"><i class="fa fa-comment-o"></i>IRC</div><span class="linebreak">|</span><span class="integration-link">{{^isContributor}}<i class="fa fa-check"></i>{{/isContributor}}{{#isContributor}}<span class="irc-channel-text">{{ircChannel}}</span>{{/isContributor}}</span>
+        <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}">
+            <i class="fa fa-comment-o"></i>IRC
+        </div>
+        <span class="linebreak">|</span>
+        {{^editMode}}
+        <span class="integration-link">
+            {{^isContributor}}
+            <i class="fa fa-check"></i>
+            {{/isContributor}}
+            {{#isContributor}}
+            <span class="irc-channel-text">{{ircChannel}}</span>
+            {{/isContributor}}
+        </span>
+        {{/editMode}}
+        {{#editMode}}
+        <input type="text" name="edit-hipchat" value="{{ircChannel}}"/>
+        {{/editMode}}
     </div>
 </div>
 {{/hasIRC}}

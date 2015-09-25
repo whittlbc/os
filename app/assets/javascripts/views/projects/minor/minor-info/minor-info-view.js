@@ -105,6 +105,20 @@ define(['jquery',
 
             this.repoURL = 'https://' + repoName;
 
+            if (options.editMode) {
+                showIntegrations = true;
+                hasSlack = hasHipChat = hasIRC = true;
+                slackObj = slackObj || {
+                    url: ''
+                };
+                hipChatObj = hipChatObj || {
+                    url: ''
+                };
+                ircObj = ircObj || {
+                    url: ''
+                };
+            }
+
             this.$el.html(MinorInfoViewTpl({
                 postDate: options.post_date ? options.post_date : '',
                 showRepoName: showRepoName,
