@@ -15,6 +15,7 @@ define(['jquery',
 		initialize: function () {
             this.isOpen = false;
             this.searchTimeout = null;
+            this.dropdownShown = false;
         },
 
 		events: {},
@@ -33,9 +34,15 @@ define(['jquery',
                     self.$searchBox.removeClass('searchbox-open');
                     self.isOpen = false;
                 }
+                self.$dropdown.hide();
+                self.dropdownShown = false;
             });
 
             this.$input.keydown(function () {
+                if (!self.dropdownShown) {
+                    self.dropdownShown = true;
+                    self.$dropdown.show();
+                }
                 if (self.searchTimeout != null) {
                     clearTimeout(self.searchTimeout);
                 }
@@ -57,6 +64,7 @@ define(['jquery',
             this.$el.html(SearchContainerViewTpl());
             this.$searchBox = this.$el.find('.searchbox');
             this.$input = this.$el.find('.searchbox > input');
+            this.$dropdown = this.$el.find('.search-results-list');
             this.renderSearchBar();
 
 		}
