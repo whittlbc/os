@@ -264,6 +264,17 @@ define(['jquery',
             });
 
             return this.sync('edit', this, requestInfo);
+        },
+
+        search: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/search',
+                data: info
+            });
+
+            return this.sync('search', this, requestInfo);
         }
     });
 

@@ -32,8 +32,8 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-        :getting_repo_data => false,
+        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        # :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
         :subtitle => project.subtitle,
@@ -658,6 +658,11 @@ class ProjectsController < ApplicationController
     else
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end
+  end
+
+  def search
+    projects = Project.where(Project.arel_table[:title].matches("#{params[:query]}%"))
+    render :json => projects
   end
 
   private

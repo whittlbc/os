@@ -51,6 +51,7 @@ define(['jquery',
                 'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray'
             }, this);
             this.userAuthed = false;
+            this.searchTimeout = null;
         },
 
 		events: {},
@@ -282,29 +283,37 @@ define(['jquery',
 
         enableUniversalSearchBar: function () {
             var self = this;
-
-            $('#universal-searchbox-input').keyup(function(e){
-                self.universalSearch($(e.currentTarget).val());
-            });
-
             var isOpen = false;
-            var inputBox = $('#universal-searchbox-input');
-            var searchBox = $('.searchbox');
-            inputBox.focus(function(){
+            var project = new Project();
+            var $inputBox = $('#universal-searchbox-input');
+            var $searchBox = $('.searchbox');
+            $inputBox.focus(function(){
                 if(!isOpen) {
-                    if (self.homeView) {
-                        self.homeView.cacheFeedBeforeSearch();
-                    }
-                    self.getUniversalSearchData();
-                    searchBox.addClass('searchbox-open');
+                    $searchBox.addClass('searchbox-open');
                     isOpen = true;
                 }
             });
-            inputBox.blur(function(){
+            $inputBox.blur(function(){
                 if(isOpen) {
-                    searchBox.removeClass('searchbox-open');
+                    $searchBox.removeClass('searchbox-open');
                     isOpen = false;
                 }
+            });
+
+            $inputBox.keydown(function () {
+                if (self.searchTimeout != null) {
+                    clearTimeout(self.searchTimeout);
+                }
+                self.searchTimeout = setTimeout(function () {
+                    var query = $inputBox.val();
+                    if (_.isEmpty(query)) {
+                        // hide seach results
+                    } else {
+                        project.search({query: query}, {success: function (projectResults) {
+                            console.log(projectResults)
+                        }});
+                    }
+                }, 180);
             });
         },
 
@@ -465,6 +474,7 @@ define(['jquery',
                 self.deleteProject();
             });
             this.deleteProjectModal.render();
+
 		}
 
 	});

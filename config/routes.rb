@@ -28,6 +28,7 @@ Backboneworld::Application.routes.draw do
       put :destroy_comment, :path => '/destroyComment'
       put :destroy_project, :path => '/destroyProject'
       put :edit, :path => '/edit'
+      get :search, :path => '/search'
     end
   end
 

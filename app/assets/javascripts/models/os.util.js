@@ -209,6 +209,10 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             'edit': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'search': {
+                verb: 'GET',
+                action: 'read'
             }
 
         }
