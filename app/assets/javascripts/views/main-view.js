@@ -12,6 +12,7 @@ define(['jquery',
     'views/modals/login-modal',
     'views/modals/contributors-modal',
     'views/modals/basic-question-modal',
+    'views/search/search-container-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -28,6 +29,7 @@ define(['jquery',
      LoginModal,
      ContributorsModal,
      BasicQuestionModal,
+     SearchContainerView,
      MainViewTpl) {
 	'use strict';
 
@@ -51,7 +53,6 @@ define(['jquery',
                 'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray'
             }, this);
             this.userAuthed = false;
-            this.searchTimeout = null;
         },
 
 		events: {},
@@ -282,39 +283,39 @@ define(['jquery',
         //},
 
         enableUniversalSearchBar: function () {
-            var self = this;
-            var isOpen = false;
-            var project = new Project();
-            var $inputBox = $('#universal-searchbox-input');
-            var $searchBox = $('.searchbox');
-            $inputBox.focus(function(){
-                if(!isOpen) {
-                    $searchBox.addClass('searchbox-open');
-                    isOpen = true;
-                }
-            });
-            $inputBox.blur(function(){
-                if(isOpen) {
-                    $searchBox.removeClass('searchbox-open');
-                    isOpen = false;
-                }
-            });
-
-            $inputBox.keydown(function () {
-                if (self.searchTimeout != null) {
-                    clearTimeout(self.searchTimeout);
-                }
-                self.searchTimeout = setTimeout(function () {
-                    var query = $inputBox.val();
-                    if (_.isEmpty(query)) {
-                        // hide seach results
-                    } else {
-                        project.search({query: query}, {success: function (projectResults) {
-                            console.log(projectResults)
-                        }});
-                    }
-                }, 180);
-            });
+            //var self = this;
+            //var isOpen = false;
+            //var project = new Project();
+            //var $inputBox = this.$el.find('#universal-searchbox-input');
+            //var $searchBox = $('.searchbox');
+            //$inputBox.focus(function(){
+            //    if(!isOpen) {
+            //        $searchBox.addClass('searchbox-open');
+            //        isOpen = true;
+            //    }
+            //});
+            //$inputBox.blur(function(){
+            //    if(isOpen) {
+            //        $searchBox.removeClass('searchbox-open');
+            //        isOpen = false;
+            //    }
+            //});
+            //
+            //$inputBox.keydown(function () {
+            //    if (self.searchTimeout != null) {
+            //        clearTimeout(self.searchTimeout);
+            //    }
+            //    self.searchTimeout = setTimeout(function () {
+            //        var query = $inputBox.val();
+            //        if (_.isEmpty(query)) {
+            //            // hide seach results
+            //        } else {
+            //            project.search({query: query}, {success: function (projectResults) {
+            //                console.log(projectResults)
+            //            }});
+            //        }
+            //    }, 180);
+            //});
         },
 
 
@@ -474,6 +475,11 @@ define(['jquery',
                 self.deleteProject();
             });
             this.deleteProjectModal.render();
+
+            this.searchView = new SearchContainerView({
+                el: '#mainSearchBar'
+            });
+            this.searchView.render();
 
 		}
 
