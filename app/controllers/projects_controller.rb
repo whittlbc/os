@@ -661,7 +661,14 @@ class ProjectsController < ApplicationController
   end
 
   def search
-    projects = Project.where(Project.arel_table[:title].matches("#{params[:query]}%"))
+    projects = Project.where(Project.arel_table[:title].matches("#{params[:query]}%")).map { |project|
+      {
+          :title => project.title,
+          :subtitle => project.subtitle,
+          :status => project.status,
+          :id => project.id
+      }
+    }
     render :json => projects
   end
 
