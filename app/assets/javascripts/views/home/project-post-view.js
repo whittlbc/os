@@ -141,6 +141,7 @@ define(['jquery',
 			var self = this;
 
             this.$el.html(ProjectPostViewTpl({
+                title: self.title,
                 subtitle: self.subtitle,
                 date: self.date,
                 vote_count: self.vote_count,

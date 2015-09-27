@@ -263,106 +263,6 @@ define(['jquery',
             $('#header-user-pic').attr('src', url);
         },
 
-        // Was used to take into account when GH API redirects you back
-        //determineEntry: function () {
-        //    var self = this;
-        //    var user = new User();
-        //    // If returned from GH with new code to get access_token and user with,
-        //    // update or initialize new user and return with user data that way
-        //    if (window.location.search != '' && window.location.search.indexOf('?code=') == 0) {
-        //        // Get user info from new GH access_token
-        //        var search = window.location.search;
-        //        var code = search.slice(search.indexOf('code=') + 5);;
-        //        user.postGHCode({code: code}, {success: self.setUserFromResponse, error: function () {
-        //            console.log('user.postGHCode() failed...now trying to get user by cookie');
-        //            self.getUserByCookie(user);
-        //        }});
-        //    } else {
-        //        this.getUserByCookie(user);
-        //    }
-        //},
-
-        enableUniversalSearchBar: function () {
-            //var self = this;
-            //var isOpen = false;
-            //var project = new Project();
-            //var $inputBox = this.$el.find('#universal-searchbox-input');
-            //var $searchBox = $('.searchbox');
-            //$inputBox.focus(function(){
-            //    if(!isOpen) {
-            //        $searchBox.addClass('searchbox-open');
-            //        isOpen = true;
-            //    }
-            //});
-            //$inputBox.blur(function(){
-            //    if(isOpen) {
-            //        $searchBox.removeClass('searchbox-open');
-            //        isOpen = false;
-            //    }
-            //});
-            //
-            //$inputBox.keydown(function () {
-            //    if (self.searchTimeout != null) {
-            //        clearTimeout(self.searchTimeout);
-            //    }
-            //    self.searchTimeout = setTimeout(function () {
-            //        var query = $inputBox.val();
-            //        if (_.isEmpty(query)) {
-            //            // hide seach results
-            //        } else {
-            //            project.search({query: query}, {success: function (projectResults) {
-            //                console.log(projectResults)
-            //            }});
-            //        }
-            //    }, 180);
-            //});
-        },
-
-
-        getUniversalSearchData: function () {
-            var self = this;
-            var project = new Project();
-            project.getUniversalSearchData({success: function (projects) {
-                self.handleUniversalSearchData(projects);
-            }});
-        },
-
-        handleUniversalSearchData: function (projects) {
-            this.allProjects = projects;
-            this.universalSearchSifter = new Sifter(projects);
-        },
-
-        universalSearch: function (query) {
-            var self = this;
-            if (query) {
-                var results = this.universalSearchSifter.search(query, {
-                    fields: ['subtitle', 'owner_gh_username'],
-                    limit: 100
-                });
-                if (results.items.length == 0 && query != "") {
-                    this.homeView.passUniveralSearchResults([]);
-                } else {
-
-                    var projectResults = [];
-                    _.map(results.items, function(item) {
-                        projectResults.push(self.allProjects[item.id]);
-                    });
-
-                    var sortedProjectResults = projectResults.sort(function(a, b){
-                        if (a.vote_count == b.vote_count){
-                            return (a.created_at > b.created_at) ? 1 : ((b.created_at > a.created_at) ? -1 : 0);
-                        } else {
-                            return (a.vote_count < b.vote_count) ? 1 : ((b.vote_count < a.vote_count) ? -1 : 0);
-                        }
-                    });
-
-                    this.homeView.passUniveralSearchResults(sortedProjectResults);
-                }
-            } else {
-                this.homeView.showCachedFeed();
-            }
-        },
-
         getAllLanguages: function () {
             this.handleAllLanguages(AllLangs.getAll());
         },
@@ -434,8 +334,6 @@ define(['jquery',
             }
 
             this.allLangs ? this.handleAllLanguages(this.allLangs) : this.getAllLanguages();
-
-            this.enableUniversalSearchBar();
 
             this.createProjectModal = new CreateProjectModal({
                 el: this.$el.find('#modalCreateProject')
