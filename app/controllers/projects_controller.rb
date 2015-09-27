@@ -210,6 +210,7 @@ class ProjectsController < ApplicationController
       {
           :title => project.title,
           :subtitle => project.subtitle,
+          :date => get_general_date(project.created_at),
           :id => project.id,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
@@ -283,6 +284,7 @@ class ProjectsController < ApplicationController
         {
             :title => project.title,
             :subtitle => project.subtitle,
+            :date => get_general_date(project.created_at),
             :id => project.id,
             :uuid => project.uuid,
             :vote_count => project.vote_count,
@@ -669,7 +671,8 @@ class ProjectsController < ApplicationController
           :id => project.id
       }
     }
-    render :json => projects
+    sorted_projects = special_sort(projects)
+    render :json => sorted_projects
   end
 
   private

@@ -55,6 +55,7 @@ define(['jquery',
             this.data = data;
             this.title = data.title;
             this.subtitle = data.subtitle;
+            this.date = data.date;
             this.id = data.id;
             this.uuid = data.uuid;
             this.vote_count = data.vote_count;
@@ -74,11 +75,13 @@ define(['jquery',
         hoverOn: function () {
             this.$licenseContainer.css('opacity', '1');
             this.$privacyContainer.css('opacity', '1');
+            this.$date.css('opacity', '1');
         },
 
         hoverOff: function () {
             this.$licenseContainer.css('opacity', '0');
             this.$privacyContainer.css('opacity', '0');
+            this.$date.css('opacity', '0');
         },
 
         addListeners: function () {
@@ -139,6 +142,7 @@ define(['jquery',
 
             this.$el.html(ProjectPostViewTpl({
                 subtitle: self.subtitle,
+                date: self.date,
                 vote_count: self.vote_count,
                 commentCount: self.commentCount,
                 contributorCount: self.contributorCount,
@@ -154,6 +158,7 @@ define(['jquery',
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
             this.$privacyContainer = this.$el.find('.project-post-privacy');
+            this.$date = this.$el.find('.project-extra-details-container .date');
             this.addListeners();
 
             this.userInfoBubble = new UserInfoBubble({

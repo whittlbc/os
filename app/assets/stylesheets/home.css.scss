@@ -116,6 +116,20 @@
   position: absolute;
   top: 0;
   right: 0;
+
+  .date {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    margin-right: 20px;
+    margin-top: 15px;
+    font-size: 10px;
+    font-family: 'Helvetica Neue';
+    font-weight: 300;
+    color: #afb1b3;
+    opacity: 0;
+  }
 }
 
 .main-three-details-container {
