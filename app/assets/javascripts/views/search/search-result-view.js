@@ -23,7 +23,8 @@ define(['jquery',
             this.$el.html(SearchResultViewTpl({
                 title: this.options.title,
                 subtitle: this.options.subtitle,
-                type: OSUtil.GRAMMATICAL_PROJECT_TYPES[this.options.status]
+                type: OSUtil.GRAMMATICAL_PROJECT_TYPES[this.options.status],
+                voteCount: this.options.voteCount
             }));
 		}
 	});

@@ -25,6 +25,7 @@ define(['jquery',
 		events: {
             'click .arrow': 'checkIfUserAuthed',
             'click .project-post-subtitle-text': 'openProjectDetails',
+            'click .title-container > span': 'openProjectDetails'
         },
 
         checkIfUserAuthed: function () {

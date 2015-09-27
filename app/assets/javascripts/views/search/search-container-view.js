@@ -39,7 +39,11 @@ define(['jquery',
             });
             searchResultView.$el.click(function (e) {
                 e.stopPropagation();
-                window.location.hash = '#projects/' + data.id;
+                if (window.location.hash == ('#projects/' + data.id)) {
+                    window.location.reload();
+                } else {
+                    window.location.hash = '#projects/' + data.id;
+                }
             });
             searchResultView.render();
             this.$dropdown.append(searchResultView.el);

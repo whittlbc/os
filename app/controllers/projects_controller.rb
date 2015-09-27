@@ -32,8 +32,8 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-        :getting_repo_data => false,
+        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        # :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
         :subtitle => project.subtitle,
@@ -668,10 +668,17 @@ class ProjectsController < ApplicationController
           :title => project.title,
           :subtitle => project.subtitle,
           :status => project.status,
-          :id => project.id
+          :id => project.id,
+          :voteCount => project.vote_count
       }
     }
-    sorted_projects = special_sort(projects)
+    sorted_projects = projects.sort { |a, b|
+      if b[:vote_count] == a[:vote_count]
+        b[:title].downcase <=> a[:title].downcase
+      else
+        b[:vote_count] <=> a[:vote_count]
+      end
+    }
     render :json => sorted_projects
   end
 
