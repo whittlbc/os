@@ -59,6 +59,7 @@ define(['jquery',
             this.ulSlideUpDuration = 550;
             this.tabSliderDuration = 255;
             this.langsFramesDropdownShown = false;
+            this.gettingMoreData = false;
         },
 
         passCookieGHUsername: function (cookieGHUsername) {
@@ -83,7 +84,6 @@ define(['jquery',
         events: {
             'click [data-trigger=popup]': 'onShowPopup',
             'click #submit-filters': 'getFilters',
-            'click #filters-anon-checkbox': 'getFilters',
             'click #launchProject': 'clickedLaunchProject',
             'click #toggleFiltersBtn': 'toggleFilters',
             'mousedown .project-type > a': 'handleSelectProjectTypeTab'
@@ -219,10 +219,11 @@ define(['jquery',
         getFilters: function () {
             var self = this;
             var any = false;
+            this.limit = 30;
+            this.gettingMoreData = false;
             var obj = {
-                filters: {
-                    status: self.projectTypeStatus
-                }
+                status: self.projectTypeStatus,
+                filters: {}
             };
 
             if (!_.isEmpty(self.langsFramesValue)) {
@@ -261,7 +262,11 @@ define(['jquery',
             var self = this;
             var project = new Project();
             project.filteredFeed(obj, {success: function (data) {
-                self.handleFilteredFeed(data);
+                self.limit += 30;
+                if (!data.gotAll) {
+                    self.gettingMoreData = false;
+                }
+                self.handleFilteredFeed(data.projects);
             }});
         },
 
@@ -372,14 +377,15 @@ define(['jquery',
 
         populateProjectFeed: function (status, initial) {
             var self = this;
+            this.limit = 30;
+            this.gettingMoreData = false;
             this.toggleAnonFilters(status);
             if (!initial) {
                 this.changeActiveTab(status);
             }
-            var project = new Project();
             this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status);
-            if (self.filters == null) {
+            if (this.filters == null) {
                 var data = {
                     status: status
                 };
@@ -389,10 +395,17 @@ define(['jquery',
                 if (!this.userData && this.cookieGHUsername) {
                     data.gh_username = this.cookieGHUsername;
                 }
-                project.fetchFeedProjects(data, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
+                var project = new Project();
+                project.fetchFeedProjects(data, {success: function (data) {
+                    self.limit += 30;
+                    if (!data.gotAll) {
+                        self.gettingMoreData = false;
+                    }
+                    self.projectFeedView.handleFetchProjects(data.projects)
+                }});
             } else {
-                self.filters.filters.status = status;
-                self.getFilteredFeed(self.filters);
+                this.filters.status = status;
+                this.getFilteredFeed(this.filters);
             }
         },
 
@@ -402,6 +415,47 @@ define(['jquery',
             this.nonLangFiltersView.$el.find('#nonLangFiltersMaster').css('width', this.langFrameWidth + 'px');
             this.nonLangFiltersView.$el.find('#clearNonLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
             this.langSelectionList.$el.find('#clearLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
+        },
+
+        addScrollLoadListener: function () {
+            var self = this;
+            $(window).scroll(function () {
+                if (!self.gettingMoreData) {
+                    var pos = $(window).scrollTop();
+                    if (pos > (0.87 * $('body').height())) {
+                        self.gettingMoreData = true;
+                        self.getMoreProjects();
+                    }
+                }
+            });
+        },
+
+        getMoreProjects: function () {
+            var self = this;
+            if (this.filters == null) {
+                var data = {
+                    status: this.projectTypeStatus,
+                    limit: this.limit
+                };
+                if (this.userData) {
+                    data.gh_username = this.userData.gh_username;
+                }
+                if (!this.userData && this.cookieGHUsername) {
+                    data.gh_username = this.cookieGHUsername;
+                }
+                var project = new Project();
+                project.fetchFeedProjects(data, {success: function (data) {
+                    self.limit += 30;
+                    if (!data.gotAll) {
+                        self.gettingMoreData = false;
+                    }
+                    self.projectFeedView.handleFetchProjects(data.projects)
+                }});
+            } else {
+                this.filters.status = this.projectTypeStatus;
+                this.filters.limit = this.limit;
+                this.getFilteredFeed(this.filters);
+            }
         },
 
 		render: function (options) {
@@ -444,6 +498,8 @@ define(['jquery',
             this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
 
             this.langSelectionList.render();
+
+            this.addScrollLoadListener();
 
             this.$el.find('ul.tabs').tabs();
 

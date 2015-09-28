@@ -225,8 +225,10 @@ class ProjectsController < ApplicationController
           :total_comments => project.comments.length
       }
     }
-    results = special_sort(projects_of_type).slice(0, 30)
-    render :json => results
+
+    limit = !params[:limit].nil? ? params[:limit].to_i : 30
+    got_all = (limit >= projects_of_type.length)
+    render :json => {:projects => special_sort(projects_of_type).slice(0, limit), :gotAll => got_all}
   end
 
   def destroy_project
@@ -272,7 +274,7 @@ class ProjectsController < ApplicationController
     end
     filters = params[:filters]
     if !filters.nil?
-      filtered_projects = Project.includes(:user, :comments).where(status: filters[:status]).active
+      filtered_projects = Project.includes(:user, :comments).where(status: params[:status]).active
       filters.each { |filter|
         if filter[1].is_a?(Array) && filter[0] != 'anon'
           filtered_projects = filtered_projects.where.overlap(filter[0] => filter[1])
@@ -299,7 +301,9 @@ class ProjectsController < ApplicationController
             :total_comments => project.comments.length
         }
       }
-      render :json => special_sort(projects).slice(0, 30)
+      limit = !params[:limit].nil? ? params[:limit].to_i : 30
+      got_all = (limit >= projects.length)
+      render :json => {:projects => special_sort(projects).slice(0, limit), :gotAll => got_all}
     else
       render :json => {:status => 500, :message => 'params[:filters] was nil'}
     end

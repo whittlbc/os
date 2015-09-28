@@ -13,12 +13,9 @@ define(['jquery',
      ) {
 	'use strict';
 
-    var view;
-
 	var ProjectFeedView = Backbone.View.extend({
 
         initialize: function() {
-            view = this;
         },
 
         setProjectTypeStatus: function (val) {
@@ -34,8 +31,8 @@ define(['jquery',
             this.colors_and_initials = data;
         },
 
-		handleFetchProjects: function (resp, status, xhr) {
-            view.populateFeed(resp);
+		handleFetchProjects: function (data) {
+            this.populateFeed(data);
 		},
 
         //handleShowNewProject: function (data) {
