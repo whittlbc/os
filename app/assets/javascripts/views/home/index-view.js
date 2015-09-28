@@ -84,13 +84,7 @@ define(['jquery',
             this.getFilters();
         },
 
-        events: {
-            'click [data-trigger=popup]': 'onShowPopup',
-            'click #submit-filters': 'getFilters',
-            'click #launchProject': 'clickedLaunchProject',
-            'click #toggleFiltersBtn': 'toggleFilters',
-            'mousedown .project-type > a': 'handleSelectProjectTypeTab'
-        },
+        events: {},
 
         handleSelectProjectTypeTab: function (e) {
             var self = this;
@@ -466,6 +460,14 @@ define(['jquery',
             }
         },
 
+        addListeners: function () {
+            var self = this;
+
+            this.$el.find('.project-type > a').mousedown(function (e) {
+                self.handleSelectProjectTypeTab(e);
+            });
+        },
+
 		render: function (options) {
 			var self = this;
             var onTheFenceActive = false;
@@ -508,6 +510,8 @@ define(['jquery',
             this.langSelectionList.render();
 
             this.addScrollLoadListener();
+
+            this.addListeners();
 
             this.$el.find('ul.tabs').tabs();
 
