@@ -321,6 +321,9 @@ define(['jquery',
                 });
             }
             if (this.showProjectView) {
+                if (this.homeView) {
+                    this.homeView.removeScrollListener();
+                }
                 if (this.projectView) {
                     this.projectView.$el = this.$el.find('#projectViewContainer');
                     this.projectView.reInitialize(options.id, this.cookieGHUsername);

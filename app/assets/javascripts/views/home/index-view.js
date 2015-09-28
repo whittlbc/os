@@ -25,9 +25,12 @@ define(['jquery',
      ) {
 	'use strict';
 
+    var master;
+
 	var IndexView = Backbone.View.extend({
 
 		initialize: function () {
+            master = this;
             Backbone.EventBroker.register({
                 'deleteLangFilter': 'deleteLangFilter',
                 'clearLangFilters': 'clearLangFilters',
@@ -418,16 +421,21 @@ define(['jquery',
         },
 
         addScrollLoadListener: function () {
-            var self = this;
-            $(window).scroll(function () {
-                if (!self.gettingMoreData) {
-                    var pos = $(window).scrollTop();
-                    if (pos > (0.87 * $('body').height())) {
-                        self.gettingMoreData = true;
-                        self.getMoreProjects();
-                    }
+            $(window).bind('scroll', master.homeViewScrollListener);
+        },
+
+        homeViewScrollListener: function () {
+            if (!master.gettingMoreData) {
+                var pos = $(window).scrollTop();
+                if (pos > (0.85 * $('body').height())) {
+                    master.gettingMoreData = true;
+                    master.getMoreProjects();
                 }
-            });
+            }
+        },
+
+        removeScrollListener: function () {
+            $(window).unbind('scroll', master.homeViewScrollListener);
         },
 
         getMoreProjects: function () {
