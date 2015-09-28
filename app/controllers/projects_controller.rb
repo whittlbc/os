@@ -32,8 +32,8 @@ class ProjectsController < ApplicationController
         :license => project.license,
         :privacy => project.privacy,
         :repo_name => project.repo_name,
-        :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-        # :getting_repo_data => false,
+        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+        :getting_repo_data => false,
         :status => project.status,
         :title => project.title,
         :subtitle => project.subtitle,
@@ -274,7 +274,7 @@ class ProjectsController < ApplicationController
     if !filters.nil?
       filtered_projects = Project.includes(:user, :comments).where(status: filters[:status]).active
       filters.each { |filter|
-        if filter[1].is_a?(Array)
+        if filter[1].is_a?(Array) && filter[0] != 'anon'
           filtered_projects = filtered_projects.where.overlap(filter[0] => filter[1])
         else
           filtered_projects = filtered_projects.where(filter[0] => filter[1])
@@ -601,9 +601,10 @@ class ProjectsController < ApplicationController
         if !integrations[:slack].nil?
           slack_integration = project.integrations.where(:service => 'Slack')
 
-          # if the integration exists but the user has passed an empty string as the new url, destroy the integration
-          if !slack_integration.blank? && integrations[:slack].empty?
-            slack_integration.first.destroy!
+          if integrations[:slack].empty?
+            if !slack_integration.blank?
+              slack_integration.first.destroy!
+            end
           else
             if slack_integration.blank?
               slackURL = ensureURL(integrations[:slack])
@@ -613,16 +614,16 @@ class ProjectsController < ApplicationController
               slack_integration.first.update_attributes(url: slackURL)
             end
           end
-
         end
 
         # HipChat
         if !integrations[:hipchat].nil?
           hipchat_integration = project.integrations.where(:service => 'HipChat')
 
-          # if the integration exists but the user has passed an empty string as the new url, destroy the integration
-          if !hipchat_integration.blank? && integrations[:hipchat].empty?
-            hipchat_integration.first.destroy!
+          if integrations[:hipchat].empty?
+            if !hipchat_integration.blank?
+              hipchat_integration.first.destroy!
+            end
           else
             if hipchat_integration.blank?
               hipchatURL = ensureURL(integrations[:hipchat])
@@ -632,26 +633,23 @@ class ProjectsController < ApplicationController
               hipchat_integration.first.update_attributes(url: hipchatURL)
             end
           end
-
         end
 
         # IRC
         if !integrations[:irc].nil?
           irc_integration = project.integrations.where(:service => 'IRC')
 
-          # if the integration exists but the user has passed an empty string as the new url, destroy the integration
-          if !irc_integration.blank? && integrations[:irc].empty?
-            irc_integration.first.destroy!
+          if integrations[:irc].empty?
+            if !irc_integration.blank?
+              irc_integration.first.destroy!
+            end
           else
             if irc_integration.blank?
-              ircChannel = integrations[:irc]
-              Integration.new(service: 'IRC', project_id: project.id, url: ircChannel).save!
+              Integration.new(service: 'IRC', project_id: project.id, url: integrations[:irc]).save!
             else
-              ircChannel = integrations[:irc]
-              irc_integration.first.update_attributes(url: ircChannel)
+              irc_integration.first.update_attributes(url: integrations[:irc])
             end
           end
-
         end
 
       end

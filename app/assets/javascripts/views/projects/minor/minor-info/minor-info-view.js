@@ -158,27 +158,30 @@ define(['jquery',
                 showLicense: showLicense,
                 license: license,
                 licenseSpecified: license != null,
-                showRepoStats: !!options.getting_repo_data,
+                showRepoStats: !!options.getting_repo_data && !options.editMode,
                 showIntegrations: showIntegrations,
                 editMode: options.editMode,
                 editModeRepoName: options.repo_name
             }));
 
-            this.contributorsView = new ContributorsView({
-                el: '#contributorsView'
-            });
-            this.contributorsView.render({
-                contributors: options.contributors,
-                showSpinner: options.getting_repo_data
-            });
+            if (!options.editMode) {
 
-            this.repoStatsView = new RepoStatsView({
-                el: '#repoStatsView'
-            });
-            this.repoStatsView.render({
-                repoURL: this.repoURL,
-                showSpinner: options.getting_repo_data
-            });
+                this.contributorsView = new ContributorsView({
+                    el: '#contributorsView'
+                });
+                this.contributorsView.render({
+                    contributors: options.contributors,
+                    showSpinner: options.getting_repo_data
+                });
+
+                this.repoStatsView = new RepoStatsView({
+                    el: '#repoStatsView'
+                });
+                this.repoStatsView.render({
+                    repoURL: this.repoURL,
+                    showSpinner: options.getting_repo_data && !options.editMode
+                });
+            }
 
             if (options.editMode && this.showLicense) {
                 this.$el.find('#licenseTypeSelection').val(license);

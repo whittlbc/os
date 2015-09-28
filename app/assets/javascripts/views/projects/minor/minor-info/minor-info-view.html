@@ -35,8 +35,10 @@
     {{/editMode}}
 </div>
 {{/showRepoName}}
+{{^editMode}}
 <div class="minor-info-subsection-title" id="contributorsSubsectionTitle">Contributors {{numContrib}}</div>
 <div id="contributorsView"></div>
+{{/editMode}}
 {{#showTeamCommunication}}
 <div class="minor-info-subsection-title">Team Communication</div>
 {{#hasSlack}}

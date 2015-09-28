@@ -35,6 +35,8 @@ define(['jquery',
                 'removeLicenseFilter': 'removeLicenseFilter',
                 'addPrivacyFilter': 'addPrivacyFilter',
                 'removePrivacyFilter': 'removePrivacyFilter',
+                'addAnonFilter': 'addAnonFilter',
+                'removeAnonFilter': 'removeAnonFilter',
                 'clearNonLangFilters': 'clearNonLangFilters'
             }, this);
 
@@ -47,6 +49,7 @@ define(['jquery',
             this.langsFramesValue = [];
             this.licenseFilters = [];
             this.privacyFilters = [];
+            this.anonFilters = [];
             this.forcedItems = [];
             this.showLangFrameSelectionDuration = 350;
             this.selectizeOpenDuration = 290;
@@ -216,7 +219,6 @@ define(['jquery',
         getFilters: function () {
             var self = this;
             var any = false;
-            var anon = self.$el.find('#filters-anon-checkbox').is(':checked');
             var obj = {
                 filters: {
                     status: self.projectTypeStatus
@@ -231,8 +233,8 @@ define(['jquery',
                 obj.filters.privacy = self.privacyFilters;
                 any = true;
             }
-            if (anon) {
-                obj.filters.anon = anon;
+            if (!_.isEmpty(self.anonFilters) && self.anonFilters.length < 2) {
+                obj.filters.anon = self.anonFilters;
                 any = true;
             }
             if (!_.isEmpty(self.licenseFilters) && self.licenseFilters.length < 3) {
@@ -289,7 +291,7 @@ define(['jquery',
 
         addLicenseFilter: function (type) {
             var self = this;
-            if (!_.contains(this.licenseFilters)) {
+            if (!_.contains(this.licenseFilters, type)) {
                 this.licenseFilters.push(type);
             }
             self.getFilters();
@@ -297,7 +299,7 @@ define(['jquery',
 
         removeLicenseFilter: function (type) {
             var self = this;
-            if (!_.contains(this.licenseFilters)) {
+            if (_.contains(this.licenseFilters, type)) {
                 this.licenseFilters.splice(this.licenseFilters.indexOf(type), 1);
             }
             self.getFilters();
@@ -305,7 +307,7 @@ define(['jquery',
 
         addPrivacyFilter: function (type) {
             var self = this;
-            if (!_.contains(this.privacyFilters)) {
+            if (!_.contains(this.privacyFilters, type)) {
                 this.privacyFilters.push(type);
             }
             self.getFilters();
@@ -313,14 +315,56 @@ define(['jquery',
 
         removePrivacyFilter: function (type) {
             var self = this;
-            if (!_.contains(this.privacyFilters)) {
+            if (_.contains(this.privacyFilters, type)) {
                 this.privacyFilters.splice(this.privacyFilters.indexOf(type), 1);
             }
             self.getFilters();
         },
 
+
+        addAnonFilter: function (val) {
+            var self = this;
+            if (val === 'anonYes') {
+                val = true;
+            }
+            if (val === 'anonNo') {
+                val = false;
+            }
+            if (!_.contains(this.anonFilters, val)) {
+                this.anonFilters.push(val);
+            }
+            self.getFilters();
+        },
+
+        removeAnonFilter: function (val) {
+            var self = this;
+            if (val === 'anonYes') {
+                val = true;
+            }
+            if (val === 'anonNo') {
+                val = false;
+            }
+            if (_.contains(this.anonFilters, val)) {
+                this.anonFilters.splice(this.anonFilters.indexOf(val), 1);
+            }
+            self.getFilters();
+        },
+
+        toggleAnonFilters: function (status) {
+            if (status == 0) {
+                this.nonLangFiltersView.showAnon();
+            } else {
+                this.nonLangFiltersView.hideAnon();
+                if (this.filters && this.filters.filters && this.filters.filters.hasOwnProperty('anon')) {
+                    delete this.filters.filters.anon;
+                }
+                this.anonFilters = [];
+            }
+        },
+
         populateProjectFeed: function (status) {
             var self = this;
+            this.toggleAnonFilters(status);
             var project = new Project();
             this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status);
@@ -336,6 +380,7 @@ define(['jquery',
                 }
                 project.fetchFeedProjects(data, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
             } else {
+                console.log('get filtered feed', self.filters);
                 self.filters.filters.status = status;
                 self.getFilteredFeed(self.filters);
             }
@@ -369,13 +414,14 @@ define(['jquery',
             this.projectFeedView.render();
 
             var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;
-            this.populateProjectFeed(projectTypeStatus);
 
             this.nonLangFiltersView = new NonLangFiltersView({
                 el: '#nonLangFiltersContainer'
             });
 
             this.nonLangFiltersView.render();
+
+            this.populateProjectFeed(projectTypeStatus);
 
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer'

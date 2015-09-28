@@ -17,6 +17,7 @@ define(['jquery',
 		events: {
             'click .licenseFilterBtn': 'handleSelectLicenseFilter',
             'click .privacyFilterBtn': 'handleSelectPrivacyFilter',
+            'click .anonFilterBtn': 'handleSelectAnonFilter',
             'click #clearNonLangFiltersBtn': 'clearNonLangFilters'
         },
 
@@ -68,6 +69,17 @@ define(['jquery',
             }
         },
 
+        handleSelectAnonFilter: function (e) {
+            if (!this.hasSelectedClass(e.currentTarget)) {
+                this.addSelectedClass(e.currentTarget, 'anonFilterBtnSelected');
+                Backbone.EventBroker.trigger('addAnonFilter', e.currentTarget.id);
+            } else {
+                this.removeSelectedClass(e.currentTarget);
+                this.removeHoverClass(e.currentTarget, 'anonFilterBtnSelected');
+                Backbone.EventBroker.trigger('removeAnonFilter', e.currentTarget.id);
+            }
+        },
+
         clearNonLangFilters: function () {
             var self = this;
             Backbone.EventBroker.trigger('clearNonLangFilters');
@@ -106,6 +118,25 @@ define(['jquery',
                 }
             });
 
+            // Anon Filter Btns
+            this.$el.find('.anonFilterBtn').mouseenter(function(e){
+                self.addHoverClass(e.currentTarget, 'anonFilterBtnSelected');
+            });
+            this.$el.find('.anonFilterBtn').mouseleave(function(e){
+                if (!self.hasSelectedClass(e.currentTarget)) {
+                    self.removeHoverClass(e.currentTarget, 'anonFilterBtnSelected');
+                }
+            });
+
+        },
+
+        showAnon: function () {
+            this.$el.find('#anonFilterContainer').show();
+        },
+
+        hideAnon: function () {
+            this.$el.find('#anonFilterContainer').hide();
+            this.$el.find('.anonFilterBtn').removeClass('anonFilterBtnSelected z-depth-1-half selectedFilter')
         },
 
 		render: function () {
