@@ -42,25 +42,20 @@ define(['jquery',
                 'removeAnonFilter': 'removeAnonFilter',
                 'clearNonLangFilters': 'clearNonLangFilters'
             }, this);
+            this.filters = null;
+            this.langsFramesValue = [];
+            this.licenseFilters = [];
+            this.privacyFilters = [];
+            this.anonFilters = [];
 
             this.resetProps();
         },
 
         resetProps: function () {
-            this.filters = null;
-            this.filtersShown = false;
-            this.langsFramesValue = [];
-            this.licenseFilters = [];
-            this.privacyFilters = [];
-            this.anonFilters = [];
-            this.forcedItems = [];
-            this.showLangFrameSelectionDuration = 350;
-            this.selectizeOpenDuration = 290;
             this.zipUpDuration = 140;
             this.zipDownDuration = 250;
             this.ulSlideDownDuration = 500;
             this.ulSlideUpDuration = 550;
-            this.tabSliderDuration = 255;
             this.langsFramesDropdownShown = false;
             this.gettingMoreData = false;
         },
@@ -494,7 +489,8 @@ define(['jquery',
             var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;
 
             this.nonLangFiltersView = new NonLangFiltersView({
-                el: '#nonLangFiltersContainer'
+                el: '#nonLangFiltersContainer',
+                filters: self.filters
             });
 
             this.nonLangFiltersView.render();
@@ -502,7 +498,8 @@ define(['jquery',
             this.populateProjectFeed(projectTypeStatus, true);
 
             this.langSelectionList = new LangSelectionList({
-                el: '#langSelectionListContainer'
+                el: '#langSelectionListContainer',
+                filters: self.filters
             });
 
             this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);

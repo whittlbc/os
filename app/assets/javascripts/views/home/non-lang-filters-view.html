@@ -2,24 +2,24 @@
     <div id="licenseFilterContainer">
         <p class="nonLangFilterHeader">License</p>
         <div class="licenseFilters">
-            <div class="licenseFilterBtn" id="MIT"><i class="fa fa-circle" hidden></i><p>MIT</p></div>
-            <div class="licenseFilterBtn" id="GPL"><i class="fa fa-circle" hidden></i><p>GPL</p></div>
-            <div class="licenseFilterBtn" id="BSD"><i class="fa fa-circle" hidden></i><p>BSD</p></div>
+            <div class="licenseFilterBtn {{#mit}}licenseFilterBtnSelected z-depth-1-half selectedFilter{{/mit}}" id="MIT"><i class="fa fa-circle {{#mit}}selected-fa{{/mit}}"></i><p>MIT</p></div>
+            <div class="licenseFilterBtn {{#gpl}}licenseFilterBtnSelected z-depth-1-half selectedFilter{{/gpl}}" id="GPL"><i class="fa fa-circle {{#gpl}}selected-fa{{/gpl}}"></i><p>GPL</p></div>
+            <div class="licenseFilterBtn {{#bsd}}licenseFilterBtnSelected z-depth-1-half selectedFilter{{/bsd}}" id="BSD"><i class="fa fa-circle {{#bsd}}selected-fa{{/bsd}}"></i><p>BSD</p></div>
         </div>
     </div>
 
     <div id="privacyFilterContainer">
         <p class="nonLangFilterHeader">Privacy</p>
         <div class="privacyFilters">
-            <div class="privacyFilterBtn" id="request"><i class="fa fa-circle"></i><p>Request to Join</p></div>
-            <div class="privacyFilterBtn" id="open"><i class="fa fa-circle"></i><p>Open</p></div>
+            <div class="privacyFilterBtn {{#request}}privacyFilterBtnSelected z-depth-1-half selectedFilter{{/request}}" id="request"><i class="fa fa-circle {{#request}}selected-fa{{/request}}"></i><p>Request to Join</p></div>
+            <div class="privacyFilterBtn {{#open}}privacyFilterBtnSelected z-depth-1-half selectedFilter{{/open}}" id="open"><i class="fa fa-circle {{#open}}selected-fa{{/open}}"></i><p>Open</p></div>
         </div>
     </div>
     <div id="anonFilterContainer" hidden>
         <p class="nonLangFilterHeader">Anonymous</p>
         <div class="anonFilters">
-            <div class="anonFilterBtn" id="anonYes"><i class="fa fa-circle"></i><p>Yes</p></div>
-            <div class="anonFilterBtn" id="anonNo"><i class="fa fa-circle"></i><p>No</p></div>
+            <div class="anonFilterBtn {{#anonYes}}anonFilterBtnSelected z-depth-1-half selectedFilter{{/anonYes}}" id="anonYes"><i class="fa fa-circle {{#anonYes}}selected-fa{{/anonYes}}"></i><p>Yes</p></div>
+            <div class="anonFilterBtn {{#anonNo}}anonFilterBtnSelected z-depth-1-half selectedFilter{{/anonNo}}" id="anonNo"><i class="fa fa-circle {{#anonNo}}selected-fa{{/anonNo}}"></i><p>No</p></div>
         </div>
     </div>
 </div>

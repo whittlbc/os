@@ -11,7 +11,9 @@ define(['jquery',
 
 	var NonLangFiltersView = Backbone.View.extend({
 
-		initialize: function () {
+		initialize: function (options) {
+            options = options || {};
+            this.filters = options.filters ? options.filters.filters : {};
 		},
 
 		events: {
@@ -36,13 +38,13 @@ define(['jquery',
         },
 
         addSelectedClass: function (target, filterTypeClass) {
-            $(target.firstChild).css('opacity', 1);
+            $(target.firstChild).addClass('selected-fa');
             $(target).addClass('selectedFilter');
             $(target).addClass(filterTypeClass);
         },
 
         removeSelectedClass: function (target) {
-            $(target.firstChild).css('opacity', 0);
+            $(target.firstChild).removeClass('selected-fa');
             $(target).removeClass('selectedFilter');
         },
 
@@ -141,7 +143,15 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
-            this.$el.html(NonLangFiltersViewTpl());
+            this.$el.html(NonLangFiltersViewTpl({
+                mit: self.filters.license ? _.contains(self.filters.license, 'MIT') : false,
+                gpl: self.filters.license ? _.contains(self.filters.license, 'GPL') : false,
+                bsd: self.filters.license ? _.contains(self.filters.license, 'BSD') : false,
+                request: self.filters.privacy ? _.contains(self.filters.privacy, 'request') : false,
+                open: self.filters.privacy ? _.contains(self.filters.privacy, 'open') : false,
+                anonYes: self.filters.anon ? _.contains(self.filters.anon, true) : false,
+                anonNo: self.filters.anon ? _.contains(self.filters.anon, false) : false
+            }));
             this.addClassListeners();
 		}
 	});

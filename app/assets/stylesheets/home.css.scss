@@ -630,7 +630,12 @@
 .anonFilterBtnSelected {
   background-color: #000000;
   color: white;
+
+  .selected-fa {
+    opacity: 1;
+  }
 }
+
 
 #clearLangFiltersBtnContainer {
   position: fixed;
