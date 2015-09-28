@@ -317,7 +317,7 @@ define(['jquery',
                 this.homeView.passCookieGHUsername(this.cookieGHUsername);
                 this.listenTo(this.homeView, 'languages:all');
                 this.homeView.render({
-                    index: options && options.index ? options.index : 1
+                    index: options && options.hasOwnProperty('index') ? options.index : 1
                 });
             }
             if (this.showProjectView) {

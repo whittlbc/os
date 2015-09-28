@@ -362,9 +362,20 @@ define(['jquery',
             }
         },
 
-        populateProjectFeed: function (status) {
+        changeActiveTab: function (status) {
+            var self = this;
+            var shouldBeActiveTab = this.$el.find('li.project-type > a')[status];
+            if (!$(shouldBeActiveTab).hasClass('active')) {
+                $(shouldBeActiveTab).click();
+            }
+        },
+
+        populateProjectFeed: function (status, initial) {
             var self = this;
             this.toggleAnonFilters(status);
+            if (!initial) {
+                this.changeActiveTab(status);
+            }
             var project = new Project();
             this.projectTypeStatus = status; // int value
             this.projectFeedView.setProjectTypeStatus(status);
@@ -380,7 +391,6 @@ define(['jquery',
                 }
                 project.fetchFeedProjects(data, {success: self.projectFeedView.handleFetchProjects, error: self.projectFeedView.errorHandler});
             } else {
-                console.log('get filtered feed', self.filters);
                 self.filters.filters.status = status;
                 self.getFilteredFeed(self.filters);
             }
@@ -396,9 +406,13 @@ define(['jquery',
 
 		render: function (options) {
 			var self = this;
+            var onTheFenceActive = false;
+
+            if (!options || !options.hasOwnProperty('index') || options.index == 1) {
+                onTheFenceActive = true;
+            }
 
             var upForGrabsActive = options && options.hasOwnProperty('index') ? options.index == 0 : false;
-            var onTheFenceActive = options && options.hasOwnProperty('index') ? options.index == 1 : true;
             var launchedActive = options && options.hasOwnProperty('index') ? options.index == 2 : false;
 
             this.$el.html(IndexViewTpl({
@@ -421,7 +435,7 @@ define(['jquery',
 
             this.nonLangFiltersView.render();
 
-            this.populateProjectFeed(projectTypeStatus);
+            this.populateProjectFeed(projectTypeStatus, true);
 
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer'
