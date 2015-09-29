@@ -87,36 +87,42 @@ define(['jquery',
                 self.dropdownShown = false;
             });
 
-            this.$input.keydown(function () {
-                self.limit = 10;
-                self.gettingMoreData = true;
-                if (!self.dropdownShown) {
-                    self.dropdownShown = true;
-                    self.$dropdown.show();
-                }
-                if (self.searchTimeout != null) {
-                    clearTimeout(self.searchTimeout);
-                }
-                self.searchTimeout = setTimeout(function () {
-                    var query = self.$input.val();
-                    self.query = query;
-                    if (_.isEmpty(query)) {
-                        self.$dropdown.empty();
-                        self.RESULTS = [];
-                        self.$noResults.show();
-                    } else {
-                        self.$noResults.hide();
-                        self.showSpinner();
-                        project.search({query: query, limit: self.limit}, {success: function (data) {
-                            self.handleProjectsFetched(data);
-                        }});
+            this.$input.keydown(function (e) {
+                if (e.keyCode != 13 && e.keyCode != 9) {
+                    self.limit = 10;
+                    self.gettingMoreData = true;
+                    if (!self.dropdownShown) {
+                        self.dropdownShown = true;
+                        self.$dropdown.show();
                     }
-                }, 175);
+                    if (self.searchTimeout != null) {
+                        clearTimeout(self.searchTimeout);
+                    }
+                    self.searchTimeout = setTimeout(function () {
+                        var query = self.$input.val();
+                        self.query = query;
+                        if (_.isEmpty(query)) {
+                            self.$dropdown.empty();
+                            self.RESULTS = [];
+                            self.$noResults.show();
+                        } else {
+                            self.$noResults.hide();
+                            self.showSpinner();
+                            project.search({query: query, limit: self.limit}, {
+                                success: function (data) {
+                                    self.handleProjectsFetched(data);
+                                }
+                            });
+                        }
+                    }, 175);
+                }
             });
 
-            this.$input.keyup(function () {
-                if (_.isEmpty(self.$input.val())) {
-                    self.$noResults.show();
+            this.$input.keyup(function (e) {
+                if (e.keyCode != 13 && e.keyCode != 9) {
+                    if (_.isEmpty(self.$input.val())) {
+                        self.$noResults.show();
+                    }
                 }
             });
         },
