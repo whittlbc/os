@@ -784,12 +784,23 @@
         margin-top: 3px;
         color: #C4C5CA;
         font-size: 12px;
+
+        span {
+          color: #00A6C9;
+          text-decoration: underline;
+          font-weight: 500;
+        }
       }
 
       .subtitle {
         width: 100%;
         font-size: 14px;
         font-weight: 500;
+
+        span {
+          color: #00A6C9;
+          text-decoration: underline;
+        }
       }
     }
 

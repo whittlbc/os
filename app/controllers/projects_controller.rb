@@ -664,14 +664,25 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def highlight_query(text, query)
+    # can't do sub because of casing
+    start_index = text.downcase.index(query.downcase)
+    if start_index === 0
+      new_text = "<span>#{text[0..(query.length-1)]}</span>#{text[query.length..text.length]}"
+      new_text
+    else
+      text
+    end
+  end
+
   def search
     projects_table = Project.arel_table
     query = "#{params[:query]}%"
 
     projects = Project.where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).map { |project|
       {
-          :title => project.title,
-          :subtitle => project.subtitle,
+          :title => highlight_query(project.title, params[:query]),
+          :subtitle => highlight_query(project.subtitle, params[:query]),
           :status => project.status,
           :id => project.id,
           :voteCount => project.vote_count
