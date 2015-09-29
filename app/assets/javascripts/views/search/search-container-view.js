@@ -12,12 +12,16 @@ define(['jquery',
      SearchContainerViewTpl) {
 	'use strict';
 
+    var master;
+
 	var SearchContainerView = Backbone.View.extend({
 
 		initialize: function () {
+            master = this;
             this.isOpen = false;
             this.searchTimeout = null;
             this.dropdownShown = false;
+            this.gettingMoreData = false;
         },
 
 		events: {},
@@ -53,15 +57,18 @@ define(['jquery',
         renderSearchBar: function () {
             var self = this;
             var project = new Project();
+
             this.$input.click(function (e) {
                 e.stopPropagation();
             });
+
             this.$input.focus(function(){
                 if(!self.isOpen) {
                     self.$searchBox.addClass('searchbox-open');
                     self.isOpen = true;
                 }
             });
+
             $(document).click(function(){
                 if(self.isOpen) {
                     self.$searchBox.removeClass('searchbox-open');
@@ -72,6 +79,8 @@ define(['jquery',
             });
 
             this.$input.keydown(function () {
+                self.limit = 10;
+                self.gettingMoreData = true;
                 if (!self.dropdownShown) {
                     self.dropdownShown = true;
                     self.$dropdown.show();
@@ -81,16 +90,55 @@ define(['jquery',
                 }
                 self.searchTimeout = setTimeout(function () {
                     var query = self.$input.val();
+                    self.query = query;
                     if (_.isEmpty(query)) {
                         self.$dropdown.empty();
                         self.RESULTS = [];
                     } else {
-                        project.search({query: query}, {success: function (projectResults) {
-                            self.populate(projectResults);
+                        project.search({query: query, limit: self.limit}, {success: function (data) {
+                            self.handleProjectsFetched(data);
                         }});
                     }
                 }, 175);
             });
+        },
+
+        handleProjectsFetched: function (data) {
+            var self = this;
+            this.limit += 10;
+            if (!data.gotAll) {
+                this.gettingMoreData = false;
+            }
+            this.populate(data.projects);
+        },
+
+        getMoreResults: function () {
+            var self = this;
+            var project = new Project();
+            project.search({query: self.query, limit: self.limit}, {success: function (data) {
+                self.handleProjectsFetched(data);
+            }})
+        },
+
+        addScrollLoadListener: function () {
+            this.$el.find('.search-results-list').bind('scroll', master.searchResultsScrollListener);
+        },
+
+        searchResultsScrollListener: function () {
+            if (!master.gettingMoreData) {
+                var pos = master.$el.find('.search-results-list').scrollTop();
+                var numItems = master.$el.find('.search-results-list > li').length;
+                var itemHeight = master.$el.find('.search-results-list > li').height();
+                console.log(pos, numItems*itemHeight);
+                if (pos > (0.75 * numItems * itemHeight)) {
+                    master.gettingMoreData = true;
+                    master.getMoreResults();
+                }
+            }
+        },
+
+        removeScrollListener: function () {
+            this.$el.find('.search-results-list').unbind('scroll', master.searchResultsScrollListener);
         },
 
 		render: function () {
@@ -100,14 +148,7 @@ define(['jquery',
             this.$input = this.$el.find('.searchbox > input');
             this.$dropdown = this.$el.find('.search-results-list');
             this.renderSearchBar();
-            //
-            //this.$dropdown.bind('mousewheel DOMMouseScroll', function (e) {
-            //    var e0 = e.originalEvent;
-            //    var delta = e0.wheelDelta || -e0.detail;
-            //    this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-            //    e.preventDefault();
-            //});
-
+            this.addScrollLoadListener();
 		}
 	});
 

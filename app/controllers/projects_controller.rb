@@ -691,14 +691,9 @@ class ProjectsController < ApplicationController
 
     sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:subtitle], project[:title]] }.reverse
 
-    # sorted_projects = projects.sort { |a, b|
-    #   if b[:vote_count] == a[:vote_count]
-    #     b[:title].downcase <=> a[:title].downcase
-    #   else
-    #     b[:vote_count] <=> a[:vote_count]
-    #   end
-    # }
-    render :json => sorted_projects
+    limit = !params[:limit].nil? ? params[:limit].to_i : 10
+    got_all = (limit >= sorted_projects.length)
+    render :json => {:projects => sorted_projects.slice(0, limit), :gotAll => got_all}
   end
 
   private
