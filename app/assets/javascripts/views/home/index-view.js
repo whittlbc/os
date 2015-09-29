@@ -174,7 +174,7 @@ define(['jquery',
             selectize.on('item_add', function (value, $item) {
                 /* if you just entered the framework as a lang/frame filter, but haven't entered the language that framework
                 goes with, then we'll go ahead and add that for you */
-                if (self.all_frames[value] && !_.contains(self.langsFramesValue, self.all_frames[value])){
+                if (!self.preventAddListener && self.all_frames[value] && !_.contains(self.langsFramesValue, self.all_frames[value])){
                     self.langsFramesValue = selectize.getValue();
                     selectize.lastQuery = null;
                     selectize.setTextboxValue('');
@@ -184,7 +184,9 @@ define(['jquery',
                     self.getFilters();
                 }
 
-                self.langSelectionList.addItem(value);
+                if (!self.preventAddListener) {
+                    self.langSelectionList.addItem(value, true);
+                }
 
             });
             selectize.on('item_remove', function (value, $item) {
@@ -463,6 +465,19 @@ define(['jquery',
             });
         },
 
+        prePopulateLangFilters: function () {
+            var self = this;
+            this.langSelectionList.$el.find('.lang-selection-list').css('top', '130px');
+            var prepopFilters = this.filters.filters.langs_and_frames.reverse();
+            this.preventAddListener = true;
+            for (var i = 0; i < prepopFilters.length; i++) {
+                this.selectize.addItem(prepopFilters[i]);
+                this.langSelectionList.addItem(prepopFilters[i], false);
+            }
+            this.preventAddListener = false;
+            this.langsFramesValue = this.selectize.getValue();
+        },
+
 		render: function (options) {
 			var self = this;
             var onTheFenceActive = false;
@@ -484,6 +499,10 @@ define(['jquery',
                 el: '#project-feed'
             });
 
+            if (this.colors_and_initials) {
+                this.projectFeedView.passColorsAndInitials(this.colors_and_initials);
+            }
+
             this.projectFeedView.render();
 
             var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;
@@ -499,12 +518,20 @@ define(['jquery',
 
             this.langSelectionList = new LangSelectionList({
                 el: '#langSelectionListContainer',
-                filters: self.filters
             });
+
+            if (this.colors_and_initials) {
+                this.langSelectionList.setColorsAndInitials(this.colors_and_initials);
+            }
 
             this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
 
             this.langSelectionList.render();
+
+            if (this.filters && this.filters.filters && this.filters.filters.langs_and_frames) {
+                this.selectize.fuckingReset();
+                this.prePopulateLangFilters();
+            }
 
             this.addScrollLoadListener();
 

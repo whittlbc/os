@@ -60,18 +60,19 @@ define(['jquery',
             this.colors_and_initials = colors_and_initials;
         },
 
-        addItem: function (value) {
+        addItem: function (value, animate) {
             var langSelection = new LangSelectionView({
                 tagName: 'li'
             });
             langSelection.passName(value);
             langSelection.render();
             this.addHoverListener(langSelection);
-            var animate = true;
             this.prepareItemForEntrance(langSelection.el, value, animate);
             this.$el.find('.lang-selection-list').append(langSelection.el);
             this.LANG_ITEMS.push(langSelection);
-            this.slideItemIn(langSelection.el);
+            if (animate) {
+                this.slideItemIn(langSelection.el);
+            }
         },
 
         addHoverListener: function (view) {
@@ -119,7 +120,7 @@ define(['jquery',
             this.$el.find('.lang-selection-list').scroll(function(){
                 self.$el.find('.lang-selection-list')[0].style.marginTop = '15px';
             });
-		}
+        }
 	});
 
 	return LangSelectionList;
