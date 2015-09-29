@@ -688,13 +688,16 @@ class ProjectsController < ApplicationController
           :voteCount => project.vote_count
       }
     }
-    sorted_projects = projects.sort { |a, b|
-      if b[:vote_count] == a[:vote_count]
-        b[:title].downcase <=> a[:title].downcase
-      else
-        b[:vote_count] <=> a[:vote_count]
-      end
-    }
+
+    sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:subtitle], project[:title]] }.reverse
+
+    # sorted_projects = projects.sort { |a, b|
+    #   if b[:vote_count] == a[:vote_count]
+    #     b[:title].downcase <=> a[:title].downcase
+    #   else
+    #     b[:vote_count] <=> a[:vote_count]
+    #   end
+    # }
     render :json => sorted_projects
   end
 
