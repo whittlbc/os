@@ -758,6 +758,13 @@
     font-style: italic;
     color: #C4C5CA;
   }
+
+  #searchSpinner {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .search-result {

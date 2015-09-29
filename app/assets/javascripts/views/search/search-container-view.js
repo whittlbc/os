@@ -3,12 +3,14 @@ define(['jquery',
 	'underscore',
     'models/project',
     'views/search/search-result-view',
-	'stache!views/search/search-container-view'
+    'views/widgets/spinner-chasing-dots',
+    'stache!views/search/search-container-view'
     ], function ($,
      Backbone,
      _,
      Project,
      SearchResultView,
+     Spinner,
      SearchContainerViewTpl) {
 	'use strict';
 
@@ -22,6 +24,7 @@ define(['jquery',
             this.searchTimeout = null;
             this.dropdownShown = false;
             this.gettingMoreData = false;
+            this.spinnerTimeout = null;
         },
 
 		events: {},
@@ -29,6 +32,7 @@ define(['jquery',
         populate: function (projects) {
             var self = this;
             this.RESULTS = [];
+            this.spinner.$el.hide();
             this.$dropdown.empty();
             if (projects.length > 0) {
                 for (var i = 0; i < projects.length; i++) {
@@ -79,6 +83,7 @@ define(['jquery',
                     self.isOpen = false;
                 }
                 self.$dropdown.hide();
+                self.$noResults.hide();
                 self.dropdownShown = false;
             });
 
@@ -101,6 +106,7 @@ define(['jquery',
                         self.$noResults.show();
                     } else {
                         self.$noResults.hide();
+                        self.showSpinner();
                         project.search({query: query, limit: self.limit}, {success: function (data) {
                             self.handleProjectsFetched(data);
                         }});
@@ -115,8 +121,19 @@ define(['jquery',
             });
         },
 
+        showSpinner: function () {
+            var self = this;
+            this.spinnerTimeout = setTimeout(function () {
+                self.spinnerTimeout = null;
+                self.$dropdown.empty();
+            }, 200);
+        },
+
         handleProjectsFetched: function (data) {
             var self = this;
+            if (this.spinnerTimeout != null) {
+                clearTimeout(this.spinnerTimeout);
+            }
             this.limit += 10;
             if (!data.gotAll) {
                 this.gettingMoreData = false;
@@ -159,6 +176,15 @@ define(['jquery',
             this.$input = this.$el.find('.searchbox > input');
             this.$dropdown = this.$el.find('.search-results-list');
             this.$noResults = this.$el.find('.no-search-results');
+
+            this.spinner = new Spinner({
+                el: '#searchSpinner',
+                width: '60px',
+                height: '60px'
+            });
+
+            this.spinner.render();
+
             this.renderSearchBar();
             this.addScrollLoadListener();
 		}
