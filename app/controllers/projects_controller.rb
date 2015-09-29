@@ -679,7 +679,7 @@ class ProjectsController < ApplicationController
     projects_table = Project.arel_table
     query = "#{params[:query]}%"
 
-    projects = Project.where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).map { |project|
+    projects = Project.where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.map { |project|
       {
           :title => highlight_query(project.title, params[:query]),
           :subtitle => highlight_query(project.subtitle, params[:query]),
