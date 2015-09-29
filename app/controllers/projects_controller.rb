@@ -665,7 +665,10 @@ class ProjectsController < ApplicationController
   end
 
   def search
-    projects = Project.where(Project.arel_table[:title].matches("#{params[:query]}%")).map { |project|
+    projects_table = Project.arel_table
+    query = "#{params[:query]}%"
+
+    projects = Project.where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).map { |project|
       {
           :title => project.title,
           :subtitle => project.subtitle,
