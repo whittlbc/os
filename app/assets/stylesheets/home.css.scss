@@ -681,6 +681,7 @@
 .searchbox {
   width: 40%;
   height: 37px;
+  position: relative;
   float: right;
   margin-top: 12px;
   margin-right: 0;
@@ -744,6 +745,18 @@
   .search-results-list::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 8px;
+  }
+
+  .no-search-results {
+    position: absolute;
+    top: 127px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Helvetica Neue';
+    font-size: 14px;
+    font-style: italic;
+    color: #C4C5CA;
   }
 }
 

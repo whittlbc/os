@@ -30,8 +30,12 @@ define(['jquery',
             var self = this;
             this.RESULTS = [];
             this.$dropdown.empty();
-            for (var i = 0; i < projects.length; i++) {
-                this.addResult(projects[i]);
+            if (projects.length > 0) {
+                for (var i = 0; i < projects.length; i++) {
+                    this.addResult(projects[i]);
+                }
+            } else {
+                this.$noResults.show();
             }
         },
 
@@ -94,12 +98,20 @@ define(['jquery',
                     if (_.isEmpty(query)) {
                         self.$dropdown.empty();
                         self.RESULTS = [];
+                        self.$noResults.show();
                     } else {
+                        self.$noResults.hide();
                         project.search({query: query, limit: self.limit}, {success: function (data) {
                             self.handleProjectsFetched(data);
                         }});
                     }
                 }, 175);
+            });
+
+            this.$input.keyup(function () {
+                if (_.isEmpty(self.$input.val())) {
+                    self.$noResults.show();
+                }
             });
         },
 
@@ -129,7 +141,6 @@ define(['jquery',
                 var pos = master.$el.find('.search-results-list').scrollTop();
                 var numItems = master.$el.find('.search-results-list > li').length;
                 var itemHeight = master.$el.find('.search-results-list > li').height();
-                console.log(pos, numItems*itemHeight);
                 if (pos > (0.75 * numItems * itemHeight)) {
                     master.gettingMoreData = true;
                     master.getMoreResults();
@@ -147,6 +158,7 @@ define(['jquery',
             this.$searchBox = this.$el.find('.searchbox');
             this.$input = this.$el.find('.searchbox > input');
             this.$dropdown = this.$el.find('.search-results-list');
+            this.$noResults = this.$el.find('.no-search-results');
             this.renderSearchBar();
             this.addScrollLoadListener();
 		}
