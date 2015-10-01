@@ -1346,3 +1346,29 @@ $major-info-project-type: #CECECE;
   text-align: center;
   height: 20px;
 }
+
+.toggle-sort-type-container {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 35px;
+  
+  .buttons-container {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+
+    .points,
+    .time {
+      width: 50%;
+      height: 100%;
+      line-height: 35px;
+      float: left;
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+}
+
