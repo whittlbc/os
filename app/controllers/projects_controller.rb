@@ -228,7 +228,7 @@ class ProjectsController < ApplicationController
 
     limit = !params[:limit].nil? ? params[:limit].to_i : 30
     got_all = (limit >= projects_of_type.length)
-    render :json => {:projects => special_sort(projects_of_type).slice(0, limit), :gotAll => got_all}
+    render :json => {:projects => special_sort(projects_of_type, params[:time_sort]).slice(0, limit), :gotAll => got_all}
   end
 
   def destroy_project
@@ -258,14 +258,18 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def special_sort(arr)
-    arr.sort { |a, b|
-      if b[:vote_count] == a[:vote_count]
-        b[:created_at] <=> a[:created_at]
-      else
-        b[:vote_count] <=> a[:vote_count]
-      end
-    }
+  def special_sort(arr, time)
+    if time
+      arr.sort { |a, b| b[:created_at] <=> a[:created_at] }
+    else
+      arr.sort { |a, b|
+        if b[:vote_count] == a[:vote_count]
+          b[:created_at] <=> a[:created_at]
+        else
+          b[:vote_count] <=> a[:vote_count]
+        end
+      }
+    end
   end
 
   def filtered_feed
@@ -282,6 +286,7 @@ class ProjectsController < ApplicationController
           filtered_projects = filtered_projects.where(filter[0] => filter[1])
         end
       }
+
       projects = filtered_projects.map { |project|
         {
             :title => project.title,
@@ -303,14 +308,14 @@ class ProjectsController < ApplicationController
       }
       limit = !params[:limit].nil? ? params[:limit].to_i : 30
       got_all = (limit >= projects.length)
-      render :json => {:projects => special_sort(projects).slice(0, limit), :gotAll => got_all}
+      render :json => {:projects => special_sort(projects, params[:time_sort]).slice(0, limit), :gotAll => got_all}
     else
       render :json => {:status => 500, :message => 'params[:filters] was nil'}
     end
   end
 
   def pull_from_ideas
-    ideas = special_sort(Project.where(:status => 0))
+    ideas = special_sort(Project.where(:status => 0).active)
     render :json => ideas
   end
 
