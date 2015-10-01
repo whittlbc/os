@@ -40,15 +40,22 @@ define(['jquery',
                 'removePrivacyFilter': 'removePrivacyFilter',
                 'addAnonFilter': 'addAnonFilter',
                 'removeAnonFilter': 'removeAnonFilter',
-                'clearNonLangFilters': 'clearNonLangFilters'
+                'clearNonLangFilters': 'clearNonLangFilters',
+                'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort'
             }, this);
             this.filters = null;
             this.langsFramesValue = [];
             this.licenseFilters = [];
             this.privacyFilters = [];
             this.anonFilters = [];
+            this.sortType = OSUtil.SORT_BY_VOTES;
 
             this.resetProps();
+        },
+
+        fetchProjectsWithSpecifiedSort: function (type) {
+            this.sortType = type;
+            this.populateProjectFeed(this.projectTypeStatus, false);
         },
 
         resetProps: function () {
@@ -381,7 +388,8 @@ define(['jquery',
             this.projectFeedView.setProjectTypeStatus(status);
             if (this.filters == null) {
                 var data = {
-                    status: status
+                    status: status,
+                    sortType: this.sortType
                 };
                 if (this.userData) {
                     data.gh_username = this.userData.gh_username;
@@ -399,6 +407,7 @@ define(['jquery',
                 }});
             } else {
                 this.filters.status = status;
+                this.filters.sortType = this.sortType;
                 this.getFilteredFeed(this.filters);
             }
         },
@@ -434,7 +443,8 @@ define(['jquery',
             if (this.filters == null) {
                 var data = {
                     status: this.projectTypeStatus,
-                    limit: this.limit
+                    limit: this.limit,
+                    sortType: this.sortType
                 };
                 if (this.userData) {
                     data.gh_username = this.userData.gh_username;
@@ -453,6 +463,7 @@ define(['jquery',
             } else {
                 this.filters.status = this.projectTypeStatus;
                 this.filters.limit = this.limit;
+                this.filters.sortType = this.sortType;
                 this.getFilteredFeed(this.filters);
             }
         },

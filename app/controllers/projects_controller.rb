@@ -211,6 +211,7 @@ class ProjectsController < ApplicationController
           :title => project.title,
           :subtitle => project.subtitle,
           :date => get_general_date(project.created_at),
+          :created_at => project.created_at,
           :id => project.id,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
@@ -228,7 +229,7 @@ class ProjectsController < ApplicationController
 
     limit = !params[:limit].nil? ? params[:limit].to_i : 30
     got_all = (limit >= projects_of_type.length)
-    render :json => {:projects => special_sort(projects_of_type, params[:time_sort]).slice(0, limit), :gotAll => got_all}
+    render :json => {:projects => special_sort(projects_of_type, params[:sortType]).slice(0, limit), :gotAll => got_all}
   end
 
   def destroy_project
@@ -258,8 +259,8 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def special_sort(arr, time)
-    if time
+  def special_sort(arr, sort_type)
+    if !sort_type.nil? && sort_type.to_i === 1
       arr.sort { |a, b| b[:created_at] <=> a[:created_at] }
     else
       arr.sort { |a, b|
@@ -292,6 +293,7 @@ class ProjectsController < ApplicationController
             :title => project.title,
             :subtitle => project.subtitle,
             :date => get_general_date(project.created_at),
+            :created_at => project.created_at,
             :id => project.id,
             :uuid => project.uuid,
             :vote_count => project.vote_count,
@@ -308,7 +310,7 @@ class ProjectsController < ApplicationController
       }
       limit = !params[:limit].nil? ? params[:limit].to_i : 30
       got_all = (limit >= projects.length)
-      render :json => {:projects => special_sort(projects, params[:time_sort]).slice(0, limit), :gotAll => got_all}
+      render :json => {:projects => special_sort(projects, params[:sortType]).slice(0, limit), :gotAll => got_all}
     else
       render :json => {:status => 500, :message => 'params[:filters] was nil'}
     end

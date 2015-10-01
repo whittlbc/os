@@ -2,12 +2,14 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'models/project',
+    'models/os.util',
     'views/home/project-post-view',
 	'stache!views/home/project-feed-view',
     ], function ($,
      Backbone,
      _,
      Project,
+     OSUtil,
      ProjectPostView,
      ProjectFeedViewTpl
      ) {
@@ -108,7 +110,14 @@ define(['jquery',
         },
 
 		events: {
-            'click .project-post-view': 'onSelectProject'
+            'click .project-post-view': 'onSelectProject',
+            'click .feed-sort-type-btn': 'handleSortTypeClick'
+        },
+
+        handleSortTypeClick: function (e) {
+            var self = this;
+            var sortType = (e.currentTarget.id === 'time') ? OSUtil.SORT_BY_TIME : OSUtil.SORT_BY_VOTES;
+            Backbone.EventBroker.trigger('projects:fetch-by-sort-type', sortType);
         },
 
         onSelectProject: function() {

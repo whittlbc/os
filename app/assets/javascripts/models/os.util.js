@@ -8,6 +8,9 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
 
         NO_USER_PIC: '',
 
+        SORT_BY_VOTES: 0,
+        SORT_BY_TIME: 1,
+
         REQUEST_PRIVACY: 'request',
         OPEN_PRIVACY: 'open',
 
