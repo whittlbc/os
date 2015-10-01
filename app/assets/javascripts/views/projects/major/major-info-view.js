@@ -31,7 +31,7 @@ define(['jquery',
 		events: {
             'click .see-all-description': 'handleToggleDescriptionSize',
             'click .project-page-vote-container': 'checkIfUserAuthed',
-            'click .join-btn': 'handleJoinOrSaveEdit',
+            'click .join-btn': 'handleProjectMajorActionBtnClick',
             'click .star': 'handleStarProject',
             'click .edit-btn': 'handleProjectEdit',
             'click .delete-btn': 'handleProjectDelete',
@@ -43,9 +43,12 @@ define(['jquery',
             Backbone.EventBroker.trigger('edit-mode:cancel');
         },
 
-        handleJoinOrSaveEdit: function () {
-            var event = this.editMode ? 'project:save-edit' : 'project:join';
-            Backbone.EventBroker.trigger(event);
+        handleProjectMajorActionBtnClick: function () {
+            if (this.editMode) {
+                Backbone.EventBroker.trigger('project:save-edit');
+            } else {
+                this.upForGrabsType ? Backbone.EventBroker.trigger('pull-project', this.projectID) : Backbone.EventBroker.trigger('project:join');
+            }
         },
 
         handleProjectEdit: function () {

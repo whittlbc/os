@@ -328,6 +328,7 @@ define(['jquery',
             var projectData = {
                 gh_username: this.userData.gh_username,
                 title: this.newProjectData.title,
+                subtitle: this.newProjectData.subtitle,
                 repo_name: this.newProjectData.repoName,
                 description: this.newProjectData.description,
                 license: [this.newProjectData.license],
@@ -342,8 +343,6 @@ define(['jquery',
             };
             this.disableAddProjectBtn();
             var project = new Project();
-
-            console.log(projectData);
             project.create(projectData, {
                 success: function (project) {
                     console.log('SUCCESSFULLY CREATED PROJECT!');

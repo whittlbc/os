@@ -19,7 +19,7 @@
             {{/editMode}}
         </div>{{
         }}<div class="project-action-container">
-            <div class="join-btn">{{^editMode}}{{joinText}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
+            <div class="join-btn">{{^editMode}}{{#upForGrabsType}}Grab{{/upForGrabsType}}{{^upForGrabsType}}{{joinText}}{{/upForGrabsType}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
             }}{{^editMode}}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
                 <div class="project-page-vote-arrow">
                     <i class="fa fa-angle-up"></i>

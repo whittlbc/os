@@ -360,7 +360,7 @@ define(['jquery',
                 openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
                 showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
                 postAnon: this.anon,
-                showIntegrations: this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] || this.selectedType == OSUtil.TYPE_MAP['launched'],
+                showIntegrations: true,
                 slackURL: this.slackURL,
                 hipChatURL: this.hipChatURL,
                 ircChannel: this.ircChannel

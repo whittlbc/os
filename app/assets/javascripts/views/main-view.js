@@ -119,7 +119,9 @@ define(['jquery',
             $backdrop.animate({opacity: 0}, 400);
             setTimeout(function () {
                 $backdrop.hide();
+                $('body').removeClass('modal-open');
             }, 400)
+
         },
 
         showContribsModal: function () {

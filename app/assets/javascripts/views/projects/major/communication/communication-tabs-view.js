@@ -38,8 +38,6 @@ define(['jquery',
             this.$el.html(CommunicationTabsViewTpl({
                 onTeam: options.project ? options.project.is_contributor : false,
                 showAdmin: options.project ? options.project.is_admin : false,
-                //onTeam: false,
-                //showAdmin: false,
                 generalActive: this.activeTab == 0,
                 suggestionsActive: this.activeTab == 1,
                 teamActive: this.activeTab == 2,
