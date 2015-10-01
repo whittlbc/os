@@ -275,6 +275,17 @@ define(['jquery',
             });
 
             return this.sync('search', this, requestInfo);
+        },
+
+        addEvolutionItem: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/addEvolutionItem',
+                data: info
+            });
+
+            return this.sync('addEvolutionItem', this, requestInfo);
         }
     });
 

@@ -26,14 +26,14 @@ define(['jquery',
             this.evolutionFeedView.populate(data);
         },
 
-		render: function () {
+		render: function (options) {
 			var self = this;
             this.$el.html(EvolutionViewTpl());
 
             this.evolutionFeedView = new EvolutionFeedView({
                 el: '#evolutionFeedView'
             });
-            this.evolutionFeedView.render();
+            this.evolutionFeedView.render(options);
 		}
 	});
 

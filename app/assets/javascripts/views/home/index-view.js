@@ -83,6 +83,7 @@ define(['jquery',
         clearNonLangFilters: function () {
             this.licenseFilters = [];
             this.privacyFilters = [];
+            this.anonFilters = [];
             this.getFilters();
         },
 
@@ -261,6 +262,12 @@ define(['jquery',
 
         getFilteredFeed: function (obj) {
             var self = this;
+            if (this.userData) {
+                obj.gh_username = this.userData.gh_username;
+            }
+            if (!this.userData && this.cookieGHUsername) {
+                obj.gh_username = this.cookieGHUsername;
+            }
             var project = new Project();
             project.filteredFeed(obj, {success: function (data) {
                 self.limit += 30;

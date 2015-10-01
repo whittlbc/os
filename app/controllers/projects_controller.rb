@@ -19,95 +19,79 @@ class ProjectsController < ApplicationController
       user = User.find_by(gh_username: params[:gh_username])
     end
     project = Project.find_by(id: params[:id])
-    owner_gh_username = project.get_owner_gh_username
-    admin_arr = Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) }
 
-    if !project.blank?
-      project_details = {
-        :anon => project.anon,
-        :post_date => get_general_date(project.created_at),
-        :description => project.description,
-        :id => project.id,
-        :langs_and_frames => project.langs_and_frames,
-        :license => project.license,
-        :privacy => project.privacy,
-        :repo_name => project.repo_name,
-        # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-        :getting_repo_data => false,
-        :status => project.status,
-        :title => project.title,
-        :subtitle => project.subtitle,
-        :user_id => project.user_id,
-        :uuid => project.uuid,
-        :voted => user ? user.voted_on_project(project.id) : nil,
-        :vote_count => project.vote_count,
-        :starred => project.is_starred?,
-        :owner_gh_username => owner_gh_username,
-        :admin => admin_arr,
-        :integrations => project.integrations,
-        :is_admin => user ? admin_arr.include?(user.gh_username) : false,
-        :is_owner => user ? user.gh_username === owner_gh_username : false,
-        :is_contributor => false
-      }
+    if project.is_active?
+      owner_gh_username = project.get_owner_gh_username
+      admin_arr = Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) }
 
-      comments = Comment.where(project_id: params[:id])
-
-      owner = []
-      admin = []
-      others = []
-      Contributor.includes(:user).where(project_id: params[:id]).each { |contrib|
-        obj = {
-            'login' => contrib.try(:user).try(:gh_username),
-            'html_url' => "https://github.com/#{contrib.try(:user).try(:gh_username)}",
-            'avatar_url' => contrib.try(:user).try(:pic),
-            'admin' => contrib.admin,
-            'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+      if !project.blank?
+        project_details = {
+          :anon => project.anon,
+          :post_date => project.created_at.utc.iso8601,
+          :description => project.description,
+          :id => project.id,
+          :langs_and_frames => project.langs_and_frames,
+          :license => project.license,
+          :privacy => project.privacy,
+          :repo_name => project.repo_name,
+          # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+          :getting_repo_data => false,
+          :status => project.status,
+          :title => project.title,
+          :subtitle => project.subtitle,
+          :user_id => project.user_id,
+          :uuid => project.uuid,
+          :voted => user ? user.voted_on_project(project.id) : nil,
+          :vote_count => project.vote_count,
+          :starred => project.is_starred?,
+          :owner_gh_username => owner_gh_username,
+          :admin => admin_arr,
+          :integrations => project.integrations,
+          :is_admin => user ? admin_arr.include?(user.gh_username) : false,
+          :is_owner => user ? user.gh_username === owner_gh_username : false,
+          :is_contributor => false
         }
-        if obj['owner']
-          owner.push(obj)
-        elsif obj['admin']
-          admin.push(obj)
-        else
-          others.push(obj)
-        end
 
-        if !user.nil? && obj['login'] === user.gh_username
-          project_details[:is_contributor] = true
-        end
-      }
+        comments = Comment.where(project_id: params[:id])
 
-      admin = admin.sort_by { |obj| obj['login'].downcase }
-      others = others.sort_by { |obj| obj['login'].downcase }
+        owner = []
+        admin = []
+        others = []
+        Contributor.includes(:user).where(project_id: params[:id]).each { |contrib|
+          obj = {
+              'login' => contrib.try(:user).try(:gh_username),
+              'html_url' => "https://github.com/#{contrib.try(:user).try(:gh_username)}",
+              'avatar_url' => contrib.try(:user).try(:pic),
+              'admin' => contrib.admin,
+              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+          }
+          if obj['owner']
+            owner.push(obj)
+          elsif obj['admin']
+            admin.push(obj)
+          else
+            others.push(obj)
+          end
 
-      project_details[:contributors] = {
-          :admin => owner + admin,
-          :others => others
-      }
+          if !user.nil? && obj['login'] === user.gh_username
+            project_details[:is_contributor] = true
+          end
+        }
 
-      render :json => {:project => project_details, :comments => comments}
-    else
-      render :json => {:message => 'Can not find project from id that was passed'}
-    end
+        admin = admin.sort_by { |obj| obj['login'].downcase }
+        others = others.sort_by { |obj| obj['login'].downcase }
 
-  end
+        project_details[:contributors] = {
+            :admin => owner + admin,
+            :others => others
+        }
 
-  def get_general_date(date)
-    min_diff = (Time.now.utc - date.utc) / 60
-    if min_diff > 60
-      hour_diff = min_diff / 60
-      if hour_diff > 24
-        day_diff = hour_diff / 24
-        if day_diff > 365
-          year_diff = day_diff / 365
-          year_diff.floor == 1 ? '1 year ago' : "#{year_diff.floor} years ago"
-        else
-          day_diff.floor == 1 ? '1 day ago' : "#{day_diff.floor} days ago"
-        end
+        render :json => {:project => project_details, :comments => comments}
       else
-        hour_diff.floor == 1 ? '1 hour ago' : "#{hour_diff.floor} hours ago"
+        render :json => {:message => 'Can not find project from id that was passed'}
       end
     else
-      min_diff.ceil == 1 ? '1 minute ago' : "#{min_diff.ceil} minutes ago"
+      render :json => {:status => 404}
     end
   end
 
@@ -162,14 +146,6 @@ class ProjectsController < ApplicationController
       contributor = Contributor.new(contrib_data)
       contributor.save
 
-      evolution_data = {
-          :uuid => UUIDTools::UUID.random_create.to_s,
-          :project_id => @project.id,
-          :property => 'Creation'
-      }
-      evolution = Evolution.new(evolution_data)
-      evolution.save
-
       if !params[:slackURL].nil? && !params[:slackURL].empty?
         slackURL = ensureURL(params[:slackURL])
         Integration.new(service: 'Slack', project_id: @project.id, url: slackURL).save!
@@ -210,8 +186,7 @@ class ProjectsController < ApplicationController
       {
           :title => project.title,
           :subtitle => project.subtitle,
-          :date => get_general_date(project.created_at),
-          :created_at => project.created_at,
+          :created_at => project.created_at.utc.iso8601,
           :id => project.id,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
@@ -292,8 +267,7 @@ class ProjectsController < ApplicationController
         {
             :title => project.title,
             :subtitle => project.subtitle,
-            :date => get_general_date(project.created_at),
-            :created_at => project.created_at,
+            :created_at => project.created_at.utc.iso8601,
             :id => project.id,
             :uuid => project.uuid,
             :vote_count => project.vote_count,
@@ -308,6 +282,7 @@ class ProjectsController < ApplicationController
             :total_comments => project.comments.length
         }
       }
+
       limit = !params[:limit].nil? ? params[:limit].to_i : 30
       got_all = (limit >= projects.length)
       render :json => {:projects => special_sort(projects, params[:sortType]).slice(0, limit), :gotAll => got_all}
@@ -411,31 +386,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def universal_search
-    projects = Project.all.map { |proj|
-      {
-        uuid: proj.uuid,
-        id: proj.id,
-        title: proj.title,
-        subtitle: proj.subtitle,
-        description: proj.description,
-        contributors: proj.contributors,
-        owner_gh_username: proj.get_owner_gh_username,
-        owner_pic: proj.get_owner_pic,
-        created_at: proj.created_at,
-        repo_name: proj.repo_name,
-        vote_count: proj.vote_count,
-        status: proj.status,
-        anon: proj.anon,
-        langs_and_frames: proj.langs_and_frames,
-        license: proj.license,
-        privacy: proj.privacy,
-        search_result: true
-      }
-    }
-    render :json => projects
-  end
-
   def post_new_comment
     user = User.find_by(uuid: params[:poster_uuid])
     if !user.nil?
@@ -476,7 +426,7 @@ class ProjectsController < ApplicationController
             :posterUUID => comment.try(:user).try(:uuid),
             :voteCount => comment.vote_count,
             :voted => user ? user.voted_on_comment(comment.id) : nil,
-            :postTime => get_general_date(comment.created_at),
+            :postTime => comment.created_at.utc.iso8601,
             :text => comment.text,
             :id => comment.id,
             :parentID => comment.parent_id,
@@ -502,7 +452,7 @@ class ProjectsController < ApplicationController
                 :posterUUID => child.try(:user).try(:uuid),
                 :voteCount => child.vote_count,
                 :voted => user ? user.voted_on_comment(child.id) : nil,
-                :postTime => get_general_date(child.created_at),
+                :postTime => child.created_at.utc.iso8601,
                 :text => child.text,
                 :id => child.id,
                 :parentID => child.parent_id,
@@ -569,28 +519,8 @@ class ProjectsController < ApplicationController
 
   def get_evolution
     project = Project.find_by(id: params[:id])
-
     if !project.nil?
-
-      fake_data = [
-        {
-            :created_at => '2015-09-20 05:31:12.130724',
-            :property => 'Creation'
-        },
-        {
-            :created_at => '2015-09-20 05:31:12.130724',
-            :property => 'description',
-            :new_value => 'My New Description!'
-        },
-        {
-            :created_at => '2015-09-20 05:31:12.130724',
-            :property => 'langs_and_frames',
-            :new_value => ['Ruby','HTML','CSS','JavaScript']
-        }
-      ]
-
-      render :json => fake_data
-      # render :json => project.evolutions.order(:created_at)
+      render :json => project.evolutions.order(:created_at)
     else
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end

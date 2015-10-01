@@ -78,7 +78,11 @@ define(['jquery',
 
         render: function (options) {
 			var self = this;
-            this.$el.html(MinorInfoEvolutionViewTpl());
+            options = options || {};
+
+            this.$el.html(MinorInfoEvolutionViewTpl({
+                launched: options.status == 2
+            }));
 
             this.minorInfoView = new MinorInfoView({
                 el: '#minorInfoView'

@@ -26,4 +26,8 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def is_active?
+    !self.is_destroyed && !self.was_pulled
+  end
+
 end

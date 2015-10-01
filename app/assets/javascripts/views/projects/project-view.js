@@ -35,8 +35,12 @@ define(['jquery',
             if (self.cookieGHUsername) {
                 data.gh_username = self.cookieGHUsername;
             }
-            project.fetchDetails(data, {success: function (projectData) {
-                self.handleFetchedDetails(projectData);
+            project.fetchDetails(data, {success: function (obj) {
+                if (obj.status && obj.status == 404) {
+                    console.log('show error view');
+                    return;
+                }
+                self.handleFetchedDetails(obj);
             }});
 
             Backbone.EventBroker.register({
@@ -45,7 +49,8 @@ define(['jquery',
                 'comments:fetch': 'fetchComments',
                 'evolution:fetch': 'fetchProjectEvolution',
                 'project:save-edit': 'handleSaveEditProject',
-                'edit-mode:cancel': 'cancelEditMode'
+                'edit-mode:cancel': 'cancelEditMode',
+                'evolution:add': 'handleAddEvolution'
             }, this);
 
             this.github = Github;
@@ -64,8 +69,12 @@ define(['jquery',
             if (this.cookieGHUsername) {
                 data.gh_username = this.cookieGHUsername;
             }
-            project.fetchDetails(data, {success: function (data) {
-                self.handleFetchedDetails(data);
+            project.fetchDetails(data, {success: function (obj) {
+                if (obj.status && obj.status == 404) {
+                    console.log('show error view');
+                    return;
+                }
+                self.handleFetchedDetails(obj);
             }});
         },
 
@@ -74,6 +83,10 @@ define(['jquery',
         },
 
         events: {},
+
+        handleAddEvolution: function (view) {
+            view.addNewEvolutionItem(this.user_uuid);
+        },
 
         handleSaveEditProject: function () {
             var self = this;
@@ -337,6 +350,7 @@ define(['jquery',
             this.projectMinorView = new ProjectMinorView({
                 el: '#projectMinorView'
             });
+
             this.projectMinorView.render(data.project);
 
             window.scrollTo(0, 0);

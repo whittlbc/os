@@ -32,7 +32,7 @@ define(['jquery',
         },
 
         checkIfUserAuthedOnInputClick: function () {
-            Backbone.EventBroker.trigger('comment-input:click', this);
+            //Backbone.EventBroker.trigger('comment-input:click', this);
         },
 
         handleAddComment: function () {

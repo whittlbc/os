@@ -1,11 +1,14 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/evolution',
     'views/projects/minor/evolution/evolution-feed-item-view',
-	'stache!views/projects/minor/evolution/evolution-feed-view'
+	'stache!views/projects/minor/evolution/evolution-feed-view',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
+     Evolution,
      EvolutionFeedItemView,
      EvolutionFeedViewTpl) {
 	'use strict';
@@ -15,29 +18,68 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+            'click .add-evolution-item-btn': 'handleAddPost'
+        },
 
         populate: function (data) {
             var self = this;
+            var $noItemsView = this.$el.find('#noEvolutionItems');
             this.$el.find('#evolutionFeedListView').empty();
-            for (var i = 0; i < data.length; i++) {
-                this.addItem(data[i]);
+            if (data.length === 0) {
+                $noItemsView.show();
+            } else {
+                $noItemsView.hide();
+                for (var i = 0; i < data.length; i++) {
+                    this.addItem(data[i]);
+                }
             }
         },
 
         addItem: function (data) {
             var self = this;
             var evolutionFeedItemView = new EvolutionFeedItemView({
-                tagName: 'li'
+                tagName: 'li',
+                data: data
             });
-            evolutionFeedItemView.setData(data);
             evolutionFeedItemView.render();
             this.$el.find('#evolutionFeedListView').append(evolutionFeedItemView.el);
         },
 
-		render: function () {
+        handleAddPost: function () {
+            Backbone.EventBroker.trigger('evolution:add', this);
+        },
+
+        addNewEvolutionItem: function (userUUID) {
+            var self = this;
+            var text = this.$el.find('#addEvolutionItemContainer > textarea').val();
+
+            if (!_.isEmpty(text)) {
+                var evolution = new Evolution();
+                evolution.createNewEvolution({project_id: self.projectID, user_uuid: userUUID, text: text}, {success: function (data) {
+                    self.$el.find('#addEvolutionItemContainer > textarea').val('');
+                    self.populate(data);
+                }});
+            } else {
+                // show some sort of message
+            }
+        },
+
+		render: function (options) {
 			var self = this;
-            this.$el.html(EvolutionFeedViewTpl());
+            options = options || {};
+            this.projectID = options.id;
+
+            this.$el.html(EvolutionFeedViewTpl({
+                isAdmin: options.is_admin
+            }));
+
+            if (options.is_admin) {
+                // Auto-resize reply textarea
+                this.$el.find('#addEvolutionItemContainer > textarea').on('keyup input', function () {
+                    $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight + 2);
+                });
+            }
 		}
 	});
 

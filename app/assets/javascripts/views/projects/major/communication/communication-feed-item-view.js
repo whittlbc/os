@@ -1,11 +1,13 @@
 define(['jquery',
     'backbone',
     'underscore',
+    'models/os.util',
     'models/project',
     'backbone-eventbroker'
 ], function ($,
      Backbone,
      _,
+    OSUtil,
     Project
 ) {
     'use strict';
@@ -41,7 +43,7 @@ define(['jquery',
             this.isPoster = data.currentUser == data.posterGHUsername;
             this.voteCount = data.voteCount;
             this.voted = data.voted;
-            this.postTime = data.postTime;
+            this.postTime = OSUtil.getTimeAgo(data.postTime);
             this.text = data.text;
             this.id = data.id;
             this.parentID = data.parentID;

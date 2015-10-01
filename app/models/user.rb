@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :projects
   has_many :comments
+  has_many :evolutions
 
   scope :username_login, -> (username, password) {
     where(:username => username, :password => password)

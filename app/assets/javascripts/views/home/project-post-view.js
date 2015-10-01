@@ -56,7 +56,7 @@ define(['jquery',
             this.data = data;
             this.title = data.title;
             this.subtitle = data.subtitle;
-            this.date = data.date;
+            this.date = OSUtil.getTimeAgo(data.created_at);
             this.id = data.id;
             this.uuid = data.uuid;
             this.vote_count = data.vote_count;

@@ -42,6 +42,7 @@ define(['jquery',
             this.minorInfoEvolutionView = new MinorInfoEvolutionView({
                 el: '#minorInfoEvolutionView'
             });
+
             this.minorInfoEvolutionView.render(options);
 		}
 	});

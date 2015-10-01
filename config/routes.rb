@@ -32,6 +32,12 @@ Backboneworld::Application.routes.draw do
     end
   end
 
+  resources :evolutions do
+    collection do
+      post :create_new_evolution, :path => '/createNewEvolution'
+    end
+  end
+
   resources :users do
     collection do
       get :login, :path => '/login'

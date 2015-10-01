@@ -566,6 +566,14 @@ $major-info-project-type: #CECECE;
   font-weight: 500;
 }
 
+#info.not-launched {
+  width: 100%;
+}
+
+#info.not-launched.active {
+  color: #333;
+}
+
 #infoEvolutionTabSeparator {
   display: inline-block;
   background-color: #DDD;
@@ -1090,8 +1098,9 @@ $major-info-project-type: #CECECE;
   margin-top: 21px;
   margin-bottom: 5px;
   width: 93%;
-  margin-right: auto;
-  margin-left: auto;
+  float: left;
+  margin-left: 3.5%;
+  position: relative;
 
   .comment-textarea {
     display: inline-block;
@@ -1115,6 +1124,8 @@ $major-info-project-type: #CECECE;
     width: 14%;
     height: 30px;
     float: left;
+    position: absolute;
+    bottom: 1px;
     margin-left: 1%;
 
     .add-comment-btn {
@@ -1158,6 +1169,7 @@ $major-info-project-type: #CECECE;
   float: left;
   border-bottom: 1px solid #DDD;
   background-color: white;
+  position: relative;
 
   .reply-textarea {
     display: inline-block;
@@ -1182,6 +1194,8 @@ $major-info-project-type: #CECECE;
     height: 29px;
     float: left;
     margin-left: 1%;
+    position: absolute;
+    bottom: 10px;
 
     .reply-comment-btn {
       height: 100%;
@@ -1323,7 +1337,7 @@ $major-info-project-type: #CECECE;
 
     }
 
-    .newValue {
+    .text {
       padding-left: 20px;
       padding-right: 20px;
       width: 100%;
@@ -1371,3 +1385,69 @@ $major-info-project-type: #CECECE;
   }
 }
 
+#noEvolutionItems {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  width: 100%;
+  color: #C4C5CA;
+  font-size: 14px;
+  font-family: 'Helvetica Neue';
+  font-style: italic;
+  text-align: center;
+}
+
+
+#addEvolutionItemContainer {
+  width: 100%;
+  margin-top: 10px;
+  padding-bottom: 8px;
+  padding-top: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  float: left;
+  background-color: white;
+  position: relative;
+
+  textarea {
+    display: inline-block;
+    width: 85%;
+    resize: none;
+    float: left;
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #30313C;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+  }
+
+  .add-evolution-item-btn-container {
+    display: inline-block;
+    width: 14%;
+    height: 29px;
+    float: left;
+    margin-left: 1%;
+    position: absolute;
+    bottom: 9px;
+
+    .add-evolution-item-btn {
+      height: 100%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      line-height: 29px;
+      border-radius: 4px;
+      font-family: 'Helvetica Neue';
+      font-size: 14px;
+      background-color: #00A6C9;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+}

@@ -1,6 +1,7 @@
 define(['jquery',
 	'backbone',
 	'underscore',
+    'models/os.util',
     'views/projects/minor/minor-info/contributors-view',
     'views/projects/minor/minor-info/repo-stats-view',
 	'stache!views/projects/minor/minor-info/minor-info-view',
@@ -8,6 +9,7 @@ define(['jquery',
     ], function ($,
      Backbone,
      _,
+     OSUtil,
      ContributorsView,
      RepoStatsView,
      MinorInfoViewTpl) {
@@ -139,7 +141,7 @@ define(['jquery',
             }
 
             this.$el.html(MinorInfoViewTpl({
-                postDate: options.post_date ? options.post_date : '',
+                postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
                 showRepoName: showRepoName,
                 repoName: repoName,
                 repoURL: this.repoURL,
