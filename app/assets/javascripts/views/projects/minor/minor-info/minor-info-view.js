@@ -36,7 +36,7 @@ define(['jquery',
                 contributors: data,
                 showSpinner: false
             });
-            this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + data.length + ')')
+            this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + data.length + ')');
         },
 
         lazyLoadRepoStats: function (data) {
@@ -169,8 +169,6 @@ define(['jquery',
 
             if (!options.editMode) {
 
-                console.log(options);
-
                 this.contributorsView = new ContributorsView({
                     el: '#contributorsView'
                 });
@@ -179,18 +177,19 @@ define(['jquery',
                     showSpinner: options.getting_repo_data && !options.fromCache
                 });
 
-                this.repoStatsView = new RepoStatsView({
-                    el: '#repoStatsView'
-                });
-
                 var repoStatsData = {
                     repoURL: this.repoURL,
                     showSpinner: options.getting_repo_data && !options.editMode && !options.fromCache
                 };
 
                 if (options.fromCache) {
+                    this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + options.contributors.length + ')');
                     repoStatsData.repoData = options.repoData
                 }
+
+                this.repoStatsView = new RepoStatsView({
+                    el: '#repoStatsView'
+                });
 
                 this.repoStatsView.render(repoStatsData);
             }
