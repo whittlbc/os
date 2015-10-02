@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
     end
     project = Project.find_by(id: params[:id])
 
-    if project.is_active?
+    if !project.nil? && project.is_active?
       owner_gh_username = project.get_owner_gh_username
       admin_arr = Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) }
 
