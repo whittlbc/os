@@ -76,6 +76,7 @@ define(['jquery',
 
         cancelEditMode: function (cachedData) {
             var self = this;
+            cachedData.fromCache = true;
             this.render(cachedData);
         },
 
@@ -168,21 +169,30 @@ define(['jquery',
 
             if (!options.editMode) {
 
+                console.log(options);
+
                 this.contributorsView = new ContributorsView({
                     el: '#contributorsView'
                 });
                 this.contributorsView.render({
                     contributors: options.contributors,
-                    showSpinner: options.getting_repo_data
+                    showSpinner: options.getting_repo_data && !options.fromCache
                 });
 
                 this.repoStatsView = new RepoStatsView({
                     el: '#repoStatsView'
                 });
-                this.repoStatsView.render({
+
+                var repoStatsData = {
                     repoURL: this.repoURL,
-                    showSpinner: options.getting_repo_data && !options.editMode
-                });
+                    showSpinner: options.getting_repo_data && !options.editMode && !options.fromCache
+                };
+
+                if (options.fromCache) {
+                    repoStatsData.repoData = options.repoData
+                }
+
+                this.repoStatsView.render(repoStatsData);
             }
 
             if (options.editMode && this.showLicense) {

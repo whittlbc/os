@@ -227,10 +227,13 @@ define(['jquery',
         handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
             var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
             this.contributors = sortedContribs;
-            this.projectMinorView.lazyLoadContribs(_.union(sortedContribs.admin, sortedContribs.others));
+            var unionContribs = _.union(sortedContribs.admin, sortedContribs.others);
+            this.cachedProjectData.project.contributors = unionContribs;
+            this.projectMinorView.lazyLoadContribs(unionContribs);
         },
 
         handleFetchedGHRepoStats: function (data) {
+            this.cachedProjectData.project.repoData = data;
             this.projectMinorView.lazyLoadRepoStats(data);
         },
 
