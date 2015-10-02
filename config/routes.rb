@@ -35,6 +35,7 @@ Backboneworld::Application.routes.draw do
   resources :evolutions do
     collection do
       post :create_new_evolution, :path => '/createNewEvolution'
+      put :delete_evolution_item, :path => '/deleteEvolutionItem'
     end
   end
 

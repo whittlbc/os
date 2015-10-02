@@ -38,9 +38,14 @@ define(['jquery',
 
         addItem: function (data) {
             var self = this;
+            data.is_admin = this.options.is_admin;
             var evolutionFeedItemView = new EvolutionFeedItemView({
                 tagName: 'li',
                 data: data
+            });
+            this.listenTo(evolutionFeedItemView, 'evolution-item:delete', function (uuid) {
+                self.evolutionItemToDelete = uuid;
+                Backbone.EventBroker.trigger('evolution-item:delete', self);
             });
             evolutionFeedItemView.render();
             this.$el.find('#evolutionFeedListView').append(evolutionFeedItemView.el);
@@ -65,9 +70,18 @@ define(['jquery',
             }
         },
 
+        deleteEvolutionItem: function () {
+            var self = this;
+            var evolution = new Evolution();
+            evolution.deleteEvolutionItem({uuid: self.evolutionItemToDelete}, {success: function (data) {
+                self.populate(data);
+            }});
+        },
+
 		render: function (options) {
 			var self = this;
             options = options || {};
+            this.options = options;
             this.projectID = options.id;
 
             this.$el.html(EvolutionFeedViewTpl({

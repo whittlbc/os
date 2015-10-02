@@ -23,6 +23,17 @@ define(['jquery',
             });
 
             return this.sync('create', this, requestInfo);
+        },
+
+        deleteEvolutionItem: function(info, options){
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/deleteEvolutionItem',
+                data: info
+            });
+
+            return this.sync('deleteEvolutionItem', this, requestInfo);
         }
 
     });

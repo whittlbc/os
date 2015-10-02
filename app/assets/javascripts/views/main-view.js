@@ -50,7 +50,8 @@ define(['jquery',
                 'project:star': 'handleStarProject',
                 'project:delete': 'showDeleteProjectModal',
                 'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
-                'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray'
+                'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray',
+                'evolution-item:delete': 'showDeleteEvolutionItemModal'
             }, this);
             this.userAuthed = false;
         },
@@ -78,6 +79,12 @@ define(['jquery',
 
         showDeleteProjectModal: function () {
             this.deleteProjectModal.showModal();
+        },
+
+        showDeleteEvolutionItemModal: function (view) {
+            var self = this;
+            self.passedEvolutionFeedView = view;
+            this.deleteEvolutionItemModal.showModal();
         },
 
         deleteProject: function () {
@@ -378,6 +385,15 @@ define(['jquery',
                 self.deleteProject();
             });
             this.deleteProjectModal.render();
+
+            this.deleteEvolutionItemModal = new BasicQuestionModal({
+                el: this.$el.find('#modalDeleteEvolutionItem'),
+                message: 'Are you sure you want to delete this item from the Coming Soon list?'
+            });
+            this.listenTo(this.deleteEvolutionItemModal, 'confirm', function () {
+                self.passedEvolutionFeedView.deleteEvolutionItem();;
+            });
+            this.deleteEvolutionItemModal.render();
 
             this.searchView = new SearchContainerView({
                 el: '#mainSearchBar'

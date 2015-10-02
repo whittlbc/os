@@ -1304,25 +1304,40 @@ $major-info-project-type: #CECECE;
     border-bottom: 1px solid #DDD;
   }
 
+  .evolution-feed-item-container:hover {
+    background-color: #F4F6F8;
+  }
+
   .evolution-feed-item-container {
     float: left;
     width: 100%;
     padding-bottom: 20px;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 10px;
+
+    .fa-trash {
+      color: #C4C5CA;
+      float: right;
+      margin-right: 5px;
+      margin-left: 6px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
 
     .date {
       font-size: 10px;
       font-family: 'Helvetica Neue';
       font-weight: 300;
       color: #C4C5CA;
-      margin-right: 15px;
       float: right;
+      margin-right: 5px;
       margin-top: 5px;
       margin-bottom: 5px;
     }
 
     .text {
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-right: 5px;
       width: 100%;
       float: left;
       font-size: 14px;
@@ -1433,3 +1448,5 @@ $major-info-project-type: #CECECE;
   }
 
 }
+
+

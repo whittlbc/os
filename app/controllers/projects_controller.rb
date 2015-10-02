@@ -292,7 +292,7 @@ class ProjectsController < ApplicationController
   end
 
   def pull_from_ideas
-    ideas = special_sort(Project.where(:status => 0).active)
+    ideas = special_sort(Project.where(:status => 0).active, 0)
     render :json => ideas
   end
 
@@ -520,7 +520,7 @@ class ProjectsController < ApplicationController
   def get_evolution
     project = Project.find_by(id: params[:id])
     if !project.nil?
-      render :json => project.evolutions.order(:created_at)
+      render :json => project.evolutions.active.order(:created_at)
     else
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end

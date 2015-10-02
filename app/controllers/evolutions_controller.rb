@@ -12,9 +12,19 @@ class EvolutionsController < ApplicationController
           :text => params[:text]
       )
       evolution.save!
-      render :json => project.evolutions.order(:created_at)
+      render :json => project.evolutions.active.order(:created_at)
     else
       render :json => {:error => 'Could not create evolution item'}
+    end
+  end
+
+  def delete_evolution_item
+    evolution = Evolution.find_by(uuid: params[:uuid])
+    if !evolution.nil?
+      evolution.update_attributes(:is_destroyed => true)
+      render :json => evolution.project.evolutions.active.order(:created_at)
+    else
+      render :json => {:status => 500, :message => 'Could not find evolution by uuid'}
     end
   end
 
