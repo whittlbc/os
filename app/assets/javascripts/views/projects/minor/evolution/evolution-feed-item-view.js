@@ -30,12 +30,15 @@ define(['jquery',
 			var self = this;
             this.$el.html(EvolutionFeedItemViewTpl({
                 date: OSUtil.getTimeAgo(this.data.created_at),
-                text: this.data.text,
-                isAdmin: this.data.is_admin
+                text: this.data.text
             }));
 
             if (this.data.is_admin) {
-                this.$el.hover(function () {self.$el.find('.fa-trash').show();}, function () {self.$el.find('.fa-trash').hide();});
+                this.$el.hover(function () {
+                    self.$el.find('.fa-trash').removeClass('hide-class');
+                }, function () {
+                    self.$el.find('.fa-trash').addClass('hide-class');
+                });
             }
 
 		}

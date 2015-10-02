@@ -7,6 +7,7 @@ define(['jquery',
     'integrations/github',
     'views/projects/major/project-major-view',
     'views/projects/minor/project-minor-view',
+    'views/not-found/404',
     'stache!views/projects/project-view',
     'selectize',
     'backbone-eventbroker'
@@ -19,6 +20,7 @@ define(['jquery',
      Github,
      ProjectMajorView,
      ProjectMinorView,
+     View404,
      ProjectViewTpl) {
     'use strict';
 
@@ -37,10 +39,10 @@ define(['jquery',
             }
             project.fetchDetails(data, {success: function (obj) {
                 if (obj.status && obj.status == 404) {
-                    console.log('show error view');
-                    return;
+                    self.render({show404: true});
+                } else {
+                    self.handleFetchedDetails(obj);
                 }
-                self.handleFetchedDetails(obj);
             }});
 
             Backbone.EventBroker.register({
@@ -71,10 +73,10 @@ define(['jquery',
             }
             project.fetchDetails(data, {success: function (obj) {
                 if (obj.status && obj.status == 404) {
-                    console.log('show error view');
-                    return;
+                    self.render({show404: true});
+                } else {
+                    self.handleFetchedDetails(obj);
                 }
-                self.handleFetchedDetails(obj);
             }});
         },
 
@@ -334,27 +336,37 @@ define(['jquery',
             var self = this;
             this.data = data;
 
-            this.$el.html(ProjectViewTpl());
+            this.$el.html(ProjectViewTpl({
+                show404: data.show404
+            }));
 
-            this.projectMajorView = new ProjectMajorView({
-                el: '#projectMajorView'
-            });
+            if (data.show404) {
+                this.view404 = new View404({
+                    el: '#404'
+                });
+                this.view404.render();
+            } else {
 
-            this.listenTo(this.projectMajorView, 'project:edit', function () {
-                self.showEditMode();
-            });
+                this.projectMajorView = new ProjectMajorView({
+                    el: '#projectMajorView'
+                });
 
-            if (this.allLangData) {
-                this.projectMajorView.passLanguages(this.allLangData);
+                this.listenTo(this.projectMajorView, 'project:edit', function () {
+                    self.showEditMode();
+                });
+
+                if (this.allLangData) {
+                    this.projectMajorView.passLanguages(this.allLangData);
+                }
+
+                this.projectMajorView.render(data);
+
+                this.projectMinorView = new ProjectMinorView({
+                    el: '#projectMinorView'
+                });
+
+                this.projectMinorView.render(data.project);
             }
-
-            this.projectMajorView.render(data);
-
-            this.projectMinorView = new ProjectMinorView({
-                el: '#projectMinorView'
-            });
-
-            this.projectMinorView.render(data.project);
 
             window.scrollTo(0, 0);
 

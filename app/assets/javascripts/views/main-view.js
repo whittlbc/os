@@ -399,7 +399,6 @@ define(['jquery',
                 el: '#mainSearchBar'
             });
             this.searchView.render();
-
 		}
 
 	});
