@@ -89,7 +89,7 @@
         <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Any team communication forums?
     </div>
     <!--Slack-->
-    <div class="integration-container">
+    <div class="integration-container" id="slackIntegrationContainer">
         <div class="logo-container">
             <img id="slack" src="assets/slack_logo.png"/>
         </div>
@@ -98,6 +98,16 @@
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
+        <div class="api-key-container">
+            <div class="api-key-text">
+                <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Enable auto-invites for contributors?
+            </div>
+            <div class="api-key-input-container">
+                <input type="text" name="slack-api-key" placeholder="Slack team API key" value="{{slackAPIKey}}"/>
+            </div>
+            <div class="api-key-find"><span>Find Key</span></div>
+        </div>
+        <div id="findAPIKeyBubble" hidden></div>
     </div>
     <!--HipChat-->
     <div class="integration-container">
@@ -112,9 +122,12 @@
     </div>
     <!--IRC-->
     <div class="integration-container">
-        <div class="irc">IRC</div>
-        <div id="ircChannel" class="forum-link-container">
-            <input name="irc" placeholder="Enter IRC channel" type="text" value="{{ircChannel}}"/>
+        <div class="irc">IRC</div>{{
+        }}<div id="ircChannel" class="forum-link-container">
+            <input name="irc" placeholder="Channel (e.g. #myChannel)" type="text" value="{{ircChannel}}"/>
+        </div>{{
+        }}<div id="ircNetworkContainer">
+            <select id="ircNetwork" placeholder="Network"></select>
         </div>
     </div>
 </div>

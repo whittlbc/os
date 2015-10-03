@@ -2,6 +2,7 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'models/os.util',
+    'views/widgets/text-info-bubble',
 	'stache!views/add-project/details-view',
     'selectize',
     'velocity'
@@ -9,6 +10,7 @@ define(['jquery',
      Backbone,
      _,
      OSUtil,
+     TextInfoBubble,
      DetailsViewTpl) {
 	'use strict';
 
@@ -30,6 +32,13 @@ define(['jquery',
                     "title": "BSD"
                 }
             ];
+
+            this.ircNetworks = [
+                {
+                    "id": "IRCNet",
+                    "title": "IRCNet"
+                }
+            ];
 		},
 
 		events: {
@@ -42,7 +51,33 @@ define(['jquery',
             'blur [name=slack]': 'handleSlackBlur',
             'blur [name=hipchat]': 'handleHipChatBlur',
             'blur [name=irc]': 'handleIRCBlur',
-            'click .add-project-anon-choice': 'handleAnonSelection'
+            'click .add-project-anon-choice': 'handleAnonSelection',
+            'keyup [name=slack]': 'handleKeyUpAPIKeyContainer',
+            'keydown [name=slack]': 'handleKeyDownAPIKeyContainer'
+        },
+
+        handleKeyUpAPIKeyContainer: function (e) {
+            var slackURL = $(e.currentTarget).val();
+            _.isEmpty(slackURL) ? this.hideAPIKeyContainer() : this.showAPIKeyContainer();
+        },
+
+        handleKeyDownAPIKeyContainer: function (e) {
+            var prevValue = $(e.currentTarget).val();
+            if (_.isEmpty(prevValue) && e.keyCode != 8 && e.keyCode != 13) {
+                this.showAPIKeyContainer();
+            }
+        },
+
+        hideAPIKeyContainer: function () {
+            var $apiKeyContainer = this.$el.find('.api-key-container');
+            $apiKeyContainer.css({borderBottom: 'none'});
+            $apiKeyContainer.animate({height: 0}, 230);
+        },
+
+        showAPIKeyContainer: function () {
+            var $apiKeyContainer = this.$el.find('.api-key-container');
+            $apiKeyContainer.css({borderBottom: '1px solid #EEE'});
+            $apiKeyContainer.animate({height: 67}, 230);
         },
 
         handleSlackBlur: function (e) {
@@ -192,9 +227,6 @@ define(['jquery',
                     self.license = self.licenseSelectize.getValue();
                     Backbone.EventBroker.trigger('license:updated', self.license);
                 },
-                onFocus: function () {
-                    self.trigger('scroll:bottom');
-                },
                 selectOnTab: false,
                 render: {
                     option: function (data, escape) {
@@ -216,35 +248,44 @@ define(['jquery',
             });
         },
 
-        scrollToBottom: function () {
-
+        initIRCNetworkDropdown: function () {
+            var self = this;
+            var options = {
+                theme: 'links',
+                maxItems: 1,
+                valueField: 'id',
+                searchField: 'title',
+                options: this.ircNetworks,
+                onBlur: function () {
+                    self.ircNetwork = self.licenseSelectize.getValue();
+                    Backbone.EventBroker.trigger('irc-network:updated', self.ircNetwork);
+                },
+                onFocus: function () {
+                    self.trigger('scroll:bottom');
+                },
+                selectOnTab: false,
+                render: {
+                    option: function (data, escape) {
+                        return '<div class="option title">' + escape(data.title) + '</div>';
+                    },
+                    item: function (data, escape) {
+                        return '<div class="item">' + escape(data.title) + '</div>';
+                    }
+                }
+            };
+            var $ircNetworkSelect = this.$el.find('#ircNetwork').selectize(options);
+            var ircNetworkSelectize = $ircNetworkSelect[0].selectize;
+            this.ircNetworkSelectize = ircNetworkSelectize;
+            this.ircNetworkSelectize.on('item_add', function () {
+                self.ircNetwork = self.ircNetworkSelectize.getValue();
+            });
+            this.ircNetworkSelectize.on('item_remove', function () {
+                self.ircNetwork = self.ircNetworkSelectize.getValue();
+            });
+            if (this.ircNetwork) {
+                this.ircNetworkSelectize.setValue(this.ircNetwork);
+            }
         },
-
-        //initTagsDropdown: function () {
-        //    var self = this;
-        //    var options = {
-        //        theme: 'links',
-        //        maxItems: null,
-        //        valueField: 'id',
-        //        searchField: 'title',
-        //        options: this.tags,
-        //        normal: true,
-        //        selectOnTab: false,
-        //        render: {
-        //            option: function (data, escape) {
-        //                return '<div class="option title">' + escape(data.title) + '</div>';
-        //            },
-        //            item: function (data, escape) {
-        //                return '<div class="item">' + escape(data.title) + '</div>';
-        //            }
-        //        }
-        //    };
-        //
-        //    var $tagsSelect = this.$el.find('#add-project-tags-selection').selectize(options);
-        //    var tagsSelectize = $tagsSelect[0].selectize;
-        //    this.tagsSelectize = tagsSelectize;
-        //    this.tagsSelectize.original = true;
-        //},
 
         checkIfShowRepoNameAndLicense: function () {
             return ((this.selectedType == OSUtil.TYPE_MAP['on-the-fence']) || this.selectedType == OSUtil.TYPE_MAP['launched']);
@@ -253,7 +294,8 @@ define(['jquery',
         resetInfo: function () {
             var self = this;
             this.langFrameSelectize.clear();
-            //this.tagsSelectize.clear();
+            this.licenseSelectize.clear();
+            this.ircNetworkSelectize.clear();
         },
 
         setRepoInfo: function (data) {
@@ -383,20 +425,45 @@ define(['jquery',
                 }
             }
 
-            //this.tags = [
-            //    {
-            //        "id": "iOS",
-            //        "title": "iOS"
-            //    },
-            //    {
-            //        "id": "Boss Shit",
-            //        "title": "Boss Shit"
-            //    }
-            //];
-            //
-            //if (this.tags && options && !options.hideDetailsView) {
-            //    this.initTagsDropdown();
-            //}
+            if (!options.hideDetailsView) {
+                this.initIRCNetworkDropdown();
+            }
+
+            this.findAPIKeyBubble = new TextInfoBubble({
+                el: '#findAPIKeyBubble'
+            });
+
+            this.findAPIKeyBubble.render({
+                text: 'Visit <a href="https://api.slack.com/web" target="_blank">api.slack.com/web</a> and scroll to the bottom of the page. If the key doesn\'t already exist, you can create one there.'
+            });
+
+            this.$infoBubble = this.findAPIKeyBubble.$el;
+            this.$findKeyText = this.$el.find('.api-key-find > span');
+
+            // Hover listener for user info bubble
+            this.$findKeyText.hover(function () {
+                if (!self.bubbleShown) {
+                    self.$infoBubble.show();
+                    self.bubbleShown = true;
+                }
+            }, function () {
+                if (self.bubbleShown) {
+                    self.$infoBubble.hide();
+                    self.bubbleShown = false;
+                }
+            });
+
+            this.$infoBubble.hover(function () {
+                if (!self.bubbleShown) {
+                    self.$infoBubble.show();
+                    self.bubbleShown = true;
+                }
+            }, function () {
+                if (self.bubbleShown) {
+                    self.$infoBubble.hide();
+                    self.bubbleShown = false;
+                }
+            });
 
 		}
 	});

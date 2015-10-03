@@ -930,7 +930,7 @@ input[name="add-project-repo-name"] {
 
   .integration-container {
     width: 100%;
-    height: 85px;
+    min-height: 75px;
     display: block;
     float: left;
 
@@ -941,12 +941,12 @@ input[name="add-project-repo-name"] {
       float: left;
 
       #slack {
-        width: 150px;
+        width: 145px;
         margin-top: 9px;
       }
 
       #hipchat {
-        width: 130px;
+        width: 122px;
         margin-left: 16px;
         margin-top: 17px;
       }
@@ -968,7 +968,19 @@ input[name="add-project-repo-name"] {
     }
 
     #ircChannel {
-      width: 55%;
+      width: 35%;
+    }
+
+    #ircNetworkContainer {
+      width: 19%;
+      float: left;
+      height: 100%;
+      display: inline-block;
+      padding-top: 25px;
+
+      .selectize-control.single {
+        top: 0;
+      }
     }
 
     .forum-link-container,
@@ -1020,4 +1032,93 @@ input[name="add-project-repo-name"] {
 
   }
 
+}
+
+.api-key-container {
+  width: 100%;
+  height: 0;
+  display: block;
+  overflow: hidden;
+  float: left;
+
+  .api-key-text {
+    width: 45%;
+    height: 50px;
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+    color: black;
+    padding-left: 20px;
+    padding-top: 14px;
+    font-family: 'Helvetica Neue';
+  }
+
+  .api-key-input-container {
+    width: 35%;
+    height: 50px;
+    display: inline-block;
+    float: left;
+    padding-top: 5px;
+
+    input {
+      height: 35px;
+      line-height: 35px;
+      width: 94.5%;
+      padding: 6px;
+      padding-left: 8px;
+      padding-top: 7px;
+      font-size: 14px;
+      font-family: 'Helvetica Neue';
+      border: 1px solid #cecece;
+      border-radius: 4px;
+    }
+  }
+
+  .api-key-find {
+    width: 10%;
+    line-height: 46px;
+    height: 50px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    color: #00A6C9;
+    font-size: 13px;
+    font-familly: 'Helvetica Neue';
+  }
+
+}
+
+#slackIntegrationContainer {
+  position: relative;
+  margin-top: -10px;
+
+  #findAPIKeyBubble {
+    width: 158px;
+    height: 186px;
+    position: absolute;
+    top: -27px;
+    right: 20px;
+
+    .bubble-content-container {
+      padding: 13px 10px;
+      height: auto;
+    }
+
+    .fa-caret-down {
+      left: 71px;
+    }
+
+    .text {
+      width: 100%;
+      height: 100%;
+      font-size: 12px;
+      color: white;
+      font-family: 'Helvetica Neue';
+
+      a {
+        color: #00A6C9;
+      }
+    }
+
+  }
 }
