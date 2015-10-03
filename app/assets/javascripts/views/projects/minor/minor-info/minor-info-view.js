@@ -241,6 +241,10 @@ define(['jquery',
                 this.irc = ircObj;
                 this.initIRCNetworkDropdown();
             }
+
+            if (options.editMode) {
+                $('[data-toggle="tooltip"]').tooltip();
+            }
         }
 	});
 
