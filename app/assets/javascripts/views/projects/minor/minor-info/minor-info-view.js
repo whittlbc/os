@@ -65,7 +65,10 @@ define(['jquery',
             }
             if (this.showIntegrations) {
                 data.integrations = {
-                    slack: this.$el.find('[name="edit-slack"]').val(),
+                    slack: {
+                        url: this.$el.find('[name="edit-slack"]').val(),
+                        key: this.$el.find('[name="slack-api-key"]').val()
+                    },
                     hipchat: this.$el.find('[name="edit-hipchat"]').val(),
                     irc: {
                         channel: this.$el.find('[name="edit-irc"]').val(),
@@ -161,7 +164,8 @@ define(['jquery',
                 showIntegrations = true;
                 hasSlack = hasHipChat = hasIRC = true;
                 slackObj = slackObj || {
-                    url: ''
+                    url: '',
+                    key: ''
                 };
                 hipChatObj = hipChatObj || {
                     url: ''
@@ -187,6 +191,7 @@ define(['jquery',
                 isContributor: options.is_contributor,
                 slackTeamName: hasSlack ? slackObj.url.replace('https://', '').replace('http://', '') : null,
                 slackTeamURL: hasSlack ? slackObj.url : null,
+                slackAPIKey: hasSlack ? slackObj.key : null,
                 hipChatTeamName: hasHipChat ? hipChatObj.url.replace('https://', '').replace('http://', '') : null,
                 hipChatTeamURL: hasHipChat ? hipChatObj.url : null,
                 ircChannel: hasIRC ? ircObj.channel : null,

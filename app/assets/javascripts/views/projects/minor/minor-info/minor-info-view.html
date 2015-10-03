@@ -42,7 +42,7 @@
 {{#showIntegrations}}
 <div class="minor-info-subsection-title">Team Communication</div>
 {{#hasSlack}}
-<div class="minorInfoIntegrationContainer">
+<div class="minorInfoIntegrationContainer {{#editMode}}auto-height{{/editMode}}">
     <div class="minor-info-integration-logo-container">
         <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="assets/slack_logo.png">
         <span class="linebreak">|</span>
@@ -58,7 +58,16 @@
         </span>
         {{/editMode}}
         {{#editMode}}
-        <input type="text" name="edit-slack" value="{{slackTeamName}}"/>
+        <input type="text" name="edit-slack" placeholder="Team URL" value="{{slackTeamName}}"/>
+        <div class="edit-api-key-container">
+            <div class="edit-api-key-text">
+                <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Enable auto-invites?
+            </div>{{
+            }}<div class="edit-api-key-input-container">
+                <input type="text" name="slack-api-key" placeholder="API key" value="{{slackAPIKey}}"/>
+            </div>
+        </div>
+        <div class="linebreak"></div>
         {{/editMode}}
     </div>
 </div>
@@ -79,7 +88,7 @@
         </span>
         {{/editMode}}
         {{#editMode}}
-        <input type="text" name="edit-hipchat" value="{{hipChatTeamName}}"/>
+        <input type="text" placeholder="Team URL" name="edit-hipchat" value="{{hipChatTeamName}}"/>
         {{/editMode}}
     </div>
 </div>

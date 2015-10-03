@@ -550,17 +550,25 @@ class ProjectsController < ApplicationController
         if !integrations[:slack].nil?
           slack_integration = project.integrations.where(:service => 'Slack')
 
-          if integrations[:slack].empty?
+          if integrations[:slack][:url].empty?
             if !slack_integration.blank?
               slack_integration.first.destroy!
             end
           else
             if slack_integration.blank?
-              slackURL = ensureURL(integrations[:slack])
-              Integration.new(service: 'Slack', project_id: project.id, url: slackURL).save!
+              slack_data = {
+                  :service => 'Slack',
+                  :project_id => project.id,
+                  :url => ensureURL(integrations[:slack][:url]),
+                  :key => !integrations[:slack][:key].empty? ? integrations[:slack][:key] : nil
+              }
+              Integration.new(slack_data).save!
             else
-              slackURL = ensureURL(integrations[:slack])
-              slack_integration.first.update_attributes(url: slackURL)
+              slackURL = ensureURL(integrations[:slack][:url])
+              key = !integrations[:slack][:key].empty? ? integrations[:slack][:key] : nil
+
+              "UPDATE SLACK INTEGRATION: URL => #{slackURL} KEY => #{key}"
+              slack_integration.first.update_attributes(url: slackURL, key: key)
             end
           end
         end
