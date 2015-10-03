@@ -3,6 +3,13 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
 
     var OSUtil = {
 
+        IRC_NETWORKS: [
+            {
+                "id": "IRCNet",
+                "title": "IRCNet"
+            }
+        ],
+
         HOME_PAGE: 'home',
         PROJECT_PAGE: 'project',
 

@@ -34,8 +34,8 @@ class ProjectsController < ApplicationController
           :license => project.license,
           :privacy => project.privacy,
           :repo_name => project.repo_name,
-          :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-          # :getting_repo_data => false,
+          # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+          :getting_repo_data => false,
           :status => project.status,
           :title => project.title,
           :subtitle => project.subtitle,
@@ -148,7 +148,15 @@ class ProjectsController < ApplicationController
 
       if !params[:slackURL].nil? && !params[:slackURL].empty?
         slackURL = ensureURL(params[:slackURL])
-        Integration.new(service: 'Slack', project_id: @project.id, url: slackURL).save!
+        slack_data = {
+            :service => 'Slack',
+            :project_id => @project.id,
+            :url => slackURL
+        }
+        if !params[:slackAPIKey].nil? && !params[:slackAPIKey].empty?
+          slack_data[:key] = params[:slackAPIKey]
+        end
+        Integration.new(slack_data).save!
       end
 
       if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
@@ -156,8 +164,8 @@ class ProjectsController < ApplicationController
         Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL).save!
       end
 
-      if !params[:ircChannel].nil? && !params[:ircChannel].empty?
-        Integration.new(service: 'IRC', project_id: @project.id, url: params[:ircChannel]).save!
+      if !params[:irc].nil? && !params[:irc].empty?
+        Integration.new(service: 'IRC', project_id: @project.id, irc: params[:irc]).save!
       end
 
       render :json => @project
@@ -580,15 +588,15 @@ class ProjectsController < ApplicationController
         if !integrations[:irc].nil?
           irc_integration = project.integrations.where(:service => 'IRC')
 
-          if integrations[:irc].empty?
+          if integrations[:irc][:channel].empty?
             if !irc_integration.blank?
               irc_integration.first.destroy!
             end
           else
             if irc_integration.blank?
-              Integration.new(service: 'IRC', project_id: project.id, url: integrations[:irc]).save!
+              Integration.new(service: 'IRC', project_id: project.id, irc: integrations[:irc]).save!
             else
-              irc_integration.first.update_attributes(url: integrations[:irc])
+              irc_integration.first.update_attributes(irc: integrations[:irc])
             end
           end
         end

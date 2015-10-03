@@ -63,11 +63,14 @@ define(['jquery',
             if (this.showRepoName) {
                 data.repo_name = this.$el.find('[name="repo-name"]').val();
             }
-            if (this.showTeamCommunication) {
+            if (this.showIntegrations) {
                 data.integrations = {
                     slack: this.$el.find('[name="edit-slack"]').val(),
                     hipchat: this.$el.find('[name="edit-hipchat"]').val(),
-                    irc: this.$el.find('[name="edit-irc"]').val()
+                    irc: {
+                        channel: this.$el.find('[name="edit-irc"]').val(),
+                        network: this.irc.network
+                    }
                 };
             }
 
@@ -80,13 +83,44 @@ define(['jquery',
             this.render(cachedData);
         },
 
+        initIRCNetworkDropdown: function () {
+            var self = this;
+            var options = {
+                theme: 'links',
+                maxItems: 1,
+                valueField: 'id',
+                searchField: 'title',
+                options: OSUtil.IRC_NETWORKS,
+                selectOnTab: false,
+                render: {
+                    option: function (data, escape) {
+                        return '<div class="option title">' + escape(data.title) + '</div>';
+                    },
+                    item: function (data, escape) {
+                        return '<div class="item">' + escape(data.title) + '</div>';
+                    }
+                }
+            };
+            var $ircNetworkSelect = this.$el.find('#editIRCNetwork').selectize(options);
+            var ircNetworkSelectize = $ircNetworkSelect[0].selectize;
+            this.ircNetworkSelectize = ircNetworkSelectize;
+            this.ircNetworkSelectize.on('item_add', function () {
+                self.irc.network = self.ircNetworkSelectize.getValue();
+            });
+            this.ircNetworkSelectize.on('item_remove', function () {
+                self.irc.network = self.ircNetworkSelectize.getValue();
+            });
+            if (this.irc.network) {
+                this.ircNetworkSelectize.setValue(this.irc.network);
+            }
+        },
+
         render: function (options) {
 			var self = this;
             var repoName;
             var showRepoName = false;
             var showLicense = false;
             var license;
-            var showTeamCommunication = false;
             var hasSlack = false;
             var hasHipChat = false;
             var hasIRC = false;
@@ -101,33 +135,29 @@ define(['jquery',
                 showLicense = true;
                 repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
                 license = (options.hasOwnProperty('license') && options.license[0]) ? options.license[0] : null;
-            }
 
-            if (Array.isArray(options.integrations)) {
-                for (var i = 0; i < options.integrations.length; i++) {
-                    showIntegrations = true;
-                    if (options.integrations[i].service == 'Slack') {
-                        hasSlack = true;
-                        slackObj = options.integrations[i];
-                        showTeamCommunication = true;
-                    } else if (options.integrations[i].service == 'HipChat') {
-                        hasHipChat = true;
-                        hipChatObj = options.integrations[i];
-                        showTeamCommunication = true;
-                    } else if (options.integrations[i].service == 'IRC') {
-                        hasIRC = true;
-                        ircObj = options.integrations[i];
-                        showTeamCommunication = true;
+                if (Array.isArray(options.integrations)) {
+                    for (var i = 0; i < options.integrations.length; i++) {
+                        showIntegrations = true;
+                        if (options.integrations[i].service == 'Slack') {
+                            hasSlack = true;
+                            slackObj = options.integrations[i];
+                        } else if (options.integrations[i].service == 'HipChat') {
+                            hasHipChat = true;
+                            hipChatObj = options.integrations[i];
+                        } else if (options.integrations[i].service == 'IRC') {
+                            hasIRC = true;
+                            ircObj = options.integrations[i].irc;
+                        }
                     }
                 }
             }
 
-            this.showTeamCommunication = showTeamCommunication;
             this.showRepoName = showRepoName;
             this.showLicense = showLicense;
             this.repoURL = 'https://' + repoName;
 
-            if (options.editMode) {
+            if (options.editMode && showIntegrations) {
                 showIntegrations = true;
                 hasSlack = hasHipChat = hasIRC = true;
                 slackObj = slackObj || {
@@ -137,9 +167,12 @@ define(['jquery',
                     url: ''
                 };
                 ircObj = ircObj || {
-                    url: ''
+                    channel: '',
+                    network: ''
                 };
             }
+
+            this.showIntegrations = showIntegrations;
 
             this.$el.html(MinorInfoViewTpl({
                 postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
@@ -148,7 +181,6 @@ define(['jquery',
                 repoURL: this.repoURL,
                 linkRepoName: repoName != null,
                 numContrib: options.contributors && !options.getting_repo_data ? '(' + options.contributors.length + ')' : '',
-                showTeamCommunication: showTeamCommunication,
                 hasSlack: hasSlack,
                 hasHipChat: hasHipChat,
                 hasIRC: hasIRC,
@@ -157,7 +189,9 @@ define(['jquery',
                 slackTeamURL: hasSlack ? slackObj.url : null,
                 hipChatTeamName: hasHipChat ? hipChatObj.url.replace('https://', '').replace('http://', '') : null,
                 hipChatTeamURL: hasHipChat ? hipChatObj.url : null,
-                ircChannel: hasIRC ? ircObj.url : null,
+                ircChannel: hasIRC ? ircObj.channel : null,
+                hasIRCNetwork: hasIRC && ircObj.network,
+                ircNetwork: hasIRC ? ircObj.network : null,
                 showLicense: showLicense,
                 license: license,
                 licenseSpecified: license != null,
@@ -196,6 +230,11 @@ define(['jquery',
 
             if (options.editMode && this.showLicense) {
                 this.$el.find('#licenseTypeSelection').val(license);
+            }
+
+            if (options.editMode && showIntegrations) {
+                this.irc = ircObj;
+                this.initIRCNetworkDropdown();
             }
         }
 	});

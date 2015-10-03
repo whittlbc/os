@@ -37,7 +37,8 @@ define(['jquery',
                 'license:updated': 'handleLicenseUpdate',
                 'privacy:updated': 'handlePrivacyUpdate',
                 'anon:updated': 'handleAnonUpdate',
-                'slack:updated': 'handleSlackUpdate',
+                'slackURL:updated': 'handleSlackURLUpdate',
+                'slackAPIKey:updated': 'handleSlackAPIKeyUpdate',
                 'hipChat:updated': 'handleHipChatUpdate',
                 'irc:updated': 'handleIRCUpdate',
                 'create-project:retry': 'handleRetry'
@@ -96,8 +97,9 @@ define(['jquery',
                         'license': null,
                         'privacy': null,
                         'slackURL': null,
+                        'slackAPIKey': null,
                         'hipChatURL': null,
-                        'ircChannel': null
+                        'irc': null
                     },
                     //Scratch
                     'source2': {
@@ -109,8 +111,9 @@ define(['jquery',
                         'license': null,
                         'privacy': null,
                         'slackURL': null,
+                        'slackAPIKey': null,
                         'hipChatURL': null,
-                        'ircChannel': null
+                        'irc': null
                     },
                     // Pull from Ideas
                     'source3': {
@@ -122,8 +125,9 @@ define(['jquery',
                         'license': null,
                         'privacy': null,
                         'slackURL': null,
+                        'slackAPIKey': null,
                         'hipChatURL': null,
-                        'ircChannel': null
+                        'irc': null
                     }
                 },
 
@@ -140,8 +144,9 @@ define(['jquery',
                         'license': null,
                         'privacy': null,
                         'slackURL': null,
+                        'slackAPIKey': null,
                         'hipChatURL': null,
-                        'ircChannel': null
+                        'irc': null
                     },
                     // Scratch
                     'source2': {
@@ -153,8 +158,9 @@ define(['jquery',
                         'license': null,
                         'privacy': null,
                         'slackURL': null,
+                        'slackAPIKey': null,
                         'hipChatURL': null,
-                        'ircChannel': null
+                        'irc': null
                     }
                 }
             };
@@ -266,10 +272,17 @@ define(['jquery',
             }
         },
 
-        handleSlackUpdate: function (slackURL) {
+        handleSlackURLUpdate: function (slackURL) {
             var sourceObj = this.getSelectedSourceObj();
             if (sourceObj != null) {
                 sourceObj['slackURL'] = slackURL;
+            }
+        },
+
+        handleSlackAPIKeyUpdate: function (slackAPIKey) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['slackAPIKey'] = slackAPIKey;
             }
         },
 
@@ -280,10 +293,10 @@ define(['jquery',
             }
         },
 
-        handleIRCUpdate: function (ircChannel) {
+        handleIRCUpdate: function (ircObj) {
             var sourceObj = this.getSelectedSourceObj();
             if (sourceObj != null) {
-                sourceObj['ircChannel'] = ircChannel;
+                sourceObj['irc'] = ircObj;
             }
         },
 
@@ -337,9 +350,9 @@ define(['jquery',
                 anon: this.newProjectData.anon,
                 privacy: [this.newProjectData.privacy],
                 slackURL: this.newProjectData.slackURL,
+                slackAPIKey: this.newProjectData.slackAPIKey,
                 hipChatURL: this.newProjectData.hipChatURL,
-                ircChannel: this.newProjectData.ircChannel
-
+                irc: this.newProjectData.irc
             };
             this.disableAddProjectBtn();
             var project = new Project();

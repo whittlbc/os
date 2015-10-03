@@ -39,7 +39,7 @@
 <div class="minor-info-subsection-title" id="contributorsSubsectionTitle">Contributors {{numContrib}}</div>
 <div id="contributorsView"></div>
 {{/editMode}}
-{{#showTeamCommunication}}
+{{#showIntegrations}}
 <div class="minor-info-subsection-title">Team Communication</div>
 {{#hasSlack}}
 <div class="minorInfoIntegrationContainer">
@@ -97,17 +97,18 @@
             <i class="fa fa-check"></i>
             {{/isContributor}}
             {{#isContributor}}
-            <span class="irc-channel-text">{{ircChannel}}</span>
+            <span class="irc-channel-text">{{ircChannel}}{{#hasIRCNetwork}}<span> ({{ircNetwork}})</span>{{/hasIRCNetwork}}</span>
             {{/isContributor}}
         </span>
         {{/editMode}}
         {{#editMode}}
-        <input type="text" name="edit-irc" value="{{ircChannel}}"/>
+        <input type="text" placeholder="Channel" name="edit-irc" value="{{ircChannel}}"/>
+        <select id="editIRCNetwork" placeholder="Network"></select>
         {{/editMode}}
     </div>
 </div>
 {{/hasIRC}}
-{{/showTeamCommunication}}
+{{/showIntegrations}}
 {{#showRepoStats}}
 <div class="minor-info-subsection-title">Repo Stats</div>
 <div id="repoStatsView"></div>

@@ -32,13 +32,6 @@ define(['jquery',
                     "title": "BSD"
                 }
             ];
-
-            this.ircNetworks = [
-                {
-                    "id": "IRCNet",
-                    "title": "IRCNet"
-                }
-            ];
 		},
 
 		events: {
@@ -48,9 +41,10 @@ define(['jquery',
             'blur [name=add-project-title]': 'handleTitleBlur',
             'blur [name=add-project-subtitle]': 'handleSubtitleBlur',
             'blur [name=add-project-repo-name]': 'handleRepoNameBlur',
-            'blur [name=slack]': 'handleSlackBlur',
+            'blur [name=slack]': 'handleSlackURLBlur',
+            'blur [name=slack-api-key]': 'handleSlackAPIKeyBlur',
             'blur [name=hipchat]': 'handleHipChatBlur',
-            'blur [name=irc]': 'handleIRCBlur',
+            'blur [name=irc]': 'handleIRCChannelBlur',
             'click .add-project-anon-choice': 'handleAnonSelection',
             'keyup [name=slack]': 'handleKeyUpAPIKeyContainer',
             'keydown [name=slack]': 'handleKeyDownAPIKeyContainer'
@@ -80,9 +74,14 @@ define(['jquery',
             $apiKeyContainer.animate({height: 67}, 230);
         },
 
-        handleSlackBlur: function (e) {
+        handleSlackURLBlur: function (e) {
             this.slackURL = $(e.currentTarget).val();
-            Backbone.EventBroker.trigger('slack:updated', this.slackURL);
+            Backbone.EventBroker.trigger('slackURL:updated', this.slackURL);
+        },
+
+        handleSlackAPIKeyBlur: function (e) {
+            this.slackAPIKey = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('slackAPIKey:updated', this.slackAPIKey);
         },
 
         handleHipChatBlur: function (e) {
@@ -90,9 +89,9 @@ define(['jquery',
             Backbone.EventBroker.trigger('hipChat:updated', this.hipChatURL);
         },
 
-        handleIRCBlur: function (e) {
-            this.ircChannel = $(e.currentTarget).val();
-            Backbone.EventBroker.trigger('irc:updated', this.ircChannel);
+        handleIRCChannelBlur: function (e) {
+            this.irc.channel = $(e.currentTarget).val();
+            Backbone.EventBroker.trigger('irc:updated', this.irc);
         },
 
         handleTitleBlur: function (e) {
@@ -255,10 +254,10 @@ define(['jquery',
                 maxItems: 1,
                 valueField: 'id',
                 searchField: 'title',
-                options: this.ircNetworks,
+                options: OSUtil.IRC_NETWORKS,
                 onBlur: function () {
-                    self.ircNetwork = self.licenseSelectize.getValue();
-                    Backbone.EventBroker.trigger('irc-network:updated', self.ircNetwork);
+                    self.irc.network = self.ircNetworkSelectize.getValue();
+                    Backbone.EventBroker.trigger('irc:updated', self.irc);
                 },
                 onFocus: function () {
                     self.trigger('scroll:bottom');
@@ -277,13 +276,13 @@ define(['jquery',
             var ircNetworkSelectize = $ircNetworkSelect[0].selectize;
             this.ircNetworkSelectize = ircNetworkSelectize;
             this.ircNetworkSelectize.on('item_add', function () {
-                self.ircNetwork = self.ircNetworkSelectize.getValue();
+                self.irc.network = self.ircNetworkSelectize.getValue();
             });
             this.ircNetworkSelectize.on('item_remove', function () {
-                self.ircNetwork = self.ircNetworkSelectize.getValue();
+                self.irc.network = self.ircNetworkSelectize.getValue();
             });
-            if (this.ircNetwork) {
-                this.ircNetworkSelectize.setValue(this.ircNetwork);
+            if (this.irc.network) {
+                this.ircNetworkSelectize.setValue(this.irc.network);
             }
         },
 
@@ -340,8 +339,9 @@ define(['jquery',
                 privacy: this.privacy,
                 anon: this.anon,
                 slackURL: this.slackURL,
+                slackAPIKey: this.slackAPIKey,
                 hipChatURL: this.hipChatURL,
-                ircChannel: this.ircChannel
+                irc: this.irc
             };
         },
 
@@ -384,11 +384,13 @@ define(['jquery',
             this.anon = (options.projectData) ? options.projectData.anon : false;
 
             this.slackURL = (options.projectData) ? options.projectData.slackURL : null;
+            this.slackAPIKey = (options.projectData) ? options.projectData.slackAPIKey : null;
             this.hipChatURL = (options.projectData) ? options.projectData.hipChatURL : null;
-            this.ircChannel = (options.projectData) ? options.projectData.ircChannel : null;
+            this.irc = (options.projectData && options.projectData.irc) ? options.projectData.irc : {};
 
             var hideDetailsView = options.hideDetailsView;
             var showRepoNameAndLicense = this.checkIfShowRepoNameAndLicense();
+            var showIntegrations = this.selectedType != OSUtil.TYPE_MAP['up-for-grabs'];
 
             this.$el.html(DetailsViewTpl({
                 onTheFenceOrLaunchedNoPullFromIdeas: showRepoNameAndLicense,
@@ -402,10 +404,11 @@ define(['jquery',
                 openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
                 showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
                 postAnon: this.anon,
-                showIntegrations: true,
+                showIntegrations: showIntegrations,
                 slackURL: this.slackURL,
+                slackAPIKey: this.slackAPIKey,
                 hipChatURL: this.hipChatURL,
-                ircChannel: this.ircChannel
+                ircChannel: this.irc && this.irc.channel ? this.irc.channel : null
             }));
 
 
@@ -425,7 +428,7 @@ define(['jquery',
                 }
             }
 
-            if (!options.hideDetailsView) {
+            if (!options.hideDetailsView && showIntegrations) {
                 this.initIRCNetworkDropdown();
             }
 
