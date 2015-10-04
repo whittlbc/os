@@ -153,8 +153,7 @@ class ProjectsController < ApplicationController
           :user_id => @user.id,
           :admin => true
       }
-      contributor = Contributor.new(contrib_data)
-      contributor.save
+      Contributor.new(contrib_data).save!
 
       if !params[:slackURL].nil? && !params[:slackURL].empty?
         slackURL = ensureURL(params[:slackURL])
@@ -337,6 +336,46 @@ class ProjectsController < ApplicationController
     else
       render :json => {:status => 500, :message => 'Could not add pending request'}
     end
+  end
+
+  def accept_request
+    user = User.find_by(uuid: params[:user_uuid])
+    project = Project.find_by(uuid: params[:project_uuid])
+    pending_request = PendingRequest.find_by(:uuid => params[:pending_request_uuid])
+
+    if !user.nil? && !project.nil? && !pending_request.nil?
+      asset = pending_request.requested_asset
+
+      # delete the pending request
+      pending_request.destroy!
+
+      # if the request was a join project request, just add the user as a contributor
+      if asset === PROJECT_ASSET
+        contrib_data = {
+            :uuid => UUIDTools::UUID.random_create.to_s,
+            :project_id => project.id,
+            :user_id => user.id,
+            :admin => false
+        }
+        Contributor.new(contrib_data).save!
+        render :status => 200
+
+      # otherwise, it was an integrations request
+      else
+        # add the user's id into the users[] column of the integration corresponding to this project and asset
+        service = Integration.service_for_asset(asset)
+        integration.find_by(:service => service, :project_id => project.id)
+
+        if !integration.nil?
+          integration.update_attributes(:users => integration.users + [user.id])
+        end
+
+        render :status => 200
+      end
+    else
+      render :json => {:status => 500, :message => 'Could not accept request...either the user, the project, or the pending request was nil'}
+    end
+
   end
 
   def invite_slack_user(user, api_token)
