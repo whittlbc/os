@@ -10,6 +10,11 @@ class ProjectsController < ApplicationController
   require 'json'
   require 'date'
 
+  PROJECT_ASSET = 0
+  SLACK_ASSET = 1
+  HIPCHAT_ASSET = 2
+
+
   def index
     render :index, :layout => 'layouts/application'
   end
@@ -49,7 +54,12 @@ class ProjectsController < ApplicationController
           :integrations => project.integrations,
           :is_admin => user ? admin_arr.include?(user.gh_username) : false,
           :is_owner => user ? user.gh_username === owner_gh_username : false,
-          :is_contributor => false
+          :is_contributor => false,
+          :pending_project_request => user.has_pending_request?(project.id, PROJECT_ASSET),
+          :pending_slack_request => user.has_pending_request?(project.id, SLACK_ASSET),
+          :pending_hipchat_request => user.has_pending_request?(project.id, HIPCHAT_ASSET),
+          :is_slack_member => project.is_slack_member?(user.id),
+          :is_hipchat_member => project.is_hipchat_member?(user.id)
         }
 
         comments = Comment.where(project_id: params[:id])
@@ -151,7 +161,8 @@ class ProjectsController < ApplicationController
         slack_data = {
             :service => 'Slack',
             :project_id => @project.id,
-            :url => slackURL
+            :url => slackURL,
+            :users => [@user.id]
         }
         if !params[:slackAPIKey].nil? && !params[:slackAPIKey].empty?
           slack_data[:key] = params[:slackAPIKey]
@@ -161,11 +172,11 @@ class ProjectsController < ApplicationController
 
       if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
         hipChatURL = ensureURL(params[:hipChatURL])
-        Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL).save!
+        Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL, users: [@user.id]).save!
       end
 
       if !params[:irc].nil? && !params[:irc].empty?
-        Integration.new(service: 'IRC', project_id: @project.id, irc: params[:irc]).save!
+        Integration.new(service: 'IRC', project_id: @project.id, irc: params[:irc], users: [@user.id]).save!
       end
 
       render :json => @project
@@ -317,7 +328,15 @@ class ProjectsController < ApplicationController
   end
 
   def request_to_join
-    render :json => {:status => 200}
+    user = User.find_by(uuid: params[:user_uuid])
+    project = Project.find_by(uuid: params[:project_uuid])
+
+    if !user.nil? && !project.nil? && !params[:asset].nil?
+      PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => params[:asset].to_i, :user_id => user.id, :project_id => project.id).save!
+      render :json => { :message => 'Successfully added pending request' }
+    else
+      render :json => {:status => 500, :message => 'Could not add pending request'}
+    end
   end
 
   def invite_slack_user(user, api_token)

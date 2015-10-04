@@ -10,6 +10,12 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             }
         ],
 
+        REQUESTS: {
+            'project': 0,
+            'slack': 1,
+            'hipchat': 2
+        },
+
         HOME_PAGE: 'home',
         PROJECT_PAGE: 'project',
 

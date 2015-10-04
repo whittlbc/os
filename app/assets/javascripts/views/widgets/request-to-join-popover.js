@@ -25,6 +25,7 @@ define(['jquery',
             var self = this;
             e.stopPropagation();
             if (this.status === 0) {
+                this.trigger('join');
                 this.render({
                     status: 1
                 });

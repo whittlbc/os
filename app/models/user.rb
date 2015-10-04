@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
-
   has_many :projects
   has_many :comments
   has_many :evolutions
+  has_many :pending_requests
+
 
   scope :username_login, -> (username, password) {
     where(:username => username, :password => password)
@@ -23,6 +24,16 @@ class User < ActiveRecord::Base
 
   def voted_on_comment(comment_id)
     self.upvoted_comments.include?(comment_id)
+  end
+
+  def has_pending_request?(project_id, asset)
+    has_request = false
+    self.pending_requests.each { |request|
+      if request.project_id === project_id && request.requested_asset === asset
+        has_request = true
+      end
+    }
+    has_request
   end
 
 end

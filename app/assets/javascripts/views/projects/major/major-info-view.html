@@ -19,7 +19,7 @@
             {{/editMode}}
         </div>{{
         }}<div class="project-action-container">
-            <div class="join-btn {{#editMode}}regular{{/editMode}}{{^editMode}}{{#isContributor}}contributor{{/isContributor}} {{#pendingJoinRequest}}pending{{/pendingJoinRequest}} {{^isContributor}}{{^pendingJoinRequest}}regular{{/pendingJoinRequest}}{{/isContributor}}{{/editMode}}">{{^editMode}}{{#isContributor}}<i class="fa fa-check"></i>On Project{{/isContributor}}{{#pendingJoinRequest}}Request Sent{{/pendingJoinRequest}}{{^isContributor}}{{^pendingJoinRequest}}{{#upForGrabsType}}Grab{{/upForGrabsType}}{{^upForGrabsType}}{{joinText}}{{/upForGrabsType}}{{/pendingJoinRequest}}{{/isContributor}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
+            <div class="join-btn {{#editMode}}regular{{/editMode}}{{^editMode}}{{#isContributor}}contributor{{/isContributor}} {{#pendingProjectRequest}}pending{{/pendingProjectRequest}} {{^isContributor}}{{^pendingProjectRequest}}regular{{/pendingProjectRequest}}{{/isContributor}}{{/editMode}}">{{^editMode}}{{#isContributor}}<i class="fa fa-check"></i>On Project{{/isContributor}}{{#pendingProjectRequest}}Request Sent{{/pendingProjectRequest}}{{^isContributor}}{{^pendingProjectRequest}}{{#upForGrabsType}}Grab{{/upForGrabsType}}{{^upForGrabsType}}{{joinText}}{{/upForGrabsType}}{{/pendingProjectRequest}}{{/isContributor}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
             }}{{^editMode}}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
                 <div class="project-page-vote-arrow">
                     <i class="fa fa-angle-up"></i>

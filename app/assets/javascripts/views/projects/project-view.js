@@ -52,7 +52,9 @@ define(['jquery',
                 'evolution:fetch': 'fetchProjectEvolution',
                 'project:save-edit': 'handleSaveEditProject',
                 'edit-mode:cancel': 'cancelEditMode',
-                'evolution:add': 'handleAddEvolution'
+                'evolution:add': 'handleAddEvolution',
+                'slack:join': 'requestToJoin',
+                'hipchat:join': 'requestToJoin'
             }, this);
 
             this.github = Github;
@@ -292,7 +294,7 @@ define(['jquery',
 
         checkProjectPrivacy: function () {
             if (!this.isContributor()) {
-                this.privacy == OSUtil.OPEN_PRIVACY ? this.joinProject() : this.requestToJoin();
+                this.privacy == OSUtil.OPEN_PRIVACY ? this.joinProject() : this.requestToJoin(OSUtil.REQUESTS['project']);
             }
         },
 
@@ -312,15 +314,18 @@ define(['jquery',
             }});
         },
 
-        requestToJoin: function () {
+        requestToJoin: function (int) {
             var self = this;
             var project = new Project();
             var obj = {
                 project_uuid: self.uuid,
-                user_uuid: self.user_uuid
+                user_uuid: self.user_uuid,
+                asset: int
             };
             project.requestToJoin(obj, {success: function () {
-                self.projectMajorView.majorInfoView.switchToRequestSent();
+                if (int === 0) {
+                    self.projectMajorView.majorInfoView.switchToRequestSent();
+                }
             }});
         },
 

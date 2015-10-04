@@ -227,10 +227,10 @@ define(['jquery',
                 licenseSpecified: license != null,
                 showRepoStats: !!options.getting_repo_data && !options.editMode,
                 showIntegrations: showIntegrations,
-                slackAccepted: false,
-                hipchatAccetped: false,
-                slackRequestSent: false,
-                hipchatRequestSent: true,
+                slackAccepted: options.is_slack_member,
+                hipchatAccetped: options.is_hipchat_member,
+                slackRequestSent: options.pending_slack_request,
+                hipchatRequestSent: options.pending_hipchat_request,
                 editMode: options.editMode,
                 editModeRepoName: options.repo_name
             }));
@@ -277,15 +277,21 @@ define(['jquery',
                 this.slackPopover = new RequestToJoinPopover({
                     el: '#slackPopover'
                 });
+                this.listenTo(this.slackPopover, 'join', function () {
+                    Backbone.EventBroker.trigger('slack:join', OSUtil.REQUESTS['slack']);
+                });
                 this.slackPopover.render({
-                    status: 0
+                    status: options.pending_slack_request ? 1 : 0
                 });
 
                 this.hipchatPopover = new RequestToJoinPopover({
                     el: '#hipchatPopover'
                 });
+                this.listenTo(this.hipchatPopover, 'join', function () {
+                    Backbone.EventBroker.trigger('hipchat:join', OSUtil.REQUESTS['hipchat']);
+                });
                 this.hipchatPopover.render({
-                    status: 0
+                    status: options.pending_hipchat_request ? 1 : 0
                 });
 
                 $(document).click(function () {

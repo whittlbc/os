@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
   has_many :integrations
   has_many :comments
   has_many :evolutions
+  has_many :pending_requests
 
   scope :active, -> { where(:is_destroyed => false, :was_pulled => false) }
 
@@ -29,5 +30,14 @@ class Project < ActiveRecord::Base
   def is_active?
     !self.is_destroyed && !self.was_pulled
   end
+
+  def is_slack_member?(user_id)
+    !self.integrations.where(:service => 'Slack').where.overlap(:users => [user_id]).empty?
+  end
+
+  def is_hipchat_member?(user_id)
+    !self.integrations.where(:service => 'HipChat').where.overlap(:users => [user_id]).empty?
+  end
+
 
 end
