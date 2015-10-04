@@ -331,7 +331,18 @@ class ProjectsController < ApplicationController
     project = Project.find_by(uuid: params[:project_uuid])
 
     if !user.nil? && !project.nil? && !params[:asset].nil?
-      PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => params[:asset].to_i, :user_id => user.id, :project_id => project.id).save!
+      asset = params[:asset].to_i
+      PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :user_id => user.id, :project_id => project.id).save!
+
+      if asset === SLACK_ASSET
+        integration = Integration.find_by(:service => 'Slack', :project_id => project.id)
+
+        # Invite the user to join the Slack team if the project has a Slack API Key associated with it
+        if !integration.key.nil?
+          invite_slack_user(user, integration.key)
+        end
+      end
+
       render :json => { :message => 'Successfully added pending request' }
     else
       render :json => {:status => 500, :message => 'Could not add pending request'}
@@ -364,7 +375,7 @@ class ProjectsController < ApplicationController
       else
         # add the user's id into the users[] column of the integration corresponding to this project and asset
         service = Integration.service_for_asset(asset)
-        integration.find_by(:service => service, :project_id => project.id)
+        integration = Integration.find_by(:service => service, :project_id => project.id)
 
         if !integration.nil?
           integration.update_attributes(:users => integration.users + [user.id])
