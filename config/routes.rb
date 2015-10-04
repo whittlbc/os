@@ -29,6 +29,7 @@ Backboneworld::Application.routes.draw do
       put :destroy_project, :path => '/destroyProject'
       put :edit, :path => '/edit'
       get :search, :path => '/search'
+      post :request_to_join, :path => '/requestToJoin'
     end
   end
 

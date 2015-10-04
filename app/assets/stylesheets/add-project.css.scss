@@ -579,6 +579,18 @@ textarea[name="add-project-description"] {
 }
 
 
+.add-project-langs-frames-container {
+
+  .selectize-input {
+    .item {
+      border-radius: 6px;
+      background-color: white !important;
+      position: relative;
+      top: -1px;
+    }
+  }
+}
+
 .add-project-langs-frames-container,
 .add-project-repo-name-container,
 .add-project-license-container,
@@ -635,6 +647,8 @@ textarea[name="add-project-description"] {
   right: 0;
   top: 0;
 }
+
+
 
 .add-project-repo-name-input-container,
 .add-project-license-selection-container,

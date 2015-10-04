@@ -4,6 +4,7 @@ define(['jquery',
     'models/os.util',
     'views/projects/minor/minor-info/contributors-view',
     'views/projects/minor/minor-info/repo-stats-view',
+    'views/widgets/request-to-join-popover',
 	'stache!views/projects/minor/minor-info/minor-info-view',
     'backbone-eventbroker'
     ], function ($,
@@ -12,6 +13,7 @@ define(['jquery',
      OSUtil,
      ContributorsView,
      RepoStatsView,
+     RequestToJoinPopover,
      MinorInfoViewTpl) {
 	'use strict';
 
@@ -24,7 +26,30 @@ define(['jquery',
 		},
 
 		events: {
-            'click #contributorsSubsectionTitle': 'showContribsModal'
+            'click #contributorsSubsectionTitle': 'showContribsModal',
+            'click #slackEllipsis': 'toggleSlackPopover',
+            'click #hipchatEllipsis': 'toggleHipChatPopover'
+        },
+
+        toggleSlackPopover: function (e) {
+            e.stopPropagation();
+            if ($(e.toElement).is('i')) {
+                this.hipchatPopover.$el.hide();
+                this.slackPopover.$el.css('display') === 'none' ? this.slackPopover.$el.show() : this.slackPopover.$el.hide();
+            }
+        },
+
+        toggleHipChatPopover: function (e) {
+            e.stopPropagation();
+            if ($(e.toElement).is('i')) {
+                this.slackPopover.$el.hide();
+                this.hipchatPopover.$el.css('display') === 'none' ? this.hipchatPopover.$el.show() : this.hipchatPopover.$el.hide();
+            }
+        },
+
+        hidePopovers: function () {
+            this.slackPopover.$el.hide();
+            this.hipchatPopover.$el.hide()
         },
 
         showContribsModal: function () {
@@ -202,6 +227,10 @@ define(['jquery',
                 licenseSpecified: license != null,
                 showRepoStats: !!options.getting_repo_data && !options.editMode,
                 showIntegrations: showIntegrations,
+                slackAccepted: false,
+                hipchatAccetped: false,
+                slackRequestSent: false,
+                hipchatRequestSent: true,
                 editMode: options.editMode,
                 editModeRepoName: options.repo_name
             }));
@@ -244,6 +273,24 @@ define(['jquery',
 
             if (options.editMode) {
                 $('[data-toggle="tooltip"]').tooltip();
+            } else {
+                this.slackPopover = new RequestToJoinPopover({
+                    el: '#slackPopover'
+                });
+                this.slackPopover.render({
+                    status: 0
+                });
+
+                this.hipchatPopover = new RequestToJoinPopover({
+                    el: '#hipchatPopover'
+                });
+                this.hipchatPopover.render({
+                    status: 0
+                });
+
+                $(document).click(function () {
+                    self.hidePopovers();
+                });
             }
         }
 	});

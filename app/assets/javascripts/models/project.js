@@ -286,7 +286,19 @@ define(['jquery',
             });
 
             return this.sync('addEvolutionItem', this, requestInfo);
+        },
+
+        requestToJoin: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/requestToJoin',
+                data: info
+            });
+
+            return this.sync('requestToJoin', this, requestInfo);
         }
+
     });
 
     return Project;

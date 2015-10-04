@@ -305,20 +305,23 @@ define(['jquery',
             var project = new Project();
             var obj = {
                 project_uuid: self.uuid,
-                owner_id: self.owner_id,
-                joiner_uuid: self.user_uuid
+                user_uuid: self.user_uuid
             };
             project.join(obj, {success: function (data) {
-                self.handleJoinProjectSuccess(data);
+                window.location.reload();
             }});
         },
 
         requestToJoin: function () {
-            // send an email I guess and store it in their messages box somewhere
-        },
-
-        handleJoinProjectSuccess: function (data) {
-            console.log('Successfully joined project');
+            var self = this;
+            var project = new Project();
+            var obj = {
+                project_uuid: self.uuid,
+                user_uuid: self.user_uuid
+            };
+            project.requestToJoin(obj, {success: function () {
+                self.projectMajorView.majorInfoView.switchToRequestSent();
+            }});
         },
 
         showEditMode: function () {

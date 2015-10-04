@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151003210241) do
+ActiveRecord::Schema.define(version: 20151004050741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(version: 20151003210241) do
     t.string   "frameworks", default: [], array: true
   end
 
+  create_table "pending_requests", force: true do |t|
+    t.integer  "requested_asset"
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", force: true do |t|
     t.string   "title"
     t.datetime "created_at",                       null: false
@@ -78,7 +86,6 @@ ActiveRecord::Schema.define(version: 20151003210241) do
     t.integer  "status"
     t.boolean  "anon",             default: false
     t.string   "langs_and_frames", default: [],                 array: true
-    t.integer  "contributors",     default: [],                 array: true
     t.string   "license",          default: [],                 array: true
     t.string   "privacy",          default: [],                 array: true
     t.boolean  "was_pulled",       default: false

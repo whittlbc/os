@@ -150,6 +150,11 @@ define(['jquery',
             this.render(data);
         },
 
+        switchToRequestSent: function () {
+            var self = this;
+            this.$el.find('.join-btn').removeClass('regular').addClass('pending').html('Request Sent');
+        },
+
         getSavedEditData: function () {
             var self = this;
             var data = {
@@ -202,8 +207,9 @@ define(['jquery',
             this.langFrameSelectize = $langFrameSelect[0].selectize;
 
             this.langFrameSelectize.on('item_add', function (value, $item) {
-                $item.css('background-color', self.colors_and_initials[value]['color']);
-                $item.css('color', 'white');
+                $item.css('color', self.colors_and_initials[value]['color']);
+                $item.css('border', '2px solid ' + self.colors_and_initials[value]['color']);
+
                 if (!self.preventAddingMore && self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
                     self.langsFrames = self.langFrameSelectize.getValue();
                     self.langFrameSelectize.addItem(self.allFrames[value]);
@@ -226,8 +232,9 @@ define(['jquery',
             options = options || {};
 
             this.editMode = options.editMode;
-            this.uuid = options ? options.uuid : null;
-            this.projectID = options ? options.id : null;
+            this.uuid = options.uuid;
+            this.projectID = options.id;
+            this.privacy = options.privacy;
 
             this.upForGrabsType = (options.status == 0);
 
@@ -242,6 +249,8 @@ define(['jquery',
                 voted: options.voted,
                 isAdmin: options.is_admin,
                 isOwner: options.is_owner,
+                isContributor: options.is_contributor,
+                pendingJoinRequest: false,
                 editMode: options.editMode,
                 upForGrabsType: this.upForGrabsType,
                 open: options.privacy[0] === OSUtil.OPEN_PRIVACY,

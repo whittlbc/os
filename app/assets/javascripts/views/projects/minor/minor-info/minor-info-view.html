@@ -49,11 +49,13 @@
         {{^editMode}}
         <span class="integration-link">
             {{^isContributor}}
-
             <i class="fa fa-check"></i>
             {{/isContributor}}
             {{#isContributor}}
             <a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>
+            {{^slackAccepted}}
+            <i class="fa fa-ellipsis-v" id="slackEllipsis"><div id="slackPopover" hidden></div></i>
+            {{/slackAccepted}}
             {{/isContributor}}
         </span>
         {{/editMode}}
@@ -84,6 +86,9 @@
             {{/isContributor}}
             {{#isContributor}}
             <a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>
+            {{^hipchatAccepted}}
+            <i class="fa fa-ellipsis-v" id="hipchatEllipsis"><div id="hipchatPopover" hidden></div></i>
+            {{/hipchatAccepted}}
             {{/isContributor}}
         </span>
         {{/editMode}}

@@ -306,21 +306,18 @@ class ProjectsController < ApplicationController
 
   # Join project as collaborator
   def join
-    owner = User.find_by(id: params[:owner_id])
-    joiner = User.find_by(uuid: params[:joiner_uuid])
+    user = User.find_by(uuid: params[:user_uuid])
     project = Project.find_by(uuid: params[:project_uuid])
-    if !owner.nil? && !joiner.nil?
-      add_to_contributors(joiner, project)
-      client = Octokit::Client.new(:access_token => owner.password)
-      client.add_collaborator({:user => owner.gh_username, :repo => project.repo_name}, joiner.gh_username)
-      integration = Integration.where(project_id: project.id, service: 'Slack').first
-      if !integration.nil?
-        invite_slack_user(joiner, integration.key)
-      end
+    if !user.nil? && !project.nil?
+      Contributor.new(:uuid => UUIDTools::UUID.random_create.to_s, :project_id => project.id, :user_id => user.id).save!
       render :json => { :message => 'Successfully added contributor' }
     else
-      render :json => {:status => 500, :message => 'Could not find user by passed gh_username'}
+      render :json => {:status => 500, :message => 'Could not add user as contributor'}
     end
+  end
+
+  def request_to_join
+    render :json => {:status => 200}
   end
 
   def invite_slack_user(user, api_token)
@@ -357,20 +354,6 @@ class ProjectsController < ApplicationController
       end
     end
     all_channels
-  end
-
-  def add_to_contributors(user, project)
-    contributors = project.contributors
-    contributors.push(user.id)
-    project.update_attributes(:contributors => contributors)
-    obj = {
-        :uuid => UUIDTools::UUID.random_create.to_s,
-        :name => user.name,
-        :project_id => project.id,
-        :user_id => user.id
-    }
-    new_contributor = Contributor.new(obj)
-    new_contributor.save
   end
 
   def get_team_name(slack)

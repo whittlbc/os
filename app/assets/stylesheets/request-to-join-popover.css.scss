@@ -1,0 +1,41 @@
+
+.rtj-popover-container {
+  width: 100%;
+  position: relative;
+
+
+  .rtj-popover-content {
+    width: 100%;
+    height: 40px;
+    line-height: 42px;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
+    color: #B0B0B5;
+    text-align: center;
+    cursor: default;
+
+    .fa-check {
+      color: #00A6C9;
+      position: relative;
+      right: 9px;
+    }
+  }
+
+  .rtj-popover-content.active {
+    color: black;
+    cursor: pointer;
+  }
+
+  .rtj-popover-content.active:hover {
+    background-color: #F1F1F9;
+  }
+
+  .fa-caret-down {
+    position: absolute;
+    font-size: 30px;
+    color: lightgray;
+    top: 29px;
+    right: 20px;
+  }
+}

@@ -232,6 +232,10 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'deleteEvolutionItem': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'requestToJoin': {
+                verb: 'POST',
+                action: 'create'
             }
         }
 

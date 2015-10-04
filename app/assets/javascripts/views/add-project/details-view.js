@@ -197,8 +197,8 @@ define(['jquery',
             var langFrameSelectize = $langFrameSelect[0].selectize;
             this.langFrameSelectize = langFrameSelectize;
             this.langFrameSelectize.on('item_add', function (value, $item) {
-                $item.css('background-color', self.colors_and_initials[value]['color']);
-                $item.css('color', 'white');
+                $item.css('color', self.colors_and_initials[value]['color']);
+                $item.css('border', '2px solid ' + self.colors_and_initials[value]['color']);
                 if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])){
                     self.langsFramesValue = self.langFrameSelectize.getValue();
                     self.langFrameSelectize.addItem(self.allFrames[value]);
