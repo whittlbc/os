@@ -332,14 +332,15 @@ class ProjectsController < ApplicationController
 
     if !user.nil? && !project.nil? && !params[:asset].nil?
       asset = params[:asset].to_i
-      PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :user_id => user.id, :project_id => project.id).save!
+      pending_request = PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :user_id => user.id, :project_id => project.id)
+      pending_request.save!
 
       if asset === SLACK_ASSET
         integration = Integration.find_by(:service => 'Slack', :project_id => project.id)
 
         # Invite the user to join the Slack team if the project has a Slack API Key associated with it
         if !integration.key.nil?
-          invite_slack_user(user, integration.key)
+          invite_slack_user(user, integration, pending_request)
         end
       end
 
@@ -389,15 +390,14 @@ class ProjectsController < ApplicationController
 
   end
 
-  def invite_slack_user(user, api_token)
+  def invite_slack_user(user, integration, pending_request)
     Slack.configure do |config|
-      config.token = api_token
+      config.token = integration.key
     end
     email = user.email
-    first_name = !user.name.empty? ? user.name.split(' ')[0] : user.gh_username
     base = "https://#{get_team_name(Slack)}.slack.com"
     hash = "/api/users.admin.invite?t=#{Time.now.to_i}"
-    data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(first_name)}&token=#{api_token}&set_active=true&_attempts=1"
+    data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(user.gh_username)}&token=#{integration.key}&set_active=true&_attempts=1"
     uri = URI.parse(base)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -405,7 +405,11 @@ class ProjectsController < ApplicationController
     request = Net::HTTP::Post.new(hash)
     request.add_field('Content-Type', 'application/x-www-form-urlencoded')
     request.body = data
-    http.request(request)
+    slack_invite = http.request(request)
+
+    # CHANGE THIS to where you only call this on success
+    pending_request.destroy!
+    integration.update_attributes(:users => integration.users + [user.id])
   end
 
   # Get all channels for a team
