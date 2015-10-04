@@ -340,7 +340,11 @@ class ProjectsController < ApplicationController
 
         # Invite the user to join the Slack team if the project has a Slack API Key associated with it
         if !integration.key.nil?
-          invite_slack_user(user, integration, pending_request)
+          slack_invite = invite_slack_user(user, integration.key)
+          if slack_invite === true
+            pending_request.destroy!
+            integration.update_attributes(:users => integration.users + [user.id])
+          end
         end
       end
 
@@ -390,14 +394,14 @@ class ProjectsController < ApplicationController
 
   end
 
-  def invite_slack_user(user, integration, pending_request)
+  def invite_slack_user(user, api_token)
     Slack.configure do |config|
-      config.token = integration.key
+      config.token = api_token
     end
     email = user.email
     base = "https://#{get_team_name(Slack)}.slack.com"
     hash = "/api/users.admin.invite?t=#{Time.now.to_i}"
-    data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(user.gh_username)}&token=#{integration.key}&set_active=true&_attempts=1"
+    data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(user.gh_username)}&token=#{api_token}&set_active=true&_attempts=1"
     uri = URI.parse(base)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -405,11 +409,9 @@ class ProjectsController < ApplicationController
     request = Net::HTTP::Post.new(hash)
     request.add_field('Content-Type', 'application/x-www-form-urlencoded')
     request.body = data
-    slack_invite = http.request(request)
+    response = http.request(request)
 
-    # CHANGE THIS to where you only call this on success
-    pending_request.destroy!
-    integration.update_attributes(:users => integration.users + [user.id])
+    response.kind_of? Net::HTTPSuccess
   end
 
   # Get all channels for a team
