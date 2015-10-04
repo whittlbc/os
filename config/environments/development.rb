@@ -14,7 +14,16 @@ Backboneworld::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      :port                 =>  587,
+      :address              =>  'smtp.mandrillapp.com',
+      :user_name            =>  'benwhittle31@gmail.com',
+      :password             =>  '2Ar0L9OD5G2YXs0O_AuiRw',
+      :enable_starttls_auto =>  true,
+      :authentication       => 'login'
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

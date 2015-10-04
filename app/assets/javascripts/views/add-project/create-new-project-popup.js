@@ -389,6 +389,12 @@ define(['jquery',
             }
             setTimeout(function () {
                 Backbone.EventBroker.trigger('create-project-modal:hide');
+
+                // if user selected to send invites to all contributors
+                if (true) {
+                    Backbone.EventBroker.trigger('invite-gh-contributors', project);
+                }
+
                 window.location.hash = '#projects/' + project.id;
                 setTimeout(function () {
                     self.resetPopup();

@@ -297,6 +297,17 @@ define(['jquery',
             });
 
             return this.sync('requestToJoin', this, requestInfo);
+        },
+
+        sendInviteEmails: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/sendInviteEmails',
+                data: info
+            });
+
+            return this.sync('sendInviteEmails', this, requestInfo);
         }
 
     });

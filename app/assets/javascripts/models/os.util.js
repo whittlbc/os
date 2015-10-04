@@ -242,6 +242,10 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'requestToJoin': {
                 verb: 'POST',
                 action: 'create'
+            },
+            'sendInviteEmails': {
+                verb: 'POST',
+                action: 'create'
             }
         }
 

@@ -8,6 +8,7 @@ define(['jquery',
     'views/modals/create-project-modal',
     'models/all-langs',
     'models/user',
+    'integrations/github',
     'sifter.min',
     'views/modals/login-modal',
     'views/modals/contributors-modal',
@@ -25,6 +26,7 @@ define(['jquery',
      CreateProjectModal,
      AllLangs,
      User,
+     Github,
      Sifter,
      LoginModal,
      ContributorsModal,
@@ -51,12 +53,33 @@ define(['jquery',
                 'project:delete': 'showDeleteProjectModal',
                 'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
                 'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray',
-                'evolution-item:delete': 'showDeleteEvolutionItemModal'
+                'evolution-item:delete': 'showDeleteEvolutionItemModal',
+                'invite-gh-contributors': 'getAllContributorsForRepo'
             }, this);
             this.userAuthed = false;
+
+            this.github = Github;
+            this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
+            this.getAllContributorsForRepo();
+
         },
 
 		events: {},
+
+        getAllContributorsForRepo: function (project) {
+            var self = this;
+            this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
+            //this.github.getContributors(this.userData.gh_username, project.repo_name, function (contribData) {
+                var usernames = [];
+                _.each(contribData, function (contributor) {
+                    if (contributor.login != self.userData.gh_username) {
+                        usernames.push(contributor.login);
+                    }
+                });
+                var project = new Project();
+                project.sendInviteEmails({uuid: 'myprojectuuid', usernames: usernames});
+            });
+        },
 
         showDeleteCommentModal: function (data) {
             var self = this;

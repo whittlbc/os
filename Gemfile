@@ -76,5 +76,7 @@ gem 'rails4_upgrade'
 
 gem 'postgres_ext'
 
+gem 'delayed_job_active_record', '4.0.2'
+
 # Slack integration
 gem 'slack-api'

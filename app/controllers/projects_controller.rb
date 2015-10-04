@@ -10,6 +10,8 @@ class ProjectsController < ApplicationController
   require 'json'
   require 'date'
 
+  include ProjectHelper
+
   PROJECT_ASSET = 0
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2
@@ -39,8 +41,8 @@ class ProjectsController < ApplicationController
           :license => project.license,
           :privacy => project.privacy,
           :repo_name => project.repo_name,
-          # :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-          :getting_repo_data => false,
+          :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
+          # :getting_repo_data => false,
           :status => project.status,
           :title => project.title,
           :subtitle => project.subtitle,
@@ -105,25 +107,11 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def launch
-
-    # WHAT SHOULD BE HERE
-
-    # project = Project.find_by(uuid: params[:project_uuid])
-    # user = User.find_by(uuid: params[:user_uuid])
-    # client = Octokit::Client.new(:access_token => user.password)
-    # options = {
-    #     :description => project.description,
-    #     :auto_init => true
-    # }
-    # client.create_repository(project.repo_name, options)
-
-
-    # JUST ME HARDCODING SOME STUFF
-    user = User.find_by(uuid: "35e982e1-c95d-43ac-ae60-a532596c5495")
+  def send_invite_emails
+    user = User.find_by(email: 'benwhittle31@gmail.com')
     client = Octokit::Client.new(:access_token => user.password)
-    client.create_repository('from-os')
-    render :json => {:message => "Successfullly created repo"}
+    ProjectHelper.delay.fetch_gh_email(client, params[:usernames], 0, [])
+    render :json => {:status => 200}
   end
 
   def create

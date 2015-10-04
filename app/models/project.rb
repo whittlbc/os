@@ -39,5 +39,4 @@ class Project < ActiveRecord::Base
     !self.integrations.where(:service => 'HipChat').where.overlap(:users => [user_id]).empty?
   end
 
-
 end
