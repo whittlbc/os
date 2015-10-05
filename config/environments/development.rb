@@ -19,8 +19,8 @@ Backboneworld::Application.configure do
   config.action_mailer.smtp_settings = {
       :port                 =>  587,
       :address              =>  'smtp.mandrillapp.com',
-      :user_name            =>  'benwhittle31@gmail.com',
-      :password             =>  '2Ar0L9OD5G2YXs0O_AuiRw',
+      :user_name            =>  ENV['MANDRILL_USERNAME'],
+      :password             =>  ENV['MANDRILL_PASSWORD'],
       :enable_starttls_auto =>  true,
       :authentication       => 'login'
   }

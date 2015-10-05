@@ -78,5 +78,7 @@ gem 'postgres_ext'
 
 gem 'delayed_job_active_record', '4.0.2'
 
+gem 'figaro', '0.7.0'
+
 # Slack integration
 gem 'slack-api'
