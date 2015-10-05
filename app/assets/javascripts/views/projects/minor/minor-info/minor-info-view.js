@@ -26,7 +26,8 @@ define(['jquery',
 		},
 
 		events: {
-            'click #contributorsSubsectionTitle': 'showContribsModal',
+            'click .num-contribs-text': 'showContribsModal',
+            'click .send-invites-from-project-page-btn': 'showSendInvitesModal',
             'click #slackEllipsis': 'toggleSlackPopover',
             'click #hipchatEllipsis': 'toggleHipChatPopover'
         },
@@ -56,12 +57,16 @@ define(['jquery',
             Backbone.EventBroker.trigger('contribs-modal:show');
         },
 
+        showSendInvitesModal: function () {
+            Backbone.EventBroker.trigger('send-invites-modal:show');
+        },
+
         lazyLoadContribs: function (data) {
             this.contributorsView.render({
                 contributors: data,
                 showSpinner: false
             });
-            this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + data.length + ')');
+            this.$el.find('.num-contribs-text').html('Contributors (' + data.length + ')');
         },
 
         lazyLoadRepoStats: function (data) {
@@ -251,7 +256,7 @@ define(['jquery',
                 };
 
                 if (options.fromCache) {
-                    this.$el.find('#contributorsSubsectionTitle').html('Contributors (' + options.contributors.length + ')');
+                    this.$el.find('.num-contribs-text').html('Contributors (' + options.contributors.length + ')');
                     repoStatsData.repoData = options.repoData
                 }
 

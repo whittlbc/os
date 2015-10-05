@@ -1028,7 +1028,22 @@ $major-info-project-type: #CECECE;
   text-overflow: ellipsis;
 }
 
-#contributorsSubsectionTitle:hover {
+.num-contribs-text:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.send-invites-from-project-page-btn {
+  color: #C4C5CA;
+  font-size: 12px;
+  margin-left: 12px;
+  text-transform: none;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+.send-invites-from-project-page-btn:hover {
   text-decoration: underline;
   cursor: pointer;
 }
