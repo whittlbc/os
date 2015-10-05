@@ -402,7 +402,7 @@ define(['jquery',
             setTimeout(function () {
                 Backbone.EventBroker.trigger('create-project-modal:hide');
                 if (self.newProjectData.sendInvites === true) {
-                    Backbone.EventBroker.trigger('invite-gh-contributors', project);
+                    Backbone.EventBroker.trigger('invite-gh-contributors', project.uuid);
                 }
                 window.location.hash = '#projects/' + project.id;
                 setTimeout(function () {

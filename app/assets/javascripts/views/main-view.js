@@ -49,6 +49,7 @@ define(['jquery',
                 'login:gh': 'loginWithGH',
                 'contribs-modal:show': 'showContribsModal',
                 'create-project-modal:hide': 'hideCreateProjectModal',
+                'send-invites-modal:show': 'showSendInvitesModal',
                 'project:star': 'handleStarProject',
                 'project:delete': 'showDeleteProjectModal',
                 'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
@@ -65,7 +66,7 @@ define(['jquery',
 
 		events: {},
 
-        getAllContributorsForRepo: function (projectJustCreated) {
+        getAllContributorsForRepo: function (projectUUID) {
             var self = this;
             this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
             //this.github.getContributors(this.userData.gh_username, project.repo_name, function (contribData) {
@@ -76,7 +77,7 @@ define(['jquery',
                     }
                 });
                 var project = new Project();
-                project.sendInviteEmails({user_uuid: self.userData.user_uuid, project_uuid: projectJustCreated.uuid, usernames: usernames});
+                project.sendInviteEmails({user_uuid: self.userData.user_uuid, project_uuid: projectUUID, usernames: usernames});
             });
         },
 
@@ -159,6 +160,10 @@ define(['jquery',
                 this.contribsModal.populate(this.projectView.contributors);
                 this.contribsModal.showModal();
             }
+        },
+
+        showSendInvitesModal: function () {
+            this.sendInvitesModal.showModal();
         },
 
         passActiveHomeIndex: function (index) {
@@ -413,9 +418,18 @@ define(['jquery',
                 message: 'Are you sure you want to delete this item from the Coming Soon list?'
             });
             this.listenTo(this.deleteEvolutionItemModal, 'confirm', function () {
-                self.passedEvolutionFeedView.deleteEvolutionItem();;
+                self.passedEvolutionFeedView.deleteEvolutionItem();
             });
             this.deleteEvolutionItemModal.render();
+
+            this.sendInvitesModal = new BasicQuestionModal({
+                el: this.$el.find('#modalSendInvites'),
+                message: 'Send invitations to join this project to all contributors of this Github repo?'
+            });
+            this.listenTo(this.sendInvitesModal, 'confirm', function () {
+                self.getAllContributorsForRepo(self.projectView.uuid);
+            });
+            this.sendInvitesModal.render();
 
             this.searchView = new SearchContainerView({
                 el: '#mainSearchBar'
