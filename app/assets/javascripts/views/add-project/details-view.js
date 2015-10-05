@@ -17,6 +17,7 @@ define(['jquery',
 	var DetailsView = Backbone.View.extend({
 
 		initialize: function () {
+            this.extraInfoExpandDuration = 200;
             this.toggleDescriptionSizeDuration = 275;
             this.licenseItems = [
                 {
@@ -47,7 +48,10 @@ define(['jquery',
             'blur [name=irc]': 'handleIRCChannelBlur',
             'click .add-project-anon-choice': 'handleAnonSelection',
             'keyup [name=slack]': 'handleKeyUpAPIKeyContainer',
-            'keydown [name=slack]': 'handleKeyDownAPIKeyContainer'
+            'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
+            'keyup [name=add-project-repo-name]': 'handleKeyUpRepoName',
+            'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
+            'click .add-project-send-invites-choice': 'handleSendInvitesSelection'
         },
 
         handleKeyUpAPIKeyContainer: function (e) {
@@ -65,13 +69,37 @@ define(['jquery',
         hideAPIKeyContainer: function () {
             var $apiKeyContainer = this.$el.find('.api-key-container');
             $apiKeyContainer.css({borderBottom: 'none'});
-            $apiKeyContainer.animate({height: 0}, 230);
+            $apiKeyContainer.animate({height: 0}, this.extraInfoExpandDuration);
         },
 
         showAPIKeyContainer: function () {
             var $apiKeyContainer = this.$el.find('.api-key-container');
             $apiKeyContainer.css({borderBottom: '1px solid #EEE'});
-            $apiKeyContainer.animate({height: 67}, 230);
+            $apiKeyContainer.animate({height: 67}, this.extraInfoExpandDuration);
+        },
+
+        handleKeyUpRepoName: function (e) {
+            var repoName = $(e.currentTarget).val();
+            _.isEmpty(repoName) ? this.hideInviteUsersQuestion() : this.showInviteUsersQuestion();
+        },
+
+        handleKeyDownRepoName: function (e) {
+            var prevValue = $(e.currentTarget).val();
+            if (_.isEmpty(prevValue) && e.keyCode != 8 && e.keyCode != 13) {
+                this.showInviteUsersQuestion();
+            }
+        },
+
+        hideInviteUsersQuestion: function () {
+            var $inviteUsersQuestion = this.$el.find('.send-invites-question-container');
+            $inviteUsersQuestion.css({borderBottom: 'none'});
+            $inviteUsersQuestion.animate({height: 0}, this.extraInfoExpandDuration);
+        },
+
+        showInviteUsersQuestion: function () {
+            var $inviteUsersQuestion = this.$el.find('.send-invites-question-container');
+            $inviteUsersQuestion.css({borderBottom: '1px solid #EEE'});
+            $inviteUsersQuestion.animate({height: 67}, this.extraInfoExpandDuration);
         },
 
         handleSlackURLBlur: function (e) {
@@ -121,6 +149,12 @@ define(['jquery',
             }
         },
 
+        handleSendInvitesSelection: function (e) {
+            if (!$(e.currentTarget).hasClass('active-send-invites')) {
+                ($(e.currentTarget).attr('name') == 'send-invites-yes') ? this.switchToSendInvitesYes() : this.switchToSendInvitesNo();
+            }
+        },
+
         switchToOpen: function () {
             this.$el.find('[name=request]').removeClass('active-privacy');
             this.$el.find('[name=open]').addClass('active-privacy');
@@ -147,6 +181,20 @@ define(['jquery',
             this.$el.find('[name=anon-yes]').addClass('active-anon');
             this.anon = true;
             Backbone.EventBroker.trigger('anon:updated', this.anon);
+        },
+
+        switchToSendInvitesYes: function () {
+            this.$el.find('[name=send-invites-no]').removeClass('active-send-invites');
+            this.$el.find('[name=send-invites-yes]').addClass('active-send-invites');
+            this.sendInvites = true;
+            Backbone.EventBroker.trigger('send-invites:updated', this.sendInvites);
+        },
+
+        switchToSendInvitesNo: function () {
+            this.$el.find('[name=send-invites-yes]').removeClass('active-send-invites');
+            this.$el.find('[name=send-invites-no]').addClass('active-send-invites');
+            this.sendInvites = false;
+            Backbone.EventBroker.trigger('send-invites:updated', this.sendInvites);
         },
 
         expandDescription: function (e) {
@@ -335,6 +383,7 @@ define(['jquery',
                 description: this.description,
                 langsFrames: this.langsFrames,
                 repoName: this.repoName,
+                sendInvites: this.sendInvites,
                 license: this.license,
                 privacy: this.privacy,
                 anon: this.anon,
@@ -376,6 +425,7 @@ define(['jquery',
             this.description = (options.projectData) ? options.projectData.description : null;
             this.langsFrames = (options.projectData) ? options.projectData.langsFrames : null;
             this.repoName = (options.projectData) ? options.projectData.repoName : null;
+            this.sendInvites = (options.projectData) ? options.projectData.sendInvites : false;
             this.license = (options.projectData) ? options.projectData.license : null;
             this.privacy = (options.projectData) ? options.projectData.privacy : OSUtil.REQUEST_PRIVACY;
             if (this.privacy == null) {
@@ -400,6 +450,7 @@ define(['jquery',
                 subtitle: this.subtitle,
                 description: this.description,
                 repoName: this.repoName,
+                sendInvites: this.sendInvites,
                 requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
                 openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
                 showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],

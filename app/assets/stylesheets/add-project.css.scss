@@ -593,6 +593,7 @@ textarea[name="add-project-description"] {
 
 .add-project-langs-frames-container,
 .add-project-repo-name-container,
+.send-invites-question-container,
 .add-project-license-container,
 .add-project-privacy-container,
 .add-project-anon-container {
@@ -680,7 +681,8 @@ input[name="add-project-repo-name"] {
 }
 
 .add-project-privacy-choice,
-.add-project-anon-choice {
+.add-project-anon-choice,
+.add-project-send-invites-choice {
   height: 45px;
   margin-top: 15px;
   padding-top: 10px;
@@ -694,14 +696,16 @@ input[name="add-project-repo-name"] {
 }
 
 .add-project-privacy-choice.active-privacy,
-.add-project-anon-choice.active-anon {
+.add-project-anon-choice.active-anon,
+.add-project-send-invites-choice.active-send-invites {
   color: white;
   background-color: #00A6C9;
   border-color: #00A6C9 !important;
 }
 
 #add-project-privacy-request,
-#add-project-anon-yes {
+#add-project-anon-yes,
+#add-project-send-invites-yes {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   border-left: 2px solid lightgray;
@@ -710,7 +714,8 @@ input[name="add-project-repo-name"] {
 }
 
 #add-project-privacy-open,
-#add-project-anon-no {
+#add-project-anon-no,
+#add-project-send-invites-no {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   border-right: 2px solid lightgray;
@@ -719,12 +724,14 @@ input[name="add-project-repo-name"] {
 }
 
 #add-project-privacy-request.active-privacy,
-#add-project-anon-yes.active-anon {
+#add-project-anon-yes.active-anon,
+#add-project-send-invites-yes.active-send-invites {
   border-right: 2px solid #00A6C9;
 }
 
 #add-project-privacy-open.active-privacy,
-#add-project-anon-no.active-anon {
+#add-project-anon-no.active-anon
+#add-project-send-invites-no.active-send-invites {
   border-left: 2px solid #00A6C9;
 }
 
@@ -1134,5 +1141,42 @@ input[name="add-project-repo-name"] {
       }
     }
 
+  }
+}
+
+.send-invites-question-container {
+  height: 0;
+  overflow: hidden;
+
+  .question {
+    width: 67%;
+    height: 60px;
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+    color: black;
+    padding-left: 20px;
+    padding-top: 21px;
+    font-family: 'Helvetica Neue';
+  }
+
+  .answers-container {
+    width: 33%;
+    height: 60px;
+    display: inline-block;
+    float: right;
+    padding-right: 5%;
+
+    .add-project-send-invites-choice-container {
+      width: 50%;
+      display: inline-block;
+      height: 60px;
+
+      .add-project-send-invites-choice {
+        float: left;
+        margin-top: 8px;
+      }
+
+    }
   }
 }

@@ -111,13 +111,14 @@ class ProjectsController < ApplicationController
   def send_invite_emails
     sender = User.find_by(:uuid => params[:user_uuid])
     project = Project.find_by(:uuid => params[:project_uuid])
-    project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
-    if !sender.nil?
+
+    if !sender.nil? && !project.nil?
+      project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
       client = Octokit::Client.new(:access_token => User.find_by(email: 'benwhittle31@gmail.com').password)
       ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [])
       render :json => {:status => 200}
     else
-      render :json => {:status => 500, :message => 'Could not find sender based on user_uuid param'}
+      render :json => {:status => 500, :message => 'Either sender was nil or project was nil by uuid'}
     end
   end
 

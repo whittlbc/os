@@ -34,6 +34,7 @@ define(['jquery',
                 'description:updated': 'handleDescriptionUpdate',
                 'langsFrames:updated': 'handleLangsFramesUpdate',
                 'repoName:updated': 'handleRepoNameUpdate',
+                'send-invites:updated': 'handleSendInvitesUpdate',
                 'license:updated': 'handleLicenseUpdate',
                 'privacy:updated': 'handlePrivacyUpdate',
                 'anon:updated': 'handleAnonUpdate',
@@ -99,7 +100,8 @@ define(['jquery',
                         'slackURL': null,
                         'slackAPIKey': null,
                         'hipChatURL': null,
-                        'irc': null
+                        'irc': null,
+                        'sendInvites': null
                     },
                     //Scratch
                     'source2': {
@@ -113,7 +115,8 @@ define(['jquery',
                         'slackURL': null,
                         'slackAPIKey': null,
                         'hipChatURL': null,
-                        'irc': null
+                        'irc': null,
+                        'sendInvites': null
                     },
                     // Pull from Ideas
                     'source3': {
@@ -127,7 +130,8 @@ define(['jquery',
                         'slackURL': null,
                         'slackAPIKey': null,
                         'hipChatURL': null,
-                        'irc': null
+                        'irc': null,
+                        'sendInvites': null
                     }
                 },
 
@@ -146,7 +150,8 @@ define(['jquery',
                         'slackURL': null,
                         'slackAPIKey': null,
                         'hipChatURL': null,
-                        'irc': null
+                        'irc': null,
+                        'sendInvites': null
                     },
                     // Scratch
                     'source2': {
@@ -160,7 +165,8 @@ define(['jquery',
                         'slackURL': null,
                         'slackAPIKey': null,
                         'hipChatURL': null,
-                        'irc': null
+                        'irc': null,
+                        'sendInvites': null
                     }
                 }
             };
@@ -198,7 +204,6 @@ define(['jquery',
             var selectedSource = typeObj['selectedSource'];
             return (selectedSource != null) ? selectedSource : null;
         },
-
 
         getSelectedSourceObj: function () {
             var selectedType = this.masterMap['selectedType'];
@@ -248,6 +253,13 @@ define(['jquery',
             var sourceObj = this.getSelectedSourceObj();
             if (sourceObj != null) {
                 sourceObj['repoName'] = repoName;
+            }
+        },
+
+        handleSendInvitesUpdate: function (sendInvites) {
+            var sourceObj = this.getSelectedSourceObj();
+            if (sourceObj != null) {
+                sourceObj['sendInvites'] = sendInvites;
             }
         },
 
@@ -389,12 +401,9 @@ define(['jquery',
             }
             setTimeout(function () {
                 Backbone.EventBroker.trigger('create-project-modal:hide');
-
-                // if user selected to send invites to all contributors
-                if (true) {
+                if (self.newProjectData.sendInvites === true) {
                     Backbone.EventBroker.trigger('invite-gh-contributors', project);
                 }
-
                 window.location.hash = '#projects/' + project.id;
                 setTimeout(function () {
                     self.resetPopup();

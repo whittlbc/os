@@ -183,7 +183,6 @@ define(['jquery',
                 //    self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
                 //});
                 this.github.getContributors('yabwe', 'medium-editor', function (contribData) {
-                    console.log(contribData);
                     self.handleFetchedGHContribs(contribData, data.project.admin, 'yabwe');
                 });
                 //this.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {

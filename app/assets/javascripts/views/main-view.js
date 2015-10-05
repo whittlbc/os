@@ -60,13 +60,12 @@ define(['jquery',
 
             this.github = Github;
             this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
-            this.getAllContributorsForRepo();
 
         },
 
 		events: {},
 
-        getAllContributorsForRepo: function (project) {
+        getAllContributorsForRepo: function (projectJustCreated) {
             var self = this;
             this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
             //this.github.getContributors(this.userData.gh_username, project.repo_name, function (contribData) {
@@ -77,7 +76,7 @@ define(['jquery',
                     }
                 });
                 var project = new Project();
-                project.sendInviteEmails({user_uuid: self.userData.user_uuid, project_uuid: "243fca7e-6d3c-438c-959c-b6bfcbddaca5", usernames: usernames});
+                project.sendInviteEmails({user_uuid: self.userData.user_uuid, project_uuid: projectJustCreated.uuid, usernames: usernames});
             });
         },
 
