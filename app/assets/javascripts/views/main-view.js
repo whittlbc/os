@@ -14,6 +14,7 @@ define(['jquery',
     'views/modals/contributors-modal',
     'views/modals/basic-question-modal',
     'views/search/search-container-view',
+    'views/notifications/notifications-dropdown-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -32,6 +33,7 @@ define(['jquery',
      ContributorsModal,
      BasicQuestionModal,
      SearchContainerView,
+     NotificationsDropdownView,
      MainViewTpl) {
 	'use strict';
 
@@ -435,6 +437,13 @@ define(['jquery',
                 el: '#mainSearchBar'
             });
             this.searchView.render();
+
+            this.notifcationsDropdown = new NotificationsDropdownView({
+                el: '#notificationsDropdown'
+            });
+            this.notifcationsDropdown.render();
+
+            this.notifcationsDropdown.populate([1, 2, 3]);
 		}
 
 	});

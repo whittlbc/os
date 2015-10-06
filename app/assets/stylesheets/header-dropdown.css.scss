@@ -1,0 +1,67 @@
+
+
+
+// Notifications Dropdown
+
+#notificationsDropdown {
+  position: fixed;
+  top: 64px;
+  right: 100px;
+  width: 350px;
+  z-index: 1035;
+
+  .notifications-item-container {
+    float: left;
+    height: 100px;
+    background-color: white;
+    width: 100%;
+  }
+
+}
+
+
+
+.dropdown-container {
+  width: 100%;
+  float: left;
+  border: 1px solid #DDD;
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  height: auto;
+  position: relative;
+
+  ul.main-list {
+    list-style-type: none;
+    padding-left: 0;
+    float: left;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+
+    li {
+      float: left;
+      border-bottom: 1px solid #EEE;
+      width: 100%;
+    }
+  }
+
+  .dropdown-arrow {
+    width: 28px;
+    height: 28px;
+    float: right;
+    position: absolute;
+    border: 14px solid transparent;
+    right: 10px;
+  }
+
+  .dropdown-arrow.back {
+    border-bottom: 14px solid #CCC;
+    top: -28px;
+  }
+
+  .dropdown-arrow.front {
+    border-bottom: 14px solid white;
+    top: -27px;
+    z-index: 1;
+  }
+
+}
