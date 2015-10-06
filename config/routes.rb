@@ -31,6 +31,7 @@ Backboneworld::Application.routes.draw do
       get :search, :path => '/search'
       post :request_to_join, :path => '/requestToJoin'
       post :send_invite_emails, :path => '/sendInviteEmails'
+      put :respond_to_request, :path => '/respondToRequest'
     end
   end
 

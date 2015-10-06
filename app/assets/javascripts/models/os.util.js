@@ -16,6 +16,21 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'hipchat': 2
         },
 
+        NOTIFICATIONS: {
+            '0': {
+                text: 'has requested to join your project, ',
+                positiveBtnText: 'Accept'
+            },
+            '1': {
+                text: 'has requested to join the Slack team for your project, ',
+                positiveBtnText: 'Invite'
+            },
+            '2': {
+                text: 'has requested to join the HipChat team for your project, ',
+                positiveBtnText: 'Invite'
+            }
+        },
+
         HOME_PAGE: 'home',
         PROJECT_PAGE: 'project',
 
@@ -246,6 +261,10 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'sendInviteEmails': {
                 verb: 'POST',
                 action: 'create'
+            },
+            'respondToRequest': {
+                verb: 'PUT',
+                action: 'update'
             }
         }
 

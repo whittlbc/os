@@ -308,6 +308,17 @@ define(['jquery',
             });
 
             return this.sync('sendInviteEmails', this, requestInfo);
+        },
+
+        respondToRequest: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/respondToRequest',
+                data: info
+            });
+
+            return this.sync('respondToRequest', this, requestInfo);
         }
 
     });

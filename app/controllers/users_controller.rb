@@ -64,7 +64,8 @@ class UsersController < ApplicationController
                  :upvotedProjects => user.upvoted_projects,
                  :upvotedComments => user.upvoted_comments,
                  :user_uuid => user.uuid,
-                 :id => user.id
+                 :id => user.id,
+                 :notifications => user.get_notifications
              }
     end
   end

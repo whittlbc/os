@@ -21,8 +21,20 @@ define(['jquery',
             var self = this;
             this.NOTIFICATIONS = [];
             this.$mainList.empty();
-            for (var i = 0; i < notifications.length; i++) {
-                this.addItem(notifications[i]);
+
+            if (notifications.length > 0) {
+                $('#headerNotificationsCount').html(notifications.length);
+                $('#headerNotificationsCount').show();
+                for (var i = 0; i < notifications.length; i++) {
+                    this.addItem(notifications[i]);
+                }
+            } else {
+                $('#headerNotificationsCount').hide();
+                var $zeroNotificationsView = $('<div>', {
+                    class: 'zero-notifications'
+                });
+                $zeroNotificationsView.html('No Notifications');
+                this.$el.find('.main-list').append($zeroNotificationsView);
             }
         },
 
@@ -31,15 +43,43 @@ define(['jquery',
                 tagName: 'li',
                 data: data
             });
+            this.setListener(notificationsItemView);
             notificationsItemView.render();
             this.$mainList.append(notificationsItemView.el);
             this.NOTIFICATIONS.push(notificationsItemView);
+        },
+
+        setListener: function (view) {
+            var self = this;
+            this.listenTo(view, 'accept', function (view) {
+                self.trigger('accept-request', view.data);
+                switch (view.data.requested_asset) {
+                    case 0:
+                        view.showAccept();
+                        break;
+                    case 1:
+                        window.open(view.data.slack_url + '/admin'); // will need to place them at the best position to invite someone
+                        break;
+                    case 2:
+                        // this isn't right yet
+                        window.open(view.data.hipchat_url + '/admin'); // will need to place them at the best position to invite someone
+                        break;
+                }
+            });
+            this.listenTo(view, 'reject', function (view) {
+                self.trigger('reject-request', view.data)
+            });
         },
 
 		render: function () {
 			var self = this;
             this.$el.html(NotificationsDropdownViewTpl());
             this.$mainList = this.$el.find('.main-list');
+
+            // prevent a click anywhere on this view from causing it to disappear
+            this.$el.click(function (e) {
+                e.stopPropagation();
+            });
 		}
 	});
 

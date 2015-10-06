@@ -1,1 +1,14 @@
-<div class="notifications-item-container"></div>
+<div class="notifications-item-container">
+    <div class="pic-text-container">
+        <div class="pic">
+            <a href="{{userGHLink}}" target="_blank"><img src="{{pic}}"/></a>
+        </div>
+        <div class="text"><a href="{{userGHLink}}" target="_blank">{{requesterName}} </a>{{text}}<a href="{{projectLink}}">My Slack and Ruby.</a></div>
+    </div>
+    <div class="action-btn-master-container">
+        <div class="action-btn-container">
+            <div class="action-btn" id="reject">No thanks</div>
+            <div class="action-btn" id="accept">{{positiveBtnText}}</div>
+        </div>
+    </div>
+</div>

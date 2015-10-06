@@ -84,6 +84,7 @@ define(['jquery',
 
             this.$input.focus(function(){
                 if(!self.isOpen) {
+                    self.trigger('hide-menu-dropdowns');
                     self.$searchBox.addClass('searchbox-open');
                     self.isOpen = true;
                 }

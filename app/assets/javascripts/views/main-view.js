@@ -274,6 +274,7 @@ define(['jquery',
                 var user = new User();
                 user.getByGHUsername({gh_username: cookieGHUsername}, {success: function (user) {
                     self.setUserFromResponse(user);
+                    self.notificationsDropdown.populate(user.notifications);
                 }});
             }
         },
@@ -339,6 +340,23 @@ define(['jquery',
                 self.searchView.forceCloseSearchBar();
                 self.notificationsDropdown.$el.css('display') === 'none' ? self.notificationsDropdown.$el.show() : self.notificationsDropdown.$el.hide();
             });
+        },
+
+        respondToRequest: function (notificationData, answer) {
+            var self = this;
+            var project = new Project();
+            project.respondToRequest({
+                requester_uuid: notificationData.requester_uuid,
+                responder_uuid: self.userData.user_uuid,
+                project_uuid: notificationData.project_uuid,
+                pending_request_uuid: notificationData.uuid,
+                response: answer
+            }, {success: function (notifications) {
+                // only repopulate if a request was requested. You're showing the acceptance screen otherwise
+                if (!answer) {
+                    self.notificationsDropdown.populate(notifications);
+                }
+            }});
         },
 
 		render: function (options) {
@@ -454,9 +472,16 @@ define(['jquery',
             this.notificationsDropdown = new NotificationsDropdownView({
                 el: '#notificationsDropdown'
             });
-            this.notificationsDropdown.render();
 
-            this.notificationsDropdown.populate([1, 2, 3]);
+            this.listenTo(this.notificationsDropdown, 'accept-request', function (notificationData) {
+                self.respondToRequest(notificationData, true);
+            });
+
+            this.listenTo(this.notificationsDropdown, 'reject-request', function (notificationData) {
+                self.respondToRequest(notificationData, false);
+            });
+
+            this.notificationsDropdown.render();
 
             this.addHeaderClickListeners();
         }

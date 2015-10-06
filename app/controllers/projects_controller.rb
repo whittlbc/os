@@ -16,6 +16,14 @@ class ProjectsController < ApplicationController
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2
 
+  def service_for_asset(asset)
+    case asset
+      when SLACK_ASSET
+        'Slack'
+      when HIPCHAT_ASSET
+        'HipChat'
+    end
+  end
 
   def index
     render :index, :layout => 'layouts/application'
@@ -346,43 +354,52 @@ class ProjectsController < ApplicationController
 
       render :json => { :message => 'Successfully added pending request' }
     else
-      render :json => {:status => 500, :message => 'Could not add pending request'}
+      render :json => {:status => 500, :message => 'Could not add po ending request'}
     end
   end
 
-  def accept_request
-    user = User.find_by(uuid: params[:user_uuid])
+  def respond_to_request
+    requester = User.find_by(uuid: params[:requester_uuid])
+    responder = User.find_by(uuid: params[:responder_uuid])
     project = Project.find_by(uuid: params[:project_uuid])
     pending_request = PendingRequest.find_by(:uuid => params[:pending_request_uuid])
 
-    if !user.nil? && !project.nil? && !pending_request.nil?
+    if !requester.nil? && !project.nil? && !pending_request.nil? && !params[:response].nil?
       asset = pending_request.requested_asset
 
       # delete the pending request
       pending_request.destroy!
+
+      updated_notifications = responder.get_notifications
+
+      # if the answer to the request was "No Thanks", just return
+      if !params[:response]
+        render :json => updated_notifications
+        return
+      end
 
       # if the request was a join project request, just add the user as a contributor
       if asset === PROJECT_ASSET
         contrib_data = {
             :uuid => UUIDTools::UUID.random_create.to_s,
             :project_id => project.id,
-            :user_id => user.id,
+            :user_id => requester.id,
             :admin => false
         }
         Contributor.new(contrib_data).save!
-        render :status => 200
+        render :json => updated_notifications
 
       # otherwise, it was an integrations request
       else
         # add the user's id into the users[] column of the integration corresponding to this project and asset
-        service = Integration.service_for_asset(asset)
+        service = service_for_asset(asset)
         integration = Integration.find_by(:service => service, :project_id => project.id)
 
         if !integration.nil?
-          integration.update_attributes(:users => integration.users + [user.id])
+          integration.update_attributes(:users => integration.users + [requester.id])
         end
 
-        render :status => 200
+        render :json => updated_notifications
       end
     else
       render :json => {:status => 500, :message => 'Could not accept request...either the user, the project, or the pending request was nil'}
