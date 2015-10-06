@@ -123,14 +123,49 @@ footer p {
     border-radius: 20px;
     background-color: white;
     float: right;
-    margin-right: 6%;
+    margin-right: 57px;
     margin-top: 12px;
     display: inline-block;
 }
 
+#headerNotificationsIcon {
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    float: right;
+    margin-right: 34px;
+    margin-top: 11px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 7px;
+    cursor: pointer;
+    position: relative;
+}
+
+#headerNotificationsIcon > .fa {
+    font-size: 28px;
+    color: #333;
+}
+
+#headerNotificationsCount {
+    border-radius: 8px;
+    background-color: red;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    padding: 1px 4px;
+    min-width: 16px;
+    bottom: 16px;
+    left: 22px;
+    float: right;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    position: absolute;
+}
+
 .header-searchbar-container{
     display: inline-block;
-    width: 73%;
+    width: 66%;
+    margin-right: 20px;
     height: 65px;
     float: right;
 }
@@ -166,14 +201,23 @@ footer p {
 
 
 #headerAddProjectBtn {
-    width: 15%;
+    width: 120px;
     height: 65px;
-    line-height: 67px;
+    line-height: 58px;
     text-align: center;
     color: black;
     cursor: pointer;
-    margin-right: 1%;
+    margin-right: 14px;
     float: right;
+}
+
+#headerAddProjectBtn > span {
+    font-size: 23px;
+    position: relative;
+    top: 1px;
+    right: 5px;
+    font-weight: 300;
+    font-family: 'Helvetica Neue';
 }
 
 #createNewProjectModalContentContainer {

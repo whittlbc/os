@@ -319,7 +319,7 @@ define(['jquery',
             }
         },
 
-        addProjectBtnListener: function () {
+        addHeaderClickListeners: function () {
             var self = this;
             $('#headerAddProjectBtn').click(function () {
                 if (self.userAuthed) {
@@ -328,6 +328,16 @@ define(['jquery',
                     self.loginModal.setMessage('You must be logged in to add a project.');
                     self.loginModal.showModal();
                 }
+            });
+
+            $(document).click(function () {
+                self.notificationsDropdown.$el.hide();
+            });
+
+            $('#headerNotificationsIcon').click(function (e) {
+                e.stopPropagation();
+                self.searchView.forceCloseSearchBar();
+                self.notificationsDropdown.$el.css('display') === 'none' ? self.notificationsDropdown.$el.show() : self.notificationsDropdown.$el.hide();
             });
         },
 
@@ -340,8 +350,6 @@ define(['jquery',
                 showHomeView: this.showHomeView,
                 showProjectView: this.showProjectView
             }));
-
-            this.addProjectBtnListener();
 
             if (this.showHomeView) {
                 if (this.homeView) {
@@ -436,15 +444,22 @@ define(['jquery',
             this.searchView = new SearchContainerView({
                 el: '#mainSearchBar'
             });
+            
+            this.listenTo(this.searchView, 'hide-menu-dropdowns', function () {
+                self.notificationsDropdown.$el.hide();
+            });
+            
             this.searchView.render();
 
-            this.notifcationsDropdown = new NotificationsDropdownView({
+            this.notificationsDropdown = new NotificationsDropdownView({
                 el: '#notificationsDropdown'
             });
-            this.notifcationsDropdown.render();
+            this.notificationsDropdown.render();
 
-            this.notifcationsDropdown.populate([1, 2, 3]);
-		}
+            this.notificationsDropdown.populate([1, 2, 3]);
+
+            this.addHeaderClickListeners();
+        }
 
 	});
 

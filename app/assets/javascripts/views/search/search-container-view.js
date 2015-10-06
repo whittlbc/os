@@ -62,12 +62,24 @@ define(['jquery',
             this.RESULTS.push(searchResultView);
         },
 
+        forceCloseSearchBar: function () {
+            var self = this;
+            if(this.isOpen) {
+                this.$searchBox.removeClass('searchbox-open');
+                this.isOpen = false;
+            }
+            this.$dropdown.hide();
+            this.$noResults.hide();
+            this.dropdownShown = false;
+        },
+
         renderSearchBar: function () {
             var self = this;
             var project = new Project();
 
             this.$input.click(function (e) {
                 e.stopPropagation();
+                self.trigger('hide-menu-dropdowns');
             });
 
             this.$input.focus(function(){
@@ -78,13 +90,7 @@ define(['jquery',
             });
 
             $(document).click(function(){
-                if(self.isOpen) {
-                    self.$searchBox.removeClass('searchbox-open');
-                    self.isOpen = false;
-                }
-                self.$dropdown.hide();
-                self.$noResults.hide();
-                self.dropdownShown = false;
+                self.forceCloseSearchBar();
             });
 
             this.$input.keydown(function (e) {
