@@ -351,12 +351,7 @@ define(['jquery',
                 project_uuid: notificationData.project_uuid,
                 pending_request_uuid: notificationData.uuid,
                 response: answer
-            }, {success: function (notifications) {
-                // only repopulate if a request was requested. You're showing the acceptance screen otherwise
-                if (!answer) {
-                    self.notificationsDropdown.populate(notifications);
-                }
-            }});
+            });
         },
 
 		render: function (options) {

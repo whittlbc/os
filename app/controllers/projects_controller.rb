@@ -374,7 +374,7 @@ class ProjectsController < ApplicationController
 
       # if the answer to the request was "No Thanks", just return
       if !params[:response]
-        render :json => updated_notifications
+        render :json => {}, :status => 200
         return
       end
 
@@ -387,7 +387,6 @@ class ProjectsController < ApplicationController
             :admin => false
         }
         Contributor.new(contrib_data).save!
-        render :json => updated_notifications
 
       # otherwise, it was an integrations request
       else
@@ -398,11 +397,11 @@ class ProjectsController < ApplicationController
         if !integration.nil?
           integration.update_attributes(:users => integration.users + [requester.id])
         end
-
-        render :json => updated_notifications
       end
+
+      render :json => {}, :status => 200
     else
-      render :json => {:status => 500, :message => 'Could not accept request...either the user, the project, or the pending request was nil'}
+      render :json => {:message => 'Could not accept request...either the user, the project, or the pending request was nil'}, :status => 500
     end
 
   end

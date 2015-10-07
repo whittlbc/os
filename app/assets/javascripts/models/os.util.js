@@ -22,11 +22,11 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
                 positiveBtnText: 'Accept'
             },
             '1': {
-                text: 'has requested to join the Slack team for your project, ',
+                text: 'has requested to join the <b>Slack</b> team for your project, ',
                 positiveBtnText: 'Invite'
             },
             '2': {
-                text: 'has requested to join the HipChat team for your project, ',
+                text: 'has requested to join the <b>HipChat</b> team for your project, ',
                 positiveBtnText: 'Invite'
             }
         },

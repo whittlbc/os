@@ -75,13 +75,14 @@
       height: 45px;
 
       .action-btn-container {
-        display: inline-block;
+        display: block;
         width: 68%;
         height: 100%;
         margin-left: 17.5%;
         
         .action-btn {
           width: 42%;
+          display: inline-block;
           margin-left: auto;
           margin-right: auto;
           height: 25px;
@@ -101,6 +102,44 @@
           float: right;
         }
 
+      }
+
+      .accepted-view {
+        display: block;
+        width: 50%;
+        margin-right: 4%;
+        float: right;
+        height: 100%;
+        color: #00A6C9;
+        font-size: 13px;
+        text-align: center;
+        line-height: 30px;
+
+        .fa {
+          margin-right: 4px;
+          font-size: 16px;
+          position: relative;
+          top: 1px;
+        }
+      }
+
+      .rejected-view {
+        display: block;
+        width: 50%;
+        margin-left: 4%;
+        float: left;
+        height: 100%;
+        color: #C4C5CA;
+        font-size: 13px;
+        text-align: center;
+        line-height: 30px;
+
+        .fa {
+          margin-right: 4px;
+          font-size: 16px;
+          position: relative;
+          top: 1px;
+        }
       }
 
     }

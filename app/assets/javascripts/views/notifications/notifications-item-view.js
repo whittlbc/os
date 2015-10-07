@@ -25,8 +25,24 @@ define(['jquery',
             (e.currentTarget.id === 'accept') ? this.trigger('accept', this) : this.trigger('reject', this);
         },
 
-        render: function () {
+        showAccepted: function () {
             var self = this;
+            this.render({
+                showAccepted: true
+            });
+        },
+
+        showRejected: function () {
+            var self = this;
+            this.render({
+                showRejected: true
+            });
+        },
+
+        render: function (options) {
+            var self = this;
+            options = options || {};
+
             var notificationInfoForType = OSUtil.NOTIFICATIONS[this.data.requested_asset.toString()];
 
             this.$el.html(NotificationsItemViewTpl({
@@ -35,7 +51,10 @@ define(['jquery',
                 text: notificationInfoForType.text,
                 requesterName: this.data.requester_gh_username,
                 projectLink: '/#projects/' + this.data.project_id,
-                positiveBtnText: notificationInfoForType.positiveBtnText
+                positiveBtnText: notificationInfoForType.positiveBtnText,
+                showAccepted: options.showAccepted,
+                acceptedText: this.data.requested_asset === 0 ? 'Accepted' : 'Invited',
+                showRejected: options.showRejected
             }));
         }
     });

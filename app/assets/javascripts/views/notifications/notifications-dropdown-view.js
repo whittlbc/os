@@ -19,8 +19,8 @@ define(['jquery',
 
         populate: function (notifications) {
             var self = this;
-            this.NOTIFICATIONS = [];
             this.$mainList.empty();
+            this.notificationsCount = notifications.length;
 
             if (notifications.length > 0) {
                 $('#headerNotificationsCount').html(notifications.length);
@@ -46,29 +46,34 @@ define(['jquery',
             this.setListener(notificationsItemView);
             notificationsItemView.render();
             this.$mainList.append(notificationsItemView.el);
-            this.NOTIFICATIONS.push(notificationsItemView);
         },
 
         setListener: function (view) {
             var self = this;
             this.listenTo(view, 'accept', function (view) {
                 self.trigger('accept-request', view.data);
-                switch (view.data.requested_asset) {
-                    case 0:
-                        view.showAccept();
-                        break;
-                    case 1:
-                        window.open(view.data.slack_url + '/admin'); // will need to place them at the best position to invite someone
-                        break;
-                    case 2:
-                        // this isn't right yet
-                        window.open(view.data.hipchat_url + '/admin'); // will need to place them at the best position to invite someone
-                        break;
+                view.showAccepted();
+                if (view.data.requested_asset === 1) {
+                    window.open(view.data.slack_url + '/admin');
+                } else if (view.data.requested_asset === 2) {
+                    window.open(view.data.hipchat_url + '/admin'); // not actually a thing...fix this url
                 }
+                self.decreaseNotificationsCount();
             });
             this.listenTo(view, 'reject', function (view) {
-                self.trigger('reject-request', view.data)
+                self.trigger('reject-request', view.data);
+                view.showRejected();
+                self.decreaseNotificationsCount();
             });
+        },
+
+        decreaseNotificationsCount: function () {
+            var self = this;
+            var $countTag = $('#headerNotificationsCount');
+            if (this.notificationsCount >= 1) {
+                this.notificationsCount--;
+                this.notificationsCount == 0 ? $countTag.hide() : $countTag.html(this.notificationsCount);
+            }
         },
 
 		render: function () {
