@@ -360,19 +360,16 @@ class ProjectsController < ApplicationController
 
   def respond_to_request
     requester = User.find_by(uuid: params[:requester_uuid])
-    responder = User.find_by(uuid: params[:responder_uuid])
     project = Project.find_by(uuid: params[:project_uuid])
     pending_request = PendingRequest.find_by(:uuid => params[:pending_request_uuid])
 
     if !requester.nil? && !project.nil? && !pending_request.nil? && !params[:response].nil?
       asset = pending_request.requested_asset
 
-      # delete the pending request
-      pending_request.destroy!
+      # Update the request with the response value
+      pending_request.update_attributes(:response => params[:response])
 
-      updated_notifications = responder.get_notifications
-
-      # if the answer to the request was "No Thanks", just return
+      # if the response was "No Thanks"
       if !params[:response]
         render :json => {}, :status => 200
         return

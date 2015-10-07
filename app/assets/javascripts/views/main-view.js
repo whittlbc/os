@@ -347,7 +347,6 @@ define(['jquery',
             var project = new Project();
             project.respondToRequest({
                 requester_uuid: notificationData.requester_uuid,
-                responder_uuid: self.userData.user_uuid,
                 project_uuid: notificationData.project_uuid,
                 pending_request_uuid: notificationData.uuid,
                 response: answer

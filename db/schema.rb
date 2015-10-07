@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006061224) do
+ActiveRecord::Schema.define(version: 20151007031512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,10 @@ ActiveRecord::Schema.define(version: 20151006061224) do
     t.datetime "updated_at"
     t.string   "uuid"
     t.integer  "responder_id"
+    t.boolean  "response"
+    t.boolean  "response_seen"
+    t.boolean  "request_seen"
+    t.boolean  "response_acted_on", default: false
   end
 
   create_table "projects", force: true do |t|

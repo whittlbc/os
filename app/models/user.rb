@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
     CLIENT_SECRET = '91347eb62e866f7960510aafd81c2f41b2dda2d4'
   end
 
+  PROJECT_ASSET = 0
+  SLACK_ASSET = 1
+  HIPCHAT_ASSET = 2
+
   def voted_on_project(project_id)
     self.upvoted_projects.include?(project_id)
   end
@@ -36,26 +40,58 @@ class User < ActiveRecord::Base
   end
 
   def get_notifications
-    PendingRequest.includes(:project).where(:responder_id => self.id).map { |request|
-      requester = User.find_by(:id => request.requester_id)
-      slack_integration = request.project.integrations.where(:service => 'Slack').first
-      hipchat_integration = request.project.integrations.where(:service => 'HipChat').first
-      data = {
-          :uuid => request.uuid,
-          :requested_asset => request.requested_asset,
-          :requester_gh_username => requester.gh_username,
-          :requester_uuid => requester.uuid,
-          :pic => requester.pic,
-          :project_uuid => request.project.uuid
-      }
-      if !slack_integration.nil?
-        data[:slack_url] = slack_integration.url
-      end
-      if !hipchat_integration.nil?
-        data[:hipchat_url] = hipchat_integration.url
-      end
 
-      data
+    # Notification action order:
+
+    # Request Seen --> Response --> Response Seen --> Response Acted on
+
+    # Get all notifications where you're either:
+    # (1) the responder and there is no response
+    # (2) the requester and the response_acted_on is still false, but there has been a response (either t or f)
+    PendingRequest.includes(:project).where(:responder_id => self.id, :response => nil).or(:requester_id => self.id, :response => [true, false], :response_acted_on => false).map { |request|
+
+      # if you're the one who needs to respond
+      if request.responder_id === self.id
+        # get info about the requester
+        requester = User.find_by(:id => request.requester_id)
+        data = {
+            :uuid => request.uuid,
+            :requested_asset => request.requested_asset,
+            :username => requester.gh_username,
+            :requester_uuid => requester.uuid,
+            :pic => requester.pic,
+            :project_uuid => request.project.uuid
+        }
+
+        # if the request to join slack or hipchat, get the url the appropriate one
+        if request.requested_asset === SLACK_ASSET
+          slack_integration = request.project.integrations.where(:service => 'Slack').first
+          if !slack_integration.nil?
+            data[:slack_url] = slack_integration.url
+          end        end
+        if request.requested_asset === HIPCHAT_ASSET
+          hipchat_integration = request.project.integrations.where(:service => 'HipChat').first
+          if !hipchat_integration.nil?
+            data[:hipchat_url] = hipchat_integration.url
+          end
+        end
+
+        data
+
+      # if you're the one who sent the request, you need to "see" the response and act on it
+      else
+        # get info about the responder to your request
+        responder = User.find_by(:id => request.responder_id)
+        data = {
+            :uuid => request.uuid,
+            :requested_asset => request.requested_asset,
+            :username => responder.gh_username,
+            :pic => responder.pic,
+            :project_uuid => request.project.uuid
+        }
+
+        data
+      end
     }
   end
 
