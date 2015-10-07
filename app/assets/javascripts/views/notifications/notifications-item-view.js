@@ -39,22 +39,53 @@ define(['jquery',
             });
         },
 
+        formatTextData: function () {
+            var self = this;
+            var text;
+            var positiveBtnText;
+            var isRequest = this.data.is_request;
+
+            switch (this.data.requested_asset) {
+                case 0:
+                    text = isRequest ? 'has requested to join your project, ' : 'has accepted your request to join the project, ';
+                    positiveBtnText = isRequest ? 'Accept' : 'OK';
+                    break;
+                case 1:
+                    text = isRequest ? 'has requested to join the <b>Slack</b> team for your project, ' :
+                        'has accepted your request to join the <b>Slack</b> team for the project, ';
+                    positiveBtnText = isRequest ? 'Invite' : 'OK';
+                    break;
+                case 2:
+                    text = isRequest ? 'has requested to join the <b>HipChat</b> team for your project, ' :
+                        'has accepted your request to join the <b>HipChat</b> team for the project, ';
+                    positiveBtnText = isRequest ? 'Invite' : 'OK';
+                    break;
+            }
+
+            return {
+                text: text,
+                positiveBtnText: positiveBtnText
+            };
+        },
+
         render: function (options) {
             var self = this;
             options = options || {};
-
-            var notificationInfoForType = OSUtil.NOTIFICATIONS[this.data.requested_asset.toString()];
+            var textData = this.formatTextData();
 
             this.$el.html(NotificationsItemViewTpl({
-                userGHLink: 'https://github.com/' + this.data.requester_gh_username,
+                userGHLink: 'https://github.com/' + this.data.username,
                 pic: this.data.pic,
-                text: notificationInfoForType.text,
-                requesterName: this.data.requester_gh_username,
+                text: textData.text,
+                username: this.data.username,
                 projectLink: '/#projects/' + this.data.project_id,
-                positiveBtnText: notificationInfoForType.positiveBtnText,
+                positiveBtnText: textData.positiveBtnText,
                 showAccepted: options.showAccepted,
                 acceptedText: this.data.requested_asset === 0 ? 'Accepted' : 'Invited',
-                showRejected: options.showRejected
+                showRejected: options.showRejected,
+                acceptedIntegration: !this.data.is_request && (this.data.requested_asset === 1 || this.data.requested_asset === 2),
+                showNegativeBtn: this.data.is_request,
+                projectName: this.data.project_name
             }));
         }
     });

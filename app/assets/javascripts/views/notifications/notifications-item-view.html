@@ -3,14 +3,22 @@
         <div class="pic">
             <a href="{{userGHLink}}" target="_blank"><img src="{{pic}}"/></a>
         </div>
-        <div class="text"><a href="{{userGHLink}}" target="_blank">{{requesterName}} </a>{{{text}}}<a href="{{projectLink}}">My Slack and Ruby.</a></div>
+        <div class="text">
+            <a href="{{userGHLink}}" target="_blank">{{username}} </a>
+            {{{text}}}
+            <a href="{{projectLink}}">{{projectName}}</a>
+            {{#acceptedIntegration}}. You should expect to receive an email invite soon.{{/acceptedIntegration}}
+            {{^acceptedIntegration}}.{{/acceptedIntegration}}
+        </div>
     </div>
     <div class="action-btn-master-container">
 
         {{^showAccepted}}
         {{^showRejected}}
         <div class="action-btn-container">
+            {{#showNegativeBtn}}
             <div class="action-btn" id="reject">No thanks</div>
+            {{/showNegativeBtn}}
             <div class="action-btn" id="accept">{{positiveBtnText}}</div>
         </div>
         {{/showRejected}}

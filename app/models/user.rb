@@ -48,7 +48,10 @@ class User < ActiveRecord::Base
     # Get all notifications where you're either:
     # (1) the responder and there is no response
     # (2) the requester and the response_acted_on is still false, but there has been a response (either t or f)
-    PendingRequest.includes(:project).where(:responder_id => self.id, :response => nil).or(:requester_id => self.id, :response => [true, false], :response_acted_on => false).map { |request|
+    PendingRequest.includes(:project).where('(pending_requests.responder_id = ? AND pending_requests.response IS NULL) OR (pending_requests.requester_id = ? AND pending_requests.response IS NOT NULL AND pending_requests.response_acted_on = ?)', self.id, self.id, false).map { |request|
+
+      # go with project title, but default back to repo name
+      project_name = (request.project.title.nil? || request.project.title.empty?) ? request.project.repo_name : request.project.title
 
       # if you're the one who needs to respond
       if request.responder_id === self.id
@@ -60,7 +63,10 @@ class User < ActiveRecord::Base
             :username => requester.gh_username,
             :requester_uuid => requester.uuid,
             :pic => requester.pic,
-            :project_uuid => request.project.uuid
+            :project_uuid => request.project.uuid,
+            :project_id => request.project.id,
+            :project_name => project_name,
+            :is_request => true
         }
 
         # if the request to join slack or hipchat, get the url the appropriate one
@@ -86,8 +92,12 @@ class User < ActiveRecord::Base
             :uuid => request.uuid,
             :requested_asset => request.requested_asset,
             :username => responder.gh_username,
+            :requester_uuid => nil, # don't need it, but keeping it for consistency
             :pic => responder.pic,
-            :project_uuid => request.project.uuid
+            :project_uuid => request.project.uuid,
+            :project_id => request.project.id,
+            :project_name => project_name,
+            :is_request => false
         }
 
         data
