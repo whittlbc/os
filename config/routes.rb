@@ -51,6 +51,8 @@ Backboneworld::Application.routes.draw do
       get :get_all_user_repos, :path => '/getAllUserRepos'
       get :get_repo_details, :path => '/getRepoDetails'
       put :star, :path => '/star'
+      get :get_my_projects, :path => '/getMyProjects'
+      get :get_starred_projects, :path => '/getStarredProjects'
     end
   end
 

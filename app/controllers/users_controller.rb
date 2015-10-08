@@ -104,6 +104,57 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_starred_projects
+    user = User.find_by(uuid: params[:user_uuid])
+    if !user.nil?
+      starred = Project.includes(:user).where(:id => user.starred).active.map { |project|
+        {
+            :title => project.title,
+            :subtitle => project.subtitle,
+            :owner_gh_username => project.user.gh_username,
+            :status => project.status
+        }
+      }
+      render :json => starred
+    else
+      render :json => {:error => 'Tried to get starred projects, but user was nil'}, :status => 500
+    end
+  end
+
+  def get_my_projects
+    user = User.find_by(uuid: params[:user_uuid])
+
+    if !user.nil?
+      my_projects = user.projects.active.map { |project|
+        {
+          :title => project.title,
+          :subtitle => project.subtitle,
+          :status => project.status
+        }
+      }.sort_by { |p| p[:title] }
+
+      contributing_project_ids = Contributor.where(:user_id => user.id).map(&:project_id)
+      just_contributing_projects = []
+
+      Project.includes(:user).where(:id => contributing_project_ids).active.each { |project|
+        # only get projects where you're not the owner
+        if project.user_id != user.id
+          just_contributing_projects.push({
+            :title => project.title,
+            :subtitle => project.subtitle,
+            :owner_gh_username => project.user.gh_username,
+            :status => project.status
+          })
+        end
+      }
+      just_contributing_projects = just_contributing_projects.sort_by { |p| p[:title] }
+
+      render :json => {:own => my_projects, :contribute => just_contributing_projects}
+    else
+      render :json => {:error => 'Tried to get your projects, but user was nil'}, :status => 500
+    end
+  end
+
   private
 
   def user_params
