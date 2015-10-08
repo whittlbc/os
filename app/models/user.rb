@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
             :project_name => project_name,
             :is_request => false,
             :seen => false,
-            :date => request.responded_at.utc.iso8601
+            :date => !request.responded_at.nil? ? request.responded_at.utc.iso8601 : nil
         }
 
         data

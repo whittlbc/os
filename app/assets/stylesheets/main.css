@@ -125,6 +125,7 @@ footer p {
     float: right;
     margin-right: 57px;
     margin-top: 12px;
+    cursor: pointer;
     display: inline-block;
 }
 

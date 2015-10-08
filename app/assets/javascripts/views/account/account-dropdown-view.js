@@ -21,6 +21,7 @@ define(['jquery',
         },
 
         handleTabClicked: function (e) {
+            e.stopPropagation();
             this.trigger('account-tab-clicked', e.currentTarget.id);
         },
 

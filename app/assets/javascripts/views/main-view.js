@@ -336,11 +336,13 @@ define(['jquery',
 
             $(document).click(function () {
                 self.notificationsDropdown.$el.hide();
+                self.accountDropdown.$el.hide();
             });
 
             $('#headerNotificationsIcon').click(function (e) {
                 e.stopPropagation();
                 self.searchView.forceCloseSearchBar();
+                self.accountDropdown.$el.hide();
 
                 if (self.notificationsDropdown.$el.css('display') === 'none') {
                     self.handleSeen();
@@ -349,6 +351,21 @@ define(['jquery',
                     self.notificationsDropdown.$el.hide();
                 }
             });
+
+            $('#header-user-pic').click(function (e) {
+                e.stopPropagation();
+                self.searchView.forceCloseSearchBar();
+                self.notificationsDropdown.$el.hide();
+
+                if (self.accountDropdown.$el.css('display') === 'none') {
+                    self.handleSeen();
+                    self.accountDropdown.$el.show();
+                } else {
+                    self.accountDropdown.$el.hide();
+                }
+            });
+
+
         },
 
         handleSeen: function () {
@@ -499,6 +516,7 @@ define(['jquery',
             
             this.listenTo(this.searchView, 'hide-menu-dropdowns', function () {
                 self.notificationsDropdown.$el.hide();
+                self.accountDropdown.$el.hide();
             });
             
             this.searchView.render();
@@ -531,7 +549,7 @@ define(['jquery',
                         self.showStarredModal();
                         break;
                     case 'signInOutTab':
-                        self.userAuthed ? self.signOut() : self.showLoginModalFromAccountTabClick();
+                        !self.userAuthed ? self.signOut() : self.showLoginModalFromAccountTabClick();
                         break;
                 }
             });

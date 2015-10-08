@@ -86,7 +86,7 @@ define(['jquery',
                 acceptedIntegration: !this.data.is_request && (this.data.requested_asset === 1 || this.data.requested_asset === 2),
                 showActionBtns: this.data.is_request,
                 projectName: this.data.project_name,
-                date: OSUtil.getTimeAgo(this.data.date)
+                date: this.data.date ? OSUtil.getTimeAgo(this.data.date) : ''
             }));
         }
     });
