@@ -63,28 +63,6 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
 
         MY_GH_HEADER_TOKEN: '202171c69b06bbe92b666e1a5e3a9b7981a6fced',
 
-        //getTimeDiff: function (dateThenUTC) {
-        //    var dateNowUTC = this.dateToUTC(new Date());
-        //    var minDiff = (dateNowUTC - dateThenUTC) / 60;
-        //    if (minDiff > 60) {
-        //        var hourDiff = minDiff / 60;
-        //        if (hourDiff > 24) {
-        //            var dayDiff = hourDiff / 24;
-        //            if (dayDiff > 365) {
-        //                var yearDiff = dayDiff / 365;
-        //                return yearDiff.floor == 1 ? '1 year ago' : Math.floor(yearDiff) + ' years ago';
-        //            }
-        //            else {
-        //                return dayDiff.floor == 1 ? '1 day ago' : Math.floor(dayDiff) + ' days ago';
-        //            }
-        //        } else {
-        //            return hourDiff.floor == 1 ? '1 hour ago' : Math.floor(hourDiff) + ' hours ago';
-        //        }
-        //    } else {
-        //        return minDiff.ceil == 1 ? '1 minute ago' : Math.floor(minDiff) + ' minutes ago';
-        //    }
-        //},
-
         getTimeAgo: function (dateStr) {
             var date = new Date(dateStr);
             return $.timeago(moment.utc(date).utcOffset(date.getTimezoneOffset()).format("MM-DD-YYYY HH:mm Z"));
@@ -248,6 +226,10 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
                 action: 'create'
             },
             'respondToRequest': {
+                verb: 'PUT',
+                action: 'update'
+            },
+            'sawNotifications': {
                 verb: 'PUT',
                 action: 'update'
             }

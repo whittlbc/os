@@ -274,6 +274,7 @@ define(['jquery',
                 var user = new User();
                 user.getByGHUsername({gh_username: cookieGHUsername}, {success: function (user) {
                     self.setUserFromResponse(user);
+                    self.notifications = user.notifications;
                     self.notificationsDropdown.populate(user.notifications);
                 }});
             }
@@ -338,8 +339,35 @@ define(['jquery',
             $('#headerNotificationsIcon').click(function (e) {
                 e.stopPropagation();
                 self.searchView.forceCloseSearchBar();
-                self.notificationsDropdown.$el.css('display') === 'none' ? self.notificationsDropdown.$el.show() : self.notificationsDropdown.$el.hide();
+
+                if (self.notificationsDropdown.$el.css('display') === 'none') {
+                    self.handleSeen();
+                    self.notificationsDropdown.$el.show();
+                } else {
+                    self.notificationsDropdown.$el.hide();
+                }
             });
+        },
+
+        handleSeen: function () {
+            var self = this;
+            var unseen = [];
+
+            for (var i = 0; i < this.notifications.length; i++) {
+                if (!this.notifications[i].seen) {
+                    this.notifications[i].seen = true;
+                    unseen.push({
+                        uuid: this.notifications[i].uuid,
+                        is_request: this.notifications[i].is_request
+                    });
+                }
+            }
+            if (unseen.length > 0) {
+                this.notificationsDropdown.sawAllNotifications();
+                var project = new Project();
+                project.sawNotifications({notifications: unseen});
+            }
+
         },
 
         respondToRequest: function (notificationData, answer) {

@@ -20,22 +20,28 @@ define(['jquery',
         populate: function (notifications) {
             var self = this;
             this.$mainList.empty();
-            this.notificationsCount = notifications.length;
+            this.unseenNotificationsCount = 0;
 
             if (notifications.length > 0) {
-                $('#headerNotificationsCount').html(notifications.length);
-                $('#headerNotificationsCount').show();
                 for (var i = 0; i < notifications.length; i++) {
                     this.addItem(notifications[i]);
+                    if (!notifications[i].seen) {
+                        this.unseenNotificationsCount++;
+                    }
                 }
             } else {
-                $('#headerNotificationsCount').hide();
                 var $zeroNotificationsView = $('<div>', {
                     class: 'zero-notifications'
                 });
                 $zeroNotificationsView.html('No Notifications');
                 this.$el.find('.main-list').append($zeroNotificationsView);
             }
+
+            if (this.unseenNotificationsCount > 0) {
+                $('#headerNotificationsCount').html(this.unseenNotificationsCount);
+                $('#headerNotificationsCount').show();
+            }
+
         },
 
         addItem: function(data) {
@@ -70,10 +76,15 @@ define(['jquery',
         decreaseNotificationsCount: function () {
             var self = this;
             var $countTag = $('#headerNotificationsCount');
-            if (this.notificationsCount >= 1) {
-                this.notificationsCount--;
-                this.notificationsCount == 0 ? $countTag.hide() : $countTag.html(this.notificationsCount);
+            if (this.unseenNotificationsCount >= 1) {
+                this.unseenNotificationsCount--;
+                this.unseenNotificationsCount == 0 ? $countTag.hide() : $countTag.html(this.unseenNotificationsCount);
             }
+        },
+
+        sawAllNotifications: function () {
+            this.unseenNotificationsCount = 0;
+            $('#headerNotificationsCount').hide();
         },
 
 		render: function () {

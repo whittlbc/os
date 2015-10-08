@@ -368,6 +368,7 @@ class ProjectsController < ApplicationController
 
       # Update the request with the response value
       pending_request.update_attributes(:response => params[:response])
+      pending_request.update_attributes(:responded_at => pending_request.updated_at)
 
       # if the response was "No Thanks"
       if !params[:response]
@@ -401,6 +402,22 @@ class ProjectsController < ApplicationController
       render :json => {:message => 'Could not accept request...either the user, the project, or the pending request was nil'}, :status => 500
     end
 
+  end
+
+  def saw_notifications
+    notifications = params[:notifications]
+    if !notifications.blank?
+      notifications.each { |notification|
+        if notification[:is_request]
+          PendingRequest.find_by(uuid: notification[:uuid]).update_attributes(:request_seen => true)
+        else
+          PendingRequest.find_by(uuid: notification[:uuid]).update_attributes(:response_seen => true)
+        end
+      }
+      render :json => {}, :status => 200
+    else
+      render :json => {:error => 'params[:notifications] was .blank? for some reason...'}, :status => 500
+    end
   end
 
   def invite_slack_user(user, api_token)

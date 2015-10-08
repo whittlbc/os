@@ -48,17 +48,17 @@ define(['jquery',
             switch (this.data.requested_asset) {
                 case 0:
                     text = isRequest ? 'has requested to join your project, ' : 'has accepted your request to join the project, ';
-                    positiveBtnText = isRequest ? 'Accept' : 'OK';
+                    positiveBtnText = 'Accept';
                     break;
                 case 1:
                     text = isRequest ? 'has requested to join the <b>Slack</b> team for your project, ' :
                         'has accepted your request to join the <b>Slack</b> team for the project, ';
-                    positiveBtnText = isRequest ? 'Invite' : 'OK';
+                    positiveBtnText = 'Invite';
                     break;
                 case 2:
                     text = isRequest ? 'has requested to join the <b>HipChat</b> team for your project, ' :
                         'has accepted your request to join the <b>HipChat</b> team for the project, ';
-                    positiveBtnText = isRequest ? 'Invite' : 'OK';
+                    positiveBtnText = 'Invite';
                     break;
             }
 
@@ -84,8 +84,9 @@ define(['jquery',
                 acceptedText: this.data.requested_asset === 0 ? 'Accepted' : 'Invited',
                 showRejected: options.showRejected,
                 acceptedIntegration: !this.data.is_request && (this.data.requested_asset === 1 || this.data.requested_asset === 2),
-                showNegativeBtn: this.data.is_request,
-                projectName: this.data.project_name
+                showActionBtns: this.data.is_request,
+                projectName: this.data.project_name,
+                date: OSUtil.getTimeAgo(this.data.date)
             }));
         }
     });

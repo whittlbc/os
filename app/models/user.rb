@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     # Get all notifications where you're either:
     # (1) the responder and there is no response
     # (2) the requester and the response_acted_on is still false, but there has been a response (either t or f)
-    PendingRequest.includes(:project).where('(pending_requests.responder_id = ? AND pending_requests.response IS NULL) OR (pending_requests.requester_id = ? AND pending_requests.response IS NOT NULL AND pending_requests.response_acted_on = ?)', self.id, self.id, false).map { |request|
+    PendingRequest.includes(:project).where('(pending_requests.responder_id = ? AND pending_requests.response IS NULL) OR (pending_requests.requester_id = ? AND pending_requests.response IS NOT NULL AND pending_requests.response_seen = ?)', self.id, self.id, false).map { |request|
 
       # go with project title, but default back to repo name
       project_name = (request.project.title.nil? || request.project.title.empty?) ? request.project.repo_name : request.project.title
@@ -66,7 +66,9 @@ class User < ActiveRecord::Base
             :project_uuid => request.project.uuid,
             :project_id => request.project.id,
             :project_name => project_name,
-            :is_request => true
+            :is_request => true,
+            :seen => request.request_seen,
+            :date => request.created_at.utc.iso8601
         }
 
         # if the request to join slack or hipchat, get the url the appropriate one
@@ -84,7 +86,7 @@ class User < ActiveRecord::Base
 
         data
 
-      # if you're the one who sent the request, you need to "see" the response and act on it
+      # if you're the one who sent the request, you still need to see the response
       else
         # get info about the responder to your request
         responder = User.find_by(:id => request.responder_id)
@@ -97,12 +99,16 @@ class User < ActiveRecord::Base
             :project_uuid => request.project.uuid,
             :project_id => request.project.id,
             :project_name => project_name,
-            :is_request => false
+            :is_request => false,
+            :seen => false,
+            :date => request.responded_at.utc.iso8601
         }
 
         data
       end
-    }
+
+    }.sort_by { |r| r[:date] }.reverse
+
   end
 
 end
