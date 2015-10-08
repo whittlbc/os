@@ -15,6 +15,7 @@ define(['jquery',
     'views/modals/basic-question-modal',
     'views/search/search-container-view',
     'views/notifications/notifications-dropdown-view',
+    'views/account/account-dropdown-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -34,6 +35,7 @@ define(['jquery',
      BasicQuestionModal,
      SearchContainerView,
      NotificationsDropdownView,
+     AccountDropdownView,
      MainViewTpl) {
 	'use strict';
 
@@ -381,6 +383,16 @@ define(['jquery',
             });
         },
 
+        showLoginModalFromAccountTabClick: function () {
+            this.loginModal.setMessage('Go ahead and login!');
+            this.loginModal.showModal();
+        },
+
+        signOut: function () {
+            var self = this;
+            window.location.reload();
+        },
+
 		render: function (options) {
 			var self = this;
             this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -504,6 +516,27 @@ define(['jquery',
             });
 
             this.notificationsDropdown.render();
+
+            this.accountDropdown = new AccountDropdownView({
+                el: '#accountDropdown',
+                userAuthed: self.userAuthed
+            });
+
+            this.listenTo(this.accountDropdown, 'account-tab-clicked', function (id) {
+                switch (id) {
+                    case 'myProjectsTab':
+                        self.showMyProjectsModal();
+                        break;
+                    case 'starredTab':
+                        self.showStarredModal();
+                        break;
+                    case 'signInOutTab':
+                        self.userAuthed ? self.signOut() : self.showLoginModalFromAccountTabClick();
+                        break;
+                }
+            });
+
+            this.accountDropdown.render();
 
             this.addHeaderClickListeners();
         }
