@@ -319,7 +319,7 @@ define(['jquery',
             var project = new Project();
             var obj = {
                 project_uuid: self.uuid,
-                user_uuid: self.user_uuid,
+                requester_uuid: self.user_uuid,
                 asset: int
             };
             project.requestToJoin(obj, {success: function () {

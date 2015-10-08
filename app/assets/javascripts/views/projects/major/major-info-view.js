@@ -47,7 +47,9 @@ define(['jquery',
             if (this.editMode) {
                 Backbone.EventBroker.trigger('project:save-edit');
             } else {
-                this.upForGrabsType ? Backbone.EventBroker.trigger('pull-project', this.projectID) : Backbone.EventBroker.trigger('project:join');
+                if (!this.pendingProjectRequest && !this.isContributor) {
+                    this.upForGrabsType ? Backbone.EventBroker.trigger('pull-project', this.projectID) : Backbone.EventBroker.trigger('project:join');
+                }
             }
         },
 
@@ -237,6 +239,8 @@ define(['jquery',
             this.privacy = options.privacy;
 
             this.upForGrabsType = (options.status == 0);
+            this.pendingProjectRequest = options.pending_project_request;
+            this.isContributor = options.is_contributor;
 
             this.$el.html(MajorInfoViewTpl({
                 title: options.title ? options.title : '',

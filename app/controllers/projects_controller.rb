@@ -331,12 +331,12 @@ class ProjectsController < ApplicationController
   end
 
   def request_to_join
-    user = User.find_by(uuid: params[:user_uuid])
+    requester = User.find_by(uuid: params[:requester_uuid])
     project = Project.find_by(uuid: params[:project_uuid])
 
-    if !user.nil? && !project.nil? && !params[:asset].nil?
+    if !requester.nil? && !project.nil? && !params[:asset].nil?
       asset = params[:asset].to_i
-      pending_request = PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :user_id => user.id, :project_id => project.id)
+      pending_request = PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :requester_id => requester.id, :responder_id => project.user.id, :project_id => project.id)
       pending_request.save!
 
       if asset === SLACK_ASSET
@@ -344,10 +344,10 @@ class ProjectsController < ApplicationController
 
         # Invite the user to join the Slack team if the project has a Slack API Key associated with it
         if !integration.key.nil?
-          slack_invite = invite_slack_user(user, integration.key)
+          slack_invite = invite_slack_user(requester, integration.key)
           if slack_invite === true
             pending_request.destroy!
-            integration.update_attributes(:users => integration.users + [user.id])
+            integration.update_attributes(:users => integration.users + [requester.id])
           end
         end
       end
