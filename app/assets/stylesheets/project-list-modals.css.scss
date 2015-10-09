@@ -1,0 +1,188 @@
+
+#myProjectsModalView {
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: none !important;
+    margin-bottom: 10px;
+
+    button {
+      margin-right: 22px;
+      margin-top: 19px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 65px;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 23px;
+    }
+  }
+
+  .my-projects-modal-body {
+    height: 450px;
+    width: 100%;
+    overflow: scroll;
+    margin-bottom: 20px;
+  }
+
+  #myProjectsFeedView {
+    width: 100%;
+
+    .list-container {
+      width: 100%;
+      float: left;
+
+      .my-projects-type-title-container {
+        height: 20px;
+        width: 100%;
+        display: block;
+        float: left;
+
+        .my-projects-type-title {
+          line-height: 20px;
+          height: 100%;
+          float: left;
+          font-size: 12px;
+          padding-left: 2%;
+          padding-right: 2%;
+          display: inline-block;
+          color: #00A6C9;
+        }
+
+        .line-break {
+          height: 1px;
+          width: 89%;
+          background-color: #EEE;
+          float: left;
+          margin-top: 9px;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+      .no-others-exist {
+        color: #cecece;
+        font-style: italic;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      ul {
+        width: 100%;
+        padding-left: 0;
+        list-style-type: none;
+        float: left;
+        margin-bottom: 25px;
+
+        li {
+          width: 100%;
+          height: 65px;
+          float: left;
+        }
+
+        li:hover {
+          background-color: #F4F6F8;
+        }
+
+        .my-projects-item-container {
+          width: 100%;
+          heigth: 100%;
+          float: left;
+          display: block;
+
+        }
+
+      }
+    }
+  }
+
+}
+
+
+
+#starredModalView {
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: none !important;
+    margin-bottom: 10px;
+
+    button {
+      margin-right: 22px;
+      margin-top: 19px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 65px;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 23px;
+    }
+  }
+
+  .starred-modal-body {
+    height: 450px;
+    width: 100%;
+    overflow: scroll;
+    margin-bottom: 20px;
+  }
+
+  #starredFeedView {
+    width: 100%;
+
+    .list-container {
+      width: 100%;
+      float: left;
+
+      .no-others-exist {
+        color: #cecece;
+        font-style: italic;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      ul {
+        width: 100%;
+        padding-left: 0;
+        list-style-type: none;
+        float: left;
+        margin-bottom: 25px;
+
+        li {
+          width: 100%;
+          height: 65px;
+          float: left;
+        }
+
+        li:hover {
+          background-color: #F4F6F8;
+        }
+
+        .starred-item-container {
+          width: 100%;
+          heigth: 100%;
+          float: left;
+          display: block;
+
+        }
+
+      }
+    }
+  }
+
+}

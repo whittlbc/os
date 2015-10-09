@@ -16,6 +16,8 @@ define(['jquery',
     'views/search/search-container-view',
     'views/notifications/notifications-dropdown-view',
     'views/account/account-dropdown-view',
+    'views/modals/my-projects-modal',
+    'views/modals/starred-modal',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -36,6 +38,8 @@ define(['jquery',
      SearchContainerView,
      NotificationsDropdownView,
      AccountDropdownView,
+     MyProjectsModal,
+     StarredModal,
      MainViewTpl) {
 	'use strict';
 
@@ -69,6 +73,16 @@ define(['jquery',
         },
 
 		events: {},
+
+        showMyProjectsModal: function () {
+            var self = this;
+            this.myProjectsModal.showModal();
+        },
+
+        showStarredModal: function () {
+            var self = this;
+            this.starredModal.showModal();
+        },
 
         getAllContributorsForRepo: function (projectUUID) {
             var self = this;
@@ -555,6 +569,18 @@ define(['jquery',
             });
 
             this.accountDropdown.render();
+
+            this.myProjectsModal = new MyProjectsModal({
+                el: '#modalMyProjects'
+            });
+
+            this.myProjectsModal.render();
+
+            this.starredModal = new StarredModal({
+                el: '#modalStarred'
+            });
+
+            this.starredModal.render();
 
             this.addHeaderClickListeners();
         }
