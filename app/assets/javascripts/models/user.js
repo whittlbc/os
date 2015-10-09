@@ -132,6 +132,28 @@ define(['jquery',
             });
 
             return this.sync('star', this, requestInfo);
+        },
+
+        getMyProjects: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getMyProjects',
+                data: info
+            });
+
+            return this.sync('getMyProjects', this, requestInfo);
+        },
+
+        getStarredProjects: function(info, options) {
+            var requestInfo = options || {};
+
+            _.extend(requestInfo, {
+                url: this.extension + '/getStarredProjects',
+                data: info
+            });
+
+            return this.sync('getStarredProjects', this, requestInfo);
         }
     });
 

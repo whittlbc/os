@@ -1,15 +1,16 @@
 <div class="list-container">
     <div class="my-projects-type-title-container">
         <div class="my-projects-type-title">My Projects</div>{{
-        }}<div class="line-break"></div>
+        }}<div class="line-break" id="myProjectsLB"></div>
     </div>
     <ul id="owned-projects-list"></ul>
+    <div class="no-others-exist" id="noOwnedProjects" hidden>No owned projects</div>
 </div>
 <div class="list-container">
     <div class="my-projects-type-title-container">
-        <div class="my-projects-type-title">Other Projects I Contribute To</div>{{
-        }}<div class="line-break"></div>
+        <div class="my-projects-type-title">Contributions</div>{{
+        }}<div class="line-break" id="contributionsLB"></div>
     </div>
     <ul id="contributing-projects-list"></ul>
-    <div class="no-others-exist" hidden>No projects</div>
+    <div class="no-others-exist" id="noOtherContributions" hidden>No other contributions</div>
 </div>

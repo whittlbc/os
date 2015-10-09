@@ -58,12 +58,14 @@ define(['jquery',
                 'contribs-modal:show': 'showContribsModal',
                 'create-project-modal:hide': 'hideCreateProjectModal',
                 'send-invites-modal:show': 'showSendInvitesModal',
-                'project:star': 'handleStarProject',
+                'project:star': 'hansdleStarProject',
                 'project:delete': 'showDeleteProjectModal',
                 'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
                 'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray',
                 'evolution-item:delete': 'showDeleteEvolutionItemModal',
-                'invite-gh-contributors': 'getAllContributorsForRepo'
+                'invite-gh-contributors': 'getAllContributorsForRepo',
+                'force-hide-starred-modal': 'forceHideStarredModal',
+                'force-hide-my-projects-modal': 'forceHideMyProjectsModal'
             }, this);
             this.userAuthed = false;
 
@@ -77,11 +79,41 @@ define(['jquery',
         showMyProjectsModal: function () {
             var self = this;
             this.myProjectsModal.showModal();
+            if (!this.myProjectsData) {
+                var user = new User();
+                user.getMyProjects({user_uuid: self.userData.user_uuid}, {success: function (projects) {
+                    self.myProjectsData = projects;
+                    self.myProjectsModal.populate(projects);
+                }});
+            }
         },
 
         showStarredModal: function () {
             var self = this;
             this.starredModal.showModal();
+            if (!this.starredData) {
+                var user = new User();
+                user.getStarredProjects({user_uuid: self.userData.user_uuid}, {success: function (projects) {
+                    self.starredData = projects;
+                    self.starredModal.populate(projects);
+                }});
+            }
+        },
+
+        forceHideStarredModal: function (id) {
+            this.starredModal.hideModal();
+            this.switchToProjectAndHideModal(id);
+        },
+
+        forceHideMyProjectsModal: function (id) {
+            this.myProjectsModal.hideModal();
+            this.switchToProjectAndHideModal(id);
+        },
+
+        switchToProjectAndHideModal: function (id) {
+            window.location.hash = '#projects/' + id;
+            this.forceHideModalBackdrop();
+
         },
 
         getAllContributorsForRepo: function (projectUUID) {

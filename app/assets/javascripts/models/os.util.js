@@ -232,6 +232,14 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'sawNotifications': {
                 verb: 'PUT',
                 action: 'update'
+            },
+            'getMyProjects': {
+                verb: 'GET',
+                action: 'read'
+            },
+            'getStarredProjects': {
+                verb: 'GET',
+                action: 'read'
             }
         }
 

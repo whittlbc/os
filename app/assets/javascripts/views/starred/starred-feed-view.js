@@ -36,8 +36,15 @@ define(['jquery',
                 tagName: 'li',
                 data: data
             });
+            this.setListener(starredItemView, data);
             starredItemView.render();
             this.$el.find('#starred-feed-list').append(starredItemView.el);
+        },
+
+        setListener: function (view, data) {
+            view.$el.click(function () {
+                Backbone.EventBroker.trigger('force-hide-starred-modal', data.id);
+            });
         },
 
         render: function () {

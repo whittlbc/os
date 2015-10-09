@@ -109,12 +109,13 @@ class UsersController < ApplicationController
     if !user.nil?
       starred = Project.includes(:user).where(:id => user.starred).active.map { |project|
         {
+            :id => project.id,
             :title => project.title,
             :subtitle => project.subtitle,
             :owner_gh_username => project.user.gh_username,
             :status => project.status
         }
-      }
+      }.sort_by { |p| p[:title].try(:downcase) }
       render :json => starred
     else
       render :json => {:error => 'Tried to get starred projects, but user was nil'}, :status => 500
@@ -127,27 +128,29 @@ class UsersController < ApplicationController
     if !user.nil?
       my_projects = user.projects.active.map { |project|
         {
+          :id => project.id,
           :title => project.title,
           :subtitle => project.subtitle,
           :status => project.status
         }
-      }.sort_by { |p| p[:title] }
+      }.sort_by { |p| p[:title].try(:downcase) }
 
       contributing_project_ids = Contributor.where(:user_id => user.id).map(&:project_id)
       just_contributing_projects = []
 
-      Project.includes(:user).where(:id => contributing_project_ids).active.each { |project|
+      Project.includes(:user).where(:id => contributing_project_ids).active.each { |proj|
         # only get projects where you're not the owner
-        if project.user_id != user.id
+        if proj.user_id != user.id
           just_contributing_projects.push({
-            :title => project.title,
-            :subtitle => project.subtitle,
-            :owner_gh_username => project.user.gh_username,
-            :status => project.status
+            :id => proj.id,
+            :title => proj.title,
+            :subtitle => proj.subtitle,
+            :owner_gh_username => proj.user.gh_username,
+            :status => proj.status
           })
         end
       }
-      just_contributing_projects = just_contributing_projects.sort_by { |p| p[:title] }
+      just_contributing_projects = just_contributing_projects.sort_by { |p| p[:title].try(:downcase) }
 
       render :json => {:own => my_projects, :contribute => just_contributing_projects}
     else
