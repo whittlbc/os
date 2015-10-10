@@ -118,15 +118,25 @@ footer p {
 }
 
 #header-user-pic {
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-    background-color: white;
+    background-color: #C4C5CA;
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
     float: right;
     margin-right: 57px;
-    margin-top: 12px;
+    margin-top: 13.5px;
     cursor: pointer;
     display: inline-block;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.08), 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+    transition: box-shadow .3s ease-out;
+}
+
+#header-user-pic:hover {
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
+}
+
+#header-user-pic.top-padding {
+    padding-top: 6px;
 }
 
 #headerNotificationsIcon {
@@ -134,7 +144,7 @@ footer p {
     width: 40px;
     background-color: white;
     float: right;
-    margin-right: 34px;
+    margin-right: 36px;
     margin-top: 11px;
     display: inline-block;
     text-align: center;
@@ -144,8 +154,12 @@ footer p {
 }
 
 #headerNotificationsIcon > .fa {
-    font-size: 28px;
-    color: #333;
+    font-size: 30px;
+    color: #38383A;
+}
+
+#headerNotificationsIcon > .fa:hover {
+    color: #545454;
 }
 
 #headerNotificationsCount {
@@ -166,7 +180,7 @@ footer p {
 .header-searchbar-container{
     display: inline-block;
     width: 66%;
-    margin-right: 20px;
+    margin-right: 18px;
     height: 65px;
     float: right;
 }
@@ -202,27 +216,35 @@ footer p {
 
 
 #headerAddProjectBtn {
-    width: 120px;
+    width: 80px;
     height: 65px;
-    line-height: 58px;
     text-align: center;
-    color: black;
-    cursor: pointer;
-    margin-right: 14px;
+    margin-right: 11px;
     float: right;
 }
 
-#headerAddProjectBtn > span {
+#addNewProject {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
+    transition: box-shadow .3s ease-out, background-color .3s ease-out;
+    height: 36.5px;
+    width: 36.5px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36.5px;
+    background-color: #00A6C9;
+    color: white;
     font-size: 23px;
-    position: relative;
-    top: 1px;
-    right: 5px;
-    font-weight: 300;
-    font-family: 'Helvetica Neue';
+    cursor: pointer;
+    margin-top: 14.25px;
+}
+
+#addNewProject:hover {
+    background-color: #00B3D7;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
 }
 
 #createNewProjectModalContentContainer {
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 

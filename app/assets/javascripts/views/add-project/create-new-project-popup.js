@@ -457,11 +457,11 @@ define(['jquery',
         },
 
         disableAddProjectBtn: function () {
-            $('#headerAddProjectBtn')[0].style.pointerEvents = 'none';
+            $('#addNewProject')[0].style.pointerEvents = 'none';
         },
 
         enableAddProjectBtn: function () {
-            $('#headerAddProjectBtn')[0].style.pointerEvents = 'auto';
+            $('#addNewProject')[0].style.pointerEvents = 'auto';
         },
 
         handleBack: function () {

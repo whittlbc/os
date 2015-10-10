@@ -1144,7 +1144,6 @@ $major-info-project-type: #CECECE;
   border-bottom: none;
 }
 
-
 .poster-pic-container {
   display: inline-block;
   height: 100%;
@@ -1466,30 +1465,6 @@ $major-info-project-type: #CECECE;
   width: 20px;
   text-align: center;
   height: 20px;
-}
-
-.toggle-sort-type-container {
-  width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  height: 35px;
-  
-  .buttons-container {
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    height: 100%;
-
-    .feed-sort-type-btn {
-      width: 50%;
-      height: 100%;
-      line-height: 35px;
-      float: left;
-      display: inline-block;
-      cursor: pointer;
-      text-align: center;
-    }
-  }
 }
 
 #noEvolutionItems {

@@ -116,8 +116,12 @@ define(['jquery',
 
         handleSortTypeClick: function (e) {
             var self = this;
-            var sortType = (e.currentTarget.id === 'time') ? OSUtil.SORT_BY_TIME : OSUtil.SORT_BY_VOTES;
-            Backbone.EventBroker.trigger('projects:fetch-by-sort-type', sortType);
+            if (!$(e.currentTarget).hasClass('active')) {
+                this.$el.find('.feed-sort-type-btn').removeClass('active');
+                $(e.currentTarget).addClass('active');
+                var sortType = (e.currentTarget.id === 'time') ? OSUtil.SORT_BY_TIME : OSUtil.SORT_BY_VOTES;
+                Backbone.EventBroker.trigger('projects:fetch-by-sort-type', sortType);
+            }
         },
 
         onSelectProject: function() {

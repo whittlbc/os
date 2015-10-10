@@ -58,7 +58,7 @@ define(['jquery',
                 'contribs-modal:show': 'showContribsModal',
                 'create-project-modal:hide': 'hideCreateProjectModal',
                 'send-invites-modal:show': 'showSendInvitesModal',
-                'project:star': 'hansdleStarProject',
+                'project:star': 'handleStarProject',
                 'project:delete': 'showDeleteProjectModal',
                 'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
                 'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray',
@@ -165,7 +165,7 @@ define(['jquery',
             var project = new Project();
             project.destroyProject({id: self.projectView.projectID}, {success: function () {
                 window.location.hash = '#on-the-fence';
-                // show tiny success popup
+                // show tiny success popupchr
             }, error: function () {
                 // show an error message
             }});
@@ -348,7 +348,9 @@ define(['jquery',
         },
 
         setUserHeaderPic: function (url) {
-            $('#header-user-pic').attr('src', url);
+            var $profPic = $('#header-user-pic');
+            $profPic.attr('src', url);
+            $profPic.removeClass('top-padding');
         },
 
         getAllLanguages: function () {
@@ -371,7 +373,7 @@ define(['jquery',
 
         addHeaderClickListeners: function () {
             var self = this;
-            $('#headerAddProjectBtn').click(function () {
+            $('#addNewProject').click(function () {
                 if (self.userAuthed) {
                     self.createProjectModal.showModal();
                 } else {
@@ -418,19 +420,22 @@ define(['jquery',
             var self = this;
             var unseen = [];
 
-            for (var i = 0; i < this.notifications.length; i++) {
-                if (!this.notifications[i].seen) {
-                    this.notifications[i].seen = true;
-                    unseen.push({
-                        uuid: this.notifications[i].uuid,
-                        is_request: this.notifications[i].is_request
-                    });
+            if (this.notifications) {
+
+                for (var i = 0; i < this.notifications.length; i++) {
+                    if (!this.notifications[i].seen) {
+                        this.notifications[i].seen = true;
+                        unseen.push({
+                            uuid: this.notifications[i].uuid,
+                            is_request: this.notifications[i].is_request
+                        });
+                    }
                 }
-            }
-            if (unseen.length > 0) {
-                this.notificationsDropdown.sawAllNotifications();
-                var project = new Project();
-                project.sawNotifications({notifications: unseen});
+                if (unseen.length > 0) {
+                    this.notificationsDropdown.sawAllNotifications();
+                    var project = new Project();
+                    project.sawNotifications({notifications: unseen});
+                }
             }
 
         },
@@ -452,8 +457,8 @@ define(['jquery',
         },
 
         signOut: function () {
-            var self = this;
-            window.location.reload();
+            document.cookie = 'gh_username=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            window.location = '/';
         },
 
 		render: function (options) {
@@ -595,7 +600,7 @@ define(['jquery',
                         self.showStarredModal();
                         break;
                     case 'signInOutTab':
-                        !self.userAuthed ? self.signOut() : self.showLoginModalFromAccountTabClick();
+                        self.userAuthed ? self.signOutModal.showModal() : self.showLoginModalFromAccountTabClick();
                         break;
                 }
             });
@@ -613,6 +618,15 @@ define(['jquery',
             });
 
             this.starredModal.render();
+
+            this.signOutModal = new BasicQuestionModal({
+                el: this.$el.find('#modalSignOut'),
+                message: 'Are you sure you want to sign out?'
+            });
+            this.listenTo(this.signOutModal, 'confirm', function () {
+                self.signOut();
+            });
+            this.signOutModal.render();
 
             this.addHeaderClickListeners();
         }
