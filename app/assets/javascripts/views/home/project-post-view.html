@@ -13,9 +13,9 @@
         <div class="tag-container"></div>
     </div>{{
     }}<div class="project-extra-details-container">
-        <div class="date">{{date}}</div>
+        <div class="date {{#upForGrabsType}}up-for-grabs-type{{/upForGrabsType}}">{{date}}</div>
         {{#upForGrabsType}}
-        <div class="grab-btn">+</div>
+        <div class="grab-btn"><i class="material-icons">add</i></div>
         {{/upForGrabsType}}
         <div class="main-three-details-container">
             <div class="main-three-sub-container {{#upForGrabsType}}main-three-sub-container-no-contrib{{/upForGrabsType}}">
