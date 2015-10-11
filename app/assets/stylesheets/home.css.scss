@@ -1,4 +1,10 @@
 
+
+$not-quite-black: #1D1E22;
+$light-gray: #C4C5CA;
+$post-gray: #BDBEC1;
+
+
 .home-body {
   min-height: 700px;
 }
@@ -24,8 +30,8 @@
 }
 
 .project-post-view {
-  height: 150px;
-  border-bottom: 1px solid #ccc;
+  height: 135px;
+  border-bottom: 1px solid #EEE;
   display: block;
 }
 
@@ -79,7 +85,7 @@
 
 .title-subtitle-tag-container {
   display: inline-block;
-  width: 59%;
+  width: 67%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -90,7 +96,7 @@
   width: 100%;
   height: 20px;
   line-height: 20px;
-  color: #C4C5CA;
+  color: $post-gray;
   margin-top: 24px;
   font-size: 13px;
   padding-left: 5px;
@@ -116,7 +122,7 @@
 }
 
 .tag-container {
-  width: 90%;
+  width: 98%;
   height: auto;
   color: black;
   padding-left: 5px;
@@ -124,7 +130,7 @@
 
 .project-extra-details-container {
   display: inline-block;
-  width: 31%;
+  width: 23%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -172,11 +178,11 @@
 }
 
 .project-post-user-pic {
-  margin-left: 24px;
-  width: 25px;
-  height: 25px;
-  margin-top: 7.5px;
-  border-radius: 12.5px;
+  margin-left: 13.5px;
+  width: 28px;
+  height: 28px;
+  margin-top: 6px;
+  border-radius: 50%;
   cursor: pointer;
 }
 
@@ -195,18 +201,19 @@
   margin-right: auto;
   height: 40px;
   text-align: center;
+  color: $post-gray;
+  line-height: 40px;
 }
 
 .project-post-num-contributors {
-  font-size: 15px;
-  color: black;
-  line-height: 40px;
+  font-size: 16px;
+  margin-left: 2px;
 }
 
 .fa.fa-user {
-  color: black;
-  font-size: 18px;
-  line-height: 40px;
+  font-size: 14px;
+  position: relative;
+  top: -0.5px;
 }
 
 .project-post-comments-container {
@@ -223,19 +230,20 @@
   margin-left: auto;
   margin-right: auto;
   height: 40px;
+  line-height: 40px;
+  color: $post-gray;
   text-align: center;
 }
 
 .project-post-num-comments {
-  font-size: 15px;
-  color: black;
-  line-height: 40px;
+  font-size: 16px;
+  margin-left: 2px;
 }
 
-.fa.fa-comment {
-  color: black;
-  font-size: 18px;
-  line-height: 40px;
+.fa.fa-comment-o {
+  font-size: 14px;
+  position: relative;
+  top: -1px;
 }
 
 .post-license-privacy-container {

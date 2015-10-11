@@ -23,6 +23,7 @@ define(['jquery',
         setProjectTypeStatus: function (val) {
             var self = this;
             this.projectTypeStatus = val;
+            this.$el.find('.project-feed-list').attr('data-project-type', val);
         },
 
         errorHandler: function(resp, status, xhr) {
@@ -141,6 +142,7 @@ define(['jquery',
         },
 
 		render: function () {
+            console.log('render');
 			var self = this;
             this.$el.html(ProjectFeedViewTpl());
 		}
