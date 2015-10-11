@@ -695,37 +695,47 @@ $post-gray: #A2A7B7;
 
 .searchbox {
   width: 40%;
-  height: 37px;
+  height: 40px;
   position: relative;
   float: right;
-  margin-top: 15px;
+  margin-top: 16px;
   margin-right: 0;
   transition: width 0.3s;
 
+  .octicon-search {
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    font-size: 18px;
+    color: $light-gray;
+  }
+
   input{
     outline: 0;
-    border: 1px solid rgba(190,190,190,1);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 20px;
     margin-bottom: 0;
     background-color: white;
     width: 100%;
-    line-height: 37px;
-    padding-left: 20px;
-    font-size: 16px;
-    color: black;
+    padding-left: 38px;
+    font-size: 14px;
+    color: $post-gray;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    font-weight: 300;
   }
 
   input::-webkit-input-placeholder {
-    color: #aaaaaa;
+    color: $light-gray;
   }
   input:-moz-placeholder {
-    color: #aaaaaa;
+    color: $light-gray;
   }
   input::-moz-placeholder {
-    color: #aaaaaa;
+    color: $light-gray;
   }
   input:-ms-input-placeholder {
-    color: #aaaaaa;
+    color: $light-gray;
   }
 
   .search-results-list {

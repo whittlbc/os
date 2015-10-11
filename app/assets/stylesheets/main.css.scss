@@ -1,5 +1,6 @@
 
 
+$light-gray: #C4C5CA;
 $header-height: 70px;
 
 body {
@@ -18,7 +19,7 @@ header {
   width: 100%;
   background-color: white;
   z-index: 100;
-  box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07), 0 1px 0 0 rgba(0,0,0,0.04);
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07), 0 1px 0 0 rgba(0,0,0,0.045);
 }
 
 footer {
@@ -128,7 +129,7 @@ footer p {
 }
 
 #header-user-pic {
-    background-color: #C4C5CA;
+    background-color: #cecece;
     height: 40px;
     width: 40px;
     border-radius: 50%;
