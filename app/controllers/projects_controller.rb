@@ -66,11 +66,11 @@ class ProjectsController < ApplicationController
           :is_admin => user ? admin_arr.include?(user.gh_username) : false,
           :is_owner => user ? user.gh_username === owner_gh_username : false,
           :is_contributor => false,
-          :pending_project_request => user.has_pending_request?(project.id, PROJECT_ASSET),
-          :pending_slack_request => user.has_pending_request?(project.id, SLACK_ASSET),
-          :pending_hipchat_request => user.has_pending_request?(project.id, HIPCHAT_ASSET),
-          :is_slack_member => project.is_slack_member?(user.id),
-          :is_hipchat_member => project.is_hipchat_member?(user.id)
+          :pending_project_request => user ? user.has_pending_request?(project.id, PROJECT_ASSET) : false,
+          :pending_slack_request => user ? user.has_pending_request?(project.id, SLACK_ASSET) : false,
+          :pending_hipchat_request => user ? user.has_pending_request?(project.id, HIPCHAT_ASSET) : false,
+          :is_slack_member => user ? project.is_slack_member?(user.id) : false,
+          :is_hipchat_member => user ? project.is_hipchat_member?(user.id) : false
         }
 
         comments = Comment.where(project_id: params[:id])
