@@ -154,10 +154,7 @@ $post-gray: #BDBEC1;
 .main-three-details-container {
   width: 100%;
   height: 40px;
-}
-
-.main-three-no-search-result {
-  margin-top: 55px;
+  margin-top: 47.5px;
 }
 
 .main-three-sub-container {
@@ -247,9 +244,9 @@ $post-gray: #BDBEC1;
 }
 
 .post-license-privacy-container {
-  width: 50%;
+  width: 57%;
   height: 40px;
-  margin-top: 2px;
+  margin-top: 1px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -267,7 +264,7 @@ $post-gray: #BDBEC1;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  font-size: 12px;
+  font-size: 11px;
   font-family: 'Helvetica Neue';
   color: #C4C5CA;
   opacity: 0;
@@ -290,13 +287,15 @@ $post-gray: #BDBEC1;
 }
 
 .fa.fa-lock {
-  color: #C4C5CA;
-  font-size: 16px;
+  color: $post-gray;
+  font-size: 15px;
   line-height: 40px;
+  position: relative;
+  top: 1px;
 }
 
 .fa.fa-users {
-  color: #C4C5CA;
+  color: $post-gray;
   font-size: 14px;
   line-height: 40px;
 }
