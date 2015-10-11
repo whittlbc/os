@@ -2,7 +2,7 @@
 
 $not-quite-black: #1D1E22;
 $light-gray: #C4C5CA;
-$post-gray: #BDBEC1;
+$post-gray: #A2A7B7;
 
 
 .home-body {
@@ -146,7 +146,7 @@ $post-gray: #BDBEC1;
     font-size: 10px;
     font-family: 'Helvetica Neue';
     font-weight: 300;
-    color: #C4C5CA;
+    color: $light-gray;
     opacity: 0;
   }
 
@@ -255,10 +255,17 @@ $post-gray: #BDBEC1;
   margin-right: auto;
 }
 
+.post-license-privacy-container.up-for-grabs-type {
+  float: right;
+  margin-right: 10px;
+  width: 61.5%;
+}
+
 .project-post-license-container {
   width: 50%;
   height: 40px;
   display: inline-block;
+  float: left;
 }
 
 .project-post-license {
@@ -278,6 +285,7 @@ $post-gray: #BDBEC1;
   width: 50%;
   height: 40px;
   display: inline-block;
+  float: left;
 }
 
 .project-post-privacy {
@@ -328,7 +336,7 @@ $post-gray: #BDBEC1;
 }
 
 .user-pic-no-contrib {
-  margin-left: 23px;
+  margin-left: 20px;
 }
 
 .main-three-sub-container-no-contrib {
