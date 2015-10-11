@@ -3,17 +3,45 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
     // Document On Ready Shit
     $(document).ready(function(){
 
-        var headerShadowOn = false;
-        var headerShadow = '0 5px 8px 0 rgba(0, 0, 0, 0.075)';
+        // Hide Header on on scroll down
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 5;
+        var navbarHeight = $('header').outerHeight();
 
-        $(window).scroll(function () {
-            var pos = $(window).scrollTop();
-            if (pos < 5 && $('.header').css('box-shadow') != 'none') {
-                $('.header').css('box-shadow', 'none');
-            } else if (pos >= 5 && $('.header').css('box-shadow') != headerShadow) {
-                $('.header').css('box-shadow', headerShadow);
+        var hasScrolled = function() {
+            var st = $(this).scrollTop();
+
+            // Make sure they scroll more than delta
+            if(Math.abs(lastScrollTop - st) <= delta)
+                return;
+
+            // If they scrolled down and are past the navbar, add class .nav-up.
+            // This is necessary so you never see what is "behind" the navbar.
+            if (st > lastScrollTop && st > navbarHeight){
+                // Scroll Down
+                $('header').removeClass('nav-down').addClass('nav-up');
+            } else {
+                // Scroll Up
+                if(st + $(window).height() < $(document).height()) {
+                    $('header').removeClass('nav-up').addClass('nav-down');
+                }
             }
+
+            lastScrollTop = st;
+        };
+
+        $(window).scroll(function(event){
+            didScroll = true;
         });
+
+        setInterval(function() {
+            if (didScroll) {
+                hasScrolled();
+                didScroll = false;
+            }
+        }, 250);
+
 
         //// Highlight the current Project Type based on the initial has upon site entrance
         var initialPath = window.location.hash;

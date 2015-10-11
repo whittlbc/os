@@ -1,4 +1,6 @@
 
+$header-height: 70px;
+$sub-header-height: 69px;
 
 $not-quite-black: #1D1E22;
 $light-gray: #C4C5CA;
@@ -31,8 +33,6 @@ $post-gray: #A2A7B7;
 
 .project-post-view {
   height: 135px;
-  border-bottom: 1px solid #EEE;
-  display: block;
 }
 
 .arrow-container {
@@ -421,28 +421,27 @@ $post-gray: #A2A7B7;
 
 
 .project-type-nav {
-  height: 100px;
-  width: 55%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 65px;
-  border-bottom: 1px solid #EEE;
+  height: $sub-header-height;
+  width: 100%;
+  margin-top: $header-height;
+  border-bottom: 1px solid #E4E4E2;
+  background-color: #F7F7FA;
 }
 
 .project-type-container {
-  height: 100px;
-  width: 100%;
-  display: inline-block;
+  height: 100%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .project-type {
-  height: 80px;
+  height: 100%;
   width: 33.33%;
-  margin-top: 10px;
   cursor: pointer;
 
   a {
-    padding-top: 40px;
+    line-height: $sub-header-height;
     color: black;
   }
 
@@ -490,7 +489,7 @@ $post-gray: #A2A7B7;
 .filters-container {
 
   .selectize-control.multi {
-    position: fixed;
+    position: absolute;
     margin-left: auto;
     margin-right: auto;
     top: 100px;
@@ -699,7 +698,7 @@ $post-gray: #A2A7B7;
   height: 37px;
   position: relative;
   float: right;
-  margin-top: 12px;
+  margin-top: 15px;
   margin-right: 0;
   transition: width 0.3s;
 
