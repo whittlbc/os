@@ -7,14 +7,14 @@ $light-gray: #C4C5CA;
 $post-gray: #9EA1A9;
 $sub-header-color: #F7F7FA;
 
-$feed-width: 62.5%;
-$side-filters-width: 18.75%;
+$feed-width: 64%;
+$side-filters-width: 18%;
 
 .home-body {
   min-height: 700px;
 }
 
-#main-body-container {
+.main-body-container {
   float: left;
   width: 100%;
 }
@@ -29,6 +29,7 @@ $side-filters-width: 18.75%;
 #project-feed {
   min-height: 700px;
   width: $feed-width;
+  margin-left: $side-filters-width;
   float: left;
   display: inline-block;
 }
@@ -50,6 +51,12 @@ $side-filters-width: 18.75%;
 
 .project-post-view {
   height: 135px;
+
+  .fa-circle {
+    font-size: 9px;
+    margin-right: 3px;
+  }
+
 }
 
 .arrow-container {
@@ -673,13 +680,16 @@ $side-filters-width: 18.75%;
   padding-right: 17px;
 }
 
-.fa.fa-circle {
-  color: white;
-  font-size: 11px;
-  float: left;
-  opacity: 0;
-  padding-left: 8px;
-  line-height: 30px;
+#nonLangFiltersMaster {
+
+  .fa.fa-circle {
+    color: white;
+    font-size: 11px;
+    float: left;
+    opacity: 0;
+    padding-left: 8px;
+    line-height: 30px;
+  }
 }
 
 .licenseFilterBtnSelected,

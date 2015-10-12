@@ -124,12 +124,18 @@ define(['jquery',
 
         addTags: function (namesAndColorsArray) {
             for (var i = 0; i < namesAndColorsArray.length; i++) {
-                var $tag = $('<div>', {
-                    class: 'post-tag'
+                //var $tag = $('<div>', {
+                //    class: 'post-tag'
+                //});
+                //$tag.html(namesAndColorsArray[i].name);
+                //$tag.css('color', namesAndColorsArray[i].color);
+                //$tag.css('border', '2px solid ' + namesAndColorsArray[i].color);
+                var $tag = $('<i>', {
+                    class: 'fa fa-circle'
                 });
-                $tag.html(namesAndColorsArray[i].name);
-                $tag.css('color', namesAndColorsArray[i].color);
-                $tag.css('border', '2px solid ' + namesAndColorsArray[i].color);
+                $tag.css({
+                    color: namesAndColorsArray[i].color
+                });
                 this.$el.find('.tag-container').append($tag);
             }
         },
