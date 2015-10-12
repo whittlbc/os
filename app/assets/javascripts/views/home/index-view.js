@@ -255,9 +255,7 @@ define(['jquery',
         },
 
         setLangFrameInputProps: function () {
-            this.$el.find('.selectize-control.multi').css('width', (this.langFrameWidth-40) + 'px');
-            this.$el.find('.selectize-control.multi').css('left', '20px');
-            this.$el.find('.selectize-dropdown-content').height(140);
+            this.$el.find('.selectize-dropdown-content').height(120);
         },
 
         getFilteredFeed: function (obj) {

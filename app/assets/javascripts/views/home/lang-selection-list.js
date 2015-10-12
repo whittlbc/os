@@ -107,19 +107,9 @@ define(['jquery',
             $(el).velocity({ top: 0}, 900, [100, 15]);
         },
 
-        setSelfSize: function (width) {
-            this.$el.find('.lang-selection-list')[0].style.width = this.langFrameWidth + 'px';
-        },
-
 		render: function (width) {
 			var self = this;
             this.$el.html(LangSelectionListTpl());
-            this.langFrameWidth = ((window.innerWidth-800)/2);
-            this.setSelfSize(width);
-            this.trigger('langFrameWidth', this.langFrameWidth);
-            this.$el.find('.lang-selection-list').scroll(function(){
-                self.$el.find('.lang-selection-list')[0].style.marginTop = '15px';
-            });
         }
 	});
 
