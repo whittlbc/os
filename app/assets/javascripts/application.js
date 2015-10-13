@@ -30,7 +30,9 @@ define(['jquery',
             if (st > lastScrollTop && st > navbarHeight){
                 // Scroll Down
                 $('header').removeClass('header-nav-down').addClass('header-nav-up');
-                $('footer').removeClass('footer-nav-down').addClass('footer-nav-up');
+                if (!$('footer').hasClass('footer-dropdown-shown')) {
+                    $('footer').removeClass('footer-nav-down').addClass('footer-nav-up');
+                }
             } else {
                 // Scroll Up
                 if(st + $(window).height() < $(document).height()) {

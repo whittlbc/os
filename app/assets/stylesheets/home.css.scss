@@ -469,7 +469,7 @@ $side-filters-width: 18.25%;
     line-height: $sub-header-height;
     text-transform: uppercase;
     color: $project-type-color;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   a.active {
@@ -945,22 +945,22 @@ $side-filters-width: 18.25%;
 
     .feed-sort-type-btn {
       height: 100%;
-      line-height: 35px;
-      float: right;
+      padding-top: 16px;
+      float: left;
       display: inline-block;
       cursor: pointer;
       text-align: center;
-      font-size: 10px;
-      color: #C4C5CA;
-      margin-right: 1px;
+      font-size: 10.5px;
+      color: #cecece;
+      margin-left: 8px;
     }
 
     .feed-sort-type-btn.active {
       text-decoration: underline;
     }
 
-    .feed-sort-type-btn#points {
-      margin-right: 10px;
+    .feed-sort-type-btn#time {
+      margin-left: 10px;
     }
   }
 }

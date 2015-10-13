@@ -2,6 +2,8 @@
 $footer-height: 46px;
 $line-break-margin-top: 12px;
 $light-gray: #C4C5CA;
+$sub-header-color: #F7F7FA;
+$not-quite-black: #1D1E22;
 
 .footer-container {
   width: 100%;
@@ -34,13 +36,14 @@ $light-gray: #C4C5CA;
 
       .selectize-input {
         border: none;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 7px;
+        padding-bottom: 4px;
         padding-left: 27px;
+        line-height: 26px;
 
         input {
           color: #BBB;
-          font-size: 12.5px;
+          font-size: 14px;
           font-weight: 300;
         }
 
@@ -56,6 +59,45 @@ $light-gray: #C4C5CA;
         input:-ms-input-placeholder {
           color: $light-gray;
         }
+      }
+
+      .selectize-dropdown {
+        box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
+        border: none !important;
+        background: transparent;
+
+        .selectize-dropdown-content {
+          max-height: 136px;
+        }
+
+        .selectize-dropdown-content::-webkit-scrollbar {
+          -webkit-appearance: none;
+        }
+
+        .selectize-dropdown-content::-webkit-scrollbar:vertical {
+          width: 11px;
+        }
+
+        .selectize-dropdown-content::-webkit-scrollbar-thumb {
+          border-radius: 8px;
+          border: 2px solid rgba(0,0,0,0.9); /* should match background, can't be transparent */
+          background-color: #00A6C9;
+        }
+
+        .selectize-dropdown-content::-webkit-scrollbar-track {
+          background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        div.option {
+          padding: 8px 8px;
+          background-color: rgba(0,0,0,0.9);
+          color: white;
+        }
+
+        div.option.active {
+          background-color: rgba(110,111,114,1);
+        }
+
       }
     }
 

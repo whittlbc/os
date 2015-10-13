@@ -36,13 +36,10 @@ define(['jquery',
                 options: this.dropdown_items,
                 original: false,
                 selectOnTab: false,
+                openOnFocus: false,
                 onFocus: function () {
-                    if (!self.footerDropdownShown) {
-                    }
                 },
                 onBlur: function() {
-                    if (self.footerDropdownShown) {
-                    }
                 },
                 render: {
                     option: function (data, escape) {
@@ -57,12 +54,20 @@ define(['jquery',
             var $select = this.$el.find('#footerSelect').selectize(options);
             var selectize = $select[0].selectize;
             this.footerDropdown = selectize;
-            this.footerDropdown.$dropdown.width(self.$el.width());
-            this.footerDropdown.
-            this.footerDropdown.$dropdown.css({
-                top: -200,
-                left: 0
+            this.footerDropdown.positionDropdown = function () {
+                self.footerDropdown.$dropdown.css({
+                    width: self.$el.width(),
+                    bottom: 46,
+                    left: -14
+                });
+            };
+
+            selectize.on('dropdown_open', function () {
+                self.footerDropdown.$dropdown.removeClass('hide-class');
+                self.footerDropdown.$dropdown_content.removeClass('remove-class');
+                $('footer').addClass('footer-dropdown-shown');
             });
+
             selectize.on('item_add', function (value, $item) {
                 if (!self.preventAddListener && self.all_frames[value] && !_.contains(self.footerDropdownValue, self.all_frames[value])){
                     self.footerDropdownValue = selectize.getValue();
@@ -75,7 +80,7 @@ define(['jquery',
                 }
 
                 if (!self.preventAddListener) {
-                    self.langSelectionList.addItem(value, true);
+                    //self.langSelectionList.addItem(value, true);
                 }
 
             });
@@ -83,18 +88,26 @@ define(['jquery',
                 self.footerDropdownValue = selectize.getValue();
                 self.getFilters();
             });
+
+            $(document).click(function () {
+                self.footerDropdown.blur();
+                self.footerDropdown.$dropdown.addClass('hide-class');
+                self.footerDropdown.$dropdown_content.addClass('remove-class');
+                $('footer').removeClass('footer-dropdown-shown');
+            });
         },
 
         getFilters: function () {
             var self = this;
-
         },
 
 		render: function () {
 			var self = this;
             this.$el.html(FooterViewTpl());
-
             this.renderSearchBar();
+            this.$el.find('.search-container').click(function (e) {
+                e.stopPropagation();
+            });
 		}
 	});
 
