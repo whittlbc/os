@@ -8,7 +8,7 @@
         <div class="vote-count-container">{{vote_count}}</div>
     </div>{{
     }}<div class="title-subtitle-tag-container">
-        <div class="title-container"><span>{{title}}</span></div>
+        <div class="title-container {{^hasTags}}no-tags{{/hasTags}}"><span>{{title}}</span></div>
         <div class="subtitle-container"><span class="project-post-subtitle-text">{{subtitle}}</span></div>
         <div class="tag-container"></div>
     </div>{{

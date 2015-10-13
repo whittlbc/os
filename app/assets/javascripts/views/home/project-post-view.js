@@ -124,12 +124,6 @@ define(['jquery',
 
         addTags: function (namesAndColorsArray) {
             for (var i = 0; i < namesAndColorsArray.length; i++) {
-                //var $tag = $('<div>', {
-                //    class: 'post-tag'
-                //});
-                //$tag.html(namesAndColorsArray[i].name);
-                //$tag.css('color', namesAndColorsArray[i].color);
-                //$tag.css('border', '2px solid ' + namesAndColorsArray[i].color);
                 var $tag = $('<i>', {
                     class: 'fa fa-circle'
                 });
@@ -146,6 +140,15 @@ define(['jquery',
 
         render: function () {
 			var self = this;
+            var correctedLangsFramesArray = [];
+
+            if (Array.isArray(self.langs_and_frames)) {
+                _.each(self.langs_and_frames, function (item) {
+                    if (item) {
+                        correctedLangsFramesArray.push(item);
+                    }
+                });
+            }
 
             this.$el.html(ProjectPostViewTpl({
                 title: self.title,
@@ -161,7 +164,8 @@ define(['jquery',
                 searchResult: self.searchResult,
                 projectType: self.projectType,
                 userPic: self.owner_pic,
-                voted: self.voted
+                voted: self.voted,
+                hasTags: correctedLangsFramesArray.length > 0
             }));
             this.trigger('addTags', this);
             this.$licenseContainer = this.$el.find('.project-post-license');
