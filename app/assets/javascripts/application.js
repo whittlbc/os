@@ -1,4 +1,13 @@
-define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Router) {
+define(['jquery',
+    'backbone',
+    'underscore',
+    'router',
+    'bootstrap',
+    'backbone-eventbroker'
+], function ($,
+     Backbone,
+     _,
+     Router) {
 
     // Document On Ready Shit
     $(document).ready(function(){
@@ -20,11 +29,13 @@ define(["jquery", "backbone", "router", "bootstrap"], function($, Backbone, Rout
             // This is necessary so you never see what is "behind" the navbar.
             if (st > lastScrollTop && st > navbarHeight){
                 // Scroll Down
-                $('header').removeClass('nav-down').addClass('nav-up');
+                $('header').removeClass('header-nav-down').addClass('header-nav-up');
+                $('footer').removeClass('footer-nav-down').addClass('footer-nav-up');
             } else {
                 // Scroll Up
                 if(st + $(window).height() < $(document).height()) {
-                    $('header').removeClass('nav-up').addClass('nav-down');
+                    $('header').removeClass('header-nav-up').addClass('header-nav-down');
+                    $('footer').removeClass('footer-nav-up').addClass('footer-nav-down');
                 }
             }
 

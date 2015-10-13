@@ -332,7 +332,6 @@ define(['jquery',
             self.getFilters();
         },
 
-
         addAnonFilter: function (val) {
             var self = this;
             if (val === 'anonYes') {
@@ -415,14 +414,6 @@ define(['jquery',
                 this.filters.sortType = this.sortType;
                 this.getFilteredFeed(this.filters);
             }
-        },
-
-        setLangFrameWidth: function (width) {
-            var self = this;
-            this.langFrameWidth = width;
-            this.nonLangFiltersView.$el.find('#nonLangFiltersMaster').css('width', this.langFrameWidth + 'px');
-            this.nonLangFiltersView.$el.find('#clearNonLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
-            this.langSelectionList.$el.find('#clearLangFiltersBtnContainer').css('width', this.langFrameWidth + 'px');
         },
 
         addScrollLoadListener: function () {
@@ -540,8 +531,6 @@ define(['jquery',
                 this.langSelectionList.setColorsAndInitials(this.colors_and_initials);
             }
 
-            this.listenTo(this.langSelectionList, 'langFrameWidth', this.setLangFrameWidth);
-
             this.langSelectionList.render();
 
             if (this.filters && this.filters.filters && this.filters.filters.langs_and_frames) {
@@ -549,7 +538,7 @@ define(['jquery',
                 this.prePopulateLangFilters();
             }
 
-            this.addScrollLoadListener();
+            //this.addScrollLoadListener();
 
             this.addListeners();
 

@@ -18,6 +18,7 @@ define(['jquery',
     'views/account/account-dropdown-view',
     'views/modals/my-projects-modal',
     'views/modals/starred-modal',
+    'views/footer/footer-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -40,6 +41,7 @@ define(['jquery',
      AccountDropdownView,
      MyProjectsModal,
      StarredModal,
+     FooterView,
      MainViewTpl) {
 	'use strict';
 
@@ -361,7 +363,7 @@ define(['jquery',
             this.allLangs = data;
             if (this.homeView) {
                 this.homeView.passLanguages(data);
-                this.homeView.createLangsFilterDropdown();
+                //this.homeView.createLangsFilterDropdown();
             }
             if (this.projectView) {
                 this.projectView.passLanguages(data);
@@ -627,6 +629,13 @@ define(['jquery',
                 self.signOut();
             });
             this.signOutModal.render();
+
+            this.footerView = new FooterView({
+                el: '#mainFooter',
+                langData: this.allLangs
+            });
+
+            this.footerView.render();
 
             this.addHeaderClickListeners();
         }

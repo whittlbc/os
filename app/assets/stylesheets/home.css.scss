@@ -1,14 +1,15 @@
 
-$header-height: 70px;
-$sub-header-height: 69px;
+$header-height: 68px;
+$sub-header-height: 66px;
 
 $not-quite-black: #1D1E22;
 $light-gray: #C4C5CA;
-$post-gray: #9EA1A9;
+$project-type-color: #9EA1A9;
+$post-gray: #BBB;
 $sub-header-color: #F7F7FA;
 
-$feed-width: 64%;
-$side-filters-width: 18%;
+$feed-width: 63.5%;
+$side-filters-width: 18.25%;
 
 .home-body {
   min-height: 700px;
@@ -467,8 +468,8 @@ $side-filters-width: 18%;
   a {
     line-height: $sub-header-height;
     text-transform: uppercase;
-    color: $post-gray;
-    font-size: 13px;
+    color: $project-type-color;
+    font-size: 12px;
   }
 
   a.active {
