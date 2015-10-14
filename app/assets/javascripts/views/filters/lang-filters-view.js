@@ -78,9 +78,9 @@ define(['jquery',
         addHoverListener: function (view) {
             var self = this;
             view.$el.hover(function(){
-                    view.showClose();
+                    view.$el.addClass('expand');
                 }, function () {
-                    view.hideClose();
+                    view.$el.removeClass('expand');
                 }
             );
             view.$el.find('.filter-close-btn').click(function(){
@@ -90,21 +90,20 @@ define(['jquery',
 
         prepareItemForEntrance: function (el, value, animate) {
             var self = this;
-            el.style.listStyleType = 'none';
-            el.style.display = 'inline-block';
+            //el.style.display = 'inline-block';
             el.style.position = 'relative';
             el.firstChild.style.backgroundColor = self.colors_and_initials[value]['color'];
-            el.style.top = animate ? (window.innerHeight + 'px') : '0px';
+            el.style.left = animate ? '-100px' : '0px';
             $(el.firstChild).html(self.colors_and_initials[value]['initials']);
             var $p = $(el).children().eq(1);
             $p.html(value);
             if (value.length > 11) {
-                $(el).children().eq(1)[0].style.fontSize = '11px';
+                $p.css('font-size', '11px');
             }
         },
 
         slideItemIn: function (el) {
-            $(el).velocity({ top: 0}, 900, [100, 15]);
+            $(el).velocity({ left: 0}, 700, [100, 14]);
         },
 
         render: function () {

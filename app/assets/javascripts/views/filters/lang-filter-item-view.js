@@ -20,8 +20,8 @@ define(['jquery',
             this.closeBtnDiameter = 18;
             this.closeBtnInitialPos = 8;
 		},
-        
-        showClose: function () {
+
+        fadeIn: function () {
             var self = this;
             var options = {
                 duration: self.toggleDetailsDuration,
@@ -30,11 +30,11 @@ define(['jquery',
             self.$el.find('#removeLangFilter-' + self.name).show();
             self.$el.find('#removeLangFilter-' + self.name).animate({height: self.closeBtnDiameter}, options);
             self.$el.find('#removeLangFilter-' + self.name).animate({width: self.closeBtnDiameter}, options);
-            self.$el.find('#removeLangFilter-' + self.name).animate({top: self.closeBtnInitialPos - (self.closeBtnDiameter / 2)}, options);
-            self.$el.find('#removeLangFilter-' + self.name).animate({right: self.closeBtnInitialPos - (self.closeBtnDiameter / 2)}, options);
+            self.$el.find('.name').show();
+            self.$el.find('.name').animate({opacity: 1}, options);
         },
 
-        hideClose: function () {
+        fadeOut: function () {
             var self = this;
             var options = {
                 duration: self.toggleDetailsDuration,
@@ -43,10 +43,10 @@ define(['jquery',
             self.$el.find('#removeLangFilter-' + self.name).show();
             self.$el.find('#removeLangFilter-' + self.name).animate({height: 0}, options);
             self.$el.find('#removeLangFilter-' + self.name).animate({width: 0}, options);
-            self.$el.find('#removeLangFilter-' + self.name).animate({top: self.closeBtnInitialPos}, options);
-            self.$el.find('#removeLangFilter-' + self.name).animate({right: self.closeBtnInitialPos}, options);
+            self.$el.find('.name').animate({opacity: 0}, options);
             setTimeout(function () {
                 self.$el.find('#removeLangFilter-' + self.name).hide();
+                self.$el.find('.name').hide();
             }, self.toggleDetailsDuration);
         },
 
