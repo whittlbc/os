@@ -1,26 +1,26 @@
 define(['jquery',
 	'backbone',
 	'underscore',
-	'stache!views/home/lang-selection-view'
+	'stache!views/filters/lang-filter-item-view'
     ], function ($,
      Backbone,
      _,
-     LangSelectionViewTpl) {
+     LangFIlterItemViewTpl) {
 	'use strict';
 
-	var LangSelectionView = Backbone.View.extend({
+	var LangFIlterItemView = Backbone.View.extend({
 
-		initialize: function () {
+		initialize: function (options) {
+            options = options || {};
+            this.realName = options.name;
+            if (this.realName) {
+                this.name = this.realName.replace(/ /g,'').replace(/\+/g,'plus').replace(/#/g,'sharp').replace(/\./g,'dot');
+            }
             this.toggleDetailsDuration = 130;
             this.closeBtnDiameter = 18;
             this.closeBtnInitialPos = 8;
 		},
-
-        passName: function (name) {
-            this.realName = name;
-            this.name = name.replace(/ /g,'').replace(/\+/g,'plus').replace(/#/g,'sharp').replace(/\./g,'dot');
-        },
-
+        
         showClose: function () {
             var self = this;
             var options = {
@@ -52,12 +52,12 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
-            this.$el.html(LangSelectionViewTpl({
+            this.$el.html(LangFIlterItemViewTpl({
                 name: self.name
             }));
 		}
 	});
 
-	return LangSelectionView;
+	return LangFIlterItemView;
 
 });

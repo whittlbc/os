@@ -972,6 +972,42 @@ $side-filters-width: 18.25%;
   }
 }
 
+#langFiltersView {
+  position: fixed;
+  top: 135px;
+  left: -20px;
+  width: 140px;
+  height: 67%;
+
+  .lang-filters-list {
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+
+    .lang-filter-item {
+      height: 45px;
+      width: 45px;
+      border-radius: 50%;
+      background-color: $not-quite-black;
+      margin-left: 15px;
+      margin-right: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      list-style-type: none;
+      display: inline-block;
+      position: relative;
+      text-align: center;
+      font-size: 21px;
+      color: white;
+      line-height: 45px;
+      font-family: 'Helvetica Neue';
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
+    }
+
+  }
+}
 
 
 

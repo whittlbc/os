@@ -26,7 +26,7 @@ define(['jquery',
 
 		events: {},
 
-        renderSearchBar: function () {
+        renderDropdown: function () {
             var self = this;
             var options = {
                 theme: 'links',
@@ -80,7 +80,10 @@ define(['jquery',
                 }
 
                 if (!self.preventAddListener) {
-                    //self.langSelectionList.addItem(value, true);
+                    self.trigger('addItem', {
+                        value: value,
+                        animate: true
+                    });
                 }
 
             });
@@ -104,7 +107,7 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(FooterViewTpl());
-            this.renderSearchBar();
+            this.renderDropdown();
             this.$el.find('.search-container').click(function (e) {
                 e.stopPropagation();
             });

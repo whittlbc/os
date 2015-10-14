@@ -19,6 +19,7 @@ define(['jquery',
     'views/modals/my-projects-modal',
     'views/modals/starred-modal',
     'views/footer/footer-view',
+    'views/filters/lang-filters-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -42,6 +43,7 @@ define(['jquery',
      MyProjectsModal,
      StarredModal,
      FooterView,
+     LangFiltersView,
      MainViewTpl) {
 	'use strict';
 
@@ -630,9 +632,20 @@ define(['jquery',
             });
             this.signOutModal.render();
 
+            this.langFiltersView = new LangFiltersView({
+                el: '#langFiltersView',
+                colorsAndInitials: this.allLangs.colors_and_initials
+            });
+
+            this.langFiltersView.render();
+
             this.footerView = new FooterView({
                 el: '#mainFooter',
                 langData: this.allLangs
+            });
+
+            this.listenTo(this.footerView, 'addItem', function (data) {
+                self.langFiltersView.addItem(data);
             });
 
             this.footerView.render();

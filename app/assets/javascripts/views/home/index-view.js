@@ -5,7 +5,7 @@ define(['jquery',
     'views/home/project-feed-view',
     'models/project',
     'models/user',
-    'views/home/lang-selection-list',
+    //'views/home/lang-selection-list',
     'views/home/non-lang-filters-view',
     'stache!views/home/index-view',
     'selectize',
@@ -19,7 +19,7 @@ define(['jquery',
      ProjectFeedView,
      Project,
      User,
-     LangSelectionList,
+     //LangSelectionList,
      NonLangFiltersView,
      IndexViewTpl
      ) {
@@ -140,7 +140,7 @@ define(['jquery',
             this.projectFeedView.passColorsAndInitials(data.colors_and_initials);
             this.colors_and_initials = data.colors_and_initials;
             this.dropdown_items = data.dropdown_items;
-            this.langSelectionList.setColorsAndInitials(data.colors_and_initials);
+            //this.langSelectionList.setColorsAndInitials(data.colors_and_initials);
             this.all_frames = data.all_frames;
         },
 
@@ -522,20 +522,20 @@ define(['jquery',
             this.nonLangFiltersView.render();
 
             this.populateProjectFeed(projectTypeStatus, true);
+            //
+            //this.langSelectionList = new LangSelectionList({
+            //    el: '#langSelectionListContainer',
+            //});
 
-            this.langSelectionList = new LangSelectionList({
-                el: '#langSelectionListContainer',
-            });
-
-            if (this.colors_and_initials) {
-                this.langSelectionList.setColorsAndInitials(this.colors_and_initials);
-            }
-
-            this.langSelectionList.render();
+            //if (this.colors_and_initials) {
+            //    this.langSelectionList.setColorsAndInitials(this.colors_and_initials);
+            //}
+            //
+            //this.langSelectionList.render();
 
             if (this.filters && this.filters.filters && this.filters.filters.langs_and_frames) {
-                this.selectize.fuckingReset();
-                this.prePopulateLangFilters();
+                //this.selectize.fuckingReset();
+                //this.prePopulateLangFilters();
             }
 
             //this.addScrollLoadListener();
