@@ -3,7 +3,8 @@ define(['jquery',
 	'underscore',
     'models/os.util',
 	'stache!views/footer/footer-view',
-    'selectize'
+    'selectize',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -15,7 +16,28 @@ define(['jquery',
 
 		initialize: function (options) {
 		    options = options || {};
+
+            Backbone.EventBroker.register({
+                'deleteLangFilter': 'deleteFilter',
+                'deleteLicenseFilter': 'deleteFilter'
+            }, this);
+
             this.setLangData(options.langData);
+            this.licenseData = [
+                {
+                    "id": "MIT",
+                    "title": "MIT"
+                },
+                {
+                    "id": "GPL",
+                    "title": "GPL"
+                },
+                {
+                    "id": "BSD",
+                    "title": "BSD"
+                }
+            ];
+            this.filterType = 1;
         },
 
         setLangData: function (data) {
@@ -26,6 +48,21 @@ define(['jquery',
 
 		events: {},
 
+        deleteFilter: function (value) {
+            this.footerDropdown.deleteFuckingSelection(value);
+        },
+
+        getItemsForDropdown: function () {
+            switch (this.filterType) {
+                case 0:
+                    return this.dropdown_items;
+                    break;
+                case 1:
+                    return this.licenseData;
+                    break;
+            }
+        },
+
         renderDropdown: function () {
             var self = this;
             var options = {
@@ -33,7 +70,7 @@ define(['jquery',
                 maxItems: null,
                 valueField: 'id',
                 searchField: 'title',
-                options: this.dropdown_items,
+                options: this.getItemsForDropdown(),
                 original: false,
                 selectOnTab: false,
                 openOnFocus: false,
@@ -69,19 +106,18 @@ define(['jquery',
             });
 
             selectize.on('item_add', function (value, $item) {
+                self.footerDropdownValue = selectize.getValue();
                 if (!self.preventAddListener && self.all_frames[value] && !_.contains(self.footerDropdownValue, self.all_frames[value])){
-                    self.footerDropdownValue = selectize.getValue();
                     selectize.lastQuery = null;
                     selectize.setTextboxValue('');
                     selectize.addItem(self.all_frames[value]);
-                } else {
-                    self.footerDropdownValue = selectize.getValue();
-                    self.getFilters();
                 }
 
                 if (!self.preventAddListener) {
                     self.trigger('addItem', {
+                        set: self.filterType,
                         value: value,
+                        dropdownValues: self.footerDropdownValue,
                         animate: true
                     });
                 }
@@ -89,7 +125,10 @@ define(['jquery',
             });
             selectize.on('item_remove', function (value, $item) {
                 self.footerDropdownValue = selectize.getValue();
-                self.getFilters();
+                self.trigger('removeItem', {
+                    set: self.filterType,
+                    dropdownValues: self.footerDropdownValue
+                });
             });
 
             $(document).click(function () {
@@ -98,10 +137,6 @@ define(['jquery',
                 self.footerDropdown.$dropdown_content.addClass('remove-class');
                 $('footer').removeClass('footer-dropdown-shown');
             });
-        },
-
-        getFilters: function () {
-            var self = this;
         },
 
 		render: function () {

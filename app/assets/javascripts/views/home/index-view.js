@@ -32,8 +32,8 @@ define(['jquery',
 		initialize: function () {
             master = this;
             Backbone.EventBroker.register({
-                'deleteLangFilter': 'deleteLangFilter',
-                'clearLangFilters': 'clearLangFilters',
+                //'deleteLangFilter': 'deleteLangFilter',
+                //'clearLangFilters': 'clearLangFilters',
                 'addLicenseFilter': 'addLicenseFilter',
                 'removeLicenseFilter': 'removeLicenseFilter',
                 'addPrivacyFilter': 'addPrivacyFilter',
@@ -142,6 +142,30 @@ define(['jquery',
             this.dropdown_items = data.dropdown_items;
             //this.langSelectionList.setColorsAndInitials(data.colors_and_initials);
             this.all_frames = data.all_frames;
+        },
+
+        handleNewLangFilter: function (data) {
+            var self = this;
+            this.langsFramesValue = data.dropdownValues;
+            this.getFilters();
+        },
+
+        handleNewLicenseFilter: function (data) {
+            var self = this;
+            this.licenseFilters = data.dropdownValues;
+            this.getFilters();
+        },
+
+        handleRemoveLangFilter: function (data) {
+            var self = this;
+            this.langsFramesValue = data.dropdownValues;
+            this.getFilters();
+        },
+
+        handleRemoveLicenseFilter: function (data) {
+            var self = this;
+            this.licenseFilters = data.dropdownValues;
+            this.getFilters();
         },
 
         createLangsFilterDropdown: function (resp) {

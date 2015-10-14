@@ -16,8 +16,17 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'hipchat': 2
         },
 
+        LICENSE_COLOR_MAP: {
+            'MIT': '#646464',
+            'GPL': '#9A9A9A',
+            'BSD': '#BBB'
+        },
+
         HOME_PAGE: 'home',
         PROJECT_PAGE: 'project',
+
+        LANGS_FILTER_SET: 0,
+        LICENSE_FILTER_SET: 1,
 
         NO_USER_PIC: '',
 

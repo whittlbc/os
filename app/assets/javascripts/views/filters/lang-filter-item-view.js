@@ -5,10 +5,10 @@ define(['jquery',
     ], function ($,
      Backbone,
      _,
-     LangFIlterItemViewTpl) {
+     LangFilterItemViewTpl) {
 	'use strict';
 
-	var LangFIlterItemView = Backbone.View.extend({
+	var LangFilterItemView = Backbone.View.extend({
 
 		initialize: function (options) {
             options = options || {};
@@ -18,7 +18,6 @@ define(['jquery',
             }
             this.toggleDetailsDuration = 130;
             this.closeBtnDiameter = 18;
-            this.closeBtnInitialPos = 8;
 		},
 
         fadeIn: function () {
@@ -52,12 +51,12 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
-            this.$el.html(LangFIlterItemViewTpl({
+            this.$el.html(LangFilterItemViewTpl({
                 name: self.name
             }));
 		}
 	});
 
-	return LangFIlterItemView;
+	return LangFilterItemView;
 
 });

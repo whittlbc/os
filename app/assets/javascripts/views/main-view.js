@@ -20,6 +20,7 @@ define(['jquery',
     'views/modals/starred-modal',
     'views/footer/footer-view',
     'views/filters/lang-filters-view',
+    'views/filters/license-filters-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -44,6 +45,7 @@ define(['jquery',
      StarredModal,
      FooterView,
      LangFiltersView,
+     LicenseFiltersView,
      MainViewTpl) {
 	'use strict';
 
@@ -639,13 +641,43 @@ define(['jquery',
 
             this.langFiltersView.render();
 
+            this.licenseFiltersView = new LicenseFiltersView({
+                el: '#licenseFiltersView'
+            });
+
+            this.licenseFiltersView.render();
+
             this.footerView = new FooterView({
                 el: '#mainFooter',
                 langData: this.allLangs
             });
 
             this.listenTo(this.footerView, 'addItem', function (data) {
-                self.langFiltersView.addItem(data);
+                if (data.set === OSUtil.LANGS_FILTER_SET) {
+                    self.langFiltersView.addItem({
+                        value: data.value,
+                        animate: data.animate
+                    });
+                    setTimeout(function () {
+                        self.homeView.handleNewLangFilter(data);
+                    }, 200);
+                } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
+                    self.licenseFiltersView.addItem({
+                        value: data.value,
+                        animate: data.animate
+                    });
+                    setTimeout(function () {
+                        self.homeView.handleNewLicenseFilter(data);
+                    }, 200);
+                }
+            });
+
+            this.listenTo(this.footerView, 'removeItem', function (data) {
+                if (data.set === OSUtil.LANGS_FILTER_SET) {
+                    self.homeView.handleRemoveLangFilter(data);
+                } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
+                    self.homeView.handleRemoveLicenseFilter(data);
+                }
             });
 
             this.footerView.render();

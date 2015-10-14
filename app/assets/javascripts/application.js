@@ -33,11 +33,15 @@ define(['jquery',
                 if (!$('footer').hasClass('footer-dropdown-shown')) {
                     $('footer').removeClass('footer-nav-down').addClass('footer-nav-up');
                 }
+                $('#langFiltersView').removeClass('langs-nav-down').addClass('langs-nav-up');
+                $('#licenseFiltersView').removeClass('license-nav-down').addClass('license-nav-up');
             } else {
                 // Scroll Up
                 if(st + $(window).height() < $(document).height()) {
                     $('header').removeClass('header-nav-up').addClass('header-nav-down');
                     $('footer').removeClass('footer-nav-up').addClass('footer-nav-down');
+                    $('#langFiltersView').removeClass('langs-nav-up').addClass('langs-nav-down');
+                    $('#licenseFiltersView').removeClass('license-nav-up').addClass('license-nav-down');
                 }
             }
 
