@@ -32,6 +32,7 @@ define(["backbone",
 
             updateHomeView: function (index) {
                 var self = this;
+                $('footer').show();
                 if (!this.mainView) {
                     this.mainView = new MainView({
                         el: '#mainView'
@@ -51,6 +52,7 @@ define(["backbone",
             },
 
             projectRoute: function (id) {
+                $('footer').hide();
                 this.updateProjectView(id);
             },
 
