@@ -37,7 +37,7 @@ define(['jquery',
                     "title": "BSD"
                 }
             ];
-            this.filterType = 1;
+            this.filterType = null;
         },
 
         setLangData: function (data) {
@@ -46,7 +46,9 @@ define(['jquery',
             this.all_frames = data.all_frames;
         },
 
-		events: {},
+		events: {
+            'click .btn-container > div': 'handleFilterBtnClicked'
+        },
 
         deleteFilter: function (value) {
             this.footerDropdown.deleteFuckingSelection(value);
@@ -70,7 +72,7 @@ define(['jquery',
                 maxItems: null,
                 valueField: 'id',
                 searchField: 'title',
-                options: this.getItemsForDropdown(),
+                options: [],
                 original: false,
                 selectOnTab: false,
                 openOnFocus: false,
@@ -139,13 +141,44 @@ define(['jquery',
             });
         },
 
-		render: function () {
+        addHoverListeners: function () {
+            var self = this;
+            this.$el.find('.filter-choice-container').hover(function () {
+                if (self.filterType == null) {
+                    $(this).addClass('hover-none-selected');
+                }
+            }, function () {
+                if (self.filterType == null) {
+                    $(this).removeClass('hover-none-selected');
+                }
+            });
+        },
+
+        handleFilterBtnClicked: function (e) {
+            var self = this;
+            // Language Filter Btn
+            if (e.currentTarget.id === 'langFilterChoice' && this.filterType != 0) {
+                this.filterType = 0;
+                this.footerDropdown.clearOptions();
+                this.footerDropdown.addOption(this.getItemsForDropdown());
+            }
+            // License Filter Btn
+            else if (e.currentTarget.id === 'licenseFilterChoice' && this.filterType != 1) {
+                this.filterType = 1;
+                this.footerDropdown.clearOptions();
+                this.footerDropdown.addOption(this.getItemsForDropdown());
+            }
+        },
+
+        render: function () {
 			var self = this;
             this.$el.html(FooterViewTpl());
             this.renderDropdown();
             this.$el.find('.search-container').click(function (e) {
                 e.stopPropagation();
             });
+
+            this.addHoverListeners();
 		}
 	});
 

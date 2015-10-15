@@ -658,6 +658,8 @@ define(['jquery',
                         value: data.value,
                         animate: data.animate
                     });
+
+                    // keep setTimeout so that filter animation is smooth
                     setTimeout(function () {
                         self.homeView.handleNewLangFilter(data);
                     }, 200);
@@ -666,6 +668,8 @@ define(['jquery',
                         value: data.value,
                         animate: data.animate
                     });
+
+                    // keep setTimeout so that filter animation is smooth
                     setTimeout(function () {
                         self.homeView.handleNewLicenseFilter(data);
                     }, 200);
