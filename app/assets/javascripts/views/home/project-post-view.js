@@ -120,17 +120,30 @@ define(['jquery',
             this.$el.find('.grab-btn').click(function () {
                 Backbone.EventBroker.trigger('pull-project', self.id);
             });
+            //
+            //this.$el.find('.tag-container').hover(function () {
+            //    var $tags = $(this).children();
+            //    for (var i = 0; i < $tags.length; i++) {
+            //        $($tags[i]).animate({width: self.tagWidths[i]}, {duration: 250, queue: false});
+            //    }
+            //}, function () {
+            //    self.$el.find('.project-post-tag').animate({width: 7.5}, {duration: 250, queue: false});
+            //});
         },
 
         addTags: function (namesAndColorsArray) {
+            var self = this;
+            this.tagWidths = [];
             for (var i = 0; i < namesAndColorsArray.length; i++) {
-                var $tag = $('<i>', {
-                    class: 'fa fa-circle'
-                });
-                $tag.css({
-                    color: namesAndColorsArray[i].color
-                });
-                this.$el.find('.tag-container').append($tag);
+                var $div = $('<div>', { class: 'project-post-tag' });
+                $div.html('<i class="fa fa-circle" style="color:'+ namesAndColorsArray[i].color +'"></i><div class="tag-name">'+ namesAndColorsArray[i].name +'</div>');
+                this.$el.find('.tag-container').append($div);
+                //setTimeout(function () {
+                //    self.tagWidths.push($div.width());
+                //    if (self.tagWidths.length === namesAndColorsArray.length) {
+                //        self.$el.find('.project-post-tag').width(7.5);
+                //    }
+                //}, 5);
             }
         },
 

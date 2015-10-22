@@ -47,7 +47,7 @@ define(['jquery',
         },
 
 		events: {
-            'click .btn-container > div': 'handleFilterBtnClicked'
+            'click .footer-filter-btn': 'handleFilterBtnClicked',
         },
 
         deleteFilter: function (value) {
@@ -65,6 +65,14 @@ define(['jquery',
             }
         },
 
+        hideDropdown: function () {
+            var self = this;
+            self.footerDropdown.blur();
+            self.footerDropdown.$dropdown.addClass('hide-class');
+            self.footerDropdown.$dropdown_content.addClass('remove-class');
+            $('footer').removeClass('footer-dropdown-shown');
+        },
+
         renderDropdown: function () {
             var self = this;
             var options = {
@@ -79,6 +87,7 @@ define(['jquery',
                 onFocus: function () {
                 },
                 onBlur: function() {
+                    self.hideDropdown();
                 },
                 render: {
                     option: function (data, escape) {
@@ -134,10 +143,7 @@ define(['jquery',
             });
 
             $(document).click(function () {
-                self.footerDropdown.blur();
-                self.footerDropdown.$dropdown.addClass('hide-class');
-                self.footerDropdown.$dropdown_content.addClass('remove-class');
-                $('footer').removeClass('footer-dropdown-shown');
+                self.hideDropdown();
             });
         },
 
@@ -147,26 +153,60 @@ define(['jquery',
                 if (self.filterType == null) {
                     $(this).addClass('hover-none-selected');
                 }
+                else {
+                    $(this).addClass('hover-filter-selected');
+                }
             }, function () {
                 if (self.filterType == null) {
                     $(this).removeClass('hover-none-selected');
                 }
+                else {
+                    var filtersObj = self.getFiltersWithStatus();
+                    filtersObj.selected.removeClass('not-selected-filter').addClass('selected-filter');
+                    filtersObj.not.addClass('not-selected-filter');
+                    $(this).removeClass('hover-filter-selected');
+                }
             });
+        },
+
+        getFiltersWithStatus: function () {
+            var self = this;
+            switch (this.filterType) {
+                case 0:
+                    return {
+                        selected: this.$el.find('#langFilterChoice'),
+                        not: this.$el.find('#licenseFilterChoice')
+                    };
+                    break;
+                case 1:
+                    return {
+                        selected: this.$el.find('#licenseFilterChoice'),
+                        not: this.$el.find('#langFilterChoice')
+                    };
+                    break;
+            }
+        },
+
+        resetDropdown: function (filterTypeInt) {
+            var self = this;
+            this.filterType = filterTypeInt;
+            this.footerDropdown.clearOptions();
+            this.footerDropdown.addOption(this.getItemsForDropdown());
         },
 
         handleFilterBtnClicked: function (e) {
             var self = this;
             // Language Filter Btn
             if (e.currentTarget.id === 'langFilterChoice' && this.filterType != 0) {
-                this.filterType = 0;
-                this.footerDropdown.clearOptions();
-                this.footerDropdown.addOption(this.getItemsForDropdown());
+                this.resetDropdown(0);
+                this.$el.find('#licenseFilterChoice').removeClass('selected-filter selected-color');
+                $(e.currentTarget).addClass('selected-color');
             }
             // License Filter Btn
             else if (e.currentTarget.id === 'licenseFilterChoice' && this.filterType != 1) {
-                this.filterType = 1;
-                this.footerDropdown.clearOptions();
-                this.footerDropdown.addOption(this.getItemsForDropdown());
+                this.resetDropdown(1);
+                this.$el.find('#langFilterChoice').removeClass('selected-filter selected-color');
+                $(e.currentTarget).addClass('selected-color');
             }
         },
 
