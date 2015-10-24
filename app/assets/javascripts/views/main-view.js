@@ -16,6 +16,7 @@ define(['jquery',
     'views/search/search-container-view',
     'views/notifications/notifications-dropdown-view',
     'views/account/account-dropdown-view',
+    'views/dropdowns/extras-dropdown-view',
     'views/modals/my-projects-modal',
     'views/modals/starred-modal',
     'views/footer/footer-view',
@@ -41,6 +42,7 @@ define(['jquery',
      SearchContainerView,
      NotificationsDropdownView,
      AccountDropdownView,
+     ExtrasDropdownView,
      MyProjectsModal,
      StarredModal,
      FooterView,
@@ -391,12 +393,14 @@ define(['jquery',
             $(document).click(function () {
                 self.notificationsDropdown.$el.hide();
                 self.accountDropdown.$el.hide();
+                self.extrasDropdown.$el.hide();
             });
 
             $('#headerNotificationsIcon').click(function (e) {
                 e.stopPropagation();
                 self.searchView.forceCloseSearchBar();
                 self.accountDropdown.$el.hide();
+                self.extrasDropdown.$el.hide();
 
                 if (self.notificationsDropdown.$el.css('display') === 'none') {
                     self.handleSeen();
@@ -410,15 +414,20 @@ define(['jquery',
                 e.stopPropagation();
                 self.searchView.forceCloseSearchBar();
                 self.notificationsDropdown.$el.hide();
+                self.extrasDropdown.$el.hide();
 
-                if (self.accountDropdown.$el.css('display') === 'none') {
-                    self.handleSeen();
-                    self.accountDropdown.$el.show();
-                } else {
-                    self.accountDropdown.$el.hide();
-                }
+                self.accountDropdown.$el.css('display') === 'none' ? self.accountDropdown.$el.show() : self.accountDropdown.$el.hide();
             });
 
+
+            $('#headerEllipsis').click(function (e) {
+                e.stopPropagation();
+                self.searchView.forceCloseSearchBar();
+                self.notificationsDropdown.$el.hide();
+                self.accountDropdown.$el.hide();
+
+                self.extrasDropdown.$el.css('display') === 'none' ? self.extrasDropdown.$el.show() : self.extrasDropdown.$el.hide();
+            });
 
         },
 
@@ -574,6 +583,7 @@ define(['jquery',
             this.listenTo(this.searchView, 'hide-menu-dropdowns', function () {
                 self.notificationsDropdown.$el.hide();
                 self.accountDropdown.$el.hide();
+                self.extrasDropdown.$el.hide();
             });
             
             this.searchView.render();
@@ -612,6 +622,23 @@ define(['jquery',
             });
 
             this.accountDropdown.render();
+
+            this.extrasDropdown = new ExtrasDropdownView({
+                el: '#extrasDropdown'
+            });
+
+            this.listenTo(this.extrasDropdown, 'item:clicked', function (id) {
+                switch (id) {
+                    case 'about':
+                        // nav to about page (or show modal)
+                        break;
+                    case 'suggestions':
+                        // nav to suggestions page (or show modal)
+                        break;
+                }
+            });
+
+            this.extrasDropdown.render();
 
             this.myProjectsModal = new MyProjectsModal({
                 el: '#modalMyProjects'
