@@ -20,6 +20,7 @@ define(['jquery',
 	var ProjectPostView = Backbone.View.extend({
 
 		initialize: function () {
+            this.tagsExpanded = false;
 		},
 
 		events: {
@@ -74,15 +75,25 @@ define(['jquery',
         },
 
         hoverOn: function () {
+            var self = this;
             this.$licenseContainer.css('opacity', '1');
             this.$privacyContainer.css('opacity', '1');
             this.$date.css('opacity', '1');
         },
 
         hoverOff: function () {
+            var self = this;
             this.$licenseContainer.css('opacity', '0');
             this.$privacyContainer.css('opacity', '0');
             this.$date.css('opacity', '0');
+            if (this.tagsExpanded) {
+                _.each(self.$el.find('.tag-name'), function (element) {
+                    element.style.width = getComputedStyle(element).width;
+                    element.style.transition = 'width .285s';
+                    element.offsetWidth;
+                    element.style.width = '0px';
+                });
+            }
         },
 
         addListeners: function () {
@@ -120,15 +131,19 @@ define(['jquery',
             this.$el.find('.grab-btn').click(function () {
                 Backbone.EventBroker.trigger('pull-project', self.id);
             });
-            //
-            //this.$el.find('.tag-container').hover(function () {
-            //    var $tags = $(this).children();
-            //    for (var i = 0; i < $tags.length; i++) {
-            //        $($tags[i]).animate({width: self.tagWidths[i]}, {duration: 250, queue: false});
-            //    }
-            //}, function () {
-            //    self.$el.find('.project-post-tag').animate({width: 7.5}, {duration: 250, queue: false});
-            //});
+
+            this.$el.find('.tag-container').hover(function () {
+                self.tagsExpanded = true;
+                _.each(self.$el.find('.tag-name'), function (element) {
+                    var prevWidth = element.style.width;
+                    element.style.width = 'auto';
+                    var endWidth = getComputedStyle(element).width;
+                    element.style.width = prevWidth;
+                    element.offsetWidth;
+                    element.style.transition = 'width .285s';
+                    element.style.width = endWidth;
+                });
+            }, function () {});
         },
 
         addTags: function (namesAndColorsArray) {
@@ -136,14 +151,8 @@ define(['jquery',
             this.tagWidths = [];
             for (var i = 0; i < namesAndColorsArray.length; i++) {
                 var $div = $('<div>', { class: 'project-post-tag' });
-                $div.html('<i class="fa fa-circle" style="color:'+ namesAndColorsArray[i].color +'"></i><div class="tag-name">'+ namesAndColorsArray[i].name +'</div>');
+                $div.html('<i class="fa fa-circle" style="color:'+ namesAndColorsArray[i].color +'"></i><div class="tag-name">'+ namesAndColorsArray[i].name +'&nbsp;&nbsp;&nbsp;&nbsp;</div>');
                 this.$el.find('.tag-container').append($div);
-                //setTimeout(function () {
-                //    self.tagWidths.push($div.width());
-                //    if (self.tagWidths.length === namesAndColorsArray.length) {
-                //        self.$el.find('.project-post-tag').width(7.5);
-                //    }
-                //}, 5);
             }
         },
 

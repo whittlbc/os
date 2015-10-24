@@ -149,14 +149,15 @@ $side-filters-width: 18.25%;
 
 .tag-container {
   width: auto;
-  height: 25px;
+  cursor: default;
+  display: inline-block;
+  height: 31px;
   overflow-x: hidden;
   color: black;
   padding-left: 5px;
   white-space: nowrap;
 
   .project-post-tag {
-    margin-right: 3px;
     display: inline-block;
 
     .fa-circle {
@@ -171,19 +172,12 @@ $side-filters-width: 18.25%;
       float: left;
       height: 100%;
       line-height: 25px;
-      width: 0;
-      margin-left: 2px;
+      margin-left: 3px;
       display: inline-block;
       overflow-x: hidden;
-      transition: all .285s;
+      width: 0;
     }
-  }
-}
 
-.tag-container:hover {
-  .tag-name {
-    width: 38px;
-    text-overflow: ellipsis;
   }
 }
 
