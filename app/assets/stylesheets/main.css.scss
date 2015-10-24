@@ -97,7 +97,7 @@ header {
   width: 40px;
   background-color: white;
   float: right;
-  margin-right: 35px;
+  margin-right: 0;
   margin-top: 12.5px;
   display: inline-block;
   text-align: center;
@@ -132,7 +132,7 @@ header {
 
 .header-searchbar-container{
     display: inline-block;
-    width: 70%;
+    width: 65%;
     margin-right: 18px;
     height: $header-height;
     float: right;
@@ -174,14 +174,38 @@ header {
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
 }
 
+#headerEllipsis {
+  width: 72px;
+  height: 68px;
+  line-height: 68px;
+  text-align: center;
+  float: right;
+  margin-right: 11px;
+  cursor: pointer;
+
+  .fa {
+    font-size: 5px;
+    color: #cecece;
+    margin-right: 2px;
+    margin-left: 1.5px;
+  }
+}
+
+#headerEllipsis:hover {
+  .fa {
+    color: #00A6C9;
+  }
+}
+
 #createNewProjectModalContentContainer {
     border-radius: 0;
 }
 
 
 
-// Footer
 
+
+// Footer
 footer {
   height: $footer-height;
   width: $footer-width;
