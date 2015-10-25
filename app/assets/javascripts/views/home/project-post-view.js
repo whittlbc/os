@@ -14,7 +14,7 @@ define(['jquery',
      OSUtil,
      AllLangs,
      UserInfoBubble,
-     ProjectPostViewTpl) {8
+     ProjectPostViewTpl) {
 	'use strict';
 
 	var ProjectPostView = Backbone.View.extend({
@@ -25,11 +25,16 @@ define(['jquery',
 
 		events: {
             'click .arrow': 'checkIfUserAuthed',
-            'click .project-post-subtitle-text': 'openProjectDetails',
-            'click .title-container > span': 'openProjectDetails'
+            'click .project-post-user-pic': 'clickedUserPic',
+            'click .project-post-view': 'openProjectDetails'
         },
 
-        checkIfUserAuthed: function () {
+        clickedUserPic: function (e) {
+            e.stopPropagation();
+        },
+
+        checkIfUserAuthed: function (e) {
+            e.stopPropagation();
             Backbone.EventBroker.trigger('project:vote', {view: this, projectID: this.id});
         },
 
@@ -45,7 +50,8 @@ define(['jquery',
             var self = this;
             self.vote_count++;
             self.voted = true;
-            self.render();
+            self.$el.find('.vote-count-container').html(self.vote_count);
+            self.$el.find('.vote-master-container').addClass('voted');
             var project = new Project();
             project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {success: function (data) {
                 Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);

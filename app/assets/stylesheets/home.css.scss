@@ -52,6 +52,7 @@ $side-filters-width: 18.25%;
 
 .project-post-view {
   height: 130px;
+  cursor: pointer;
 }
 
 .arrow-container {
@@ -99,6 +100,10 @@ $side-filters-width: 18.25%;
   .vote-count-container,
   .fa{
     color: #00A6C9;
+  }
+
+  .arrow {
+    cursor: default;
   }
 }
 
@@ -149,7 +154,6 @@ $side-filters-width: 18.25%;
 
 .tag-container {
   width: auto;
-  cursor: default;
   display: inline-block;
   height: 31px;
   overflow-x: hidden;

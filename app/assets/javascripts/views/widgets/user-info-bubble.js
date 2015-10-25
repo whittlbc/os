@@ -20,6 +20,10 @@ define(['jquery',
         render: function (options) {
 			var self = this;
 
+            this.$el.click(function (e) {
+                e.stopPropagation();
+            });
+
             var ghUsername = options && options.ghUsername ? options.ghUsername : '';
 
             this.$el.html(UserInfoBubbleTpl({
