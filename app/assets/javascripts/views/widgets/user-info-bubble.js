@@ -15,7 +15,15 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+            'click .user-bubble-pic': 'handleUserPicClicked'
+        },
+
+        handleUserPicClicked: function (e) {
+            var self = this;
+            e.stopPropagation();
+            window.open(self.ghProfile, '_blank');
+        },
 
         render: function (options) {
 			var self = this;
@@ -25,12 +33,13 @@ define(['jquery',
             });
 
             var ghUsername = options && options.ghUsername ? options.ghUsername : '';
+            this.ghProfile = 'https://github.com/' + ghUsername;
 
             this.$el.html(UserInfoBubbleTpl({
                 userPic: options && options.userPic ? options.userPic : OSUtil.NO_USER_PIC,
                 ghUsername: ghUsername,
                 showLink: !_.isEmpty(ghUsername),
-                ghProfile: 'https://github.com/' + ghUsername
+                ghProfile: this.ghProfile
             }));
 		}
 	});

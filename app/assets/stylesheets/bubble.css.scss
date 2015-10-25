@@ -62,6 +62,7 @@ ul[data-project-type="0"] {
 .bubble-container {
   width: 100%;
   position: relative;
+  cursor: default;
 
   .fa-caret-down {
     position: absolute;
@@ -81,6 +82,10 @@ ul[data-project-type="0"] {
 
 .user-bubble-pic-container {
   padding-top: 1px;
+
+  a {
+    border-radius: 22.5px;
+  }
 }
 
 .user-bubble-pic {
