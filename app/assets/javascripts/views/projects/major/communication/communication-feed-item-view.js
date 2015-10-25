@@ -56,11 +56,29 @@ define(['jquery',
             this.trigger('all-reply-areas:hide', this);
         },
 
+        showBubble: function () {
+            var self = this;
+            var $infoBubble = this.getInfoBubbleEl();
+            if (!this.bubbleShown) {
+                $infoBubble.show();
+                this.bubbleShown = true;
+            }
+        },
+
+        hideBubble: function () {
+            var self = this;
+            var $infoBubble = this.getInfoBubbleEl();
+            if (this.bubbleShown) {
+                $infoBubble.hide();
+                this.bubbleShown = false;
+            }
+        },
+
         addListeners: function () {
             var self = this;
             var $comment = this.getCommentEl();
-            var $trashcan = this.getTrashcanEl();
             var $infoBubble = this.getInfoBubbleEl();
+            var $trashcan = this.getTrashcanEl();
             var $posterPic = this.getPosterPicEl();
             var $voteCountContainer = this.getVoteCountContainerEl();
             var $replyBtn = this.getReplyBtnEl();
@@ -80,27 +98,15 @@ define(['jquery',
 
             // Hover listener for user info bubble
             $posterPic.hover(function () {
-                if (!self.bubbleShown) {
-                    $infoBubble.show();
-                    self.bubbleShown = true;
-                }
+                self.showBubble();
             }, function () {
-                if (self.bubbleShown) {
-                    $infoBubble.hide();
-                    self.bubbleShown = false;
-                }
+                self.hideBubble();
             });
 
             $infoBubble.hover(function () {
-                if (!self.bubbleShown) {
-                    $infoBubble.show();
-                    self.bubbleShown = true;
-                }
+                self.showBubble();
             }, function () {
-                if (self.bubbleShown) {
-                    $infoBubble.hide();
-                    self.bubbleShown = false;
-                }
+                self.hideBubble();
             });
 
             // Comment Voting
