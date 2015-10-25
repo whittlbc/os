@@ -74,7 +74,11 @@ define(['jquery',
                 'invite-gh-contributors': 'getAllContributorsForRepo',
                 'force-hide-starred-modal': 'forceHideStarredModal',
                 'force-hide-my-projects-modal': 'forceHideMyProjectsModal',
-                'hide-header-dropdowns': 'hideHeaderDropdowns'
+                'hide-header-dropdowns': 'hideHeaderDropdowns',
+                'add-new-proj-clicked': 'addNewProjectBtnClicked',
+                'notifications-icon-clicked': 'notificationsIconClicked',
+                'header-ellipsis-clicked': 'headerEllipsisClicked',
+                'header-user-pic-clicked': 'headerUserPicClicked'
             }, this);
             this.userAuthed = false;
 
@@ -380,56 +384,47 @@ define(['jquery',
             }
         },
 
-        addHeaderClickListeners: function () {
+        addNewProjectBtnClicked: function () {
             var self = this;
-            $('#addNewProject').click(function () {
-                if (self.userAuthed) {
-                    self.createProjectModal.showModal();
-                } else {
-                    self.loginModal.setMessage('You must be logged in to add a project.');
-                    self.loginModal.showModal();
-                }
-            });
+            if (self.userAuthed) {
+                self.createProjectModal.showModal();
+            } else {
+                self.loginModal.setMessage('You must be logged in to add a project.');
+                self.loginModal.showModal();
+            }
+        },
 
-            $(document).click(function () {
+        notificationsIconClicked: function (e) {
+            var self = this;
+            e.stopPropagation();
+            self.searchView.forceCloseSearchBar();
+            self.accountDropdown.$el.hide();
+            self.extrasDropdown.$el.hide();
+
+            if (self.notificationsDropdown.$el.css('display') === 'none') {
+                self.handleSeen();
+                self.notificationsDropdown.$el.show();
+            } else {
                 self.notificationsDropdown.$el.hide();
-                self.accountDropdown.$el.hide();
-                self.extrasDropdown.$el.hide();
-            });
+            }
+        },
 
-            $('#headerNotificationsIcon').click(function (e) {
-                e.stopPropagation();
-                self.searchView.forceCloseSearchBar();
-                self.accountDropdown.$el.hide();
-                self.extrasDropdown.$el.hide();
+        headerUserPicClicked: function (e) {
+            var self = this;
+            e.stopPropagation();
+            self.searchView.forceCloseSearchBar();
+            self.notificationsDropdown.$el.hide();
+            self.extrasDropdown.$el.hide();
+            self.accountDropdown.$el.css('display') === 'none' ? self.accountDropdown.$el.show() : self.accountDropdown.$el.hide();
+        },
 
-                if (self.notificationsDropdown.$el.css('display') === 'none') {
-                    self.handleSeen();
-                    self.notificationsDropdown.$el.show();
-                } else {
-                    self.notificationsDropdown.$el.hide();
-                }
-            });
-
-            $('#header-user-pic').click(function (e) {
-                e.stopPropagation();
-                self.searchView.forceCloseSearchBar();
-                self.notificationsDropdown.$el.hide();
-                self.extrasDropdown.$el.hide();
-
-                self.accountDropdown.$el.css('display') === 'none' ? self.accountDropdown.$el.show() : self.accountDropdown.$el.hide();
-            });
-
-
-            $('#headerEllipsis').click(function (e) {
-                e.stopPropagation();
-                self.searchView.forceCloseSearchBar();
-                self.notificationsDropdown.$el.hide();
-                self.accountDropdown.$el.hide();
-
-                self.extrasDropdown.$el.css('display') === 'none' ? self.extrasDropdown.$el.show() : self.extrasDropdown.$el.hide();
-            });
-
+        headerEllipsisClicked: function (e) {
+            var self = this;
+            e.stopPropagation();
+            self.searchView.forceCloseSearchBar();
+            self.notificationsDropdown.$el.hide();
+            self.accountDropdown.$el.hide();
+            self.extrasDropdown.$el.css('display') === 'none' ? self.extrasDropdown.$el.show() : self.extrasDropdown.$el.hide();
         },
 
         handleSeen: function () {
@@ -713,8 +708,6 @@ define(['jquery',
             });
 
             this.footerView.render();
-
-            this.addHeaderClickListeners();
         }
 
 	});

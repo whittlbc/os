@@ -91,6 +91,29 @@ define(['jquery',
             }
         });
 
+        $(document).click(function () {
+            Backbone.EventBroker.trigger('hide-header-dropdowns');
+        });
+
+
+        // Header Click Events
+
+        $('#addNewProject').click(function () {
+            Backbone.EventBroker.trigger('add-new-proj-clicked');
+        });
+
+        $('#headerNotificationsIcon').click(function (e) {
+            Backbone.EventBroker.trigger('notifications-icon-clicked', e);
+        });
+
+        $('#headerEllipsis').click(function (e) {
+            Backbone.EventBroker.trigger('header-ellipsis-clicked', e);
+        });
+
+        $('#header-user-pic').click(function (e) {
+            Backbone.EventBroker.trigger('header-user-pic-clicked', e);
+        });
+
     });
 
     // Actual Backbone App
