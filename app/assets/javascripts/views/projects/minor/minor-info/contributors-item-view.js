@@ -30,25 +30,36 @@ define(['jquery',
 
 		events: {},
 
+        showBubble: function () {
+            var self = this;
+            if (!this.bubbleShown) {
+                this.$el.find('.contributor-info-bubble').show();
+                this.bubbleShown = true;
+            }
+        },
+
+        hideBubble: function () {
+            var self = this;
+            if (this.bubbleShown) {
+                this.$el.find('.contributor-info-bubble').hide();
+                this.bubbleShown = false;
+            }
+        },
+
         addHoverListeners: function () {
             var self = this;
             this.$el.find('.contributors-item-view-pic').hover(function () {
-                if (!self.bubbleShown) {
-                    self.contributorInfoBubble.fadeIn();
-                    setTimeout(function () {
-                        self.bubbleShown = true;
-                    }, 100);
-                }
-            }, function () {});
-
-            this.$el.find('.contributor-info-bubble').hover(function () {}, function () {
-                //if (self.bubbleShown) {
-                    self.contributorInfoBubble.fadeOut();
-                    setTimeout(function () {
-                        self.bubbleShown = false;
-                    }, 100);
-                //}
+                self.showBubble();
+            }, function () {
+                self.hideBubble();
             });
+
+            this.$el.find('.contributor-info-bubble').hover(function () {
+                self.showBubble();
+            }, function () {
+                self.hideBubble();
+            });
+
         },
 
         getTopPos: function () {

@@ -96,6 +96,22 @@ define(['jquery',
             }
         },
 
+        showBubble: function () {
+            var self = this;
+            if (!this.bubbleShown) {
+                this.$el.find('.user-info-bubble').show();
+                this.bubbleShown = true;
+            }
+        },
+
+        hideBubble: function () {
+            var self = this;
+            if (this.bubbleShown) {
+                this.$el.find('.user-info-bubble').hide();
+                this.bubbleShown = false;
+            }
+        },
+
         addListeners: function () {
             var self = this;
             this.$el.hover(function() {
@@ -105,17 +121,15 @@ define(['jquery',
             });
 
             this.$el.find('.project-post-user-pic').hover(function () {
-                if (!self.bubbleShown) {
-                    self.bubbleShown = true;
-                    self.userInfoBubble.fadeIn();
-                }
-            }, function () {});
+                self.showBubble();
+            }, function () {
+                self.hideBubble();
+            });
 
-            this.$el.find('.user-info-bubble').hover(function () {}, function () {
-                if (self.bubbleShown) {
-                    self.bubbleShown = false;
-                    self.userInfoBubble.fadeOut();
-                }
+            this.$el.find('.user-info-bubble').hover(function () {
+                self.showBubble();
+            }, function () {
+                self.hideBubble();
             });
 
             this.$el.find('.grab-btn').click(function () {
