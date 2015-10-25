@@ -106,25 +106,15 @@ define(['jquery',
 
             this.$el.find('.project-post-user-pic').hover(function () {
                 if (!self.bubbleShown) {
-                    self.$el.find('.user-info-bubble').show();
                     self.bubbleShown = true;
+                    self.userInfoBubble.fadeIn();
                 }
-            }, function () {
-                if (self.bubbleShown) {
-                    self.$el.find('.user-info-bubble').hide();
-                    self.bubbleShown = false;
-                }
-            });
+            }, function () {});
 
-            this.$el.find('.user-info-bubble').hover(function () {
-                if (!self.bubbleShown) {
-                    self.$el.find('.user-info-bubble').show();
-                    self.bubbleShown = true;
-                }
-            }, function () {
+            this.$el.find('.user-info-bubble').hover(function () {}, function () {
                 if (self.bubbleShown) {
-                    self.$el.find('.user-info-bubble').hide();
                     self.bubbleShown = false;
+                    self.userInfoBubble.fadeOut();
                 }
             });
 

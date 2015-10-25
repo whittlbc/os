@@ -40,6 +40,7 @@ define(['jquery',
         },
 
         addContrib: function(data, i) {
+            var self = this;
             var contribItemView = new ContributorsItemView({
                 tagName: 'li',
                 ghUsername: data.login,
@@ -48,8 +49,20 @@ define(['jquery',
                 index: i
             });
             contribItemView.render();
+            this.listenTo(contribItemView, 'hide-all-other-bubbles', function (view) {
+                self.hideAllBubbles(view);
+            });
             this.$el.find('#contributorsListView').append(contribItemView.el);
             this.CONTRIBUTORS.push(contribItemView);
+        },
+
+        hideAllBubbles: function (view) {
+            var self = this;
+            for (var i = 0; i < this.CONTRIBUTORS.length; i++) {
+                if (this.CONTRIBUTORS[i] != view) {
+                    this.CONTRIBUTORS[i].contributorInfoBubble.fadeOut();
+                }
+            }
         },
 
 		render: function (options) {

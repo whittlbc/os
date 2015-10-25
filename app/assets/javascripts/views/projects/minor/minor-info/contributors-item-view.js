@@ -34,26 +34,20 @@ define(['jquery',
             var self = this;
             this.$el.find('.contributors-item-view-pic').hover(function () {
                 if (!self.bubbleShown) {
-                    self.$el.find('.contributor-info-bubble').show();
-                    self.bubbleShown = true;
+                    self.contributorInfoBubble.fadeIn();
+                    setTimeout(function () {
+                        self.bubbleShown = true;
+                    }, 100);
                 }
-            }, function () {
-                if (self.bubbleShown) {
-                    self.$el.find('.contributor-info-bubble').hide();
-                    self.bubbleShown = false;
-                }
-            });
+            }, function () {});
 
-            this.$el.find('.contributor-info-bubble').hover(function () {
-                if (!self.bubbleShown) {
-                    self.$el.find('.contributor-info-bubble').show();
-                    self.bubbleShown = true;
-                }
-            }, function () {
-                if (self.bubbleShown) {
-                    self.$el.find('.contributor-info-bubble').hide();
-                    self.bubbleShown = false;
-                }
+            this.$el.find('.contributor-info-bubble').hover(function () {}, function () {
+                //if (self.bubbleShown) {
+                    self.contributorInfoBubble.fadeOut();
+                    setTimeout(function () {
+                        self.bubbleShown = false;
+                    }, 100);
+                //}
             });
         },
 
