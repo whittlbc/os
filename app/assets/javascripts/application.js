@@ -33,6 +33,7 @@ define(['jquery',
                 if (!$('footer').hasClass('footer-dropdown-shown')) {
                     $('footer').removeClass('footer-nav-down').addClass('footer-nav-up');
                 }
+                Backbone.EventBroker.trigger('hide-header-dropdowns');
                 //$('#langFiltersView').removeClass('langs-nav-down').addClass('langs-nav-up');
                 //$('#licenseFiltersView').removeClass('license-nav-down').addClass('license-nav-up');
             } else {

@@ -79,12 +79,12 @@ define(['jquery',
 
             this.$input.click(function (e) {
                 e.stopPropagation();
-                self.trigger('hide-menu-dropdowns');
+                Backbone.EventBroker.trigger('hide-header-dropdowns');
             });
 
             this.$input.focus(function(){
                 if(!self.isOpen) {
-                    self.trigger('hide-menu-dropdowns');
+                    Backbone.EventBroker.trigger('hide-header-dropdowns');
                     self.$searchBox.addClass('searchbox-open');
                     self.isOpen = true;
                 }

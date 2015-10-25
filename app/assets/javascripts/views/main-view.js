@@ -73,7 +73,8 @@ define(['jquery',
                 'evolution-item:delete': 'showDeleteEvolutionItemModal',
                 'invite-gh-contributors': 'getAllContributorsForRepo',
                 'force-hide-starred-modal': 'forceHideStarredModal',
-                'force-hide-my-projects-modal': 'forceHideMyProjectsModal'
+                'force-hide-my-projects-modal': 'forceHideMyProjectsModal',
+                'hide-header-dropdowns': 'hideHeaderDropdowns'
             }, this);
             this.userAuthed = false;
 
@@ -476,6 +477,12 @@ define(['jquery',
             window.location = '/';
         },
 
+        hideHeaderDropdowns: function () {
+            this.notificationsDropdown.$el.hide();
+            this.accountDropdown.$el.hide();
+            this.extrasDropdown.$el.hide();
+        },
+
 		render: function (options) {
 			var self = this;
             this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -578,12 +585,6 @@ define(['jquery',
 
             this.searchView = new SearchContainerView({
                 el: '#mainSearchBar'
-            });
-            
-            this.listenTo(this.searchView, 'hide-menu-dropdowns', function () {
-                self.notificationsDropdown.$el.hide();
-                self.accountDropdown.$el.hide();
-                self.extrasDropdown.$el.hide();
             });
             
             this.searchView.render();
