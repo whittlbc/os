@@ -68,6 +68,7 @@ define(['jquery',
                 this.$searchBox.removeClass('searchbox-open');
                 this.isOpen = false;
             }
+            this.$input.blur();
             this.$dropdown.hide();
             this.$noResults.hide();
             this.dropdownShown = false;

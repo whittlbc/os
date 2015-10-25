@@ -472,10 +472,14 @@ define(['jquery',
             window.location = '/';
         },
 
-        hideHeaderDropdowns: function () {
+        hideHeaderDropdowns: function (hideSearchResults) {
+            var self = this;
             this.notificationsDropdown.$el.hide();
             this.accountDropdown.$el.hide();
             this.extrasDropdown.$el.hide();
+            if (hideSearchResults) {
+                this.searchView.forceCloseSearchBar();
+            }
         },
 
 		render: function (options) {
