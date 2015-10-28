@@ -194,6 +194,22 @@ define(['jquery',
             this.footerDropdown.addOption(this.getItemsForDropdown());
         },
 
+        forceSetFilter: function () {
+            var self = this;
+            var $filterBtn;
+            this.$el.find('.filter-choice-container').addClass('hover-none-selected')
+            switch (this.filterType) {
+                case 0:
+                    $filterBtn = self.$el.find('#langFilterChoice');
+                    break;
+                case 1:
+                    $filterBtn = self.$el.find('#licenseFilterChoice');
+                    break;
+
+            }
+            $filterBtn.addClass('selected-color selected-filter');
+        },
+
         handleFilterBtnClicked: function (e) {
             var self = this;
             // Language Filter Btn

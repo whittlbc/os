@@ -78,9 +78,11 @@ define(['jquery',
                 'add-new-proj-clicked': 'addNewProjectBtnClicked',
                 'notifications-icon-clicked': 'notificationsIconClicked',
                 'header-ellipsis-clicked': 'headerEllipsisClicked',
-                'header-user-pic-clicked': 'headerUserPicClicked'
+                'header-user-pic-clicked': 'headerUserPicClicked',
+                'open-project': 'openProject'
             }, this);
             this.userAuthed = false;
+            this.cachedFilterType = null;
 
             this.github = Github;
             this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
@@ -88,6 +90,12 @@ define(['jquery',
         },
 
 		events: {},
+
+        openProject: function (id) {
+            this.cachedRemovedFilterItems = this.footerView.footerDropdown.$removedItems;
+            this.cachedFilterType = this.footerView.filterType;
+            window.location.hash = '#projects/' + id;
+        },
 
         showMyProjectsModal: function () {
             var self = this;
@@ -482,6 +490,32 @@ define(['jquery',
             }
         },
 
+        prePopulateFilters: function () {
+            var self = this;
+            this.footerView.preventAddListener = true;
+
+            if (this.cachedFilterType != null) {
+                this.footerView.filterType = this.cachedFilterType;
+                this.footerView.forceSetFilter();
+                this.footerView.resetDropdown(this.cachedFilterType);
+            }
+
+            var filters = this.homeView.filters.filters;
+            if (filters.langs_and_frames) {
+                for (var i = 0; i < filters.langs_and_frames.length; i++) {
+                    this.langFiltersView.addItem({ value: filters.langs_and_frames[i], animate: false });
+                }
+                this.footerView.footerDropdown.addItems(filters.langs_and_frames);
+            }
+            if (filters.license) {
+                for (var j = 0; j < filters.license.length; j++) {
+                    this.licenseFiltersView.addItem({ value: filters.license[j], animate: false });
+                }
+            }
+            this.footerView.footerDropdown.$removedItems = this.cachedRemovedFilterItems;
+            this.footerView.preventAddListener = false;
+        },
+
 		render: function (options) {
 			var self = this;
             this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -630,10 +664,10 @@ define(['jquery',
             this.listenTo(this.extrasDropdown, 'item:clicked', function (id) {
                 switch (id) {
                     case 'about':
-                        // nav to about page (or show modal)
+                        break;
+                    case 'rules':
                         break;
                     case 'suggestions':
-                        // nav to suggestions page (or show modal)
                         break;
                 }
             });
@@ -674,10 +708,13 @@ define(['jquery',
 
             this.licenseFiltersView.render();
 
-            this.footerView = new FooterView({
-                el: '#mainFooter',
-                langData: this.allLangs
-            });
+            if (!this.footerView) {
+
+                this.footerView = new FooterView({
+                    el: '#mainFooter',
+                    langData: this.allLangs
+                });
+            }
 
             this.listenTo(this.footerView, 'addItem', function (data) {
                 if (data.set === OSUtil.LANGS_FILTER_SET) {
@@ -712,6 +749,11 @@ define(['jquery',
             });
 
             this.footerView.render();
+
+            if (this.showHomeView && this.homeView && this.homeView.filters != null) {
+                this.prePopulateFilters();
+            }
+
         }
 
 	});

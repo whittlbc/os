@@ -43,7 +43,7 @@ define(['jquery',
         },
 
         openProjectDetails: function () {
-            window.location.hash = '#projects/' + this.id;
+            Backbone.EventBroker.trigger('open-project', this.id);
         },
 
         handleVote: function(userUUID) {
@@ -138,7 +138,8 @@ define(['jquery',
                 self.hideBubble();
             });
 
-            this.$el.find('.grab-btn').click(function () {
+            this.$el.find('.grab-btn').click(function (e) {
+                e.stopPropagation();
                 Backbone.EventBroker.trigger('pull-project', self.id);
             });
 

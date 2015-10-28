@@ -90,7 +90,6 @@ define(['jquery',
 
         prepareItemForEntrance: function (el, value, animate) {
             var self = this;
-            //el.style.display = 'inline-block';
             el.style.position = 'relative';
             el.firstChild.style.backgroundColor = self.colors_and_initials[value]['color'];
             el.style.left = animate ? '-100px' : '0px';
