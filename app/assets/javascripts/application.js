@@ -12,6 +12,12 @@ define(['jquery',
     // Document On Ready Shit
     $(document).ready(function(){
 
+        // set size of rest-of-header-container
+        var headerWidth = $('header').width();
+        var logoContainerWidth = $('.header-logo-container').outerWidth(true);
+        var restOfHeaderWidth = ((headerWidth - logoContainerWidth) / headerWidth) * 100;
+        $('.rest-of-header-container').width(restOfHeaderWidth + '%');
+
         // Hide Header on on scroll down
         var didScroll;
         var lastScrollTop = 0;

@@ -65,7 +65,7 @@ define(['jquery',
         forceCloseSearchBar: function () {
             var self = this;
             if(this.isOpen) {
-                this.$searchBox.removeClass('searchbox-open');
+                this.contractSearch();
                 this.isOpen = false;
             }
             this.$input.blur();
@@ -86,7 +86,7 @@ define(['jquery',
             this.$input.focus(function(){
                 if(!self.isOpen) {
                     Backbone.EventBroker.trigger('hide-header-dropdowns');
-                    self.$searchBox.addClass('searchbox-open');
+                    self.expandSearch();
                     self.isOpen = true;
                 }
             });
@@ -133,6 +133,23 @@ define(['jquery',
                     }
                 }
             });
+        },
+
+        expandSearch: function () {
+            var self = this;
+            var searchContainerLeftPos = this.$searchContainer.offset().left;
+            var searchContainerWidth = this.$searchContainer.width();
+            var rightPosOfLogoContainer = $('.header-logo-container').offset().left + $('.header-logo-container').outerWidth(true);
+            var diff = searchContainerLeftPos - rightPosOfLogoContainer;
+            var endWidth = searchContainerWidth + diff - 38;
+            if (endWidth > 0) {
+                this.$searchContainer.width(endWidth);
+            }
+        },
+
+        contractSearch: function () {
+            var self = this;
+            this.$searchContainer.width(250);
         },
 
         showSpinner: function () {
@@ -186,7 +203,7 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(SearchContainerViewTpl());
-            this.$searchBox = this.$el.find('.searchbox');
+            this.$searchContainer = $('.header-searchbar-container');
             this.$input = this.$el.find('.searchbox > input');
             this.$dropdown = this.$el.find('.search-results-list');
             this.$noResults = this.$el.find('.no-search-results');

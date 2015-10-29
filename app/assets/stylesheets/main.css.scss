@@ -43,6 +43,7 @@ $footer-height: 46px;
 header {
   height: $header-height;
   margin-bottom: 0;
+  padding: 0 90px;
   position: fixed;
   top: 0;
   transition: top 0.3s ease-in-out;
@@ -55,19 +56,19 @@ header {
 .header-logo-container {
     display: inline-block;
     height: $header-height;
-    width: 25%;
+    float: left;
 }
 
-.header-logo {
-    height: $header-height;
-    width: 80%;
-    margin-left: 20%;
+#headerLogoPic {
+  max-width: 175px;
+  margin-top: 19px;
+  float: left;
 }
 
 .rest-of-header-container {
-    display: inline-block;
-    height: $header-height;
-    width: 75%;
+  display: inline-block;
+  height: $header-height;
+  float: right;
 }
 
 #header-user-pic {
@@ -76,7 +77,6 @@ header {
     width: 40px;
     border-radius: 50%;
     float: right;
-    margin-right: 57px;
     margin-top: 14.5px;
     cursor: pointer;
     display: inline-block;
@@ -130,12 +130,13 @@ header {
     position: absolute;
 }
 
-.header-searchbar-container{
-    display: inline-block;
-    width: 65%;
-    margin-right: 18px;
-    height: $header-height;
-    float: right;
+.header-searchbar-container {
+  display: inline-block;
+  width: 250px;
+  transition: width 0.3s;
+  margin-right: 18px;
+  height: $header-height;
+  float: right;
 }
 
 #createNewProjectModal {
@@ -175,7 +176,7 @@ header {
 }
 
 #headerEllipsis {
-  width: 72px;
+  width: 68px;
   height: 68px;
   line-height: 68px;
   text-align: center;

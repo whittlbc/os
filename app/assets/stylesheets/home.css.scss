@@ -718,13 +718,12 @@ $side-filters-width: 18.25%;
 // Search
 
 .searchbox {
-  width: 40%;
+  width: 100%;
   height: 40px;
   position: relative;
   float: right;
   margin-top: 16px;
   margin-right: 0;
-  transition: width 0.3s;
 
   .octicon-search {
     position: absolute;
@@ -896,11 +895,6 @@ $side-filters-width: 18.25%;
 .search-result:hover {
   background-color: #F4F6F8;
 }
-
-.searchbox-open{
-  width: 100%;
-}
-
 
 .toggle-sort-type-container {
   width: 800px;
