@@ -28,6 +28,7 @@ define(['jquery',
                 closedPR: options.repoData ? options.repoData.closed_pr_count : '',
                 closedPRLink: options.repoURL ? options.repoURL + '/pulls?q=is%3Apr+is%3Aclosed' : '',
                 openIssues: options.repoData ? options.repoData.open_issues_count : '',
+                issuesLink: options.repoURL ? options.repoURL + '/issues' : '',
                 forks: options.repoData ? options.repoData.forks_count : '',
                 showSpinner: options.showSpinner
             }));

@@ -46,44 +46,35 @@ $side-filters-width: 18.25%;
   background-color: $sub-header-color;
 }
 
-.project-feed-list > li {
-  position: relative;
-}
-
 .project-post-view {
   height: 130px;
   cursor: pointer;
-}
-
-.arrow-container {
-  height: 60px;
-  width: 100%;
-}
-
-.arrow {
-  height: 30px;
-  width: 40%;
-  line-height: 30px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
   position: relative;
-  top: 33px;
-  cursor: pointer;
-}
-
-.fa.fa-angle-up {
-  color: rgb(198,200,202);
-  font-size: 32px;
 }
 
 .vote-master-container {
   display: inline-block;
-  width: 10%;
+  width: 8.5%;
+  float: left;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+}
+
+.new-vote-count-container {
+  width: 40px;
+  cursor: pointer;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #1d1e22;
+  line-height: 14px;
+  text-align: center;
+  font-size: 14.5px;
+  margin-top: 45px;
+
+  .fa{
+    font-size: 18.5px;
+  }
 }
 
 .vote-count-container {
@@ -97,23 +88,22 @@ $side-filters-width: 18.25%;
 
 .vote-master-container.voted {
 
-  .vote-count-container,
-  .fa{
+  .new-vote-count-container {
     color: #00A6C9;
+    font-weight: 500;
+
+    .fa{
+      display: none;
+    }
   }
 
-  .arrow {
-    cursor: default;
-  }
 }
 
 .title-subtitle-tag-container {
   display: inline-block;
-  width: 67%;
+  width: 68.5%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 10%;
+  float: left;
 }
 
 .title-container {
@@ -189,9 +179,7 @@ $side-filters-width: 18.25%;
   display: inline-block;
   width: 23%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
+  float: left;
 
   .date {
     position: absolute;
@@ -917,7 +905,6 @@ $side-filters-width: 18.25%;
       text-align: center;
       font-size: 10.5px;
       color: #cecece;
-      margin-left: 8px;
     }
 
     .feed-sort-type-btn.active {
@@ -926,6 +913,9 @@ $side-filters-width: 18.25%;
 
     .feed-sort-type-btn#time {
       margin-left: 10px;
+    }
+    .feed-sort-type-btn#points {
+      margin-left: 4.15%;
     }
   }
 }

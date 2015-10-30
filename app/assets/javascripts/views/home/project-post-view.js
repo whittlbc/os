@@ -24,7 +24,7 @@ define(['jquery',
 		},
 
 		events: {
-            'click .arrow': 'checkIfUserAuthed',
+            'click .new-vote-count-container': 'checkIfUserAuthed',
             'click .project-post-user-pic': 'clickedUserPic',
             'click .project-post-view': 'openProjectDetails'
         },
@@ -50,7 +50,7 @@ define(['jquery',
             var self = this;
             self.vote_count++;
             self.voted = true;
-            self.$el.find('.vote-count-container').html(self.vote_count);
+            self.$el.find('.new-vote-count-container > span').html(self.vote_count);
             self.$el.find('.vote-master-container').addClass('voted');
             var project = new Project();
             project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {success: function (data) {

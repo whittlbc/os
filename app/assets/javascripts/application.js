@@ -126,7 +126,10 @@ define(['jquery',
     var App = {};
     App.start = function() {
         new Router();
-        Backbone.history.start();
+        // Start the backbone history, but also prevent unspecified hashes from navigating anywhere but the home page
+        if (!Backbone.history.start()) {
+            window.location = '/#on-the-fence';
+        }
     };
 
     App.csrfToken = $("meta[name='csrf-token']").attr('content');

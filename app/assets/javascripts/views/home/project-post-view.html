@@ -1,11 +1,14 @@
 <div class="project-post-view span12">
     <div class="vote-master-container {{#voted}}voted{{/voted}}">
-        <div class="arrow-container">
-            <div class="arrow">
-                <i class="fa fa-angle-up"></i>
-            </div>
+        <div class="new-vote-count-container">
+            <i class="fa fa-caret-up"></i><br><span>{{vote_count}}</span>
         </div>
-        <div class="vote-count-container">{{vote_count}}</div>
+        <!--<div class="arrow-container">-->
+            <!--<div class="arrow">-->
+                <!--<i class="fa fa-angle-up"></i>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="vote-count-container">{{vote_count}}</div>-->
     </div>{{
     }}<div class="title-subtitle-tag-container">
         <div class="title-container {{^hasTags}}no-tags{{/hasTags}}"><span>{{title}}</span></div>

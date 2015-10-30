@@ -56,4 +56,9 @@ Backboneworld::Application.routes.draw do
     end
   end
 
+
+
+  # Catch 404's and redirect home
+  get '*unmatched_route', to: 'application#not_found'
+
 end
