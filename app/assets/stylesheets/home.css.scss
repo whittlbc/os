@@ -198,7 +198,7 @@ $side-filters-width: 18.25%;
 }
 
 .main-three-sub-container {
-  width: 92%;
+  width: 88%;
   height: 40px;
   margin-left: auto;
   margin-right: auto;
@@ -218,7 +218,7 @@ $side-filters-width: 18.25%;
   margin-left: 13.5px;
   width: 28px;
   height: 28px;
-  margin-top: 6px;
+  margin-top: 7px;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -283,31 +283,25 @@ $side-filters-width: 18.25%;
 }
 
 #projectPostCommentIcon {
-  width: 19px;
-  height: 17px;
+  width: 17px;
+  height: 15px;
+  display: inline-block;
+  margin-top: -2px;
+}
+
+#projectPostUserIcon {
+  width: 12.5px;
+  height: 13px;
   display: inline-block;
   margin-top: -3px;
 }
 
-#projectPostUserIcon {
-  width: 14.5px;
-  height: 14.5px;
-  display: inline-block;
-  margin-top: -4px;
-}
-
 .post-license-privacy-container {
-  width: 59%;
+  width: 58%;
   height: 40px;
   margin-top: 1px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.post-license-privacy-container.up-for-grabs-type {
-  float: right;
-  margin-right: 10px;
-  width: 63%;
 }
 
 .project-post-license-container {
@@ -360,6 +354,18 @@ $side-filters-width: 18.25%;
   }
 }
 
+.post-license-privacy-container.up-for-grabs-type {
+  float: right;
+  margin-right: 10px;
+  width: 55%;
+
+  .project-post-privacy {
+    .fa {
+      left: 2px;
+    }
+  }
+}
+
 .post-tag {
   display: inline-block;
   max-width: 120px;
@@ -388,7 +394,7 @@ $side-filters-width: 18.25%;
 }
 
 .main-three-sub-container-no-contrib {
-  width: 68%;
+  width: 62%;
   float: right;
   margin-right: 5px;
 }
