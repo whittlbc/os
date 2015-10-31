@@ -50,7 +50,7 @@ input {
 .project-type-selection-container {
   width: 100%;
   position: absolute;
-  top: 115px;
+  top: 130px;
   height: 200px;
   display: block;
 }
@@ -114,16 +114,16 @@ input {
   line-height: 50px;
   width: 100%;
   position: absolute;
-  top: 50px;
+  top: 45px;
   color: black;
   text-align: center;
   font-family: 'Helvetica Neue';
-  font-size: 13px;
+  font-size: 20px;
 }
 
-.project-source-selection-pic {
+.project-source-selection-pic,
+.project-type-selection-pic {
   display: block;
-  width: 120px;
   height: 120px;
   margin-top: 15px;
   margin-left: auto;
