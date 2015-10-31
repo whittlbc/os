@@ -71,6 +71,17 @@ input {
   height: 200px;
   width: 33.33%;
   cursor: pointer;
+  float: left;
+  position: relative;
+}
+
+.project-source-selection:hover,
+.project-type-selection:hover {
+
+  .project-source-selection-text,
+  .project-type-selection-text {
+    color: #00A6C9;
+  }
 }
 
 .project-type-selection.only-two-choices,
@@ -92,8 +103,9 @@ input {
   line-height: 50px;
   font-family: 'Helvetica Neue';
   font-size: 16px;
-  position: relative;
-  top: 150px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .select-project-source-text,
@@ -107,6 +119,15 @@ input {
   text-align: center;
   font-family: 'Helvetica Neue';
   font-size: 13px;
+}
+
+.project-source-selection-pic {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .no-pull-from-ideas {
