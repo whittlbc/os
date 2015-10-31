@@ -59,40 +59,35 @@ $side-filters-width: 18.25%;
   height: 100%;
 }
 
-.new-vote-count-container {
-  width: 40px;
-  cursor: pointer;
-  height: 45px;
-  margin-left: auto;
-  margin-right: auto;
-  color: #1d1e22;
-  line-height: 18px;
-  text-align: center;
-  font-size: 14.5px;
-  margin-top: 38.5px;
-
-  .fa{
-    font-size: 20px;
-  }
-}
-
-.new-vote-count-container:hover {
-  color: #00A6C9;
-}
-
-.vote-master-container.voted {
+.project-post-view {
 
   .new-vote-count-container {
-    color: #00A6C9;
-    font-weight: 500;
-    margin-top: 44.5px;
-    line-height: 16.5px;
+    width: 40px;
+    cursor: pointer;
+    height: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #1d1e22;
+    line-height: 18px;
+    text-align: center;
+    font-size: 14.5px;
+    margin-top: 38.5px;
 
     .fa {
-      display: none;
+      font-size: 20px;
     }
   }
 
+  .new-vote-count-container:hover {
+    color: #00A6C9;
+  }
+
+  .vote-master-container.voted {
+
+    .new-vote-count-container {
+      color: #00A6C9;
+    }
+  }
 }
 
 .title-subtitle-tag-container {
@@ -397,7 +392,7 @@ $side-filters-width: 18.25%;
   font-size: 30px;
   font-weight: 200;
   cursor: pointer;
-  color: $not-quite-black;
+  color: $post-gray;
 }
 
 .project-status-container {
