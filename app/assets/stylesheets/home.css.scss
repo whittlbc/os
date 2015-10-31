@@ -70,8 +70,8 @@ $side-filters-width: 18.25%;
     color: #1d1e22;
     line-height: 18px;
     text-align: center;
-    font-size: 14.5px;
-    margin-top: 38.5px;
+    font-size: 15px;
+    margin-top: 38px;
 
     .fa {
       font-size: 20px;
@@ -198,7 +198,7 @@ $side-filters-width: 18.25%;
 }
 
 .main-three-sub-container {
-  width: 88%;
+  width: 75%;
   height: 40px;
   margin-left: auto;
   margin-right: auto;
@@ -215,7 +215,7 @@ $side-filters-width: 18.25%;
 }
 
 .project-post-user-pic {
-  margin-left: 13.5px;
+  margin-left: 9.5px;
   width: 28px;
   height: 28px;
   margin-top: 7px;
@@ -244,7 +244,7 @@ $side-filters-width: 18.25%;
 
 .project-post-num-contributors {
   font-size: 16px;
-  margin-left: 1px;
+  margin-left: -3px;
 }
 
 .fa.fa-user {
@@ -280,6 +280,7 @@ $side-filters-width: 18.25%;
 
 .project-post-num-comments {
   font-size: 16px;
+  margin-left: -4px;
 }
 
 #projectPostCommentIcon {
@@ -397,6 +398,10 @@ $side-filters-width: 18.25%;
   width: 62%;
   float: right;
   margin-right: 5px;
+
+  .project-post-num-comments {
+    margin-left: -1px;
+  }
 }
 
 .grab-btn {

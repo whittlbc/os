@@ -221,11 +221,16 @@ $light-gray: #C4C5CA;
     }
 
     .share-icon#reddit {
-      color: #FF5700;
-      font-size: 27px;
-      background-color: transparent;
+      background-color: #cee3f8;
       position: relative;
-      top: -1px;
+
+      img {
+        width: 19px;
+        margin-top: 5.5px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
   }
