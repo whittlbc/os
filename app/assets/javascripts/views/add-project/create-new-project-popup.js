@@ -425,7 +425,7 @@ define(['jquery',
         resetPopup: function () {
             this.toggleBottomNav(0, 0);
             this.hideCreateBtn();
-            this.hideModalFooterTopBorder();
+            //this.hideModalFooterTopBorder();
             this.owl.jumpTo(0);
             this.slideIndex = 0;
             this.showFooter();
@@ -563,7 +563,7 @@ define(['jquery',
             this.panel2.render(options);
             this.owl.goTo(this.slideIndex);
             this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
-            this.showModalFooterTopBorder();
+            //this.showModalFooterTopBorder();
             this.renderBreadCrumbView();
         },
 
