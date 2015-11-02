@@ -407,12 +407,19 @@ $side-filters-width: 18.25%;
   right: 0px;
   width: 35px;
   height: 35px;
-  padding-top: 2px;
+  padding-top: 10px;
   text-align: center;
-  font-size: 30px;
   font-weight: 200;
   cursor: pointer;
   color: #38383A;
+
+  i {
+    font-size: 22px;
+  }
+}
+
+.grab-btn:hover {
+  color: #00A6C9;
 }
 
 .project-status-container {
