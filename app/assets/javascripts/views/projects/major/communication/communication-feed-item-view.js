@@ -134,7 +134,7 @@ define(['jquery',
 
             // Auto-resize reply textarea
             $replyTextarea.on('keyup input', function() {
-                $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight + 2);
+                $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);
             });
 
             $trashcan.click(function () {

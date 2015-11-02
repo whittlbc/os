@@ -1,6 +1,10 @@
 
 #myProjectsModalView {
 
+  .modal-content {
+    border-radius: 8px;
+  }
+
   .modal-header {
     height: 65px;
     width: 100%;
@@ -167,6 +171,10 @@
 
 
 #starredModalView {
+
+  .modal-content {
+    border-radius: 8px;
+  }
 
   .modal-header {
     height: 80px;
