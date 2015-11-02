@@ -85,8 +85,8 @@ define(['jquery',
 
         handleVote: function(userUUID) {
             var self = this;
-            var oldVote = Number(this.$el.find('.project-page-vote-count').html());
-            this.$el.find('.project-page-vote-count').html(oldVote + 1);
+            var oldVote = Number(this.$el.find('.new-vote-count-container > span').html());
+            this.$el.find('.new-vote-count-container > span').html(oldVote + 1);
             this.$el.find('.project-page-vote-container').addClass('voted');
             var project = new Project();
             project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {success: function (data) {
