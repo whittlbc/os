@@ -355,7 +355,6 @@ $light-gray: #C4C5CA;
 .major-info-project-type {
   display: inline-block;
   font-size: 12px;
-  font-family: 'Helvetica Neue';
   padding-left: 6px;
   padding-right: 6px;
   margin-left: 7px;
@@ -386,7 +385,6 @@ $light-gray: #C4C5CA;
   white-space: nowrap;
   text-overflow: ellipsis;
   background-color: white;
-  font-family: 'Helvetica Neue';
   font-size: 13px;
   text-align: center;
   margin-right: 6px;
@@ -399,6 +397,7 @@ $light-gray: #C4C5CA;
   height: 30px;
   font-size: 18px;
   line-height: 30px;
+  font-weight: bold;
   margin-top: 10px;
 }
 
@@ -732,7 +731,6 @@ $light-gray: #C4C5CA;
   text-align: center;
   color: black;
   font-size: 20px;
-  font-family: 'Helvetica Neue';
 }
 
 #contributorsView {
@@ -812,7 +810,7 @@ $light-gray: #C4C5CA;
 }
 
 .highlighted-minor-info {
-  font-weight: bold;
+  font-family: 'Proxima-Nova-Bold';
 }
 
 #minorInfoRepoURLContainer {
@@ -1027,7 +1025,6 @@ $light-gray: #C4C5CA;
   height: 40px;
   font-size: 18px;
   font-weight: 500;
-  font-family: 'Helvetica Neue';
   display: inline-block;
   float: left;
   margin-left: 10px;
@@ -1098,13 +1095,32 @@ $light-gray: #C4C5CA;
   }
 
   .octicon {
-    margin-right: 16px;
     color: #A6A6A6;
   }
 
-  .repo-stat-name {
+  .octicon-star {
+    margin-right: 13px;
   }
 
+  .octicon-eye {
+    margin-right: 12px;
+  }
+
+  .octicon-repo-forked {
+    margin-right: 16px;
+  }
+
+  .octicon-git-pull-request {
+    margin-right: 14px;
+  }
+
+  .octicon-check {
+    margin-right: 15px;
+  }
+
+  .octicon-issue-opened {
+    margin-right: 14px;
+  }
 }
 
 .minor-info-unspecified {
@@ -1183,6 +1199,7 @@ $light-gray: #C4C5CA;
 }
 
 .poster-pic-container {
+  position: relative;
   display: inline-block;
   height: 100%;
   width: 5%;
@@ -1193,7 +1210,7 @@ $light-gray: #C4C5CA;
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    margin-top: 15px;
+    margin-top: 12px;
     cursor: pointer;
   }
 
@@ -1201,6 +1218,7 @@ $light-gray: #C4C5CA;
 
 .comment-details-container {
   display: inline-block;
+  padding-left: 5px;
   height: 100%;
   margin-top: 13px;
   width: 95%;
@@ -1213,15 +1231,14 @@ $light-gray: #C4C5CA;
 }
 
 .poster-name {
-  font-weight: 500;
-  font-size: 15px;
+  font-family: 'Proxima-Nova-Bold';
+  font-size: 14px;
   float: left;
   display: inline-block;
 }
 
 .comment-post-time-ago {
   font-size: 10px;
-  font-family: 'Helvetica Neue';
   font-weight: 300;
   color: #C4C5CA;
   float: right;
@@ -1230,15 +1247,10 @@ $light-gray: #C4C5CA;
 
 .comment-text {
   font-size: 14px;
-  font-family: 'Helvetica Neue';
   display: block;
   float: left;
   padding-top: 5px;
   padding-bottom: 5px;
-}
-
-.poster-pic-container {
-  position: relative;
 }
 
 #projectPageNewCommentContainer {
@@ -1283,7 +1295,6 @@ $light-gray: #C4C5CA;
       text-align: center;
       line-height: 30px;
       border-radius: 4px;
-      font-family: 'Helvetica Neue';
       font-size: 14px;
       background-color: #00A6C9;
       color: white;
@@ -1352,7 +1363,6 @@ $light-gray: #C4C5CA;
       text-align: center;
       line-height: 29px;
       border-radius: 4px;
-      font-family: 'Helvetica Neue';
       font-size: 14px;
       background-color: #00A6C9;
       color: white;
@@ -1375,7 +1385,7 @@ $light-gray: #C4C5CA;
     text-align: center;
     display: inline-block;
     float: left;
-    line-height: 28px;
+    line-height: 31px;
     cursor: pointer;
     color: #C4C5CA;
 
@@ -1475,7 +1485,6 @@ $light-gray: #C4C5CA;
 
     .date {
       font-size: 10px;
-      font-family: 'Helvetica Neue';
       font-weight: 300;
       color: #C4C5CA;
       float: right;
@@ -1512,7 +1521,6 @@ $light-gray: #C4C5CA;
   width: 100%;
   color: #C4C5CA;
   font-size: 14px;
-  font-family: 'Helvetica Neue';
   font-style: italic;
   text-align: center;
 }
@@ -1563,7 +1571,6 @@ $light-gray: #C4C5CA;
       text-align: center;
       line-height: 30px;
       border-radius: 4px;
-      font-family: 'Helvetica Neue';
       font-size: 14px;
       background-color: #00A6C9;
       color: white;
@@ -1582,7 +1589,6 @@ $light-gray: #C4C5CA;
 
   .big-message {
     font-size: 33px;
-    font-family: 'Helvetica Neue';
     font-weight: 300;
     color: #C4C5CA;
     text-align: center;
@@ -1642,7 +1648,6 @@ $light-gray: #C4C5CA;
     color: black;
     padding-left: 10px;
     padding-top: 13px;
-    font-family: 'Helvetica Neue';
 
     .fa {
       margin-left: 2px;
@@ -1668,7 +1673,6 @@ $light-gray: #C4C5CA;
       padding-left: 8px;
       padding-top: 7px;
       font-size: 14px;
-      font-family: 'Helvetica Neue';
       border: 1px solid #DDD;
       border-radius: 4px;
     }
