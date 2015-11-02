@@ -447,7 +447,7 @@ define(['jquery',
         homeViewScrollListener: function () {
             if (!master.gettingMoreData) {
                 var pos = $(window).scrollTop();
-                if (pos > (0.85 * $('body').height())) {
+                if (pos > (0.85 * $('#project-feed').height())) {
                     master.gettingMoreData = true;
                     master.getMoreProjects();
                 }
@@ -562,7 +562,7 @@ define(['jquery',
                 //this.prePopulateLangFilters();
             }
 
-            //this.addScrollLoadListener();
+            this.addScrollLoadListener();
 
             this.addListeners();
 
