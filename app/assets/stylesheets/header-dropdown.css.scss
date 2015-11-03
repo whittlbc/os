@@ -61,6 +61,7 @@
         display: inline-block;
         width: 310px;
         height: 100%;
+        font-family: 'Proxima-Nova';
 
         .date {
           float: left;
@@ -84,7 +85,7 @@
           padding-left: 12px;
 
           a {
-            font-weight: 600;
+            font-family: 'Proxima-Nova-Bold';
             color: black;
             cursor: pointer;
           }

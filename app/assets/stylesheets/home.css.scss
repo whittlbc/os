@@ -93,6 +93,7 @@ $side-filters-width: 18.25%;
 .title-subtitle-tag-container {
   display: inline-block;
   width: 68%;
+  overflow-x: hidden;
   height: 100%;
   float: left;
 }

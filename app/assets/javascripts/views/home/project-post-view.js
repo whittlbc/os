@@ -92,14 +92,7 @@ define(['jquery',
             this.$licenseContainer.css('opacity', '0');
             this.$privacyContainer.css('opacity', '0');
             this.$date.css('opacity', '0');
-            if (this.tagsExpanded) {
-                _.each(self.$el.find('.tag-name'), function (element) {
-                    element.style.width = getComputedStyle(element).width;
-                    element.style.transition = 'width .285s';
-                    element.offsetWidth;
-                    element.style.width = '0px';
-                });
-            }
+            this.collapseTags();
         },
 
         showBubble: function () {
@@ -144,17 +137,56 @@ define(['jquery',
             });
 
             this.$el.find('.tag-container').hover(function () {
-                self.tagsExpanded = true;
-                _.each(self.$el.find('.tag-name'), function (element) {
-                    var prevWidth = element.style.width;
-                    element.style.width = 'auto';
-                    var endWidth = getComputedStyle(element).width;
-                    element.style.width = prevWidth;
-                    element.offsetWidth;
-                    element.style.transition = 'width .285s';
-                    element.style.width = endWidth;
-                });
+                self.expandTags();
             }, function () {});
+        },
+
+        expandTags: function () {
+            var self = this;
+            this.tagsExpanded = true;
+            _.each(this.$el.find('.tag-name'), function (element) {
+                var prevWidth = element.style.width;
+                element.style.width = 'auto';
+                var endWidth = getComputedStyle(element).width;
+                element.style.width = prevWidth;
+                element.offsetWidth;
+                element.style.transition = 'width .285s';
+                element.style.width = endWidth;
+            });
+
+            this.expandTimeout = setTimeout(function () {
+                var $tagContainer = self.$el.find('.tag-container');
+                var $container = self.$el.find('.title-subtitle-tag-container');
+                var containerWidth = $container.width();
+                // if this is true, by default, the last child is overlapping, so we really only care about the next to last child
+                if ($tagContainer.width() > containerWidth) {
+                    var containerRight = $container.offset().left + containerWidth;
+                    var $lastChild = $($tagContainer[0].lastChild);
+                    self.hideOverlappingTags(containerRight, $lastChild);
+                }
+            }, 286);
+        },
+
+        collapseTags: function () {
+            var self = this;
+            clearTimeout(this.expandTimeout);
+            if (this.tagsExpanded) {
+                _.each(self.$el.find('.tag-name'), function (element) {
+                    element.style.width = getComputedStyle(element).width;
+                    element.style.transition = 'width .285s';
+                    element.offsetWidth;
+                    element.style.width = '0px';
+                });
+            }
+        },
+
+        hideOverlappingTags: function (containerRight, $tag) {
+            var self = this;
+            var tagRight = $tag.offset().left + $tag.width();
+            if (tagRight > containerRight) {
+                $tag.hide();
+                this.hideOverlappingTags(containerRight, $tag.prev());
+            }
         },
 
         addTags: function (namesAndColorsArray) {
