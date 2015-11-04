@@ -23,6 +23,7 @@ define(['jquery',
             }, this);
 
             this.setLangData(options.langData);
+
             this.licenseData = [
                 {
                     "id": "MIT",
@@ -37,6 +38,22 @@ define(['jquery',
                     "title": "BSD"
                 }
             ];
+
+            this.chatData = [
+                {
+                    "id": "Slack",
+                    "title": "Slack"
+                },
+                {
+                    "id": "HipChat",
+                    "title": "HipChat"
+                },
+                {
+                    "id": "IRC",
+                    "title": "IRC"
+                }
+            ];
+
             this.filterType = null;
         },
 
@@ -61,6 +78,9 @@ define(['jquery',
                     break;
                 case 1:
                     return this.licenseData;
+                    break;
+                case 2:
+                    return this.chatData;
                     break;
             }
         },
@@ -149,22 +169,17 @@ define(['jquery',
 
         addHoverListeners: function () {
             var self = this;
-            this.$el.find('.filter-choice-container').hover(function () {
+            this.$filterChoiceContainer.hover(function () {
                 if (self.filterType == null) {
-                    $(this).addClass('hover-none-selected');
-                }
-                else {
-                    $(this).addClass('hover-filter-selected');
+                    $(this).addClass('show-filter-btns');
+                } else {
+                    self.$filterBtns.addClass('show-all');
                 }
             }, function () {
                 if (self.filterType == null) {
-                    $(this).removeClass('hover-none-selected');
-                }
-                else {
-                    var filtersObj = self.getFiltersWithStatus();
-                    filtersObj.selected.removeClass('not-selected-filter').addClass('selected-filter');
-                    filtersObj.not.addClass('not-selected-filter');
-                    $(this).removeClass('hover-filter-selected');
+                    $(this).removeClass('show-filter-btns');
+                } else {
+                    self.$filterBtns.removeClass('show-all');
                 }
             });
         },
@@ -188,16 +203,17 @@ define(['jquery',
         },
 
         resetDropdown: function (filterTypeInt) {
-            var self = this;
-            this.filterType = filterTypeInt;
-            this.footerDropdown.clearOptions();
-            this.footerDropdown.addOption(this.getItemsForDropdown());
+            if (this.filterType != filterTypeInt) {
+                this.filterType = filterTypeInt;
+                this.footerDropdown.clearOptions();
+                this.footerDropdown.addOption(this.getItemsForDropdown());
+            }
         },
 
         forceSetFilter: function () {
             var self = this;
             var $filterBtn;
-            this.$el.find('.filter-choice-container').addClass('hover-none-selected')
+            this.$el.find('.filter-choice-container').addClass('hover-none-selected');
             switch (this.filterType) {
                 case 0:
                     $filterBtn = self.$el.find('#langFilterChoice');
@@ -211,18 +227,27 @@ define(['jquery',
         },
 
         handleFilterBtnClicked: function (e) {
-            var self = this;
-            // Language Filter Btn
-            if (e.currentTarget.id === 'langFilterChoice' && this.filterType != 0) {
-                this.resetDropdown(0);
-                this.$el.find('#licenseFilterChoice').removeClass('selected-filter selected-color');
-                $(e.currentTarget).addClass('selected-color');
-            }
-            // License Filter Btn
-            else if (e.currentTarget.id === 'licenseFilterChoice' && this.filterType != 1) {
-                this.resetDropdown(1);
-                this.$el.find('#langFilterChoice').removeClass('selected-filter selected-color');
-                $(e.currentTarget).addClass('selected-color');
+            this.$filterBtns.removeClass('not-selected not-selected-hide-left not-selected-hide-right selected-filter show-all');
+
+            switch (e.currentTarget.id) {
+                case 'langFilterChoice':
+                    $(e.currentTarget).addClass('selected-filter');
+                    this.$licenseFilterBtn.addClass('not-selected-hide-right');
+                    this.$chatFilterBtn.addClass('not-selected');
+                    this.resetDropdown(0);
+                    break;
+                case 'licenseFilterChoice':
+                    this.$langFilterBtn.addClass('not-selected');
+                    $(e.currentTarget).addClass('selected-filter');
+                    this.$chatFilterBtn.addClass('not-selected');
+                    this.resetDropdown(1);
+                    break;
+                case 'chatFilterChoice':
+                    this.$langFilterBtn.addClass('not-selected');
+                    this.$licenseFilterBtn.addClass('not-selected-hide-left');
+                    $(e.currentTarget).addClass('selected-filter');
+                    this.resetDropdown(2);
+                    break;
             }
         },
 
@@ -234,6 +259,11 @@ define(['jquery',
                 e.stopPropagation();
             });
 
+            this.$langFilterBtn = this.$el.find('#langFilterChoice');
+            this.$licenseFilterBtn = this.$el.find('#licenseFilterChoice');
+            this.$chatFilterBtn = this.$el.find('#chatFilterChoice');
+            this.$filterChoiceContainer = this.$el.find('.filter-choice-container');
+            this.$filterBtns = this.$el.find('.footer-filter-btn');
             this.addHoverListeners();
 		}
 	});

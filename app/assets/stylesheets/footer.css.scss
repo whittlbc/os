@@ -13,7 +13,7 @@ $not-quite-black: #1D1E22;
   background-color: white;
 
   .search-container {
-    width: 68%;
+    width: 53%;
     height: 100%;
     display: inline-block;
     float: left;
@@ -113,7 +113,7 @@ $not-quite-black: #1D1E22;
   }
 
   .filter-choice-container {
-    width: 30%;
+    width: 45%;
     margin-left: 1%;
     height: 100%;
     display: inline-block;
@@ -151,76 +151,139 @@ $not-quite-black: #1D1E22;
       float: left;
       z-index: 2;
       display: block;
+      opacity: 0;
+      transition: opacity 0.5s;
 
       .footer-filter-btn {
-        width: 0;
+        width: auto;
         height: 100%;
         line-height: 40px;
         background-color: #CED2D4;
         display: inline-block;
-        transition: width 0.3s;
         cursor: pointer;
         color: white;
         font-size: 13.5px;
         overflow: hidden;
         text-align: center;
-        //box-sizing: border-box;
+        position: absolute;
+        z-index: 2;
+      }
+
+      .footer-filter-btn.selected-filter {
+        background-color: #00A6C9;
+        z-index: 3;
       }
 
       #langFilterChoice {
         float: left;
-        //border-right: 2px solid white;
+        left: 0;
+        right: 67%;
+        transition: right .29s;
+      }
+
+      #langFilterChoice.selected-filter {
+        right: 0 !important;
+      }
+
+      #langFilterChoice.not-selected {
+        right: 100% !important;
+      }
+
+      #langFilterChoice.show-all {
+        right: 67% !important;
       }
 
       #licenseFilterChoice {
+        float: left;
+        left: 34%;
+        right: 34%;
+        transition: left .29s, right .29s;
+      }
+
+      #licenseFilterChoice.selected-filter {
+        left: 0 !important;
+        right: 0 !important;
+      }
+
+      #licenseFilterChoice.not-selected-hide-left {
+        right: 67% !important;
+      }
+
+      #licenseFilterChoice.not-selected-hide-right {
+        left: 67% !important;
+      }
+
+      #licenseFilterChoice.show-all {
+        left: 34% !important;
+        right: 34% !important;
+      }
+
+      #chatFilterChoice {
         float: right;
-        //border-left: 2px solid white;
+        left: 67%;
+        right: 0;
+        transition: left .29s;
+      }
+
+      #chatFilterChoice.selected-filter {
+        left: 0 !important;
+      }
+
+      #chatFilterChoice.not-selected {
+        left: 100% !important;
+      }
+
+      #chatFilterChoice.show-all {
+        left: 67% !important;
       }
 
     }
 
   }
 
-  .filter-choice-container.hover-none-selected {
+  .filter-choice-container.show-filter-btns {
 
     .choose {
       opacity: 0;
     }
 
     .btn-container {
-
-      .footer-filter-btn {
-        width: 49.25%;
-      }
-      //
-      //.footer-filter-btn:hover {
-      //  background-color: #00A6C9;
-      //}
-
-      .footer-filter-btn:active {
-        background-color: #00B3D7;
-      }
-
-      .footer-filter-btn.selected-filter {
-        width: 100%;
-        background-color: #00A6C9;
-      }
-
-      .footer-filter-btn.not-selected-filter {
-        width: 0;
-      }
-
-      .footer-filter-btn.selected-color {
-        background-color: #00A6C9;
-      }
+      opacity: 1;
     }
 
   }
 
-  .filter-choice-container.hover-filter-selected {
-    .footer-filter-btn {
-      width: 49.25% !important;
-    }
-  }
 
+  //  .btn-container {
+  //
+  //    .footer-filter-btn:active {
+  //      background-color: #00B3D7;
+  //    }
+  //
+  //    .footer-filter-btn.selected-filter {
+  //      width: 100%;
+  //      background-color: #00A6C9;
+  //    }
+  //
+  //    .footer-filter-btn.not-selected-filter {
+  //      width: 0;
+  //    }
+  //
+  //    .footer-filter-btn.selected-color {
+  //      background-color: #00A6C9;
+  //    }
+  //  }
+  //
+  //}
+  //
+  //.filter-choice-container.hover-filter-selected {
+  //  .footer-filter-btn {
+  //  }
+  //}
+
+}
+
+
+.footer-container.up-for-grabs {
+  // dont have chat forum as one
 }
