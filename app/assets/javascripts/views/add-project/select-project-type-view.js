@@ -12,7 +12,9 @@ define(['jquery',
      SelectProjectTypeViewTpl) {
 	'use strict';
 
-	var SelectProjectTypeView = Backbone.View.extend({
+    var ourBlue = '#00A6C9';
+
+    var SelectProjectTypeView = Backbone.View.extend({
 
         initialize: function (){
         },
@@ -48,14 +50,32 @@ define(['jquery',
             this.onlyOnTheFence = bool;
         },
 
-        addHoverListeners: function () {
-            for (var i = 0; i < this.icons.length; i++) {
-                var icon = this.icons[i];
-                icon.$el.parent().hover(function () {
-                    icon.changeColor('#00A6C9');
-                }, function () {
-                    icon.changeColor('#000000');
-                });
+        toggleHighlight: function (pos, hoverOn) {
+            var color = hoverOn ? ourBlue : 'black';
+            var $parent;
+
+            switch (pos) {
+                case 0:
+                    $parent = this.upForGrabs.$el.parent();
+                    if (!$parent.hasClass('selected-type') || ($parent.hasClass('selected-type') && hoverOn)) {
+                        this.upForGrabs.changeColor(color);
+                        this.$type0Text.css('color', color);
+                    }
+                    break;
+                case 1:
+                    $parent = this.onTheFence.$el.parent();
+                    if (!$parent.hasClass('selected-type') || ($parent.hasClass('selected-type') && hoverOn)) {
+                        this.onTheFence.changeColor(color);
+                        this.$type1Text.css('color', color);
+                        break;
+                    }
+                case 2:
+                    $parent = this.launched.$el.parent();
+                    if (!$parent.hasClass('selected-type') || ($parent.hasClass('selected-type') && hoverOn)) {
+                        this.launched.changeColor(color);
+                        this.$type2Text.css('color', color);
+                        break;
+                    }
             }
         },
 
@@ -69,44 +89,66 @@ define(['jquery',
                 onlyOnTheFence: this.onlyOnTheFence
             }));
 
+            // Type 0
             this.upForGrabs = new SVG({
                 el: '[data-project-type-index=up-for-grabs] > .create-project-icon',
                 svg: 'up-for-grabs'
             });
+
+            this.$type0Text = this.$el.find('[data-project-type-index=up-for-grabs] > .project-type-selection-text');
+
             this.upForGrabs.$el.parent().hover(function () {
-                self.upForGrabs.changeColor('#00A6C9');
-                $(this).find('.project-type-selection-text').css('color', '#00A6C9');
+                self.toggleHighlight(0, true);
             }, function () {
-                self.upForGrabs.changeColor('#000000');
-                $(this).find('.project-type-selection-text').css('color', '#000000');
+                self.toggleHighlight(0, false);
             });
+
             this.upForGrabs.render();
 
+            // Type 1
             this.onTheFence = new SVG({
                 el: '[data-project-type-index=on-the-fence] > .create-project-icon',
                 svg: 'on-the-fence'
             });
+
+            this.$type1Text = this.$el.find('[data-project-type-index=on-the-fence] > .project-type-selection-text');
+
             this.onTheFence.$el.parent().hover(function () {
-                self.onTheFence.changeColor('#00A6C9');
-                $(this).find('.project-type-selection-text').css('color', '#00A6C9');
+                self.toggleHighlight(1, true);
             }, function () {
-                self.onTheFence.changeColor('#000000');
-                $(this).find('.project-type-selection-text').css('color', '#000000');
+                self.toggleHighlight(1, false);
             });
+
             this.onTheFence.render();
 
+            // Type 2
             this.launched = new SVG({
                 el: '[data-project-type-index=launched] > .create-project-icon',
                 svg: 'launched'
             });
+
+            this.$type2Text = this.$el.find('[data-project-type-index=launched] > .project-type-selection-text');
+
             this.launched.$el.parent().hover(function () {
-                self.launched.changeColor('#00A6C9');
-                $(this).find('.project-type-selection-text').css('color', '#00A6C9');
+                self.toggleHighlight(2, true);
             }, function () {
-                self.launched.changeColor('#000000');
-                $(this).find('.project-type-selection-text').css('color', '#000000');
+                self.toggleHighlight(2, false);
             });
+
             this.launched.render();
+
+            // Add color to the selected type if there is one
+            switch (this.selectedType) {
+                case OSUtil.TYPE_MAP['up-for-grabs']:
+                    this.toggleHighlight(0, true);
+                    break;
+                case OSUtil.TYPE_MAP['on-the-fence']:
+                    this.toggleHighlight(1, true);
+                    break;
+                case OSUtil.TYPE_MAP['launched']:
+                    this.toggleHighlight(2, true);
+                    break;
+            }
         }
 	});
 

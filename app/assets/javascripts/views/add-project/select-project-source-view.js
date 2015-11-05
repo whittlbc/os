@@ -12,6 +12,8 @@ define(['jquery',
      SelectProjectSourceViewTpl) {
 	'use strict';
 
+    var ourBlue = '#00A6C9';
+
 	var SelectProjectSourceView = Backbone.View.extend({
 
 		initialize: function (){
@@ -43,6 +45,35 @@ define(['jquery',
             this.onlyPullFromIdeas = bool
         },
 
+        toggleHighlight: function (pos, hoverOn) {
+            var color = hoverOn ? ourBlue : 'black';
+            var $parent;
+
+            switch (pos) {
+                case 0:
+                    $parent = this.githubLogo.$el.parent();
+                    if (!$parent.hasClass('selected-source') || ($parent.hasClass('selected-source') && hoverOn)) {
+                        this.githubLogo.changeColor(color);
+                        this.$source0Text.css('color', color);
+                    }
+                    break;
+                case 1:
+                    $parent = this.createFromScratch.$el.parent();
+                    if (!$parent.hasClass('selected-source') || ($parent.hasClass('selected-source') && hoverOn)) {
+                        this.createFromScratch.changeColor(color);
+                        this.$source1Text.css('color', color);
+                        break;
+                    }
+                case 2:
+                    $parent = this.pullFromIdeas.$el.parent();
+                    if (!$parent.hasClass('selected-source') || ($parent.hasClass('selected-source') && hoverOn)) {
+                        this.pullFromIdeas.changeColor(color);
+                        this.$source2Text.css('color', color);
+                        break;
+                    }
+            }
+        },
+
 		render: function (options) {
 			var self = this;
             if (options && options.showPullFromIdeas !== undefined) {
@@ -65,44 +96,67 @@ define(['jquery',
                 onlyPullFromIdeas: this.onlyPullFromIdeas
             }));
 
+            // Source 0
             this.githubLogo = new SVG({
                 el: '#gh > .create-project-icon',
                 svg: 'github'
             });
+
+            this.$source0Text = this.$el.find('#gh > .project-source-selection-text');
+
             this.githubLogo.$el.parent().hover(function () {
-                self.githubLogo.changeColor('#00A6C9');
-                $(this).find('.project-source-selection-text').css('color', '#00A6C9');
+                self.toggleHighlight(0, true);
             }, function () {
-                self.githubLogo.changeColor('#000000');
-                $(this).find('.project-source-selection-text').css('color', '#000000');
+                self.toggleHighlight(0, false);
             });
+
             this.githubLogo.render();
 
+            // Source 1
             this.createFromScratch = new SVG({
                 el: '#scratch > .create-project-icon',
                 svg: 'create-from-scratch'
             });
+
+            this.$source1Text = this.$el.find('#scratch > .project-source-selection-text');
+
             this.createFromScratch.$el.parent().hover(function () {
-                self.createFromScratch.changeColor('#00A6C9');
-                $(this).find('.project-source-selection-text').css('color', '#00A6C9');
+                self.toggleHighlight(1, true);
             }, function () {
-                self.createFromScratch.changeColor('#000000');
-                $(this).find('.project-source-selection-text').css('color', '#000000');
+                self.toggleHighlight(1, false);
             });
+
             this.createFromScratch.render();
 
+            // Source 2
             this.pullFromIdeas = new SVG({
                 el: '#pull-from-ideas > .create-project-icon',
                 svg: 'pull-from-ideas'
             });
+
+            this.$source2Text = this.$el.find('#pull-from-ideas > .project-source-selection-text');
+
             this.pullFromIdeas.$el.parent().hover(function () {
-                self.pullFromIdeas.changeColor('#00A6C9');
-                $(this).find('.project-source-selection-text').css('color', '#00A6C9');
+                self.toggleHighlight(2, true);
             }, function () {
-                self.pullFromIdeas.changeColor('#000000');
-                $(this).find('.project-source-selection-text').css('color', '#000000');
+                self.toggleHighlight(2, false);
             });
+
             this.pullFromIdeas.render();
+
+            // Add color to the selected source if there is one
+            switch (this.selectedSource) {
+                case OSUtil.SOURCE_MAP['gh']:
+                    this.toggleHighlight(0, true);
+                    break;
+                case OSUtil.SOURCE_MAP['scratch']:
+                    this.toggleHighlight(1, true);
+                    break;
+                case OSUtil.SOURCE_MAP['pull-from-ideas']:
+                    this.toggleHighlight(2, true);
+                    break;
+            }
+
 		}
 	});
 
