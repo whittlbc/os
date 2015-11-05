@@ -2,6 +2,8 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'models/os.util',
+    'views/dropdowns/more-filters-dropup',
+    'views/svgs/v-ellipsis',
 	'stache!views/footer/footer-view',
     'selectize',
     'backbone-eventbroker'
@@ -9,6 +11,8 @@ define(['jquery',
      Backbone,
      _,
      OSUtil,
+     MoreFiltersDropup,
+     VEllipsis,
      FooterViewTpl) {
 	'use strict';
 
@@ -65,6 +69,22 @@ define(['jquery',
 
 		events: {
             'click .footer-filter-btn': 'handleFilterBtnClicked',
+            'click .more-filters-btn': 'toggleMoreFiltersDropup'
+        },
+
+        toggleMoreFiltersDropup: function (e) {
+            e.stopPropagation();
+            if (this.moreFiltersDropup.$el.css('display') === 'none') {
+                this.moreFiltersDropup.$el.show();
+                this.trigger('hide-header-dropdowns-only');
+            } else {
+                this.moreFiltersDropup.$el.hide();
+            }
+        },
+
+        // needed for calls from other views
+        hideDropup: function () {
+            this.moreFiltersDropup.$el.hide();
         },
 
         deleteFilter: function (value) {
@@ -164,6 +184,7 @@ define(['jquery',
 
             $(document).click(function () {
                 self.hideDropdown();
+                self.moreFiltersDropup.$el.hide();
             });
         },
 
@@ -182,48 +203,12 @@ define(['jquery',
                     self.$filterBtns.removeClass('show-all');
                 }
             });
-        },
 
-        getFiltersWithStatus: function () {
-            var self = this;
-            switch (this.filterType) {
-                case 0:
-                    return {
-                        selected: this.$el.find('#langFilterChoice'),
-                        not: this.$el.find('#licenseFilterChoice')
-                    };
-                    break;
-                case 1:
-                    return {
-                        selected: this.$el.find('#licenseFilterChoice'),
-                        not: this.$el.find('#langFilterChoice')
-                    };
-                    break;
-            }
-        },
-
-        resetDropdown: function (filterTypeInt) {
-            if (this.filterType != filterTypeInt) {
-                this.filterType = filterTypeInt;
-                this.footerDropdown.clearOptions();
-                this.footerDropdown.addOption(this.getItemsForDropdown());
-            }
-        },
-
-        forceSetFilter: function () {
-            var self = this;
-            var $filterBtn;
-            this.$el.find('.filter-choice-container').addClass('hover-none-selected');
-            switch (this.filterType) {
-                case 0:
-                    $filterBtn = self.$el.find('#langFilterChoice');
-                    break;
-                case 1:
-                    $filterBtn = self.$el.find('#licenseFilterChoice');
-                    break;
-
-            }
-            $filterBtn.addClass('selected-color selected-filter');
+            this.vEllipsis.$el.hover(function () {
+                self.vEllipsis.changeColor('#00A6C9');
+            }, function() {
+                self.vEllipsis.changeColor('#cecece');
+            });
         },
 
         handleFilterBtnClicked: function (e) {
@@ -251,13 +236,74 @@ define(['jquery',
             }
         },
 
+        resetDropdown: function (filterTypeInt) {
+            if (this.filterType != filterTypeInt) {
+                this.filterType = filterTypeInt;
+                this.footerDropdown.clearOptions();
+                this.footerDropdown.addOption(this.getItemsForDropdown());
+                this.$el.find('.search-container input').focus();
+            }
+        },
+
+        getFiltersWithStatus: function () {
+            var self = this;
+            switch (this.filterType) {
+                case 0:
+                    return {
+                        selected: this.$el.find('#langFilterChoice'),
+                        not: this.$el.find('#licenseFilterChoice')
+                    };
+                    break;
+                case 1:
+                    return {
+                        selected: this.$el.find('#licenseFilterChoice'),
+                        not: this.$el.find('#langFilterChoice')
+                    };
+                    break;
+            }
+        },
+
+        forceSetFilter: function () {
+            var self = this;
+            var $filterBtn;
+            this.$el.find('.filter-choice-container').addClass('hover-none-selected');
+            switch (this.filterType) {
+                case 0:
+                    $filterBtn = self.$el.find('#langFilterChoice');
+                    break;
+                case 1:
+                    $filterBtn = self.$el.find('#licenseFilterChoice');
+                    break;
+
+            }
+            $filterBtn.addClass('selected-color selected-filter');
+        },
+
         render: function () {
 			var self = this;
             this.$el.html(FooterViewTpl());
             this.renderDropdown();
+
+            this.moreFiltersDropup = new MoreFiltersDropup({
+                el: '#moreFiltersDropUp'
+            });
+
+            this.listenTo(this.moreFiltersDropup, 'item:clicked', function (id) {
+                self.trigger('more-filters-toggle', id);
+            });
+
+            this.moreFiltersDropup.render();
+
             this.$el.find('.search-container').click(function (e) {
                 e.stopPropagation();
+                self.moreFiltersDropup.$el.hide();
             });
+
+            this.vEllipsis = new VEllipsis({
+                el: '.more-filters-btn'
+            });
+
+            this.vEllipsis.render();
 
             this.$langFilterBtn = this.$el.find('#langFilterChoice');
             this.$licenseFilterBtn = this.$el.find('#licenseFilterChoice');
@@ -265,6 +311,7 @@ define(['jquery',
             this.$filterChoiceContainer = this.$el.find('.filter-choice-container');
             this.$filterBtns = this.$el.find('.footer-filter-btn');
             this.addHoverListeners();
+
 		}
 	});
 

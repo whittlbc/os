@@ -408,6 +408,7 @@ define(['jquery',
             self.searchView.forceCloseSearchBar();
             self.accountDropdown.$el.hide();
             self.extrasDropdown.$el.hide();
+            self.footerView.hideDropup();
 
             if (self.notificationsDropdown.$el.css('display') === 'none') {
                 self.handleSeen();
@@ -423,6 +424,7 @@ define(['jquery',
             self.searchView.forceCloseSearchBar();
             self.notificationsDropdown.$el.hide();
             self.extrasDropdown.$el.hide();
+            self.footerView.hideDropup();
             self.accountDropdown.$el.css('display') === 'none' ? self.accountDropdown.$el.show() : self.accountDropdown.$el.hide();
         },
 
@@ -432,6 +434,7 @@ define(['jquery',
             self.searchView.forceCloseSearchBar();
             self.notificationsDropdown.$el.hide();
             self.accountDropdown.$el.hide();
+            self.footerView.hideDropup();
             self.extrasDropdown.$el.css('display') === 'none' ? self.extrasDropdown.$el.show() : self.extrasDropdown.$el.hide();
         },
 
@@ -485,6 +488,7 @@ define(['jquery',
             this.notificationsDropdown.$el.hide();
             this.accountDropdown.$el.hide();
             this.extrasDropdown.$el.hide();
+            this.footerView.hideDropup();
             if (hideSearchResults) {
                 this.searchView.forceCloseSearchBar();
             }
@@ -746,6 +750,19 @@ define(['jquery',
                 } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
                     self.homeView.handleRemoveLicenseFilter(data);
                 }
+            });
+
+            this.listenTo(this.footerView, 'more-filters-toggle', function (id) {
+               if (id === 'privacy') {
+                   console.log('show privacy filters');
+               }
+            });
+
+            this.listenTo(this.footerView, 'hide-header-dropdowns-only', function () {
+                self.notificationsDropdown.$el.hide();
+                self.accountDropdown.$el.hide();
+                self.extrasDropdown.$el.hide();
+                self.searchView.forceCloseSearchBar();
             });
 
             this.footerView.render();

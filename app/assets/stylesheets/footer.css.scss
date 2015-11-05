@@ -22,7 +22,7 @@ $not-quite-black: #1D1E22;
     .octicon-search {
       position: absolute;
       left: 12px;
-      top: 14px;
+      top: 15px;
       font-size: 16px;
       color: $light-gray;
       z-index: 100;
@@ -39,7 +39,7 @@ $not-quite-black: #1D1E22;
         padding-top: 7px;
         padding-bottom: 4px;
         padding-left: 27px;
-        line-height: 26px;
+        line-height: 30px;
 
         input {
           color: #BBB;
@@ -113,11 +113,10 @@ $not-quite-black: #1D1E22;
   }
 
   .filter-choice-container {
-    width: 45%;
-    margin-left: 1%;
+    width: 46%;
     height: 100%;
     display: inline-block;
-    float: left;
+    float: right;
     position: relative;
 
     .choose {
@@ -131,13 +130,17 @@ $not-quite-black: #1D1E22;
       cursor: default;
       z-index: 1;
       opacity: 1;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s linear;
 
       i {
-        float: left;
         position: relative;
-        left: 30%;
+        left: -7px;
         font-size: 20px;
+      }
+
+      span {
+        position: relative;
+        top: -6px;
       }
 
     }
@@ -146,13 +149,13 @@ $not-quite-black: #1D1E22;
       position: absolute;
       left: 0;
       top: 4px;
-      width: 100%;
-      height: 39px;
+      right: 38px;
+      height: 40px;
       float: left;
       z-index: 2;
       display: block;
       opacity: 0;
-      transition: opacity 0.5s;
+      transition: opacity 0.3s linear;
 
       .footer-filter-btn {
         width: auto;
@@ -177,8 +180,8 @@ $not-quite-black: #1D1E22;
       #langFilterChoice {
         float: left;
         left: 0;
-        right: 67%;
-        transition: right .29s;
+        right: 67.1%;
+        transition: right .3s;
       }
 
       #langFilterChoice.selected-filter {
@@ -190,7 +193,7 @@ $not-quite-black: #1D1E22;
       }
 
       #langFilterChoice.show-all {
-        right: 67% !important;
+        right: 67.1% !important;
       }
 
       #licenseFilterChoice {
@@ -222,7 +225,7 @@ $not-quite-black: #1D1E22;
         float: right;
         left: 67%;
         right: 0;
-        transition: left .29s;
+        transition: left .3s;
       }
 
       #chatFilterChoice.selected-filter {
@@ -239,6 +242,38 @@ $not-quite-black: #1D1E22;
 
     }
 
+    .more-filters-btn {
+      position: absolute;
+      float: right;
+      right: 0;
+      top: 0;
+      width: 38px;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s linear;
+      text-align: center;
+      font-size: 18px;
+      line-height: $footer-height;
+      color: $light-gray;
+      cursor: pointer;
+
+      svg {
+        height: 16px;
+        margin-top: 16px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+    }
+
+    #moreFiltersDropUp {
+      position: absolute;
+      top: -56px;
+      right: -9px;
+      width: 165px;
+      border-radius: 5px;
+    }
+
   }
 
   .filter-choice-container.show-filter-btns {
@@ -247,40 +282,12 @@ $not-quite-black: #1D1E22;
       opacity: 0;
     }
 
-    .btn-container {
+    .btn-container,
+    .more-filters-btn {
       opacity: 1;
     }
 
   }
-
-
-  //  .btn-container {
-  //
-  //    .footer-filter-btn:active {
-  //      background-color: #00B3D7;
-  //    }
-  //
-  //    .footer-filter-btn.selected-filter {
-  //      width: 100%;
-  //      background-color: #00A6C9;
-  //    }
-  //
-  //    .footer-filter-btn.not-selected-filter {
-  //      width: 0;
-  //    }
-  //
-  //    .footer-filter-btn.selected-color {
-  //      background-color: #00A6C9;
-  //    }
-  //  }
-  //
-  //}
-  //
-  //.filter-choice-container.hover-filter-selected {
-  //  .footer-filter-btn {
-  //  }
-  //}
-
 }
 
 
