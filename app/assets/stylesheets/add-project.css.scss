@@ -76,12 +76,23 @@ input {
   position: relative;
 }
 
-.project-source-selection:hover,
-.project-type-selection:hover {
+.project-source-selection {
+  svg {
+    height: 115px;
+    margin-top: 17.5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
-  .project-source-selection-text,
-  .project-type-selection-text {
-    color: #00A6C9;
+.project-type-selection {
+  svg {
+    height: 120px;
+    margin-top: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -118,15 +129,6 @@ input {
   color: black;
   text-align: center;
   font-size: 20px;
-}
-
-.project-source-selection-pic,
-.project-type-selection-pic {
-  display: block;
-  height: 120px;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .no-pull-from-ideas {
@@ -991,10 +993,10 @@ input[name="add-project-repo-name"] {
       height: 100%;
       display: inline-block;
       float: left;
-      padding-top: 15px;
-      padding-left: 18px;
+      padding-top: 21px;
+      padding-left: 20px;
       font-size: 34px;
-      font-weight: 500;
+      font-family: 'Proxima-Nova-SemiBold';
     }
 
     .forum-link-container {
@@ -1063,6 +1065,10 @@ input[name="add-project-repo-name"] {
 
   }
 
+  #detailsViewIRCContainer {
+    margin-top: -14px;
+  }
+
 }
 
 .api-key-container {
@@ -1118,7 +1124,6 @@ input[name="add-project-repo-name"] {
 
 #slackIntegrationContainer {
   position: relative;
-  margin-top: -10px;
 
   #findAPIKeyBubble {
     width: 158px;

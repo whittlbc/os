@@ -3,15 +3,15 @@
     <div class="project-source-selection-container {{#onlyPullFromIdeas}}only-one-choice{{/onlyPullFromIdeas}}">
         {{^onlyPullFromIdeas}}{{^upForGrabsType}}
         <div class="project-source-selection {{^showPullFromIdeas}}no-pull-from-ideas{{/showPullFromIdeas}} {{#ghSelected}}selected-source{{/ghSelected}}" id="gh">
-            <img src="images/github_logo.png" class="project-source-selection-pic"/>
+            <div class="create-project-icon"></div>
             <div class="project-source-selection-text">Import from Github</div>
         </div>{{/upForGrabsType}}{{/onlyPullFromIdeas}}{{
         }}{{^onlyPullFromIdeas}}<div class="project-source-selection {{^showPullFromIdeas}}no-pull-from-ideas{{/showPullFromIdeas}} {{#scratchSelected}}selected-source{{/scratchSelected}} {{#upForGrabsType}}up-for-grabs-type-selected{{/upForGrabsType}}" id="scratch">
-            <img src="images/create_from_scratch.svg" class="project-source-selection-pic"/>
+            <div class="create-project-icon"></div>
             <div class="project-source-selection-text">Create from Scratch</div>
         </div>{{/onlyPullFromIdeas}}{{
             }}{{#showPullFromIdeas}}<div class="project-source-selection {{#ideasSelected}}selected-source{{/ideasSelected}} {{#onlyPullFromIdeas}}only-one-choice{{/onlyPullFromIdeas}}" id="pull-from-ideas">
-            <img src="images/pull_from_ideas.svg" class="project-source-selection-pic"/>
+            <div class="create-project-icon"></div>
             <div class="project-source-selection-text">Pull from Ideas</div>
         </div>{{/showPullFromIdeas}}
     </div>

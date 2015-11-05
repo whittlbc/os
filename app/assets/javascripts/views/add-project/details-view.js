@@ -307,9 +307,6 @@ define(['jquery',
                     self.irc.network = self.ircNetworkSelectize.getValue();
                     Backbone.EventBroker.trigger('irc:updated', self.irc);
                 },
-                onFocus: function () {
-                    self.trigger('scroll:bottom');
-                },
                 selectOnTab: false,
                 render: {
                     option: function (data, escape) {

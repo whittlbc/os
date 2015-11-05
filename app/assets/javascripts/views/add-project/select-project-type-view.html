@@ -3,15 +3,15 @@
     <div class="project-type-selection-container {{#hideUpForGrabs}}only-two-choices{{/hideUpForGrabs}} {{#onlyOnTheFence}}only-one-choice{{/onlyOnTheFence}}">
         {{^onlyOnTheFence}}{{^hideUpForGrabs}}
         <div class="project-type-selection {{#upForGrabsSelected}}selected-type{{/upForGrabsSelected}}" data-project-type-index="up-for-grabs">
-            <img src="images/up_for_grabs.svg" class="project-type-selection-pic"/>
+            <div class="create-project-icon"></div>
             <div class="project-type-selection-text">Up for Grabs</div>
         </div>{{/hideUpForGrabs}}{{/onlyOnTheFence}}{{
         }}<div class="project-type-selection {{#onTheFenceSelected}}selected-type{{/onTheFenceSelected}} {{#hideUpForGrabs}}only-two-choices{{/hideUpForGrabs}} {{#onlyOnTheFence}}only-one-choice{{/onlyOnTheFence}}" data-project-type-index="on-the-fence">
-            <img src="images/on_the_fence.svg" class="project-type-selection-pic"/>
+            <div class="create-project-icon"></div>
             <div class="project-type-selection-text">On the Fence</div>
         </div>{{
         }}{{^onlyOnTheFence}}<div class="project-type-selection {{#launchedSelected}}selected-type{{/launchedSelected}} {{#hideUpForGrabs}}only-two-choices{{/hideUpForGrabs}}" data-project-type-index="launched">
-            <img src="images/launched.svg" class="project-type-selection-pic"/>
+            <div class="create-project-icon"></div>
             <div class="project-type-selection-text">Launched</div>
         </div>{{/onlyOnTheFence}}
     </div>

@@ -3,7 +3,7 @@ define(['jquery',
 	'underscore',
     'models/os.util',
     'views/dropdowns/more-filters-dropup',
-    'views/svgs/v-ellipsis',
+    'views/svgs/svg-view',
 	'stache!views/footer/footer-view',
     'selectize',
     'backbone-eventbroker'
@@ -12,7 +12,7 @@ define(['jquery',
      _,
      OSUtil,
      MoreFiltersDropup,
-     VEllipsis,
+     SVG,
      FooterViewTpl) {
 	'use strict';
 
@@ -299,8 +299,9 @@ define(['jquery',
                 self.moreFiltersDropup.$el.hide();
             });
 
-            this.vEllipsis = new VEllipsis({
-                el: '.more-filters-btn'
+            this.vEllipsis = new SVG({
+                el: '.more-filters-btn',
+                svg: 'v-ellipsis'
             });
 
             this.vEllipsis.render();

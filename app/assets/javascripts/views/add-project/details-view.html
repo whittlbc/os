@@ -102,6 +102,16 @@
     <div class="question">
         <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Any team communication forums?
     </div>
+    <!--IRC-->
+    <div class="integration-container" id="detailsViewIRCContainer">
+        <div class="irc">IRC</div>{{
+        }}<div id="ircChannel" class="forum-link-container">
+        <input name="irc" placeholder="Channel (e.g. #myChannel)" type="text" value="{{ircChannel}}"/>
+    </div>{{
+        }}<div id="ircNetworkContainer">
+            <select id="ircNetwork" placeholder="Network"></select>
+        </div>
+    </div>
     <!--Slack-->
     <div class="integration-container" id="slackIntegrationContainer">
         <div class="logo-container">
@@ -133,16 +143,6 @@
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
-    </div>
-    <!--IRC-->
-    <div class="integration-container">
-        <div class="irc">IRC</div>{{
-        }}<div id="ircChannel" class="forum-link-container">
-            <input name="irc" placeholder="Channel (e.g. #myChannel)" type="text" value="{{ircChannel}}"/>
-        </div>{{
-        }}<div id="ircNetworkContainer">
-            <select id="ircNetwork" placeholder="Network"></select>
-        </div>
     </div>
 </div>
 {{/showIntegrations}}

@@ -2,11 +2,13 @@ define(['jquery',
 	'backbone',
 	'underscore',
     'models/os.util',
+    'views/svgs/svg-view',
 	'stache!views/add-project/select-project-source-view'
     ], function ($,
      Backbone,
      _,
      OSUtil,
+     SVG,
      SelectProjectSourceViewTpl) {
 	'use strict';
 
@@ -62,6 +64,45 @@ define(['jquery',
                 upForGrabsType: upForGrabsType,
                 onlyPullFromIdeas: this.onlyPullFromIdeas
             }));
+
+            this.githubLogo = new SVG({
+                el: '#gh > .create-project-icon',
+                svg: 'github'
+            });
+            this.githubLogo.$el.parent().hover(function () {
+                self.githubLogo.changeColor('#00A6C9');
+                $(this).find('.project-source-selection-text').css('color', '#00A6C9');
+            }, function () {
+                self.githubLogo.changeColor('#000000');
+                $(this).find('.project-source-selection-text').css('color', '#000000');
+            });
+            this.githubLogo.render();
+
+            this.createFromScratch = new SVG({
+                el: '#scratch > .create-project-icon',
+                svg: 'create-from-scratch'
+            });
+            this.createFromScratch.$el.parent().hover(function () {
+                self.createFromScratch.changeColor('#00A6C9');
+                $(this).find('.project-source-selection-text').css('color', '#00A6C9');
+            }, function () {
+                self.createFromScratch.changeColor('#000000');
+                $(this).find('.project-source-selection-text').css('color', '#000000');
+            });
+            this.createFromScratch.render();
+
+            this.pullFromIdeas = new SVG({
+                el: '#pull-from-ideas > .create-project-icon',
+                svg: 'pull-from-ideas'
+            });
+            this.pullFromIdeas.$el.parent().hover(function () {
+                self.pullFromIdeas.changeColor('#00A6C9');
+                $(this).find('.project-source-selection-text').css('color', '#00A6C9');
+            }, function () {
+                self.pullFromIdeas.changeColor('#000000');
+                $(this).find('.project-source-selection-text').css('color', '#000000');
+            });
+            this.pullFromIdeas.render();
 		}
 	});
 
