@@ -35,7 +35,22 @@ define(['jquery',
             'click .star': 'handleStarProject',
             'click .edit-btn': 'handleProjectEdit',
             'click .delete-btn': 'handleProjectDelete',
-            'click .cancel-edit-mode': 'handleCancelEditMode'
+            'click .cancel-edit-mode': 'handleCancelEditMode',
+            'click #reddit': 'handleRedditShareClick',
+            'click #twitter': 'handleTwitterShareClick',
+            'click #facebook': 'handleFacebookShareClick'
+        },
+
+        handleRedditShareClick: function () {
+            window.open("http:\/\/reddit.com\/submit?url=https%3A\/\/www.sourcehoney.com\/%23projects\/" + this.projectID);
+        },
+
+        handleTwitterShareClick: function () {
+            window.open("http:\/\/twitter.com\/intent\/tweet?url=https%3A\/\/www.sourcehoney.com\/%23projects\/" + this.projectID);
+        },
+
+        handleFacebookShareClick: function () {
+            window.open("http:\/\/www.facebook.com\/dialog\/share?app_id=846135902169770\u0026href=https%3A\/\/www.sourcehoney.com\/%23projects\/" + this.projectID + "\u0026display=popup\u0026redirect_uri=https:\/\/www.sourcehoney.com/");
         },
 
         handleCancelEditMode: function () {
