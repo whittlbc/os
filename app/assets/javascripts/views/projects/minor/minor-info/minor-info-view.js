@@ -5,6 +5,7 @@ define(['jquery',
     'views/projects/minor/minor-info/contributors-view',
     'views/projects/minor/minor-info/repo-stats-view',
     'views/widgets/request-to-join-popover',
+    'views/svgs/svg-view',
 	'stache!views/projects/minor/minor-info/minor-info-view',
     'backbone-eventbroker'
     ], function ($,
@@ -14,6 +15,7 @@ define(['jquery',
      ContributorsView,
      RepoStatsView,
      RequestToJoinPopover,
+     SVG,
      MinorInfoViewTpl) {
 	'use strict';
 
@@ -34,18 +36,14 @@ define(['jquery',
 
         toggleSlackPopover: function (e) {
             e.stopPropagation();
-            if ($(e.toElement).is('i')) {
-                this.hipchatPopover.$el.hide();
-                this.slackPopover.$el.css('display') === 'none' ? this.slackPopover.$el.show() : this.slackPopover.$el.hide();
-            }
+            this.hipchatPopover.$el.hide();
+            this.slackPopover.$el.css('display') === 'none' ? this.slackPopover.$el.show() : this.slackPopover.$el.hide();
         },
 
         toggleHipChatPopover: function (e) {
             e.stopPropagation();
-            if ($(e.toElement).is('i')) {
-                this.slackPopover.$el.hide();
-                this.hipchatPopover.$el.css('display') === 'none' ? this.hipchatPopover.$el.show() : this.hipchatPopover.$el.hide();
-            }
+            this.slackPopover.$el.hide();
+            this.hipchatPopover.$el.css('display') === 'none' ? this.hipchatPopover.$el.show() : this.hipchatPopover.$el.hide();
         },
 
         hidePopovers: function () {
@@ -304,6 +302,33 @@ define(['jquery',
                     self.hidePopovers();
                 });
             }
+
+            this.slackEllipsis = new SVG({
+                el: '#slackEllipsis',
+                svg: 'v-ellipsis'
+            });
+
+            this.slackEllipsis.render();
+
+            this.slackEllipsis.$el.hover(function () {
+                self.slackEllipsis.changeColor('#00A6C9');
+            }, function () {
+                self.slackEllipsis.changeColor('#cecece');
+            });
+
+            this.hipchatEllipsis = new SVG({
+                el: '#hipchatEllipsis',
+                svg: 'v-ellipsis'
+            });
+
+            this.hipchatEllipsis.render();
+
+            this.hipchatEllipsis.$el.hover(function () {
+                self.hipchatEllipsis.changeColor('#00A6C9');
+            }, function () {
+                self.hipchatEllipsis.changeColor('#cecece');
+            });
+
         }
 	});
 

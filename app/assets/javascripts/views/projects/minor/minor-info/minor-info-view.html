@@ -54,7 +54,7 @@
             {{#isContributor}}
             <a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>
             {{^slackAccepted}}
-            <i class="fa fa-ellipsis-v" id="slackEllipsis"><div id="slackPopover" hidden></div></i>
+            <div id="slackEllipsis"></div><div id="slackPopover" hidden></div>
             {{/slackAccepted}}
             {{/isContributor}}
         </span>
@@ -87,7 +87,7 @@
             {{#isContributor}}
             <a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>
             {{^hipchatAccepted}}
-            <i class="fa fa-ellipsis-v" id="hipchatEllipsis"><div id="hipchatPopover" hidden></div></i>
+            <div id="hipchatEllipsis"></div><div id="hipchatPopover" hidden></div>
             {{/hipchatAccepted}}
             {{/isContributor}}
         </span>
@@ -124,6 +124,6 @@
 {{/hasIRC}}
 {{/showIntegrations}}
 {{#showRepoStats}}
-<div class="minor-info-subsection-title">Repo Stats</div>
+<div class="minor-info-subsection-title" id="repoStatsSubsectionTitle">Repo Stats</div>
 <div id="repoStatsView"></div>
 {{/showRepoStats}}

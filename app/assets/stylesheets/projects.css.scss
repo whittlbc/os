@@ -500,6 +500,7 @@ $light-gray: #C4C5CA;
     color: black;
     text-decoration: none;
     line-height: 40px;
+    font-family: 'Proxima-Nova-SemiBold';
   }
   a:hover {
     color: #00A6C9;
@@ -899,38 +900,32 @@ $light-gray: #C4C5CA;
 
   .integration-link {
     margin-left: 12px;
+    position: relative;
 
-    .fa-ellipsis-v {
-      font-size: 14px;
-      color: #C4C5CA;
-      cursor: pointer;
-      text-align: center;
-      width: 20px;
-      position: relative;
-      height: 25px;
-      line-height: 25px;
-      top: 1px;
-      margin-left: 2px;
+     #slackEllipsis,
+     #hipchatEllipsis {
+       display: inline-block;
+       width: auto;
+       height: auto;
 
+       svg {
+         height: 13px;
+         width: 20px;
+         margin-left: 2px;
+         cursor: pointer;
+         position: relative;
+         display: inline-block;
+         top: 2px;
+       }
+     }
 
-      #slackPopover {
+      #slackPopover,
+      #hipchatPopover{
         position: absolute;
-        top: -47px;
-        right: -18px;
+        top: -50px;
+        right: -19px;
         width: 145px;
       }
-
-      #hipchatPopover {
-        position: absolute;
-        top: -47px;
-        right: -18px;
-        width: 145px;
-      }
-    }
-
-    .fa-ellipsis-v:hover {
-      color: #B0B0B5;
-    }
 
   }
 
@@ -1688,4 +1683,16 @@ $light-gray: #C4C5CA;
   margin-bottom: 3px;
   display: block;
   float: left;
+}
+
+#contributorsSubsectionTitle {
+  margin-top: 15px;
+}
+
+#repoStatsSubsectionTitle {
+  margin-top: 18px;
+}
+
+#repoStatsView {
+  margin-bottom: 25px;
 }
