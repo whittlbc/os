@@ -22,11 +22,18 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
             'BSD': '#BBB'
         },
 
+        CHAT_COLOR_MAP: {
+            'Slack': 'red',
+            'HipChat': 'blue',
+            'IRC': 'yellow'
+        },
+
         HOME_PAGE: 'home',
         PROJECT_PAGE: 'project',
 
         LANGS_FILTER_SET: 0,
         LICENSE_FILTER_SET: 1,
+        CHAT_FILTER_SET: 2,
 
         NO_USER_PIC: '',
 

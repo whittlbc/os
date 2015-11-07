@@ -1004,10 +1004,10 @@ $side-filters-width: 18.25%;
         border-radius: 50%;
         background-color: rgba(0,0,0,0.66);
         color: white;
-        font-size: 12px;
+        font-size: 13px;
         text-align: center;
         cursor: pointer;
-        line-height: 15px;
+        line-height: 16px;
       }
 
     }
@@ -1038,6 +1038,22 @@ $side-filters-width: 18.25%;
   }
 }
 
+.minor-filters-type-icon {
+  display: inline-block;
+  float: right;
+  margin-right: 24px;
+  margin-bottom: 7px;
+  opacity: 0;
+
+  span {
+    color: $post-gray;
+    font-size: 20px;
+  }
+
+  img {
+    height: 20px;
+  }
+}
 
 #licenseFiltersView.license-nav-up {
   right: -51px;
@@ -1046,10 +1062,9 @@ $side-filters-width: 18.25%;
 #licenseFiltersView {
   position: fixed;
   top: 145px;
-  right: -5px;
-  transition: right 0.3s ease-in-out;
   width: 11%;
   height: auto;
+  right: 0;
 
   .license-filters-list {
     width: 100%;
@@ -1057,6 +1072,8 @@ $side-filters-width: 18.25%;
     list-style-type: none;
     padding-left: 0;
     margin-bottom: 0;
+    float: right;
+    margin-right: 19px;
 
     // REGULAR
     li {
@@ -1067,68 +1084,59 @@ $side-filters-width: 18.25%;
 
       .license-filter-item {
         float: right;
-        height: 46px;
-        width: 46px;
-        line-height: 48px;
+        height: 0;
+        width: 0;
         border-radius: 50%;
-        background-color: $not-quite-black;
-        margin-left: 7px;
-        margin-top: -5px;
-        margin-bottom: 0;
+        //background-color: $project-type-color;
+        margin-left: 10px;
+        text-align: center;
+        overflow: hidden;
         display: inline-block;
         position: relative;
-        text-align: center;
-        font-size: 15px;
-        color: white;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
-        transition: width 0.175s, height 0.175s, line-height 0.175s, font-size 0.175s;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+        left: -12.5px;
+        top: 12.5px;
+
+        span {
+          color: white;
+          font-size: 15.5px;
+          line-height: 25px;
+        }
       }
 
-      //.name {
-      //  float: right;
-      //  padding-top: 16px;
-      //  font-size: 12px;
-      //  white-space: nowrap;
-      //  text-overflow: ellipsis;
-      //  max-width: 54%;
-      //  overflow: hidden;
-      //  cursor: default;
-      //  color: $not-quite-black;
-      //  margin-left: 9px;
-      //  display: none;
-      //}
+      .name {
+        float: right;
+        padding-top: 6px;
+        font-size: 12px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-left: 12px;
+        cursor: default;
+        color: $not-quite-black;
+        opacity: 0;
+        text-align: right;
+      }
 
       .filter-close-btn {
         display: none;
         float: right;
-        margin-top: 16px;
+        margin-top: 6px;
         height: 0;
         width: 0;
         border-radius: 50%;
         background-color: rgba(0,0,0,0.66);
         color: white;
-        font-size: 12px;
+        font-size: 13px;
         text-align: center;
         cursor: pointer;
-        line-height: 15px;
+        line-height: 16px;
       }
 
     }
 
     // HOVER
     li.expand {
-
-      .license-filter-item {
-        width: 54px;
-        height: 54px;
-        line-height: 56px;
-        font-size: 17px;
-        z-index: 1;
-      }
-
-      //.name {
-      //  display: inline-block;
-      //}
 
       .filter-close-btn {
         display: inline-block;
@@ -1140,6 +1148,102 @@ $side-filters-width: 18.25%;
 
   }
 }
+
+#chatFiltersView {
+  position: fixed;
+  top: 320px;
+  width: 11%;
+  height: auto;
+  right: 0;
+
+  .chat-filters-list {
+    width: 100%;
+    height: auto;
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    float: right;
+    margin-right: 19px;
+
+    // REGULAR
+    li {
+      width: 100%;
+      height: auto;
+      float: right;
+      display: block;
+
+      .chat-filter-item {
+        float: right;
+        height: 0;
+        width: 0;
+        border-radius: 50%;
+        //background-color: white;
+        margin-left: 10px;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        //box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+        left: -12.5px;
+        top: 12.5px;
+        //border: 1px solid #EEE;
+
+
+        img {
+          width: 0;
+          height: 0;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          position: relative;
+        }
+      }
+
+      .name {
+        float: right;
+        padding-top: 6px;
+        font-size: 12px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-left: 12px;
+        cursor: default;
+        color: $not-quite-black;
+        opacity: 0;
+        text-align: right;
+      }
+
+      .filter-close-btn {
+        display: none;
+        float: right;
+        margin-top: 6px;
+        height: 0;
+        width: 0;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.66);
+        color: white;
+        font-size: 13px;
+        text-align: center;
+        cursor: pointer;
+        line-height: 16px;
+      }
+
+    }
+
+    // HOVER
+    li.expand {
+
+      .filter-close-btn {
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+      }
+
+    }
+
+  }
+}
+
+
 
 
 

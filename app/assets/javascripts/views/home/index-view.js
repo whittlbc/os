@@ -46,6 +46,7 @@ define(['jquery',
             this.filters = null;
             this.langsFramesValue = [];
             this.licenseFilters = [];
+            this.chatFilters = [];
             this.privacyFilters = [];
             this.anonFilters = [];
             this.sortType = OSUtil.SORT_BY_VOTES;
@@ -156,6 +157,12 @@ define(['jquery',
             this.getFilters();
         },
 
+        handleNewChatFilter: function (data) {
+            var self = this;
+            this.chatFilters = data.dropdownValues;
+            this.getFilters();
+        },
+
         handleRemoveLangFilter: function (data) {
             var self = this;
             this.langsFramesValue = data.dropdownValues;
@@ -165,6 +172,12 @@ define(['jquery',
         handleRemoveLicenseFilter: function (data) {
             var self = this;
             this.licenseFilters = data.dropdownValues;
+            this.getFilters();
+        },
+
+        handleRemoveChatFilter: function (data) {
+            var self = this;
+            this.chatFilters = data.dropdownValues;
             this.getFilters();
         },
 
@@ -268,6 +281,11 @@ define(['jquery',
                 obj.filters.license = self.licenseFilters;
                 any = true;
             }
+            //
+            //if (!_.isEmpty(self.chatFilters) && self.chatFilters.length < 3) {
+            //    obj.filters.chat = self.chatFilters;
+            //    any = true;
+            //}
 
             self.filters = obj;
 

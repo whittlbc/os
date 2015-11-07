@@ -25,6 +25,14 @@ define(['jquery',
             'click #clearLicenseFiltersBtn': 'clearLicenseFilters'
         },
 
+        isEmpty: function () {
+            return this.$list.children().length === 0;
+        },
+
+        toggleIconVisibility: function (opacity, duration) {
+            this.$el.find('.minor-filters-type-icon').animate({opacity: opacity}, duration);
+        },
+
         handleDeleteLicenseFilter: function(view) {
             var self = this;
             this.$list.empty();
@@ -35,7 +43,9 @@ define(['jquery',
                     licenseFilterItemView.render();
                     this.addHoverListener(licenseFilterItemView);
                     var animate = false;
-                    this.prepareItemForEntrance(licenseFilterItemView.el, licenseFilterItemView.name, animate);
+                    var $ball = licenseFilterItemView.$el.find('.license-filter-item');
+                    var $name = licenseFilterItemView.$el.find('.name');
+                    this.prepareItemForEntrance($ball, $name, licenseFilterItemView.name, animate);
                     this.$list.append(licenseFilterItemView.el);
                     tempArray.push(licenseFilterItemView);
                 }
@@ -66,11 +76,13 @@ define(['jquery',
             });
             licenseFilterItemView.render();
             this.addHoverListener(licenseFilterItemView);
-            this.prepareItemForEntrance(licenseFilterItemView.el, data.value, data.animate);
+            var $ball = licenseFilterItemView.$el.find('.license-filter-item');
+            var $name = licenseFilterItemView.$el.find('.name');
+            this.prepareItemForEntrance($ball, $name, data.value, data.animate);
             this.$list.append(licenseFilterItemView.el);
             this.LICENSE_FILTERS.push(licenseFilterItemView);
             if (data.animate) {
-                this.slideItemIn(licenseFilterItemView.el);
+                this.animateItemIn($ball, $name);
             }
         },
 
@@ -87,19 +99,15 @@ define(['jquery',
             });
         },
 
-        prepareItemForEntrance: function (el, value, animate) {
+        prepareItemForEntrance: function ($ball, $name, value, animate) {
             var self = this;
-            //el.style.display = 'inline-block';
-            el.style.position = 'relative';
-            el.firstChild.style.backgroundColor = OSUtil.LICENSE_COLOR_MAP[value];
-            el.style.right = animate ? '-100px' : '0px';
-            $(el.firstChild).html(value);
-            //var $p = $(el).children().eq(1);
-            //$p.html(value);
+            $ball.css({ backgroundColor: OSUtil.LICENSE_COLOR_MAP[value] });
+            $name.html(value);
         },
 
-        slideItemIn: function (el) {
-            $(el).velocity({ right: 0}, 700, [100, 14]);
+        animateItemIn: function ($ball, $name) {
+            $ball.velocity({width: 25, height: 25, top: 0, left: 0}, 690, [100, 15]);
+            $name.animate({opacity: 1}, {duration: 300, queue: false});
         },
 
         render: function () {
