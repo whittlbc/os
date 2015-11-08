@@ -10,6 +10,7 @@ $light-gray: #C4C5CA;
 .vertical-toggle {
   width: 100px;
   position: relative;
+  float: right;
 
   .selection {
     display: block;
@@ -45,7 +46,7 @@ $light-gray: #C4C5CA;
         text-align: center;
         line-height: $selection-height;
         opacity: 0;
-        margin-left: 7px;
+        margin-left: 7.5px;
 
       }
 

@@ -21,13 +21,8 @@ define(['jquery',
         handleClick: function (e) {
             e.stopPropagation();
             var $target = $(e.currentTarget);
-            if ($target.hasClass('selected')) {
-                $target.removeClass('selected');
-                this.trigger('remove-extra-filter', e.currentTarget.id);
-            } else {
-                $target.addClass('selected');
-                this.trigger('add-extra-filter', e.currentTarget.id);
-            }
+            this.trigger('item:clicked', e.currentTarget.id);
+            $target.hasClass('selected') ? $target.removeClass('selected') : $target.addClass('selected');
         },
 
         render: function () {

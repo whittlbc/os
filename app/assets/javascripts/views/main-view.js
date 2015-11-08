@@ -771,7 +771,7 @@ define(['jquery',
 
             this.listenTo(this.footerView, 'more-filters-toggle', function (id) {
                if (id === 'privacy') {
-                   console.log('show privacy filters');
+                   self.minorFiltersView.togglePrivacyFilters();
                }
             });
 

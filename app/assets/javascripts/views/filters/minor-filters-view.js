@@ -60,24 +60,29 @@ define(['jquery',
             $chatFilters.unbind();
         },
 
-        addPrivacyFilters: function () {
+        togglePrivacyFilters: function () {
             var self = this;
-            // create a div on the fly and append it to #minorFiltersView -- this will be your anchor for your filter view
-            var $div = $('<div>', { id: 'privacyFiltersView' });
-            this.$el.append($div);
+            console.log('asdfasdf');
+            if (this.filterTypeDoesntExist('#privacyFiltersView')) {
+                // create a div on the fly and append it to #minorFiltersView -- this will be your anchor for your filter view
+                var $div = $('<div>', {id: 'privacyFiltersView'});
+                this.$el.append($div);
 
-            this.privacyFiltersView = new PrivacyFiltersView({
-                el: '#privacyFiltersView'
-            });
+                this.privacyFiltersView = new VerticalToggle({
+                    el: '#privacyFiltersView',
+                    topName: 'Open',
+                    topIcon: 'fa-users',
+                    bottomName: 'Request',
+                    bottomIcon: 'fa-lock'
+                });
 
-            this.privacyFiltersView.render();
-        },
+                this.privacyFiltersView.render();
 
-        removePrivacyFilters: function () {
-            var self = this;
-            var $privacyFilters = this.$el.find('#privacyFiltersView');
-            $privacyFilters.remove();
-            $privacyFilters.unbind();
+            } else {
+                var $privacyFilters = this.$el.find('#privacyFiltersView');
+                $privacyFilters.remove();
+                $privacyFilters.unbind();
+            }
         },
 
         filterTypeDoesntExist: function (id) {
@@ -124,16 +129,6 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(MinorFiltersViewTpl());
-
-            this.verticalToggle = new VerticalToggle({
-                el: '#verticalToggle',
-                topName: 'Open',
-                topIcon: 'fa-users',
-                bottomName: 'Request',
-                bottomIcon: 'fa-lock'
-            });
-
-            this.verticalToggle.render();
 		}
 	});
 
