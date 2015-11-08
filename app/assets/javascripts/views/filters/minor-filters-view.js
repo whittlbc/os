@@ -62,7 +62,6 @@ define(['jquery',
 
         togglePrivacyFilters: function () {
             var self = this;
-            console.log('asdfasdf');
             if (this.filterTypeDoesntExist('#privacyFiltersView')) {
                 // create a div on the fly and append it to #minorFiltersView -- this will be your anchor for your filter view
                 var $div = $('<div>', {id: 'privacyFiltersView'});

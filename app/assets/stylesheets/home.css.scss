@@ -1,6 +1,7 @@
 
 $header-height: 68px;
 $sub-header-height: 66px;
+$minor-filters-right-offset: 28px;
 
 $not-quite-black: #1D1E22;
 $light-gray: #C4C5CA;
@@ -1071,7 +1072,7 @@ $side-filters-width: 18.25%;
   width: 100%;
   height: auto;
   float: right;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 
   .license-filters-list {
     width: 100%;
@@ -1080,7 +1081,7 @@ $side-filters-width: 18.25%;
     padding-left: 0;
     margin-bottom: 0;
     float: right;
-    margin-right: 21px;
+    margin-right: $minor-filters-right-offset;
 
     // REGULAR
     li {
@@ -1160,7 +1161,7 @@ $side-filters-width: 18.25%;
   width: 100%;
   height: auto;
   float: right;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 
   .chat-filters-list {
     width: 100%;
@@ -1169,7 +1170,7 @@ $side-filters-width: 18.25%;
     padding-left: 0;
     margin-bottom: 0;
     float: right;
-    margin-right: 21px;
+    margin-right: $minor-filters-right-offset;
 
     // REGULAR
     li {
@@ -1254,7 +1255,7 @@ $side-filters-width: 18.25%;
   width: 100%;
   height: auto;
   float: right;
-  margin-right: 21px;
+  margin-right: $minor-filters-right-offset;
   margin-bottom: 27px;
 }
 
