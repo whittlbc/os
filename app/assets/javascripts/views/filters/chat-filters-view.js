@@ -40,19 +40,39 @@ define(['jquery',
             for (var i = 0; i < this.CHAT_FILTERS.length; i++) {
                 if (this.CHAT_FILTERS[i].name != view.name) {
                     var chatFilterItemView = this.CHAT_FILTERS[i];
-                    chatFilterItemView.render();
+
+                    var options = {};
+
+                    if (chatFilterItemView.name === 'Slack') {
+                        options.image = 'images/slack_icon.svg';
+                    }
+                    else if (chatFilterItemView.name === 'HipChat') {
+                        options.image = 'images/hipchat.svg';
+                    }
+                    else {
+                        options.image = 'images/bubble.png';
+                    }
+
+                    chatFilterItemView.render(options);
                     this.addHoverListener(chatFilterItemView);
-                    var animate = false;
-                    var $ball = chatFilterItemView.$el.find('.chat-filter-item');
-                    var $icon = $ball.find('img');
-                    var $name = chatFilterItemView.$el.find('.name');
-                    this.prepareItemForEntrance($ball, $name, chatFilterItemView.name, animate);
-                    this.$list.append(chatFilterItemView.el);
+                    this.forceAddItem(chatFilterItemView);
                     tempArray.push(chatFilterItemView);
                 }
             }
             this.CHAT_FILTERS = tempArray;
             Backbone.EventBroker.trigger('deleteChatFilter', view.name);
+        },
+
+        forceAddItem: function (chatFilterItemView) {
+            var self = this;
+            var $ball = chatFilterItemView.$el.find('.chat-filter-item');
+            var $icon = $ball.find('img');
+            var $name = chatFilterItemView.$el.find('.name');
+            $ball.css({width: 25, height: 25, top: 0, left: 0});
+            $icon.css({width: 25, height: 25, top: 0, left: 0});
+            $name.css({opacity: 1});
+            $name.html(chatFilterItemView.name);
+            this.$list.append(chatFilterItemView.el);
         },
 
         clearChatFilters: function () {
@@ -93,7 +113,7 @@ define(['jquery',
             var $ball = chatFilterItemView.$el.find('.chat-filter-item');
             var $icon = $ball.find('img');
             var $name = chatFilterItemView.$el.find('.name');
-            this.prepareItemForEntrance($ball, $name, data.value, data.animate);
+            this.prepareItemForEntrance($name, data.value);
             this.$list.append(chatFilterItemView.el);
             this.CHAT_FILTERS.push(chatFilterItemView);
             if (data.animate) {
@@ -114,7 +134,7 @@ define(['jquery',
             });
         },
 
-        prepareItemForEntrance: function ($ball, $name, value, animate) {
+        prepareItemForEntrance: function ($name, value) {
             $name.html(value);
         },
 

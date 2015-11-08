@@ -21,8 +21,7 @@ define(['jquery',
     'views/modals/starred-modal',
     'views/footer/footer-view',
     'views/filters/lang-filters-view',
-    'views/filters/license-filters-view',
-    'views/filters/chat-filters-view',
+    'views/filters/minor-filters-view',
     'stache!views/main-view',
     'backbone-eventbroker'
 ], function ($,
@@ -48,8 +47,7 @@ define(['jquery',
      StarredModal,
      FooterView,
      LangFiltersView,
-     LicenseFiltersView,
-     ChatFiltersView,
+     MinorFiltersView,
      MainViewTpl) {
 	'use strict';
 
@@ -522,26 +520,6 @@ define(['jquery',
             this.footerView.preventAddListener = false;
         },
 
-        showLicenseFilters: function () {
-            this.licenseFiltersView.$el.show();
-            this.licenseFiltersView.toggleIconVisibility(1, 200);
-        },
-
-        hideLicenseFilters: function () {
-            this.licenseFiltersView.toggleIconVisibility(0, 0);
-            this.licenseFiltersView.$el.hide();
-        },
-
-        showChatFilters: function () {
-            this.chatFiltersView.$el.show();
-            this.chatFiltersView.toggleIconVisibility(1, 200);
-        },
-
-        hideChatFilters: function () {
-            this.chatFiltersView.toggleIconVisibility(0, 0);
-            this.chatFiltersView.$el.hide();
-        },
-
 		render: function (options) {
 			var self = this;
             this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -728,17 +706,11 @@ define(['jquery',
 
             this.langFiltersView.render();
 
-            this.licenseFiltersView = new LicenseFiltersView({
-                el: '#licenseFiltersView'
+            this.minorFiltersView = new MinorFiltersView({
+                el: '#minorFiltersView'
             });
 
-            this.licenseFiltersView.render();
-
-            this.chatFiltersView = new ChatFiltersView({
-                el: '#chatFiltersView'
-            });
-
-            this.chatFiltersView.render();
+            this.minorFiltersView.render();
 
             if (!this.footerView) {
 
@@ -765,51 +737,34 @@ define(['jquery',
 
                 // LICENSES
                 else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-                    if (self.licenseFiltersView.isEmpty()) {
-                        self.showLicenseFilters();
-                    }
-
-                    self.licenseFiltersView.addItem({
-                        value: data.value,
-                        animate: data.animate
-                    });
+                    self.minorFiltersView.addLicenseItem(data);
 
                     // keep setTimeout so that filter animation is smooth
                     setTimeout(function () {
                         self.homeView.handleNewLicenseFilter(data);
-                    }, 250);
+                    }, 200);
                 }
 
                 // CHAT
                 else if (data.set === OSUtil.CHAT_FILTER_SET) {
-                    if (self.chatFiltersView.isEmpty()) {
-                        self.showChatFilters();
-                    }
-
-                    self.chatFiltersView.addItem({
-                        value: data.value,
-                        animate: data.animate
-                    });
+                    self.minorFiltersView.addChatItem(data);
 
                     // keep setTimeout so that filter animation is smooth
                     setTimeout(function () {
                         self.homeView.handleNewChatFilter(data);
-                    }, 250);
+                    }, 200);
                 }
             });
 
             this.listenTo(this.footerView, 'removeItem', function (data) {
+
                 if (data.set === OSUtil.LANGS_FILTER_SET) {
                     self.homeView.handleRemoveLangFilter(data);
                 } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-                    if (self.licenseFiltersView.isEmpty()) {
-                        self.hideLicenseFilters();
-                    }
+                    self.minorFiltersView.removeLicenseItem();
                     self.homeView.handleRemoveLicenseFilter(data);
                 } else if (data.set === OSUtil.CHAT_FILTER_SET) {
-                    if (self.chatFiltersView.isEmpty()) {
-                        self.hideChatFilters();
-                    }
+                    self.minorFiltersView.removeChatItem();
                     self.homeView.handleRemoveChatFilter(data);
                 }
             });

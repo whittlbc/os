@@ -23,7 +23,8 @@ define(['jquery',
 
             Backbone.EventBroker.register({
                 'deleteLangFilter': 'deleteFilter',
-                'deleteLicenseFilter': 'deleteFilter'
+                'deleteLicenseFilter': 'deleteFilter',
+                'deleteChatFilter': 'deleteFilter'
             }, this);
 
             this.setLangData(options.langData);

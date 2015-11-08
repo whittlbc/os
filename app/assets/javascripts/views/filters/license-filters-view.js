@@ -42,16 +42,22 @@ define(['jquery',
                     var licenseFilterItemView = this.LICENSE_FILTERS[i];
                     licenseFilterItemView.render();
                     this.addHoverListener(licenseFilterItemView);
-                    var animate = false;
-                    var $ball = licenseFilterItemView.$el.find('.license-filter-item');
-                    var $name = licenseFilterItemView.$el.find('.name');
-                    this.prepareItemForEntrance($ball, $name, licenseFilterItemView.name, animate);
-                    this.$list.append(licenseFilterItemView.el);
+                    this.forceAddItem(licenseFilterItemView);
                     tempArray.push(licenseFilterItemView);
                 }
             }
             this.LICENSE_FILTERS = tempArray;
             Backbone.EventBroker.trigger('deleteLicenseFilter', view.name);
+        },
+
+        forceAddItem: function (licenseFilterItemView) {
+            var self = this;
+            var $ball = licenseFilterItemView.$el.find('.license-filter-item');
+            var $name = licenseFilterItemView.$el.find('.name');
+            $ball.css({width: 25, height: 25, top: 0, left: 0, backgroundColor: OSUtil.LICENSE_COLOR_MAP[licenseFilterItemView.name]});
+            $name.css({opacity: 1});
+            $name.html(licenseFilterItemView.name);
+            this.$list.append(licenseFilterItemView.el);
         },
 
         clearLicenseFilters: function () {
@@ -78,7 +84,7 @@ define(['jquery',
             this.addHoverListener(licenseFilterItemView);
             var $ball = licenseFilterItemView.$el.find('.license-filter-item');
             var $name = licenseFilterItemView.$el.find('.name');
-            this.prepareItemForEntrance($ball, $name, data.value, data.animate);
+            this.prepareItemForEntrance($ball, $name, data.value);
             this.$list.append(licenseFilterItemView.el);
             this.LICENSE_FILTERS.push(licenseFilterItemView);
             if (data.animate) {
@@ -99,7 +105,7 @@ define(['jquery',
             });
         },
 
-        prepareItemForEntrance: function ($ball, $name, value, animate) {
+        prepareItemForEntrance: function ($ball, $name, value) {
             var self = this;
             $ball.css({ backgroundColor: OSUtil.LICENSE_COLOR_MAP[value] });
             $name.html(value);
