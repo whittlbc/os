@@ -41,7 +41,6 @@ define(['jquery',
 
         changeColor: function (color) {
             this.$el.find('path').attr('fill', color);
-            this.$el.find('line').attr('stroke', color);
         },
 
         render: function () {
