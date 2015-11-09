@@ -270,7 +270,7 @@ define(['jquery',
                 obj.filters.langs_and_frames = self.langsFramesValue;
                 atleastOneFilter = true;
             }
-            if (!_.isEmpty(self.privacyFilters) && self.privacyFilters.length < 2) {
+            if (self.privacyFilters.length === 1) {
                 obj.filters.privacy = self.privacyFilters;
                 atleastOneFilter = true;
             }
@@ -360,19 +360,13 @@ define(['jquery',
         },
 
         addPrivacyFilter: function (type) {
-            var self = this;
-            if (!_.contains(this.privacyFilters, type)) {
-                this.privacyFilters.push(type);
-            }
-            self.getFilters();
+            this.privacyFilters = [type];
+            this.getFilters();
         },
 
-        removePrivacyFilter: function (type) {
-            var self = this;
-            if (_.contains(this.privacyFilters, type)) {
-                this.privacyFilters.splice(this.privacyFilters.indexOf(type), 1);
-            }
-            self.getFilters();
+        removePrivacyFilter: function () {
+            this.privacyFilters = [];
+            this.getFilters();
         },
 
         //addAnonFilter: function (val) {

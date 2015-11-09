@@ -4,7 +4,8 @@ define(['jquery',
     'views/filters/license-filters-view',
     'views/filters/chat-filters-view',
     'views/widgets/vertical-toggle',
-    'stache!views/filters/minor-filters-view'
+    'stache!views/filters/minor-filters-view',
+    'backbone-eventbroker'
     ], function ($,
      Backbone,
      _,
@@ -78,6 +79,7 @@ define(['jquery',
                 this.privacyFiltersView.render();
 
             } else {
+                Backbone.EventBroker.trigger('removePrivacyFilter');
                 var $privacyFilters = this.$el.find('#privacyFiltersView');
                 $privacyFilters.remove();
                 $privacyFilters.unbind();
