@@ -520,6 +520,18 @@ define(['jquery',
             this.footerView.preventAddListener = false;
         },
 
+        captureFilters: function () {
+            var self = this;
+            if (this.showHomeView) {
+                this.cachedFilters = this.homeView.filters;
+                this.cachedItems = {
+                    items: this.footerView.removedItems,
+                    values: this.footerView.removedValues
+                };
+                this.lastFilterType = this.footerView.filterType;
+            }
+        },
+
 		render: function (options) {
 			var self = this;
             this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -541,6 +553,9 @@ define(['jquery',
                 }
                 this.homeView.passCookieGHUsername(this.cookieGHUsername);
                 this.listenTo(this.homeView, 'languages:all');
+                if (this.cachedFilters) {
+                    this.homeView.passFilters(this.cachedFilters);
+                }
                 this.homeView.render({
                     index: options && options.hasOwnProperty('index') ? options.index : 1
                 });
@@ -706,86 +721,98 @@ define(['jquery',
 
             this.langFiltersView.render();
 
+            if (this.showHomeView && this.cachedItems) {
+                this.langFiltersView.prePopulateFilters(this.cachedItems.values);
+            }
+
             this.minorFiltersView = new MinorFiltersView({
                 el: '#minorFiltersView'
             });
 
             this.minorFiltersView.render();
 
-            if (!this.footerView) {
+            if (this.showHomeView && this.cachedItems) {
+                this.minorFiltersView.prePopulateFilters(this.cachedItems.values);
+            }
 
-                this.footerView = new FooterView({
+            if (this.showHomeView){
+
+                this.footerView = this.footerView || new FooterView({
                     el: '#mainFooter',
                     langData: this.allLangs
                 });
-            }
 
-            this.listenTo(this.footerView, 'addItem', function (data) {
+                this.footerView.unbind();
 
-                // LANGUAGES/FRAMEWORKS
-                if (data.set === OSUtil.LANGS_FILTER_SET) {
-                    self.langFiltersView.addItem({
-                        value: data.value,
-                        animate: data.animate
-                    });
+                this.listenTo(this.footerView, 'addItem', function (data) {
 
-                    // keep setTimeout so that filter animation is smooth
-                    setTimeout(function () {
-                        self.homeView.handleNewLangFilter(data);
-                    }, 200);
+                    // LANGUAGES/FRAMEWORKS
+                    if (data.set === OSUtil.LANGS_FILTER_SET) {
+                        self.langFiltersView.addItem({
+                            value: data.value,
+                            animate: data.animate
+                        });
+
+                        // keep setTimeout so that filter animation is smooth
+                        setTimeout(function () {
+                            self.homeView.handleNewLangFilter(data);
+                        }, 200);
+                    }
+
+                    // LICENSES
+                    else if (data.set === OSUtil.LICENSE_FILTER_SET) {
+                        self.minorFiltersView.addLicenseItem(data);
+
+                        // keep setTimeout so that filter animation is smooth
+                        setTimeout(function () {
+                            self.homeView.handleNewLicenseFilter(data);
+                        }, 200);
+                    }
+
+                    // CHAT
+                    else if (data.set === OSUtil.CHAT_FILTER_SET) {
+                        self.minorFiltersView.addChatItem(data);
+
+                        // keep setTimeout so that filter animation is smooth
+                        setTimeout(function () {
+                            self.homeView.handleNewChatFilter(data);
+                        }, 200);
+                    }
+                });
+
+                this.listenTo(this.footerView, 'removeItem', function (data) {
+
+                    if (data.set === OSUtil.LANGS_FILTER_SET) {
+                        self.homeView.handleRemoveLangFilter(data);
+                    } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
+                        self.minorFiltersView.removeLicenseItem();
+                        self.homeView.handleRemoveLicenseFilter(data);
+                    } else if (data.set === OSUtil.CHAT_FILTER_SET) {
+                        self.minorFiltersView.removeChatItem();
+                        self.homeView.handleRemoveChatFilter(data);
+                    }
+                });
+
+                this.listenTo(this.footerView, 'more-filters-toggle', function (id) {
+                    if (id === 'privacy') {
+                        self.minorFiltersView.togglePrivacyFilters();
+                    }
+                });
+
+                this.listenTo(this.footerView, 'hide-header-dropdowns-only', function () {
+                    self.notificationsDropdown.$el.hide();
+                    self.accountDropdown.$el.hide();
+                    self.extrasDropdown.$el.hide();
+                    self.searchView.forceCloseSearchBar();
+                });
+
+                this.footerView.render();
+
+                if (this.cachedItems) {
+                    this.footerView.passCachedItems(this.cachedItems);
+                    this.footerView.passFilterType(this.lastFilterType);
                 }
 
-                // LICENSES
-                else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-                    self.minorFiltersView.addLicenseItem(data);
-
-                    // keep setTimeout so that filter animation is smooth
-                    setTimeout(function () {
-                        self.homeView.handleNewLicenseFilter(data);
-                    }, 200);
-                }
-
-                // CHAT
-                else if (data.set === OSUtil.CHAT_FILTER_SET) {
-                    self.minorFiltersView.addChatItem(data);
-
-                    // keep setTimeout so that filter animation is smooth
-                    setTimeout(function () {
-                        self.homeView.handleNewChatFilter(data);
-                    }, 200);
-                }
-            });
-
-            this.listenTo(this.footerView, 'removeItem', function (data) {
-
-                if (data.set === OSUtil.LANGS_FILTER_SET) {
-                    self.homeView.handleRemoveLangFilter(data);
-                } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-                    self.minorFiltersView.removeLicenseItem();
-                    self.homeView.handleRemoveLicenseFilter(data);
-                } else if (data.set === OSUtil.CHAT_FILTER_SET) {
-                    self.minorFiltersView.removeChatItem();
-                    self.homeView.handleRemoveChatFilter(data);
-                }
-            });
-
-            this.listenTo(this.footerView, 'more-filters-toggle', function (id) {
-               if (id === 'privacy') {
-                   self.minorFiltersView.togglePrivacyFilters();
-               }
-            });
-
-            this.listenTo(this.footerView, 'hide-header-dropdowns-only', function () {
-                self.notificationsDropdown.$el.hide();
-                self.accountDropdown.$el.hide();
-                self.extrasDropdown.$el.hide();
-                self.searchView.forceCloseSearchBar();
-            });
-
-            this.footerView.render();
-
-            if (this.showHomeView && this.homeView && this.homeView.filters != null) {
-                this.prePopulateFilters();
             }
 
         }

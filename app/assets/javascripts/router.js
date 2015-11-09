@@ -66,6 +66,8 @@ define(["backbone",
                         self.setCookie('gh_username', gh_username, 7); // expires in 7 days
                     });
 
+                } else {
+                    this.mainView.captureFilters();
                 }
                 this.mainView.passCookieUser(this.getCookie('gh_username'));
                 this.mainView.render({

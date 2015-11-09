@@ -35,7 +35,6 @@ define(['jquery',
                     setTimeout(function () {
                         Backbone.EventBroker.trigger('addPrivacyFilter', privacy);
                     }, 200);
-
                 }
             });
         },

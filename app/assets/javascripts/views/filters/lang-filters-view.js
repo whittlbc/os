@@ -35,8 +35,7 @@ define(['jquery',
                     var langFilterItemView = this.LANG_FILTERS[i];
                     langFilterItemView.render();
                     this.addHoverListener(langFilterItemView);
-                    var animate = false;
-                    this.prepareItemForEntrance(langFilterItemView.el, langFilterItemView.realName, animate);
+                    this.prepareItemForEntrance(langFilterItemView.el, langFilterItemView.realName, false);
                     this.$list.append(langFilterItemView.el);
                     tempArray.push(langFilterItemView);
                 }
@@ -103,6 +102,18 @@ define(['jquery',
 
         slideItemIn: function (el) {
             $(el).velocity({ left: 0}, 700, [100, 14]);
+        },
+
+        prePopulateFilters: function (filtersMap) {
+            var self = this;
+            var filters = Object.keys(filtersMap[0]);
+
+            _.each(filters, function (lang) {
+                self.addItem({
+                    value: lang,
+                    animate: false
+                });
+            });
         },
 
         render: function () {

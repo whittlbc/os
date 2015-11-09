@@ -110,15 +110,19 @@ define(['jquery',
 
             chatFilterItemView.render(options);
             this.addHoverListener(chatFilterItemView);
-            var $ball = chatFilterItemView.$el.find('.chat-filter-item');
-            var $icon = $ball.find('img');
-            var $name = chatFilterItemView.$el.find('.name');
-            this.prepareItemForEntrance($name, data.value);
-            this.$list.append(chatFilterItemView.el);
-            this.CHAT_FILTERS.push(chatFilterItemView);
+
             if (data.animate) {
+                var $ball = chatFilterItemView.$el.find('.chat-filter-item');
+                var $icon = $ball.find('img');
+                var $name = chatFilterItemView.$el.find('.name');
+                this.prepareItemForEntrance($name, data.value);
+                this.$list.append(chatFilterItemView.el);
                 this.animateItemIn($ball, $name, $icon);
+            } else {
+                this.forceAddItem(chatFilterItemView);
             }
+
+            this.CHAT_FILTERS.push(chatFilterItemView);
         },
 
         addHoverListener: function (view) {

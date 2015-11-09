@@ -82,14 +82,18 @@ define(['jquery',
             });
             licenseFilterItemView.render();
             this.addHoverListener(licenseFilterItemView);
-            var $ball = licenseFilterItemView.$el.find('.license-filter-item');
-            var $name = licenseFilterItemView.$el.find('.name');
-            this.prepareItemForEntrance($ball, $name, data.value);
-            this.$list.append(licenseFilterItemView.el);
-            this.LICENSE_FILTERS.push(licenseFilterItemView);
+
             if (data.animate) {
+                var $ball = licenseFilterItemView.$el.find('.license-filter-item');
+                var $name = licenseFilterItemView.$el.find('.name');
+                this.prepareItemForEntrance($ball, $name, data.value);
+                this.$list.append(licenseFilterItemView.el);
                 this.animateItemIn($ball, $name);
+            } else {
+                this.forceAddItem(licenseFilterItemView);
             }
+
+            this.LICENSE_FILTERS.push(licenseFilterItemView);
         },
 
         addHoverListener: function (view) {
@@ -101,6 +105,7 @@ define(['jquery',
                 }
             );
             view.$el.find('.filter-close-btn').click(function(){
+                console.log('heard click');
                 self.handleDeleteLicenseFilter(view);
             });
         },

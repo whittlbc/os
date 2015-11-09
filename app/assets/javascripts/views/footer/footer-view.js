@@ -146,6 +146,7 @@ define(['jquery',
         },
 
         deleteFilter: function (value) {
+            console.log('delete fucking selection');
             this.footerDropdown.deleteFuckingSelection(value);
         },
 
@@ -274,6 +275,7 @@ define(['jquery',
                 }
             });
             selectize.on('item_remove', function (value, $item) {
+                console.log('heard remove item', value);
                 self.removeItemFromSelectedMap(value);
                 self.footerDropdownValue = self.getDropdownValues();
                 self.trigger('removeItem', {
@@ -356,7 +358,8 @@ define(['jquery',
                 var removedItemsForType = this.removedItems[filterTypeInt];
                 // if you do, set it as the $removedItems for the dropdown
                 if (removedItemsForType) {
-                    this.footerDropdown.setRemovedItems(removedItemsForType);
+                    this.footerDropdown.setRemovedItems(removedItemsForType, this.resetItemsToo);
+                    this.resetItemsToo = false;
                 }
             }
         },
@@ -393,6 +396,18 @@ define(['jquery',
 
             }
             $filterBtn.addClass('selected-color selected-filter');
+        },
+
+        passCachedItems: function (data) {
+            this.resetItemsToo = true;
+            this.removedItems = data.items;
+            this.removedValues = data.values;
+        },
+
+        passFilterType: function (int) {
+            this.filterType = null;
+            this.$filterChoiceContainer.addClass('show-filter-btns');
+            this.$el.find('#filterChoices').children().eq(int).click();
         },
 
         render: function () {

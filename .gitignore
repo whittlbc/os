@@ -31,4 +31,4 @@ pubnub.log
 application.yml
 config/database.yml
 node_modules
-public/assets
+# public/assets

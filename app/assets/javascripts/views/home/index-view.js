@@ -522,6 +522,14 @@ define(['jquery',
             this.langsFramesValue = this.selectize.getValue();
         },
 
+        passFilters: function (filters) {
+            this.filters = filters;
+            this.langsFramesValue = this.filters.langs_and_frames || [];
+            this.privacyFilters = this.filters.privacy || [];
+            this.licenseFilters = this.filters.license || [];
+            this.chatFilters = this.filters.chat || [];
+        },
+
 		render: function (options) {
 			var self = this;
             var onTheFenceActive = false;
@@ -559,21 +567,6 @@ define(['jquery',
             this.nonLangFiltersView.render();
 
             this.populateProjectFeed(projectTypeStatus, true);
-            //
-            //this.langSelectionList = new LangSelectionList({
-            //    el: '#langSelectionListContainer',
-            //});
-
-            //if (this.colors_and_initials) {
-            //    this.langSelectionList.setColorsAndInitials(this.colors_and_initials);
-            //}
-            //
-            //this.langSelectionList.render();
-
-            if (this.filters && this.filters.filters && this.filters.filters.langs_and_frames) {
-                //this.selectize.fuckingReset();
-                //this.prePopulateLangFilters();
-            }
 
             this.addScrollLoadListener();
 

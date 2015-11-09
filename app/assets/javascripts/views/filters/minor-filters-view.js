@@ -127,6 +127,24 @@ define(['jquery',
             }
         },
 
+        prePopulateFilters: function (filtersMap) {
+            var self = this;
+            var cachedLicenseFilters = Object.keys(filtersMap[1]);
+            var cachedChatFilters = Object.keys(filtersMap[2]);
+            _.each(cachedLicenseFilters, function (license) {
+                self.addLicenseItem({
+                    value: license,
+                    animate: false
+                });
+            });
+            _.each(cachedChatFilters, function (license) {
+                self.addChatItem({
+                    value: license,
+                    animate: false
+                });
+            });
+        },
+
 		render: function () {
 			var self = this;
             this.$el.html(MinorFiltersViewTpl());
