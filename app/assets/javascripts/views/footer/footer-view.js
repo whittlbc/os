@@ -29,42 +29,56 @@ define(['jquery',
 
             this.setLangData(options.langData);
 
-            this.licenseData = [
-                {
+            this.licenseData = {
+                "MIT": {
                     "id": "MIT",
                     "title": "MIT"
                 },
-                {
+                "GPL": {
                     "id": "GPL",
                     "title": "GPL"
                 },
-                {
+                "BSD": {
                     "id": "BSD",
                     "title": "BSD"
                 }
-            ];
+            };
 
-            this.chatData = [
-                {
+            this.chatData = {
+                "Slack": {
                     "id": "Slack",
                     "title": "Slack"
                 },
-                {
+                "HipChat": {
                     "id": "HipChat",
                     "title": "HipChat"
                 },
-                {
+                "IRC": {
                     "id": "IRC",
                     "title": "IRC"
                 }
-            ];
+            };
 
             this.filterType = null;
+
+            // used to hold the cache for div items selected by dropdown
+            this.removedItems = {
+                0: {},
+                1: {},
+                2: {}
+            };
+
+            // used to hold the VALUES for those selected items
+            this.removedValues = {
+                0: {},
+                1: {},
+                2: {}
+            };
         },
 
         setLangData: function (data) {
             this.colors_and_initials = data.colors_and_initials;
-            this.dropdown_items = data.dropdown_items;
+            this.langMap = data.langMap;
             this.all_frames = data.all_frames;
         },
 
@@ -93,17 +107,53 @@ define(['jquery',
         },
 
         getItemsForDropdown: function () {
+            var allItems;
             switch (this.filterType) {
                 case 0:
-                    return this.dropdown_items;
+                    allItems = this.langMap;
+                    return this.getItemsStillUpForSelection(0, allItems);
                     break;
                 case 1:
-                    return this.licenseData;
+                    allItems = this.licenseData;
+                    return this.getItemsStillUpForSelection(1, allItems);
                     break;
                 case 2:
-                    return this.chatData;
+                    allItems = this.chatData;
+                    return this.getItemsStillUpForSelection(2, allItems);
                     break;
             }
+        },
+
+        getItemsStillUpForSelection: function (int, allItems) {
+            var alreadySelectedItems = this.removedValues[int];
+
+            // return all items if none exist inside the removedValues map for that filter type
+            if (_.isEmpty(alreadySelectedItems)) {
+                return this.arrayFromMap(allItems);
+            }
+
+            var alreadySelectedItemsArray = Object.keys(alreadySelectedItems);
+
+            for (var i = 0; i < alreadySelectedItemsArray.length; i++) {
+                delete allItems[alreadySelectedItemsArray[i]];
+            }
+            return this.arrayFromMap(allItems);
+        },
+
+        arrayFromMap: function (map) {
+            var values = [];
+            for (var key in map) {
+                values.push(map[key]);
+            }
+            return values;
+        },
+
+        addItemToSelectedMap: function (value) {
+            this.removedValues[this.filterType][value] = value;
+        },
+
+        removeItemFromSelectedMap: function (value) {
+            delete this.removedValues[this.filterType][value];
         },
 
         hideDropdown: function () {
@@ -159,6 +209,7 @@ define(['jquery',
 
             selectize.on('item_add', function (value, $item) {
                 self.footerDropdownValue = selectize.getValue();
+                self.addItemToSelectedMap(value);
                 if (!self.preventAddListener && self.all_frames[value] && !_.contains(self.footerDropdownValue, self.all_frames[value])){
                     selectize.lastQuery = null;
                     selectize.setTextboxValue('');
@@ -173,10 +224,10 @@ define(['jquery',
                         animate: true
                     });
                 }
-
             });
             selectize.on('item_remove', function (value, $item) {
                 self.footerDropdownValue = selectize.getValue();
+                self.removeItemFromSelectedMap(value);
                 self.trigger('removeItem', {
                     set: self.filterType,
                     dropdownValues: self.footerDropdownValue
@@ -238,11 +289,27 @@ define(['jquery',
         },
 
         resetDropdown: function (filterTypeInt) {
+            // if this is not the same filter type, proceed
             if (this.filterType != filterTypeInt) {
+
+                // cache the removed items for the current filter type
+                this.removedItems[this.filterType] = this.footerDropdown.$removedItems;
+
+                // set the new filterType
                 this.filterType = filterTypeInt;
+
+                // clear out all dropdown options
                 this.footerDropdown.clearOptions();
+
+                // add the new dropdown items for the new type, leaving out ones already selected
                 this.footerDropdown.addOption(this.getItemsForDropdown());
-                this.$el.find('.search-container input').focus();
+
+                // check to see if you have a cache of the removed items for this new filter type
+                var removedItemsForType = this.removedItems[filterTypeInt];
+                // if you do, set it as the $removedItems for the dropdown
+                if (removedItemsForType) {
+                    this.footerDropdown.setRemovedItems(removedItemsForType);
+                }
             }
         },
 
