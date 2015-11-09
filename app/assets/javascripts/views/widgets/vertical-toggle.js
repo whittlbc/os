@@ -18,7 +18,13 @@ define(['jquery',
             this.animateDuration = 210;
 		},
 
-		events: {},
+		events: {
+            'click .remove-filters-btn': 'removeFilters'
+        },
+
+        removeFilters: function () {
+            Backbone.EventBroker.trigger('forceRemovePrivacyFilters');
+        },
 
         addClickListeners: function () {
             var self = this;

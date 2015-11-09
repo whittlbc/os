@@ -72,4 +72,30 @@ $light-gray: #C4C5CA;
     z-index: -1;
   }
 
+  .remove-filters-btn {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    display: none;
+    height: 0;
+    width: 0;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.66);
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 16px;
+  }
+
+}
+
+.vertical-toggle:hover {
+
+  .remove-filters-btn {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+  }
+
 }

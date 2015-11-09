@@ -12,10 +12,18 @@ define(['jquery',
     var MoreFiltersDropup = Backbone.View.extend({
 
         initialize: function () {
+            Backbone.EventBroker.register({
+                'forceRemovePrivacyFilters': 'forceClickPrivacy'
+            }, this);
         },
 
         events: {
             'click ul#moreFiltersList > li': 'handleClick'
+        },
+
+        forceClickPrivacy: function () {
+            var self = this;
+            this.$el.find('#privacy').click();
         },
 
         handleClick: function (e) {
