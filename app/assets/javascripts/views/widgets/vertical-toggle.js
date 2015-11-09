@@ -31,7 +31,11 @@ define(['jquery',
             this.$el.find('.selection').click(function () {
                 if (!$(this).hasClass('.selected')) {
                     self.select($(this));
-                    Backbone.EventBroker.trigger('addPrivacyFilter', this.id);
+                    var privacy = this.id;
+                    setTimeout(function () {
+                        Backbone.EventBroker.trigger('addPrivacyFilter', privacy);
+                    }, 200);
+
                 }
             });
         },
@@ -58,8 +62,10 @@ define(['jquery',
 
             // go ahead and preselect the OPEN filter
             this.select(this.$el.find('.selected'));
-            Backbone.EventBroker.trigger('addPrivacyFilter', 'open');
-		}
+            setTimeout(function () {
+                Backbone.EventBroker.trigger('addPrivacyFilter', 'open');
+            }, 200);
+        }
 	});
 
 	return VerticalToggle;
