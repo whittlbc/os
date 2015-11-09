@@ -38,19 +38,24 @@ define(['jquery',
             'click .cancel-edit-mode': 'handleCancelEditMode',
             'click #reddit': 'handleRedditShareClick',
             'click #twitter': 'handleTwitterShareClick',
-            'click #facebook': 'handleFacebookShareClick'
+            'click #facebook': 'handleFacebookShareClick',
+            'click #hackerNews': 'handleHackerNewsShareClick'
         },
 
         handleRedditShareClick: function () {
-            window.open("http:\/\/reddit.com\/submit?url=https%3A\/\/www.sourcehoney.com\/%23projects\/" + this.projectID);
+            window.open("http:\/\/reddit.com\/submit?url=" + encodeURIComponent(window.location) + "&title=" + encodeURIComponent(this.title));
         },
 
         handleTwitterShareClick: function () {
-            window.open("http:\/\/twitter.com\/intent\/tweet?url=https%3A\/\/www.sourcehoney.com\/%23projects\/" + this.projectID);
+            window.open("http:\/\/twitter.com\/intent\/tweet?url=" + encodeURIComponent(window.location));
         },
 
         handleFacebookShareClick: function () {
-            window.open("http:\/\/www.facebook.com\/dialog\/share?app_id=846135902169770\u0026href=https%3A\/\/www.sourcehoney.com\/%23projects\/" + this.projectID + "\u0026display=popup\u0026redirect_uri=https:\/\/www.sourcehoney.com/");
+            window.open("http:\/\/www.facebook.com\/dialog\/share?app_id=846135902169770\u0026href=" + encodeURIComponent(window.location) + "\u0026display=popup\u0026redirect_uri=" + encodeURIComponent(window.location));
+        },
+
+        handleHackerNewsShareClick: function () {
+            window.open("http:\/\/news.ycombinator.com\/submitlink?u=" + encodeURIComponent(window.location) + "&t=" + encodeURIComponent(this.title));
         },
 
         handleCancelEditMode: function () {
@@ -256,9 +261,10 @@ define(['jquery',
             this.upForGrabsType = (options.status == 0);
             this.pendingProjectRequest = options.pending_project_request;
             this.isContributor = options.is_contributor;
+            this.title = options.title || '';
 
             this.$el.html(MajorInfoViewTpl({
-                title: options.title ? options.title : '',
+                title: this.title,
                 projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
                 subtitle: options.subtitle ? options.subtitle : '',
                 description: options.description ? options.description : '',

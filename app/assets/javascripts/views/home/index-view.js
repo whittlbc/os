@@ -283,7 +283,7 @@ define(['jquery',
                 atleastOneFilter = true;
             }
 
-            if (!_.isEmpty(self.chatFilters) && self.chatFilters.length < 3) {
+            if (!_.isEmpty(self.chatFilters)) {
                 obj.filters.chat = self.chatFilters;
                 atleastOneFilter = true;
             }

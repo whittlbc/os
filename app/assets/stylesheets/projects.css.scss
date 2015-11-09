@@ -221,12 +221,25 @@ $light-gray: #C4C5CA;
     }
 
     .share-icon#reddit {
+      margin-right: 9px;
       background-color: #cee3f8;
       position: relative;
 
       img {
         width: 19px;
         margin-top: 5.5px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .share-icon#hackerNews {
+      background-color: #fb651e;
+
+      img {
+        height: 13px;
+        margin-top: 7.5px;
         display: block;
         margin-left: auto;
         margin-right: auto;
