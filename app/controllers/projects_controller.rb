@@ -276,14 +276,33 @@ class ProjectsController < ApplicationController
     end
     filters = params[:filters]
     if !filters.nil?
-      filtered_projects = Project.includes(:user, :comments).where(status: params[:status]).active
+
+      chat = filters[:chat]
+
+      filtered_projects = Project.includes(:user, :comments, :integrations).where!(status: params[:status]).active
+
       filters.each { |filter|
-        if filter[1].is_a?(Array) && filter[0] != 'anon'
-          filtered_projects = filtered_projects.where.overlap(filter[0] => filter[1])
-        else
-          filtered_projects = filtered_projects.where(filter[0] => filter[1])
+        if filter[0] != 'chat'
+          if filter[1].is_a?(Array) &&
+            filtered_projects.where!.overlap(filter[0] => filter[1])
+          else
+            filtered_projects.where!(filter[0] => filter[1])
+          end
         end
       }
+
+      if chat
+        sql = ''
+        counter = 0
+        chat.each { |service|
+          counter += 1
+          sql += "integrations.service ='#{service}'"
+          if counter < chat.length
+            sql += ' OR '
+          end
+        }
+        filtered_projects.where!(sql)
+      end
 
       projects = filtered_projects.map { |project|
         {

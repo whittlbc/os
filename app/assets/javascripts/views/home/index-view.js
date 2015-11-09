@@ -38,8 +38,8 @@ define(['jquery',
                 'removeLicenseFilter': 'removeLicenseFilter',
                 'addPrivacyFilter': 'addPrivacyFilter',
                 'removePrivacyFilter': 'removePrivacyFilter',
-                'addAnonFilter': 'addAnonFilter',
-                'removeAnonFilter': 'removeAnonFilter',
+                //'addAnonFilter': 'addAnonFilter',
+                //'removeAnonFilter': 'removeAnonFilter',
                 'clearNonLangFilters': 'clearNonLangFilters',
                 'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort'
             }, this);
@@ -48,7 +48,7 @@ define(['jquery',
             this.licenseFilters = [];
             this.chatFilters = [];
             this.privacyFilters = [];
-            this.anonFilters = [];
+            //this.anonFilters = [];
             this.sortType = OSUtil.SORT_BY_VOTES;
 
             this.resetProps();
@@ -84,7 +84,8 @@ define(['jquery',
         clearNonLangFilters: function () {
             this.licenseFilters = [];
             this.privacyFilters = [];
-            this.anonFilters = [];
+            this.chatFilters = [];
+            //this.anonFilters = [];
             this.getFilters();
         },
 
@@ -257,7 +258,7 @@ define(['jquery',
 
         getFilters: function () {
             var self = this;
-            var any = false;
+            var atleastOneFilter = false;
             this.limit = 30;
             this.gettingMoreData = false;
             var obj = {
@@ -267,31 +268,31 @@ define(['jquery',
 
             if (!_.isEmpty(self.langsFramesValue)) {
                 obj.filters.langs_and_frames = self.langsFramesValue;
-                any = true;
+                atleastOneFilter = true;
             }
             if (!_.isEmpty(self.privacyFilters) && self.privacyFilters.length < 2) {
                 obj.filters.privacy = self.privacyFilters;
-                any = true;
+                atleastOneFilter = true;
             }
-            if (!_.isEmpty(self.anonFilters) && self.anonFilters.length < 2) {
-                obj.filters.anon = self.anonFilters;
-                any = true;
-            }
+            //if (!_.isEmpty(self.anonFilters) && self.anonFilters.length < 2) {
+            //    obj.filters.anon = self.anonFilters;
+            //    atleastOneFilter = true;
+            //}
             if (!_.isEmpty(self.licenseFilters) && self.licenseFilters.length < 3) {
                 obj.filters.license = self.licenseFilters;
-                any = true;
+                atleastOneFilter = true;
             }
-            //
-            //if (!_.isEmpty(self.chatFilters) && self.chatFilters.length < 3) {
-            //    obj.filters.chat = self.chatFilters;
-            //    any = true;
-            //}
+
+            if (!_.isEmpty(self.chatFilters) && self.chatFilters.length < 3) {
+                obj.filters.chat = self.chatFilters;
+                atleastOneFilter = true;
+            }
 
             self.filters = obj;
 
             self.getFilteredFeed(obj);
 
-            if (!any) {
+            if (!atleastOneFilter) {
                 self.filters = null;
             }
         },
@@ -374,45 +375,45 @@ define(['jquery',
             self.getFilters();
         },
 
-        addAnonFilter: function (val) {
-            var self = this;
-            if (val === 'anonYes') {
-                val = true;
-            }
-            if (val === 'anonNo') {
-                val = false;
-            }
-            if (!_.contains(this.anonFilters, val)) {
-                this.anonFilters.push(val);
-            }
-            self.getFilters();
-        },
+        //addAnonFilter: function (val) {
+        //    var self = this;
+        //    if (val === 'anonYes') {
+        //        val = true;
+        //    }
+        //    if (val === 'anonNo') {
+        //        val = false;
+        //    }
+        //    if (!_.contains(this.anonFilters, val)) {
+        //        this.anonFilters.push(val);
+        //    }
+        //    self.getFilters();
+        //},
 
-        removeAnonFilter: function (val) {
-            var self = this;
-            if (val === 'anonYes') {
-                val = true;
-            }
-            if (val === 'anonNo') {
-                val = false;
-            }
-            if (_.contains(this.anonFilters, val)) {
-                this.anonFilters.splice(this.anonFilters.indexOf(val), 1);
-            }
-            self.getFilters();
-        },
+        //removeAnonFilter: function (val) {
+        //    var self = this;
+        //    if (val === 'anonYes') {
+        //        val = true;
+        //    }
+        //    if (val === 'anonNo') {
+        //        val = false;
+        //    }
+        //    if (_.contains(this.anonFilters, val)) {
+        //        this.anonFilters.splice(this.anonFilters.indexOf(val), 1);
+        //    }
+        //    self.getFilters();
+        //},
 
-        toggleAnonFilters: function (status) {
-            if (status == 0) {
-                this.nonLangFiltersView.showAnon();
-            } else {
-                this.nonLangFiltersView.hideAnon();
-                if (this.filters && this.filters.filters && this.filters.filters.hasOwnProperty('anon')) {
-                    delete this.filters.filters.anon;
-                }
-                this.anonFilters = [];
-            }
-        },
+        //toggleAnonFilters: function (status) {
+        //    if (status == 0) {
+        //        this.nonLangFiltersView.showAnon();
+        //    } else {
+        //        this.nonLangFiltersView.hideAnon();
+        //        if (this.filters && this.filters.filters && this.filters.filters.hasOwnProperty('anon')) {
+        //            delete this.filters.filters.anon;
+        //        }
+        //        this.anonFilters = [];
+        //    }
+        //},
 
         changeActiveTab: function (status) {
             var self = this;
@@ -426,7 +427,7 @@ define(['jquery',
             var self = this;
             this.limit = 30;
             this.gettingMoreData = false;
-            this.toggleAnonFilters(status);
+            //this.toggleAnonFilters(status);
             if (!initial) {
                 this.changeActiveTab(status);
             }

@@ -22,9 +22,9 @@ define(['jquery',
 		    options = options || {};
 
             Backbone.EventBroker.register({
-                'deleteLangFilter': 'deleteFilter',
-                'deleteLicenseFilter': 'deleteFilter',
-                'deleteChatFilter': 'deleteFilter'
+                'deleteLangFilter': 'deleteLangFilter',
+                'deleteLicenseFilter': 'deleteLicenseFilter',
+                'deleteChatFilter': 'deleteChatFilter'
             }, this);
 
             this.setLangData(options.langData);
@@ -85,6 +85,49 @@ define(['jquery',
 		events: {
             'click .footer-filter-btn': 'handleFilterBtnClicked',
             'click .more-filters-btn': 'toggleMoreFiltersDropup'
+        },
+
+        deleteLangFilter: function (value) {
+            var self = this;
+            if (this.filterType === 0) {
+                this.deleteFilter(value);
+            } else {
+                delete this.removedItems[0][value];
+                delete this.removedValues[0][value];
+                self.trigger('removeItem', {
+                    set: 0,
+                    dropdownValues: self.getDropdownValues(0)
+                });
+            }
+
+        },
+
+        deleteLicenseFilter: function (value) {
+            var self = this;
+            if (this.filterType === 1) {
+                this.deleteFilter(value);
+            } else {
+                delete this.removedItems[1][value];
+                delete this.removedValues[1][value];
+                self.trigger('removeItem', {
+                    set: 1,
+                    dropdownValues: self.getDropdownValues(1)
+                });
+            }
+        },
+
+        deleteChatFilter: function (value) {
+            var self = this;
+            if (this.filterType === 2) {
+                this.deleteFilter(value);
+            } else {
+                delete this.removedItems[2][value];
+                delete this.removedValues[2][value];
+                self.trigger('removeItem', {
+                    set: 2,
+                    dropdownValues: self.getDropdownValues(2)
+                });
+            }
         },
 
         toggleMoreFiltersDropup: function (e) {
@@ -164,6 +207,11 @@ define(['jquery',
             $('footer').removeClass('footer-dropdown-shown');
         },
 
+        getDropdownValues: function (int) {
+            int = int || this.filterType;
+            return Object.keys(this.removedValues[int]);
+        },
+
         renderDropdown: function () {
             var self = this;
             var options = {
@@ -208,8 +256,8 @@ define(['jquery',
             });
 
             selectize.on('item_add', function (value, $item) {
-                self.footerDropdownValue = selectize.getValue();
                 self.addItemToSelectedMap(value);
+                self.footerDropdownValue = self.getDropdownValues();
                 if (!self.preventAddListener && self.all_frames[value] && !_.contains(self.footerDropdownValue, self.all_frames[value])){
                     selectize.lastQuery = null;
                     selectize.setTextboxValue('');
@@ -226,8 +274,8 @@ define(['jquery',
                 }
             });
             selectize.on('item_remove', function (value, $item) {
-                self.footerDropdownValue = selectize.getValue();
                 self.removeItemFromSelectedMap(value);
+                self.footerDropdownValue = self.getDropdownValues();
                 self.trigger('removeItem', {
                     set: self.filterType,
                     dropdownValues: self.footerDropdownValue
