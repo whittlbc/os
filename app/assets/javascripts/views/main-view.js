@@ -121,6 +121,10 @@ define(['jquery',
             }
         },
 
+        forceShowHeader: function () {
+            $('header').removeClass('header-nav-up').addClass('header-nav-down');
+        },
+
         forceHideStarredModal: function (id) {
             this.starredModal.hideModal();
             this.switchToProjectAndHideModal(id);
@@ -561,6 +565,7 @@ define(['jquery',
                 });
             }
             if (this.showProjectView) {
+                this.forceShowHeader();
                 if (this.homeView) {
                     this.homeView.removeScrollListener();
                 }
