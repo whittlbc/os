@@ -735,8 +735,9 @@ class ProjectsController < ApplicationController
     projects_table = Project.arel_table
     query = "#{params[:query]}%"
 
-    projects = Project.where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.map { |project|
+    projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.map { |project|
       {
+          :owner => project.get_owner_gh_username,
           :title => highlight_query(project.title, params[:query]),
           :subtitle => highlight_query(project.subtitle, params[:query]),
           :status => project.status,

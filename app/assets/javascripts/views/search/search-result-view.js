@@ -21,6 +21,7 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(SearchResultViewTpl({
+                owner: this.options.owner,
                 title: this.options.title,
                 subtitle: this.options.subtitle,
                 type: OSUtil.GRAMMATICAL_PROJECT_TYPES[this.options.status],

@@ -773,14 +773,14 @@ $side-filters-width: 18.25%;
     margin-left: 3%;
     margin-bottom: 0px;
     height: 220px;
-    padding-left: 9px;
+    padding-left: 0px;
     list-style-type: none;
     background-color: white;
     border: 1px solid #CCC;
     border-top: none;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
     display: none;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 
   .search-results-list::-webkit-scrollbar {
@@ -843,38 +843,46 @@ $side-filters-width: 18.25%;
       display: inline-block;
       float: left;
       font-size: 14px;
-      padding-top: 24px;
-      color: #C4C5CA;
+      padding-top: 27px;
+      color: $post-gray;
     }
 
     .search-result-title-subtitle-container {
       width: 90%;
       display: inline-block;
       float: left;
+      padding-top: 1px;
 
       .title {
         width: 100%;
         margin-bottom: 4px;
         margin-top: 3px;
-        color: #C4C5CA;
-        font-size: 12px;
+        font-size: 14px;
+        font-family: 'Proxima-Nova-SemiBold';
+        color: $not-quite-black;
 
         span {
           color: #00A6C9;
           text-decoration: underline;
-          font-weight: 500;
         }
       }
 
       .subtitle {
         width: 100%;
-        font-size: 14px;
-        font-weight: 500;
+        font-size: 12.5px;
+        color: $post-gray;
+        margin-bottom: 2.5px;
 
         span {
           color: #00A6C9;
           text-decoration: underline;
         }
+      }
+
+      .owner {
+        width: 100%;
+        font-size: 11px;
+        color: $post-gray;
       }
     }
 
@@ -890,7 +898,7 @@ $side-filters-width: 18.25%;
       width: 100%;
       padding-top: 35px;
       text-align: center;
-      font-size: 12px;
+      font-size: 13px;
       color: #C4C5CA;
     }
   }
