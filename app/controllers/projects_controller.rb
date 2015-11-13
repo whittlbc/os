@@ -735,22 +735,42 @@ class ProjectsController < ApplicationController
     projects_table = Project.arel_table
     query = "#{params[:query]}%"
 
-    projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.map { |project|
-      {
-          :owner => project.get_owner_gh_username,
-          :title => highlight_query(project.title, params[:query]),
-          :subtitle => highlight_query(project.subtitle, params[:query]),
-          :status => project.status,
-          :id => project.id,
-          :voteCount => project.vote_count
+    # return just the title and id of the project
+    if params[:upForGrabs]
+      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.map { |project|
+        {
+            :id => project.id,
+            :title => project.title,
+            :subtitle => project.subtitle,
+            :description => project.description,
+            :langsFrames => project.langs_and_frames
+        }
       }
-    }
 
-    sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:subtitle], project[:title]] }.reverse
+      sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:title]] }.reverse
+      limit = !params[:limit].nil? ? params[:limit].to_i : 10
+      render :json => {:projects => sorted_projects.slice(0, limit)}
 
-    limit = !params[:limit].nil? ? params[:limit].to_i : 10
-    got_all = (limit >= sorted_projects.length)
-    render :json => {:projects => sorted_projects.slice(0, limit), :gotAll => got_all}
+    else
+      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.map { |project|
+        {
+            :owner => project.get_owner_gh_username,
+            :title => highlight_query(project.title, params[:query]),
+            :subtitle => highlight_query(project.subtitle, params[:query]),
+            :status => project.status,
+            :id => project.id,
+            :voteCount => project.vote_count
+        }
+      }
+
+      sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:subtitle], project[:title]] }.reverse
+
+      limit = !params[:limit].nil? ? params[:limit].to_i : 10
+      got_all = (limit >= sorted_projects.length)
+      render :json => {:projects => sorted_projects.slice(0, limit), :gotAll => got_all}
+
+    end
+
   end
 
   private

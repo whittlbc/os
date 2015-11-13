@@ -17,8 +17,7 @@ define(['jquery',
 			var self = this;
             this.data = data;
             this.$el.html(PullFromIdeasSearchResultTpl({
-                title: data.title,
-                userPic: data.userPic
+                title: data.title
             }));
 
             this.$el.click(function () {

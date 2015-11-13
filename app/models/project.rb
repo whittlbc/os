@@ -12,6 +12,12 @@ class Project < ActiveRecord::Base
 
   scope :not_destroyed, -> { where(:is_destroyed => false) }
 
+  scope :up_for_grabs, -> { where(:status => 0) }
+
+  scope :on_the_fence, -> { where(:status => 1) }
+
+  scope :launched, -> { where(:status => 2) }
+
   def get_owner_gh_username
     self.try(:user).try(:gh_username)
   end
