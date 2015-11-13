@@ -158,8 +158,10 @@ define(['jquery',
                     var langFrame = colors_and_initials[langsFrames[i]];
                     if (langFrame) {
                         var color = langFrame['color'];
-                        $tag.css('color', color);
-                        $tag.css('border', '2px solid ' + color);
+                        $tag.css({
+                            color: color,
+                            border: '2px solid ' + color
+                        });
                         this.$el.find('.major-info-tag-container').append($tag);
                     }
                 }

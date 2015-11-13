@@ -492,7 +492,9 @@ define(['jquery',
             this.notificationsDropdown.$el.hide();
             this.accountDropdown.$el.hide();
             this.extrasDropdown.$el.hide();
-            this.footerView.hideDropup();
+            if (this.footerView) {
+                this.footerView.hideDropup();
+            }
             if (hideSearchResults) {
                 this.searchView.forceCloseSearchBar();
             }
