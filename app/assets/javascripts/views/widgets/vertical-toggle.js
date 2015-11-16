@@ -15,7 +15,7 @@ define(['jquery',
 		initialize: function (options) {
             options = options || {};
             this.options = options;
-            this.animateDuration = 210;
+            this.animateDuration = 175;
 		},
 
 		events: {

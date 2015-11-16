@@ -17,27 +17,18 @@ define(['jquery',
 
         events: {},
 
-        reEmptyAllLists: function () {
-            var self = this;
-            this.$el.find('#owned-projects-list').empty();
-            this.$el.find('#contributing-projects-list').empty();
-        },
-
         populate: function (projects) {
-            var self = this;
-            this.reEmptyAllLists();
-            if (projects.own.length == 0) {
-                this.$el.find('#noOwnedProjects').show();
-            } else {
-                this.$el.find('#noOwnedProjects').hide();
+            // populate owned projects
+            if (projects.own.length > 0) {
+                this.$el.find('#owned-projects-list').empty();
                 for (var i = 0; i < projects.own.length; i++) {
-                    this.addProject(projects.own[i], 1);
+                    this.addProject(projects.own[i], 0);
                 }
             }
-            if (projects.contribute.length == 0) {
-                this.$el.find('#noOtherContributions').show();
-            } else {
-                this.$el.find('#noOtherContributions').hide();
+
+            // populate contributions
+            if (projects.contribute.length > 0) {
+                this.$el.find('#contributing-projects-list').empty();
                 for (var j = 0; j < projects.contribute.length; j++) {
                     this.addProject(projects.contribute[j], 1);
                 }

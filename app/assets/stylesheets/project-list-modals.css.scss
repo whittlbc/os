@@ -1,4 +1,6 @@
 
+$not-quite-black: #1D1E22;
+
 #myProjectsModalView {
 
   .modal-content {
@@ -9,18 +11,17 @@
     height: 65px;
     width: 100%;
     border-bottom: none !important;
-    margin-bottom: 10px;
 
     button {
       margin-right: 22px;
-      margin-top: 19px;
+      margin-top: 22px;
       font-size: 22px;
     }
 
     .header-text {
       width: 100%;
       height: 100%;
-      line-height: 65px;
+      line-height: 55px;
       text-align: center;
       font-size: 24px;
       color: black;
@@ -30,7 +31,7 @@
   }
 
   .my-projects-modal-body {
-    height: 450px;
+    height: 350px;
     width: 100%;
     overflow: scroll;
     margin-bottom: 20px;
@@ -78,13 +79,6 @@
         }
       }
 
-      .no-others-exist {
-        color: #cecece;
-        font-style: italic;
-        font-size: 14px;
-        text-align: center;
-        margin-top: 65px;
-      }
 
       ul {
         width: 100%;
@@ -93,9 +87,18 @@
         float: left;
         margin-bottom: 25px;
 
+        .my-projects-none-message {
+          color: #C4C5CA;
+          font-style: italic;
+          font-size: 14px;
+          text-align: center;
+          margin-top: 46px;
+          width: 100%;
+        }
+
         li {
           width: 100%;
-          height: 78px;
+          height: 45px;
           float: left;
           cursor: pointer;
         }
@@ -110,54 +113,14 @@
           float: left;
           display: block;
 
-          .left-container {
-            display: inline-block;
+          .title {
+            width: 100%;
+            padding-left: 30px;
             height: 100%;
-            float: left;
-            width: 75%;
-            padding-top: 8px;
-            padding-left: 5%;
-
-            .title {
-              width: 100%;
-              margin-bottom: 4px;
-              margin-top: 3px;
-              color: #C4C5CA;
-              font-size: 12px;
-            }
-
-            .subtitle {
-              width: 100%;
-              font-size: 14px;
-              font-weight: 500;
-            }
-
-            .owner {
-              width: 100%;
-              font-size: 11px;
-              margin-top: 2px;
-
-              a {
-                cursor: pointer;
-                color: #C4C5CA;
-              }
-            }
-
-          }
-
-          .right-container {
-            display: inline-block;
-            height: 100%;
-            float: left;
-            width: 25%;
-
-            .type {
-              width: 100%;
-              padding-top: 31px;
-              text-align: center;
-              font-size: 12px;
-              color: #C4C5CA;
-            }
+            line-height: 45px;
+            color: $not-quite-black;
+            font-size: 14px;
+            font-family: 'Proxima-Nova-SemiBold';
           }
 
         }
@@ -177,31 +140,44 @@
   }
 
   .modal-header {
-    height: 80px;
+    height: 65px;
     width: 100%;
     border-bottom: 1px solid #EEE !important;
     margin-bottom: 10px;
+    position: relative;
 
     button {
       margin-right: 22px;
-      margin-top: 19px;
+      margin-top: 22px;
       font-size: 22px;
     }
 
     .header-text {
-      width: 100%;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
       height: 100%;
-      line-height: 65px;
+      line-height: 55px;
       text-align: center;
       font-size: 24px;
       color: black;
       padding-top: 8px;
-      padding-left: 23px;
+      position: relative;
+      left: 9px;
+    }
+
+    .fa-star,
+    .fa-star-o {
+      color: #F7E00F;
+      font-size: 26px;
+      position: absolute;
+      left: 180px;
+      top: 20px;
     }
   }
 
   .starred-modal-body {
-    height: 450px;
+    height: 350px;
     width: 100%;
     overflow: scroll;
     margin-bottom: 20px;
@@ -228,11 +204,10 @@
         padding-left: 0;
         list-style-type: none;
         float: left;
-        margin-bottom: 25px;
 
         li {
           width: 100%;
-          height: 78px;
+          height: 45px;
           float: left;
           cursor: pointer;
         }
@@ -247,56 +222,16 @@
           float: left;
           display: block;
 
-          .left-container {
-            display: inline-block;
+          .title {
+            width: 100%;
+            padding-left: 30px;
             height: 100%;
-            float: left;
-            width: 75%;
-            padding-top: 8px;
-            padding-left: 5%;
-
-            .title {
-              width: 100%;
-              margin-bottom: 4px;
-              margin-top: 3px;
-              color: #C4C5CA;
-              font-size: 12px;
-            }
-
-            .subtitle {
-              width: 100%;
-              font-size: 14px;
-              font-weight: 500;
-            }
-
-            .owner {
-              width: 100%;
-              font-size: 11px;
-              color: #C4C5CA;
-              margin-top: 2px;
-
-              a {
-                cursor: pointer;
-                color: #C4C5CA;
-              }
-            }
-
+            line-height: 45px;
+            color: $not-quite-black;
+            font-size: 14px;
+            font-family: 'Proxima-Nova-SemiBold';
           }
 
-          .right-container {
-            display: inline-block;
-            height: 100%;
-            float: left;
-            width: 25%;
-
-            .type {
-              width: 100%;
-              padding-top: 31px;
-              text-align: center;
-              font-size: 12px;
-              color: #C4C5CA;
-            }
-          }
         }
 
       }

@@ -16,10 +16,16 @@ define(['jquery',
 
         initialize: function () {
             this.currentTopPos = 125;
-            this.starredModalHeight = 500;
+            this.starredModalHeight = 400;
         },
 
-        events: {},
+        events: {
+            'click .close': 'handleCloseModal'
+        },
+
+        handleCloseModal: function () {
+            console.log('asdfasdasdf');
+        },
 
         populate: function (data) {
             var self = this;
@@ -30,8 +36,7 @@ define(['jquery',
             var self = this;
             var starredModalMarginTop = ((window.innerHeight - this.starredModalHeight - this.currentTopPos) / 2);
             this.$modal.css('margin-top', starredModalMarginTop + 'px');
-            this.$el.find('#starredModalContentContainer').width(700);
-            this.$el.find('#starredModalContentContainer').css('left', '-50px');
+            this.$el.find('#starredModalContentContainer').width(600);
         },
 
         render: function () {

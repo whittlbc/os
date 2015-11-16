@@ -17,7 +17,6 @@ define(['jquery',
 		},
 
 		events: {
-            'click #accountDropdownList > li': 'handleTabClicked'
         },
 
         handleTabClicked: function (e) {
@@ -32,6 +31,10 @@ define(['jquery',
             this.$el.html(AccountDropdownViewTpl({
                 signInOutText: this.userAuthed ? 'Sign Out' : 'Sign In'
             }));
+
+            this.$el.find('#accountDropdownList > li').click(function (e) {
+                self.handleTabClicked(e);
+            });
 		}
 	});
 

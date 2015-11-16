@@ -16,7 +16,7 @@ define(['jquery',
 
         initialize: function () {
             this.currentTopPos = 125;
-            this.myProjectsModalHeight = 500;
+            this.myProjectsModalHeight = 400;
         },
 
         events: {},
@@ -30,8 +30,7 @@ define(['jquery',
             var self = this;
             var myProjectsModalMarginTop = ((window.innerHeight - this.myProjectsModalHeight - this.currentTopPos) / 2);
             this.$modal.css('margin-top', myProjectsModalMarginTop + 'px');
-            this.$el.find('#myProjectsModalContentContainer').width(700);
-            this.$el.find('#myProjectsModalContentContainer').css('left', '-50px');
+            this.$el.find('#myProjectsModalContentContainer').width(600);
         },
 
         render: function () {

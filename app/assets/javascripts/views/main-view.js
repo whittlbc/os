@@ -100,25 +100,19 @@ define(['jquery',
         showMyProjectsModal: function () {
             var self = this;
             this.myProjectsModal.showModal();
-            if (!this.myProjectsData) {
-                var user = new User();
-                user.getMyProjects({user_uuid: self.userData.user_uuid}, {success: function (projects) {
-                    self.myProjectsData = projects;
-                    self.myProjectsModal.populate(projects);
-                }});
-            }
+            var user = new User();
+            user.getMyProjects({user_uuid: self.userData.user_uuid}, {success: function (projects) {
+                self.myProjectsModal.populate(projects);
+            }});
         },
 
         showStarredModal: function () {
             var self = this;
             this.starredModal.showModal();
-            if (!this.starredData) {
-                var user = new User();
-                user.getStarredProjects({user_uuid: self.userData.user_uuid}, {success: function (projects) {
-                    self.starredData = projects;
-                    self.starredModal.populate(projects);
-                }});
-            }
+            var user = new User();
+            user.getStarredProjects({user_uuid: self.userData.user_uuid}, {success: function (projects) {
+                self.starredModal.populate(projects);
+            }});
         },
 
         forceShowHeader: function () {
@@ -428,7 +422,9 @@ define(['jquery',
             self.searchView.forceCloseSearchBar();
             self.notificationsDropdown.$el.hide();
             self.extrasDropdown.$el.hide();
-            self.footerView.hideDropup();
+            if (self.footerView) {
+                self.footerView.hideDropup();
+            }
             self.accountDropdown.$el.css('display') === 'none' ? self.accountDropdown.$el.show() : self.accountDropdown.$el.hide();
         },
 
@@ -438,7 +434,9 @@ define(['jquery',
             self.searchView.forceCloseSearchBar();
             self.notificationsDropdown.$el.hide();
             self.accountDropdown.$el.hide();
-            self.footerView.hideDropup();
+            if (self.footerView) {
+                self.footerView.hideDropup();
+            }
             self.extrasDropdown.$el.css('display') === 'none' ? self.extrasDropdown.$el.show() : self.extrasDropdown.$el.hide();
         },
 
