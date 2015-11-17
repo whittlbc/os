@@ -407,7 +407,7 @@ define(['jquery',
             self.accountDropdown.$el.hide();
             self.extrasDropdown.$el.hide();
             self.footerView.hideDropup();
-
+            Backbone.EventBroker.trigger('hide-more-langs-dropdown');
             if (self.notificationsDropdown.$el.css('display') === 'none') {
                 self.handleSeen();
                 self.notificationsDropdown.$el.show();
@@ -421,6 +421,7 @@ define(['jquery',
             e.stopPropagation();
             self.searchView.forceCloseSearchBar();
             self.notificationsDropdown.$el.hide();
+            Backbone.EventBroker.trigger('hide-more-langs-dropdown');
             self.extrasDropdown.$el.hide();
             if (self.footerView) {
                 self.footerView.hideDropup();
@@ -434,6 +435,7 @@ define(['jquery',
             self.searchView.forceCloseSearchBar();
             self.notificationsDropdown.$el.hide();
             self.accountDropdown.$el.hide();
+            Backbone.EventBroker.trigger('hide-more-langs-dropdown');
             if (self.footerView) {
                 self.footerView.hideDropup();
             }
@@ -808,6 +810,7 @@ define(['jquery',
                     self.notificationsDropdown.$el.hide();
                     self.accountDropdown.$el.hide();
                     self.extrasDropdown.$el.hide();
+                    Backbone.EventBroker.trigger('hide-more-langs-dropdown');
                     self.searchView.forceCloseSearchBar();
                 });
 

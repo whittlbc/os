@@ -3,6 +3,7 @@ define(['jquery',
     'underscore',
     'models/os.util',
     'views/filters/lang-filter-item-view',
+    'views/widgets/more-dropdown/more-dropdown',
     'stache!views/filters/lang-filters-view',
     'velocity',
     'backbone-eventbroker'
@@ -11,6 +12,7 @@ define(['jquery',
      _,
      OSUtil,
      LangFilterItemView,
+     MoreDropdown,
      LangFiltersViewTpl) {
     'use strict';
 
@@ -20,6 +22,11 @@ define(['jquery',
             options = options || {};
             this.colors_and_initials = options.colorsAndInitials;
             this.LANG_FILTERS = [];
+            Backbone.EventBroker.register({
+                'hide-more-langs-dropdown': 'forceHideDropdown'
+            }, this);
+
+            this.requiredBottomSpacing = 160;
         },
 
         events: {
@@ -60,17 +67,23 @@ define(['jquery',
         },
 
         addItem: function (data) {
-            var langFilterItemView = new LangFilterItemView({
-                tagName: 'li',
-                name: data.value
-            });
-            langFilterItemView.render();
-            this.addHoverListener(langFilterItemView);
-            this.prepareItemForEntrance(langFilterItemView.el, data.value, data.animate);
-            this.$list.append(langFilterItemView.el);
-            this.LANG_FILTERS.push(langFilterItemView);
-            if (data.animate) {
-                this.slideItemIn(langFilterItemView.el);
+            if (this.shownFiltersFull()) {
+                this.toggleMoreFiltersContainer(true);
+                this.$el.find('.more-count > span').html(this.moreDropdown.getNumItems() + 1);
+                this.moreDropdown.addItem(data.value);
+            } else {
+                var langFilterItemView = new LangFilterItemView({
+                    tagName: 'li',
+                    name: data.value
+                });
+                langFilterItemView.render();
+                this.addHoverListener(langFilterItemView);
+                this.prepareItemForEntrance(langFilterItemView.el, data.value, data.animate);
+                this.$list.append(langFilterItemView.el);
+                this.LANG_FILTERS.push(langFilterItemView);
+                if (data.animate) {
+                    this.slideItemIn(langFilterItemView.el);
+                }
             }
         },
 
@@ -116,10 +129,46 @@ define(['jquery',
             });
         },
 
+        shownFiltersFull: function () {
+            var $list = this.$el.find('.lang-filters-list');
+            var currentBottomPos = $list.offset().top + $list.height();
+            var verticalSpaceLeft = window.innerHeight - currentBottomPos;
+            return verticalSpaceLeft < this.requiredBottomSpacing;
+        },
+
+        forceHideDropdown: function () {
+            this.moreDropdown.hideDropdown();
+        },
+
+        toggleMoreFiltersContainer: function (show) {
+            var $btn = this.$el.find('.more-dropdown-container');
+            show ? $btn.show() : $btn.hide();
+        },
+
         render: function () {
             var self = this;
             this.$el.html(LangFiltersViewTpl());
+
             this.$list = this.$el.find('.lang-filters-list');
+
+            this.moreDropdown = new MoreDropdown({
+                el: self.$el.find('#moreLangFilters')
+            });
+
+            this.listenTo(this.moreDropdown, 'item:remove', function () {
+                var $countEl = self.$el.find('.more-count > span');
+                $countEl.html(Number($countEl.html()) - 1);
+            });
+
+            this.listenTo(this.moreDropdown, 'list:empty', function () {
+                self.toggleMoreFiltersContainer(false);
+            });
+
+            this.moreDropdown.render();
+
+            $(document).click(function () {
+                self.forceHideDropdown();
+            });
         }
     });
 
