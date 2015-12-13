@@ -13,7 +13,9 @@ define(['jquery',
 
 	var MoreDropdown = Backbone.View.extend({
 
-		initialize: function () {
+		initialize: function (options) {
+            options = options || {};
+            this.interactive = options.interactive;
             this.ITEMS = [];
 		},
 
@@ -35,6 +37,7 @@ define(['jquery',
         addItem: function(name) {
             var item = new MoreDropdownItem({
                 tagName: 'li',
+                interactive: this.interactive,
                 name: name
             });
             this.setItemListeners(item);

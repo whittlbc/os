@@ -11,7 +11,9 @@ define(['jquery',
 	var MoreDropdownItem = Backbone.View.extend({
 
 		initialize: function (options) {
+            options = options || {};
             this.name = options.name;
+            this.interactive = options.interactive;
 		},
 
 		events: {
@@ -26,6 +28,7 @@ define(['jquery',
 		render: function () {
 			var self = this;
             this.$el.html(MoreDropdownItemTpl({
+                interactive: this.interactive,
                 name: this.name
             }));
 		}

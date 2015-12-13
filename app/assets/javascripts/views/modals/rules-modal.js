@@ -1,50 +1,49 @@
 define(['jquery',
-    'backbone',
-    'underscore',
-    'views/modals/modal-view',
-    'views/rules/rules-view',
-    'stache!views/modals/rules-modal'
+  'backbone',
+  'underscore',
+  'views/modals/modal-view',
+  'views/rules/rules-view',
+  'stache!views/modals/rules-modal'
 ], function ($,
              Backbone,
              _,
              ModalView,
              RulesView,
              RulesModalTpl) {
-    'use strict';
+  'use strict';
 
-    var RulesModal = ModalView.extend({
+  var RulesModal = ModalView.extend({
 
-        initialize: function () {
-            this.currentTopPos = 125;
-            this.rulesModalHeight = 500;
-        },
+    initialize: function () {
+      this.currentTopPos = 125;
+      this.rulesModalHeight = 197;
+    },
 
-        events: {},
+    events: {},
 
-        sizeModal: function () {
-            var rulesModalMarginTop = ((window.innerHeight - this.rulesModalHeight - this.currentTopPos) / 2);
-            this.$modal.css('margin-top', rulesModalMarginTop + 'px');
-            this.$el.find('#rulesModalContentContainer').width(700);
-            this.$el.find('#rulesModalContentContainer').css('left', '-50px');
-        },
+    sizeModal: function () {
+      var rulesModalMarginTop = ((window.innerHeight - this.rulesModalHeight - this.currentTopPos) / 2);
+      this.$modal.css('margin-top', rulesModalMarginTop + 'px');
+      this.$el.find('#rulesModalContentContainer').width(600);
+    },
 
-        render: function () {
-            var self = this;
-            this.$el.html(RulesModalTpl());
+    render: function () {
+      var self = this;
+      this.$el.html(RulesModalTpl());
 
-            this.$modal = this.$el.find('#rulesModalView');
+      this.$modal = this.$el.find('#rulesModalView');
 
-            this.sizeModal();
+      this.sizeModal();
 
-            this.rulesFeedView = new RulesView({
-                el: this.$el.find('#rulesFeedView')
-            });
+      this.rulesFeedView = new RulesView({
+        el: this.$el.find('#rulesContentView')
+      });
 
-            this.rulesFeedView.render();
+      this.rulesFeedView.render();
 
-        }
-    });
+    }
+  });
 
-    return RulesModal;
+  return RulesModal;
 
 });

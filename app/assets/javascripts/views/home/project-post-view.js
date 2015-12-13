@@ -5,6 +5,7 @@ define(['jquery',
     'models/os.util',
     'models/all-langs',
     'views/widgets/user-info-bubble',
+    'views/widgets/more-dropdown/more-dropdown',
 	'stache!views/home/project-post-view',
     'backbone-eventbroker'
     ], function ($,
@@ -14,6 +15,7 @@ define(['jquery',
      OSUtil,
      AllLangs,
      UserInfoBubble,
+     MoreDropdown,
      ProjectPostViewTpl) {
 	'use strict';
 

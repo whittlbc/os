@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :projects
   has_many :comments
   has_many :evolutions
+  has_many :suggestions
 
 
   scope :username_login, -> (username, password) {

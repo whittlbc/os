@@ -1,0 +1,255 @@
+
+$not-quite-black: #1D1E22;
+
+#aboutModalView {
+
+  .modal-content {
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #EEE !important;
+    position: relative;
+
+    button {
+      margin-right: 22px;
+      margin-top: 22px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 55px;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 23px;
+    }
+  }
+
+  .about-modal-body {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  #aboutContentView {
+    width: 100%;
+    padding: 35px;
+
+    .about-text {
+      font-size: 15px;
+      line-height: 25px;
+    }
+
+  }
+
+}
+
+
+#rulesModalView {
+
+  .modal-content {
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #EEE !important;
+    position: relative;
+
+    button {
+      margin-right: 22px;
+      margin-top: 22px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 55px;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 23px;
+    }
+  }
+
+  .rules-modal-body {
+    width: 100%;
+  }
+
+  #rulesContentView {
+    width: 100%;
+    padding: 35px;
+
+    .rules-text {
+      font-size: 15px;
+      line-height: 25px;
+    }
+
+  }
+
+}
+
+
+#suggestionsModalView {
+
+  .modal-content {
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #EEE !important;
+    position: relative;
+
+    button {
+      margin-right: 22px;
+      margin-top: 22px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 55px;
+      text-align: center;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 23px;
+    }
+  }
+
+  .suggestions-modal-body {
+    width: 100%;
+  }
+
+  #suggestionsContentView {
+    width: 100%;
+
+    .suggestions-view-container {
+      width: 100%;
+      padding: 0 35px;
+      height: 258px;
+
+      .make-a-suggestion-text {
+        width: 100%;
+        height: 30px;
+        float: left;
+        margin: 20px 0;
+        line-height: 30px;
+        font-size: 14px;
+        text-align: center;
+        font-family: 'Proxima-Nova-SemiBold';
+      }
+
+      .suggestion-textarea {
+        width: 100%;
+        height: 120px;
+        resize: none;
+        overflow: scroll;
+        font-size: 14px;
+        padding: 5px 10px;
+        border: 1px solid #DDD;
+        border-radius: 4px;
+        color: $not-quite-black;
+        box-shadow: none;
+        outline: none;
+        float: left;
+      }
+
+      #suggestionsSpinnerView {
+        width: auto;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 50px;
+
+        .sk-circle {
+          margin: 0px auto;
+        }
+      }
+
+      .sending-suggestion {
+        width: 100%;
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: $not-quite-black;
+        font-size: 17px;
+        margin-top: 15px;
+      }
+
+      #suggestionsSuccess {
+        width: 100%;
+        height: auto;
+        float: left;
+
+        .fa {
+          font-size: 80px;
+          color: #00A6C9;
+          text-align: center;
+          display: block;
+          margin-top: 35px;
+          margin-bottom: 5px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .success-text {
+        width: 100%;
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: $not-quite-black;
+        font-size: 17px;
+        margin-bottom: 20px;
+      }
+
+      .suggestions-error-text {
+        width: 65%;
+        float: left;
+        line-height: 25px;
+        margin: 60px auto;
+        text-align: center;
+        color: red;
+        font-size: 15px;
+        margin-left: 17.5%;
+      }
+
+      .suggestions-footer {
+        height: 68px;
+        width: 100%;
+        float: left;
+
+        .submit-btn {
+          width: 100px;
+          height: 32px;
+          line-height: 32px;
+          border-radius: 16px;
+          background-color: #00A6C9;
+          color: white;
+          cursor: pointer;
+          text-align: center;
+          margin-top: 18px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+    }
+
+  }
+
+}

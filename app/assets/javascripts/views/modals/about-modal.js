@@ -16,7 +16,7 @@ define(['jquery',
 
         initialize: function () {
             this.currentTopPos = 125;
-            this.aboutModalHeight = 500;
+            this.aboutModalHeight = 297;
         },
 
         events: {},
@@ -24,8 +24,7 @@ define(['jquery',
         sizeModal: function () {
             var aboutModalMarginTop = ((window.innerHeight - this.aboutModalHeight - this.currentTopPos) / 2);
             this.$modal.css('margin-top', aboutModalMarginTop + 'px');
-            this.$el.find('#aboutModalContentContainer').width(700);
-            this.$el.find('#aboutModalContentContainer').css('left', '-50px');
+            this.$el.find('#aboutModalContentContainer').width(600);
         },
 
         render: function () {
@@ -37,7 +36,7 @@ define(['jquery',
             this.sizeModal();
 
             this.aboutFeedView = new AboutView({
-                el: this.$el.find('#aboutFeedView')
+                el: this.$el.find('#aboutContentView')
             });
 
             this.aboutFeedView.render();

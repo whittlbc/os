@@ -16,8 +16,7 @@ define(['jquery',
 		events: {},
 
 		render: function () {
-			var self = this;
-            this.$el.html(AboutViewTpl());
+      this.$el.html(AboutViewTpl());
 		}
 	});
 

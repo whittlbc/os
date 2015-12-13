@@ -152,7 +152,8 @@ define(['jquery',
             this.$list = this.$el.find('.lang-filters-list');
 
             this.moreDropdown = new MoreDropdown({
-                el: self.$el.find('#moreLangFilters')
+                el: self.$el.find('#moreLangFilters'),
+                interactive: true
             });
 
             this.listenTo(this.moreDropdown, 'item:remove', function () {
