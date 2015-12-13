@@ -34,6 +34,15 @@ define(['jquery',
       }
     },
 
+    hasItems: function () {
+      var self = this;
+      return this.ITEMS.length > 0;
+    },
+
+    getTopItem: function () {
+      return this.ITEMS[0].name;
+    },
+
     addItem: function (name) {
       var item = new MoreDropdownItem({
         tagName: 'li',

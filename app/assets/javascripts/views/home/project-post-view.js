@@ -23,8 +23,7 @@ define(['jquery',
 
     initialize: function () {
       this.tagsExpanded = false;
-      this.MAX_TAGS = 5;
-      this.passedExtraTagsToDropdown = false;
+      this.MAX_TAGS = 6;
     },
 
     events: {
@@ -177,23 +176,11 @@ define(['jquery',
           self.$moreTagsContainer.css('display', 'inline-block');
         }, 200);
       }
-
-      //this.expandTimeout = setTimeout(function () {
-      //  var $tagContainer = self.$el.find('.tag-container');
-      //  var $container = self.$el.find('.title-subtitle-tag-container');
-      //  var containerWidth = $container.width();
-      //  // if this is true, by default, the last child is overlapping, so we really only care about the next to last child
-      //  if ($tagContainer.width() > containerWidth) {
-      //    var containerRight = $container.offset().left + containerWidth;
-      //    var $lastChild = $($tagContainer[0].lastChild);
-      //    self.hideOverlappingTags(containerRight, $lastChild);
-      //  }
-      //}, 286);
     },
 
     collapseTags: function () {
       var self = this;
-      //clearTimeout(this.expandTimeout);
+
       if (this.tagsExpanded) {
         var tagCount = 0;
         var hiddenTags = [];
