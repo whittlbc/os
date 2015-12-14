@@ -549,10 +549,7 @@ define(['jquery',
       var self = this;
       if (this.showHomeView) {
         this.cachedFilters = this.homeView.filters;
-        this.cachedItems = {
-          items: this.footerView.removedItems,
-          values: this.footerView.removedValues
-        };
+        this.cachedItems = this.footerView.removedValues;
         this.lastFilterType = this.footerView.filterType;
       }
     },
@@ -779,7 +776,7 @@ define(['jquery',
       this.langFiltersView.render();
 
       if (this.showHomeView && this.cachedItems) {
-        this.langFiltersView.prePopulateFilters(this.cachedItems.values);
+        this.langFiltersView.prePopulateFilters(this.cachedItems);
       }
 
       this.minorFiltersView = new MinorFiltersView({
@@ -789,7 +786,7 @@ define(['jquery',
       this.minorFiltersView.render();
 
       if (this.showHomeView && this.cachedItems) {
-        this.minorFiltersView.prePopulateFilters(this.cachedItems.values);
+        this.minorFiltersView.prePopulateFilters(this.cachedItems);
       }
 
       if (this.showHomeView) {

@@ -61,14 +61,7 @@ define(['jquery',
 
       this.filterType = null;
 
-      // used to hold the cache for div items selected by dropdown
-      this.removedItems = {
-        0: {},
-        1: {},
-        2: {}
-      };
-
-      // used to hold the VALUES for those selected items
+      // cache of selected values for each filter type
       this.removedValues = {
         0: {},
         1: {},
@@ -92,7 +85,6 @@ define(['jquery',
       if (this.filterType === 0) {
         this.deleteFilter(value);
       } else {
-        delete this.removedItems[0][value];
         delete this.removedValues[0][value];
         self.trigger('removeItem', {
           set: 0,
@@ -107,7 +99,6 @@ define(['jquery',
       if (this.filterType === 1) {
         this.deleteFilter(value);
       } else {
-        delete this.removedItems[1][value];
         delete this.removedValues[1][value];
         self.trigger('removeItem', {
           set: 1,
@@ -121,7 +112,6 @@ define(['jquery',
       if (this.filterType === 2) {
         this.deleteFilter(value);
       } else {
-        delete this.removedItems[2][value];
         delete this.removedValues[2][value];
         self.trigger('removeItem', {
           set: 2,
@@ -169,18 +159,18 @@ define(['jquery',
     },
 
     getItemsStillUpForSelection: function (int, allItems) {
-      var alreadySelectedItems = this.removedValues[int];
-
-      // return all items if none exist inside the removedValues map for that filter type
-      if (_.isEmpty(alreadySelectedItems)) {
-        return this.arrayFromMap(allItems);
-      }
-
-      var alreadySelectedItemsArray = Object.keys(alreadySelectedItems);
-
-      for (var i = 0; i < alreadySelectedItemsArray.length; i++) {
-        delete allItems[alreadySelectedItemsArray[i]];
-      }
+      //var alreadySelectedItems = this.removedValues[int];
+      //
+      //// return all items if none exist inside the removedValues map for that filter type
+      //if (_.isEmpty(alreadySelectedItems)) {
+      //  return this.arrayFromMap(allItems);
+      //}
+      //
+      //var alreadySelectedItemsArray = Object.keys(alreadySelectedItems);
+      //
+      //for (var i = 0; i < alreadySelectedItemsArray.length; i++) {
+      //  delete allItems[alreadySelectedItemsArray[i]];
+      //}
       return this.arrayFromMap(allItems);
     },
 
@@ -198,7 +188,6 @@ define(['jquery',
 
     removeItemFromSelectedMap: function (value) {
       delete this.removedValues[this.filterType][value];
-      delete this.removedItems[this.filterType][value];
     },
 
     hideDropdown: function () {
@@ -340,11 +329,9 @@ define(['jquery',
     },
 
     resetDropdown: function (filterTypeInt) {
+      var self = this;
       // if this is not the same filter type, proceed
       if (this.filterType != filterTypeInt) {
-
-        // cache the removed items for the current filter type
-        this.removedItems[this.filterType] = this.footerDropdown.$removedItems;
 
         // set the new filterType
         this.filterType = filterTypeInt;
@@ -355,12 +342,14 @@ define(['jquery',
         // add the new dropdown items for the new type, leaving out ones already selected
         this.footerDropdown.addOption(this.getItemsForDropdown());
 
-        // check to see if you have a cache of the removed items for this new filter type
-        var removedItemsForType = this.removedItems[filterTypeInt];
-        // if you do, set it as the $removedItems for the dropdown
-        if (removedItemsForType) {
-          this.footerDropdown.setRemovedItems(removedItemsForType, this.resetItemsToo);
-          this.resetItemsToo = false;
+        // check to see if you have a cache of the removed valuers for this new filter type
+        var removedValuesForType = this.removedValues[filterTypeInt];
+
+        if (removedValuesForType) {
+          this.preventAddListener = true;
+          this.footerDropdown.addItems(Object.keys(removedValuesForType), true, function () {
+            self.preventAddListener = false;
+          });
         }
       }
     },
@@ -400,9 +389,7 @@ define(['jquery',
     },
 
     passCachedItems: function (data) {
-      this.resetItemsToo = true;
-      this.removedItems = data.items;
-      this.removedValues = data.values;
+      this.removedValues = data;
     },
 
     passFilterType: function (int) {

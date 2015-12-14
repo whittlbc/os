@@ -2466,12 +2466,15 @@
 		 * @param {string} value
 		 * @param {boolean} silent
 		 */
-		addItems: function(values, silent) {
+		addItems: function(values, silent, cb) {
 			var items = $.isArray(values) ? values : [values];
 			for (var i = 0, n = items.length; i < n; i++) {
 				this.isPending = (i < n - 1);
 				this.addItem(items[i], silent);
 			}
+      if (cb) {
+        cb();
+      }
 		},
 	
 		/**
@@ -2583,12 +2586,10 @@
 			}
 		},
 
-		setRemovedItems: function (map, setItems) {
-			this.$removedItems = map;
-			if (setItems) {
-				this.items = Object.keys(map);
-			}
-		},
+		//setRemovedItems: function (map, cb) {
+		//	this.$removedItems = map;
+     // this.addItems(Object.keys(map), true, cb);
+		//},
 
 		removeFuckingItem: function (value, silent) {
 			var self = this;
