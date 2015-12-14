@@ -136,7 +136,6 @@ define(['jquery',
     },
 
     deleteFilter: function (value) {
-      console.log('delete fucking selection');
       this.footerDropdown.deleteFuckingSelection(value);
     },
 
@@ -390,6 +389,7 @@ define(['jquery',
 
     passCachedItems: function (data) {
       this.removedValues = data;
+      console.log('CACHE: ', data)
     },
 
     passFilterType: function (int) {

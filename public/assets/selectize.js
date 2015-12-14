@@ -2756,7 +2756,6 @@
 			opts = opts || {};
 			if (self.tagType === TAG_SELECT) {
 				options = [];
-				console.log('update original input', self.items);
 				for (i = 0, n = self.items.length; i < n; i++) {
 					label = self.options[self.items[i]][self.settings.labelField] || '';
 					options.push('<option value="' + escape_html(self.items[i]) + '" selected="selected">' + escape_html(label) + '</option>');
