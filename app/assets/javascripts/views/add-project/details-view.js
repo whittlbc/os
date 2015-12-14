@@ -33,6 +33,8 @@ define(['jquery',
           "title": "BSD"
         }
       ];
+
+      this.preventKeys = [8, 9, 13];
     },
 
     events: {
@@ -47,22 +49,19 @@ define(['jquery',
       'blur [name=hipchat]': 'handleHipChatBlur',
       'blur [name=irc]': 'handleIRCChannelBlur',
       'click .add-project-anon-choice': 'handleAnonSelection',
-      'keyup [name=slack]': 'handleKeyUpAPIKeyContainer',
       'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
-      'keyup [name=add-project-repo-name]': 'handleKeyUpRepoName',
       'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
       'click .add-project-send-invites-choice': 'handleSendInvitesSelection'
     },
 
-    handleKeyUpAPIKeyContainer: function (e) {
-      var slackURL = $(e.currentTarget).val();
-      _.isEmpty(slackURL) ? this.hideAPIKeyContainer() : this.showAPIKeyContainer();
-    },
-
     handleKeyDownAPIKeyContainer: function (e) {
       var prevValue = $(e.currentTarget).val();
-      if (_.isEmpty(prevValue) && e.keyCode != 8 && e.keyCode != 13) {
+
+      if (_.isEmpty(prevValue) && !_.contains(this.preventKeys, e.keyCode)) {
         this.showAPIKeyContainer();
+      }
+      else if (!_.isEmpty(prevValue) && e.keyCode === 8) {
+        this.hideAPIKeyContainer();
       }
     },
 
@@ -78,15 +77,14 @@ define(['jquery',
       $apiKeyContainer.animate({height: 67}, this.extraInfoExpandDuration);
     },
 
-    handleKeyUpRepoName: function (e) {
-      var repoName = $(e.currentTarget).val();
-      _.isEmpty(repoName) ? this.hideInviteUsersQuestion() : this.showInviteUsersQuestion();
-    },
-
     handleKeyDownRepoName: function (e) {
       var prevValue = $(e.currentTarget).val();
-      if (_.isEmpty(prevValue) && e.keyCode != 8 && e.keyCode != 13) {
+
+      if (_.isEmpty(prevValue) && !_.contains(this.preventKeys, e.keyCode)) {
         this.showInviteUsersQuestion();
+      }
+      else if (!_.isEmpty(prevValue) && e.keyCode === 8) {
+        this.hideInviteUsersQuestion();
       }
     },
 
