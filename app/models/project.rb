@@ -22,8 +22,16 @@ class Project < ActiveRecord::Base
     self.try(:user).try(:gh_username)
   end
 
+  def is_anon?
+    self.anon === true
+  end
+
   def get_owner_pic
-    self.try(:user).try(:pic)
+    if self.is_anon?
+      nil
+    else
+      self.try(:user).try(:pic)
+    end
   end
 
   def is_starred?
