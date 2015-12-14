@@ -73,8 +73,8 @@ define(['jquery',
       this.uuid = data.uuid;
       this.vote_count = data.vote_count;
       this.voted = data.voted;
-      this.commentCount = data.total_comments;
-      this.contributorCount = data.contributors ? data.contributors.length : 0;
+      this.commentCount = data.total_comments || 0;
+      this.contributorCount = data.total_contributors || 0;
       this.license = _.isEmpty(data.license) ? null : data.license[0];
       this.privacy = _.isEmpty(data.privacy) ? null : data.privacy[0];
       this.langs_and_frames = data.langs_and_frames;

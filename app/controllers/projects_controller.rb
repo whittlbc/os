@@ -204,7 +204,7 @@ class ProjectsController < ApplicationController
     if params[:gh_username]
       user = User.find_by(gh_username: params[:gh_username])
     end
-    projects_of_type = Project.includes(:user, :comments).where(:status => params[:status]).active.map { |project|
+    projects_of_type = Project.includes(:user, :comments, :contributors).where(:status => params[:status]).active.map { |project|
       {
           :title => project.title,
           :subtitle => project.subtitle,
@@ -212,7 +212,7 @@ class ProjectsController < ApplicationController
           :id => project.id,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
-          :contributors => project.contributors,
+          :total_contributors => project.contributors.count,
           :license => project.license,
           :privacy => project.privacy,
           :langs_and_frames => project.langs_and_frames,
@@ -220,7 +220,7 @@ class ProjectsController < ApplicationController
           :owner_pic => project.get_owner_pic,
           :voted => user ? user.voted_on_project(project.id) : nil,
           :status => project.status,
-          :total_comments => project.comments.length
+          :total_comments => project.comments.count
       }
     }
 
@@ -279,7 +279,7 @@ class ProjectsController < ApplicationController
 
       chat = filters[:chat]
 
-      filtered_projects = Project.includes(:user, :comments, :integrations).where!(status: params[:status]).active
+      filtered_projects = Project.includes(:user, :comments, :contributors, :integrations).where!(status: params[:status]).active
 
       filters.each { |filter|
         if filter[0] != 'chat'
@@ -320,7 +320,7 @@ class ProjectsController < ApplicationController
             :id => project.id,
             :uuid => project.uuid,
             :vote_count => project.vote_count,
-            :contributors => project.contributors,
+            :total_contributors => project.contributors.count,
             :license => project.license,
             :privacy => project.privacy,
             :langs_and_frames => project.langs_and_frames,
@@ -328,7 +328,7 @@ class ProjectsController < ApplicationController
             :owner_pic => project.get_owner_pic,
             :voted => user ? user.voted_on_project(project.id) : nil,
             :status => project.status,
-            :total_comments => project.comments.length
+            :total_comments => project.comments.count
         }
       }
 
