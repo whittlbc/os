@@ -65,6 +65,7 @@ define(['jquery',
       this.ulSlideUpDuration = 550;
       this.langsFramesDropdownShown = false;
       this.gettingMoreData = false;
+      this.exclusiveFilters = false;
     },
 
     passCookieGHUsername: function (cookieGHUsername) {
@@ -298,13 +299,21 @@ define(['jquery',
 
     getFilteredFeed: function (obj) {
       var self = this;
+      var project = new Project();
+
       if (this.userData) {
         obj.gh_username = this.userData.gh_username;
       }
+
       if (!this.userData && this.cookieGHUsername) {
         obj.gh_username = this.cookieGHUsername;
       }
-      var project = new Project();
+
+      // if more than one lang filter, check if they want inclusive/exclusive
+      if (obj.filters && obj.filters.langs_and_frames && obj.filters.langs_and_frames.length > 1) {
+       obj.exclusive = this.exclusiveFilters;
+      }
+
       project.filteredFeed(obj, {
         success: function (data) {
           self.limit += 30;

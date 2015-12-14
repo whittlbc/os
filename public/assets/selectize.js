@@ -2837,6 +2837,7 @@
 		 * Calculates and applies the appropriate
 		 * position of the dropdown.
 		 */
+
 		positionDropdown: function() {
 			var $control = this.$control;
 			var offset = this.settings.dropdownParent === 'body' ? $control.offset() : $control.position();
@@ -2849,7 +2850,6 @@
 				});
 			}
 		},
-
 
 		zipUp: function (duration) {
 			var self = this;
@@ -2892,9 +2892,6 @@
 			self.showInput();
 			self.trigger('clear');
 		},
-
-
-
 
 		/**
 		 * A helper method for inserting an element

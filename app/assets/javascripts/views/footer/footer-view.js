@@ -234,8 +234,8 @@ define(['jquery',
       this.footerDropdown.positionDropdown = function () {
         self.footerDropdown.$dropdown.css({
           width: self.$el.width(),
-          bottom: 46,
-          left: -14
+          bottom: 50,
+          left: -11
         });
       };
 

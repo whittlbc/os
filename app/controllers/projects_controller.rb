@@ -283,10 +283,18 @@ class ProjectsController < ApplicationController
 
       filters.each { |filter|
         if filter[0] != 'chat'
-          if filter[1].is_a?(Array) &&
-            filtered_projects.where!.overlap(filter[0] => filter[1])
+          if filter[0] == 'langs_and_frames'
+            if params[:exclusive] === true
+              filtered_projects.where!(filter[0] => filter[1])
+            else
+              filtered_projects.where!.overlap(filter[0] => filter[1])
+            end
           else
-            filtered_projects.where!(filter[0] => filter[1])
+            if filter[1].is_a?(Array)
+              filtered_projects.where!.overlap(filter[0] => filter[1])
+            else
+              filtered_projects.where!(filter[0] => filter[1])
+            end
           end
         end
       }
