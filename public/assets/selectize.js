@@ -1226,7 +1226,10 @@
 			self.$dropdown_content = $dropdown_content;
 
 			$dropdown.on('mouseenter', '[data-selectable]', function() { return self.onOptionHover.apply(self, arguments); });
-			$dropdown.on('mousedown click', '[data-selectable]', function() { return self.onOptionSelect.apply(self, arguments); });
+			$dropdown.on('mousedown click', '[data-selectable]', function(e) {
+        e.stopPropagation();
+        return self.onOptionSelect.apply(self, arguments);
+      });
 			watchChildEvent($control, 'mousedown', '*:not(input)', function() { return self.onItemSelect.apply(self, arguments); });
 			autoGrow($control_input);
 	
@@ -1397,7 +1400,7 @@
 		 */
 		onClick: function(e) {
 			var self = this;
-	
+      e.stopPropagation();
 			// necessary for mobile webkit devices (manual focus triggering
 			// is ignored unless invoked within a click event)
 			if (!self.isFocused) {
@@ -3715,6 +3718,7 @@
 				// add event listener
 				this.$control.on('click', '.' + options.className, function(e) {
 					e.preventDefault();
+          e.stopPropagation();
 					if (self.isLocked) return;
 	
 					var $item = $(e.currentTarget).parent();
