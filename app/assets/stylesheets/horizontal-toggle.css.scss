@@ -1,0 +1,53 @@
+
+.h-toggle  {
+
+  .h-toggle-lbl {
+    position: relative;
+    display: block;
+    height: 8px;
+    width: 100%;
+    background: #898989;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+
+    &:after {
+      position: absolute;
+      left: -2px;
+      top: -6px;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
+      content: '';
+      transition: all .3s ease;
+    }
+
+    &:active {
+      &:after {
+        transform: scale(1.15, .85);
+      }
+    }
+  }
+
+  .h-toggle-input:checked ~ label {
+    background: #6FBEB5;
+
+    &:after {
+      left: 66.67%;
+      background: #179588;
+    }
+  }
+
+  .cbx:disabled ~ label {
+    background: #D5D5D5;
+    pointer-events: none;
+
+    &:after {
+      background: #BCBDBC;
+    }
+  }
+
+}

@@ -949,7 +949,7 @@ $side-filters-width: 18.25%;
 
 #langFiltersView {
   position: fixed;
-  top: 145px;
+  top: 116px;
   left: -5px;
   transition: left 0.3s ease-in-out;
   width: 15.5%;
@@ -1043,6 +1043,25 @@ $side-filters-width: 18.25%;
 
     }
 
+  }
+
+  .lang-filters-options {
+    width: 100%;
+    float: left;
+    height: auto;
+    margin-bottom: 13px;
+
+    .fa-info-circle {
+      display: block;
+      float: left;
+      margin-left: 18.5px;
+      text-align: center;
+      font-size: 14px;
+      color: $not-quite-black;
+      cursor: pointer;
+
+
+    }
   }
 }
 
@@ -1295,15 +1314,6 @@ $side-filters-width: 18.25%;
     text-decoration: underline;
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 

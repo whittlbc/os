@@ -4,16 +4,20 @@ define(['jquery',
   'models/os.util',
   'views/filters/lang-filter-item-view',
   'views/widgets/more-dropdown/more-dropdown',
+  'views/svgs/svg-view',
+  'views/dropdowns/lang-filters-options-bubble',
   'stache!views/filters/lang-filters-view',
   'velocity',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             OSUtil,
-             LangFilterItemView,
-             MoreDropdown,
-             LangFiltersViewTpl) {
+   Backbone,
+   _,
+   OSUtil,
+   LangFilterItemView,
+   MoreDropdown,
+   SVG,
+   LangFiltersOptionsBubble,
+   LangFiltersViewTpl) {
   'use strict';
 
   var LangFiltersView = Backbone.View.extend({
@@ -182,6 +186,19 @@ define(['jquery',
       });
 
       this.moreDropdown.render();
+
+      this.vEllipsis = new SVG({
+        el: this.$el.find('.ellipsis'),
+        svg: 'v-ellipsis'
+      });
+
+      this.vEllipsis.render();
+
+      this.optionsBubble = new LangFiltersOptionsBubble({
+        el: this.$el.find('#langFiltersOptionsBubble')
+      });
+
+      this.optionsBubble.render();
 
       $(document).click(function () {
         self.forceHideDropdown();
