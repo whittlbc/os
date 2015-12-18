@@ -38,7 +38,13 @@ class ProjectsController < ApplicationController
 
     if !project.nil? && project.is_active?
       owner_gh_username = project.get_owner_gh_username
-      admin_arr = Contributor.admin(project.id).map { |contrib| contrib.try(:user).try(:gh_username) }
+      admin_arr = Contributor.admin(project.id).map { |contrib|
+        if project.anon
+          'Anonymous'
+        else
+          contrib.try(:user).try(:gh_username)
+        end
+      }
 
       if !project.blank?
         project_details = {
