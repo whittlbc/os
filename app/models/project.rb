@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
 
   def get_owner_pic
     if self.is_anon?
-      nil
+      'images/anon.png'
     else
       self.try(:user).try(:pic)
     end
