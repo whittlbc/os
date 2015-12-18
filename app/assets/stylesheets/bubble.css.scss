@@ -134,7 +134,7 @@ ul[data-project-type="0"] {
   width: 123px;
   z-index: 10;
   position: absolute;
-  top: -23.5px;
+  top: -28px;
   left: 30px;
 
   .options-bubble-container {
@@ -144,9 +144,9 @@ ul[data-project-type="0"] {
 
     .options-bubble-content {
       width: 100%;
-      height: 60px;
+      height: 50px;
       background-color: $not-quite-black;
-      border-radius: 7px;
+      border-radius: 6.5px;
       margin-left: 6px;
 
       .toggle-container {
@@ -163,7 +163,7 @@ ul[data-project-type="0"] {
           text-align: center;
           font-size: 10px;
           text-transform: uppercase;
-          line-height: 60px;
+          line-height: 52px;
           color: white;
         }
 
@@ -176,7 +176,7 @@ ul[data-project-type="0"] {
           padding-right: 1%;
 
           .h-toggle {
-            margin-top: 26px;
+            margin-top: 23px;
           }
         }
 
@@ -188,7 +188,7 @@ ul[data-project-type="0"] {
       position: absolute;
       font-size: 20px;
       color: $not-quite-black;
-      bottom: 20px;
+      bottom: 5px;
     }
   }
 

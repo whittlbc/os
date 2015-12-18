@@ -37,6 +37,7 @@ define(['jquery',
         'removeLicenseFilter': 'removeLicenseFilter',
         'addPrivacyFilter': 'addPrivacyFilter',
         'removePrivacyFilter': 'removePrivacyFilter',
+        'lang-filters-scope:change': 'updateLangFiltersScope',
         //'addAnonFilter': 'addAnonFilter',
         //'removeAnonFilter': 'removeAnonFilter',
         'clearNonLangFilters': 'clearNonLangFilters',
@@ -65,7 +66,7 @@ define(['jquery',
       this.ulSlideUpDuration = 550;
       this.langsFramesDropdownShown = false;
       this.gettingMoreData = false;
-      this.exclusiveFilters = false;
+      this.langFiltersOr = false;
     },
 
     passCookieGHUsername: function (cookieGHUsername) {
@@ -178,6 +179,11 @@ define(['jquery',
 
     handleRemoveChatFilter: function (data) {
       this.chatFilters = data.dropdownValues;
+      this.getFilters();
+    },
+
+    updateLangFiltersScope: function (checked) {
+      this.langFiltersOr = !checked;
       this.getFilters();
     },
 
@@ -311,7 +317,7 @@ define(['jquery',
 
       // if more than one lang filter, check if they want inclusive/exclusive
       if (obj.filters && obj.filters.langs_and_frames && obj.filters.langs_and_frames.length > 1) {
-       obj.exclusive = this.exclusiveFilters;
+        obj.lang_filters_or = this.langFiltersOr;
       }
 
       project.filteredFeed(obj, {

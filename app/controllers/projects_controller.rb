@@ -284,10 +284,12 @@ class ProjectsController < ApplicationController
       filters.each { |filter|
         if filter[0] != 'chat'
           if filter[0] == 'langs_and_frames'
-            if params[:exclusive] === true
-              filtered_projects.where!(filter[0] => filter[1])
-            else
+            # OR - only needs to contain at least one
+            if params[:lang_filters_or] === true
               filtered_projects.where!.overlap(filter[0] => filter[1])
+            # default - AND - must contain ALL languages included
+            else
+              filtered_projects.where!.contains(filter[0] => filter[1])
             end
           else
             if filter[1].is_a?(Array)

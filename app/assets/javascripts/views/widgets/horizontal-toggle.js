@@ -19,9 +19,14 @@ define(['jquery',
 
 		render: function () {
 			var self = this;
+
       this.$el.html(HorizontalToggleTpl({
         id: this.id
       }));
+
+      this.$el.find('input').change(function () {
+        self.trigger('toggle', $(this).is(':checked'));
+      });
 		}
 	});
 

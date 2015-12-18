@@ -3,7 +3,8 @@ define(['jquery',
   'underscore',
   'models/os.util',
   'views/widgets/horizontal-toggle',
-  'stache!views/dropdowns/lang-filters-options-bubble'
+  'stache!views/dropdowns/lang-filters-options-bubble',
+  'backbone-eventbroker'
 ], function ($,
    Backbone,
    _,
@@ -32,6 +33,10 @@ define(['jquery',
       this.hToggle = new HToggle({
         el: '#langFilterScopeToggle',
         id: 'scopeToggle'
+      });
+
+      this.listenTo(this.hToggle, 'toggle', function (checked) {
+        Backbone.EventBroker.trigger('lang-filters-scope:change', checked);
       });
 
       this.hToggle.render();
