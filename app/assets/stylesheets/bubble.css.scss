@@ -99,6 +99,10 @@ ul[data-project-type="0"] {
   cursor: pointer;
 }
 
+.user-bubble-pic.anon {
+  cursor: default;
+}
+
 .user-bubble-gh-username-container {
 
   width: 100%;

@@ -1,56 +1,60 @@
 define(['jquery',
-	'backbone',
-	'underscore',
-    'views/modals/modal-view',
-    'views/contributors/contributors-feed-container-view',
-	'stache!views/modals/contributors-modal'
-    ], function ($,
-     Backbone,
-     _,
-     ModalView,
-     ContributorsFeedContainerView,
-     ContributorsModalTpl) {
-	'use strict';
+  'backbone',
+  'underscore',
+  'views/modals/modal-view',
+  'views/contributors/contributors-feed-container-view',
+  'stache!views/modals/contributors-modal'
+], function ($,
+             Backbone,
+             _,
+             ModalView,
+             ContributorsFeedContainerView,
+             ContributorsModalTpl) {
+  'use strict';
 
-	var ContributorsModal = ModalView.extend({
+  var ContributorsModal = ModalView.extend({
 
-		initialize: function () {
-            this.currentTopPos = 125;
-            this.contributorsModalHeight = 460;
-        },
+    initialize: function () {
+      this.currentTopPos = 125;
+      this.contributorsModalHeight = 460;
+    },
 
-		events: {},
+    events: {},
 
-        populate: function (data) {
-            var self = this;
-            this.contributorsFeedContainerView.populate(data);
-        },
+    setAnonStatus: function (bool) {
+      this.contributorsFeedContainerView.setAnonStatus(bool);
+    },
 
-        sizeModal: function () {
-            var self = this;
-            var contributorsModalMarginTop = ((window.innerHeight - this.contributorsModalHeight - this.currentTopPos) / 2);
-            this.$modal.css('margin-top', contributorsModalMarginTop + 'px');
-            this.$el.find('#contributorsModalContentContainer').width(650);
-            this.$el.find('#contributorsModalContentContainer').css('left', '-25px');
-        },
+    populate: function (data) {
+      var self = this;
+      this.contributorsFeedContainerView.populate(data);
+    },
 
-		render: function () {
-			var self = this;
-            this.$el.html(ContributorsModalTpl());
+    sizeModal: function () {
+      var self = this;
+      var contributorsModalMarginTop = ((window.innerHeight - this.contributorsModalHeight - this.currentTopPos) / 2);
+      this.$modal.css('margin-top', contributorsModalMarginTop + 'px');
+      this.$el.find('#contributorsModalContentContainer').width(650);
+      this.$el.find('#contributorsModalContentContainer').css('left', '-25px');
+    },
 
-            this.$modal = this.$el.find('#contributorsModalView');
+    render: function () {
+      var self = this;
+      this.$el.html(ContributorsModalTpl());
 
-            this.sizeModal();
+      this.$modal = this.$el.find('#contributorsModalView');
 
-            this.contributorsFeedContainerView = new ContributorsFeedContainerView({
-                el: this.$el.find('#contributorsModalContent')
-            });
+      this.sizeModal();
 
-            this.contributorsFeedContainerView.render();
+      this.contributorsFeedContainerView = new ContributorsFeedContainerView({
+        el: this.$el.find('#contributorsModalContent')
+      });
 
-        }
-	});
+      this.contributorsFeedContainerView.render();
 
-	return ContributorsModal;
+    }
+  });
+
+  return ContributorsModal;
 
 });

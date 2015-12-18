@@ -1,39 +1,43 @@
 define(['jquery',
-	'backbone',
-	'underscore',
-    'views/contributors/contributors-feed-view',
-	'stache!views/contributors/contributors-feed-container-view'
-    ], function ($,
-     Backbone,
-     _,
-     ContributorsFeedView,
-     ContributorsFeedContainerViewTpl) {
-	'use strict';
+  'backbone',
+  'underscore',
+  'views/contributors/contributors-feed-view',
+  'stache!views/contributors/contributors-feed-container-view'
+], function ($,
+             Backbone,
+             _,
+             ContributorsFeedView,
+             ContributorsFeedContainerViewTpl) {
+  'use strict';
 
-	var ContributorsFeedContainerView = Backbone.View.extend({
+  var ContributorsFeedContainerView = Backbone.View.extend({
 
-		initialize: function () {
-		},
+    initialize: function () {
+    },
 
-		events: {},
+    setAnonStatus: function (bool) {
+      this.contributorsFeedView.setAnonStatus(bool);
+    },
 
-        populate: function (data) {
-            var self = this;
-            this.contributorsFeedView.populate(data);
-        },
+    events: {},
 
-		render: function () {
-			var self = this;
-            this.$el.html(ContributorsFeedContainerViewTpl());
+    populate: function (data) {
+      var self = this;
+      this.contributorsFeedView.populate(data);
+    },
 
-            this.contributorsFeedView = new ContributorsFeedView({
-                el: this.$el.find('#contributorsFeedView')
-            });
+    render: function () {
+      var self = this;
+      this.$el.html(ContributorsFeedContainerViewTpl());
 
-            this.contributorsFeedView.render();
-		}
-	});
+      this.contributorsFeedView = new ContributorsFeedView({
+        el: this.$el.find('#contributorsFeedView')
+      });
 
-	return ContributorsFeedContainerView;
+      this.contributorsFeedView.render();
+    }
+  });
+
+  return ContributorsFeedContainerView;
 
 });

@@ -87,6 +87,12 @@ class ProjectsController < ApplicationController
               'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
           }
           if obj['owner']
+            # Do this for the owner just in case it's an anon project
+            if project.anon
+              obj['avatar_url'] = project.get_owner_pic
+              obj['login'] = project.get_owner_gh_username
+              obj['html_url'] = nil
+            end
             owner.push(obj)
           elsif obj['admin']
             admin.push(obj)
@@ -206,6 +212,7 @@ class ProjectsController < ApplicationController
     end
     projects_of_type = Project.includes(:user, :comments, :contributors).where(:status => params[:status]).active.map { |project|
       {
+          :anon => project.anon,
           :title => project.title,
           :subtitle => project.subtitle,
           :created_at => project.created_at.utc.iso8601,
@@ -316,6 +323,7 @@ class ProjectsController < ApplicationController
 
       projects = filtered_projects.map { |project|
         {
+            :anon => project.anon,
             :title => project.title,
             :subtitle => project.subtitle,
             :created_at => project.created_at.utc.iso8601,

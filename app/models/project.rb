@@ -19,7 +19,11 @@ class Project < ActiveRecord::Base
   scope :launched, -> { where(:status => 2) }
 
   def get_owner_gh_username
-    self.try(:user).try(:gh_username)
+    if self.is_anon?
+      'Anonymous'
+    else
+      self.try(:user).try(:gh_username)
+    end
   end
 
   def is_anon?

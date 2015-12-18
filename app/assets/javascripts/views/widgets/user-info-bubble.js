@@ -22,11 +22,15 @@ define(['jquery',
     handleUserPicClicked: function (e) {
       var self = this;
       e.stopPropagation();
-      window.open(self.ghProfile, '_blank');
+      if (!this.anon) {
+        window.open(self.ghProfile, '_blank');
+      }
     },
 
     render: function (options) {
+      options = options || {};
       var self = this;
+      this.anon = options.anon;
 
       this.$el.click(function (e) {
         e.stopPropagation();
@@ -39,7 +43,8 @@ define(['jquery',
         userPic: options && options.userPic ? options.userPic : OSUtil.NO_USER_PIC,
         ghUsername: ghUsername,
         showLink: !_.isEmpty(ghUsername),
-        ghProfile: this.ghProfile
+        ghProfile: this.ghProfile,
+        anon: options.anon
       }));
     }
   });

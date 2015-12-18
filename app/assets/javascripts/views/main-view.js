@@ -240,6 +240,7 @@ define(['jquery',
     showContribsModal: function () {
       var self = this;
       if (this.projectView && this.projectView.contributors) {
+        this.contribsModal.setAnonStatus(this.projectView.data.project.anon); // jesus christ
         this.contribsModal.populate(this.projectView.contributors);
         this.contribsModal.showModal();
       }

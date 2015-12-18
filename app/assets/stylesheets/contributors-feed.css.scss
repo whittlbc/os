@@ -117,6 +117,10 @@
             cursor: pointer;
           }
 
+          img.anon {
+            cursor: default;
+          }
+
           .name {
             height: 100%;
             line-height: 65px;
@@ -130,6 +134,12 @@
               cursor: pointer;
               text-decoration: underline;
               color: #00A6C9;
+            }
+
+            span.anon:hover {
+              cursor: default;
+              text-decoration: none;
+              color: #333;
             }
           }
 

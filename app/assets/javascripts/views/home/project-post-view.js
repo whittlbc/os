@@ -82,7 +82,8 @@ define(['jquery',
       this.projectType = OSUtil.GRAMMATICAL_PROJECT_TYPES[self.status];
       this.searchResult = data.search_result;
       this.owner_pic = data.owner_pic;
-      this.ownerGHUsername = data.owner_gh_username
+      this.ownerGHUsername = data.owner_gh_username;
+      this.anon = data.anon;
     },
 
     hoverOn: function () {
@@ -314,7 +315,8 @@ define(['jquery',
       });
       this.userInfoBubble.render({
         userPic: self.owner_pic,
-        ghUsername: self.ownerGHUsername
+        ghUsername: self.ownerGHUsername,
+        anon: self.anon
       });
 
     }
