@@ -264,7 +264,6 @@ define(['jquery',
         }
       });
       selectize.on('item_remove', function (value, $item) {
-        console.log('heard remove item', value);
         self.removeItemFromSelectedMap(value);
         self.footerDropdownValue = self.getDropdownValues();
         self.trigger('removeItem', {
@@ -389,7 +388,6 @@ define(['jquery',
 
     passCachedItems: function (data) {
       this.removedValues = data;
-      console.log('CACHE: ', data)
     },
 
     passFilterType: function (int) {

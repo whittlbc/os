@@ -1048,20 +1048,25 @@ $side-filters-width: 18.25%;
   .lang-filters-options {
     width: 100%;
     float: left;
-    height: auto;
+    height: 14px;
     margin-bottom: 13px;
 
     .fa-info-circle {
-      display: block;
+      display: none;
       float: left;
       margin-left: 18.5px;
       text-align: center;
       font-size: 14px;
       color: $not-quite-black;
       cursor: pointer;
-
-
     }
+
+    .fa-info-circle:hover {
+      #langFiltersOptionsBubble {
+        display: block;
+      }
+    }
+
   }
 }
 

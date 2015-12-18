@@ -267,35 +267,36 @@ define(['jquery',
       this.limit = 30;
       this.gettingMoreData = false;
       var obj = {
-        status: self.projectTypeStatus,
+        status: this.projectTypeStatus,
+        lang_filters_or: this.langFiltersOr,
         filters: {}
       };
 
-      if (!_.isEmpty(self.langsFramesValue)) {
-        obj.filters.langs_and_frames = self.langsFramesValue;
+      if (!_.isEmpty(this.langsFramesValue)) {
+        obj.filters.langs_and_frames = this.langsFramesValue;
         atleastOneFilter = true;
       }
-      if (self.privacyFilters.length === 1) {
-        obj.filters.privacy = self.privacyFilters;
-        atleastOneFilter = true;
-      }
-
-      if (!_.isEmpty(self.licenseFilters)) {
-        obj.filters.license = self.licenseFilters;
+      if (this.privacyFilters.length === 1) {
+        obj.filters.privacy = this.privacyFilters;
         atleastOneFilter = true;
       }
 
-      if (!_.isEmpty(self.chatFilters)) {
-        obj.filters.chat = self.chatFilters;
+      if (!_.isEmpty(this.licenseFilters)) {
+        obj.filters.license = this.licenseFilters;
         atleastOneFilter = true;
       }
 
-      self.filters = obj;
+      if (!_.isEmpty(this.chatFilters)) {
+        obj.filters.chat = this.chatFilters;
+        atleastOneFilter = true;
+      }
 
-      self.getFilteredFeed(obj);
+      this.filters = obj;
+
+      this.getFilteredFeed(obj);
 
       if (!atleastOneFilter) {
-        self.filters = null;
+        this.filters = null;
       }
     },
 
@@ -313,11 +314,6 @@ define(['jquery',
 
       if (!this.userData && this.cookieGHUsername) {
         obj.gh_username = this.cookieGHUsername;
-      }
-
-      // if more than one lang filter, check if they want inclusive/exclusive
-      if (obj.filters && obj.filters.langs_and_frames && obj.filters.langs_and_frames.length > 1) {
-        obj.lang_filters_or = this.langFiltersOr;
       }
 
       project.filteredFeed(obj, {
@@ -546,6 +542,7 @@ define(['jquery',
       this.privacyFilters = obj.filters.privacy || [];
       this.licenseFilters = obj.filters.license || [];
       this.chatFilters = obj.filters.chat || [];
+      this.langFiltersOr = obj.lang_filters_or;
     },
 
     render: function (options) {

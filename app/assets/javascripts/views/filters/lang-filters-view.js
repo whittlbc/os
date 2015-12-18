@@ -89,6 +89,10 @@ define(['jquery',
           this.slideItemIn(langFilterItemView.el);
         }
       }
+
+      if (this.needToShowInfoIcon()) {
+        this.$el.find('.lang-filters-options > .fa').css('display', 'block');
+      }
     },
 
     addHoverListener: function (view) {
@@ -113,7 +117,19 @@ define(['jquery',
           self.moreDropdown.stripItemAndRepopulate(langToMoveUpFromDrodown);
           self.decreaseMoreDropdownCount();
         }
+
+        if (self.needToHideInfoIcon()) {
+          self.$el.find('.lang-filters-options > .fa').hide();
+        }
       });
+    },
+
+    needToShowInfoIcon: function () {
+      return (this.LANG_FILTERS.length + this.moreDropdown.getNumItems()) > 1;
+    },
+
+    needToHideInfoIcon: function () {
+      return (this.LANG_FILTERS.length + this.moreDropdown.getNumItems()) <= 1;
     },
 
     prepareItemForEntrance: function (el, value, animate) {
@@ -166,8 +182,10 @@ define(['jquery',
       $countEl.html(Number($countEl.html()) - 1);
     },
 
-    render: function () {
+    render: function (options) {
+      options = options || {};
       var self = this;
+
       this.$el.html(LangFiltersViewTpl());
 
       this.$list = this.$el.find('.lang-filters-list');
@@ -198,7 +216,9 @@ define(['jquery',
         el: this.$el.find('#langFiltersOptionsBubble')
       });
 
-      this.optionsBubble.render();
+      this.optionsBubble.render({
+        orSelected: options.orSelected
+      });
 
       $(document).click(function () {
         self.forceHideDropdown();

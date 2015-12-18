@@ -28,33 +28,33 @@ define(['jquery',
   'stache!views/main-view',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             IndexView,
-             ProjectView,
-             OSUtil,
-             Project,
-             CreateProjectModal,
-             AllLangs,
-             User,
-             Github,
-             Sifter,
-             LoginModal,
-             ContributorsModal,
-             BasicQuestionModal,
-             SearchContainerView,
-             NotificationsDropdownView,
-             AccountDropdownView,
-             ExtrasDropdownView,
-             MyProjectsModal,
-             StarredModal,
-             AboutModal,
-             RulesModal,
-             SuggestionsModal,
-             FooterView,
-             LangFiltersView,
-             MinorFiltersView,
-             MainViewTpl) {
+   Backbone,
+   _,
+   IndexView,
+   ProjectView,
+   OSUtil,
+   Project,
+   CreateProjectModal,
+   AllLangs,
+   User,
+   Github,
+   Sifter,
+   LoginModal,
+   ContributorsModal,
+   BasicQuestionModal,
+   SearchContainerView,
+   NotificationsDropdownView,
+   AccountDropdownView,
+   ExtrasDropdownView,
+   MyProjectsModal,
+   StarredModal,
+   AboutModal,
+   RulesModal,
+   SuggestionsModal,
+   FooterView,
+   LangFiltersView,
+   MinorFiltersView,
+   MainViewTpl) {
   'use strict';
 
   var MainView = Backbone.View.extend({
@@ -773,7 +773,9 @@ define(['jquery',
         colorsAndInitials: this.allLangs.colors_and_initials
       });
 
-      this.langFiltersView.render();
+      this.langFiltersView.render({
+        orSelected: (this.cachedFilters || {}).lang_filters_or
+      });
 
       if (this.showHomeView && this.cachedItems) {
         this.langFiltersView.prePopulateFilters(this.cachedItems);

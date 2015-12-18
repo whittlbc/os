@@ -22,6 +22,7 @@ define(['jquery',
     },
 
     render: function (options) {
+      options = options || {};
       var self = this;
 
       this.$el.click(function (e) {
@@ -39,7 +40,9 @@ define(['jquery',
         Backbone.EventBroker.trigger('lang-filters-scope:change', checked);
       });
 
-      this.hToggle.render();
+      this.hToggle.render({
+        orSelected: options.orSelected
+      });
     }
   });
 

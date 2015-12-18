@@ -17,11 +17,13 @@ define(['jquery',
 
 		events: {},
 
-		render: function () {
+		render: function (options) {
+      options = options || {};
 			var self = this;
 
       this.$el.html(HorizontalToggleTpl({
-        id: this.id
+        id: this.id,
+        orSelected: options.orSelected
       }));
 
       this.$el.find('input').change(function () {

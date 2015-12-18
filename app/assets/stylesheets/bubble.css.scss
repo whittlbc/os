@@ -136,6 +136,7 @@ ul[data-project-type="0"] {
   position: absolute;
   top: -28px;
   left: 30px;
+  display: none;
 
   .options-bubble-container {
     width: 100%;
@@ -189,6 +190,7 @@ ul[data-project-type="0"] {
       font-size: 20px;
       color: $not-quite-black;
       bottom: 5px;
+      left: 0;
     }
   }
 
