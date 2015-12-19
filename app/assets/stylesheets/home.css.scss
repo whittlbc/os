@@ -34,6 +34,16 @@ $side-filters-width: 18.25%;
   margin-left: $side-filters-width;
   float: left;
   display: inline-block;
+
+  .no-project-results {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    font-size: 15.5px;
+    color: $light-gray;
+    text-align: center;
+    font-style: italic;
+  }
 }
 
 .project-feed-list {
