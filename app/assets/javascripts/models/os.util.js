@@ -156,8 +156,8 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
                 action: 'create'
             },
             'launch': {
-                verb: 'POST',
-                action: 'create'
+                verb: 'PUT',
+                action: 'update'
             },
             'getRepoDetails': {
                 verb: 'GET',

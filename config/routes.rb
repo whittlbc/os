@@ -15,7 +15,7 @@ Backboneworld::Application.routes.draw do
       put :vote, :path => '/vote'
       get :universal_search, :path => '/universalSearch'
       post :join, :path => '/join'
-      post :launch, :path => '/launch'
+      put :launch, :path => '/launch'
       get :get_up_for_grabs, :path => '/getUpForGrabs'
       post :fetch_gh_contributors, :path => '/fetchGHContributors'
       get :fetch_gh_repo_stats, :path => '/fetchGHRepoStats'

@@ -85,7 +85,8 @@ define(['jquery',
         'notifications-icon-clicked': 'notificationsIconClicked',
         'header-ellipsis-clicked': 'headerEllipsisClicked',
         'header-user-pic-clicked': 'headerUserPicClicked',
-        'open-project': 'openProject'
+        'open-project': 'openProject',
+        'project:confirm-launch': 'confirmProjectLaunch'
       }, this);
       this.userAuthed = false;
       this.cachedFilterType = null;
@@ -96,6 +97,17 @@ define(['jquery',
     },
 
     events: {},
+
+    confirmProjectLaunch: function () {
+      this.confirmLaunchProjectModal.showModal();
+    },
+
+    launchProject: function () {
+      var project = new Project();
+      project.launch({id: this.projectView.projectID}, { success: function () {
+        window.location.reload();
+      }});
+    },
 
     openProject: function (id) {
       this.cachedRemovedFilterItems = this.footerView.footerDropdown.$removedItems;
@@ -658,6 +670,15 @@ define(['jquery',
         self.getAllContributorsForRepo(self.projectView.uuid);
       });
       this.sendInvitesModal.render();
+
+      this.confirmLaunchProjectModal = new BasicQuestionModal({
+        el: this.$el.find('#modalConfirmLaunch'),
+        message: 'Are you sure you want to launch this project?'
+      });
+      this.listenTo(this.confirmLaunchProjectModal, 'confirm', function () {
+        self.launchProject();
+      });
+      this.confirmLaunchProjectModal.render();
 
       this.searchView = new SearchContainerView({
         el: '#mainSearchBar'

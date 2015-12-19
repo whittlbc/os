@@ -189,6 +189,23 @@ $light-gray: #C4C5CA;
     .delete-btn {
       margin-right: 3px;
     }
+
+    .launch-btn {
+      display: inline-block;
+      float: right;
+      height: 28px;
+      line-height: 28px;
+      font-size: 12px;
+      text-align: center;
+      cursor: pointer;
+      color: #888A94;
+      margin-right: 12px;
+    }
+
+    .launch-btn:hover {
+      color: #00A6C9;
+      text-decoration: underline;
+    }
   }
 
   .share-icons-container {
@@ -412,6 +429,17 @@ $light-gray: #C4C5CA;
   line-height: 30px;
   font-weight: bold;
   margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.major-info-project-subtitle.admin {
+  width: 90%;
+}
+
+.major-info-project-subtitle.otf {
+  width: 80%;
 }
 
 .major-info-project-description {

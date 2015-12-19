@@ -61,6 +61,7 @@ class ProjectsController < ApplicationController
           :status => project.status,
           :title => project.title,
           :subtitle => project.subtitle,
+          :subtitle => project.subtitle,
           :user_id => project.user_id,
           :uuid => project.uuid,
           :voted => user ? user.voted_on_project(project.id) : nil,
@@ -795,6 +796,17 @@ class ProjectsController < ApplicationController
 
     end
 
+  end
+
+  def launch
+    project = Project.find_by(id: params[:id])
+
+    if project.present?
+      project.update_attributes!(status: 2)
+      render :json => {}, :status => 200
+    else
+      render :json => {:message => 'Cant find project by that id'}, :status => 500
+    end
   end
 
   private
