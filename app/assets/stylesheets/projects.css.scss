@@ -1,13 +1,6 @@
 
-
-// Variables
-
 $project-minor: white;
-$major-info-project-type: #CECECE;
 $light-gray: #C4C5CA;
-
-
-// Styling
 
 
 .z-depth-half {
@@ -37,7 +30,6 @@ $light-gray: #C4C5CA;
 }
 
 #majorInfoView {
-  min-height: 330px;
   width: 100%;
 }
 
@@ -130,6 +122,16 @@ $light-gray: #C4C5CA;
   position: absolute;
   top: 0;
   left: 0;
+  margin-top: 2px;
+
+  .project-title-span {
+    width: auto;
+    display: inline-block;
+    max-width: 74%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
   .star {
     display: inline-block;
@@ -378,7 +380,7 @@ $light-gray: #C4C5CA;
   background-color: #DDD;
   margin-left: 13px;
   position: relative;
-  top: 2px;
+  top: -8px;
   z-index: 1;
 }
 
@@ -391,17 +393,39 @@ $light-gray: #C4C5CA;
   height: 30px;
   line-height: 28px;
   border-radius: 6px;
-  //border: 2px solid $major-info-project-type;
-  color: $major-info-project-type;
+  color: $light-gray;
   text-align: center;
   position: relative;
-  top: -5px;
+  top: -17px;
 }
 
 .major-info-tag-container {
   width: 70%;
   height: auto;
   margin-top: 12px;
+
+  .more-project-tags-container {
+    display: inline-block;
+    position: relative;
+    margin-left: 3px;
+    top: 6px;
+
+    .more-tags-count {
+      font-size: 11px;
+      color: $light-gray;
+      text-decoration: underline;
+    }
+
+    .more-tags-dropdown {
+      position: absolute;
+
+      .hover-cover {
+        left: 4px;
+        top: -22px;
+      }
+    }
+
+  }
 }
 
 .major-info-tag {
@@ -423,7 +447,7 @@ $light-gray: #C4C5CA;
 }
 
 .major-info-project-subtitle {
-  width: 100%;
+  width: 70%;
   height: 30px;
   font-size: 18px;
   line-height: 30px;
@@ -432,14 +456,6 @@ $light-gray: #C4C5CA;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.major-info-project-subtitle.admin {
-  width: 90%;
-}
-
-.major-info-project-subtitle.otf {
-  width: 80%;
 }
 
 .major-info-project-description {
@@ -817,7 +833,7 @@ $light-gray: #C4C5CA;
   height: 100%;
   text-align: center;
   cursor: pointer;
-  border: 2px solid $major-info-project-type;
+  border: 2px solid $light-gray;
   background-color: white;
   line-height: 11px;
   padding-top: 5px;
@@ -825,7 +841,7 @@ $light-gray: #C4C5CA;
   bottom: 0px;
   right: 4px;
   font-size: 11px;
-  color: $major-info-project-type;
+  color: $light-gray;
 }
 
 .see-all-contribs-btn:hover {
@@ -860,14 +876,17 @@ $light-gray: #C4C5CA;
 #minorInfoRepoURLContainer {
   height: 40px;
   padding-left: 10px;
+  padding-right: 10px;
   line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   a {
     color: black;
     font-weight: bold;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
+
   a:hover {
     color: #00A6C9;
   }
@@ -943,8 +962,12 @@ $light-gray: #C4C5CA;
   .integration-link {
     margin-left: 12px;
     position: relative;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-     #slackEllipsis,
+    #slackEllipsis,
      #hipchatEllipsis {
        display: inline-block;
        width: auto;
@@ -1162,7 +1185,7 @@ $light-gray: #C4C5CA;
 }
 
 .minor-info-unspecified {
-  color: $major-info-project-type;
+  color: $light-gray;
   font-style: italic;
 }
 

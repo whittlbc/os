@@ -23,7 +23,7 @@ define(['jquery',
 
     initialize: function () {
       this.tagsExpanded = false;
-      this.MAX_TAGS = 6;
+      this.MAX_TAGS = 8;
     },
 
     events: {

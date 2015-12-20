@@ -62,7 +62,7 @@ $more-dropdown-border-radius: 6px;
   z-index: 1035;
 
   ul.main-list {
-    min-height: 80px;
+    min-height: 76px;
     max-height: 325px;
     overflow: scroll;
   }
@@ -70,7 +70,7 @@ $more-dropdown-border-radius: 6px;
   .zero-notifications,
   .notifications-item-container {
     float: left;
-    height: 95px;
+    height: auto;
     background-color: white;
     width: 100%;
   }
@@ -89,7 +89,7 @@ $more-dropdown-border-radius: 6px;
       float: left;
       width: 100%;
       display: block;
-      height: 58px;
+      height: auto;
 
       .pic {
         float: left;
@@ -102,7 +102,7 @@ $more-dropdown-border-radius: 6px;
           width: 25px;
           border-radius: 12.5px;
           float: right;
-          margin-top: 18px;
+          margin-top: 16px;
           cursor: pointer;
         }
 
@@ -124,13 +124,13 @@ $more-dropdown-border-radius: 6px;
           font-size: 10px;
           padding-right: 8px;
           color: #C4C5CA;
-          padding-bottom: 1px;
+          padding-bottom: 2px;
         }
         
         .text {
           float: left;
           display: inline-block;
-          height: 90%;
+          height: auto;
           width: 310px;
           font-size: 11.5px;
           padding-right: 8px;
@@ -155,21 +155,21 @@ $more-dropdown-border-radius: 6px;
       float: left;
       width: 100%;
       display: block;
-      height: 35px;
+      height: 40px;
 
       .action-btn-container {
         display: block;
-        width: 60%;
+        width: 54%;
         height: 100%;
-        margin-left: 20%;
+        margin-left: 23%;
         
         .action-btn {
-          width: 83px;
+          width: 73px;
           display: inline-block;
           margin-left: auto;
           margin-right: auto;
           height: 21px;
-          font-size: 11px;
+          font-size: 10.5px;
           border-radius: 12px;
           line-height: 21px;
           color: white;
@@ -177,7 +177,7 @@ $more-dropdown-border-radius: 6px;
           text-align: center;
           float: left;
           cursor: pointer;
-          margin-top: 5px;
+          margin-top: 7.5px;
         }
 
         .action-btn#accept {

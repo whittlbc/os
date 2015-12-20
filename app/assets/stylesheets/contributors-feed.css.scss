@@ -129,6 +129,10 @@
             float: left;
             margin-left: 16px;
             display: inline-block;
+            max-width: 58%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             span:hover {
               cursor: pointer;

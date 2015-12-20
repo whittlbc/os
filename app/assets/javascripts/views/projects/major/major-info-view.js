@@ -4,18 +4,20 @@ define(['jquery',
   'models/os.util',
   'models/project',
   'models/all-langs',
+  'views/widgets/more-dropdown/more-dropdown',
   'stache!views/projects/major/major-info-view',
   'dotdotdot',
   'selectize',
   'toggle',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             OSUtil,
-             Project,
-             AllLangs,
-             MajorInfoViewTpl) {
+   Backbone,
+   _,
+   OSUtil,
+   Project,
+   AllLangs,
+   MoreDropdown,
+   MajorInfoViewTpl) {
   'use strict';
 
   var MajorInfoView = Backbone.View.extend({
@@ -155,24 +157,63 @@ define(['jquery',
     },
 
     addTags: function (langsFrames) {
+      var $tagContainer = this.$el.find('.major-info-tag-container');
+      var tagContainerWidth = $tagContainer.width();
+      var tagsWidth = 0;
+      var extraTags = [];
+
       if (Array.isArray(langsFrames)) {
         for (var i = 0; i < langsFrames.length; i++) {
-          var $tag = $('<div>', {
-            class: 'major-info-tag'
-          });
-          $tag.html(langsFrames[i]);
-          var colors_and_initials = this.allLangs['colors_and_initials'];
-          var langFrame = colors_and_initials[langsFrames[i]];
-          if (langFrame) {
-            var color = langFrame['color'];
-            $tag.css({
-              color: color,
-              border: '2px solid ' + color
+          if (tagContainerWidth - tagsWidth < 100) {
+            extraTags.push(langsFrames[i]);
+
+            if (i === langsFrames.length - 1) {
+              this.populatMoreTagsDropdown(extraTags);
+            }
+          } else {
+            var $tag = $('<div>', {
+              class: 'major-info-tag'
             });
-            this.$el.find('.major-info-tag-container').append($tag);
+            $tag.html(langsFrames[i]);
+            var colors_and_initials = this.allLangs['colors_and_initials'];
+            var langFrame = colors_and_initials[langsFrames[i]];
+            if (langFrame) {
+              var color = langFrame['color'];
+              $tag.css({
+                color: color,
+                border: '2px solid ' + color
+              });
+              $tagContainer.append($tag);
+              tagsWidth += $tag.outerWidth(true);
+            }
           }
         }
       }
+    },
+
+    populatMoreTagsDropdown: function (extraTags) {
+      var self = this;
+      var $div = $('<div>', {class: 'more-project-tags-container'});
+      var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
+      var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
+      $div.append($moreTagsCount);
+      $div.append($moreTagsDropdown);
+      this.$el.find('.major-info-tag-container').append($div);
+
+      $moreTagsCount.html(extraTags.length + ' more');
+
+      this.moreTagsDropdown = new MoreDropdown({
+        el: this.$el.find('.more-tags-dropdown')
+      });
+
+      this.moreTagsDropdown.render();
+      this.moreTagsDropdown.populate(extraTags);
+
+      $moreTagsCount.hover(function () {
+        self.moreTagsDropdown.showDropdown();
+      }, function () {
+        self.moreTagsDropdown.hideDropdown();
+      });
     },
 
     showEditMode: function (data) {

@@ -110,11 +110,12 @@ ul[data-project-type="0"] {
   padding-right: 5px;
   padding-top: 6.5px;
   text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   a {
     font-size: 12px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     color: white;
   }
 

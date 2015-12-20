@@ -116,11 +116,15 @@ $not-quite-black: #1D1E22;
           .title {
             width: 100%;
             padding-left: 30px;
+            padding-right: 30px;
             height: 100%;
             line-height: 45px;
             color: $not-quite-black;
             font-size: 14px;
             font-family: 'Proxima-Nova-SemiBold';
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
 
         }
@@ -225,11 +229,15 @@ $not-quite-black: #1D1E22;
           .title {
             width: 100%;
             padding-left: 30px;
+            padding-right: 30px;
             height: 100%;
             line-height: 45px;
             color: $not-quite-black;
             font-size: 14px;
             font-family: 'Proxima-Nova-SemiBold';
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
 
         }

@@ -868,6 +868,9 @@ $side-filters-width: 18.25%;
         font-size: 14px;
         font-family: 'Proxima-Nova-SemiBold';
         color: $not-quite-black;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         span {
           color: #00A6C9;
@@ -880,6 +883,9 @@ $side-filters-width: 18.25%;
         font-size: 12.5px;
         color: $post-gray;
         margin-bottom: 2.5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         span {
           color: #00A6C9;
@@ -891,6 +897,9 @@ $side-filters-width: 18.25%;
         width: 100%;
         font-size: 11px;
         color: $post-gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 
