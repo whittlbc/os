@@ -13,15 +13,15 @@ define(['jquery',
   'backbone-eventbroker',
   'tabs'
 ], function ($,
-             Backbone,
-             _,
-             OSUtil,
-             ProjectFeedView,
-             Project,
-             User,
-             //LangSelectionList,
-             NonLangFiltersView,
-             IndexViewTpl) {
+   Backbone,
+   _,
+   OSUtil,
+   ProjectFeedView,
+   Project,
+   User,
+   //LangSelectionList,
+   NonLangFiltersView,
+   IndexViewTpl) {
   'use strict';
 
   var master;
@@ -50,6 +50,8 @@ define(['jquery',
       this.privacyFilters = [];
       //this.anonFilters = [];
       this.sortType = OSUtil.SORT_BY_VOTES;
+
+      this.FETCH_MORE_DATA_DECIMAL = 0.8;
 
       this.resetProps();
     },
@@ -472,7 +474,7 @@ define(['jquery',
     homeViewScrollListener: function () {
       if (!master.gettingMoreData) {
         var pos = $(window).scrollTop();
-        if (pos > (0.85 * $('#project-feed').height())) {
+        if (pos > (master.FETCH_MORE_DATA_DECIMAL * $('#project-feed').height())) {
           master.gettingMoreData = true;
           master.getMoreProjects();
         }

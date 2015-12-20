@@ -567,6 +567,23 @@ define(['jquery',
       }
     },
 
+    cachedItemsExist: function () {
+      if (!this.cachedItems) {
+        return false;
+      }
+
+      var self = this;
+      var itemsExist = false;
+
+      _.each(['0', '1', '2'], function (key) {
+        if (!_.isEmpty(self.cachedItems[key])) {
+          itemsExist = true;
+        }
+      });
+
+      return itemsExist;
+    },
+
     render: function (options) {
       var self = this;
       this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -887,8 +904,11 @@ define(['jquery',
 
         this.footerView.render();
 
-        if (this.cachedItems) {
+        if (this.cachedItemsExist()) {
           this.footerView.passCachedItems(this.cachedItems);
+        }
+
+        if (_.has(this, 'lastFilterType') && this.lastFilterType != null) {
           this.footerView.passFilterType(this.lastFilterType);
         }
 

@@ -1,4 +1,6 @@
 
+$not-quite-black: #1D1E22;
+
 .rtj-popover-container {
   width: 100%;
   position: relative;
@@ -11,7 +13,7 @@
     font-size: 14px;
     background-color: white;
     border-radius: 5px;
-    color: #B0B0B5;
+    color: $not-quite-black;
     text-align: center;
     cursor: default;
 
@@ -28,14 +30,26 @@
   }
 
   .rtj-popover-content.active:hover {
-    background-color: #F1F1F9;
+    color: #BDBEC4;
   }
 
   .fa-caret-down {
     position: absolute;
+  }
+
+  .fa-caret-down.front {
+    font-size: 27px;
+    color: white;
+    top: 29px;
+    right: 12px;
+    z-index: 1;
+  }
+
+  .fa-caret-down.back {
     font-size: 30px;
     color: lightgray;
     top: 29px;
-    right: 20px;
+    right: 11px;
+    z-index: 0;
   }
 }

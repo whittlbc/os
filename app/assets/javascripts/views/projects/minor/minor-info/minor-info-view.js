@@ -147,6 +147,7 @@ define(['jquery',
     },
 
     render: function (options) {
+      options = options || {};
       var self = this;
       var repoName;
       var showRepoName = false;
@@ -165,7 +166,7 @@ define(['jquery',
         showRepoName = true;
         showLicense = true;
         repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
-        license = (options.hasOwnProperty('license') && options.license[0]) ? options.license[0] : null;
+        license = (!_.isEmpty(options.license) && Array.isArray(options.license)) ? options.license[0] : null;
 
         if (Array.isArray(options.integrations)) {
           for (var i = 0; i < options.integrations.length; i++) {

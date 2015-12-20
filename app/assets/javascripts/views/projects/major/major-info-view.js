@@ -313,6 +313,8 @@ define(['jquery',
       this.isContributor = options.is_contributor;
       this.title = options.title || '';
 
+      var hasTags = !_.isEmpty(options.langs_and_frames);
+
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
         projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
@@ -330,11 +332,14 @@ define(['jquery',
         upForGrabsType: this.upForGrabsType,
         otf: options.status == 1,
         open: options.privacy[0] === OSUtil.OPEN_PRIVACY,
-        anon: options.anon === true
+        anon: options.anon === true,
+        hasTags: hasTags
       }));
 
       if (!this.editMode) {
-        this.addTags(options.langs_and_frames);
+        if (hasTags) {
+          this.addTags(options.langs_and_frames);
+        }
         this.$descriptionContainer = this.$el.find('.major-info-project-description');
         this.originalDescriptionHeight = this.$descriptionContainer.height();
         this.$descriptionContainer.dotdotdot({
@@ -345,6 +350,12 @@ define(['jquery',
         if (!isTruncated) {
           this.$el.find('.see-all-description').hide();
         }
+
+        // if no description, say so
+        if (_.isEmpty(options.description)) {
+          this.$el.find('p.none').show();
+        }
+
       } else {
         this.initLangFramesDropdown(options.langs_and_frames);
         this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
