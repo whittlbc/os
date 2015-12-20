@@ -12,16 +12,16 @@ define(['jquery',
   'owl-carousel',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             SelectProjectTypeView,
-             SelectProjectSourceView,
-             AddProjectDetailsView,
-             BreadCrumbView,
-             User,
-             Project,
-             OSUtil,
-             IndexViewTpl) {
+   Backbone,
+   _,
+   SelectProjectTypeView,
+   SelectProjectSourceView,
+   AddProjectDetailsView,
+   BreadCrumbView,
+   User,
+   Project,
+   OSUtil,
+   IndexViewTpl) {
   'use strict';
 
   var CreateNewProjectPopup = Backbone.View.extend({
