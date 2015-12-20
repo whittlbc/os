@@ -359,7 +359,28 @@ input {
   width: 100%;
   height: 40px;
   margin-bottom: 6px;
+  position: relative;
+  
+  .project-creation-validation-error {
+    display: none;
+    position: absolute;
+    float: left;
+    color: red;
+    font-size: 12px;
+    left: 2.5%;
+    top: -21px;
+  }
 }
+
+.add-project-title-container.error,
+.add-project-subtitle-container.error {
+  margin-top: 19px;
+
+  .project-creation-validation-error {
+    display: block;
+  }
+}
+
 
 input[name="add-project-title"],
 input[name="add-project-subtitle"] {

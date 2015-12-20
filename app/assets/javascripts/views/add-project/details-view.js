@@ -51,7 +51,12 @@ define(['jquery',
       'click .add-project-anon-choice': 'handleAnonSelection',
       'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
       'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
-      'click .add-project-send-invites-choice': 'handleSendInvitesSelection'
+      'click .add-project-send-invites-choice': 'handleSendInvitesSelection',
+      'keydown [name=add-project-title], [name=add-project-subtitle]': 'hideErrorMessage'
+    },
+
+    hideErrorMessage: function (e) {
+      $(e.currentTarget).closest('div').removeClass('error');
     },
 
     handleKeyDownAPIKeyContainer: function (e) {
@@ -342,7 +347,7 @@ define(['jquery',
 
     setRepoInfo: function (data) {
       var self = this;
-      this.$el.find('[name=add-project-title]').val(data.description);
+      this.$el.find('[name=add-project-subtitle]').val(data.description);
       this.$el.find('[name=add-project-repo-name]').val(data.name);
       for (var i = 0; i < data.languages.length; i++) {
         this.langFrameSelectize.addItem(data.languages[i]);
@@ -366,9 +371,30 @@ define(['jquery',
       this.selectedType = type;
     },
 
+    checkIfHasTitle: function () {
+      var hasTitle = true;
+      var $input = this.$el.find('[name="add-project-title"]');
+      if (_.isEmpty($input.val())) {
+        $input.closest('div').addClass('error');
+        hasTitle = false;
+      }
+      return hasTitle;
+    },
+
+    checkIfHasSubtitle: function () {
+      var hasSubtitle = true;
+      var $input = this.$el.find('[name="add-project-subtitle"]');
+      if (_.isEmpty($input.val())) {
+        $input.closest('div').addClass('error');
+        hasSubtitle = false;
+      }
+      return hasSubtitle;
+    },
+
     allowCreate: function () {
-      // will need to show validation shit if not everything filled in
-      return true;
+      var hasTitle = this.checkIfHasTitle();
+      var hasSubtitle = this.checkIfHasSubtitle();
+      return hasTitle && hasSubtitle;
     },
 
     getData: function () {

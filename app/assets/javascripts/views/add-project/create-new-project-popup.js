@@ -680,8 +680,9 @@ define(['jquery',
       var self = this;
       var user = new User();
       user.getRepoDetails({gh_username: self.userData.gh_username, repo_name: repoName}, {
-        success: function (data) {
+          success: function (data) {
           self.handleRepoDetails(data);
+          console.log(data);
         }, error: function () {
           console.log('Error getting repo details');
         }

@@ -146,6 +146,13 @@ class ProjectsController < ApplicationController
   def create
 
     begin
+
+      # Make sure both title and subtitle are defined
+      if params[:title].blank? || params[:subtitle].blank?
+        render :json => {:message => 'Project creation failed: Title and Subtitle both have to exist'}, :status => 500
+        return
+      end
+
       @user = User.find_by(gh_username: params[:gh_username])
       project_data = {
           :title => params[:title],
@@ -161,6 +168,7 @@ class ProjectsController < ApplicationController
           :anon => params[:anon],
           :privacy => params[:privacy]
       }
+
       @project = Project.new(project_data)
       @project.save
 
@@ -197,7 +205,7 @@ class ProjectsController < ApplicationController
 
       render :json => @project
     rescue
-      render :json => {:status => 500}
+      render :json => {:message => 'Project creation failed'}, :status => 500
     end
   end
 
