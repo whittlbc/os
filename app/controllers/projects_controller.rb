@@ -136,7 +136,7 @@ class ProjectsController < ApplicationController
     if !sender.nil? && !project.nil?
       project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
       client = Octokit::Client.new(:access_token => User.find_by(email: 'benwhittle31@gmail.com').password)
-      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [])
+      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.id)
       render :json => {:status => 200}
     else
       render :json => {:status => 500, :message => 'Either sender was nil or project was nil by uuid'}
