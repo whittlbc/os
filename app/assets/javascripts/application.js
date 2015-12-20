@@ -5,17 +5,12 @@ define(['jquery',
   'bootstrap',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             Router) {
+   Backbone,
+   _,
+   Router) {
 
   // Document On Ready Shit
   $(document).ready(function () {
-
-    $(window).on('navigate', function(event, data) {
-      console.log(data.state);
-    });
-
 
     // set size of rest-of-header-container
     var headerWidth = $('header').width();
@@ -45,15 +40,11 @@ define(['jquery',
           $('footer').removeClass('footer-nav-down').addClass('footer-nav-up');
         }
         Backbone.EventBroker.trigger('hide-header-dropdowns', true);
-        //$('#langFiltersView').removeClass('langs-nav-down').addClass('langs-nav-up');
-        //$('#licenseFiltersView').removeClass('license-nav-down').addClass('license-nav-up');
       } else {
         // Scroll Up
         if (st + $(window).height() < $(document).height()) {
           $('header').removeClass('header-nav-up').addClass('header-nav-down');
           $('footer').removeClass('footer-nav-up').addClass('footer-nav-down');
-          //$('#langFiltersView').removeClass('langs-nav-up').addClass('langs-nav-down');
-          //$('#licenseFiltersView').removeClass('license-nav-up').addClass('license-nav-down');
         }
       }
 
@@ -69,7 +60,7 @@ define(['jquery',
         hasScrolled();
         didScroll = false;
       }
-    }, 250);
+    }, 200);
 
 
     //// Highlight the current Project Type based on the initial has upon site entrance

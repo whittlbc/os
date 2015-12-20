@@ -384,6 +384,10 @@ $light-gray: #C4C5CA;
   z-index: 1;
 }
 
+.major-info-project-type-divider.edit {
+  top: 5px;
+}
+
 .major-info-project-type {
   display: inline-block;
   font-size: 12px;
@@ -453,9 +457,12 @@ $light-gray: #C4C5CA;
   line-height: 30px;
   font-weight: bold;
   margin-top: 10px;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.major-info-project-subtitle.hide-overflow {
+  overflow: hidden
 }
 
 .major-info-project-description {
