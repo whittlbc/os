@@ -15,12 +15,14 @@ define(['jquery',
     initialize: function (options) {
       options = options || {};
       this.userAuthed = options.userAuthed;
+      this.populated = false;
     },
 
     events: {},
 
     populate: function (notifications) {
       var self = this;
+      this.populated = true;
       this.$mainList.empty();
       this.unseenNotificationsCount = 0;
 
@@ -64,7 +66,7 @@ define(['jquery',
         if (view.data.requested_asset === 1) {
           window.open(view.data.slack_url + '/admin');
         } else if (view.data.requested_asset === 2) {
-          window.open(view.data.hipchat_url + '/admin'); // not actually a thing...fix this url
+          window.open(view.data.hipchat_url + '/admin/user');
         }
         self.decreaseNotificationsCount();
       });

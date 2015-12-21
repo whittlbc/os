@@ -400,7 +400,7 @@ define(['jquery',
           success: function (user) {
             self.setUserFromResponse(user);
             self.notifications = user.notifications;
-            self.notificationsDropdown.populate(user.notifications);
+            self.notificationsDropdown.populate(self.notifications);
           }
         });
       }
@@ -769,6 +769,10 @@ define(['jquery',
       });
 
       this.notificationsDropdown.render();
+
+      if (_.has(this, 'notifications') && !this.notificationsDropdown.populated) {
+        this.notificationsDropdown.populate(this.notifications);
+      }
 
       this.accountDropdown = new AccountDropdownView({
         el: '#accountDropdown',

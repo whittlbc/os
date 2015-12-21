@@ -389,22 +389,22 @@ class ProjectsController < ApplicationController
       pending_request = PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :requester_id => requester.id, :responder_id => project.user.id, :project_id => project.id)
       pending_request.save!
 
-      if asset === SLACK_ASSET
-        integration = Integration.find_by(:service => 'Slack', :project_id => project.id)
-
-        # Invite the user to join the Slack team if the project has a Slack API Key associated with it
-        if !integration.key.nil?
-          slack_invite = invite_slack_user(requester, integration.key)
-          if slack_invite === true
-            pending_request.destroy!
-            integration.update_attributes(:users => integration.users + [requester.id])
-          end
-        end
-      end
+      # # Invite the user to join the Slack team if the project has a Slack API Key associated with it
+      # if asset === SLACK_ASSET
+      #   integration = Integration.find_by(:service => 'Slack', :project_id => project.id)
+      #
+      #   if !integration.key.nil?
+      #     slack_invite = invite_slack_user(requester, integration.key)
+      #     if slack_invite === true
+      #       pending_request.destroy!
+      #       integration.update_attributes(:users => integration.users + [requester.id])
+      #     end
+      #   end
+      # end
 
       render :json => { :message => 'Successfully added pending request' }
     else
-      render :json => {:status => 500, :message => 'Could not add po ending request'}
+      render :json => {:status => 500, :message => 'Could not add pending request'}
     end
   end
 
