@@ -18,35 +18,43 @@
   }
 
   .action-btn-container {
-    displa: block;
+    display: block;
     width: 100%;
-    height: 65px;
-    border-top: 1px solid #EEE;
+    height: 55px;
+    border-top: 1px solid rgb(245,245,245);
 
     .cancel-btn,
     .confirm-btn {
-      width: 120px;
-      height: 40px;
-      line-height: 40px;
-      border-radius: 17px;
+      width: 110px;
+      height: 35px;
+      line-height: 37px;
+      border-radius: 20px;
       text-align: center;
       color: white;
       font-size: 16px;
       font-weight: 500;
-      margin-top: 10px;
+      margin-top: 9px;
       cursor: pointer;
     }
 
     .cancel-btn {
       float: left;
-      margin-left: 70px;
+      margin-left: 101px;
       background-color: #BEBFC4;
     }
 
     .confirm-btn {
       float: right;
-      margin-right: 70px;
+      margin-right: 101px;
       background-color: #00A6C9;
+    }
+
+    .cancel-btn:hover {
+      background-color: #C6C8D0;
+    }
+
+    .confirm-btn:hover {
+      background-color: #00B3D7;
     }
 
   }

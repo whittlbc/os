@@ -274,6 +274,10 @@ $more-dropdown-border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
   }
+
+  li.not-authed {
+    padding-left: 55px;
+  }
   
   li:hover {
     background-color: #F1F1F9;
