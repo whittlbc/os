@@ -57,10 +57,8 @@ class ProjectsController < ApplicationController
           :privacy => project.privacy,
           :repo_name => project.repo_name,
           :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
-          # :getting_repo_data => false,
           :status => project.status,
           :title => project.title,
-          :subtitle => project.subtitle,
           :subtitle => project.subtitle,
           :user_id => project.user_id,
           :uuid => project.uuid,
@@ -686,7 +684,7 @@ class ProjectsController < ApplicationController
         if !integrations[:slack].nil?
           slack_integration = project.integrations.where(:service => 'Slack')
 
-          if integrations[:slack][:url].empty?
+          if integrations[:slack].empty?
             if !slack_integration.blank?
               slack_integration.first.destroy!
             end
@@ -695,16 +693,12 @@ class ProjectsController < ApplicationController
               slack_data = {
                   :service => 'Slack',
                   :project_id => project.id,
-                  :url => ensureURL(integrations[:slack][:url]),
-                  :key => !integrations[:slack][:key].empty? ? integrations[:slack][:key] : nil
+                  :url => ensureURL(integrations[:slack]),
               }
               Integration.new(slack_data).save!
             else
-              slackURL = ensureURL(integrations[:slack][:url])
-              key = !integrations[:slack][:key].empty? ? integrations[:slack][:key] : nil
-
-              "UPDATE SLACK INTEGRATION: URL => #{slackURL} KEY => #{key}"
-              slack_integration.first.update_attributes(url: slackURL, key: key)
+              slackURL = ensureURL(integrations[:slack])
+              slack_integration.first.update_attributes(url: slackURL)
             end
           end
         end

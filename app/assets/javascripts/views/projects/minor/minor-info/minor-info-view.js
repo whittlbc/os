@@ -93,10 +93,7 @@ define(['jquery',
       }
       if (this.showIntegrations) {
         data.integrations = {
-          slack: {
-            url: this.$el.find('[name="edit-slack"]').val(),
-            key: this.$el.find('[name="slack-api-key"]').val()
-          },
+          slack: this.$el.find('[name="edit-slack"]').val(),
           hipchat: this.$el.find('[name="edit-hipchat"]').val(),
           irc: {
             channel: this.$el.find('[name="edit-irc"]').val(),
@@ -193,8 +190,7 @@ define(['jquery',
         showIntegrations = true;
         hasSlack = hasHipChat = hasIRC = true;
         slackObj = slackObj || {
-            url: '',
-            key: ''
+            url: ''
           };
         hipChatObj = hipChatObj || {
             url: ''
@@ -217,11 +213,11 @@ define(['jquery',
         hasSlack: hasSlack,
         hasHipChat: hasHipChat,
         hasIRC: hasIRC,
+        justIRC: hasIRC && !hasSlack && !hasHipChat,
         isContributor: options.is_contributor,
         showSendInvitesBtn: options.is_owner && showRepoName && !_.isEmpty(repoName),
         slackTeamName: hasSlack ? slackObj.url.replace('https://', '').replace('http://', '') : null,
         slackTeamURL: hasSlack ? slackObj.url : null,
-        slackAPIKey: hasSlack ? slackObj.key : null,
         hipChatTeamName: hasHipChat ? hipChatObj.url.replace('https://', '').replace('http://', '') : null,
         hipChatTeamURL: hasHipChat ? hipChatObj.url : null,
         ircChannel: hasIRC ? ircObj.channel : null,
@@ -266,20 +262,7 @@ define(['jquery',
         });
 
         this.repoStatsView.render(repoStatsData);
-      }
 
-      if (options.editMode && this.showLicense) {
-        this.$el.find('#licenseTypeSelection').val(license);
-      }
-
-      if (options.editMode && showIntegrations) {
-        this.irc = ircObj;
-        this.initIRCNetworkDropdown();
-      }
-
-      if (options.editMode) {
-        $('[data-toggle="tooltip"]').tooltip();
-      } else {
         this.slackPopover = new RequestToJoinPopover({
           el: '#slackPopover'
         });
@@ -303,6 +286,16 @@ define(['jquery',
         $(document).click(function () {
           self.hidePopovers();
         });
+
+      }
+
+      if (options.editMode && this.showLicense) {
+        this.$el.find('#licenseTypeSelection').val(license);
+      }
+
+      if (options.editMode && showIntegrations) {
+        this.irc = ircObj;
+        this.initIRCNetworkDropdown();
       }
 
       this.slackEllipsis = new SVG({

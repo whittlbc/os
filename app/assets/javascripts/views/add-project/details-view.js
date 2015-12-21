@@ -49,7 +49,7 @@ define(['jquery',
       'blur [name=hipchat]': 'handleHipChatBlur',
       'blur [name=irc]': 'handleIRCChannelBlur',
       'click .add-project-anon-choice': 'handleAnonSelection',
-      'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
+      //'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
       'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
       'click .add-project-send-invites-choice': 'handleSendInvitesSelection',
       'keydown [name=add-project-title], [name=add-project-subtitle]': 'hideErrorMessage'
@@ -487,6 +487,7 @@ define(['jquery',
       var hideDetailsView = options.hideDetailsView;
       var showRepoNameAndLicense = this.checkIfShowRepoNameAndLicense();
       var showIntegrations = this.selectedType != OSUtil.TYPE_MAP['up-for-grabs'];
+      var showPrivacy = this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] || this.selectedType == OSUtil.TYPE_MAP['launched'];
 
       this.$el.html(DetailsViewTpl({
         onTheFenceOrLaunchedNoPullFromIdeas: showRepoNameAndLicense,
@@ -497,6 +498,7 @@ define(['jquery',
         description: this.description,
         repoName: this.repoName,
         sendInvites: this.sendInvites,
+        showPrivacy: showPrivacy,
         requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
         openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
         showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],

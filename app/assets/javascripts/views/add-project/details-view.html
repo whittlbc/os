@@ -20,9 +20,7 @@
 
 <!--Languages and Frameworks-->
 <div class="add-project-langs-frames-container">
-    <div class="add-project-langs-frames-text">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;What languages/frameworks are involved?
-    </div>{{
+    <div class="add-project-langs-frames-text">What languages/frameworks are involved?</div>{{
     }}<div class="add-project-langs-frames-selection-container">
         <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
     </div>
@@ -31,9 +29,7 @@
 <!--Anon-->
 {{#showAnon}}
 <div class="add-project-anon-container">
-    <div class="add-project-anon-text">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Want to post anonymously?
-    </div>{{
+    <div class="add-project-anon-text">Want to post anonymously?</div>{{
     }}<div class="add-project-anon-choices">
         <div class="add-project-anon-choice-container">
             <div id="add-project-anon-yes" name="anon-yes" class="add-project-anon-choice {{#postAnon}}active-anon{{/postAnon}}">Yes</div>
@@ -48,18 +44,14 @@
 {{#onTheFenceOrLaunchedNoPullFromIdeas}}
 <!--Repo Name-->
 <div class="add-project-repo-name-container">
-    <div class="add-project-repo-name-text">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;What is the name of your Github repo?
-    </div>{{
+    <div class="add-project-repo-name-text">What is the name of your Github repo?</div>{{
     }}<div class="add-project-repo-name-input-container">
         <input name="add-project-repo-name" placeholder="Github repo name" type="text" value="{{repoName}}"/>
     </div>
 </div>
 
 <div class="send-invites-question-container">
-    <div class="question">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Send invitations to current contributors of this repository?
-    </div>{{
+    <div class="question">Send invitations to current contributors of this repository?</div>{{
     }}<div class="answers-container">
         <div class="add-project-send-invites-choice-container">
             <div id="add-project-send-invites-yes" name="send-invites-yes" class="add-project-send-invites-choice {{#sendInvites}}active-send-invites{{/sendInvites}}">Yes</div>
@@ -72,21 +64,17 @@
 
 <!--License-->
 <div class="add-project-license-container">
-    <div class="add-project-license-text">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;What license are you proposing?
-    </div>{{
+    <div class="add-project-license-text">What license are you proposing?</div>{{
     }}<div class="add-project-license-selection-container">
         <select id="add-project-license-selection" placeholder="License"></select>
     </div>
 </div>
 {{/onTheFenceOrLaunchedNoPullFromIdeas}}
 
-{{#launched}}
+{{#showPrivacy}}
 <!--Privacy-->
 <div class="add-project-privacy-container">
-    <div class="add-project-privacy-text">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;What will your project's privacy be?
-    </div>{{
+    <div class="add-project-privacy-text">What will your project's privacy be?</div>{{
     }}<div class="add-project-privacy-choices">
         <div class="add-project-privacy-choice-container">
             <div id="add-project-privacy-request" name="request" class="add-project-privacy-choice {{#requestPrivacy}}active-privacy{{/requestPrivacy}}">Request</div>
@@ -96,14 +84,12 @@
         </div>
     </div>
 </div>
-{{/launched}}
+{{/showPrivacy}}
 
 {{#showIntegrations}}
 <!--Integrations-->
 <div class="add-project-integrations-container">
-    <div class="question">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Any team communication forums?
-    </div>
+    <div class="question">Any team communication forums?</div>
     <!--IRC-->
     <div class="integration-container" id="detailsViewIRCContainer">
         <div class="irc">IRC</div>{{
@@ -124,16 +110,6 @@
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
-        <div class="api-key-container">
-            <div class="api-key-text">
-                <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Go Tooltips!"></i>&nbsp;Enable auto-invites for contributors?
-            </div>
-            <div class="api-key-input-container">
-                <input type="text" name="slack-api-key" placeholder="Slack team API key" value="{{slackAPIKey}}"/>
-            </div>
-            <div class="api-key-find"><span>Find Key</span></div>
-        </div>
-        <div id="findAPIKeyBubble" hidden></div>
     </div>
     <!--HipChat-->
     <div class="integration-container">

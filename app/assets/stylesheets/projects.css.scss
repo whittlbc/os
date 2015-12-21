@@ -970,6 +970,10 @@ $light-gray: #C4C5CA;
   height: auto;
 }
 
+.minorInfoIntegrationContainer.irc-extra-bottom {
+  margin-bottom: 33px;
+}
+
 .minor-info-integration-logo-container {
   width: 100%;
   height: 100%;
@@ -1066,7 +1070,7 @@ $light-gray: #C4C5CA;
   .selectize-control {
     display: inline-block;
     width: 25%;
-    margin-right: 6%;
+    margin-right: 9.5%;
     float: right;
 
     .selectize-input {
@@ -1110,7 +1114,7 @@ $light-gray: #C4C5CA;
 }
 
 .minor-info-irc-logo {
-  width: 85px;
+  width: 81px;
   height: 40px;
   font-size: 18px;
   font-weight: 500;
@@ -1119,6 +1123,7 @@ $light-gray: #C4C5CA;
   margin-left: 10px;
   padding-left: 2px;
   margin-right: 4px;
+  padding-top: 7.5px;
 
   .fa {
     margin-right: 5px;
