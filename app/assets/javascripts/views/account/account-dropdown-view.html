@@ -2,8 +2,10 @@
     <div class="dropdown-arrow back"></div>
     <div class="dropdown-arrow front"></div>
     <ul id="accountDropdownList" class="main-list">
+        {{#userAuthed}}
         <li id="myProjectsTab">My Projects</li>
         <li id="starredTab">Starred Projects</li>
-        <li id="signInOutTab">{{signInOutText}}</li>
+        {{/userAuthed}}
+        <li id="signInOutTab">{{#userAuthed}}Sign Out{{/userAuthed}}{{^userAuthed}}Sign in with Github{{/userAuthed}}</li>
     </ul>
 </div>

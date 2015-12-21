@@ -813,6 +813,7 @@ $light-gray: #C4C5CA;
 
 #contributorsView {
   display: block;
+  float: left;
   min-height: 43px;
 }
 
@@ -873,6 +874,8 @@ $light-gray: #C4C5CA;
 
 #minorInfoDateContainer {
   height: 40px;
+  width: 95.75%;
+  float: left;
   padding-left: 10px;
   line-height: 40px;
   border-top: 1px solid #DDD;
@@ -882,6 +885,8 @@ $light-gray: #C4C5CA;
 #minorInfoLicenseContainer {
   height: 40px;
   padding-left: 10px;
+  width: 95.75%;
+  float: left;
   line-height: 40px;
   border-bottom: 1px solid #DDD;
   position: relative;
@@ -893,9 +898,11 @@ $light-gray: #C4C5CA;
 
 #minorInfoRepoURLContainer {
   height: 40px;
+  float: left;
   padding-left: 10px;
   padding-right: 10px;
   line-height: 40px;
+  width: 95.75%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -959,12 +966,19 @@ $light-gray: #C4C5CA;
   background-color: #D5D5DB;
   color: white;
   pointer-events: none;
+  float: left;
 }
-
-.minorInfoIntegrationContainer {
-  display: block;
-  height: 40px;
-}
+//
+//.minorInfoIntegrationContainer {
+//  display: block;
+//  height: 40px;
+//
+//  .tooltip.top {
+//    .tooltip-inner {
+//      width: 120px !important;
+//    }
+//  }
+//}
 
 .minorInfoIntegrationContainer.auto-height {
   height: auto;
@@ -1049,7 +1063,9 @@ $light-gray: #C4C5CA;
   }
 
   .fa-check {
-    font-size: 17px;
+    font-size: 15px;
+    position: relative;
+    top: 1px;
     color: #00A6C9;
   }
 
@@ -1152,8 +1168,10 @@ $light-gray: #C4C5CA;
   font-size: 14px;
   text-transform: uppercase;
   height: 30px;
+  float: left;
   line-height: 30px;
   padding-left: 5px;
+  width: 100%;
   margin-top: 23px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1182,6 +1200,7 @@ $light-gray: #C4C5CA;
 #minorInfoRepoInfo {
 
   div {
+    width: 95.75%;
     height: 40px;
     padding-left: 10px;
     line-height: 40px;
@@ -1783,14 +1802,13 @@ $light-gray: #C4C5CA;
   float: left;
 }
 
+#repoStatsSubsectionTitle,
 #contributorsSubsectionTitle {
   margin-top: 15px;
 }
 
-#repoStatsSubsectionTitle {
-  margin-top: 18px;
-}
-
 #repoStatsView {
   margin-bottom: 25px;
+  width: 100%;
+  float: left;
 }

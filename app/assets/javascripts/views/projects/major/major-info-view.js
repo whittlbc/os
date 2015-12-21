@@ -33,7 +33,7 @@ define(['jquery',
     events: {
       'click .see-all-description': 'handleToggleDescriptionSize',
       'click .project-page-vote-container': 'checkIfUserAuthed',
-      'click .join-btn': 'handleProjectMajorActionBtnClick',
+      'click .join-btn': 'checkAuthedStatusOnMajorActionBtnClick',
       'click .star': 'handleStarProject',
       'click .edit-btn': 'handleProjectEdit',
       'click .delete-btn': 'handleProjectDelete',
@@ -66,8 +66,14 @@ define(['jquery',
     },
 
     handleCancelEditMode: function () {
-      var self = this;
       Backbone.EventBroker.trigger('edit-mode:cancel');
+    },
+
+    checkAuthedStatusOnMajorActionBtnClick: function () {
+      Backbone.EventBroker.trigger('project:major-action-btn-clicked', {
+        view: this,
+        status: this.projectStatus
+      });
     },
 
     handleProjectMajorActionBtnClick: function () {
@@ -307,6 +313,7 @@ define(['jquery',
       this.uuid = options.uuid;
       this.projectID = options.id;
       this.privacy = options.privacy;
+      this.projectStatus = options.status;
 
       this.upForGrabsType = (options.status == 0);
       this.pendingProjectRequest = options.pending_project_request;

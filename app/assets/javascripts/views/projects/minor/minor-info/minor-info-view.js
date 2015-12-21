@@ -324,6 +324,8 @@ define(['jquery',
         self.hipchatEllipsis.changeColor('#cecece');
       });
 
+      this.$el.find('[data-toggle="tooltip"]').tooltip();
+
     }
   });
 

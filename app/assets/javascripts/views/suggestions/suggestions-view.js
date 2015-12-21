@@ -29,11 +29,16 @@ define(['jquery',
       var self = this;
 
       if (_.isEmpty(this.options)) {
+        var uuid;
         var text = self.$el.find('.suggestion-textarea').val();
 
         self.render({ spinnerView: true });
 
-        var suggestion = new Suggestion({ uuid: this.user.user_uuid });
+        if (this.user && this.user.user_uuid) {
+          uuid = this.user.user_uuid;
+        }
+
+        var suggestion = new Suggestion({ uuid: uuid });
 
         suggestion.create({ text: text }, {
           success: function () {

@@ -86,7 +86,8 @@ define(['jquery',
         'header-ellipsis-clicked': 'headerEllipsisClicked',
         'header-user-pic-clicked': 'headerUserPicClicked',
         'open-project': 'openProject',
-        'project:confirm-launch': 'confirmProjectLaunch'
+        'project:confirm-launch': 'confirmProjectLaunch',
+        'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin'
       }, this);
       this.userAuthed = false;
       this.cachedFilterType = null;
@@ -97,6 +98,29 @@ define(['jquery',
     },
 
     events: {},
+
+    majorProjectActionBtnClickOrLogin: function (data) {
+      if (this.userAuthed) {
+        data.view.handleProjectMajorActionBtnClick();
+      } else {
+        var loginModalText;
+
+        switch (data.status) {
+          case 0:
+            loginModalText = 'You must be logged in to grab a project.';
+            break;
+          case 1:
+            loginModalText = 'You must be logged in to join a project.';
+            break;
+          case 2:
+            loginModalText = 'You must be logged in to join a project.';
+            break;
+        }
+
+        this.loginModal.setMessage(loginModalText);
+        this.loginModal.showModal();
+      }
+    },
 
     confirmProjectLaunch: function () {
       this.confirmLaunchProjectModal.showModal();
@@ -338,7 +362,7 @@ define(['jquery',
 
     loginOrAllowCommentInput: function (view) {
       var self = this;
-      if (this.userAuthed) {
+      if (!this.userAuthed) {
         this.loginModal.setMessage('You must be logged in to participate in the discussion.');
         this.loginModal.showModal();
       }
@@ -346,12 +370,17 @@ define(['jquery',
 
     showCreateModalOnPullProject: function (id) {
       var self = this;
-      this.lastAddProjectPopupShownForGrab = true;
-      this.createProjectModal.resetPopup();
-      this.createProjectModal.formatForPullProject(id);
-      setTimeout(function () {
-        self.createProjectModal.showModal();
-      }, 10)
+      if (this.userAuthed) {
+        this.lastAddProjectPopupShownForGrab = true;
+        this.createProjectModal.resetPopup();
+        this.createProjectModal.formatForPullProject(id);
+        setTimeout(function () {
+          self.createProjectModal.showModal();
+        }, 10)
+      } else {
+        this.loginModal.setMessage('You must be logged in to grab a project.');
+        this.loginModal.showModal();
+      }
     },
 
     changeHomeFeedType: function (index) {
@@ -425,7 +454,7 @@ define(['jquery',
 
     addNewProjectBtnClicked: function () {
       var self = this;
-      if (self.userAuthed) {
+      if (this.userAuthed) {
         if (this.lastAddProjectPopupShownForGrab) {
           this.lastAddProjectPopupShownForGrab = false;
           this.createProjectModal.resetPopup();
@@ -436,8 +465,8 @@ define(['jquery',
           self.createProjectModal.showModal();
         }
       } else {
-        self.loginModal.setMessage('You must be logged in to add a project.');
-        self.loginModal.showModal();
+        this.loginModal.setMessage('You must be logged in to add a project.');
+        this.loginModal.showModal();
       }
     },
 
@@ -447,7 +476,9 @@ define(['jquery',
       self.searchView.forceCloseSearchBar();
       self.accountDropdown.$el.hide();
       self.extrasDropdown.$el.hide();
-      self.footerView.hideDropup();
+      if (self.footerView) {
+        self.footerView.hideDropup();
+      }
       Backbone.EventBroker.trigger('hide-more-langs-dropdown');
       if (self.notificationsDropdown.$el.css('display') === 'none') {
         self.handleSeen();
@@ -713,7 +744,8 @@ define(['jquery',
       this.searchView.render();
 
       this.notificationsDropdown = new NotificationsDropdownView({
-        el: '#notificationsDropdown'
+        el: '#notificationsDropdown',
+        userAuthed: self.userAuthed
       });
 
       this.listenTo(this.notificationsDropdown, 'accept-request', function (notificationData) {
@@ -813,6 +845,9 @@ define(['jquery',
       _.each([this.aboutModal, this.rulesModal, this.suggestionsModal], function (view) {
         self.listenTo(view, 'close', function () {
           view.hideModal();
+          setTimeout(function () {
+            view.render();
+          }, 300);
         });
       });
 

@@ -47,7 +47,6 @@ define(['jquery',
             });
 
             this.listenTo(this.suggestionsContentView, 'close', function () {
-              console.log('heard close');
               self.trigger('close');
             });
 
