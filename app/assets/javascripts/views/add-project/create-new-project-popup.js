@@ -425,7 +425,6 @@ define(['jquery',
     resetPopup: function () {
       this.toggleBottomNav(0, 0);
       this.hideCreateBtn();
-      //this.hideModalFooterTopBorder();
       this.owl.jumpTo(0);
       this.slideIndex = 0;
       this.showFooter();
@@ -433,7 +432,7 @@ define(['jquery',
       this.resetMasterMap(this.masterMap);
       this.panel1.setUpForGrabsToggle(false);
       this.panel1.setOnlyOnTheFenceToggle(false);
-      //this.renderPanels();
+      this.renderPanels(true);
       this.renderBreadCrumbView();
       this.passLangData(this.dropdownItems);
       this.handleUserRepos(this.repos);
@@ -655,7 +654,7 @@ define(['jquery',
       this.panel3.passUserRepos(this.repos);
     },
 
-    addPubSubListeners: function () {
+    addPanelListeners: function () {
       var self = this;
       this.listenTo(this.panel1, 'type:selected', function (type) {
         self.handleTypeSelected(type);
@@ -772,7 +771,7 @@ define(['jquery',
       this.panel3.autoSelectUpForGrabsProject(this.projectIDToPullFrom);
     },
 
-    renderPanels: function () {
+    renderPanels: function (ignoreListeners) {
       var self = this;
       this.panel1 = new SelectProjectTypeView({
         el: '#newProjectPanel1'
@@ -793,7 +792,10 @@ define(['jquery',
       this.panel3.render();
 
       this.setSizeForPopup();
-      this.addPubSubListeners();
+
+      if (!ignoreListeners) {
+        this.addPanelListeners();
+      }
     },
 
     render: function () {

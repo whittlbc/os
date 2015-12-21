@@ -90,10 +90,10 @@ define(['jquery',
       }, this);
       this.userAuthed = false;
       this.cachedFilterType = null;
+      this.lastAddProjectPopupShownForGrab = false;
 
       this.github = Github;
       this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
-
     },
 
     events: {},
@@ -346,6 +346,7 @@ define(['jquery',
 
     showCreateModalOnPullProject: function (id) {
       var self = this;
+      this.lastAddProjectPopupShownForGrab = true;
       this.createProjectModal.resetPopup();
       this.createProjectModal.formatForPullProject(id);
       setTimeout(function () {
@@ -425,7 +426,15 @@ define(['jquery',
     addNewProjectBtnClicked: function () {
       var self = this;
       if (self.userAuthed) {
-        self.createProjectModal.showModal();
+        if (this.lastAddProjectPopupShownForGrab) {
+          this.lastAddProjectPopupShownForGrab = false;
+          this.createProjectModal.resetPopup();
+          setTimeout(function () {
+            self.createProjectModal.showModal();
+          }, 5)
+        } else {
+          self.createProjectModal.showModal();
+        }
       } else {
         self.loginModal.setMessage('You must be logged in to add a project.');
         self.loginModal.showModal();
