@@ -624,6 +624,18 @@ define(['jquery',
       return itemsExist;
     },
 
+    handleLoginWithGHBtnClick: function () {
+      this.loginWithGH();
+      this.$el.find('#floatingLoginWithGHBtn + .tooltip').hide();
+      var $ghLoginBtn = this.$el.find('#floatingLoginWithGHBtn');
+      var $loadingContainer = $('<div>', {class: 'gh-login-loading'});
+      var $loadingSpinner = $('<div>', {class: 'growing-circle-spinner'});
+
+      $loadingContainer.append($loadingSpinner);
+      $ghLoginBtn.after($loadingContainer);
+      $ghLoginBtn.hide();
+    },
+
     render: function (options) {
       var self = this;
       this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
@@ -954,6 +966,31 @@ define(['jquery',
 
         if (_.has(this, 'lastFilterType') && this.lastFilterType != null) {
           this.footerView.passFilterType(this.lastFilterType);
+        }
+
+        if (!this.userAuthed) {
+          var $loginWithGHBtn = this.$el.find('#floatingLoginWithGHBtn');
+          $loginWithGHBtn.css('display', 'inline-block');
+
+          $loginWithGHBtn.click(function () {
+            if (!self.clickedLoginWithGH) {
+              self.clickedLoginWithGH = true;
+              self.handleLoginWithGHBtnClick();
+            }
+          });
+
+          var $ghTooltip = this.$el.find('[data-toggle="gh-tooltip"]');
+
+          $ghTooltip.tooltip({
+            trigger: 'manual'
+          });
+
+          $loginWithGHBtn.hover(function () {
+            $ghTooltip.tooltip('show');
+          }, function () {
+            $ghTooltip.tooltip('hide');
+          });
+
         }
 
       }
