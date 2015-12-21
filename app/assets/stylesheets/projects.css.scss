@@ -1077,7 +1077,7 @@ $light-gray: #C4C5CA;
     padding-left: 6px;
     padding-bottom: 5px;
     padding-top: 5px;
-    width: 61%;
+    width: 66%;
   }
 
   input[name="edit-irc"] {
@@ -1087,8 +1087,8 @@ $light-gray: #C4C5CA;
 
   .selectize-control {
     display: inline-block;
-    width: 25%;
-    margin-right: 9.5%;
+    width: 30%;
+    margin-right: 4.5%;
     float: right;
 
     .selectize-input {
@@ -1163,6 +1163,14 @@ $light-gray: #C4C5CA;
     top: 2px;
   }
 
+  .selectize-dropdown-content {
+    max-height: 95px !important;
+  }
+
+}
+
+#ircContainer.edit {
+  margin-top: 7px;
 }
 
 .minor-info-subsection-title {
