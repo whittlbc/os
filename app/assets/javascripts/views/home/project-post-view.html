@@ -34,12 +34,12 @@
             </div>
             <div class="post-license-privacy-container {{#upForGrabsType}}up-for-grabs-type{{/upForGrabsType}}">
                 <div class="project-post-license-container">
-                    <div class="project-post-license">{{license}}</div>
+                    <div class="project-post-license" {{#hasLicense}}data-toggle="tooltip" data-placement="top" title="License"{{/hasLicense}}>{{license}}</div>
                 </div>{{
                 }}<div class="project-post-privacy-container">
                     <div class="project-post-privacy">
-                        {{#requestToJoin}}<i class="fa fa-lock"></i>{{/requestToJoin}}
-                        {{#open}}<i class="fa fa-users"></i>{{/open}}
+                        {{#requestToJoin}}<i class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="Request to join"></i>{{/requestToJoin}}
+                        {{#open}}<i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="Open to join"></i>{{/open}}
                     </div>
                 </div>
             </div>

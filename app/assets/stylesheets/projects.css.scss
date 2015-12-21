@@ -265,6 +265,12 @@ $light-gray: #C4C5CA;
       }
     }
 
+    .share-icon#hackerNews + .tooltip {
+      .tooltip-inner {
+        width: 90px !important;
+      }
+    }
+
   }
 
 }

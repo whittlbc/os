@@ -312,6 +312,10 @@ $side-filters-width: 18.25%;
   margin-top: 1px;
   margin-left: auto;
   margin-right: auto;
+
+  .tooltip.top {
+    top: 64px !important;
+  }
 }
 
 .project-post-license-container {
@@ -371,6 +375,14 @@ $side-filters-width: 18.25%;
   .project-post-privacy {
     .fa {
       left: 2px;
+    }
+  }
+
+  .tooltip.top {
+    top: 64px !important;
+
+    .tooltip-inner {
+      width: 98px !important;
     }
   }
 }
@@ -949,7 +961,8 @@ $side-filters-width: 18.25%;
       color: #cecece;
     }
 
-    .feed-sort-type-btn.active {
+    .feed-sort-type-btn.active,
+    .feed-sort-type-btn:hover {
       text-decoration: underline;
     }
 

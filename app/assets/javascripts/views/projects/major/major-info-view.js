@@ -371,6 +371,8 @@ define(['jquery',
         this.$el.find('#projectTypeSelection').val(options.status.toString());
       }
 
+      this.$el.find('[data-toggle="tooltip"]').tooltip();
+
     }
   });
 

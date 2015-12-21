@@ -294,6 +294,7 @@ define(['jquery',
         commentCount: self.commentCount,
         contributorCount: self.contributorCount,
         license: self.license,
+        hasLicense: !_.isEmpty(self.license),
         requestToJoin: self.privacy === OSUtil.REQUEST_PRIVACY,
         open: self.privacy === OSUtil.OPEN_PRIVACY,
         upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
@@ -313,12 +314,14 @@ define(['jquery',
       this.userInfoBubble = new UserInfoBubble({
         el: this.$el.find('.user-info-bubble')
       });
+
       this.userInfoBubble.render({
         userPic: self.owner_pic,
         ghUsername: self.ownerGHUsername,
         anon: self.anon
       });
 
+      this.$el.find('[data-toggle="tooltip"]').tooltip();
     }
   });
 
