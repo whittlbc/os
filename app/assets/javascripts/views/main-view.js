@@ -431,7 +431,7 @@ define(['jquery',
     setUserHeaderPic: function (url) {
       var $profPic = $('#header-user-pic');
       $profPic.attr('src', url);
-      $profPic.removeClass('top-padding');
+      //$profPic.removeClass('top-padding');
     },
 
     getAllLanguages: function () {
