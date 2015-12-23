@@ -21,13 +21,6 @@ define(['jquery',
 
         events: {},
 
-        passUserData: function (user) {
-          this.user = user;
-          if (this.suggestionsContentView) {
-            this.suggestionsContentView.passUserData(user);
-          }
-        },
-
         sizeModal: function () {
             var suggestionsModalMarginTop = ((window.innerHeight - this.suggestionsModalHeight - this.currentTopPos) / 2);
             this.$modal.css('margin-top', suggestionsModalMarginTop + 'px');
@@ -50,12 +43,7 @@ define(['jquery',
               self.trigger('close');
             });
 
-            if (this.user) {
-              this.suggestionsContentView.passUserData(this.user);
-            }
-
             this.suggestionsContentView.render();
-
         }
     });
 

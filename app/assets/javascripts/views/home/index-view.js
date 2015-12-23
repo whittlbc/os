@@ -2,10 +2,10 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'views/os.view',
   'views/home/project-feed-view',
   'models/project',
   'models/user',
-  //'views/home/lang-selection-list',
   'views/home/non-lang-filters-view',
   'stache!views/home/index-view',
   'selectize',
@@ -16,20 +16,21 @@ define(['jquery',
    Backbone,
    _,
    OSUtil,
+   OSView,
    ProjectFeedView,
    Project,
    User,
-   //LangSelectionList,
    NonLangFiltersView,
    IndexViewTpl) {
   'use strict';
 
   var master;
 
-  var IndexView = Backbone.View.extend({
+  var IndexView = OSView.extend({
 
     initialize: function () {
       master = this;
+
       Backbone.EventBroker.register({
         //'deleteLangFilter': 'deleteLangFilter',
         //'clearLangFilters': 'clearLangFilters',
@@ -62,18 +63,8 @@ define(['jquery',
     },
 
     resetProps: function () {
-      this.zipUpDuration = 140;
-      this.zipDownDuration = 250;
-      this.ulSlideDownDuration = 500;
-      this.ulSlideUpDuration = 550;
-      this.langsFramesDropdownShown = false;
       this.gettingMoreData = false;
       this.langFiltersOr = false;
-    },
-
-    passCookieGHUsername: function (cookieGHUsername) {
-      var self = this;
-      this.cookieGHUsername = cookieGHUsername;
     },
 
     deleteLangFilter: function (name) {
@@ -106,47 +97,8 @@ define(['jquery',
       }
     },
 
-    clickedLaunchProject: function () {
-      var self = this;
-      var project = new Project();
-      var obj = {
-        project_uuid: 'jhgfdsedrfghjhgfdf',
-        user_uuid: 'yrdyftughgrdtuyfgih'
-      };
-      project.launch(obj, {success: self.successfullyLaunchProject})
-    },
-
-    successfullyLaunchProject: function (resp) {
-      console.log(resp);
-    },
-
     errorHandler: function (resp, status, xhr) {
       console.log('AJAX ERROR: ', xhr, resp);
-    },
-
-    cacheFeedBeforeSearch: function () {
-      var self = this;
-      self.cachedFeed = self.projectFeedView.POST_VIEWS.map(function (project) {
-        return project;
-      });
-    },
-
-    showCachedFeed: function () {
-      var self = this;
-      self.projectFeedView.populateFeed(self.cachedFeed);
-    },
-
-    passUniveralSearchResults: function (projects) {
-      window.scrollTo(0, 0);
-      this.projectFeedView.populateFeed(projects);
-    },
-
-    passLanguages: function (data) {
-      this.projectFeedView.passColorsAndInitials(data.colors_and_initials);
-      this.colors_and_initials = data.colors_and_initials;
-      this.dropdown_items = data.dropdown_items;
-      //this.langSelectionList.setColorsAndInitials(data.colors_and_initials);
-      this.all_frames = data.all_frames;
     },
 
     handleNewLangFilter: function (data) {
@@ -187,80 +139,6 @@ define(['jquery',
     updateLangFiltersScope: function (checked) {
       this.langFiltersOr = !checked;
       this.getFilters();
-    },
-
-    createLangsFilterDropdown: function (resp) {
-      var self = this;
-      var options = {
-        theme: 'links',
-        maxItems: null,
-        valueField: 'id',
-        searchField: 'title',
-        options: this.dropdown_items,
-        original: false,
-        selectOnTab: false,
-        onFocus: function () {
-          if (!self.langsFramesDropdownShown) {
-            self.zipDownDropdown();
-          }
-        },
-        onBlur: function () {
-          if (self.langsFramesDropdownShown) {
-            self.zipUpDropdown();
-          }
-        },
-        render: {
-          option: function (data, escape) {
-            return '<div class="option title">' + escape(data.title) + '</div>';
-          },
-          item: function (data, escape) {
-            return '<div class="item">' + escape(data.title) + '</div>';
-          }
-        }
-      };
-
-      var $select = this.$el.find('#filters-langs-frames').selectize(options);
-      var selectize = $select[0].selectize;
-      this.selectize = selectize;
-      this.selectize.zipUp(0);
-      this.setLangFrameInputProps();
-      selectize.on('item_add', function (value, $item) {
-        /* if you just entered the framework as a lang/frame filter, but haven't entered the language that framework
-         goes with, then we'll go ahead and add that for you */
-        if (!self.preventAddListener && self.all_frames[value] && !_.contains(self.langsFramesValue, self.all_frames[value])) {
-          self.langsFramesValue = selectize.getValue();
-          selectize.lastQuery = null;
-          selectize.setTextboxValue('');
-          selectize.addItem(self.all_frames[value]);
-        } else {
-          self.langsFramesValue = selectize.getValue();
-          self.getFilters();
-        }
-
-        if (!self.preventAddListener) {
-          self.langSelectionList.addItem(value, true);
-        }
-
-      });
-      selectize.on('item_remove', function (value, $item) {
-        self.langsFramesValue = selectize.getValue();
-        self.getFilters();
-      });
-    },
-
-    zipUpDropdown: function () {
-      var self = this;
-      this.selectize.zipUp(this.zipUpDuration);
-      this.langSelectionList.$el.find('.lang-selection-list').velocity({top: 130}, this.ulSlideUpDuration, [230, 20]);
-      this.langsFramesDropdownShown = false;
-    },
-
-    zipDownDropdown: function () {
-      var self = this;
-      var duration = this.zipDownDuration;
-      this.selectize.zipDown(duration);
-      this.langSelectionList.$el.find('.lang-selection-list').velocity({top: 270}, this.ulSlideDownDuration, [230, 20]);
-      this.langsFramesDropdownShown = true;
     },
 
     getFilters: function () {
@@ -310,12 +188,8 @@ define(['jquery',
       var self = this;
       var project = new Project();
 
-      if (this.userData) {
-        obj.gh_username = this.userData.gh_username;
-      }
-
-      if (!this.userData && this.cookieGHUsername) {
-        obj.gh_username = this.cookieGHUsername;
+      if (this.currentUser) {
+        obj.gh_username = this.currentUser.get('gh_username');
       }
 
       project.filteredFeed(obj, {
@@ -345,14 +219,6 @@ define(['jquery',
 
     handlePullFromIdeas: function (resp) {
       console.log(resp);
-    },
-
-    passUserInfo: function (data) {
-      this.userData = data;
-      this.user_uuid = data.user_uuid;
-      this.userID = data.id;
-      this.ghAccessToken = data.password;
-      this.gh_username = data.gh_username;
     },
 
     addLicenseFilter: function (type) {
@@ -444,11 +310,8 @@ define(['jquery',
           status: status,
           sortType: this.sortType
         };
-        if (this.userData) {
-          data.gh_username = this.userData.gh_username;
-        }
-        if (!this.userData && this.cookieGHUsername) {
-          data.gh_username = this.cookieGHUsername;
+        if (this.currentUser) {
+          data.gh_username = this.currentUser.get('gh_username');
         }
         var project = new Project();
         project.fetchFeedProjects(data, {
@@ -493,11 +356,8 @@ define(['jquery',
           limit: this.limit,
           sortType: this.sortType
         };
-        if (this.userData) {
-          data.gh_username = this.userData.gh_username;
-        }
-        if (!this.userData && this.cookieGHUsername) {
-          data.gh_username = this.cookieGHUsername;
+        if (this.currentUser) {
+          data.gh_username = this.currentUser.get('gh_username');
         }
         var project = new Project();
         project.fetchFeedProjects(data, {
@@ -567,10 +427,6 @@ define(['jquery',
       this.projectFeedView = new ProjectFeedView({
         el: '#project-feed'
       });
-
-      if (this.colors_and_initials) {
-        this.projectFeedView.passColorsAndInitials(this.colors_and_initials);
-      }
 
       this.projectFeedView.render();
 

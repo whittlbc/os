@@ -1,7 +1,12 @@
-define(['backbone', 'backbone-eventbroker'], function(Backbone) {
-    'use strict';
+define(['backbone',
+  'backbone-eventbroker'
+], function(
+  Backbone
+) {
+  'use strict';
+  var instance;
 
-    var AllLangs = {
+  var AllLangsModel = Backbone.Model.extend({
 
         getAll: function () {
             return {
@@ -3358,7 +3363,17 @@ define(['backbone', 'backbone-eventbroker'], function(Backbone) {
             }
         }
 
-    };
+  });
 
-    return AllLangs;
+  var AllLangs = function() {};
+
+  AllLangs.getInstance = function() {
+    if (!instance) {
+      instance = new AllLangsModel();
+    }
+    return instance;
+  };
+
+  return AllLangs.getInstance();
+
 });

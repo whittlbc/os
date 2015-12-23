@@ -94,7 +94,8 @@ class UsersController < ApplicationController
   end
 
   def star
-    user = User.find_by(uuid: params[:user_uuid])
+    user = User.find_by(uuid: params[:uuid])
+
     if !user.nil?
       params[:star] ? user.update_attributes(:starred => user.starred + [params[:project_id]]) :
           user.update_attributes(:starred => user.starred - [params[:project_id]])
@@ -105,7 +106,8 @@ class UsersController < ApplicationController
   end
 
   def get_starred_projects
-    user = User.find_by(uuid: params[:user_uuid])
+    user = User.find_by(uuid: params[:uuid])
+
     if !user.nil?
       starred = Project.includes(:user).where(:id => user.starred).active.map { |project|
         {
@@ -123,7 +125,7 @@ class UsersController < ApplicationController
   end
 
   def get_my_projects
-    user = User.find_by(uuid: params[:user_uuid])
+    user = User.find_by(uuid: params[:uuid])
 
     if !user.nil?
       my_projects = user.projects.active.map { |project|

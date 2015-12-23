@@ -1,19 +1,20 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'views/os.view',
   'stache!views/account/account-dropdown-view',
   'backbone-eventbroker'
 ], function ($,
              Backbone,
              _,
+             OSView,
              AccountDropdownViewTpl) {
   'use strict';
 
-  var AccountDropdownView = Backbone.View.extend({
+  var AccountDropdownView = OSView.extend({
 
     initialize: function (options) {
       options = options || {};
-      this.userAuthed = options.userAuthed;
     },
 
     events: {},
@@ -28,7 +29,7 @@ define(['jquery',
       options = options || {};
 
       this.$el.html(AccountDropdownViewTpl({
-        userAuthed: this.userAuthed
+        userAuthed: !!this.currentUser
       }));
 
       this.$el.find('#accountDropdownList > li').click(function (e) {

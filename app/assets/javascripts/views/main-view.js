@@ -1,13 +1,12 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'views/os.view',
   'views/home/index-view',
   'views/projects/project-view',
   'models/os.util',
   'models/project',
   'views/modals/create-project-modal',
-  'models/all-langs',
-  'models/user',
   'integrations/github',
   'sifter.min',
   'views/modals/login-modal',
@@ -30,13 +29,12 @@ define(['jquery',
 ], function ($,
    Backbone,
    _,
+   OSView,
    IndexView,
    ProjectView,
    OSUtil,
    Project,
    CreateProjectModal,
-   AllLangs,
-   User,
    Github,
    Sifter,
    LoginModal,
@@ -57,9 +55,11 @@ define(['jquery',
    MainViewTpl) {
   'use strict';
 
-  var MainView = Backbone.View.extend({
+  var MainView = OSView.extend({
 
     initialize: function () {
+      this.getNotifications();
+
       Backbone.EventBroker.register({
         'pull-project': 'showCreateModalOnPullProject',
         'project:vote': 'loginOrProjectVote',
@@ -89,7 +89,7 @@ define(['jquery',
         'project:confirm-launch': 'confirmProjectLaunch',
         'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin'
       }, this);
-      this.userAuthed = false;
+
       this.cachedFilterType = null;
       this.lastAddProjectPopupShownForGrab = false;
 
@@ -99,8 +99,23 @@ define(['jquery',
 
     events: {},
 
+    getNotifications: function () {
+      var self = this;
+
+      this.notificationsDropdown = new NotificationsDropdownView({
+        el: '#notificationsDropdown'
+      });
+
+      if (this.currentUser) {
+        this.currentUser.getNotifications({ success: function (data) {
+          self.notifications = data;
+          self.notificationsDropdown.populate(data);
+        }});
+      }
+    },
+
     majorProjectActionBtnClickOrLogin: function (data) {
-      if (this.userAuthed) {
+      if (this.currentUser) {
         data.view.handleProjectMajorActionBtnClick();
       } else {
         var loginModalText;
@@ -142,23 +157,27 @@ define(['jquery',
     showMyProjectsModal: function () {
       var self = this;
       this.myProjectsModal.showModal();
-      var user = new User();
-      user.getMyProjects({user_uuid: self.userData.user_uuid}, {
-        success: function (projects) {
-          self.myProjectsModal.populate(projects);
-        }
-      });
+
+      if (this.currentUser) {
+        this.currentUser.getMyProjects({
+          success: function (projects) {
+            self.myProjectsModal.populate(projects);
+          }
+        });
+      }
     },
 
     showStarredModal: function () {
       var self = this;
       this.starredModal.showModal();
-      var user = new User();
-      user.getStarredProjects({user_uuid: self.userData.user_uuid}, {
-        success: function (projects) {
-          self.starredModal.populate(projects);
-        }
-      });
+
+      if (this.currentUser) {
+        this.currentUser.getStarredProjects({
+          success: function (projects) {
+            self.starredModal.populate(projects);
+          }
+        });
+      }
     },
 
     forceShowHeader: function () {
@@ -184,15 +203,21 @@ define(['jquery',
     getAllContributorsForRepo: function (projectUUID) {
       var self = this;
       this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
-        //this.github.getContributors(this.userData.gh_username, project.repo_name, function (contribData) {
+        //this.github.getContributors(this.currentUser.get('gh_username'), project.repo_name, function (contribData) {
         var usernames = [];
+
         _.each(contribData, function (contributor) {
-          if (contributor.login != self.userData.gh_username) {
+          if (contributor.login != self.currentUser.get('gh_username')) {
             usernames.push(contributor.login);
           }
         });
+
         var project = new Project();
-        project.sendInviteEmails({user_uuid: self.userData.user_uuid, project_uuid: projectUUID, usernames: usernames});
+        project.sendInviteEmails({
+          user_uuid: self.currentUser.get('uuid'),
+          project_uuid: projectUUID,
+          usernames: usernames
+        });
       });
     },
 
@@ -207,7 +232,7 @@ define(['jquery',
       var project = new Project();
       project.destroyComment({
         comment_id: self.commentToDeleteOptions.id,
-        user_uuid: self.userData.user_uuid,
+        user_uuid: self.currentUser.get('uuid'),
         project_id: self.projectView.projectID,
         feed: self.commentToDeleteOptions.feed
       }, {
@@ -241,19 +266,18 @@ define(['jquery',
     },
 
     updateUpvotedProjectsArray: function (arr) {
-      var self = this;
-      this.userData.upvotedProjects = arr;
+      this.upvotedProjects = arr;
     },
 
     updateUpvotedCommentsArray: function (arr) {
-      var self = this;
-      this.userData.upvotedComments = arr;
+      this.upvotedComments = arr;
     },
 
     handleStarProject: function (bool) {
-      var self = this;
-      var user = new User();
-      user.star({user_uuid: self.userData.user_uuid, project_id: Number(self.projectView.projectID), star: bool});
+      this.currentUser.star({
+        project_id: Number(this.projectView.projectID),
+        star: bool
+      });
     },
 
     hideCreateProjectModal: function () {
@@ -316,10 +340,10 @@ define(['jquery',
     // either show the login modal or vote on the passed projectPostView
     loginOrProjectVote: function (data) {
       var self = this;
-      if (this.userAuthed) {
-        if (!_.contains(this.userData.upvotedProjects, data.projectID)) {
-          this.userData.upvotedProjects.push(data.projectID);
-          data.view.handleVote(self.userData.user_uuid);
+      if (this.currentUser) {
+        if (!_.contains(this.upvotedProjects, data.projectID)) {
+          this.upvotedProjects.push(data.projectID);
+          data.view.handleVote();
         }
       } else {
         this.loginModal.setMessage('You must be logged in to vote on projects.');
@@ -329,10 +353,10 @@ define(['jquery',
 
     loginOrCommentVote: function (view) {
       var self = this;
-      if (this.userAuthed) {
-        if (!_.contains(this.userData.upvotedComments, view.id)) {
-          this.userData.upvotedComments.push(view.id);
-          view.handleVote(self.userData.user_uuid);
+      if (this.currentUser) {
+        if (!_.contains(this.upvotedComments, view.id)) {
+          this.upvotedComments.push(view.id);
+          view.handleVote();
         }
       } else {
         this.loginModal.setMessage('You must be logged in to vote on comments.');
@@ -342,7 +366,7 @@ define(['jquery',
 
     loginOrReplyToComment: function (view) {
       var self = this;
-      if (this.userAuthed) {
+      if (this.currentUser) {
         view.handleShowReplyInput();
       } else {
         this.loginModal.setMessage('You must be logged in to participate in the discussion.');
@@ -352,7 +376,7 @@ define(['jquery',
 
     loginOrPostComment: function (view) {
       var self = this;
-      if (this.userAuthed) {
+      if (this.currentUser) {
         view.handleAddComment();
       } else {
         this.loginModal.setMessage('You must be logged in to participate in the discussion.');
@@ -362,7 +386,7 @@ define(['jquery',
 
     loginOrAllowCommentInput: function (view) {
       var self = this;
-      if (!this.userAuthed) {
+      if (!this.currentUser) {
         this.loginModal.setMessage('You must be logged in to participate in the discussion.');
         this.loginModal.showModal();
       }
@@ -370,7 +394,7 @@ define(['jquery',
 
     showCreateModalOnPullProject: function (id) {
       var self = this;
-      if (this.userAuthed) {
+      if (this.currentUser) {
         this.lastAddProjectPopupShownForGrab = true;
         this.createProjectModal.resetPopup();
         this.createProjectModal.formatForPullProject(id);
@@ -387,74 +411,9 @@ define(['jquery',
       this.homeView.populateProjectFeed(index);
     },
 
-    passCookieUser: function (cookieGHUsername) {
-      var self = this;
-      this.cookieGHUsername = cookieGHUsername;
-      if (_.isEmpty(cookieGHUsername)) {
-        // user cookie wan't set
-        console.log('user cookie wasnt set');
-      } else {
-        this.userAuthed = true;
-        var user = new User();
-        user.getByGHUsername({gh_username: cookieGHUsername}, {
-          success: function (user) {
-            self.setUserFromResponse(user);
-            self.notifications = user.notifications;
-            self.notificationsDropdown.populate(self.notifications);
-          }
-        });
-      }
-    },
-
-    setUserFromResponse: function (user) {
-      this.userData = user;
-      this.setUserHeaderPic(user.pic);
-      if (this.createProjectModal) {
-        this.createProjectModal.passUserData(user);
-      }
-      if (this.suggestionsModal) {
-        this.suggestionsModal.passUserData(user);
-      }
-      this.trigger('cookie:set', user.gh_username);
-      this.passUserToNestedViews(user);
-    },
-
-    passUserToNestedViews: function (user) {
-      if (this.homeView) {
-        this.homeView.passUserInfo(user);
-      }
-      if (this.projectView) {
-        this.projectView.passUserInfo(user);
-      }
-    },
-
-    setUserHeaderPic: function (url) {
-      var $profPic = $('#header-user-pic');
-      $profPic.attr('src', url);
-      //$profPic.removeClass('top-padding');
-    },
-
-    getAllLanguages: function () {
-      this.handleAllLanguages(AllLangs.getAll());
-    },
-
-    handleAllLanguages: function (data) {
-      this.allLangs = data;
-      if (this.homeView) {
-        this.homeView.passLanguages(data);
-        //this.homeView.createLangsFilterDropdown();
-      }
-      if (this.projectView) {
-        this.projectView.passLanguages(data);
-      }
-      if (this.createProjectModal) {
-        this.createProjectModal.passLangData(data);
-      }
-    },
-
     addNewProjectBtnClicked: function () {
       var self = this;
-      if (this.userAuthed) {
+      if (this.currentUser) {
         if (this.lastAddProjectPopupShownForGrab) {
           this.lastAddProjectPopupShownForGrab = false;
           this.createProjectModal.resetPopup();
@@ -636,170 +595,224 @@ define(['jquery',
       $ghLoginBtn.hide();
     },
 
-    render: function (options) {
+    handleFilterAdded: function (data) {
       var self = this;
-      this.showHomeView = options && options.view == OSUtil.HOME_PAGE;
-      this.showProjectView = options && options.view == OSUtil.PROJECT_PAGE;
 
-      this.$el.html(MainViewTpl({
-        showHomeView: this.showHomeView,
-        showProjectView: this.showProjectView
-      }));
+      // LANGUAGES/FRAMEWORKS
+      if (data.set === OSUtil.LANGS_FILTER_SET) {
+        self.langFiltersView.addItem({
+          value: data.value,
+          animate: data.animate
+        });
 
-      if (this.showHomeView) {
-        if (this.homeView) {
-          this.homeView.$el = this.$el.find('#homeViewContainer');
-          this.homeView.resetProps();
-        } else {
-          this.homeView = new IndexView({
-            el: this.$el.find('#homeViewContainer')
-          });
-        }
-        this.homeView.passCookieGHUsername(this.cookieGHUsername);
-        this.listenTo(this.homeView, 'languages:all');
-        if (this.cachedFilters) {
-          this.homeView.passFilters(this.cachedFilters);
-        }
-        this.homeView.render({
-          index: options && options.hasOwnProperty('index') ? options.index : 1
+        // keep setTimeout so that filter animation is smooth
+        setTimeout(function () {
+          self.homeView.handleNewLangFilter(data);
+        }, 200);
+      }
+
+      // LICENSES
+      else if (data.set === OSUtil.LICENSE_FILTER_SET) {
+        self.minorFiltersView.addLicenseItem(data);
+
+        // keep setTimeout so that filter animation is smooth
+        setTimeout(function () {
+          self.homeView.handleNewLicenseFilter(data);
+        }, 200);
+      }
+
+      // CHAT
+      else if (data.set === OSUtil.CHAT_FILTER_SET) {
+        self.minorFiltersView.addChatItem(data);
+
+        // keep setTimeout so that filter animation is smooth
+        setTimeout(function () {
+          self.homeView.handleNewChatFilter(data);
+        }, 200);
+      }
+    },
+
+    handleFilterRemoved: function (data) {
+      var self = this;
+      if (data.set === OSUtil.LANGS_FILTER_SET) {
+        self.homeView.handleRemoveLangFilter(data);
+      } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
+        self.minorFiltersView.removeLicenseItem();
+        self.homeView.handleRemoveLicenseFilter(data);
+      } else if (data.set === OSUtil.CHAT_FILTER_SET) {
+        self.minorFiltersView.removeChatItem();
+        self.homeView.handleRemoveChatFilter(data);
+      }
+    },
+
+    handleMoreFiltersToggle: function (id) {
+      if (id === 'privacy') {
+        this.minorFiltersView.togglePrivacyFilters();
+      }
+    },
+
+    hideHeaderDropdownsOnly: function () {
+      var self = this;
+      self.notificationsDropdown.$el.hide();
+      self.accountDropdown.$el.hide();
+      self.extrasDropdown.$el.hide();
+      Backbone.EventBroker.trigger('hide-more-langs-dropdown');
+      self.searchView.forceCloseSearchBar();
+    },
+
+    renderHomeView: function (options) {
+      var self = this;
+
+      if (this.homeView) {
+        //this.homeView.$el = this.$el.find('#homeViewContainer');
+        this.homeView.resetProps();
+      } else {
+        this.homeView = new IndexView({
+          el: this.$el.find('#homeViewContainer')
         });
       }
-      if (this.showProjectView) {
-        this.forceShowHeader();
-        if (this.homeView) {
-          this.homeView.removeScrollListener();
-        }
-        if (this.projectView) {
-          this.projectView.$el = this.$el.find('#projectViewContainer');
-          this.projectView.reInitialize(options.id, this.cookieGHUsername);
-        } else {
-          this.projectView = new ProjectView({
-            el: this.$el.find('#projectViewContainer'),
-            id: options ? options.id : null,
-            cookieGHUsername: this.cookieGHUsername
-          });
-        }
+      this.listenTo(this.homeView, 'languages:all');
+
+      if (this.cachedFilters) {
+        this.homeView.passFilters(this.cachedFilters);
       }
 
-      this.allLangs ? this.handleAllLanguages(this.allLangs) : this.getAllLanguages();
+      this.homeView.render({
+        index: _.has(options, 'index') ? options.index : 1
+      });
+
+      this.footerView = this.footerView || new FooterView({
+        el: '#mainFooter'
+      });
+
+      this.footerView.unbind();
+
+      this.listenTo(this.footerView, 'addItem', function (data) {
+        self.handleFilterAdded(data);
+      });
+
+      this.listenTo(this.footerView, 'removeItem', function (data) {
+        self.handleFilterRemoved(data);
+      });
+
+      this.listenTo(this.footerView, 'more-filters-toggle', function (id) {
+        self.handleMoreFiltersToggle(id);
+      });
+
+      this.listenTo(this.footerView, 'hide-header-dropdowns-only', function () {
+        self.hideHeaderDropdownsOnly();
+      });
+
+      this.footerView.render();
+
+      if (this.cachedItemsExist()) {
+        this.footerView.passCachedItems(this.cachedItems);
+      }
+
+      if (_.has(this, 'lastFilterType') && this.lastFilterType != null) {
+        this.footerView.passFilterType(this.lastFilterType);
+      }
+
+      if (!this.currentUser) {
+        this.renderLoginWithGHBtn();
+      }
+    },
+
+    renderProjectView: function (options) {
+      var self = this;
+
+      this.forceShowHeader();
+
+      if (this.homeView) {
+        this.homeView.removeScrollListener();
+      }
+
+      if (this.projectView) {
+        //this.projectView.$el = this.$el.find('#projectViewContainer');
+        this.projectView.reInitialize(options.id);
+      } else {
+        this.projectView = new ProjectView({
+          el: this.$el.find('#projectViewContainer'),
+          id: options.id
+        });
+      }
+    },
+
+    renderModals: function () {
+      var self = this;
 
       this.createProjectModal = new CreateProjectModal({
         el: this.$el.find('#modalCreateProject')
       });
-      if (this.userData) {
-        this.createProjectModal.passUserData(this.userData);
-      }
-      if (this.allLangs) {
-        this.createProjectModal.passLangData(this.allLangs);
-      }
+
       this.createProjectModal.render();
 
       this.loginModal = new LoginModal({
         el: this.$el.find('#modalLogin')
       });
+
       this.loginModal.render();
 
       this.contribsModal = new ContributorsModal({
         el: this.$el.find('#modalContribs')
       });
+
       this.contribsModal.render();
 
       this.deleteCommentModal = new BasicQuestionModal({
         el: this.$el.find('#modalDeleteComment'),
         message: 'Are you sure you want to delete this comment?'
       });
+
       this.listenTo(this.deleteCommentModal, 'confirm', function () {
         self.deleteComment();
       });
+
       this.deleteCommentModal.render();
 
       this.deleteProjectModal = new BasicQuestionModal({
         el: this.$el.find('#modalDeleteProject'),
         message: 'Are you sure you want to delete this project?'
       });
+
       this.listenTo(this.deleteProjectModal, 'confirm', function () {
         self.deleteProject();
       });
+
       this.deleteProjectModal.render();
 
       this.deleteEvolutionItemModal = new BasicQuestionModal({
         el: this.$el.find('#modalDeleteEvolutionItem'),
         message: 'Are you sure you want to delete this item from the Coming Soon list?'
       });
+
       this.listenTo(this.deleteEvolutionItemModal, 'confirm', function () {
         self.passedEvolutionFeedView.deleteEvolutionItem();
       });
+
       this.deleteEvolutionItemModal.render();
 
       this.sendInvitesModal = new BasicQuestionModal({
         el: this.$el.find('#modalSendInvites'),
         message: 'Send invitations to join this project to all contributors of this Github repo?'
       });
+
       this.listenTo(this.sendInvitesModal, 'confirm', function () {
         self.getAllContributorsForRepo(self.projectView.uuid);
       });
+
       this.sendInvitesModal.render();
 
       this.confirmLaunchProjectModal = new BasicQuestionModal({
         el: this.$el.find('#modalConfirmLaunch'),
         message: 'Are you sure you want to launch this project?'
       });
+
       this.listenTo(this.confirmLaunchProjectModal, 'confirm', function () {
         self.launchProject();
       });
+
       this.confirmLaunchProjectModal.render();
-
-      this.searchView = new SearchContainerView({
-        el: '#mainSearchBar'
-      });
-
-      this.searchView.render();
-
-      this.notificationsDropdown = new NotificationsDropdownView({
-        el: '#notificationsDropdown',
-        userAuthed: self.userAuthed
-      });
-
-      this.listenTo(this.notificationsDropdown, 'accept-request', function (notificationData) {
-        self.respondToRequest(notificationData, true);
-      });
-
-      this.listenTo(this.notificationsDropdown, 'reject-request', function (notificationData) {
-        self.respondToRequest(notificationData, false);
-      });
-
-      this.notificationsDropdown.render();
-
-      if (_.has(this, 'notifications') && !this.notificationsDropdown.populated) {
-        this.notificationsDropdown.populate(this.notifications);
-      }
-
-      this.accountDropdown = new AccountDropdownView({
-        el: '#accountDropdown',
-        userAuthed: self.userAuthed
-      });
-
-      this.listenTo(this.accountDropdown, 'account-tab-clicked', function (id) {
-        switch (id) {
-          case 'myProjectsTab':
-            self.showMyProjectsModal();
-            break;
-          case 'starredTab':
-            self.showStarredModal();
-            break;
-          case 'signInOutTab':
-            self.userAuthed ? self.signOutModal.showModal() : self.showLoginModalFromAccountTabClick();
-            break;
-        }
-      });
-
-      this.accountDropdown.render();
-
-      this.extrasDropdown = new ExtrasDropdownView({
-        el: '#extrasDropdown'
-      });
-
-      this.extrasDropdown.render();
 
       this.myProjectsModal = new MyProjectsModal({
         el: '#modalMyProjects'
@@ -817,9 +830,11 @@ define(['jquery',
         el: this.$el.find('#modalSignOut'),
         message: 'Are you sure you want to sign out?'
       });
+
       this.listenTo(this.signOutModal, 'confirm', function () {
         self.signOut();
       });
+
       this.signOutModal.render();
 
       this.aboutModal = new AboutModal({
@@ -837,10 +852,6 @@ define(['jquery',
       this.suggestionsModal = new SuggestionsModal({
         el: '#modalSuggestions'
       });
-
-      if (this.userData) {
-        this.suggestionsModal.passUserData(this.userData);
-      }
 
       this.suggestionsModal.render();
 
@@ -866,10 +877,67 @@ define(['jquery',
           }, 300);
         });
       });
+    },
+
+    renderDropdowns: function () {
+      var self = this;
+
+      this.notificationsDropdown.$el = this.$el.find('#notificationsDropdown');
+
+      this.listenTo(this.notificationsDropdown, 'accept-request', function (notificationData) {
+        self.respondToRequest(notificationData, true);
+      });
+
+      this.listenTo(this.notificationsDropdown, 'reject-request', function (notificationData) {
+        self.respondToRequest(notificationData, false);
+      });
+
+      this.notificationsDropdown.render();
+
+      if (_.has(this, 'notifications') && !this.notificationsDropdown.populated) {
+        this.notificationsDropdown.populate(this.notifications);
+      }
+
+      this.accountDropdown = new AccountDropdownView({
+        el: '#accountDropdown'
+      });
+
+      this.listenTo(this.accountDropdown, 'account-tab-clicked', function (id) {
+        switch (id) {
+          case 'myProjectsTab':
+            self.showMyProjectsModal();
+            break;
+          case 'starredTab':
+            self.showStarredModal();
+            break;
+          case 'signInOutTab':
+            self.currentUser ? self.signOutModal.showModal() : self.showLoginModalFromAccountTabClick();
+            break;
+        }
+      });
+
+      this.accountDropdown.render();
+
+      this.extrasDropdown = new ExtrasDropdownView({
+        el: '#extrasDropdown'
+      });
+
+      this.extrasDropdown.render();
+    },
+
+    renderSearchbar: function () {
+      this.searchView = new SearchContainerView({
+        el: this.$el.find('#mainSearchBar')
+      });
+
+      this.searchView.render();
+    },
+
+    renderFilters: function () {
+      var self = this;
 
       this.langFiltersView = new LangFiltersView({
-        el: '#langFiltersView',
-        colorsAndInitials: this.allLangs.colors_and_initials
+        el: '#langFiltersView'
       });
 
       this.langFiltersView.render({
@@ -889,116 +957,65 @@ define(['jquery',
       if (this.showHomeView && this.cachedItems) {
         this.minorFiltersView.prePopulateFilters(this.cachedItems);
       }
+    },
 
+    renderLoginWithGHBtn: function () {
+      var self = this;
+      var $loginWithGHBtn = this.$el.find('#floatingLoginWithGHBtn');
+      $loginWithGHBtn.css('display', 'inline-block');
+
+      $loginWithGHBtn.click(function () {
+        if (!self.clickedLoginWithGH) {
+          self.clickedLoginWithGH = true;
+          self.handleLoginWithGHBtnClick();
+        }
+      });
+
+      var $ghTooltip = this.$el.find('[data-toggle="gh-tooltip"]');
+
+      $ghTooltip.tooltip({
+        trigger: 'manual'
+      });
+
+      $loginWithGHBtn.hover(function () {
+        $ghTooltip.tooltip('show');
+      }, function () {
+        $ghTooltip.tooltip('hide');
+      });
+    },
+
+    render: function (options) {
+      options = options || {};
+
+      this.showHomeView = (options.view === OSUtil.HOME_PAGE);
+      this.showProjectView = (options.view === OSUtil.PROJECT_PAGE);
+
+      this.$el.html(MainViewTpl({
+        showHomeView: this.showHomeView,
+        showProjectView: this.showProjectView
+      }));
+
+      // CREATE FILTERS
+      this.renderFilters();
+
+      // CREATE HOME VIEW
       if (this.showHomeView) {
-
-        this.footerView = this.footerView || new FooterView({
-            el: '#mainFooter',
-            langData: this.allLangs
-          });
-
-        this.footerView.unbind();
-
-        this.listenTo(this.footerView, 'addItem', function (data) {
-
-          // LANGUAGES/FRAMEWORKS
-          if (data.set === OSUtil.LANGS_FILTER_SET) {
-            self.langFiltersView.addItem({
-              value: data.value,
-              animate: data.animate
-            });
-
-            // keep setTimeout so that filter animation is smooth
-            setTimeout(function () {
-              self.homeView.handleNewLangFilter(data);
-            }, 200);
-          }
-
-          // LICENSES
-          else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-            self.minorFiltersView.addLicenseItem(data);
-
-            // keep setTimeout so that filter animation is smooth
-            setTimeout(function () {
-              self.homeView.handleNewLicenseFilter(data);
-            }, 200);
-          }
-
-          // CHAT
-          else if (data.set === OSUtil.CHAT_FILTER_SET) {
-            self.minorFiltersView.addChatItem(data);
-
-            // keep setTimeout so that filter animation is smooth
-            setTimeout(function () {
-              self.homeView.handleNewChatFilter(data);
-            }, 200);
-          }
-        });
-
-        this.listenTo(this.footerView, 'removeItem', function (data) {
-
-          if (data.set === OSUtil.LANGS_FILTER_SET) {
-            self.homeView.handleRemoveLangFilter(data);
-          } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-            self.minorFiltersView.removeLicenseItem();
-            self.homeView.handleRemoveLicenseFilter(data);
-          } else if (data.set === OSUtil.CHAT_FILTER_SET) {
-            self.minorFiltersView.removeChatItem();
-            self.homeView.handleRemoveChatFilter(data);
-          }
-        });
-
-        this.listenTo(this.footerView, 'more-filters-toggle', function (id) {
-          if (id === 'privacy') {
-            self.minorFiltersView.togglePrivacyFilters();
-          }
-        });
-
-        this.listenTo(this.footerView, 'hide-header-dropdowns-only', function () {
-          self.notificationsDropdown.$el.hide();
-          self.accountDropdown.$el.hide();
-          self.extrasDropdown.$el.hide();
-          Backbone.EventBroker.trigger('hide-more-langs-dropdown');
-          self.searchView.forceCloseSearchBar();
-        });
-
-        this.footerView.render();
-
-        if (this.cachedItemsExist()) {
-          this.footerView.passCachedItems(this.cachedItems);
-        }
-
-        if (_.has(this, 'lastFilterType') && this.lastFilterType != null) {
-          this.footerView.passFilterType(this.lastFilterType);
-        }
-
-        if (!this.userAuthed) {
-          var $loginWithGHBtn = this.$el.find('#floatingLoginWithGHBtn');
-          $loginWithGHBtn.css('display', 'inline-block');
-
-          $loginWithGHBtn.click(function () {
-            if (!self.clickedLoginWithGH) {
-              self.clickedLoginWithGH = true;
-              self.handleLoginWithGHBtnClick();
-            }
-          });
-
-          var $ghTooltip = this.$el.find('[data-toggle="gh-tooltip"]');
-
-          $ghTooltip.tooltip({
-            trigger: 'manual'
-          });
-
-          $loginWithGHBtn.hover(function () {
-            $ghTooltip.tooltip('show');
-          }, function () {
-            $ghTooltip.tooltip('hide');
-          });
-
-        }
-
+        this.renderHomeView(options);
       }
 
+      // CREATE PROJECT VIEW
+      else if (this.showProjectView) {
+        this.renderProjectView(options);
+      }
+
+      // CREATE DROPDOWNS
+      this.renderDropdowns();
+
+      // CREATE SEARCH BAR
+      this.renderSearchbar();
+
+      // CREATE MODALS
+      this.renderModals();
     }
 
   });

@@ -5,9 +5,9 @@ define(['jquery',
   'views/add-project/select-project-source-view',
   'views/add-project/add-project-details-view',
   'views/add-project/breadcrumb-view',
-  'models/user',
   'models/project',
   'models/os.util',
+  'views/os.view',
   'stache!views/add-project/create-new-project-popup',
   'owl-carousel',
   'backbone-eventbroker'
@@ -18,13 +18,13 @@ define(['jquery',
    SelectProjectSourceView,
    AddProjectDetailsView,
    BreadCrumbView,
-   User,
    Project,
    OSUtil,
+   OSView,
    IndexViewTpl) {
   'use strict';
 
-  var CreateNewProjectPopup = Backbone.View.extend({
+  var CreateNewProjectPopup = OSView.extend({
 
     initialize: function () {
 
@@ -170,10 +170,6 @@ define(['jquery',
           }
         }
       };
-    },
-
-    passUserData: function (data) {
-      this.userData = data;
     },
 
     resetMasterMap: function (obj) {
@@ -351,7 +347,7 @@ define(['jquery',
       this.panel3.render({showCreatingProjectView: true});
       this.hideFooter();
       var projectData = {
-        gh_username: this.userData.gh_username,
+        gh_username: this.currentUser.get('gh_username'),
         title: this.newProjectData.title,
         subtitle: this.newProjectData.subtitle,
         repo_name: this.newProjectData.repoName,
@@ -434,7 +430,6 @@ define(['jquery',
       this.panel1.setOnlyOnTheFenceToggle(false);
       this.renderPanels(true);
       this.renderBreadCrumbView();
-      this.passLangData(this.dropdownItems);
       this.handleUserRepos(this.repos);
     },
 
@@ -637,8 +632,7 @@ define(['jquery',
 
     getGHRepos: function () {
       var self = this;
-      var user = new User();
-      user.getAllUserRepos({gh_username: self.userData.gh_username}, {
+      this.currentUser.getAllUserRepos({
         success: function (data) {
           setTimeout(function () {
             self.handleUserRepos(data.repos);
@@ -677,27 +671,15 @@ define(['jquery',
 
     getRepoDetails: function (repoName) {
       var self = this;
-      var user = new User();
-      user.getRepoDetails({gh_username: self.userData.gh_username, repo_name: repoName}, {
-          success: function (data) {
+      this.currentUser.getRepoDetails({ repo_name: repoName }, {
+        success: function (data) {
           self.handleRepoDetails(data);
-          console.log(data);
-        }, error: function () {
-          console.log('Error getting repo details');
         }
       });
     },
 
     handleRepoDetails: function (data) {
       this.panel3.passRepoInfo(data);
-    },
-
-    passLangData: function (data) {
-      var self = this;
-      this.dropdownItems = data;
-      if (this.panel3) {
-        this.panel3.passLangDropdownItems(data);
-      }
     },
 
     passTags: function (data) {
@@ -786,9 +768,7 @@ define(['jquery',
       this.panel3 = new AddProjectDetailsView({
         el: '#newProjectPanel3'
       });
-      if (this.dropdownItems) {
-        this.panel3.passLangDropdownItems(this.dropdownItems);
-      }
+
       this.panel3.render();
 
       this.setSizeForPopup();

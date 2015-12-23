@@ -2,32 +2,33 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'models/all-langs',
   'views/dropdowns/more-filters-dropup',
   'views/svgs/svg-view',
   'stache!views/footer/footer-view',
   'selectize',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             OSUtil,
-             MoreFiltersDropup,
-             SVG,
-             FooterViewTpl) {
+   Backbone,
+   _,
+   OSUtil,
+   AllLangs,
+   MoreFiltersDropup,
+   SVG,
+   FooterViewTpl) {
   'use strict';
 
   var FooterView = Backbone.View.extend({
 
     initialize: function (options) {
       options = options || {};
+      this.getAllLanguages();
 
       Backbone.EventBroker.register({
         'deleteLangFilter': 'deleteLangFilter',
         'deleteLicenseFilter': 'deleteLicenseFilter',
         'deleteChatFilter': 'deleteChatFilter'
       }, this);
-
-      this.setLangData(options.langData);
 
       this.licenseData = {
         "MIT": {
@@ -69,10 +70,10 @@ define(['jquery',
       };
     },
 
-    setLangData: function (data) {
-      this.colors_and_initials = data.colors_and_initials;
-      this.langMap = data.langMap;
-      this.all_frames = data.all_frames;
+    getAllLanguages: function () {
+      this.allLangs = AllLangs.getAll();
+      this.langMap = this.allLangs.langMap;
+      this.all_frames = this.allLangs.all_frames;
     },
 
     events: {

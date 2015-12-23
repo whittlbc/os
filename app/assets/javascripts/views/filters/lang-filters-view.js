@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'models/all-langs',
   'views/filters/lang-filter-item-view',
   'views/widgets/more-dropdown/more-dropdown',
   'views/svgs/svg-view',
@@ -13,6 +14,7 @@ define(['jquery',
    Backbone,
    _,
    OSUtil,
+   AllLangs,
    LangFilterItemView,
    MoreDropdown,
    SVG,
@@ -24,17 +26,22 @@ define(['jquery',
 
     initialize: function (options) {
       options = options || {};
-      this.colors_and_initials = options.colorsAndInitials;
+      this.getAllLanguages();
       this.LANG_FILTERS = [];
+      this.requiredBottomSpacing = 160;
+
       Backbone.EventBroker.register({
         'hide-more-langs-dropdown': 'forceHideDropdown'
       }, this);
-
-      this.requiredBottomSpacing = 160;
     },
 
     events: {
       'click #clearLangFiltersBtn': 'clearLangFilters'
+    },
+
+    getAllLanguages: function () {
+      this.allLangs = AllLangs.getAll();
+      this.colors_and_initials = this.allLangs.colors_and_initials;
     },
 
     handleDeleteLangFilter: function (view) {
@@ -64,10 +71,6 @@ define(['jquery',
       }
       this.LANG_FILTERS = [];
       Backbone.EventBroker.trigger('clearLangFilters', langNamesArray);
-    },
-
-    setColorsAndInitials: function (colors_and_initials) {
-      this.colors_and_initials = colors_and_initials;
     },
 
     addItem: function (data) {

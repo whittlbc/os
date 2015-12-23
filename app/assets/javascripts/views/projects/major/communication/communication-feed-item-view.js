@@ -1,17 +1,19 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'views/os.view',
   'models/os.util',
   'models/project',
   'backbone-eventbroker'
 ], function ($,
              Backbone,
              _,
+             OSView,
              OSUtil,
              Project) {
   'use strict';
 
-  var CommunicationFeedItemView = Backbone.View.extend({
+  var CommunicationFeedItemView = OSView.extend({
 
     initialize: function () {
     },
@@ -22,7 +24,7 @@ define(['jquery',
       Backbone.EventBroker.trigger(channel, this);
     },
 
-    handleVote: function (userUUID) {
+    handleVote: function () {
       var self = this;
       var $voteCountEl = this.getVoteCountEl();
       var newVoteCount = Number($voteCountEl.html()) + 1;
@@ -30,7 +32,7 @@ define(['jquery',
       var $voteCountContainer = this.getVoteCountContainerEl();
       $voteCountContainer.addClass('voted');
       var project = new Project();
-      project.commentVote({id: Number(this.id), new_vote_count: newVoteCount, user_uuid: userUUID}, {
+      project.commentVote({id: Number(this.id), new_vote_count: newVoteCount, user_uuid: this.currentUser.get('uuid')}, {
         success: function (data) {
           Backbone.EventBroker.trigger('updateUpvotedCommentsArray', data);
         }
@@ -41,7 +43,7 @@ define(['jquery',
       this.userPic = data.userPic;
       this.posterGHUsername = data.posterGHUsername;
       this.posterUUID = data.posterUUID;  // use this to check against current user when you make the switch to uuids
-      this.isPoster = data.currentUser == data.posterGHUsername;
+      this.isPoster = this.currentUser.get('gh_username') == data.posterGHUsername;
       this.voteCount = data.voteCount;
       this.voted = data.voted;
       this.postTime = OSUtil.getTimeAgo(data.postTime);

@@ -1,78 +1,66 @@
 define(['jquery',
-	'backbone',
-	'underscore',
-    'views/projects/major/major-info-view',
-    'views/projects/major/communication/communication-view',
-	'stache!views/projects/major/project-major-view',
-    ], function ($,
-     Backbone,
-     _,
-     MajorInfoView,
-     CommunicationView,
-     ProjectMajorViewTpl) {
-	'use strict';
+  'backbone',
+  'underscore',
+  'views/os.view',
+  'views/projects/major/major-info-view',
+  'views/projects/major/communication/communication-view',
+  'stache!views/projects/major/project-major-view'
+], function ($,
+   Backbone,
+   _,
+   OSView,
+   MajorInfoView,
+   CommunicationView,
+   ProjectMajorViewTpl) {
+  'use strict';
 
-	var ProjectMajorView = Backbone.View.extend({
+  var ProjectMajorView = OSView.extend({
 
-		initialize: function () {
-		},
+    initialize: function () {
+    },
 
-		events: {},
+    events: {},
 
-        showNewComment: function (data) {
-            var self = this;
-            self.communicationView.showNewComment(data);
-        },
+    showNewComment: function (data) {
+      this.communicationView.showNewComment(data);
+    },
 
-        passComments: function (data) {
-            var self = this;
-            self.communicationView.passComments(data);
-        },
+    passComments: function (data) {
+      this.communicationView.passComments(data);
+    },
 
-        showEditMode: function (data) {
-            var self = this;
-            this.majorInfoView.showEditMode(data.project);
-        },
+    showEditMode: function (data) {
+      this.majorInfoView.showEditMode(data.project);
+    },
 
-        getSavedEditData: function () {
-            return this.majorInfoView.getSavedEditData();
-        },
+    getSavedEditData: function () {
+      return this.majorInfoView.getSavedEditData();
+    },
 
-        passLanguages: function (data) {
-            this.allLangData = data;
-            if (this.majorInfoView) {
-                this.majorInfoView.passLanguages(data);
-            }
-        },
+    render: function (options) {
+      var self = this;
+      this.$el.html(ProjectMajorViewTpl());
 
-        render: function (options) {
-			var self = this;
-            this.$el.html(ProjectMajorViewTpl());
+      this.majorInfoView = new MajorInfoView({
+        el: '#majorInfoView'
+      });
 
-            this.majorInfoView = new MajorInfoView({
-                el: '#majorInfoView'
-            });
+      this.listenTo(this.majorInfoView, 'project:edit', function () {
+        self.trigger('project:edit');
+      });
 
-            this.listenTo(this.majorInfoView, 'project:edit', function () {
-                self.trigger('project:edit');
-            });
+      this.majorInfoView.render(options.project);
 
-            if (this.allLangData) {
-                this.majorInfoView.passLanguages(this.allLangData);
-            }
+      var majorInfoHeight = window.innerHeight - this.$el.find('#majorInfoView').height(); // adding 10 because of the stupid margin-top: -10px you had to do for some reason
 
-            this.majorInfoView.render(options.project);
+      this.communicationView = new CommunicationView({
+        el: '#communicationView',
+        height: majorInfoHeight
+      });
+      this.communicationView.render(options);
+    }
+  });
 
-            var majorInfoHeight = window.innerHeight - this.$el.find('#majorInfoView').height(); // adding 10 because of the stupid margin-top: -10px you had to do for some reason
-
-            this.communicationView = new CommunicationView({
-                el: '#communicationView',
-                height: majorInfoHeight
-            });
-            this.communicationView.render(options);
-		}
-	});
-
-	return ProjectMajorView;
+  return ProjectMajorView;
 
 });

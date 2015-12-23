@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'models/all-langs',
   'views/widgets/text-info-bubble',
   'stache!views/add-project/details-view',
   'selectize',
@@ -10,6 +11,7 @@ define(['jquery',
              Backbone,
              _,
              OSUtil,
+             AllLangs,
              TextInfoBubble,
              DetailsViewTpl) {
   'use strict';
@@ -17,6 +19,7 @@ define(['jquery',
   var DetailsView = Backbone.View.extend({
 
     initialize: function () {
+      this.getAllLanguages();
       this.extraInfoExpandDuration = 200;
       this.toggleDescriptionSizeDuration = 275;
       this.licenseItems = [
@@ -53,6 +56,13 @@ define(['jquery',
       'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
       'click .add-project-send-invites-choice': 'handleSendInvitesSelection',
       'keydown [name=add-project-title], [name=add-project-subtitle]': 'hideErrorMessage'
+    },
+
+    getAllLanguages: function () {
+      this.allLangs = AllLangs.getAll();
+      this.dropdownItems = this.allLangs.dropdown_items;
+      this.allFrames = this.allLangs.all_frames;
+      this.colors_and_initials = this.allLangs.colors_and_initials;
     },
 
     hideErrorMessage: function (e) {
@@ -355,12 +365,6 @@ define(['jquery',
       this.title = data.description; // most relevant actually to be the title
       this.langsFrames = data.languages;
       this.repoName = data.name;
-    },
-
-    passLangDropdownItems: function (data) {
-      this.dropdownItems = data.dropdown_items;
-      this.allFrames = data.all_frames;
-      this.colors_and_initials = data.colors_and_initials;
     },
 
     passTags: function (data) {

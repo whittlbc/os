@@ -1,20 +1,21 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'views/os.view',
   'views/notifications/notifications-item-view',
   'stache!views/notifications/notifications-dropdown-view'
 ], function ($,
              Backbone,
              _,
+             OSView,
              NotificationsItemView,
              NotificationsDropdownViewTpl) {
   'use strict';
 
-  var NotificationsDropdownView = Backbone.View.extend({
+  var NotificationsDropdownView = OSView.extend({
 
     initialize: function (options) {
       options = options || {};
-      this.userAuthed = options.userAuthed;
       this.populated = false;
     },
 
@@ -94,7 +95,7 @@ define(['jquery',
     render: function () {
       var self = this;
       this.$el.html(NotificationsDropdownViewTpl({
-        userAuthed: this.userAuthed
+        userAuthed: !!this.currentUser
       }));
       this.$mainList = this.$el.find('.main-list');
 

@@ -1,28 +1,26 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'views/os.view',
   'views/widgets/spinner-chasing-dots',
   'models/suggestion',
   'stache!views/suggestions/suggestions-view'
 ], function ($,
    Backbone,
    _,
+   OSView,
    Spinner,
    Suggestion,
    SuggestionsViewTpl) {
   'use strict';
 
-  var SuggestionsView = Backbone.View.extend({
+  var SuggestionsView = OSView.extend({
 
     initialize: function () {
     },
 
     events: {
       'click .submit-btn': 'handleSubmit'
-    },
-
-    passUserData: function (user) {
-      this.user = user;
     },
 
     handleSubmit: function () {
@@ -34,8 +32,8 @@ define(['jquery',
 
         self.render({ spinnerView: true });
 
-        if (this.user && this.user.user_uuid) {
-          uuid = this.user.user_uuid;
+        if (this.currentUser) {
+          uuid = this.currentUser.get('uuid');
         }
 
         var suggestion = new Suggestion({ uuid: uuid });

@@ -3,6 +3,7 @@ define(['jquery',
   'underscore',
   'models/project',
   'models/os.util',
+  'models/all-langs',
   'views/home/project-post-view',
   'stache!views/home/project-feed-view',
 ], function ($,
@@ -10,6 +11,7 @@ define(['jquery',
              _,
              Project,
              OSUtil,
+             AllLangs,
              ProjectPostView,
              ProjectFeedViewTpl) {
   'use strict';
@@ -17,6 +19,12 @@ define(['jquery',
   var ProjectFeedView = Backbone.View.extend({
 
     initialize: function () {
+      this.getAllLanguages();
+    },
+
+    getAllLanguages: function () {
+      this.allLangs = AllLangs.getAll();
+      this.colors_and_initials = this.allLangs.colors_and_initials;
     },
 
     setProjectTypeStatus: function (val) {
@@ -27,10 +35,6 @@ define(['jquery',
 
     errorHandler: function (resp, status, xhr) {
       console.log('AJAX ERROR: ', xhr, resp);
-    },
-
-    passColorsAndInitials: function (data) {
-      this.colors_and_initials = data;
     },
 
     showNoProjects: function () {

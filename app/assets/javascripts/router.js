@@ -1,112 +1,90 @@
-define(["backbone",
-        "events",
-        'views/main-view',
-        'models/os.util'],
-    function (Backbone,
-              Events,
-              MainView,
-              OSUtil) {
+define(['jquery',
+  "backbone",
+  "events",
+  'views/main-view',
+  'models/os.util',
+  'models/session'
+],
+  function ($,
+  Backbone,
+  Events,
+  MainView,
+  OSUtil,
+  Session
+) {
 
-        var Router = Backbone.Router.extend({
+  var Router = Backbone.Router.extend({
 
-            routes: {
-                'up-for-grabs': 'upForGrabsRoute',
-                'on-the-fence': 'onTheFenceRoute',
-                'launched': 'launchedRoute',
-                'projects/:id': 'projectRoute',
-                'login/:id': 'setUserCookieRoute', // :id is gh_username just obtained from GH
-                '': 'onTheFenceRoute'
-            },
+    initialize: function () {
+      Session.checkForSession();
+    },
 
-            upForGrabsRoute: function() {
-                this.updateHomeView(0);
-            },
+    routes: {
+      'up-for-grabs': 'upForGrabsRoute',
+      'on-the-fence': 'onTheFenceRoute',
+      'launched': 'launchedRoute',
+      'projects/:id': 'projectRoute',
+      //'login/:id': 'setUserCookieRoute', // :id is gh_username just obtained from GH
+      '': 'onTheFenceRoute'
+    },
 
-            onTheFenceRoute: function() {
-                (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? this.redirectHome() : this.updateHomeView(1);
-            },
+    // UP FOR GRABS
+    upForGrabsRoute: function () {
+      this.updateHomeView(0);
+    },
 
-            launchedRoute: function() {
-                this.updateHomeView(2);
-            },
+    // ON THE FENCE
+    onTheFenceRoute: function () {
+      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? this.redirectHome() : this.updateHomeView(1);
+    },
 
-            updateHomeView: function (index) {
-                var self = this;
-                $('footer').show();
-                if (!this.mainView) {
-                    this.mainView = new MainView({
-                        el: '#mainView'
-                    });
-                    this.listenTo(this.mainView, 'cookie:set', function (gh_username) {
-                        self.setCookie('gh_username', gh_username, 7); // expires in 7 days
-                    });
-                    this.mainView.passCookieUser(this.getCookie('gh_username'));
-                    this.mainView.render({
-                        view: OSUtil.HOME_PAGE,
-                        index: index
-                    });
-                } else {
-                    this.mainView.showHomeView ? this.mainView.changeHomeFeedType(index) : this.mainView.render({view: OSUtil.HOME_PAGE, index: index});
-                }
-                this.mainView.passActiveHomeIndex(index);
-            },
+    // LAUNCHED
+    launchedRoute: function () {
+      this.updateHomeView(2);
+    },
 
-            projectRoute: function (id) {
-                $('footer').hide();
-                this.updateProjectView(id);
-            },
+    // PROJECT
+    projectRoute: function (id) {
+      $('footer').hide();
+      this.updateProjectView(id);
+    },
 
-            updateProjectView: function (id) {
-                var self = this;
-                if (!this.mainView) {
-                    this.mainView = new MainView({
-                        el: '#mainView'
-                    });
-                    this.listenTo(this.mainView, 'cookie:set', function (gh_username) {
-                        self.setCookie('gh_username', gh_username, 7); // expires in 7 days
-                    });
+    updateHomeView: function (feedIndex) {
+      $('footer').show();
+      this.mainView = this.mainView || new MainView({ el: '#mainView' });
 
-                } else {
-                    this.mainView.captureFilters();
-                }
-                this.mainView.passCookieUser(this.getCookie('gh_username'));
-                this.mainView.render({
-                    view: OSUtil.PROJECT_PAGE,
-                    id: id
-                });
-            },
+      this.mainView.passActiveHomeIndex(feedIndex);
 
-            redirectHome: function () {
-                window.location.hash = "#on-the-fence";
-            },
+      this.mainView.showHomeView ? this.mainView.changeHomeFeedType(feedIndex) : this.mainView.render({
+        view: OSUtil.HOME_PAGE,
+        index: feedIndex
+      });
+    },
 
-            setUserCookieRoute: function (gh_username) {
-                this.setCookie('gh_username', gh_username, 7); // expires in 7 days
-                var destination = window.location.hash.slice(window.location.hash.indexOf('?') + 1);
-                window.location.hash = '#' + destination;
-            },
+    updateProjectView: function (id) {
+      this.mainView = this.mainView || new MainView({ el: '#mainView' });
 
-            setCookie: function (cname, cvalue, exdays) {
-                var d = new Date();
-                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-                var expires = "expires=" + d.toUTCString();
-                document.cookie = cname + "=" + cvalue + "; " + expires;
-            },
+      this.mainView.captureFilters();
 
-            getCookie: function (cname) {
-                var name = cname + "=";
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1);
-                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-                }
-                return "";
-            }
+      this.mainView.render({
+        view: OSUtil.PROJECT_PAGE,
+        id: id
+      });
+    },
 
-        });
+    redirectHome: function () {
+      window.location.hash = "#on-the-fence";
+    }
 
-        return Router;
+    //setUserCookieRoute: function (gh_username) {
+    //  this.setCookie('gh_username', gh_username, 7); // expires in 7 days
+    //  var destination = window.location.hash.slice(window.location.hash.indexOf('?') + 1);
+    //  window.location.hash = '#' + destination;
+    //}
 
-    });
+  });
+
+  return Router;
+
+});
 

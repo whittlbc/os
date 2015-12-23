@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'views/os.view',
   'models/project',
   'models/all-langs',
   'views/widgets/more-dropdown/more-dropdown',
@@ -14,20 +15,26 @@ define(['jquery',
    Backbone,
    _,
    OSUtil,
+   OSView,
    Project,
    AllLangs,
    MoreDropdown,
    MajorInfoViewTpl) {
   'use strict';
 
-  var MajorInfoView = Backbone.View.extend({
+  var MajorInfoView = OSView.extend({
 
     initialize: function () {
-      this.allLangs = AllLangs.getAll();
+      this.getAllLanguages();
       this.descriptionMaxHeight = 135;
+
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode'
       }, this);
+    },
+
+    getAllLanguages: function () {
+      this.allLangs = AllLangs.getAll();
     },
 
     events: {
@@ -116,13 +123,14 @@ define(['jquery',
       Backbone.EventBroker.trigger('project:vote', {view: this, projectID: this.projectID});
     },
 
-    handleVote: function (userUUID) {
+    handleVote: function () {
       var self = this;
       var oldVote = Number(this.$el.find('.new-vote-count-container > span').html());
       this.$el.find('.new-vote-count-container > span').html(oldVote + 1);
       this.$el.find('.project-page-vote-container').addClass('voted');
+
       var project = new Project();
-      project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {
+      project.vote({project_uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
         success: function (data) {
           Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
         }

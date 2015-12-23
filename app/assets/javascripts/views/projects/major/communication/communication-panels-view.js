@@ -50,13 +50,11 @@ define(['jquery',
         },
 
         showNewComment: function (data) {
-            var self = this;
-            this.activePanel.passComments(data);
+          this.activePanel.passComments(data);
         },
 
         passComments: function (data) {
-            var self = this;
-            this.activePanel.passComments(data);
+          this.activePanel.passComments(data);
         },
 
         scrollToNewComment: function () {

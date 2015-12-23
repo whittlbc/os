@@ -3,6 +3,7 @@ define(['jquery',
   'underscore',
   'models/project',
   'models/os.util',
+  'views/os.view',
   'models/all-langs',
   'views/widgets/user-info-bubble',
   'views/widgets/more-dropdown/more-dropdown',
@@ -13,13 +14,14 @@ define(['jquery',
              _,
              Project,
              OSUtil,
+             OSView,
              AllLangs,
              UserInfoBubble,
              MoreDropdown,
              ProjectPostViewTpl) {
   'use strict';
 
-  var ProjectPostView = Backbone.View.extend({
+  var ProjectPostView = OSView.extend({
 
     initialize: function () {
       this.tagsExpanded = false;
@@ -49,14 +51,15 @@ define(['jquery',
       Backbone.EventBroker.trigger('open-project', this.id);
     },
 
-    handleVote: function (userUUID) {
+    handleVote: function () {
       var self = this;
       self.vote_count++;
       self.voted = true;
       self.$el.find('.new-vote-count-container > span').html(self.vote_count);
       self.$el.find('.vote-master-container').addClass('voted');
+
       var project = new Project();
-      project.vote({project_uuid: self.uuid, user_uuid: userUUID}, {
+      project.vote({project_uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
         success: function (data) {
           Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
         }

@@ -1,84 +1,64 @@
 define(['jquery',
-	'backbone',
-	'underscore',
-    'views/modals/modal-view',
-    'views/add-project/create-new-project-popup',
-	'stache!views/modals/create-project-modal'
-    ], function ($,
-     Backbone,
-     _,
-     ModalView,
-     CreateNewProjectPopup,
-     CreateProjectModalTpl) {
-	'use strict';
+  'backbone',
+  'underscore',
+  'views/modals/modal-view',
+  'views/add-project/create-new-project-popup',
+  'stache!views/modals/create-project-modal'
+], function ($,
+             Backbone,
+             _,
+             ModalView,
+             CreateNewProjectPopup,
+             CreateProjectModalTpl) {
+  'use strict';
 
-	var CreateProjectModal = ModalView.extend({
+  var CreateProjectModal = ModalView.extend({
 
-		initialize: function () {
-            this.currentTopPos = 125;
-            this.createNewProjectModalHeight = 496;
-		},
+    initialize: function () {
+      this.currentTopPos = 125;
+      this.createNewProjectModalHeight = 496;
+    },
 
-		events: {},
+    events: {},
 
-        passUserData: function (data) {
-            var self = this;
-            this.userData = data;
-            if (this.createNewProjectPopup) {
-                this.createNewProjectPopup.passUserData(data);
-            }
-        },
+    resetPopup: function () {
+      var self = this;
+      if (this.createNewProjectPopup) {
+        this.createNewProjectPopup.resetPopup();
+      }
+    },
 
-        passLangData: function (data) {
-            var self = this;
-            this.allLangs = data;
-        },
+    formatForPullProject: function (id) {
+      var self = this;
+      if (this.createNewProjectPopup) {
+        this.createNewProjectPopup.formatForPullProject(id);
+      }
+    },
 
-        resetPopup: function () {
-            var self = this;
-            if (this.createNewProjectPopup) {
-                this.createNewProjectPopup.resetPopup();
-            }
-        },
+    sizeModal: function () {
+      var self = this;
+      var createNewProjectModalMarginTop = ((window.innerHeight - this.createNewProjectModalHeight - this.currentTopPos) / 2);
+      this.$modal.css('margin-top', createNewProjectModalMarginTop + 'px');
+      this.$el.find('#createNewProjectModalContentContainer').width(750);
+      this.$el.find('#createNewProjectModalContentContainer').css('left', '-75px');
+    },
 
-        formatForPullProject: function (id) {
-            var self = this;
-            if (this.createNewProjectPopup) {
-                this.createNewProjectPopup.formatForPullProject(id);
-            }
-        },
+    render: function () {
+      var self = this;
+      this.$el.html(CreateProjectModalTpl());
 
-        sizeModal: function () {
-            var self = this;
-            var createNewProjectModalMarginTop = ((window.innerHeight - this.createNewProjectModalHeight - this.currentTopPos) / 2);
-            this.$modal.css('margin-top', createNewProjectModalMarginTop + 'px');
-            this.$el.find('#createNewProjectModalContentContainer').width(750);
-            this.$el.find('#createNewProjectModalContentContainer').css('left', '-75px');
-        },
+      this.$modal = this.$el.find('#createNewProjectModal');
 
-        render: function () {
-			var self = this;
-            this.$el.html(CreateProjectModalTpl());
+      this.sizeModal();
 
-            this.$modal = this.$el.find('#createNewProjectModal');
+      this.createNewProjectPopup = new CreateNewProjectPopup({
+        el: this.$el.find('#createNewProjectModalContent')
+      });
 
-            this.sizeModal();
+      this.createNewProjectPopup.render();
+    }
+  });
 
-            this.createNewProjectPopup = new CreateNewProjectPopup({
-                el: this.$el.find('#createNewProjectModalContent')
-            });
-
-            if (this.userData) {
-                this.createNewProjectPopup.passUserData(this.userData);
-            }
-            if (this.allLangs) {
-                this.createNewProjectPopup.passLangData(this.allLangs);
-            }
-
-            this.createNewProjectPopup.render();
-		}
-	});
-
-	return CreateProjectModal;
+  return CreateProjectModal;
 
 });

@@ -4,6 +4,7 @@ define(['jquery',
   'models/user',
   'models/project',
   'models/os.util',
+  'views/os.view',
   'integrations/github',
   'views/projects/major/project-major-view',
   'views/projects/minor/project-minor-view',
@@ -12,31 +13,34 @@ define(['jquery',
   'selectize',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             User,
-             Project,
-             OSUtil,
-             Github,
-             ProjectMajorView,
-             ProjectMinorView,
-             View404,
-             ProjectViewTpl) {
+   Backbone,
+   _,
+   User,
+   Project,
+   OSUtil,
+   OSView,
+   Github,
+   ProjectMajorView,
+   ProjectMinorView,
+   View404,
+   ProjectViewTpl) {
   'use strict';
 
-  var ProjectView = Backbone.View.extend({
+  var ProjectView = OSView.extend({
 
     initialize: function (options) {
       var self = this;
       var project = new Project();
-      self.projectID = options.id;
-      self.cookieGHUsername = options.cookieGHUsername;
+      this.projectID = options.id;
+
       var data = {
         id: options.id
       };
-      if (self.cookieGHUsername) {
-        data.gh_username = self.cookieGHUsername;
+
+      if (this.currentUser) {
+        data.gh_username = this.currentUser.get('gh_username');
       }
+
       project.fetchDetails(data, {
         success: function (obj) {
           if (obj.status && obj.status == 404) {
@@ -64,17 +68,19 @@ define(['jquery',
 
     },
 
-    reInitialize: function (id, cookieGHUsername) {
+    reInitialize: function (id) {
       var self = this;
       var project = new Project();
       self.projectID = id;
-      self.cookieGHUsername = cookieGHUsername;
+
       var data = {
         id: id
       };
-      if (this.cookieGHUsername) {
-        data.gh_username = this.cookieGHUsername;
+
+      if (this.currentUser) {
+        data.gh_username = this.currentUser.get('gh_username');
       }
+
       project.fetchDetails(data, {
         success: function (obj) {
           if (obj.status && obj.status == 404) {
@@ -93,7 +99,7 @@ define(['jquery',
     events: {},
 
     handleAddEvolution: function (view) {
-      view.addNewEvolutionItem(this.user_uuid);
+      view.addNewEvolutionItem();
     },
 
     handleSaveEditProject: function () {
@@ -149,8 +155,7 @@ define(['jquery',
 
       var obj = {
         text: data.text,
-        //poster_uuid: this.user_uuid,
-        poster_uuid: '35e982e1-c95d-43ac-ae60-a532596c5495',
+        poster_uuid: this.currentUser.get('uuid'),
         project_id: this.projectID,
         feed: data.feed,
         parent_id: data.parent_id
@@ -160,21 +165,10 @@ define(['jquery',
         var project = new Project();
         project.postNewComment(obj, {
           success: function (updatedComments) {
-            var obj = {
-              comments: updatedComments,
-              currentUser: self.gh_username || self.cookieGHUsername
-            };
-            self.projectMajorView.showNewComment(obj);
-          }, error: function () {
-            self.errorPostingComment();
+            self.projectMajorView.showNewComment({ comments: updatedComments });
           }
         });
       }
-    },
-
-    errorPostingComment: function () {
-      var self = this;
-      console.log('Error Posting Comment');
     },
 
     setProjectProperties: function (data) {
@@ -218,26 +212,16 @@ define(['jquery',
         project_id: self.projectID,
         feed: feedStatus
       };
-      if (this.gh_username) {
-        data.gh_username = this.gh_username;
+
+      if (this.currentUser) {
+        data.gh_username = this.currentUser.get('gh_username');
       }
-      if (!this.gh_username && this.cookieGHUsername) {
-        data.gh_username = this.cookieGHUsername;
-      }
+
       project.fetchComments(data, {
         success: function (comments) {
-          self.handleFetchedComments(comments);
+          self.projectMajorView.passComments({ comments: comments });
         }
       });
-    },
-
-    handleFetchedComments: function (comments) {
-      var self = this;
-      var data = {
-        comments: comments,
-        currentUser: this.gh_username || this.cookieGHUsername
-      };
-      self.projectMajorView.passComments(data);
     },
 
     handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
@@ -288,22 +272,6 @@ define(['jquery',
       };
     },
 
-    passUserInfo: function (data) {
-      var self = this;
-      this.userData = data;
-      this.user_uuid = data.user_uuid;
-      this.userID = data.id;
-      this.ghAccessToken = data.password;
-      this.gh_username = data.gh_username;
-    },
-
-    passLanguages: function (data) {
-      this.allLangData = data;
-      if (this.projectMajorView) {
-        this.projectMajorView.passLanguages(data);
-      }
-    },
-
     checkProjectPrivacy: function () {
       if (!this.isContributor()) {
         this.privacy == OSUtil.OPEN_PRIVACY ? this.joinProject() : this.requestToJoin(OSUtil.REQUESTS['project']);
@@ -311,7 +279,7 @@ define(['jquery',
     },
 
     isContributor: function () {
-      return _.contains(this.contributors, this.userID);
+      return _.contains(this.contributors, this.currentUser.get('id'));
     },
 
     joinProject: function () {
@@ -319,7 +287,7 @@ define(['jquery',
       var project = new Project();
       var obj = {
         project_uuid: self.uuid,
-        user_uuid: self.user_uuid
+        user_uuid: self.currentUser.get('uuid')
       };
       project.join(obj, {
         success: function (data) {
@@ -333,7 +301,7 @@ define(['jquery',
       var project = new Project();
       var obj = {
         project_uuid: self.uuid,
-        requester_uuid: self.user_uuid,
+        requester_uuid: self.currentUser.get('uuid'),
         asset: int
       };
       project.requestToJoin(obj, {
@@ -378,10 +346,6 @@ define(['jquery',
         this.listenTo(this.projectMajorView, 'project:edit', function () {
           self.showEditMode();
         });
-
-        if (this.allLangData) {
-          this.projectMajorView.passLanguages(this.allLangData);
-        }
 
         this.projectMajorView.render(data);
 

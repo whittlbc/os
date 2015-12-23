@@ -21,7 +21,6 @@ define(['jquery',
         },
 
         passComments: function (data) {
-            var self = this;
             this.generalFeedView.passComments(data);
         },
 

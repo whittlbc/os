@@ -45,10 +45,6 @@ define(['jquery',
     setHeight: function (height) {
     },
 
-    passLangDropdownItems: function (data) {
-      this.langDropdownItems = data;
-    },
-
     passTags: function (data) {
       this.tags = data;
     },
@@ -97,7 +93,6 @@ define(['jquery',
 
     allowCreate: function () {
       var self = this;
-
     },
 
     showCreatingProjectView: function () {
@@ -170,9 +165,7 @@ define(['jquery',
       if (this.selectedType) {
         this.detailsView.passType(this.selectedType);
       }
-      if (this.langDropdownItems) {
-        this.detailsView.passLangDropdownItems(this.langDropdownItems);
-      }
+
       if (this.tags) {
         this.detailsView.passTags(this.tags);
       }

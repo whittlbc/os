@@ -3,6 +3,8 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
 
   var OSUtil = {
 
+    USER_STORAGE_KEY: 'sourcehoney_user',
+
     IRC_NETWORKS: [
       {
         "id": "ChLame",

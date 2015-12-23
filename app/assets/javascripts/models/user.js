@@ -1,161 +1,191 @@
 define(['jquery',
-    'backbone',
-    'underscore',
-    'models/os.model',
-    'backbone-eventbroker'
-    ], function (
-    $,
-    Backbone,
-    _,
-    OSModel
-) {
-    'use strict';
+  'backbone',
+  'underscore',
+  'models/os.model',
+  'backbone-eventbroker'
+], function ($,
+             Backbone,
+             _,
+             OSModel) {
+  'use strict';
 
-    var User = OSModel.extend({
+  var User = OSModel.extend({
 
-        extension: 'users',
+    extension: 'users',
 
-        postGHCode: function(info, options){
-            var requestInfo = options || {};
+    getNotifications: function (options) {
+      var requestInfo = options || {};
+      var info = {
+        uuid: this.get('uuid')
+      };
 
-            _.extend(requestInfo, {
-                url: this.extension + '/postGHCode',
-                data: info
-            });
+      _.extend(requestInfo, {
+        url: this.extension + '/getNotifications',
+        data: info
+      });
 
-            return this.sync('postGHCode', this, requestInfo);
-        },
+      return this.sync('getNotifications', this, requestInfo);
+    },
 
-        getAllUserRepos: function(info, options){
-            var requestInfo = options || {};
+    postGHCode: function (info, options) {
+      var requestInfo = options || {};
 
-            _.extend(requestInfo, {
-                url: this.extension + '/getAllUserRepos',
-                data: info
-            });
+      _.extend(requestInfo, {
+        url: this.extension + '/postGHCode',
+        data: info
+      });
 
-            return this.sync('getAllUserRepos', this, requestInfo);
-        },
+      return this.sync('postGHCode', this, requestInfo);
+    },
 
-        getRepoDetails: function(info, options){
-            var requestInfo = options || {};
+    getAllUserRepos: function (info, options) {
+      var requestInfo = options || {};
 
-            _.extend(requestInfo, {
-                url: this.extension + '/getRepoDetails',
-                data: info
-            });
+      _.extend(info, {
+        gh_username: this.get('gh_username')
+      });
 
-            return this.sync('getRepoDetails', this, requestInfo);
-        },
+      _.extend(requestInfo, {
+        url: this.extension + '/getAllUserRepos',
+        data: info
+      });
 
-        getByGHUsername: function(info, options){
-            var requestInfo = options || {};
+      return this.sync('getAllUserRepos', this, requestInfo);
+    },
 
-            _.extend(requestInfo, {
-                url: this.extension + '/getByGHUsername',
-                data: info
-            });
+    getRepoDetails: function (info, options) {
+      var requestInfo = options || {};
 
-            return this.sync('getByGHUsername', this, requestInfo);
-        },
+      _.extend(info, {
+        gh_username: this.get('gh_username')
+      });
 
-        login: function(info, options){
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/getRepoDetails',
+        data: info
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/login',
-                data: info
-            });
+      return this.sync('getRepoDetails', this, requestInfo);
+    },
 
-            return this.sync('login', this, requestInfo);
-        },
+    getByGHUsername: function (info, options) {
+      var requestInfo = options || {};
 
-        signup: function(info, options){
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/getByGHUsername',
+        data: info
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension,
-                data: info
-            });
+      return this.sync('getByGHUsername', this, requestInfo);
+    },
 
-            return this.sync('create', this, requestInfo);
-        },
+    login: function (info, options) {
+      var requestInfo = options || {};
 
-        checkUsername: function(info, options){
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/login',
+        data: info
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/checkUsername',
-                data: info
-            });
+      return this.sync('login', this, requestInfo);
+    },
 
-            return this.sync('checkUsername', this, requestInfo);
-        },
+    signup: function (info, options) {
+      var requestInfo = options || {};
 
-        read: function(options){
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension,
+        data: info
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/all'
-            });
+      return this.sync('create', this, requestInfo);
+    },
 
-            return this.sync('read', this, requestInfo);
-        },
+    checkUsername: function (info, options) {
+      var requestInfo = options || {};
 
-        update: function(info, options) {
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/checkUsername',
+        data: info
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/' + this.get('id'),
-                data: info
-            });
+      return this.sync('checkUsername', this, requestInfo);
+    },
 
-            return this.sync('update', this, requestInfo);
-        },
+    read: function (options) {
+      var requestInfo = options || {};
 
-        delete: function(options) {
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/all'
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/' + this.get('id'),
-            });
+      return this.sync('read', this, requestInfo);
+    },
 
-            return this.sync('delete', this, requestInfo);
-        },
+    update: function (info, options) {
+      var requestInfo = options || {};
 
-        star: function(info, options) {
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/' + this.get('id'),
+        data: info
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/star',
-                data: info
-            });
+      return this.sync('update', this, requestInfo);
+    },
 
-            return this.sync('star', this, requestInfo);
-        },
+    delete: function (options) {
+      var requestInfo = options || {};
 
-        getMyProjects: function(info, options) {
-            var requestInfo = options || {};
+      _.extend(requestInfo, {
+        url: this.extension + '/' + this.get('id'),
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/getMyProjects',
-                data: info
-            });
+      return this.sync('delete', this, requestInfo);
+    },
 
-            return this.sync('getMyProjects', this, requestInfo);
-        },
+    star: function (info, options) {
+      var requestInfo = options || {};
 
-        getStarredProjects: function(info, options) {
-            var requestInfo = options || {};
+      _.extend(info, {
+        uuid: this.get('uuid')
+      });
 
-            _.extend(requestInfo, {
-                url: this.extension + '/getStarredProjects',
-                data: info
-            });
+      _.extend(requestInfo, {
+        url: this.extension + '/star',
+        data: info
+      });
 
-            return this.sync('getStarredProjects', this, requestInfo);
-        }
-    });
+      return this.sync('star', this, requestInfo);
+    },
 
-    return User;
+    getMyProjects: function (options) {
+      var requestInfo = options || {};
+      var info = {
+        uuid: this.get('uuid')
+      };
+
+      _.extend(requestInfo, {
+        url: this.extension + '/getMyProjects',
+        data: info
+      });
+
+      return this.sync('getMyProjects', this, requestInfo);
+    },
+
+    getStarredProjects: function (options) {
+      var requestInfo = options || {};
+      var info = {
+        uuid: this.get('uuid')
+      };
+
+      _.extend(requestInfo, {
+        url: this.extension + '/getStarredProjects',
+        data: info
+      });
+
+      return this.sync('getStarredProjects', this, requestInfo);
+    }
+  });
+
+  return User;
 });

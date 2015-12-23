@@ -29,13 +29,11 @@ define(['jquery',
         },
 
         showNewComment: function (data) {
-            var self = this;
-            self.communicationPanelsView.showNewComment(data);
+          this.communicationPanelsView.showNewComment(data);
         },
 
         passComments: function (data) {
-            var self = this;
-            self.communicationPanelsView.passComments(data);
+          this.communicationPanelsView.passComments(data);
         },
 
         render: function (options) {

@@ -1,6 +1,7 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'views/os.view',
   'models/evolution',
   'views/projects/minor/evolution/evolution-feed-item-view',
   'stache!views/projects/minor/evolution/evolution-feed-view',
@@ -8,12 +9,13 @@ define(['jquery',
 ], function ($,
              Backbone,
              _,
+             OSView,
              Evolution,
              EvolutionFeedItemView,
              EvolutionFeedViewTpl) {
   'use strict';
 
-  var EvolutionFeedView = Backbone.View.extend({
+  var EvolutionFeedView = OSView.extend({
 
     initialize: function () {
     },
@@ -52,16 +54,12 @@ define(['jquery',
     },
 
     handleAddPost: function () {
-      Backbone.EventBroker.trigger('evolution:add', this);
-    },
-
-    addNewEvolutionItem: function (userUUID) {
       var self = this;
       var text = this.$el.find('#addEvolutionItemContainer > textarea').val();
 
       if (!_.isEmpty(text)) {
         var evolution = new Evolution();
-        evolution.createNewEvolution({project_id: self.projectID, user_uuid: userUUID, text: text}, {
+        evolution.createNewEvolution({project_id: self.projectID, user_uuid: this.currentUser.get('uuid'), text: text}, {
           success: function (data) {
             var $textarea = self.$el.find('#addEvolutionItemContainer > textarea');
             $textarea.val('');
@@ -69,8 +67,6 @@ define(['jquery',
             self.populate(data);
           }
         });
-      } else {
-        // show some sort of message
       }
     },
 
