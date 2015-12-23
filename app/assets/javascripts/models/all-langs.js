@@ -3365,13 +3365,15 @@ define(['backbone',
 
   });
 
-  var AllLangs = function() {};
+  var AllLangs = {
 
-  AllLangs.getInstance = function() {
-    if (!instance) {
-      instance = new AllLangsModel();
+    getInstance: function() {
+      if (!instance) {
+        instance = new AllLangsModel();
+      }
+      return instance;
     }
-    return instance;
+
   };
 
   return AllLangs.getInstance();
