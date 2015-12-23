@@ -9,11 +9,9 @@ define(['jquery',
  ) {
 	'use strict';
 
-	var OSView = Backbone.View.extend({
+	var OSView = Backbone.View.extend({});
 
-    currentUser: Session.getCurrentUser()
-
-	});
+  OSView.currentUser = Session.getCurrentUser();
 
 	return OSView;
 

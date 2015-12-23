@@ -89,13 +89,15 @@ define(['jquery',
 
   });
 
-  var Session = function() {};
+  var Session = {
 
-  Session.getInstance = function() {
-    if (!instance) {
-      instance = new SessionModel();
+    getInstance: function() {
+      if (!instance) {
+        instance = new SessionModel();
+      }
+      return instance;
     }
-    return instance;
+
   };
 
   return Session.getInstance();
