@@ -30,11 +30,11 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_details
-
-    if params[:gh_username]
-      user = User.find_by(gh_username: params[:gh_username])
+    if params[:user_uuid]
+      user = User.find_by(uuid: params[:user_uuid])
     end
-    project = Project.find_by(id: params[:id])
+
+    project = Project.find_by(uuid: params[:uuid])
 
     if !project.nil? && project.is_active?
       owner_gh_username = project.get_owner_gh_username
@@ -78,12 +78,13 @@ class ProjectsController < ApplicationController
           :is_hipchat_member => user ? project.is_hipchat_member?(user.id) : false
         }
 
-        comments = Comment.where(project_id: params[:id])
+        comments = Comment.where(project_id: project.id)
 
         owner = []
         admin = []
         others = []
-        Contributor.includes(:user).where(project_id: params[:id]).each { |contrib|
+
+        Contributor.includes(:user).where(project_id: project.id).each { |contrib|
           obj = {
               'login' => contrib.try(:user).try(:gh_username),
               'html_url' => "https://github.com/#{contrib.try(:user).try(:gh_username)}",
@@ -129,7 +130,7 @@ class ProjectsController < ApplicationController
 
   def send_invite_emails
     sender = User.find_by(:uuid => params[:user_uuid])
-    project = Project.find_by(:uuid => params[:project_uuid])
+    project = Project.find_by(:uuid => params[:uuid])
 
     if !sender.nil? && !project.nil?
       project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
@@ -151,7 +152,7 @@ class ProjectsController < ApplicationController
         return
       end
 
-      @user = User.find_by(gh_username: params[:gh_username])
+      @user = User.find_by(user_uuid: params[:user_uuid])
       project_data = {
           :title => params[:title],
           :subtitle => params[:subtitle],
@@ -168,7 +169,7 @@ class ProjectsController < ApplicationController
       }
 
       @project = Project.new(project_data)
-      @project.save
+      @project.save!
 
       contrib_data = {
           :uuid => UUIDTools::UUID.random_create.to_s,
@@ -220,8 +221,8 @@ class ProjectsController < ApplicationController
   end
 
   def feed
-    if params[:gh_username]
-      user = User.find_by(gh_username: params[:gh_username])
+    if params[:user_uuid]
+      user = User.find_by(user_uuid: params[:user_uuid])
     end
     projects_of_type = Project.includes(:user, :comments, :contributors).where(:status => params[:status]).active.map { |project|
       {
@@ -229,7 +230,6 @@ class ProjectsController < ApplicationController
           :title => project.title,
           :subtitle => project.subtitle,
           :created_at => project.created_at.utc.iso8601,
-          :id => project.id,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
           :total_contributors => project.contributors.count,
@@ -250,25 +250,30 @@ class ProjectsController < ApplicationController
   end
 
   def destroy_project
-    project = Project.find_by(id: params[:id])
+    project = Project.find_by(uuid: params[:uuid])
+
     if !project.nil?
       project.update_attributes(is_destroyed: true)
       render :json => {:status => 200}
     else
-      render :json => {:status => 500, :message => 'Couldnt find project by uuid'}
+      render :json => {:status => 500, :message => 'Couldn\'t find project by uuid'}
     end
   end
 
   def destroy_comment
     user = User.find_by(uuid: params[:user_uuid])
+    project = Project.find_by(uuid: params[:uuid])
+
     if !user.nil?
-      comment = Comment.find_by(id: params[:comment_id])
+      comment = Comment.find_by(uuid: params[:comment_uuid])
+
       if !comment.nil?
         comment.update_attributes(is_destroyed: true)
         comment.children.map { |child|
           child.update_attributes(is_destroyed: true)
         }
-        all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed], user)
+
+        all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)
         render :json => all_comments_of_feed_type
       end
     else
@@ -291,8 +296,8 @@ class ProjectsController < ApplicationController
   end
 
   def filtered_feed
-    if params[:gh_username]
-      user = User.find_by(gh_username: params[:gh_username])
+    if params[:user_uuid]
+      user = User.find_by(uuid: params[:user_uuid])
     end
     filters = params[:filters]
     if !filters.nil?
@@ -340,7 +345,6 @@ class ProjectsController < ApplicationController
             :title => project.title,
             :subtitle => project.subtitle,
             :created_at => project.created_at.utc.iso8601,
-            :id => project.id,
             :uuid => project.uuid,
             :vote_count => project.vote_count,
             :total_contributors => project.contributors.count,
@@ -371,7 +375,7 @@ class ProjectsController < ApplicationController
   # Join project as collaborator
   def join
     user = User.find_by(uuid: params[:user_uuid])
-    project = Project.find_by(uuid: params[:project_uuid])
+    project = Project.find_by(uuid: params[:uuid])
     if !user.nil? && !project.nil?
       Contributor.new(:uuid => UUIDTools::UUID.random_create.to_s, :project_id => project.id, :user_id => user.id).save!
       render :json => { :message => 'Successfully added contributor' }
@@ -382,7 +386,7 @@ class ProjectsController < ApplicationController
 
   def request_to_join
     requester = User.find_by(uuid: params[:requester_uuid])
-    project = Project.find_by(uuid: params[:project_uuid])
+    project = Project.find_by(uuid: params[:uuid])
 
     if !requester.nil? && !project.nil? && !params[:asset].nil?
       asset = params[:asset].to_i
@@ -410,7 +414,7 @@ class ProjectsController < ApplicationController
 
   def respond_to_request
     requester = User.find_by(uuid: params[:requester_uuid])
-    project = Project.find_by(uuid: params[:project_uuid])
+    project = Project.find_by(uuid: params[:uuid])
     pending_request = PendingRequest.find_by(:uuid => params[:pending_request_uuid])
 
     if !requester.nil? && !project.nil? && !pending_request.nil? && !params[:response].nil?
@@ -456,39 +460,41 @@ class ProjectsController < ApplicationController
 
   def saw_notifications
     notifications = params[:notifications]
-    if !notifications.blank?
+
+    if notifications.present?
+
       notifications.each { |notification|
-        if notification[:is_request]
-          PendingRequest.find_by(uuid: notification[:uuid]).update_attributes(:request_seen => true)
-        else
-          PendingRequest.find_by(uuid: notification[:uuid]).update_attributes(:response_seen => true)
-        end
+        attr = notification[:is_request] ? :request_seen : :response_seen
+        PendingRequest.find_by(uuid: notification[:uuid]).update_attributes(attr => true)
       }
+
       render :json => {}, :status => 200
     else
       render :json => {:error => 'params[:notifications] was .blank? for some reason...'}, :status => 500
     end
   end
 
-  def invite_slack_user(user, api_token)
-    Slack.configure do |config|
-      config.token = api_token
-    end
-    email = user.email
-    base = "https://#{get_team_name(Slack)}.slack.com"
-    hash = "/api/users.admin.invite?t=#{Time.now.to_i}"
-    data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(user.gh_username)}&token=#{api_token}&set_active=true&_attempts=1"
-    uri = URI.parse(base)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Post.new(hash)
-    request.add_field('Content-Type', 'application/x-www-form-urlencoded')
-    request.body = data
-    response = http.request(request)
 
-    response.kind_of? Net::HTTPSuccess
-  end
+  # def invite_slack_user(user, api_token)
+  #   Slack.configure do |config|
+  #     config.token = api_token
+  #   end
+  #   email = user.email
+  #   base = "https://#{get_team_name(Slack)}.slack.com"
+  #   hash = "/api/users.admin.invite?t=#{Time.now.to_i}"
+  #   data = "email=#{CGI.escape(email)}&channels=#{get_channels(Slack)}&first_name=#{CGI.escape(user.gh_username)}&token=#{api_token}&set_active=true&_attempts=1"
+  #   uri = URI.parse(base)
+  #   http = Net::HTTP.new(uri.host, uri.port)
+  #   http.use_ssl = true
+  #   http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #   request = Net::HTTP::Post.new(hash)
+  #   request.add_field('Content-Type', 'application/x-www-form-urlencoded')
+  #   request.body = data
+  #   response = http.request(request)
+  #
+  #   response.kind_of? Net::HTTPSuccess
+  # end
+
 
   # Get all channels for a team
   def get_channels(slack)
@@ -513,15 +519,17 @@ class ProjectsController < ApplicationController
     team_name
   end
 
-  # Apply vote
   def vote
-    @project = Project.find_by(uuid: params[:project_uuid])
-    if !@project.nil?
-      @project.update_attributes(:vote_count => (@project.vote_count + 1))
+    project = Project.find_by(uuid: params[:uuid])
+
+    if project.present?
+      project.update_attributes(:vote_count => (project.vote_count + 1))
       user = User.find_by(uuid: params[:user_uuid])
-      if !user.nil?
-        user.update_attributes(:upvoted_projects => user.upvoted_projects + [@project.id])
+
+      if user.present?
+        user.update_attributes(:upvoted_projects => user.upvoted_projects + [project.id])
       end
+
       render :json => user.upvoted_projects
     else
       render :json => {:status => 500, :message => 'Could not find project by UUID'}
@@ -530,20 +538,23 @@ class ProjectsController < ApplicationController
 
   def post_new_comment
     user = User.find_by(uuid: params[:poster_uuid])
-    if !user.nil?
+    project = Project.find_by(uuid: params[:uuid])
+    parent_comment = Comment.find_by(uuid: params[:parent_uuid])
+
+    if user.present?
       comment_info = {
           :uuid => UUIDTools::UUID.random_create.to_s,
           :text => params[:text],
-          :project_id => params[:project_id],
+          :project_id => project.id,
           :user_id => user.id,
           :vote_count => 0,
           :feed => params[:feed],
-          :parent_id => params[:parent_id]
+          :parent_id => parent_comment.id
       }
       comment = Comment.new(comment_info)
       comment.save
 
-      all_comments_of_feed_type = comments_for_feed(params[:project_id], params[:feed], user)
+      all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)
       render :json => all_comments_of_feed_type
     else
       render :json => {:status => 500}
@@ -551,10 +562,16 @@ class ProjectsController < ApplicationController
   end
 
   def fetch_comments
-    if params[:gh_username]
-      user = User.find_by(gh_username: params[:gh_username])
+    if params[:user_uuid]
+      user = User.find_by(uuid: params[:user_uuid])
     end
-    comments = comments_for_feed(params[:project_id], params[:feed], user)
+
+    project = Project.find_by(uuid: params[:uuid])
+
+    if project.present?
+      comments = comments_for_feed(project.id, params[:feed], user)
+    end
+
     render :json => comments
   end
 
@@ -609,12 +626,13 @@ class ProjectsController < ApplicationController
   end
 
   def comment_vote
-    comment = Comment.find_by(id: params[:id])
+    comment = Comment.find_by(comment_uuid: params[:comment_uuid])
+
     if !comment.nil?
       comment.update_attributes(:vote_count => params[:new_vote_count])
       user = User.find_by(uuid: params[:user_uuid])
       if !user.nil?
-        user.update_attributes(:upvoted_comments => user.upvoted_comments + [params[:id]])
+        user.update_attributes(:upvoted_comments => user.upvoted_comments + comment.id)
       end
       render :json => user.upvoted_comments
     else
@@ -637,10 +655,11 @@ class ProjectsController < ApplicationController
   end
 
   def get_up_for_grabs_details
-    project = Project.find_by(id: params[:id])
+    project = Project.find_by(uuid: params[:uuid])
+
     if !project.nil?
       data = {
-          :id => project.id,
+          :uuid => project.uuid,
           :title => project.title,
           :subtitle => project.subtitle,
           :description => project.description,
@@ -652,15 +671,14 @@ class ProjectsController < ApplicationController
     end
   end
 
-
   def pull_project
-    project = Project.find_by(id: params[:id])
+    project = Project.find_by(uuid: params[:uuid])
     project.update_attributes(:was_pulled => true)
     render :json => {:status => 200}
   end
 
   def get_evolution
-    project = Project.find_by(id: params[:id])
+    project = Project.find_by(uuid: params[:uuid])
     if !project.nil?
       render :json => project.evolutions.active.order(:created_at)
     else
@@ -669,7 +687,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    project = Project.find_by(id: params[:id])
+    project = Project.find_by(uuid: params[:uuid])
     if !project.nil?
       attrs_to_update = {}
       integrations = {}
@@ -801,7 +819,7 @@ class ProjectsController < ApplicationController
   end
 
   def launch
-    project = Project.find_by(id: params[:id])
+    project = Project.find_by(uuid: params[:uuid])
 
     if project.present?
       project.update_attributes!(status: 2)

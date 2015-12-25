@@ -10,9 +10,9 @@ class LoginController < ApplicationController
   def gh_login_cb
 
     data = {
-        :client_id => User::GH::CLIENT_ID,
-        :client_secret => User::GH::CLIENT_SECRET,
-        :code => params[:code]
+      :client_id => User::GH::CLIENT_ID,
+      :client_secret => User::GH::CLIENT_SECRET,
+      :code => params[:code]
     }
 
     response = RestClient.post('https://github.com/login/oauth/access_token', data, :accept => :json)
@@ -26,44 +26,35 @@ class LoginController < ApplicationController
   end
 
 
-  # GH login - If user's not there, create him
+  # Call to Github's API to get user info - upsert user on response
   def upsert_user(access_token, state)
     response = RestClient.get("https://api.github.com/user?access_token=#{access_token}", :accept => :json)
     body = JSON.parse(response.body)
-    gh_username = body['login']
-    name = body['name']
-    email = body['email']
-    pic = body['avatar_url']
-    old_user = User.find_by_gh_username(gh_username)
-    json_response = {
-        :gh_username => gh_username,
-        :name => name,
-        :pic => pic,
-        :email => email,
-        :password => access_token
+
+    User.where(gh_username: body['login']).first_or_initialize { |user|
+      user.uuid = UUIDTools::UUID.random_create.to_s
     }
 
-    # CAN TOTALLY USE find_or_initialize_by here
-    if old_user.nil?
-      # Create new User
-      @user = User.new(:uuid => UUIDTools::UUID.random_create.to_s,
-                       :gh_username => gh_username,
-                       :name => name,
-                       :pic => pic,
-                       :email => email,
-                       :password => access_token)
-      @user.save
-      json_response[:user_uuid] = @user.uuid
-      json_response[:id] = @user.id
-    else
-      old_user.update_attributes(:password => access_token)
-      json_response[:user_uuid] = old_user.uuid
-      json_response[:id] = old_user.id
-    end
+    user.assign_attributes({
+      name: body['name'],
+      email: body['email'],
+      pic: body['avatar_url'],
+      password: access_token
+    })
 
-    prevhash = get_prev_page_from_state(state)
+    user.save!
 
-    redirect_to "/#login/#{gh_username}?#{prevhash}"
+    cookies[:gh_login] = {
+        gh_username: user.gh_username,
+        uuid: user.uuid,
+        pic: user.pic,
+        email: user.email
+    }
+
+    # Get the last page they were on before they logged in
+    previous_location = get_prev_page_from_state(state)
+
+    redirect_to "/##{previous_location}"
   end
 
   def get_prev_page_from_state(state)

@@ -59,7 +59,7 @@ define(['jquery',
 
       if (!_.isEmpty(text)) {
         var evolution = new Evolution();
-        evolution.createNewEvolution({project_id: self.projectID, user_uuid: this.currentUser.get('uuid'), text: text}, {
+        evolution.createNewEvolution({project_uuid: this.projectUUID, user_uuid: this.currentUser.get('uuid'), text: text}, {
           success: function (data) {
             var $textarea = self.$el.find('#addEvolutionItemContainer > textarea');
             $textarea.val('');
@@ -84,7 +84,7 @@ define(['jquery',
       var self = this;
       options = options || {};
       this.options = options;
-      this.projectID = options.id;
+      this.projectUUID = options.uuid;
 
       this.$el.html(EvolutionFeedViewTpl({
         isAdmin: options.is_admin

@@ -2,7 +2,7 @@ class EvolutionsController < ApplicationController
 
   def create_new_evolution
     user = User.find_by(uuid: params[:user_uuid])
-    project = Project.find_by(id: params[:project_id])
+    project = Project.find_by(uuid: params[:project_uuid])
 
     if !user.nil? && !project.nil? && !params[:text].nil?
       evolution = Evolution.new(

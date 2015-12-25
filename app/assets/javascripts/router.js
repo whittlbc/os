@@ -24,7 +24,6 @@ define(['jquery',
       'on-the-fence': 'onTheFenceRoute',
       'launched': 'launchedRoute',
       'projects/:id': 'projectRoute',
-      //'login/:id': 'setUserCookieRoute', // :id is gh_username just obtained from GH
       '': 'onTheFenceRoute'
     },
 
@@ -75,12 +74,6 @@ define(['jquery',
     redirectHome: function () {
       window.location.hash = "#on-the-fence";
     }
-
-    //setUserCookieRoute: function (gh_username) {
-    //  this.setCookie('gh_username', gh_username, 7); // expires in 7 days
-    //  var destination = window.location.hash.slice(window.location.hash.indexOf('?') + 1);
-    //  window.location.hash = '#' + destination;
-    //}
 
   });
 

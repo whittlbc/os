@@ -288,6 +288,10 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
       'getStarredProjects': {
         verb: 'GET',
         action: 'read'
+      },
+      'getNonCachedInfo': {
+        verb: 'GET',
+        action: 'read'
       }
     }
 

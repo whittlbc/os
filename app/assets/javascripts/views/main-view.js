@@ -58,7 +58,7 @@ define(['jquery',
   var MainView = OSView.extend({
 
     initialize: function () {
-      this.getNotifications();
+      this.getNonCachedUserInfo();
 
       Backbone.EventBroker.register({
         'pull-project': 'showCreateModalOnPullProject',
@@ -92,14 +92,11 @@ define(['jquery',
 
       this.cachedFilterType = null;
       this.lastAddProjectPopupShownForGrab = false;
-
-      this.github = Github;
-      this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
     },
 
     events: {},
 
-    getNotifications: function () {
+    getNonCachedUserInfo: function () {
       var self = this;
 
       this.notificationsDropdown = new NotificationsDropdownView({
@@ -107,11 +104,18 @@ define(['jquery',
       });
 
       if (this.currentUser) {
-        this.currentUser.getNotifications({ success: function (data) {
-          self.notifications = data;
-          self.notificationsDropdown.populate(data);
+        this.currentUser.getNonCachedInfo({ success: function (data) {
+          self.ghAccessToken = data.gh_access_token;
+          self.notifications = data.notifications;
+          self.notificationsDropdown.populate(self.notifications);
+          self.createGHInstance();
         }});
       }
+    },
+
+    createGHInstance: function () {
+      this.github = Github;
+      this.github.setToken(this.ghAccessToken);
     },
 
     majorProjectActionBtnClickOrLogin: function (data) {

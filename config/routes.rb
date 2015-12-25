@@ -45,6 +45,7 @@ Backboneworld::Application.routes.draw do
 
   resources :users do
     collection do
+      get :get_non_cached_user_info, :path => '/getNonCachedInfo'
       get :login, :path => '/login'
       get :username_test, :path => '/checkUsername'
       get :get_by_gh_username, :path => '/getByGHUsername'

@@ -13,18 +13,18 @@ define(['jquery',
 
     extension: 'users',
 
-    getNotifications: function (options) {
+    getNonCachedInfo: function (options) {
       var requestInfo = options || {};
       var info = {
         uuid: this.get('uuid')
       };
 
       _.extend(requestInfo, {
-        url: this.extension + '/getNotifications',
+        url: this.extension + '/getNonCachedInfo',
         data: info
       });
 
-      return this.sync('getNotifications', this, requestInfo);
+      return this.sync('getNonCachedInfo', this, requestInfo);
     },
 
     postGHCode: function (info, options) {
@@ -44,7 +44,6 @@ define(['jquery',
       _.extend(info, {
         gh_username: this.get('gh_username')
       });
-
       _.extend(requestInfo, {
         url: this.extension + '/getAllUserRepos',
         data: info

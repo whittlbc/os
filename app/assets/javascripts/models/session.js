@@ -18,9 +18,22 @@ define(['jquery',
     checkForSession: function () {
       var cachedUserData = this.getFromStorage(OSUtil.USER_STORAGE_KEY);
 
+      // first see if user is in local storage
       if (cachedUserData) {
-        this.currentUser = new User(cachedUserData);
-        this.setUserPic();
+        this.setCurrentUser(cachedUserData);
+      }
+      // if not, check to see if user data is in cookie (aka. just logged in with GH)
+      else {
+        cachedUserData = this.getCookie('gh_login');
+
+        // if cookie user data exists, set that into local storage and set current user
+        if (cachedUserData) {
+          this.setToStorage(OSUtil.USER_STORAGE_KEY, cachedUserData);
+          this.setCurrentUser(cachedUserData);
+
+          // delete the cookie!
+
+        }
       }
     },
 
@@ -30,6 +43,11 @@ define(['jquery',
       if (pic) {
         $('#header-user-pic').attr('src', pic);
       }
+    },
+
+    setCurrentUser: function (data) {
+      this.currentUser = new User(data);
+      this.setUserPic();
     },
 
     getCurrentUser: function () {
