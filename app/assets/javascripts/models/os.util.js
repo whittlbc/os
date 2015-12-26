@@ -5,6 +5,8 @@ define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], func
 
     USER_STORAGE_KEY: 'sourcehoney_user',
 
+    BASIC_TRACKING_KEY: 'sourcehoney',
+
     IRC_NETWORKS: [
       {
         "id": "ChLame",

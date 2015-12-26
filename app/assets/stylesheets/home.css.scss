@@ -1356,13 +1356,13 @@ $side-filters-width: 18.25%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
   transition: box-shadow .2s ease-out, color .2s ease-out;
   border-radius: 50%;
-  font-size: 44px;
+  font-size: 50px;
   display: none;
   color: #333;
   cursor: pointer;
   position: fixed;
-  bottom: 19px;
-  right: 21px;
+  bottom: 21px;
+  right: 23px;
   z-index: 1;
 }
 
@@ -1384,14 +1384,14 @@ $side-filters-width: 18.25%;
 }
 
 .gh-login-loading {
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   background-color: #3F3F3F;
   z-index: 0;
   cursor: default;
   position: fixed;
-  bottom: 19px;
-  right: 21px;
+  bottom: 21px;
+  right: 23px;
   border-radius: 50%;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
 

@@ -27,11 +27,15 @@ define(['jquery',
     },
 
     checkForSession: function () {
+      this.addTrackingCookie();
+      this.authed = false;
+
       var cachedUserData = this.getFromStorage(OSUtil.USER_STORAGE_KEY);
 
       // first see if user is in local storage
       if (cachedUserData) {
         this.setCurrentUser(cachedUserData);
+        this.authed = true;
       }
       // if not, check to see if user data is in cookie (aka. just logged in with GH)
       else {
@@ -45,8 +49,21 @@ define(['jquery',
           this.setCurrentUser(cachedUserData);
           // don't need the cookie anymore since you stored the data in local storage
           this.deleteCookie('gh_login');
+          this.authed = true;
         }
       }
+    },
+
+    addTrackingCookie: function () {
+      if (!this.getCookie(OSUtil.BASIC_TRACKING_KEY)) {
+        // doesn't matter what the value is, so just use a random uuid
+        this.setCookie(OSUtil.BASIC_TRACKING_KEY, '02e70fc4-ceaa-422f-8d87-707f7ef2615c', 60);
+        this.noCookie = true;
+      }
+    },
+
+    isFirstVisit: function () {
+      return !this.authed && this.noCookie;
     },
 
     setUserPic: function () {

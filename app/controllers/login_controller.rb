@@ -2,8 +2,6 @@ class LoginController < ApplicationController
   require 'rest-client'
   require 'json'
 
-  skip_before_filter :verify_authenticity_token
-
   UP_FOR_GRABS_STATE = '924bcad2-2e31-4522-9157-ca239c6e5b3b'
   ON_THE_FENCE_STATE = 'ecbc2679-5789-4ce8-aa82-155f4f964d20'
   LAUNCHED_STATE = 'fc68f489-fa29-4431-a8b0-e2e9f818107e'

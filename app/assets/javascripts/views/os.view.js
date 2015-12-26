@@ -16,7 +16,11 @@ define(['jquery',
       this.postInitialize(options);
     },
 
-    postInitialize: function (options) {}
+    postInitialize: function (options) {},
+
+    showAboutModal: function () {
+      return Session.isFirstVisit();
+    }
 
   });
 

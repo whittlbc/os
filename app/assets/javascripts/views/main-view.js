@@ -877,6 +877,12 @@ define(['jquery',
           }, 300);
         });
       });
+
+      if (this.showAboutModal()) {
+        setTimeout(function () {
+          self.aboutModal.showModal();
+        }, 400);
+      }
     },
 
     renderDropdowns: function () {

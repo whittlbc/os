@@ -162,6 +162,7 @@ define(['jquery',
       this.$el.find('.major-info-project-description > p').css('display', 'inline');
       this.$el.find('.see-all-description').html('See Less');
       this.$el.find('.see-all-description').css('margin-left', '8px');
+      this.$el.find('p.none').hide();
     },
 
     showLessDescription: function () {
@@ -171,6 +172,7 @@ define(['jquery',
       });
       this.$el.find('.see-all-description').html('See All');
       this.$el.find('.see-all-description').css('margin-left', '0');
+      this.$el.find('p.none').hide();
     },
 
     addTags: function (langsFrames) {
@@ -381,6 +383,8 @@ define(['jquery',
         // if no description, say so
         if (_.isEmpty(options.description)) {
           this.$el.find('p.none').show();
+        } else {
+          this.$el.find('p.none').hide();
         }
       }
 
