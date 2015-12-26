@@ -31,8 +31,9 @@ define(['jquery',
       $voteCountEl.html(newVoteCount);
       var $voteCountContainer = this.getVoteCountContainerEl();
       $voteCountContainer.addClass('voted');
+
       var project = new Project();
-      project.commentVote({id: Number(this.id), new_vote_count: newVoteCount, user_uuid: this.currentUser.get('uuid')}, {
+      project.commentVote({comment_uuid: this.uuid, new_vote_count: newVoteCount, user_uuid: this.currentUser.get('uuid')}, {
         success: function (data) {
           Backbone.EventBroker.trigger('updateUpvotedCommentsArray', data);
         }
@@ -43,7 +44,7 @@ define(['jquery',
       this.userPic = data.userPic;
       this.posterGHUsername = data.posterGHUsername;
       this.posterUUID = data.posterUUID;  // use this to check against current user when you make the switch to uuids
-      this.isPoster = this.currentUser.get('gh_username') == data.posterGHUsername;
+      this.isPoster = this.currentUser ? (this.currentUser.get('gh_username') == data.posterGHUsername) : false;
       this.voteCount = data.voteCount;
       this.voted = data.voted;
       this.postTime = OSUtil.getTimeAgo(data.postTime);

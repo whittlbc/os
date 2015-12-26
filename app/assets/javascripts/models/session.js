@@ -28,18 +28,18 @@ define(['jquery',
 
         // if cookie user data exists, set that into local storage and set current user
         if (cachedUserData) {
+          cachedUserData = JSON.parse(decodeURIComponent(this.getCookie('gh_login')));
+
           this.setToStorage(OSUtil.USER_STORAGE_KEY, cachedUserData);
           this.setCurrentUser(cachedUserData);
-
-          // delete the cookie!
-
+          // don't need the cookie anymore since you stored the data in local storage
+          this.deleteCookie('gh_login');
         }
       }
     },
 
     setUserPic: function () {
       var pic = this.currentUser.get('pic');
-
       if (pic) {
         $('#header-user-pic').attr('src', pic);
       }
@@ -80,6 +80,10 @@ define(['jquery',
       return '';
     },
 
+    deleteCookie: function (name) {
+      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    },
+
     setToStorage: function (key, value) {
       var val;
 
@@ -103,6 +107,10 @@ define(['jquery',
       }
 
       return item;
+    },
+
+    deleteFromStorage: function (key) {
+      localStorage.removeItem(key);
     }
 
   });

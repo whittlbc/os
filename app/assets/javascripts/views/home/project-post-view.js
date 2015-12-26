@@ -48,7 +48,7 @@ define(['jquery',
     },
 
     openProjectDetails: function () {
-      Backbone.EventBroker.trigger('open-project', this.id);
+      Backbone.EventBroker.trigger('open-project', this.uuid);
     },
 
     handleVote: function () {
@@ -59,7 +59,7 @@ define(['jquery',
       self.$el.find('.vote-master-container').addClass('voted');
 
       var project = new Project();
-      project.vote({project_uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
+      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
         success: function (data) {
           Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
         }

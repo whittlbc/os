@@ -51,7 +51,6 @@ class ProjectsController < ApplicationController
           :anon => project.anon,
           :post_date => project.created_at.utc.iso8601,
           :description => project.description,
-          :id => project.id,
           :langs_and_frames => project.langs_and_frames,
           :license => project.license,
           :privacy => project.privacy,
@@ -60,7 +59,7 @@ class ProjectsController < ApplicationController
           :status => project.status,
           :title => project.title,
           :subtitle => project.subtitle,
-          :user_id => project.user_id,
+          :user_uuid => project.user.uuid,
           :uuid => project.uuid,
           :voted => user ? user.voted_on_project(project.id) : nil,
           :vote_count => project.vote_count,
@@ -136,9 +135,9 @@ class ProjectsController < ApplicationController
       project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
       client = Octokit::Client.new(:access_token => User.find_by(email: 'benwhittle31@gmail.com').password)
       ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.id)
-      render :json => {:status => 200}
+      render :json => {}, :status => 200
     else
-      render :json => {:status => 500, :message => 'Either sender was nil or project was nil by uuid'}
+      render :json => {:message => 'Either sender was nil or project was nil by uuid'}, :status => 500
     end
   end
 
@@ -152,11 +151,12 @@ class ProjectsController < ApplicationController
         return
       end
 
-      @user = User.find_by(user_uuid: params[:user_uuid])
+      user = User.find_by(user_uuid: params[:user_uuid])
+
       project_data = {
           :title => params[:title],
           :subtitle => params[:subtitle],
-          :user_id => @user.id,
+          :user_id => user.id,
           :uuid => UUIDTools::UUID.random_create.to_s,
           :repo_name => params[:repo_name],
           :description => params[:description],
@@ -168,13 +168,13 @@ class ProjectsController < ApplicationController
           :privacy => params[:privacy]
       }
 
-      @project = Project.new(project_data)
-      @project.save!
+      project = Project.new(project_data)
+      project.save!
 
       contrib_data = {
           :uuid => UUIDTools::UUID.random_create.to_s,
-          :project_id => @project.id,
-          :user_id => @user.id,
+          :project_id => project.id,
+          :user_id => user.id,
           :admin => true
       }
       Contributor.new(contrib_data).save!
@@ -183,9 +183,9 @@ class ProjectsController < ApplicationController
         slackURL = ensureURL(params[:slackURL])
         slack_data = {
             :service => 'Slack',
-            :project_id => @project.id,
+            :project_id => project.id,
             :url => slackURL,
-            :users => [@user.id]
+            :users => [user.id]
         }
         if !params[:slackAPIKey].nil? && !params[:slackAPIKey].empty?
           slack_data[:key] = params[:slackAPIKey]
@@ -195,14 +195,14 @@ class ProjectsController < ApplicationController
 
       if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
         hipChatURL = ensureURL(params[:hipChatURL])
-        Integration.new(service: 'HipChat', project_id: @project.id, url: hipChatURL, users: [@user.id]).save!
+        Integration.new(service: 'HipChat', project_id: project.id, url: hipChatURL, users: [user.id]).save!
       end
 
       if !params[:irc].nil? && !params[:irc].empty?
-        Integration.new(service: 'IRC', project_id: @project.id, irc: params[:irc], users: [@user.id]).save!
+        Integration.new(service: 'IRC', project_id: project.id, irc: params[:irc], users: [user.id]).save!
       end
 
-      render :json => @project
+      render :json => project
     rescue
       render :json => {:message => 'Project creation failed'}, :status => 500
     end
@@ -269,6 +269,7 @@ class ProjectsController < ApplicationController
 
       if !comment.nil?
         comment.update_attributes(is_destroyed: true)
+
         comment.children.map { |child|
           child.update_attributes(is_destroyed: true)
         }
@@ -587,8 +588,8 @@ class ProjectsController < ApplicationController
             :voted => user ? user.voted_on_comment(comment.id) : nil,
             :postTime => comment.created_at.utc.iso8601,
             :text => comment.text,
-            :id => comment.id,
-            :parentID => comment.parent_id,
+            :uuid => comment.uuid,
+            :parentUUID => comment.try(:parent).try(:uuid),
             :feed => comment.feed
           },
           :children => get_comment_children(comment, user)
@@ -613,8 +614,8 @@ class ProjectsController < ApplicationController
                 :voted => user ? user.voted_on_comment(child.id) : nil,
                 :postTime => child.created_at.utc.iso8601,
                 :text => child.text,
-                :id => child.id,
-                :parentID => child.parent_id,
+                :uuid => child.uuid,
+                :parentUUID => child.try(:parent).try(:uuid),
                 :feed => child.feed
             },
             :children => get_comment_children(child, user)
@@ -674,20 +675,32 @@ class ProjectsController < ApplicationController
   def pull_project
     project = Project.find_by(uuid: params[:uuid])
     project.update_attributes(:was_pulled => true)
-    render :json => {:status => 200}
+    render :json => {}, :status => 200
   end
 
   def get_evolution
     project = Project.find_by(uuid: params[:uuid])
-    if !project.nil?
-      render :json => project.evolutions.active.order(:created_at)
+    if project.present?
+      evolutions = project.evolutions.active.order(:created_at).map { |ev|
+        {
+          :uuid => ev.uuid,
+          :project_uuid => project.uuid,
+          :user_uuid => ev.user.uuid,
+          :text => ev.text,
+          :created_at => ev.created_at,
+          :updated_at => ev.updated_at
+        }
+      }
+
+      render :json => evolutions
     else
-      render :json => {:status => 500, :message => 'Could not find project by id'}
+      render :json => {:message => 'Could not find project by id'}, :status => 500
     end
   end
 
   def edit
     project = Project.find_by(uuid: params[:uuid])
+
     if !project.nil?
       attrs_to_update = {}
       integrations = {}
@@ -784,7 +797,7 @@ class ProjectsController < ApplicationController
     if params[:upForGrabs]
       projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.map { |project|
         {
-            :id => project.id,
+            :uuid => project.uuid,
             :title => project.title,
             :subtitle => project.subtitle,
             :description => project.description,
@@ -803,7 +816,7 @@ class ProjectsController < ApplicationController
             :title => highlight_query(project.title, params[:query]),
             :subtitle => highlight_query(project.subtitle, params[:query]),
             :status => project.status,
-            :id => project.id,
+            :uuid => project.uuid,
             :voteCount => project.vote_count
         }
       }

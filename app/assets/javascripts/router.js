@@ -23,7 +23,7 @@ define(['jquery',
       'up-for-grabs': 'upForGrabsRoute',
       'on-the-fence': 'onTheFenceRoute',
       'launched': 'launchedRoute',
-      'projects/:id': 'projectRoute',
+      'projects/:uuid': 'projectRoute',
       '': 'onTheFenceRoute'
     },
 
@@ -33,7 +33,7 @@ define(['jquery',
     },
 
     // ON THE FENCE
-    onTheFenceRoute: function () {
+    onTheFenceRoute: function (something) {
       (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? this.redirectHome() : this.updateHomeView(1);
     },
 
@@ -43,9 +43,9 @@ define(['jquery',
     },
 
     // PROJECT
-    projectRoute: function (id) {
+    projectRoute: function (uuid) {
       $('footer').hide();
-      this.updateProjectView(id);
+      this.updateProjectView(uuid);
     },
 
     updateHomeView: function (feedIndex) {
@@ -60,14 +60,14 @@ define(['jquery',
       });
     },
 
-    updateProjectView: function (id) {
+    updateProjectView: function (uuid) {
       this.mainView = this.mainView || new MainView({ el: '#mainView' });
 
       this.mainView.captureFilters();
 
       this.mainView.render({
         view: OSUtil.PROJECT_PAGE,
-        id: id
+        uuid: uuid
       });
     },
 

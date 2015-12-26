@@ -20,6 +20,7 @@ class UsersController < ApplicationController
 
   def get_all_user_repos
     user = User.find_by(uuid: params[:uuid])
+
     client = Octokit::Client.new(:access_token => user.password)
     repo_list = []
     client.repositories(:user => user.gh_username).each { |repo|

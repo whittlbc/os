@@ -73,11 +73,12 @@ define(['jquery',
       }
     },
 
-    autoSelectUpForGrabsProject: function (projectID) {
+    autoSelectUpForGrabsProject: function (projectUUID) {
       var self = this;
-      this.oldPullFromIdeasID = projectID;
+      this.oldPullFromIdeasUUID = projectUUID;
+
       var project = new Project();
-      project.getUpForGrabsDetails({id: projectID}, {
+      project.getUpForGrabsDetails({uuid: projectUUID}, {
         success: function (data) {
           var options = {
             hideDetailsView: false,
@@ -99,8 +100,8 @@ define(['jquery',
       this.creatingProjectView.show();
     },
 
-    getOldPullFromIdeasID: function () {
-      return this.oldPullFromIdeasID;
+    getOldPullFromIdeasUUID: function () {
+      return this.oldPullFromIdeasUUID;
     },
 
     addClickToBlurListeners: function () {

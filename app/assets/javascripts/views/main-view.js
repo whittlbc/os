@@ -147,15 +147,15 @@ define(['jquery',
 
     launchProject: function () {
       var project = new Project();
-      project.launch({id: this.projectView.projectID}, { success: function () {
+      project.launch({uuid: this.projectView.projectUUID}, { success: function () {
         window.location.reload();
       }});
     },
 
-    openProject: function (id) {
+    openProject: function (uuid) {
       this.cachedRemovedFilterItems = this.footerView.footerDropdown.$removedItems;
       this.cachedFilterType = this.footerView.filterType;
-      window.location.hash = '#projects/' + id;
+      window.location.hash = '#projects/' + uuid;
     },
 
     showMyProjectsModal: function () {
@@ -219,7 +219,7 @@ define(['jquery',
         var project = new Project();
         project.sendInviteEmails({
           user_uuid: self.currentUser.get('uuid'),
-          project_uuid: projectUUID,
+          uuid: projectUUID,
           usernames: usernames
         });
       });
@@ -235,9 +235,9 @@ define(['jquery',
       var self = this;
       var project = new Project();
       project.destroyComment({
-        comment_id: self.commentToDeleteOptions.id,
+        comment_uuid: self.commentToDeleteOptions.uuid,
         user_uuid: self.currentUser.get('uuid'),
-        project_id: self.projectView.projectID,
+        uuid: self.projectView.projectUUID,
         feed: self.commentToDeleteOptions.feed
       }, {
         success: function (comments) {
@@ -259,7 +259,7 @@ define(['jquery',
     deleteProject: function () {
       var self = this;
       var project = new Project();
-      project.destroyProject({id: self.projectView.projectID}, {
+      project.destroyProject({uuid: self.projectView.projectUUID}, {
         success: function () {
           window.location.hash = '#on-the-fence';
           // show tiny success popupchr
@@ -279,7 +279,7 @@ define(['jquery',
 
     handleStarProject: function (bool) {
       this.currentUser.star({
-        project_id: Number(this.projectView.projectID),
+        project_uuid: Number(this.projectView.projectUUID),
         star: bool
       });
     },
@@ -506,7 +506,7 @@ define(['jquery',
       var project = new Project();
       project.respondToRequest({
         requester_uuid: notificationData.requester_uuid,
-        project_uuid: notificationData.project_uuid,
+        uuid: notificationData.project_uuid,
         pending_request_uuid: notificationData.uuid,
         response: answer
       });
@@ -733,11 +733,11 @@ define(['jquery',
 
       if (this.projectView) {
         //this.projectView.$el = this.$el.find('#projectViewContainer');
-        this.projectView.reInitialize(options.id);
+        this.projectView.reInitialize(options.uuid);
       } else {
         this.projectView = new ProjectView({
           el: this.$el.find('#projectViewContainer'),
-          id: options.id
+          uuid: options.uuid
         });
       }
     },

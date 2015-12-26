@@ -31,14 +31,14 @@ define(['jquery',
     initialize: function (options) {
       var self = this;
       var project = new Project();
-      this.projectID = options.id;
+      this.projectUUID = options.uuid;
 
       var data = {
-        id: options.id
+        uuid: options.uuid // project uuid
       };
 
       if (this.currentUser) {
-        data.gh_username = this.currentUser.get('gh_username');
+        data.user_uuid = this.currentUser.get('uuid');
       }
 
       project.fetchDetails(data, {
@@ -68,17 +68,17 @@ define(['jquery',
 
     },
 
-    reInitialize: function (id) {
+    reInitialize: function (uuid) {
       var self = this;
       var project = new Project();
-      self.projectID = id;
+      self.projectUUID = uuid;
 
       var data = {
-        id: id
+        uuid: uuid  // project uuid
       };
 
       if (this.currentUser) {
-        data.gh_username = this.currentUser.get('gh_username');
+        data.user_uuid = this.currentUser.get('uuid');
       }
 
       project.fetchDetails(data, {
@@ -131,7 +131,7 @@ define(['jquery',
       }
 
       var project = new Project();
-      project.edit({id: self.projectID, data: data}, {
+      project.edit({uuid: self.projectUUID, data: data}, {
         success: function () {
           window.location.reload();
         }, error: function () {
@@ -143,7 +143,7 @@ define(['jquery',
     fetchProjectEvolution: function () {
       var self = this;
       var project = new Project();
-      project.getEvolution({id: this.projectID}, {
+      project.getEvolution({uuid: this.projectUUID}, {
         success: function (data) {
           Backbone.EventBroker.trigger('evolution:pass', data);
         }
@@ -156,9 +156,9 @@ define(['jquery',
       var obj = {
         text: data.text,
         poster_uuid: this.currentUser.get('uuid'),
-        project_id: this.projectID,
+        uuid: this.projectUUID,
         feed: data.feed,
-        parent_id: data.parent_id
+        parent_uuid: data.parent_uuid
       };
 
       if (!_.isEmpty(obj.text)) {
@@ -209,12 +209,12 @@ define(['jquery',
       var self = this;
       var project = new Project();
       var data = {
-        project_id: self.projectID,
+        uuid: self.projectUUID,
         feed: feedStatus
       };
 
       if (this.currentUser) {
-        data.gh_username = this.currentUser.get('gh_username');
+        data.user_uuid = this.currentUser.get('uuid');
       }
 
       project.fetchComments(data, {
@@ -286,7 +286,7 @@ define(['jquery',
       var self = this;
       var project = new Project();
       var obj = {
-        project_uuid: self.uuid,
+        uuid: self.uuid,
         user_uuid: self.currentUser.get('uuid')
       };
       project.join(obj, {
@@ -300,7 +300,7 @@ define(['jquery',
       var self = this;
       var project = new Project();
       var obj = {
-        project_uuid: self.uuid,
+        uuid: self.uuid,
         requester_uuid: self.currentUser.get('uuid'),
         asset: int
       };

@@ -189,7 +189,7 @@ define(['jquery',
       var project = new Project();
 
       if (this.currentUser) {
-        obj.gh_username = this.currentUser.get('gh_username');
+        obj.user_uuid = this.currentUser.get('uuid');
       }
 
       project.filteredFeed(obj, {
@@ -306,13 +306,16 @@ define(['jquery',
       this.projectTypeStatus = status; // int value
       this.projectFeedView.setProjectTypeStatus(status);
       if (this.filters == null) {
+
         var data = {
           status: status,
           sortType: this.sortType
         };
+
         if (this.currentUser) {
-          data.gh_username = this.currentUser.get('gh_username');
+          data.user_uuid = this.currentUser.get('uuid');
         }
+
         var project = new Project();
         project.fetchFeedProjects(data, {
           success: function (data) {
@@ -351,14 +354,17 @@ define(['jquery',
     getMoreProjects: function () {
       var self = this;
       if (this.filters == null) {
+
         var data = {
           status: this.projectTypeStatus,
           limit: this.limit,
           sortType: this.sortType
         };
+
         if (this.currentUser) {
-          data.gh_username = this.currentUser.get('gh_username');
+          data.user_uuid = this.currentUser.get('uuid');
         }
+
         var project = new Project();
         project.fetchFeedProjects(data, {
           success: function (data) {

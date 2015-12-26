@@ -2,6 +2,8 @@ class LoginController < ApplicationController
   require 'rest-client'
   require 'json'
 
+  skip_before_filter :verify_authenticity_token
+
   UP_FOR_GRABS_STATE = '924bcad2-2e31-4522-9157-ca239c6e5b3b'
   ON_THE_FENCE_STATE = 'ecbc2679-5789-4ce8-aa82-155f4f964d20'
   LAUNCHED_STATE = 'fc68f489-fa29-4431-a8b0-e2e9f818107e'
@@ -31,7 +33,7 @@ class LoginController < ApplicationController
     response = RestClient.get("https://api.github.com/user?access_token=#{access_token}", :accept => :json)
     body = JSON.parse(response.body)
 
-    User.where(gh_username: body['login']).first_or_initialize { |user|
+    user = User.where(gh_username: body['login']).first_or_initialize { |user|
       user.uuid = UUIDTools::UUID.random_create.to_s
     }
 
@@ -44,17 +46,17 @@ class LoginController < ApplicationController
 
     user.save!
 
-    cookies[:gh_login] = {
-        gh_username: user.gh_username,
-        uuid: user.uuid,
-        pic: user.pic,
-        email: user.email
+    user_info = {
+      gh_username: user.gh_username,
+      uuid: user.uuid,
+      pic: user.pic,
+      email: user.email
     }
 
-    # Get the last page they were on before they logged in
-    previous_location = get_prev_page_from_state(state)
+    cookies['gh_login'] = user_info.to_json
 
-    redirect_to "/##{previous_location}"
+    redirect_to controller: 'home', action: 'index'
+
   end
 
   def get_prev_page_from_state(state)

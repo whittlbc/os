@@ -42,7 +42,7 @@ define(['jquery',
       var requestInfo = options || {};
 
       _.extend(info, {
-        gh_username: this.get('gh_username')
+        uuid: this.get('uuid')
       });
       _.extend(requestInfo, {
         url: this.extension + '/getAllUserRepos',
@@ -56,7 +56,7 @@ define(['jquery',
       var requestInfo = options || {};
 
       _.extend(info, {
-        gh_username: this.get('gh_username')
+        uuid: this.get('uuid')
       });
 
       _.extend(requestInfo, {

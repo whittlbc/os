@@ -347,7 +347,7 @@ define(['jquery',
       this.panel3.render({showCreatingProjectView: true});
       this.hideFooter();
       var projectData = {
-        gh_username: this.currentUser.get('gh_username'),
+        user_uuid: this.currentUser.get('uuid'),
         title: this.newProjectData.title,
         subtitle: this.newProjectData.subtitle,
         repo_name: this.newProjectData.repoName,
@@ -363,7 +363,9 @@ define(['jquery',
         irc: this.newProjectData.irc
       };
       this.disableAddProjectBtn();
+
       var project = new Project();
+
       project.create(projectData, {
         success: function (project) {
           console.log('SUCCESSFULLY CREATED PROJECT!');
@@ -434,11 +436,10 @@ define(['jquery',
     },
 
     inactivateOldUpForGrabsProject: function () {
-      var self = this;
-      var projectID = this.panel3.getOldPullFromIdeasID();
-      if (Number.isInteger(projectID) && projectID >= 0) {
+      var projectUUID = this.panel3.getOldPullFromIdeasUUID();
+      if (projectUUID) {
         var project = new Project();
-        project.pullProject({id: projectID});
+        project.pullProject({uuid: projectUUID});
       }
     },
 
