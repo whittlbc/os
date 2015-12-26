@@ -513,7 +513,9 @@ define(['jquery',
 
     signOut: function () {
       Backbone.EventBroker.trigger('session:signOut');
-      window.location.reload();
+      setTimeout(function () {
+        window.location.reload();
+      }, 5)
     },
 
     hideHeaderDropdowns: function (hideSearchResults) {

@@ -55,7 +55,6 @@ define(['jquery',
       this.feed = data.feed;
       this.hasChildren = data.hasChildren;
       this.commentNumber = data.commentNumber;
-      console.log(this.uuid, 'original');
     },
 
     handleShowReplyInput: function () {

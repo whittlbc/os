@@ -35,6 +35,9 @@ define(['jquery',
 
     getAllLanguages: function () {
       this.allLangs = AllLangs.getAll();
+      this.dropdownItems = this.allLangs.dropdown_items;
+      this.allFrames = this.allLangs.all_frames;
+      this.colors_and_initials = this.allLangs.colors_and_initials;
     },
 
     events: {
@@ -231,7 +234,6 @@ define(['jquery',
     },
 
     showEditMode: function (data) {
-      var self = this;
       data.editMode = true;
       this.render(data);
     },
@@ -260,12 +262,6 @@ define(['jquery',
     cancelEditMode: function (cachedData) {
       var self = this;
       this.render(cachedData);
-    },
-
-    passLanguages: function (data) {
-      this.dropdownItems = data.dropdown_items;
-      this.allFrames = data.all_frames;
-      this.colors_and_initials = data.colors_and_initials;
     },
 
     initLangFramesDropdown: function (langFrames) {
@@ -351,7 +347,23 @@ define(['jquery',
         hasTags: hasTags
       }));
 
-      if (!this.editMode) {
+      if (this.editMode) {
+
+        this.initLangFramesDropdown(options.langs_and_frames);
+        this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
+          onText: 'Open',
+          offText: 'Request'
+        });
+        if (this.upForGrabsType) {
+          this.$el.find('[name="anon-edit"]').bootstrapSwitch({
+            onText: 'Yes',
+            offText: 'No'
+          });
+        }
+        this.$el.find('#projectTypeSelection').val(options.status.toString());
+
+      } else {
+
         if (hasTags) {
           this.addTags(options.langs_and_frames);
         }
@@ -370,20 +382,6 @@ define(['jquery',
         if (_.isEmpty(options.description)) {
           this.$el.find('p.none').show();
         }
-
-      } else {
-        this.initLangFramesDropdown(options.langs_and_frames);
-        this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
-          onText: 'Open',
-          offText: 'Request'
-        });
-        if (this.upForGrabsType) {
-          this.$el.find('[name="anon-edit"]').bootstrapSwitch({
-            onText: 'Yes',
-            offText: 'No'
-          });
-        }
-        this.$el.find('#projectTypeSelection').val(options.status.toString());
       }
 
       this.$el.find('[data-toggle="tooltip"]').tooltip();
