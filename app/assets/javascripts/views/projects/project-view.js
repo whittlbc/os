@@ -28,7 +28,7 @@ define(['jquery',
 
   var ProjectView = OSView.extend({
 
-    initialize: function (options) {
+    postInitialize: function (options) {
       var self = this;
       var project = new Project();
       this.projectUUID = options.uuid;

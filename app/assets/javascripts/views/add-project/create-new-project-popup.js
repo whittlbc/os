@@ -26,7 +26,7 @@ define(['jquery',
 
   var CreateNewProjectPopup = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
 
       Backbone.EventBroker.register({
         'title:updated': 'handleTitleUpdate',
@@ -635,6 +635,7 @@ define(['jquery',
       var self = this;
       this.currentUser.getAllUserRepos({
         success: function (data) {
+          console.log(data);
           setTimeout(function () {
             self.handleUserRepos(data.repos);
           }, 200);

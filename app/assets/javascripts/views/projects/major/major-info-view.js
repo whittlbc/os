@@ -24,7 +24,7 @@ define(['jquery',
 
   var MajorInfoView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
       this.getAllLanguages();
       this.descriptionMaxHeight = 135;
 

@@ -16,7 +16,7 @@ define(['jquery',
 
   var SuggestionsView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
     },
 
     events: {

@@ -23,7 +23,7 @@ define(['jquery',
 
   var ProjectPostView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
       this.tagsExpanded = false;
       this.MAX_TAGS = 8;
     },

@@ -17,7 +17,7 @@ define(['jquery',
 
   var EvolutionFeedView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
     },
 
     events: {

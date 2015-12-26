@@ -222,7 +222,7 @@ class ProjectsController < ApplicationController
 
   def feed
     if params[:user_uuid]
-      user = User.find_by(user_uuid: params[:user_uuid])
+      user = User.find_by(uuid: params[:user_uuid])
     end
     projects_of_type = Project.includes(:user, :comments, :contributors).where(:status => params[:status]).active.map { |project|
       {

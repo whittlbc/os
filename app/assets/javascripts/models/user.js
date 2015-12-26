@@ -38,12 +38,12 @@ define(['jquery',
       return this.sync('postGHCode', this, requestInfo);
     },
 
-    getAllUserRepos: function (info, options) {
+    getAllUserRepos: function (options) {
       var requestInfo = options || {};
-
-      _.extend(info, {
+      var info = {
         uuid: this.get('uuid')
-      });
+      };
+
       _.extend(requestInfo, {
         url: this.extension + '/getAllUserRepos',
         data: info

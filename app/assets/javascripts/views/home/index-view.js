@@ -28,7 +28,7 @@ define(['jquery',
 
   var IndexView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
       master = this;
 
       Backbone.EventBroker.register({

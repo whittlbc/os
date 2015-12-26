@@ -7,12 +7,16 @@ class UsersController < ApplicationController
 
     if user.present?
       # return the stuff not already stored in local storage
-      render :json => {
+
+      # :upvotedProjects => user.upvoted_projects,
+      # :upvotedComments => user.upvoted_comments
+
+      response_hash = {
         :gh_access_token => user.password,
         :notifications => user.get_notifications
-        # :upvotedProjects => user.upvoted_projects,
-        # :upvotedComments => user.upvoted_comments
       }
+
+      render :json => response_hash
     else
       render :json => {}, :status => 500
     end
@@ -52,7 +56,7 @@ class UsersController < ApplicationController
 
       render :json => {}, :status => 200
     else
-      render :json => {:message => 'Could not find user or project'}, :status => 500,
+      render :json => {:message => 'Could not find user or project'}, :status => 500
     end
   end
 

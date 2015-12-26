@@ -48,6 +48,7 @@ define(['jquery',
     setCurrentUser: function (data) {
       this.currentUser = new User(data);
       this.setUserPic();
+      console.log('setCurrentUser', this.currentUser);
     },
 
     getCurrentUser: function () {

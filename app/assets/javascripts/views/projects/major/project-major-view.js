@@ -16,7 +16,7 @@ define(['jquery',
 
   var ProjectMajorView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
     },
 
     events: {},

@@ -6,6 +6,7 @@ define(['jquery',
   'views/projects/project-view',
   'models/os.util',
   'models/project',
+  'models/session',
   'views/modals/create-project-modal',
   'integrations/github',
   'sifter.min',
@@ -34,6 +35,7 @@ define(['jquery',
    ProjectView,
    OSUtil,
    Project,
+   Session,
    CreateProjectModal,
    Github,
    Sifter,
@@ -57,7 +59,7 @@ define(['jquery',
 
   var MainView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
       this.getNonCachedUserInfo();
 
       Backbone.EventBroker.register({
@@ -417,6 +419,7 @@ define(['jquery',
 
     addNewProjectBtnClicked: function () {
       var self = this;
+      console.log('addNewProjectBtnClicked', this.currentUser);
       if (this.currentUser) {
         if (this.lastAddProjectPopupShownForGrab) {
           this.lastAddProjectPopupShownForGrab = false;

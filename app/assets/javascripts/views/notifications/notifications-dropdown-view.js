@@ -14,7 +14,7 @@ define(['jquery',
 
   var NotificationsDropdownView = OSView.extend({
 
-    initialize: function (options) {
+    postInitialize: function (options) {
       options = options || {};
       this.populated = false;
     },

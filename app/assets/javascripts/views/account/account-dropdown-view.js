@@ -13,7 +13,7 @@ define(['jquery',
 
   var AccountDropdownView = OSView.extend({
 
-    initialize: function (options) {
+    postInitialize: function (options) {
       options = options || {};
     },
 

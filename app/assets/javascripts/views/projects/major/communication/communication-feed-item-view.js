@@ -15,7 +15,7 @@ define(['jquery',
 
   var CommunicationFeedItemView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
     },
 
     events: {},
