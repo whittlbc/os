@@ -76,8 +76,6 @@ define(['jquery',
         'send-invites-modal:show': 'showSendInvitesModal',
         'project:star': 'handleStarProject',
         'project:delete': 'showDeleteProjectModal',
-        'updateUpvotedProjectsArray': 'updateUpvotedProjectsArray',
-        'updateUpvotedCommentsArray': 'updateUpvotedCommentsArray',
         'evolution-item:delete': 'showDeleteEvolutionItemModal',
         'invite-gh-contributors': 'getAllContributorsForRepo',
         'force-hide-starred-modal': 'forceHideStarredModal',
@@ -97,6 +95,10 @@ define(['jquery',
     },
 
     events: {},
+
+    resetNotifications: function () {
+      this.notificationsDropdown.populated = false;
+    },
 
     getNonCachedUserInfo: function () {
       var self = this;
@@ -271,14 +273,6 @@ define(['jquery',
       });
     },
 
-    updateUpvotedProjectsArray: function (arr) {
-      this.upvotedProjects = arr;
-    },
-
-    updateUpvotedCommentsArray: function (arr) {
-      this.upvotedComments = arr;
-    },
-
     handleStarProject: function (bool) {
       this.currentUser.star({
         project_uuid: Number(this.projectView.projectUUID),
@@ -345,10 +339,8 @@ define(['jquery',
 
     // either show the login modal or vote on the passed projectPostView
     loginOrProjectVote: function (data) {
-      var self = this;
       if (this.currentUser) {
-        if (!_.contains(this.upvotedProjects, data.projectID)) {
-          this.upvotedProjects.push(data.projectID);
+        if (!data.view.voted) {
           data.view.handleVote();
         }
       } else {
@@ -360,8 +352,7 @@ define(['jquery',
     loginOrCommentVote: function (view) {
       var self = this;
       if (this.currentUser) {
-        if (!_.contains(this.upvotedComments, view.id)) {
-          this.upvotedComments.push(view.id);
+        if (!view.voted) {
           view.handleVote();
         }
       } else {
@@ -521,8 +512,8 @@ define(['jquery',
     },
 
     signOut: function () {
-      document.cookie = 'gh_username=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      window.location = '/';
+      Backbone.EventBroker.trigger('session:signOut');
+      window.location.reload();
     },
 
     hideHeaderDropdowns: function (hideSearchResults) {
@@ -671,7 +662,7 @@ define(['jquery',
       var self = this;
 
       if (this.homeView) {
-        //this.homeView.$el = this.$el.find('#homeViewContainer');
+        this.homeView.$el = this.$el.find('#homeViewContainer');
         this.homeView.resetProps();
       } else {
         this.homeView = new IndexView({
@@ -735,7 +726,7 @@ define(['jquery',
       }
 
       if (this.projectView) {
-        //this.projectView.$el = this.$el.find('#projectViewContainer');
+        this.projectView.$el = this.$el.find('#projectViewContainer');
         this.projectView.reInitialize(options.uuid);
       } else {
         this.projectView = new ProjectView({
@@ -934,7 +925,7 @@ define(['jquery',
 
     renderSearchbar: function () {
       this.searchView = new SearchContainerView({
-        el: this.$el.find('#mainSearchBar')
+        el: '#mainSearchBar'
       });
 
       this.searchView.render();

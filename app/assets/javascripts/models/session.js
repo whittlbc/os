@@ -15,6 +15,16 @@ define(['jquery',
 
   var SessionModel = Backbone.Model.extend({
 
+    initialize: function () {
+      Backbone.EventBroker.register({
+        'session:signOut': 'signOut'
+      }, this);
+    },
+
+    signOut: function () {
+      this.deleteFromStorage(OSUtil.USER_STORAGE_KEY);
+    },
+
     checkForSession: function () {
       var cachedUserData = this.getFromStorage(OSUtil.USER_STORAGE_KEY);
 
@@ -48,7 +58,6 @@ define(['jquery',
     setCurrentUser: function (data) {
       this.currentUser = new User(data);
       this.setUserPic();
-      console.log('setCurrentUser', this.currentUser);
     },
 
     getCurrentUser: function () {

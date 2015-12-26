@@ -52,10 +52,10 @@ define(['jquery',
       });
       searchResultView.$el.click(function (e) {
         e.stopPropagation();
-        if (window.location.hash == ('#projects/' + data.id)) {
+        if (window.location.hash == ('#projects/' + data.uuid)) {
           window.location.reload();
         } else {
-          window.location.hash = '#projects/' + data.id;
+          window.location.hash = '#projects/' + data.uuid;
         }
       });
       searchResultView.render();

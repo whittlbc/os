@@ -54,16 +54,21 @@ define(['jquery',
 
       this.mainView.passActiveHomeIndex(feedIndex);
 
-      this.mainView.showHomeView ? this.mainView.changeHomeFeedType(feedIndex) : this.mainView.render({
-        view: OSUtil.HOME_PAGE,
-        index: feedIndex
-      });
+      if (this.mainView.showHomeView) {
+        this.mainView.changeHomeFeedType(feedIndex);
+      } else {
+        this.mainView.resetNotifications();
+        this.mainView.render({
+          view: OSUtil.HOME_PAGE,
+          index: feedIndex
+        });
+      }
     },
 
     updateProjectView: function (uuid) {
       this.mainView = this.mainView || new MainView({ el: '#mainView' });
-
       this.mainView.captureFilters();
+      this.mainView.resetNotifications();
 
       this.mainView.render({
         view: OSUtil.PROJECT_PAGE,

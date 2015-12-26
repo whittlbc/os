@@ -158,7 +158,7 @@ define(['jquery',
         poster_uuid: this.currentUser.get('uuid'),
         uuid: this.projectUUID,
         feed: data.feed,
-        parent_uuid: data.parent_uuid
+        parent_uuid: data.parentUUID
       };
 
       if (!_.isEmpty(obj.text)) {

@@ -14,9 +14,6 @@ define(['jquery',
 
 	var TeamFeedItemView = CommunicationFeedItemView.extend({
 
-        initialize: function () {
-        },
-
         events: {
         },
 

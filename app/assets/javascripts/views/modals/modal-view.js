@@ -1,29 +1,28 @@
 define(['jquery',
-	'backbone',
-	'underscore'
-    ], function ($,
-     Backbone,
-     _) {
-	'use strict';
+  'backbone',
+  'underscore'
+], function ($,
+   Backbone,
+   _) {
+  'use strict';
 
-	var ModalView = Backbone.View.extend({
+  var ModalView = Backbone.View.extend({
 
-		initialize: function () {
-		},
+    initialize: function () {
+    },
 
-		events: {},
+    events: {},
 
-        showModal: function () {
-            this.$modal.modal('show');
-            console.log(this.$modal);
-        },
+    showModal: function () {
+      this.$modal.modal('show');
+    },
 
-        hideModal: function () {
-            this.$modal.modal('hide');
-        }
+    hideModal: function () {
+      this.$modal.modal('hide');
+    }
 
-	});
+  });
 
-	return ModalView;
+  return ModalView;
 
 });

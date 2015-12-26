@@ -26,6 +26,7 @@ define(['jquery',
 
     handleVote: function () {
       var self = this;
+      this.voted = true;
       var $voteCountEl = this.getVoteCountEl();
       var newVoteCount = Number($voteCountEl.html()) + 1;
       $voteCountEl.html(newVoteCount);
@@ -44,16 +45,17 @@ define(['jquery',
       this.userPic = data.userPic;
       this.posterGHUsername = data.posterGHUsername;
       this.posterUUID = data.posterUUID;  // use this to check against current user when you make the switch to uuids
-      this.isPoster = this.currentUser ? (this.currentUser.get('gh_username') == data.posterGHUsername) : false;
+      this.isPoster = this.currentUser ? (this.currentUser.get('uuid') == data.posterUUID) : false;
       this.voteCount = data.voteCount;
       this.voted = data.voted;
       this.postTime = OSUtil.getTimeAgo(data.postTime);
       this.text = data.text;
-      this.id = data.id;
-      this.parentID = data.parentID;
+      this.uuid = data.uuid;
+      this.parentUUID = data.parentUUID;
       this.feed = data.feed;
       this.hasChildren = data.hasChildren;
       this.commentNumber = data.commentNumber;
+      console.log(this.uuid, 'original');
     },
 
     handleShowReplyInput: function () {
@@ -131,7 +133,7 @@ define(['jquery',
           Backbone.EventBroker.trigger('comment:add', {
             text: text,
             feed: self.feed,
-            parent_id: self.id
+            parentUUID: self.uuid
           });
         }
       });
@@ -142,7 +144,7 @@ define(['jquery',
       });
 
       $trashcan.click(function () {
-        Backbone.EventBroker.trigger('comment:delete', {id: self.id, feed: self.feed});
+        Backbone.EventBroker.trigger('comment:delete', {uuid: self.uuid, feed: self.feed});
       });
     },
 

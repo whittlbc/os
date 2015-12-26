@@ -14,9 +14,6 @@ define(['jquery',
 
 	var AdminFeedItemView = CommunicationFeedItemView.extend({
 
-        initialize: function () {
-        },
-
         events: {
         },
 

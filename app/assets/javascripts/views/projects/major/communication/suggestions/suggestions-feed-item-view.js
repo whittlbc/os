@@ -14,9 +14,6 @@ define(['jquery',
 
 	var SuggestionsFeedItemView = CommunicationFeedItemView.extend({
 
-        initialize: function () {
-        },
-
         events: {
         },
 

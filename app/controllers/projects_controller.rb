@@ -627,13 +627,13 @@ class ProjectsController < ApplicationController
   end
 
   def comment_vote
-    comment = Comment.find_by(comment_uuid: params[:comment_uuid])
+    comment = Comment.find_by(uuid: params[:comment_uuid])
 
     if !comment.nil?
       comment.update_attributes(:vote_count => params[:new_vote_count])
       user = User.find_by(uuid: params[:user_uuid])
       if !user.nil?
-        user.update_attributes(:upvoted_comments => user.upvoted_comments + comment.id)
+        user.update_attributes(:upvoted_comments => user.upvoted_comments + [comment.id])
       end
       render :json => user.upvoted_comments
     else

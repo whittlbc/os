@@ -15,9 +15,6 @@ define(['jquery',
 
 	var GeneralFeedItemView = CommunicationFeedItemView.extend({
 
-		initialize: function () {
-		},
-
 		events: {
         },
 
