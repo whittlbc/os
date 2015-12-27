@@ -1,4 +1,4 @@
-define(['jquery', 'backbone', 'moment', 'backbone-eventbroker', 'timeago'], function ($, Backbone, moment) {
+define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, moment) {
   'use strict';
 
   var OSUtil = {

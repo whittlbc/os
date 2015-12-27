@@ -8,6 +8,9 @@ paths:
     toggle: 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min'
     timeago: 'https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.3/jquery.timeago.min'
     moment: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min'
+    backbone-eventbroker: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/backbone-eventbroker'
+    selectize: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/selectize'
+    tabs: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/tabs'
 shim:
     jquery:
         exports: '$'
@@ -34,6 +37,16 @@ shim:
     moment:
         deps: ['jquery']
         exports: 'moment'
+    backbone-eventbroker:
+        deps: ['jquery']
+        exports: 'backbone-eventbroker'
+    selectize:
+        deps: ['jquery']
+        exports: 'selectize'
+    tabs:
+        deps: ['jquery']
+        exports: 'tabs'
+
 modules:
     - name: 'application'
 

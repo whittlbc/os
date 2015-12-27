@@ -44,13 +44,13 @@ define(['jquery',
                     var options = {};
 
                     if (chatFilterItemView.name === 'Slack') {
-                        options.image = 'images/slack_icon.svg';
+                        options.image = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_icon.svg';
                     }
                     else if (chatFilterItemView.name === 'HipChat') {
-                        options.image = 'images/hipchat.svg';
+                        options.image = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.svg';
                     }
                     else {
-                        options.image = 'images/bubble.png';
+                        options.image = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/bubble.png';
                     }
 
                     chatFilterItemView.render(options);
@@ -99,13 +99,13 @@ define(['jquery',
             var options = {};
 
             if (data.value === 'Slack') {
-                options.image = 'images/slack_icon.svg';
+                options.image = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_icon.svg';
             }
             else if (data.value === 'HipChat') {
-                options.image = 'images/hipchat.svg';
+                options.image = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.svg';
             }
             else {
-                options.image = 'images/bubble.png';
+                options.image = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/bubble.png';
             }
 
             chatFilterItemView.render(options);

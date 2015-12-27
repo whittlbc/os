@@ -15,7 +15,8 @@ define(['jquery',
    AllLangs,
    MoreFiltersDropup,
    SVG,
-   FooterViewTpl) {
+   FooterViewTpl
+) {
   'use strict';
 
   var FooterView = Backbone.View.extend({

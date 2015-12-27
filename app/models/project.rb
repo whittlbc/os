@@ -32,7 +32,7 @@ class Project < ActiveRecord::Base
 
   def get_owner_pic
     if self.is_anon?
-      'images/anon.png'
+      'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/anon.png'
     else
       self.try(:user).try(:pic)
     end
