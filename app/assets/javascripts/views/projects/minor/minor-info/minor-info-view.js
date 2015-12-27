@@ -19,6 +19,8 @@ define(['jquery',
    MinorInfoViewTpl) {
   'use strict';
 
+  console.log('');
+
   var MinorInfoView = Backbone.View.extend({
 
     initialize: function () {
