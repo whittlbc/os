@@ -1,0 +1,130 @@
+{{^hideDetailsView}}
+<div class="enter-details-message">Enter project details:</div>
+
+<!--Title-->
+<div class="add-project-title-container">
+    <div class="project-creation-validation-error">* Please enter a project title</div>
+    <input name="add-project-title" placeholder="Title" type="text" value="{{title}}"/>
+</div>
+
+<!--Subtitle-->
+<div class="add-project-subtitle-container">
+    <div class="project-creation-validation-error">* Please enter a short description for this project</div>
+    <input name="add-project-subtitle" placeholder="Subtitle" type="text" value="{{subtitle}}"/>
+</div>
+
+<!--Description-->
+<div class="add-project-description-container">
+    <textarea name="add-project-description" placeholder="Description" value="{{description}}">{{description}}</textarea>
+</div>
+
+<!--Languages and Frameworks-->
+<div class="add-project-langs-frames-container">
+    <div class="add-project-langs-frames-text">What languages/frameworks are involved?</div>{{
+    }}<div class="add-project-langs-frames-selection-container">
+        <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
+    </div>
+</div>
+
+<!--Anon-->
+{{#showAnon}}
+<div class="add-project-anon-container">
+    <div class="add-project-anon-text">Want to post anonymously?</div>{{
+    }}<div class="add-project-anon-choices">
+        <div class="add-project-anon-choice-container">
+            <div id="add-project-anon-yes" name="anon-yes" class="add-project-anon-choice {{#postAnon}}active-anon{{/postAnon}}">Yes</div>
+        </div>{{
+        }}<div class="add-project-anon-choice-container">
+            <div id="add-project-anon-no" name="anon-no" class="add-project-anon-choice {{^postAnon}}active-anon{{/postAnon}}">No</div>
+        </div>
+    </div>
+</div>
+{{/showAnon}}
+
+{{#onTheFenceOrLaunchedNoPullFromIdeas}}
+<!--Repo Name-->
+<div class="add-project-repo-name-container">
+    <div class="add-project-repo-name-text">What is the name of your Github repo?</div>{{
+    }}<div class="add-project-repo-name-input-container">
+        <input name="add-project-repo-name" placeholder="Github repo name" type="text" value="{{repoName}}"/>
+    </div>
+</div>
+
+<div class="send-invites-question-container">
+    <div class="question">Send invitations to current contributors of this repository?</div>{{
+    }}<div class="answers-container">
+        <div class="add-project-send-invites-choice-container">
+            <div id="add-project-send-invites-yes" name="send-invites-yes" class="add-project-send-invites-choice {{#sendInvites}}active-send-invites{{/sendInvites}}">Yes</div>
+        </div>{{
+        }}<div class="add-project-send-invites-choice-container">
+            <div id="add-project-send-invites-no" name="send-invites-no" class="add-project-send-invites-choice {{^sendInvites}}active-send-invites{{/sendInvites}}">No</div>
+        </div>
+    </div>
+</div>
+
+<!--License-->
+<div class="add-project-license-container">
+    <div class="add-project-license-text">What license are you proposing?</div>{{
+    }}<div class="add-project-license-selection-container">
+        <select id="add-project-license-selection" placeholder="License"></select>
+    </div>
+</div>
+{{/onTheFenceOrLaunchedNoPullFromIdeas}}
+
+{{#showPrivacy}}
+<!--Privacy-->
+<div class="add-project-privacy-container">
+    <div class="add-project-privacy-text">What will your project's privacy be?</div>{{
+    }}<div class="add-project-privacy-choices">
+        <div class="add-project-privacy-choice-container">
+            <div id="add-project-privacy-request" name="request" class="add-project-privacy-choice {{#requestPrivacy}}active-privacy{{/requestPrivacy}}">Request</div>
+        </div>{{
+        }}<div class="add-project-privacy-choice-container">
+            <div id="add-project-privacy-open" name="open" class="add-project-privacy-choice {{#openPrivacy}}active-privacy{{/openPrivacy}}">Open</div>
+        </div>
+    </div>
+</div>
+{{/showPrivacy}}
+
+{{#showIntegrations}}
+<!--Integrations-->
+<div class="add-project-integrations-container">
+    <div class="question">Any team communication forums?</div>
+    <!--IRC-->
+    <div class="integration-container" id="detailsViewIRCContainer">
+        <div class="irc">IRC</div>{{
+        }}<div id="ircChannel" class="forum-link-container">
+        <input name="irc" placeholder="Channel (e.g. #myChannel)" type="text" value="{{ircChannel}}"/>
+    </div>{{
+        }}<div id="ircNetworkContainer">
+            <select id="ircNetwork" placeholder="Network"></select>
+        </div>
+    </div>
+    <!--Slack-->
+    <div class="integration-container" id="slackIntegrationContainer">
+        <div class="logo-container">
+            <img id="slack" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_logo.png"/>
+        </div>
+        <div class="forum-link-container">
+            <input name="slack" placeholder="Enter Slack team URL" type="text" value="{{slackURL}}"/>
+        </div>
+        <div class="or">OR</div>
+        <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
+    </div>
+    <!--HipChat-->
+    <div class="integration-container">
+        <div class="logo-container">
+            <img id="hipchat" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.png"/>
+        </div>
+        <div class="forum-link-container">
+            <input name="hipchat" placeholder="Enter HipChat team URL" type="text" value="{{hipChatURL}}"/>
+        </div>
+        <div class="or">OR</div>
+        <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
+    </div>
+</div>
+{{/showIntegrations}}
+
+{{/hideDetailsView}}
+
+

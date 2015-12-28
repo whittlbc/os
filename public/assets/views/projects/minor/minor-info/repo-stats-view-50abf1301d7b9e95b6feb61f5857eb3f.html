@@ -1,0 +1,14 @@
+{{^showSpinner}}
+<div id="minorInfoRepoInfo">
+    <div id="minorInfoLastCommitContainer">last updated <span class="highlighted-minor-info">{{lastUpdated}}</span></div>
+    <div id="minorInfoStarCountContainer"><span class="octicon octicon-star"></span><span class="highlighted-minor-info">{{starCount}}</span><span class="repo-stat-name"> stars</span></div>
+    <div id="minorInfoWatchCountContainer"><span class="octicon octicon-eye"></span><span class="highlighted-minor-info">{{watchCount}}</span><span class="repo-stat-name"> watching</span></div>
+    <div id="minorInfoForksContainer"><span class="octicon octicon-repo-forked"></span><span class="highlighted-minor-info">{{forks}}</span><span class="repo-stat-name"> forks</span></div>
+    <div id="minorInfoOpenPRContainer"><span class="octicon octicon-git-pull-request"></span><a href="{{openPRLink}}" target="_blank"><span class="highlighted-minor-info">{{openPR}} open</span><span class="repo-stat-name"> pull requests</span></a></div>
+    <div id="minorInfoClosedPRContainer"><span class="octicon octicon-check"></span><a href="{{closedPRLink}}" target="_blank"><span class="highlighted-minor-info">{{closedPR}} closed</span><span class="repo-stat-name"> pull requests</span></a></div>
+    <div id="minorInfoOpenIssuesContainer"><span class="octicon octicon-issue-opened"></span><a href="{{issuesLink}}" target="_blank"><span class="highlighted-minor-info">{{openIssues}}</span><span class="repo-stat-name"> open issues</span></a></div>
+</div>
+{{/showSpinner}}
+{{#showSpinner}}
+<div id="repoStatsLoading"></div>
+{{/showSpinner}}
