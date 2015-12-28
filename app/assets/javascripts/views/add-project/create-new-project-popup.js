@@ -342,10 +342,11 @@ define(['jquery',
       var self = this;
       this.createBtnClickCount = 0;
       this.hideSlideOutConfirmCreateMessage();
+      this.hideFooter();
       this.newProjectData = this.panel3.detailsView.getData();
       this.renderBreadCrumbView(true);
       this.panel3.render({showCreatingProjectView: true});
-      this.hideFooter();
+
       var projectData = {
         user_uuid: this.currentUser.get('uuid'),
         title: this.newProjectData.title,
@@ -362,14 +363,14 @@ define(['jquery',
         hipChatURL: this.newProjectData.hipChatURL,
         irc: this.newProjectData.irc
       };
+
       this.disableAddProjectBtn();
 
       var project = new Project();
-
       project.create(projectData, {
         success: function (project) {
           console.log('SUCCESSFULLY CREATED PROJECT!');
-          self.showProjectCreationSuccess(project);
+          self.showProjectCreationSuccess(project.uuid);
         }, error: function () {
           console.log('ERROR CREATING PROJECT');
           self.showProjectCreationError();
@@ -392,7 +393,8 @@ define(['jquery',
       $confirmMessage.css('opacity', 0);
     },
 
-    showProjectCreationSuccess: function (project) {
+    showProjectCreationSuccess: function (newProjectUUID) {
+      console.log(newProjectUUID);
       var self = this;
       if (this.masterMap[this.masterMap['selectedType']]['selectedSource'] == OSUtil.SOURCE_MAP['pull-from-ideas']) {
         this.inactivateOldUpForGrabsProject();
@@ -400,9 +402,9 @@ define(['jquery',
       setTimeout(function () {
         Backbone.EventBroker.trigger('create-project-modal:hide');
         if (self.newProjectData.sendInvites === true) {
-          Backbone.EventBroker.trigger('invite-gh-contributors', project.uuid);
+          Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
         }
-        window.location.hash = '#projects/' + project.id;
+        window.location.hash = '#projects/' + newProjectUUID;
         setTimeout(function () {
           self.resetPopup();
         }, 200);
@@ -444,11 +446,13 @@ define(['jquery',
     },
 
     showFooter: function () {
-      this.$el.find('.modal-footer').css('visibility', 'visible');
+      this.$el.find('.modal-footer > .bottom-nav-back').show();
+      this.$el.find('.modal-footer > .bottom-nav-create-btn').show();
     },
 
     hideFooter: function () {
-      this.$el.find('.modal-footer').css('visibility', 'hidden');
+      this.$el.find('.modal-footer > .bottom-nav-back').hide();
+      this.$el.find('.modal-footer > .bottom-nav-create-btn').hide();
     },
 
     disableAddProjectBtn: function () {

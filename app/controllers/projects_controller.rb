@@ -151,7 +151,7 @@ class ProjectsController < ApplicationController
         return
       end
 
-      user = User.find_by(user_uuid: params[:user_uuid])
+      user = User.find_by(uuid: params[:user_uuid])
 
       project_data = {
           :title => params[:title],
@@ -202,7 +202,7 @@ class ProjectsController < ApplicationController
         Integration.new(service: 'IRC', project_id: project.id, irc: params[:irc], users: [user.id]).save!
       end
 
-      render :json => project
+      render :json => {:uuid => project.uuid}
     rescue
       render :json => {:message => 'Project creation failed'}, :status => 500
     end

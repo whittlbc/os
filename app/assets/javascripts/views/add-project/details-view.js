@@ -365,6 +365,9 @@ define(['jquery',
       this.title = data.description; // most relevant actually to be the title
       this.langsFrames = data.languages;
       this.repoName = data.name;
+      if (this.repoName) {
+        this.showInviteUsersQuestion();
+      }
     },
 
     passTags: function (data) {
@@ -402,6 +405,11 @@ define(['jquery',
     },
 
     getData: function () {
+
+      if (_.isEmpty(this.irc.channel) || _.isEmpty(this.irc.network)) {
+        this.irc = null;
+      }
+
       return {
         title: this.title,
         subtitle: this.subtitle,
@@ -514,7 +522,6 @@ define(['jquery',
         ircChannel: this.irc && this.irc.channel ? this.irc.channel : null
       }));
 
-
       if (this.dropdownItems && !options.hideDetailsView) {
         this.initLangFramesDropdown();
         if (this.langsFrames != null) {
@@ -535,41 +542,45 @@ define(['jquery',
         this.initIRCNetworkDropdown();
       }
 
-      this.findAPIKeyBubble = new TextInfoBubble({
-        el: '#findAPIKeyBubble'
-      });
+      if (this.repoName) {
+        this.showInviteUsersQuestion();
+      }
 
-      this.findAPIKeyBubble.render({
-        text: 'Visit <a href="https://api.slack.com/web" target="_blank">api.slack.com/web</a> and scroll to the bottom of the page. If the key doesn\'t already exist, you can create one there.'
-      });
+      //this.findAPIKeyBubble = new TextInfoBubble({
+      //  el: '#findAPIKeyBubble'
+      //});
+      //
+      //this.findAPIKeyBubble.render({
+      //  text: 'Visit <a href="https://api.slack.com/web" target="_blank">api.slack.com/web</a> and scroll to the bottom of the page. If the key doesn\'t already exist, you can create one there.'
+      //});
 
-      this.$infoBubble = this.findAPIKeyBubble.$el;
-      this.$findKeyText = this.$el.find('.api-key-find > span');
+      //this.$infoBubble = this.findAPIKeyBubble.$el;
+      //this.$findKeyText = this.$el.find('.api-key-find > span');
 
       // Hover listener for user info bubble
-      this.$findKeyText.hover(function () {
-        if (!self.bubbleShown) {
-          self.$infoBubble.show();
-          self.bubbleShown = true;
-        }
-      }, function () {
-        if (self.bubbleShown) {
-          self.$infoBubble.hide();
-          self.bubbleShown = false;
-        }
-      });
-
-      this.$infoBubble.hover(function () {
-        if (!self.bubbleShown) {
-          self.$infoBubble.show();
-          self.bubbleShown = true;
-        }
-      }, function () {
-        if (self.bubbleShown) {
-          self.$infoBubble.hide();
-          self.bubbleShown = false;
-        }
-      });
+      //this.$findKeyText.hover(function () {
+      //  if (!self.bubbleShown) {
+      //    self.$infoBubble.show();
+      //    self.bubbleShown = true;
+      //  }
+      //}, function () {
+      //  if (self.bubbleShown) {
+      //    self.$infoBubble.hide();
+      //    self.bubbleShown = false;
+      //  }
+      //});
+      //
+      //this.$infoBubble.hover(function () {
+      //  if (!self.bubbleShown) {
+      //    self.$infoBubble.show();
+      //    self.bubbleShown = true;
+      //  }
+      //}, function () {
+      //  if (self.bubbleShown) {
+      //    self.$infoBubble.hide();
+      //    self.bubbleShown = false;
+      //  }
+      //});
 
       this.addStopPropagationListeners();
     }
