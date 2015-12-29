@@ -56,6 +56,14 @@ $light-gray: #C4C5CA;
     }
   }
 
+  .selectize-dropdown-content {
+
+    div.active {
+      background-color: #F1F2FC;
+    }
+  }
+
+
   .selectize-control.multi,
   input[name="edit-subtitle"] {
     width: 70%;
@@ -515,6 +523,11 @@ $light-gray: #C4C5CA;
   background-color: #D5D5DB;
   color: white;
   pointer-events: none;
+
+  .fa {
+    position: relative;
+    top: 2px;
+  }
 }
 
 .major-info-project-description.edit-mode {
@@ -969,6 +982,11 @@ $light-gray: #C4C5CA;
   color: white;
   pointer-events: none;
   float: left;
+
+  .fa {
+    position: relative;
+    top: 2px;
+  }
 }
 //
 //.minorInfoIntegrationContainer {
@@ -1165,6 +1183,10 @@ $light-gray: #C4C5CA;
 
   .selectize-dropdown-content {
     max-height: 95px !important;
+
+    div.active {
+      background-color: #EEEFF3;
+    }
   }
 
 }

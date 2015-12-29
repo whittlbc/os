@@ -616,6 +616,10 @@ textarea[name="add-project-description"] {
 
   .selectize-dropdown-content {
     max-height: 95px !important;
+
+    div.active {
+      background-color: #EEEFF3;
+    }
   }
 }
 
