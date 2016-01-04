@@ -40,7 +40,7 @@ define(['jquery',
 
     checkIfUserAuthed: function (e) {
       e.stopPropagation();
-      Backbone.EventBroker.trigger('project:vote', {view: this, projectID: this.id});
+      Backbone.EventBroker.trigger('project:vote', this);
     },
 
     errorHandler: function (resp, status, xhr) {
@@ -142,7 +142,7 @@ define(['jquery',
 
       this.$el.find('.grab-btn').click(function (e) {
         e.stopPropagation();
-        Backbone.EventBroker.trigger('pull-project', self.id);
+        Backbone.EventBroker.trigger('pull-project', self.uuid);
       });
 
       this.$el.find('.tag-container').hover(function () {

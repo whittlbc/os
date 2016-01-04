@@ -498,8 +498,9 @@ define(['jquery',
 
       var hideDetailsView = options.hideDetailsView;
       var showRepoNameAndLicense = this.checkIfShowRepoNameAndLicense();
-      var showIntegrations = this.selectedType != OSUtil.TYPE_MAP['up-for-grabs'];
-      var showPrivacy = this.selectedType == OSUtil.TYPE_MAP['on-the-fence'] || this.selectedType == OSUtil.TYPE_MAP['launched'];
+
+      var showPrivacy = this.selectedType != OSUtil.TYPE_MAP['up-for-grabs'];
+      var showIntegrations = showPrivacy;
 
       this.$el.html(DetailsViewTpl({
         onTheFenceOrLaunchedNoPullFromIdeas: showRepoNameAndLicense,

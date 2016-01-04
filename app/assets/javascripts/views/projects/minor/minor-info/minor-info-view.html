@@ -12,6 +12,7 @@
     {{#editMode}}
     <span class="edit-mode-info-label">License:</span>
     <select id="licenseTypeSelection">
+        <option value="none"></option>
         <option value="MIT">MIT</option>
         <option value="GPL">GPL</option>
         <option value="BSD">BSD</option>
@@ -40,13 +41,14 @@
 <div id="contributorsView"></div>
 {{/editMode}}
 {{#showIntegrations}}
-<div class="minor-info-subsection-title">Team Communication</div>
-{{#hasSlack}}
-<div class="minorInfoIntegrationContainer {{#editMode}}auto-height{{/editMode}}">
-    <div class="minor-info-integration-logo-container">
-        <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_logo.png">
-        {{^editMode}}
-        <span class="linebreak"></span>
+<div id="integrationsContainer">
+    <div class="minor-info-subsection-title">Team Communication</div>
+    {{#hasSlack}}
+    <div class="minorInfoIntegrationContainer {{#editMode}}auto-height{{/editMode}}">
+        <div class="minor-info-integration-logo-container">
+            <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_logo.png">
+            {{^editMode}}
+            <span class="linebreak"></span>
         <span class="integration-link">
             {{^isContributor}}
             <i class="fa fa-check"></i>
@@ -58,19 +60,19 @@
             {{/slackAccepted}}
             {{/isContributor}}
         </span>
-        {{/editMode}}
-        {{#editMode}}
-        <input type="text" name="edit-slack" placeholder="Team URL" value="{{slackTeamName}}"/>
-        {{/editMode}}
+            {{/editMode}}
+            {{#editMode}}
+            <input type="text" name="edit-slack" placeholder="Team URL" value="{{slackTeamName}}"/>
+            {{/editMode}}
+        </div>
     </div>
-</div>
-{{/hasSlack}}
-{{#hasHipChat}}
-<div class="minorInfoIntegrationContainer">
-    <div class="minor-info-integration-logo-container {{^hasSlack}}add-top-margin{{/hasSlack}}" id="hipChatContainer">
-        <img class="minor-info-hipchat-logo" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.png">
-        {{^editMode}}
-        <span class="linebreak"></span>
+    {{/hasSlack}}
+    {{#hasHipChat}}
+    <div class="minorInfoIntegrationContainer">
+        <div class="minor-info-integration-logo-container {{^hasSlack}}add-top-margin{{/hasSlack}}" id="hipChatContainer">
+            <img class="minor-info-hipchat-logo" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.png">
+            {{^editMode}}
+            <span class="linebreak"></span>
         <span class="integration-link" id="hipChatSpan">
             {{^isContributor}}
             <i class="fa fa-check"></i>
@@ -82,21 +84,21 @@
             {{/hipchatAccepted}}
             {{/isContributor}}
         </span>
-        {{/editMode}}
-        {{#editMode}}
-        <input type="text" placeholder="Team URL" name="edit-hipchat" value="{{hipChatTeamName}}"/>
-        {{/editMode}}
-    </div>
-</div>
-{{/hasHipChat}}
-{{#hasIRC}}
-<div class="minorInfoIntegrationContainer">
-    <div class="minor-info-integration-logo-container {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}} {{#editMode}}edit{{/editMode}}" id="ircContainer">
-        <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}">
-            <i class="fa fa-comment-o"></i>IRC
+            {{/editMode}}
+            {{#editMode}}
+            <input type="text" placeholder="Team URL" name="edit-hipchat" value="{{hipChatTeamName}}"/>
+            {{/editMode}}
         </div>
-        {{^editMode}}
-        <span class="linebreak"></span>
+    </div>
+    {{/hasHipChat}}
+    {{#hasIRC}}
+    <div class="minorInfoIntegrationContainer">
+        <div class="minor-info-integration-logo-container {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}} {{#editMode}}edit{{/editMode}}" id="ircContainer">
+            <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}">
+                <i class="fa fa-comment-o"></i>IRC
+            </div>
+            {{^editMode}}
+            <span class="linebreak"></span>
         <span class="integration-link">
             {{^isContributor}}
             <i class="fa fa-check"></i>
@@ -105,14 +107,15 @@
             <span class="irc-channel-text">{{ircChannel}}{{#hasIRCNetwork}}<span> ({{ircNetwork}})</span>{{/hasIRCNetwork}}</span>
             {{/isContributor}}
         </span>
-        {{/editMode}}
-        {{#editMode}}
-        <input type="text" placeholder="Channel" name="edit-irc" value="{{ircChannel}}"/>
-        <select id="editIRCNetwork" placeholder="Network"></select>
-        {{/editMode}}
+            {{/editMode}}
+            {{#editMode}}
+            <input type="text" placeholder="Channel" name="edit-irc" value="{{ircChannel}}"/>
+            <select id="editIRCNetwork" placeholder="Network"></select>
+            {{/editMode}}
+        </div>
     </div>
+    {{/hasIRC}}
 </div>
-{{/hasIRC}}
 {{/showIntegrations}}
 {{#showRepoStats}}
 <div class="minor-info-subsection-title" id="repoStatsSubsectionTitle">Repo Stats</div>

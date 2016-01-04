@@ -29,7 +29,7 @@ define(['jquery',
       this.descriptionMaxHeight = 135;
 
       Backbone.EventBroker.register({
-        're-render-for-cancel-edit-mode': 'cancelEditMode'
+        're-render-for-cancel-edit-mode': 'cancelEditMode',
       }, this);
     },
 
@@ -91,7 +91,7 @@ define(['jquery',
         Backbone.EventBroker.trigger('project:save-edit');
       } else {
         if (!this.pendingProjectRequest && !this.isContributor) {
-          this.upForGrabsType ? Backbone.EventBroker.trigger('pull-project', this.projectID) : Backbone.EventBroker.trigger('project:join');
+          this.upForGrabsType ? Backbone.EventBroker.trigger('pull-project', this.uuid) : Backbone.EventBroker.trigger('project:join');
         }
       }
     },
@@ -123,11 +123,12 @@ define(['jquery',
     },
 
     checkIfUserAuthed: function () {
-      Backbone.EventBroker.trigger('project:vote', {view: this, projectID: this.projectID});
+      Backbone.EventBroker.trigger('project:vote', this);
     },
 
     handleVote: function () {
       var self = this;
+      this.voted = true;
       var oldVote = Number(this.$el.find('.new-vote-count-container > span').html());
       this.$el.find('.new-vote-count-container > span').html(oldVote + 1);
       this.$el.find('.project-page-vote-container').addClass('voted');
@@ -245,19 +246,40 @@ define(['jquery',
       this.$el.find('.join-btn').removeClass('regular').addClass('pending').html('Request Sent');
     },
 
+    checkIfCanSave: function () {
+      var titleExists = true;
+      var subtitleExists = true;
+      var title = this.$el.find('[name="edit-title"]').val();
+      var subtitle = this.$el.find('[name="edit-subtitle"]').val();
+
+      if (_.isEmpty(title)) {
+        titleExists = false;
+        this.$el.find('.no-title-error').show();
+      }
+
+      if (_.isEmpty(subtitle)) {
+        subtitleExists = false;
+        this.$el.find('.no-subtitle-error').show();
+      }
+
+      return titleExists && subtitleExists;
+    },
+
     getSavedEditData: function () {
-      var self = this;
       var data = {
         title: this.$el.find('[name="edit-title"]').val(),
         subtitle: this.$el.find('[name="edit-subtitle"]').val(),
         description: this.$el.find('.edit-description').val(),
         langs_and_frames: this.langsFrames,
-        status: Number(this.$el.find('#projectTypeSelection').val()),
-        privacy: this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY]
+        status: Number(this.$el.find('#projectTypeSelection').val())
       };
-      if (this.upForGrabsType) {
+
+      if (data.status == 0) {
         data.anon = this.$el.find('[name="anon-edit"]').is(':checked');
+      } else {
+        data.privacy = this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY];
       }
+
       return data;
     },
 
@@ -317,7 +339,6 @@ define(['jquery',
 
       this.editMode = options.editMode;
       this.uuid = options.uuid;
-      this.projectID = options.id;
       this.privacy = options.privacy;
       this.projectStatus = options.status;
 
@@ -350,19 +371,34 @@ define(['jquery',
       }));
 
       if (this.editMode) {
-
         this.initLangFramesDropdown(options.langs_and_frames);
+
         this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
           onText: 'Open',
           offText: 'Request'
         });
+
         if (this.upForGrabsType) {
           this.$el.find('[name="anon-edit"]').bootstrapSwitch({
             onText: 'Yes',
             offText: 'No'
           });
         }
-        this.$el.find('#projectTypeSelection').val(options.status.toString());
+
+        var $projectStatusDropdown = this.$el.find('#projectTypeSelection');
+        $projectStatusDropdown.val(options.status.toString());
+
+        $projectStatusDropdown.change(function () {
+          Backbone.EventBroker.trigger('project:edit:change-type', Number($(this).val()));
+        });
+
+        this.$el.find('[name="edit-title"]').keydown(function () {
+          self.$el.find('.no-title-error').hide();
+        });
+
+        this.$el.find('[name="edit-subtitle"]').keydown(function () {
+          self.$el.find('.no-subtitle-error').hide();
+        });
 
       } else {
 

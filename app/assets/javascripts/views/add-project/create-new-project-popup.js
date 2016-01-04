@@ -182,9 +182,9 @@ define(['jquery',
       this.masterMap['type1']['source2']['anon'] = false;
     },
 
-    formatForPullProject: function (id) {
+    formatForPullProject: function (uuid) {
       var self = this;
-      this.projectIDToPullFrom = id;
+      this.projectUUIDToPullFrom = uuid;
       this.autoSelectPanelsOneAndTwo();
     },
 
@@ -359,7 +359,6 @@ define(['jquery',
         anon: this.newProjectData.anon,
         privacy: [this.newProjectData.privacy],
         slackURL: this.newProjectData.slackURL,
-        slackAPIKey: this.newProjectData.slackAPIKey,
         hipChatURL: this.newProjectData.hipChatURL,
         irc: this.newProjectData.irc
       };
@@ -756,7 +755,7 @@ define(['jquery',
       this.panel2.setOnlyPullFromIdeasToggle(true);
       this.panel2.autoSelectSource();
       this.handleSourceSelected(this.source3);
-      this.panel3.autoSelectUpForGrabsProject(this.projectIDToPullFrom);
+      this.panel3.autoSelectUpForGrabsProject(this.projectUUIDToPullFrom);
     },
 
     renderPanels: function (ignoreListeners) {

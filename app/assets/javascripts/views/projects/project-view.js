@@ -58,6 +58,7 @@ define(['jquery',
         'evolution:fetch': 'fetchProjectEvolution',
         'project:save-edit': 'handleSaveEditProject',
         'edit-mode:cancel': 'cancelEditMode',
+        'project:edit:change-type': 'changedTypeDuringEdit',
         'evolution:add': 'handleAddEvolution',
         'slack:join': 'requestToJoin',
         'hipchat:join': 'requestToJoin'
@@ -104,40 +105,46 @@ define(['jquery',
 
     handleSaveEditProject: function () {
       var self = this;
-      var majorProjectData = this.projectMajorView.getSavedEditData();
-      var minorProjectData = this.projectMinorView.getSavedEditData();
+      if (this.projectMajorView.checkIfCanSave()) {
 
-      var data = {
-        title: majorProjectData.title,
-        subtitle: majorProjectData.subtitle,
-        description: majorProjectData.description,
-        langs_and_frames: majorProjectData.langs_and_frames,
-        status: majorProjectData.status,
-        privacy: majorProjectData.privacy
-      };
+        var majorProjectData = this.projectMajorView.getSavedEditData();
+        var minorProjectData = this.projectMinorView.getSavedEditData();
 
-      if (majorProjectData.hasOwnProperty('anon')) {
-        data.anon = majorProjectData.anon;
-      }
-      if (minorProjectData.hasOwnProperty('license')) {
-        data.license = minorProjectData.license;
-      }
-      if (minorProjectData.hasOwnProperty('repo_name')) {
-        data.repo_name = minorProjectData.repo_name;
-      }
+        var data = {
+          title: majorProjectData.title,
+          subtitle: majorProjectData.subtitle,
+          description: majorProjectData.description,
+          langs_and_frames: majorProjectData.langs_and_frames,
+          status: majorProjectData.status,
+          privacy: majorProjectData.privacy
+        };
 
-      if (minorProjectData.hasOwnProperty('integrations')) {
-        data.integrations = minorProjectData.integrations;
-      }
-
-      var project = new Project();
-      project.edit({uuid: self.projectUUID, data: data}, {
-        success: function () {
-          window.location.reload();
-        }, error: function () {
-          window.location.reload();
+        if (data.status == 0) {
+          data.anon = majorProjectData.anon;
+        } else {
+          data.anon = false;
         }
-      });
+
+        if (minorProjectData.hasOwnProperty('license')) {
+          data.license = minorProjectData.license;
+        }
+        if (minorProjectData.hasOwnProperty('repo_name')) {
+          data.repo_name = minorProjectData.repo_name;
+        }
+
+        if (minorProjectData.hasOwnProperty('integrations')) {
+          data.integrations = minorProjectData.integrations;
+        }
+
+        var project = new Project();
+        project.edit({uuid: self.projectUUID, data: data}, {
+          success: function () {
+            window.location.reload();
+          }, error: function () {
+            window.location.reload();
+          }
+        });
+      }
     },
 
     fetchProjectEvolution: function () {
@@ -313,13 +320,21 @@ define(['jquery',
       });
     },
 
+    changedTypeDuringEdit: function (type) {
+      type == 0 ? this.$el.find('.project-body').addClass('up-for-grabs-edit') :
+        this.$el.find('.project-body').removeClass('up-for-grabs-edit');
+    },
+
     showEditMode: function () {
-      var self = this;
+      if (this.data.project.status == 0) {
+        this.$el.find('.project-body').addClass('up-for-grabs-edit');
+      }
       this.projectMajorView.showEditMode(this.data);
       this.projectMinorView.showEditMode(this.data.project);
     },
 
     cancelEditMode: function () {
+      this.$el.find('.project-body').removeClass('up-for-grabs-edit');
       this.cachedProjectData.project.editMode = false;
       Backbone.EventBroker.trigger('re-render-for-cancel-edit-mode', this.cachedProjectData.project);
     },

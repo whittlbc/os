@@ -82,15 +82,17 @@ define(['jquery',
     },
 
     getSavedEditData: function () {
-      var self = this;
       var data = {};
 
       if (this.showLicense) {
-        data.license = [this.$el.find('#licenseTypeSelection').val()];
+        var licenseVal = this.$el.find('#licenseTypeSelection').val();
+        data.license = (licenseVal === 'none') ? [] : [licenseVal];
       }
+
       if (this.showRepoName) {
         data.repo_name = this.$el.find('[name="repo-name"]').val();
       }
+
       if (this.showIntegrations) {
         data.integrations = {
           slack: this.$el.find('[name="edit-slack"]').val(),

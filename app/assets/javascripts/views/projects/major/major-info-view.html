@@ -7,7 +7,10 @@
             </div>
             <span class="project-title-span">{{title}}</span>
             {{/editMode}}
-            {{#editMode}}<input type="text" name="edit-title" value="{{title}}"/>{{/editMode}}
+            {{#editMode}}
+            <div class="no-title-error">* Please enter a project title</div>
+            <input type="text" name="edit-title" value="{{title}}"/>
+            {{/editMode}}
             <div class="major-info-project-type-divider {{#editMode}}edit{{/editMode}}"></div>
             {{^editMode}}
             <span class="major-info-project-type">{{projectType}}</span>
@@ -32,7 +35,6 @@
                 <div class="share-icon" id="hackerNews" data-toggle="tooltip" data-placement="top" title="Hacker News"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/y-combinator.svg"/></div>
                 <div class="share-icon" id="reddit"  data-toggle="tooltip" data-placement="top" title="Reddit"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/reddit-alien.png" /></div>
                 <div class="share-icon" id="twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></div>
-                <div class="share-icon" id="facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></div>
             </div>
             {{#isAdmin}}
             <div class="admin-action-container">
@@ -55,7 +57,15 @@
     {{#editMode}}
     <select id="editLangFrames" placeholder="Languages and frameworks"></select>
     {{/editMode}}
-    <div class="major-info-project-subtitle {{^editMode}}hide-overflow{{/editMode}}">{{^editMode}}{{subtitle}}{{/editMode}}{{#editMode}}<input type="text" name="edit-subtitle" value="{{subtitle}}"/>{{/editMode}}</div>
+    <div class="major-info-project-subtitle {{^editMode}}hide-overflow{{/editMode}}">
+        {{^editMode}}
+        {{subtitle}}
+        {{/editMode}}
+        {{#editMode}}
+        <input type="text" name="edit-subtitle" value="{{subtitle}}"/>
+        <div class="no-subtitle-error">* Please enter a short description for this project</div>
+        {{/editMode}}
+    </div>
     <div class="major-info-project-description {{#editMode}}edit-mode{{/editMode}}">
         {{^editMode}}
         <p>{{description}}</p><a class="see-all-description">See All</a>
@@ -65,16 +75,16 @@
         <textarea class="edit-description" placeholder="Description">{{description}}</textarea>
         {{/editMode}}
     </div>
-
     {{#editMode}}
+    {{^upForGrabsType}}
     <div class="edit-privacy">
         <span class="edit-mode-info-label major-info">Privacy:</span><input type="checkbox" name="privacy-edit" {{#open}}checked{{/open}}>
     </div>
+    {{/upForGrabsType}}
     {{#upForGrabsType}}
     <div class="edit-anon">
         <span class="edit-mode-info-label major-info">Anonymous:</span><input type="checkbox" name="anon-edit" {{#anon}}checked{{/anon}}>
     </div>
     {{/upForGrabsType}}
     {{/editMode}}
-
 </div>

@@ -28,10 +28,10 @@ define(['jquery',
       }
     },
 
-    formatForPullProject: function (id) {
+    formatForPullProject: function (uuid) {
       var self = this;
       if (this.createNewProjectPopup) {
-        this.createNewProjectPopup.formatForPullProject(id);
+        this.createNewProjectPopup.formatForPullProject(uuid);
       }
     },
 

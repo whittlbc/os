@@ -243,7 +243,7 @@ define(['jquery',
         feed: self.commentToDeleteOptions.feed
       }, {
         success: function (comments) {
-          self.projectView.handleFetchedComments(comments);
+          self.projectView.projectMajorView.passComments({ comments: comments });
         }
       });
     },
@@ -273,7 +273,7 @@ define(['jquery',
 
     handleStarProject: function (bool) {
       this.currentUser.star({
-        project_uuid: Number(this.projectView.projectUUID),
+        project_uuid: this.projectView.projectUUID,
         star: bool
       });
     },
@@ -292,7 +292,6 @@ define(['jquery',
         $backdrop.hide();
         $('body').removeClass('modal-open');
       }, 400)
-
     },
 
     showContribsModal: function () {
@@ -313,33 +312,14 @@ define(['jquery',
     },
 
     loginWithGH: function () {
-      var self = this;
-      var state;
-
-      if (this.showHomeView) {
-        switch (this.activeHomeIndex) {
-          case 0:
-            state = OSUtil.UP_FOR_GRABS_STATE;
-            break;
-          case 1:
-            state = OSUtil.ON_THE_FENCE_STATE;
-            break;
-          case 2:
-            state = OSUtil.LAUNCHED_STATE;
-            break;
-        }
-      } else {
-        state = OSUtil.PROJECT_STATE + 'num' + this.projectView.projectID;
-      }
-
-      window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&scope=public_repo&state=' + state;
+      window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&scope=public_repo';
     },
 
     // either show the login modal or vote on the passed projectPostView
-    loginOrProjectVote: function (data) {
+    loginOrProjectVote: function (view) {
       if (this.currentUser) {
-        if (!data.view.voted) {
-          data.view.handleVote();
+        if (!view.voted) {
+          view.handleVote();
         }
       } else {
         this.loginModal.setMessage('You must be logged in to vote on projects.');
@@ -387,12 +367,12 @@ define(['jquery',
       }
     },
 
-    showCreateModalOnPullProject: function (id) {
+    showCreateModalOnPullProject: function (uuid) {
       var self = this;
       if (this.currentUser) {
         this.lastAddProjectPopupShownForGrab = true;
         this.createProjectModal.resetPopup();
-        this.createProjectModal.formatForPullProject(id);
+        this.createProjectModal.formatForPullProject(uuid);
         setTimeout(function () {
           self.createProjectModal.showModal();
         }, 10)
@@ -774,6 +754,7 @@ define(['jquery',
       });
 
       this.listenTo(this.deleteProjectModal, 'confirm', function () {
+        self.forceHideModalBackdrop();
         self.deleteProject();
       });
 

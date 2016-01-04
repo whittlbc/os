@@ -144,6 +144,7 @@ class ProjectsController < ApplicationController
   def create
 
     begin
+      params = ProjectHelper.get_allowable_creation_params(params)
 
       # Make sure both title and subtitle are defined
       if params[:title].blank? || params[:subtitle].blank?
@@ -550,7 +551,7 @@ class ProjectsController < ApplicationController
           :user_id => user.id,
           :vote_count => 0,
           :feed => params[:feed],
-          :parent_id => parent_comment.id
+          :parent_id => parent_comment.try(:id)
       }
       comment = Comment.new(comment_info)
       comment.save
@@ -616,7 +617,9 @@ class ProjectsController < ApplicationController
                 :text => child.text,
                 :uuid => child.uuid,
                 :parentUUID => child.try(:parent).try(:uuid),
-                :feed => child.feed
+                def
+                  :feed => child.feed
+                end
             },
             :children => get_comment_children(child, user)
         }
@@ -700,11 +703,12 @@ class ProjectsController < ApplicationController
 
   def edit
     project = Project.find_by(uuid: params[:uuid])
+    new_data = ProjectHelper.get_allowable_edit_params(params[:data])
 
     if !project.nil?
       attrs_to_update = {}
       integrations = {}
-      params[:data].each { |key, val|
+      new_data.each { |key, val|
         (key == 'integrations') ? (integrations = val) : (attrs_to_update[key] = val)
       }
       project.update_attributes(attrs_to_update)

@@ -22,6 +22,17 @@ $light-gray: #C4C5CA;
   margin-top: 65px;
 }
 
+.project-body.up-for-grabs-edit {
+  .edit-privacy,
+  .edit-anon,
+  #minorInfoLicenseContainer,
+  #minorInfoRepoURLContainer,
+  #integrationsContainer {
+    display: none !important;
+  }
+}
+
+
 // PROJECT MAJOR VIEW
 
 #projectMajorView {
@@ -80,6 +91,23 @@ $light-gray: #C4C5CA;
     outline: none;
     border: 1px solid #DDD;
     padding-left: 8px;
+  }
+
+  .no-title-error,
+  .no-subtitle-error {
+    display: none;
+    color: red;
+    font-size: 12px;
+  }
+
+  .no-title-error {
+    position: absolute;
+    left: 8px;
+    top: -25px;
+  }
+
+  .no-subtitle-error {
+    float: left;
   }
 
   .edit-privacy {
@@ -419,7 +447,7 @@ $light-gray: #C4C5CA;
 }
 
 .major-info-tag-container {
-  width: 70%;
+  width: 72%;
   height: auto;
   margin-top: 12px;
 
@@ -487,6 +515,7 @@ $light-gray: #C4C5CA;
 
   p {
     font-size: 14px;
+    white-space: pre-line;
   }
 
   p.none {

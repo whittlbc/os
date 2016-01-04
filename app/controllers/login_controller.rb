@@ -19,7 +19,7 @@ class LoginController < ApplicationController
     body = JSON.parse(response.body)
 
     if body['access_token']
-      upsert_user(body['access_token'], params[:state])
+      upsert_user(body['access_token'])
     else
       redirect_to '/#on-the-fence'
     end
@@ -27,7 +27,7 @@ class LoginController < ApplicationController
 
 
   # Call to Github's API to get user info - upsert user on response
-  def upsert_user(access_token, state)
+  def upsert_user(access_token)
     response = RestClient.get("https://api.github.com/user?access_token=#{access_token}", :accept => :json)
     body = JSON.parse(response.body)
 
@@ -54,26 +54,6 @@ class LoginController < ApplicationController
     cookies['gh_login'] = user_info.to_json
 
     redirect_to controller: 'home', action: 'index'
-
-  end
-
-  def get_prev_page_from_state(state)
-
-    if state.include?(PROJECT_STATE)
-      project_id = state[(state.index('num') + 3)..(state.length-1)]
-      path = "projects/#{project_id}"
-    else
-      case state
-        when UP_FOR_GRABS_STATE
-          path = 'up-for-grabs'
-        when ON_THE_FENCE_STATE
-          path = 'on-the-fence'
-        when LAUNCHED_STATE
-          path = 'launched'
-      end
-    end
-
-    path
   end
 
 end
