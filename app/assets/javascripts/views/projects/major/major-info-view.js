@@ -325,11 +325,13 @@ define(['jquery',
         }
       });
 
-      this.preventAddingMore = true;
-      for (var i = 0; i < langFrames.length; i++) {
-        this.langFrameSelectize.addItem(langFrames[i]);
+      if (!_.isEmpty(langFrames)) {
+        this.preventAddingMore = true;
+        for (var i = 0; i < langFrames.length; i++) {
+          this.langFrameSelectize.addItem(langFrames[i]);
+        }
+        this.preventAddingMore = false;
       }
-      this.preventAddingMore = false;
 
       this.langsFrames = this.langFrameSelectize.getValue();
     },

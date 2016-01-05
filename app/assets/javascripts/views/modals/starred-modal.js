@@ -24,7 +24,6 @@ define(['jquery',
         },
 
         handleCloseModal: function () {
-            console.log('asdfasdasdf');
         },
 
         populate: function (data) {

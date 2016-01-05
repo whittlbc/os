@@ -65,7 +65,6 @@ class User < ActiveRecord::Base
             :requester_uuid => requester.uuid,
             :pic => requester.pic,
             :project_uuid => request.project.uuid,
-            :project_id => request.project.id,
             :project_name => project_name,
             :is_request => true,
             :seen => request.request_seen,
@@ -77,11 +76,13 @@ class User < ActiveRecord::Base
           slack_integration = request.project.integrations.where(:service => 'Slack').first
           if !slack_integration.nil?
             data[:slack_url] = slack_integration.url
+            data[:email] = requester.email
           end        end
         if request.requested_asset === HIPCHAT_ASSET
           hipchat_integration = request.project.integrations.where(:service => 'HipChat').first
           if !hipchat_integration.nil?
             data[:hipchat_url] = hipchat_integration.url
+            data[:email] = requester.email
           end
         end
 
@@ -98,7 +99,6 @@ class User < ActiveRecord::Base
             :requester_uuid => nil, # don't need it, but keeping it for consistency
             :pic => responder.pic,
             :project_uuid => request.project.uuid,
-            :project_id => request.project.id,
             :project_name => project_name,
             :is_request => false,
             :seen => false,

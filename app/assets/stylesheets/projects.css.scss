@@ -120,16 +120,11 @@ $light-gray: #C4C5CA;
     margin-left: 2px;
   }
 
-  .edit-privacy {
-    position: absolute;
-    right: 2%;
-    top: 100px;
-  }
-
+  .edit-privacy,
   .edit-anon {
     position: absolute;
     right: 2%;
-    top: 150px;
+    top: 100px;
   }
 
   .bootstrap-switch-handle-on,
@@ -1097,8 +1092,8 @@ $light-gray: #C4C5CA;
   .linebreak {
     background-color: #DDD;
     width: 1px;
-    height: 25px;
-    margin-top: 5.5px;
+    height: 19px;
+    margin-top: 9px;
     float: left;
   }
 

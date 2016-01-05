@@ -3,6 +3,7 @@ module ProjectHelper
   UP_FOR_GRABS = 0
 
   CREATION_SPECIFIC_PARAMS = [
+    :user_uuid,
     :slackURL,
     :hipChatURL,
     :irc

@@ -487,7 +487,7 @@ define(['jquery',
       this.license = (options.projectData) ? options.projectData.license : null;
       this.privacy = (options.projectData) ? options.projectData.privacy : OSUtil.REQUEST_PRIVACY;
       if (this.privacy == null) {
-        this.privacy = OSUtil.REQUEST_PRIVACY;
+        this.privacy = OSUtil.OPEN_PRIVACY;
       }
       this.anon = (options.projectData) ? options.projectData.anon : false;
 

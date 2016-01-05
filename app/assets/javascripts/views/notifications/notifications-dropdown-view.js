@@ -62,17 +62,27 @@ define(['jquery',
     setListener: function (view) {
       var self = this;
       this.listenTo(view, 'accept', function (view) {
-        self.trigger('accept-request', view.data);
+        var data = view.data;
+        self.trigger('accept-request', data);
         view.showAccepted();
-        if (view.data.requested_asset === 1) {
-          window.open(view.data.slack_url + '/admin');
-        } else if (view.data.requested_asset === 2) {
-          window.open(view.data.hipchat_url + '/admin/user');
+
+        // SLACK
+        if (data.requested_asset === 1) {
+          window.open(data.slack_url + '/admin');
         }
+        // HIPCHAT
+        else if (data.requested_asset === 2) {
+          var hipChatURL = data.hipchat_url + '/admin/user?name=' + data.username;
+          if (data.email) {
+            hipChatURL += ('&email=' + data.email);
+          }
+          window.open(hipChatURL);
+        }
+
         self.decreaseNotificationsCount();
       });
       this.listenTo(view, 'reject', function (view) {
-        self.trigger('reject-request', view.data);
+        self.trigger('reject-request', data);
         view.showRejected();
         self.decreaseNotificationsCount();
       });

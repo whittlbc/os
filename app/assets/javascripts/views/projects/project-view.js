@@ -145,16 +145,14 @@ define(['jquery',
           }
         }
 
-        console.log('EDIT: ', data);
-
-        //var project = new Project();
-        //project.edit({uuid: self.projectUUID, data: data}, {
-        //  success: function () {
-        //    window.location.reload();
-        //  }, error: function () {
-        //    window.location.reload();
-        //  }
-        //});
+        var project = new Project();
+        project.edit({uuid: self.projectUUID, data: data}, {
+          success: function () {
+            window.location.reload();
+          }, error: function () {
+            window.location.reload();
+          }
+        });
       }
     },
 
@@ -201,18 +199,25 @@ define(['jquery',
     handleFetchedDetails: function (data) {
       var self = this;
       if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-        //this.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
-        //    self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
-        //});
-        this.github.getContributors('yabwe', 'medium-editor', function (contribData) {
-          self.handleFetchedGHContribs(contribData, data.project.admin, 'yabwe');
+
+        this.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
+            self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
         });
-        //this.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
-        //    self.handleFetchedGHRepoStats(data);
-        //});
-        this.github.fetchRepoStats('yabwe', 'medium-editor', function (data) {
+
+        this.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
           self.handleFetchedGHRepoStats(data);
         });
+
+
+        //this.github.getContributors('yabwe', 'medium-editor', function (contribData) {
+        //  self.handleFetchedGHContribs(contribData, data.project.admin, 'yabwe');
+        //});
+
+        //this.github.fetchRepoStats('yabwe', 'medium-editor', function (data) {
+        //  self.handleFetchedGHRepoStats(data);
+        //});
+
+
       } else {
         this.contributors = data.project.contributors;
         data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);

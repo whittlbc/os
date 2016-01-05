@@ -144,29 +144,29 @@ class ProjectsController < ApplicationController
   def create
 
     begin
-      params = ProjectHelper.get_allowable_creation_params(params)
+      allowable_params = ProjectHelper.get_allowable_creation_params(params)
 
       # Make sure both title and subtitle are defined
-      if params[:title].blank? || params[:subtitle].blank?
+      if allowable_params[:title].blank? || allowable_params[:subtitle].blank?
         render :json => {:message => 'Project creation failed: Title and Subtitle both have to exist'}, :status => 500
         return
       end
 
-      user = User.find_by(uuid: params[:user_uuid])
+      user = User.find_by(uuid: allowable_params[:user_uuid])
 
       project_data = {
-          :title => params[:title],
-          :subtitle => params[:subtitle],
+          :title => allowable_params[:title],
+          :subtitle => allowable_params[:subtitle],
           :user_id => user.id,
           :uuid => UUIDTools::UUID.random_create.to_s,
-          :repo_name => params[:repo_name],
-          :description => params[:description],
+          :repo_name => allowable_params[:repo_name],
+          :description => allowable_params[:description],
           :vote_count => 0,
-          :license => params[:license],
-          :status => params[:status],
-          :langs_and_frames => params[:langs_and_frames],
-          :anon => params[:anon],
-          :privacy => params[:privacy]
+          :license => allowable_params[:license],
+          :status => allowable_params[:status],
+          :langs_and_frames => allowable_params[:langs_and_frames],
+          :anon => allowable_params[:anon],
+          :privacy => allowable_params[:privacy]
       }
 
       project = Project.new(project_data)
@@ -180,27 +180,27 @@ class ProjectsController < ApplicationController
       }
       Contributor.new(contrib_data).save!
 
-      if !params[:slackURL].nil? && !params[:slackURL].empty?
-        slackURL = ensureURL(params[:slackURL])
+      if !allowable_params[:slackURL].nil? && !allowable_params[:slackURL].empty?
+        slackURL = ensureURL(allowable_params[:slackURL])
         slack_data = {
             :service => 'Slack',
             :project_id => project.id,
             :url => slackURL,
             :users => [user.id]
         }
-        if !params[:slackAPIKey].nil? && !params[:slackAPIKey].empty?
-          slack_data[:key] = params[:slackAPIKey]
+        if !allowable_params[:slackAPIKey].nil? && !allowable_params[:slackAPIKey].empty?
+          slack_data[:key] = allowable_params[:slackAPIKey]
         end
         Integration.new(slack_data).save!
       end
 
-      if !params[:hipChatURL].nil? && !params[:hipChatURL].empty?
-        hipChatURL = ensureURL(params[:hipChatURL])
+      if !allowable_params[:hipChatURL].nil? && !allowable_params[:hipChatURL].empty?
+        hipChatURL = ensureURL(allowable_params[:hipChatURL])
         Integration.new(service: 'HipChat', project_id: project.id, url: hipChatURL, users: [user.id]).save!
       end
 
-      if !params[:irc].nil? && !params[:irc].empty?
-        Integration.new(service: 'IRC', project_id: project.id, irc: params[:irc], users: [user.id]).save!
+      if !allowable_params[:irc].nil? && !allowable_params[:irc].empty?
+        Integration.new(service: 'IRC', project_id: project.id, irc: allowable_params[:irc], users: [user.id]).save!
       end
 
       render :json => {:uuid => project.uuid}
@@ -217,7 +217,7 @@ class ProjectsController < ApplicationController
     elsif uri && uri.kind_of?(URI::HTTPS)
       url
     else
-      "https://#{url}"
+      "http://#{url}"
     end
   end
 
@@ -706,9 +706,15 @@ class ProjectsController < ApplicationController
     if !project.nil?
       attrs_to_update = {}
       integrations = {}
+
       new_data.each { |key, val|
-        (key == 'integrations') ? (integrations = val) : (attrs_to_update[key] = val)
+        if key == :integrations
+          integrations = val
+        else
+          attrs_to_update[key] = val
+        end
       }
+
       project.update_attributes(attrs_to_update)
 
       if !integrations.nil?
