@@ -113,25 +113,36 @@ define(['jquery',
           subtitle: majorProjectData.subtitle,
           description: majorProjectData.description,
           langs_and_frames: majorProjectData.langs_and_frames,
-          status: majorProjectData.status,
-          privacy: majorProjectData.privacy
+          status: majorProjectData.status
         };
 
         if (data.status == 0) {
           data.anon = majorProjectData.anon;
+          data.privacy = [];
+          data.license = [];
+          data.repo_name = null;
+          data.integrations = {
+            slack: '',
+            hipchat: '',
+            irc: {
+              channel: '',
+              network: ''
+            }
+          };
+
         } else {
           data.anon = false;
-        }
+          data.privacy = majorProjectData.privacy;
+          if (minorProjectData.hasOwnProperty('license')) {
+            data.license = minorProjectData.license;
+          }
+          if (minorProjectData.hasOwnProperty('repo_name')) {
+            data.repo_name = minorProjectData.repo_name;
+          }
 
-        if (minorProjectData.hasOwnProperty('license')) {
-          data.license = minorProjectData.license;
-        }
-        if (minorProjectData.hasOwnProperty('repo_name')) {
-          data.repo_name = minorProjectData.repo_name;
-        }
-
-        if (minorProjectData.hasOwnProperty('integrations')) {
-          data.integrations = minorProjectData.integrations;
+          if (minorProjectData.hasOwnProperty('integrations')) {
+            data.integrations = minorProjectData.integrations;
+          }
         }
 
         console.log('EDIT: ', data);

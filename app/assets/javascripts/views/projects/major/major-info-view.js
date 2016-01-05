@@ -274,6 +274,7 @@ define(['jquery',
         status: Number(this.$el.find('#projectTypeSelection').val())
       };
 
+      // if Up for Grabs
       if (data.status == 0) {
         data.anon = this.$el.find('[name="anon-edit"]').is(':checked');
       } else {
@@ -341,6 +342,7 @@ define(['jquery',
       this.uuid = options.uuid;
       this.privacy = options.privacy;
       this.projectStatus = options.status;
+      this.voted = options.voted;
 
       this.upForGrabsType = (options.status == 0);
       this.pendingProjectRequest = options.pending_project_request;
@@ -378,12 +380,10 @@ define(['jquery',
           offText: 'Request'
         });
 
-        if (this.upForGrabsType) {
-          this.$el.find('[name="anon-edit"]').bootstrapSwitch({
-            onText: 'Yes',
-            offText: 'No'
-          });
-        }
+        this.$el.find('[name="anon-edit"]').bootstrapSwitch({
+          onText: 'Yes',
+          offText: 'No'
+        });
 
         var $projectStatusDropdown = this.$el.find('#projectTypeSelection');
         $projectStatusDropdown.val(options.status.toString());

@@ -24,11 +24,14 @@ $light-gray: #C4C5CA;
 
 .project-body.up-for-grabs-edit {
   .edit-privacy,
-  .edit-anon,
   #minorInfoLicenseContainer,
   #minorInfoRepoURLContainer,
   #integrationsContainer {
     display: none !important;
+  }
+
+  .edit-anon {
+    display: block !important;
   }
 }
 

@@ -2,20 +2,14 @@ module ProjectHelper
 
   UP_FOR_GRABS = 0
 
-  NOT_UP_FOR_GRABS_CREATION_PROPS = [
-    :repo_name,
-    :license,
-    :privacy,
+  CREATION_SPECIFIC_PARAMS = [
     :slackURL,
     :hipChatURL,
     :irc
   ]
 
-  NOT_UP_FOR_GRABS_EDIT_PROPS = [
-      :repo_name,
-      :license,
-      :privacy,
-      :integrations
+  EDIT_SPECIFIC_PARAMS = [
+    :integrations
   ]
 
   def self.fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_id)
@@ -45,25 +39,22 @@ module ProjectHelper
       :subtitle => data[:subtitle],
       :description => data[:description],
       :status => data[:status],
-      :langs_and_frames => data[:langs_and_frames]
+      :langs_and_frames => data[:langs_and_frames],
+      :repo_name => data[:repo_name],
+      :license => data[:license],
+      :privacy => data[:privacy],
+      :anon => data[:anon]
     }
   end
 
   def self.get_allowables(data, creation)
     allowed = get_always_allowed(data)
 
-    if creation
-      allowed[:user_uuid] = data[:user_uuid]
-    end
+    extra_params = creation ? CREATION_SPECIFIC_PARAMS : EDIT_SPECIFIC_PARAMS
 
-    if data[:status] == UP_FOR_GRABS
-      allowed[:anon] = data[:anon] if data[:anon].present?
-    else
-      keys = creation ? NOT_UP_FOR_GRABS_CREATION_PROPS : NOT_UP_FOR_GRABS_EDIT_PROPS
-      keys.each { |key|
-        allowed[key] = data[key]
-      }
-    end
+    extra_params.each { |key|
+      allowed[key] = data[key]
+    }
 
     allowed
   end
