@@ -617,9 +617,7 @@ class ProjectsController < ApplicationController
                 :text => child.text,
                 :uuid => child.uuid,
                 :parentUUID => child.try(:parent).try(:uuid),
-                def
-                  :feed => child.feed
-                end
+                :feed => child.feed
             },
             :children => get_comment_children(child, user)
         }

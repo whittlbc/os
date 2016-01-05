@@ -9,7 +9,7 @@
             {{/editMode}}
             {{#editMode}}
             <div class="no-title-error">* Please enter a project title</div>
-            <input type="text" name="edit-title" value="{{title}}"/>
+            <input type="text" name="edit-title" placeholder="Title" value="{{title}}"/>
             {{/editMode}}
             <div class="major-info-project-type-divider {{#editMode}}edit{{/editMode}}"></div>
             {{^editMode}}
@@ -62,11 +62,11 @@
         {{subtitle}}
         {{/editMode}}
         {{#editMode}}
-        <input type="text" name="edit-subtitle" value="{{subtitle}}"/>
         <div class="no-subtitle-error">* Please enter a short description for this project</div>
+        <input type="text" name="edit-subtitle" placeholder="Subtitle" value="{{subtitle}}"/>
         {{/editMode}}
     </div>
-    <div class="major-info-project-description {{#editMode}}edit-mode{{/editMode}}">
+    <div class="major-info-project-description">
         {{^editMode}}
         <p>{{description}}</p><a class="see-all-description">See All</a>
         <p class="none">No Description</p>

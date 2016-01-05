@@ -93,6 +93,11 @@ $light-gray: #C4C5CA;
     padding-left: 8px;
   }
 
+  input[name="edit-subtitle"] {
+    float: left;
+    margin-bottom: 18px;
+  }
+
   .no-title-error,
   .no-subtitle-error {
     display: none;
@@ -103,11 +108,13 @@ $light-gray: #C4C5CA;
   .no-title-error {
     position: absolute;
     left: 8px;
-    top: -25px;
+    top: -23px;
   }
 
   .no-subtitle-error {
     float: left;
+    margin-top: -11px;
+    margin-left: 2px;
   }
 
   .edit-privacy {
@@ -557,10 +564,6 @@ $light-gray: #C4C5CA;
     position: relative;
     top: 2px;
   }
-}
-
-.major-info-project-description.edit-mode {
-  margin-top: 20px;
 }
 
 .edit-description {

@@ -104,9 +104,7 @@ define(['jquery',
     },
 
     handleSaveEditProject: function () {
-      var self = this;
-      if (this.projectMajorView.checkIfCanSave()) {
-
+      if (this.projectMajorView.majorInfoView.checkIfCanSave()) {
         var majorProjectData = this.projectMajorView.getSavedEditData();
         var minorProjectData = this.projectMinorView.getSavedEditData();
 
@@ -136,14 +134,16 @@ define(['jquery',
           data.integrations = minorProjectData.integrations;
         }
 
-        var project = new Project();
-        project.edit({uuid: self.projectUUID, data: data}, {
-          success: function () {
-            window.location.reload();
-          }, error: function () {
-            window.location.reload();
-          }
-        });
+        console.log('EDIT: ', data);
+
+        //var project = new Project();
+        //project.edit({uuid: self.projectUUID, data: data}, {
+        //  success: function () {
+        //    window.location.reload();
+        //  }, error: function () {
+        //    window.location.reload();
+        //  }
+        //});
       }
     },
 
