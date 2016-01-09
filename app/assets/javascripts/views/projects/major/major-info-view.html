@@ -25,7 +25,7 @@
             {{/editMode}}
         </div>{{
         }}<div class="project-action-container">
-            <div class="join-btn {{#editMode}}regular{{/editMode}}{{^editMode}}{{#isContributor}}contributor{{/isContributor}} {{#pendingProjectRequest}}pending{{/pendingProjectRequest}} {{^isContributor}}{{^pendingProjectRequest}}regular{{/pendingProjectRequest}}{{/isContributor}}{{/editMode}}">{{^editMode}}{{#isContributor}}<i class="fa fa-check"></i>On Project{{/isContributor}}{{#pendingProjectRequest}}Request Sent{{/pendingProjectRequest}}{{^isContributor}}{{^pendingProjectRequest}}{{#upForGrabsType}}Grab{{/upForGrabsType}}{{^upForGrabsType}}{{joinText}}{{/upForGrabsType}}{{/pendingProjectRequest}}{{/isContributor}}{{/editMode}}{{#editMode}}Save{{/editMode}}</div>{{
+            <div class="join-btn {{majorActionBtnClass}}">{{{majorActionBtnText}}}</div>{{
             }}{{^editMode}}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
                 <div class="new-vote-count-container">
                     <i class="fa fa-caret-up"></i><br><span>{{voteCount}}</span>
@@ -79,7 +79,7 @@
     <div class="edit-privacy">
         <span class="edit-mode-info-label major-info">Privacy:</span><input type="checkbox" name="privacy-edit" {{#open}}checked{{/open}}>
     </div>
-    <div class="edit-anon" {{^upForGrabsType}}hidden{{/upForGrabsType}}>
+    <div class="edit-anon">
         <span class="edit-mode-info-label major-info">Anonymous:</span><input type="checkbox" name="anon-edit" {{#anon}}checked{{/anon}}>
     </div>
     {{/editMode}}

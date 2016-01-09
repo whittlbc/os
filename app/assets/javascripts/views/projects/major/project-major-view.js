@@ -42,7 +42,7 @@ define(['jquery',
       this.$el.html(ProjectMajorViewTpl());
 
       this.majorInfoView = new MajorInfoView({
-        el: '#majorInfoView'
+        el: this.$el.find('#majorInfoView')
       });
 
       this.listenTo(this.majorInfoView, 'project:edit', function () {

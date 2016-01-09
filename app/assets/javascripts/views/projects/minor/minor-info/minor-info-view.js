@@ -84,16 +84,12 @@ define(['jquery',
     getSavedEditData: function () {
       var data = {};
 
-      if (this.showLicense) {
+      if (!$('.project-body').hasClass('up-for-grabs-edit')) {
         var licenseVal = this.$el.find('#licenseTypeSelection').val();
         data.license = (licenseVal === 'none') ? [] : [licenseVal];
-      }
 
-      if (this.showRepoName) {
         data.repo_name = this.$el.find('[name="repo-name"]').val();
-      }
 
-      if (this.showIntegrations) {
         data.integrations = {
           slack: this.$el.find('[name="edit-slack"]').val(),
           hipchat: this.$el.find('[name="edit-hipchat"]').val(),
@@ -184,11 +180,11 @@ define(['jquery',
         }
       }
 
-      this.showRepoName = showRepoName;
-      this.showLicense = showLicense;
       this.repoURL = 'https://' + repoName;
 
-      if (options.editMode && showIntegrations) {
+      if (options.editMode) {
+        showRepoName = true;
+        showLicense = true;
         showIntegrations = true;
         hasSlack = hasHipChat = hasIRC = true;
         slackObj = slackObj || {
@@ -203,8 +199,6 @@ define(['jquery',
           };
       }
 
-      this.showIntegrations = showIntegrations;
-
       this.$el.html(MinorInfoViewTpl({
         postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
         showRepoName: showRepoName,
@@ -215,6 +209,7 @@ define(['jquery',
         hasSlack: hasSlack,
         hasHipChat: hasHipChat,
         hasIRC: hasIRC,
+        isOwner: options.is_owner,
         isContributor: options.is_contributor,
         showSendInvitesBtn: options.is_owner && showRepoName && !_.isEmpty(repoName),
         slackTeamName: hasSlack ? slackObj.url.replace('https://', '').replace('http://', '') : null,
@@ -290,7 +285,7 @@ define(['jquery',
 
       }
 
-      if (options.editMode && this.showLicense) {
+      if (options.editMode && showLicense) {
         this.$el.find('#licenseTypeSelection').val(license);
       }
 

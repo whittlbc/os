@@ -146,7 +146,7 @@ define(['jquery',
         }
 
         var project = new Project();
-        project.edit({uuid: self.projectUUID, data: data}, {
+        project.edit({uuid: this.projectUUID, data: data}, {
           success: function () {
             window.location.reload();
           }, error: function () {

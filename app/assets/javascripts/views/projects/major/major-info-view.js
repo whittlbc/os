@@ -89,10 +89,10 @@ define(['jquery',
     handleProjectMajorActionBtnClick: function () {
       if (this.editMode) {
         Backbone.EventBroker.trigger('project:save-edit');
-      } else {
-        if (!this.pendingProjectRequest && !this.isContributor) {
-          this.upForGrabsType ? Backbone.EventBroker.trigger('pull-project', this.uuid) : Backbone.EventBroker.trigger('project:join');
-        }
+      } else if (this.upForGrabsType) {
+        Backbone.EventBroker.trigger('pull-project', this.uuid);
+      } else if (!this.pendingProjectRequest && !this.isContributor) {
+        Backbone.EventBroker.trigger('project:join');
       }
     },
 
@@ -353,25 +353,46 @@ define(['jquery',
 
       var hasTags = !_.isEmpty(options.langs_and_frames);
 
+      var majorActionBtnClass = 'regular';
+      var majorActionBtnText;
+
+      if (options.editMode) {
+        majorActionBtnText = 'Save';
+      } else {
+        if (options.status == 0) {
+          majorActionBtnText = 'Grab';
+        }
+        else if (options.is_contributor) {
+          majorActionBtnClass = 'contributor';
+          majorActionBtnText = '<i class="fa fa-check"></i>On Project';
+        }
+        else if (options.pending_project_request) {
+          majorActionBtnClass = 'pending';
+          majorActionBtnText = 'Request Sent';
+        }
+        else {
+          majorActionBtnText = (options.privacy[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
+        }
+      }
+
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
         projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
         subtitle: options.subtitle ? options.subtitle : '',
         description: options.description ? options.description : '',
         voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
-        joinText: options.privacy[0] === OSUtil.OPEN_PRIVACY ? 'Join' : 'Request to Join',
         starred: options.starred,
         voted: options.voted,
         isAdmin: options.is_admin,
         isOwner: options.is_owner,
-        isContributor: options.is_contributor,
-        pendingProjectRequest: options.pending_project_request,
         editMode: options.editMode,
         upForGrabsType: this.upForGrabsType,
         otf: options.status == 1,
-        open: options.privacy[0] === OSUtil.OPEN_PRIVACY,
+        open: options.privacy && (options.privacy[0] === OSUtil.OPEN_PRIVACY),
         anon: options.anon === true,
-        hasTags: hasTags
+        hasTags: hasTags,
+        majorActionBtnClass: majorActionBtnClass,
+        majorActionBtnText: majorActionBtnText
       }));
 
       if (this.editMode) {

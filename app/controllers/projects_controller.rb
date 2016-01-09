@@ -46,6 +46,8 @@ class ProjectsController < ApplicationController
         end
       }
 
+      is_owner = user ? (user.gh_username === project.try(:user).try(:gh_username)) : false
+
       if !project.blank?
         project_details = {
           :anon => project.anon,
@@ -67,8 +69,8 @@ class ProjectsController < ApplicationController
           :owner_gh_username => owner_gh_username,
           :admin => admin_arr,
           :integrations => project.integrations,
-          :is_admin => user ? admin_arr.include?(user.gh_username) : false,
-          :is_owner => user ? user.gh_username === owner_gh_username : false,
+          :is_admin => is_owner || (user ? admin_arr.include?(user.gh_username) : false),
+          :is_owner => is_owner,
           :is_contributor => false,
           :pending_project_request => user ? user.has_pending_request?(project.id, PROJECT_ASSET) : false,
           :pending_slack_request => user ? user.has_pending_request?(project.id, SLACK_ASSET) : false,

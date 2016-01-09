@@ -20,6 +20,10 @@ $light-gray: #C4C5CA;
   width: 100%;
   display: block;
   margin-top: 65px;
+
+  .edit-anon {
+    display: none;
+  }
 }
 
 .project-body.up-for-grabs-edit {

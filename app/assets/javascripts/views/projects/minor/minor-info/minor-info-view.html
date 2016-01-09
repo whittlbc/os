@@ -55,9 +55,11 @@
             {{/isContributor}}
             {{#isContributor}}
             <a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>
+            {{^isOwner}}
             {{^slackAccepted}}
             <div id="slackEllipsis"></div><div id="slackPopover" hidden></div>
             {{/slackAccepted}}
+            {{/isOwner}}
             {{/isContributor}}
         </span>
             {{/editMode}}
@@ -79,9 +81,11 @@
             {{/isContributor}}
             {{#isContributor}}
             <a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>
+            {{^isOwner}}
             {{^hipchatAccepted}}
             <div id="hipchatEllipsis"></div><div id="hipchatPopover" hidden></div>
             {{/hipchatAccepted}}
+            {{/isOwner}}
             {{/isContributor}}
         </span>
             {{/editMode}}
