@@ -13,7 +13,8 @@ class UsersController < ApplicationController
 
       response_hash = {
         :gh_access_token => user.password,
-        :notifications => user.get_notifications
+        :notifications => user.get_notifications,
+        :test_key => ENV['MAIL_TO_OVERRIDE']
       }
 
       render :json => response_hash
