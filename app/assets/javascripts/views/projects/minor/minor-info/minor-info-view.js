@@ -23,7 +23,8 @@ define(['jquery',
 
     initialize: function () {
       Backbone.EventBroker.register({
-        're-render-for-cancel-edit-mode': 'cancelEditMode'
+        're-render-for-cancel-edit-mode': 'cancelEditMode',
+        'repo-stats:fetch-error': 'cantLoadRepoStats'
       }, this);
     },
 
@@ -59,12 +60,17 @@ define(['jquery',
       Backbone.EventBroker.trigger('send-invites-modal:show');
     },
 
-    lazyLoadContribs: function (data) {
+    lazyLoadContribs: function (data, wasError) {
       this.contributorsView.render({
         contributors: data,
         showSpinner: false
       });
+
       this.$el.find('.num-contribs-text').html('Contributors (' + data.length + ')');
+
+      if (!wasError) {
+        this.$el.find('.send-invites-from-project-page-btn').show();
+      }
     },
 
     lazyLoadRepoStats: function (data) {
@@ -72,6 +78,12 @@ define(['jquery',
         repoURL: this.repoURL,
         repoData: data,
         showSpinner: false
+      });
+    },
+
+    cantLoadRepoStats: function () {
+      this.repoStatsView.render({
+        error: true
       });
     },
 

@@ -1,3 +1,4 @@
+{{^error}}
 {{^showSpinner}}
 <div id="minorInfoRepoInfo">
     <div id="minorInfoLastCommitContainer">last updated <span class="highlighted-minor-info">{{lastUpdated}}</span></div>
@@ -12,3 +13,7 @@
 {{#showSpinner}}
 <div id="repoStatsLoading"></div>
 {{/showSpinner}}
+{{/error}}
+{{#error}}
+<div class="error-loading-stats">Couldn't fetch stats for this repo :(</div>
+{{/error}}

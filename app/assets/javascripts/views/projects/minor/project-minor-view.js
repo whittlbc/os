@@ -17,8 +17,8 @@ define(['jquery',
 
     events: {},
 
-    lazyLoadContribs: function (contribs) {
-      this.minorInfoEvolutionView.lazyLoadContribs(contribs);
+    lazyLoadContribs: function (contribs, wasError) {
+      this.minorInfoEvolutionView.lazyLoadContribs(contribs, wasError);
     },
 
     lazyLoadRepoStats: function (data) {

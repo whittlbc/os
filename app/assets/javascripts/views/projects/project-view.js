@@ -198,30 +198,32 @@ define(['jquery',
 
     handleFetchedDetails: function (data) {
       var self = this;
+
+      // if project has a repo assigned to it
       if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-
-        this.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
-            self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
+        // Get Contributors
+        self.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
+          self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
+        }, function () {
+          // revert back to non-GH-pulled contributors
+          self.contributors = data.project.contributors;
+          data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
+          self.cachedProjectData.project.contributors = data.project.contributors;
+          self.projectMinorView.lazyLoadContribs(data.project.contributors, true);
         });
 
-        this.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
+        // Get Repo Stats
+        self.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
           self.handleFetchedGHRepoStats(data);
+        }, function () {
+          Backbone.EventBroker.trigger('repo-stats:fetch-error');
         });
-
-
-        //this.github.getContributors('yabwe', 'medium-editor', function (contribData) {
-        //  self.handleFetchedGHContribs(contribData, data.project.admin, 'yabwe');
-        //});
-
-        //this.github.fetchRepoStats('yabwe', 'medium-editor', function (data) {
-        //  self.handleFetchedGHRepoStats(data);
-        //});
-
 
       } else {
         this.contributors = data.project.contributors;
         data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
       }
+
       this.fetchComments(0);
       this.setProjectProperties(data);
       this.cachedProjectData = data;

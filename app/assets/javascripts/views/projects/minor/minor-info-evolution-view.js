@@ -59,8 +59,8 @@ define(['jquery',
       }, 400);
     },
 
-    lazyLoadContribs: function (contribs) {
-      this.minorInfoView.lazyLoadContribs(contribs);
+    lazyLoadContribs: function (contribs, wasError) {
+      this.minorInfoView.lazyLoadContribs(contribs, wasError);
     },
 
     lazyLoadRepoStats: function (data) {

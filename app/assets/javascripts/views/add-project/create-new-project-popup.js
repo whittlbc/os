@@ -640,7 +640,7 @@ define(['jquery',
 
     handleUserRepos: function (repoNamesArray) {
       var self = this;
-      
+
       setTimeout(function () {
         self.repos = repoNamesArray;
         self.panel3.passUserRepos(self.repos);
