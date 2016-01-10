@@ -7,14 +7,9 @@ class UsersController < ApplicationController
 
     if user.present?
       # return the stuff not already stored in local storage
-
-      # :upvotedProjects => user.upvoted_projects,
-      # :upvotedComments => user.upvoted_comments
-
       response_hash = {
         :gh_access_token => user.password,
-        :notifications => user.get_notifications,
-        :test_key => ENV['MAIL_TO_OVERRIDE']
+        :notifications => user.get_notifications
       }
 
       render :json => response_hash

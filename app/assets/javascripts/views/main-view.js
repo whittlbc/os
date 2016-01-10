@@ -218,8 +218,8 @@ define(['jquery',
     // used to get people to send email invites to
     getAllContributorsForRepo: function (projectUUID) {
       var self = this;
-      //this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
-      this.github.getContributors(this.currentUser.get('gh_username'), project.repo_name, function (contribData) {
+      this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
+      //this.github.getContributors(this.currentUser.get('gh_username'), project.repo_name, function (contribData) {
         var usernames = [];
 
         _.each(contribData, function (contributor) {
