@@ -98,6 +98,7 @@ $light-gray: #C4C5CA;
     outline: none;
     border: 1px solid #DDD;
     padding-left: 8px;
+    float: left;
   }
 
   input[name="edit-subtitle"] {
@@ -127,8 +128,8 @@ $light-gray: #C4C5CA;
   .edit-privacy,
   .edit-anon {
     position: absolute;
-    right: 2%;
-    top: 100px;
+    right: 15px;
+    top: 106px;
   }
 
   .bootstrap-switch-handle-on,
@@ -174,6 +175,7 @@ $light-gray: #C4C5CA;
     display: inline-block;
     max-width: 74%;
     overflow: hidden;
+    float: left;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -409,7 +411,7 @@ $light-gray: #C4C5CA;
 
 
 .cancel-edit-mode {
-  margin-top: 10px;
+  margin-top: 6px;
   margin-right: 11px;
   height: 34px;
   padding: 0 14px;
@@ -432,12 +434,13 @@ $light-gray: #C4C5CA;
   background-color: #DDD;
   margin-left: 13px;
   position: relative;
-  top: -8px;
+  top: 6.5px;
   z-index: 1;
+  float: left;
 }
 
 .major-info-project-type-divider.edit {
-  top: 5px;
+  top: 10px;
 }
 
 .major-info-project-type {
@@ -452,7 +455,7 @@ $light-gray: #C4C5CA;
   color: $light-gray;
   text-align: center;
   position: relative;
-  top: -17px;
+  top: -5px;
 }
 
 .major-info-tag-container {
@@ -535,7 +538,6 @@ $light-gray: #C4C5CA;
 
 #projectTypeSelection {
   width: 27.75%;
-  float: right;
   border: 1px solid #DDD;
   padding: 4px 3px 3px 8px;
   margin-top: 8px;
@@ -544,6 +546,8 @@ $light-gray: #C4C5CA;
   line-height: 1.5;
   background: white;
   -webkit-appearance: none;
+  float: left;
+  margin-left: 13px;
 }
 
 #projectTypeSelection + label {
@@ -567,6 +571,7 @@ $light-gray: #C4C5CA;
     top: 2px;
   }
 }
+
 
 .edit-description {
   width: 98%;
@@ -971,9 +976,9 @@ $light-gray: #C4C5CA;
     outline: none;
     border: 1px solid #DDD;
     padding-left: 8px;
-    margin-left: 2%;
+    margin-left: 15px;
     margin-top: 6px;
-    width: 68.7%;
+    width: 73%;
     line-height: 28px;
   }
 }
@@ -992,7 +997,7 @@ $light-gray: #C4C5CA;
   border: 1px solid #DDD;
   padding-left: 8px;
   margin-top: 0;
-  margin-left: 8%;
+  margin-left: 32px;
   font-size: 14px;
   outline: none;
   line-height: 28px;
@@ -1140,8 +1145,8 @@ $light-gray: #C4C5CA;
   .selectize-control {
     display: inline-block;
     width: 30%;
-    margin-right: 4.5%;
-    float: right;
+    margin-right: 2%;
+    float: left;
 
     .selectize-input {
       padding-bottom: 4px;
