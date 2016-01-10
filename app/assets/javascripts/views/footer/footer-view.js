@@ -239,7 +239,7 @@ define(['jquery',
         self.footerDropdown.$dropdown.css({
           width: self.$el.width(),
           bottom: 50,
-          left: -11
+          left: '-2.8%'
         });
       };
 
