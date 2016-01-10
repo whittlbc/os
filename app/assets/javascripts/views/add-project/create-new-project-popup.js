@@ -42,7 +42,8 @@ define(['jquery',
         'slackAPIKey:updated': 'handleSlackAPIKeyUpdate',
         'hipChat:updated': 'handleHipChatUpdate',
         'irc:updated': 'handleIRCUpdate',
-        'create-project:retry': 'handleRetry'
+        'create-project:retry': 'handleRetry',
+        'all-user-repos:response': 'handleUserRepos'
       }, this);
 
       this.popupContainerHeight = 410;
@@ -634,22 +635,16 @@ define(['jquery',
     },
 
     getGHRepos: function () {
-      var self = this;
-      this.currentUser.getAllUserRepos({
-        success: function (data) {
-          console.log(data);
-          setTimeout(function () {
-            self.handleUserRepos(data.repos);
-          }, 200);
-        }, error: function () {
-          console.log('Error getting all user repos');
-        }
-      });
+      Backbone.EventBroker.trigger('all-user-repos:request');
     },
 
     handleUserRepos: function (repoNamesArray) {
-      this.repos = repoNamesArray;
-      this.panel3.passUserRepos(this.repos);
+      var self = this;
+      
+      setTimeout(function () {
+        self.repos = repoNamesArray;
+        self.panel3.passUserRepos(self.repos);
+      }, 500);
     },
 
     addPanelListeners: function () {

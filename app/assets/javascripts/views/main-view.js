@@ -85,7 +85,8 @@ define(['jquery',
         'header-user-pic-clicked': 'headerUserPicClicked',
         'open-project': 'openProject',
         'project:confirm-launch': 'confirmProjectLaunch',
-        'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin'
+        'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin',
+        'all-user-repos:request': 'getAllUserRepos'
       }, this);
 
       this.cachedFilterType = null;
@@ -118,6 +119,14 @@ define(['jquery',
     createGHInstance: function () {
       this.github = Github;
       this.github.setToken(this.ghAccessToken);
+    },
+
+    getAllUserRepos: function () {
+      this.github.getReposForUser(this.currentUser.get('gh_username'), function (repos) {
+        var repoNames = _.map(repos, function (repo) { return repo.name });
+
+        Backbone.EventBroker.trigger('all-user-repos:response', repoNames);
+      });
     },
 
     majorProjectActionBtnClickOrLogin: function (data) {

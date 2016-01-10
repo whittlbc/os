@@ -17,7 +17,7 @@ define(['jquery',
 
             switch (asset) {
                 case 'allUserRepos':
-                    return this.endpoint + 'users/' + username + '/repos';
+                    return this.endpoint + 'users/' + username + '/repos?type=owner';
                     break;
                 case 'repo':
                     return this.endpoint + 'repos/' + username + '/' + repo;

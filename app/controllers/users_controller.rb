@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # DEPRECATED -- Called from Front End Github model instead now since it wasn't respecting the :type param
   def get_all_user_repos
     user = User.find_by(uuid: params[:uuid])
 
