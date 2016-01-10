@@ -62,6 +62,7 @@ define(['jquery',
             self.forceCloseSearchBar();
           }, 50)
         }
+        document.body.style.overflow = 'auto';
       });
 
       searchResultView.render();

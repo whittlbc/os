@@ -63,6 +63,8 @@ define(['jquery',
           index: feedIndex
         });
       }
+
+      document.body.style.overflow='auto';
     },
 
     updateProjectView: function (uuid) {
@@ -74,6 +76,8 @@ define(['jquery',
         view: OSUtil.PROJECT_PAGE,
         uuid: uuid
       });
+
+      document.body.style.overflow='auto';
     },
 
     redirectHome: function () {

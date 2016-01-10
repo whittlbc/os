@@ -393,7 +393,6 @@ define(['jquery',
     },
 
     showProjectCreationSuccess: function (newProjectUUID) {
-      console.log(newProjectUUID);
       var self = this;
       if (this.masterMap[this.masterMap['selectedType']]['selectedSource'] == OSUtil.SOURCE_MAP['pull-from-ideas']) {
         this.inactivateOldUpForGrabsProject();
