@@ -15,7 +15,7 @@ define(['jquery',
     var SuggestionsModal = ModalView.extend({
 
         initialize: function () {
-            this.currentTopPos = 125;
+            this.currentTopPos = 150;
             this.suggestionsModalHeight = 300;
         },
 

@@ -15,7 +15,7 @@ define(['jquery',
     var AboutModal = ModalView.extend({
 
         initialize: function () {
-            this.currentTopPos = 125;
+            this.currentTopPos = 150;
             this.aboutModalHeight = 297;
         },
 
