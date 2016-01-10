@@ -200,7 +200,9 @@ define(['jquery',
     },
 
     getDropdownValues: function (int) {
-      int = int || this.filterType;
+      if (_.isUndefined(int)) {
+        int = this.filterType;
+      }
       return Object.keys(this.removedValues[int]);
     },
 

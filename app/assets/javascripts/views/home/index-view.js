@@ -391,19 +391,6 @@ define(['jquery',
       });
     },
 
-    prePopulateLangFilters: function () {
-      var self = this;
-      this.langSelectionList.$el.find('.lang-selection-list').css('top', '130px');
-      var prepopFilters = this.filters.filters.langs_and_frames.reverse();
-      this.preventAddListener = true;
-      for (var i = 0; i < prepopFilters.length; i++) {
-        this.selectize.addItem(prepopFilters[i]);
-        this.langSelectionList.addItem(prepopFilters[i], false);
-      }
-      this.preventAddListener = false;
-      this.langsFramesValue = this.selectize.getValue();
-    },
-
     passFilters: function (obj) {
       this.filters = obj;
       this.langsFramesValue = obj.filters.langs_and_frames || [];
