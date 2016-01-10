@@ -54,6 +54,7 @@ define(['jquery',
       'click .add-project-anon-choice': 'handleAnonSelection',
       //'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
       'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
+      'keyup [name=add-project-repo-name]': 'handleKeyUpRepoName',
       'click .add-project-send-invites-choice': 'handleSendInvitesSelection',
       'keydown [name=add-project-title], [name=add-project-subtitle]': 'hideErrorMessage'
     },
@@ -98,7 +99,14 @@ define(['jquery',
       if (_.isEmpty(prevValue) && !_.contains(this.preventKeys, e.keyCode)) {
         this.showInviteUsersQuestion();
       }
-      else if (!_.isEmpty(prevValue) && e.keyCode === 8) {
+      else if ((prevValue.length === 0 || prevValue.length === 1) && e.keyCode === 8) {
+        this.hideInviteUsersQuestion();
+      }
+    },
+
+    handleKeyUpRepoName: function (e) {
+      // account for deleting all highlight text
+      if (e.keyCode === 8 && _.isEmpty($(e.currentTarget).val())) {
         this.hideInviteUsersQuestion();
       }
     },
@@ -401,6 +409,9 @@ define(['jquery',
     allowCreate: function () {
       var hasTitle = this.checkIfHasTitle();
       var hasSubtitle = this.checkIfHasSubtitle();
+      if (!hasTitle || !hasSubtitle) {
+        this.trigger('scroll-to-error');
+      }
       return hasTitle && hasSubtitle;
     },
 

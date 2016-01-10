@@ -46,19 +46,26 @@ define(['jquery',
 
     addResult: function (data) {
       var self = this;
+
       var searchResultView = new SearchResultView({
         tagName: 'li',
         data: data
       });
+
       searchResultView.$el.click(function (e) {
         e.stopPropagation();
         if (window.location.hash == ('#projects/' + data.uuid)) {
           window.location.reload();
         } else {
           window.location.hash = '#projects/' + data.uuid;
+          setTimeout(function () {
+            self.forceCloseSearchBar();
+          }, 50)
         }
       });
+
       searchResultView.render();
+
       this.$dropdown.append(searchResultView.el);
       this.RESULTS.push(searchResultView);
     },

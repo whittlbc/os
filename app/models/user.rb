@@ -42,14 +42,12 @@ class User < ActiveRecord::Base
 
   def get_notifications
 
-    # Notification action order:
+    # Get Notifications where:
+    # (1) You're the responder and there is still no response
+    # OR
+    # (2) You're the requester and the response is TRUE (been accepted) and you haven't seen it yet
 
-    # Request Seen --> Response --> Response Seen --> Response Acted on
-
-    # Get all notifications where you're either:
-    # (1) the responder and there is no response
-    # (2) the requester and the response_acted_on is still false, but there has been a response (either t or f)
-    PendingRequest.includes(:project).where('(pending_requests.responder_id = ? AND pending_requests.response IS NULL) OR (pending_requests.requester_id = ? AND pending_requests.response IS NOT NULL AND pending_requests.response_seen = ?)', self.id, self.id, false).map { |request|
+    PendingRequest.includes(:project).where('(pending_requests.responder_id = ? AND pending_requests.response IS NULL) OR (pending_requests.requester_id = ? AND pending_requests.response = ? AND pending_requests.response_seen = ?)', self.id, self.id, true, false).map { |request|
 
       # go with project title, but default back to repo name
       project_name = (request.project.title.nil? || request.project.title.empty?) ? request.project.repo_name : request.project.title

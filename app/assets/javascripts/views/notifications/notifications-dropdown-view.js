@@ -82,8 +82,12 @@ define(['jquery',
         self.decreaseNotificationsCount();
       });
       this.listenTo(view, 'reject', function (view) {
+        var data = view.data;
+
         self.trigger('reject-request', data);
+
         view.showRejected();
+
         self.decreaseNotificationsCount();
       });
     },

@@ -163,6 +163,13 @@ define(['jquery',
         }, 50);
       });
 
+      this.listenTo(this.detailsView, 'scroll-to-error', function () {
+        var $scrollContainer = self.$el.find('.add-project-details-scroll-container');
+        var top = this.$el.find('.enter-details-message').offset().top;
+
+        $scrollContainer.animate({ scrollTop: top }, { duration: 500 });
+      });
+
       if (this.selectedType) {
         this.detailsView.passType(this.selectedType);
       }
