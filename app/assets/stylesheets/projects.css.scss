@@ -713,6 +713,7 @@ $light-gray: #C4C5CA;
 // PROJECT MINOR VIEW
 #projectMinorView {
   width: 25%;
+  min-width: 237.5px;
   height: 100%;
   display: inline-block;
   position: absolute;
@@ -1888,4 +1889,10 @@ $light-gray: #C4C5CA;
   color: #c4c5ca;
   padding-left: 12px;
   margin-top: 5px;
+}
+
+@media (max-width: 1150px) {
+  .project-page-vote-container {
+    margin-right: 7px;
+  }
 }

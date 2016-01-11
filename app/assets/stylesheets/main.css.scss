@@ -17,12 +17,16 @@ body {
   font-family: 'Proxima-Nova';
 }
 
+
 // VARS
 $light-gray: #C4C5CA;
 $header-height: 68px;
 $footer-width: 65%;
 $footer-left-margin: 17.5%;
 $footer-height: 48px;
+
+$document-min-width: 1000px;
+$footer-min-width: 650px; // this is whatever footer's width is when document is at ^min-width
 
 // Z-DEPTH SHIT
 .z-depth-half {
@@ -67,6 +71,7 @@ header {
   top: 0;
   transition: top 0.3s ease-in-out;
   width: 100%;
+  min-width: $document-min-width;
   background-color: white;
   z-index: 100;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.07), 0 1px 0 0 rgba(0, 0, 0, 0.045);
@@ -237,6 +242,7 @@ header {
 footer {
   height: $footer-height;
   width: $footer-width;
+  min-width: $footer-min-width;
   margin-left: $footer-left-margin;
   margin-top: 0;
   position: fixed;
@@ -255,5 +261,7 @@ footer {
   bottom: -48px;
 }
 
-
+#mainView {
+  min-width: $document-min-width;
+}
 

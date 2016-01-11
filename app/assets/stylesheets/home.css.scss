@@ -65,7 +65,7 @@ $side-filters-width: 18.25%;
 
 .vote-master-container {
   display: inline-block;
-  width: 9%;
+  width: 73px;
   float: left;
   height: 100%;
 }
@@ -103,9 +103,18 @@ $side-filters-width: 18.25%;
 
 .title-subtitle-tag-container {
   display: inline-block;
-  width: 68%;
   height: 100%;
-  float: left;
+  position: absolute;
+  left: 73px;
+  right: 190px;
+}
+
+[data-project-type="0"] {
+
+  .title-subtitle-tag-container {
+    right: 140px;
+  }
+
 }
 
 .title-container {
@@ -178,9 +187,9 @@ $side-filters-width: 18.25%;
 
 .project-extra-details-container {
   display: inline-block;
-  width: 23%;
+  width: 190px;
   height: 100%;
-  float: left;
+  float: right;
 
   .date {
     position: absolute;
