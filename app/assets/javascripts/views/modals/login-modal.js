@@ -15,7 +15,7 @@ define(['jquery',
   var LoginModal = ModalView.extend({
 
     initialize: function () {
-      this.currentTopPos = 230;
+      this.currentTopPos = 220;
       this.loginModalHeight = 150;
     },
 

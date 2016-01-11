@@ -19,7 +19,7 @@ define(['jquery',
       this.confirmBtnText = options.confirmBtnText ? options.confirmBtnText : 'Yes';
       this.cancelBtnText = options.cancelBtnText ? options.cancelBtnText : 'No';
       this.message = options.message ? options.message : '';
-      this.currentTopPos = 150;
+      this.currentTopPos = 135;
       this.modalHeight = 250;
     },
 

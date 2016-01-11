@@ -3,12 +3,13 @@
 $not-quite-black: #1D1E22;
 
 .poster-pic-container {
+  position: relative;
 
   .poster-info-bubble {
     width: 110px;
     z-index: 10;
     position: absolute;
-    top: -92px;
+    top: -95px;
     left: -40px;
   }
 
@@ -19,11 +20,14 @@ $not-quite-black: #1D1E22;
 }
 
 .contributors-item-view-container {
+  position: relative;
 
   .contributor-info-bubble {
     width: 110px;
     z-index: 10;
     position: absolute;
+    top: -107px;
+    left: -38px;
   }
 
   .bubble-content-container {
@@ -37,8 +41,8 @@ $not-quite-black: #1D1E22;
     width: 110px;
     z-index: 10;
     position: absolute;
-    top: -56px;
-    right: 86px;
+    top: -101px;
+    left: -32px;
   }
 
   .bubble-content-container {
@@ -53,8 +57,8 @@ ul[data-project-type="0"] {
       width: 110px;
       z-index: 10;
       position: absolute;
-      top: -56px;
-      right: 33px;
+      top: -101px;
+      left: -22px;
     }
   }
 }

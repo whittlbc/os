@@ -13,9 +13,6 @@ define(['jquery',
   var ContributorsItemView = Backbone.View.extend({
 
     initialize: function (options) {
-      this.firstRowTopPos = -103;
-      this.secondRowTopPos = -60;
-      this.firstColRightPos = 228;
       if (options) {
         this.setPropsFromOptions(options);
       }
@@ -63,16 +60,9 @@ define(['jquery',
 
     },
 
-    getTopPos: function () {
-      return this.index < 7 ? this.firstRowTopPos : this.secondRowTopPos;
-    },
-
-    getRightPos: function () {
-      return this.firstColRightPos - (this.index % 7) * 43;
-    },
-
     render: function () {
       var self = this;
+
       this.$el.html(ContributorsItemViewTpl({
         ghUsername: this.ghUsername,
         admin: this.admin,
@@ -89,9 +79,6 @@ define(['jquery',
         ghUsername: this.ghUsername,
         anon: this.admin && this.anonProj
       });
-
-      this.$el.find('.contributor-info-bubble')[0].style.top = this.getTopPos() + 'px';
-      this.$el.find('.contributor-info-bubble')[0].style.right = this.getRightPos() + 'px';
 
       this.addHoverListeners();
     }
