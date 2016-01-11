@@ -168,11 +168,11 @@ header {
 
 .header-searchbar-container {
   display: inline-block;
-  width: 250px;
-  transition: width 0.3s;
-  margin-right: 18px;
   height: $header-height;
   float: right;
+  position: absolute;
+  right: 265px;
+  left: 38px;
 }
 
 #createNewProjectModal {

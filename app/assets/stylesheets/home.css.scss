@@ -754,7 +754,8 @@ $side-filters-width: 18.25%;
 // Search
 
 .searchbox {
-  width: 100%;
+  width: 250px;
+  transition: width 0.3s;
   height: 40px;
   position: relative;
   float: right;
@@ -850,6 +851,10 @@ $side-filters-width: 18.25%;
   }
 }
 
+.searchbox.expand {
+  width: 100%;
+}
+
 .search-result {
   width: 100%;
   height: 85px;
@@ -863,11 +868,11 @@ $side-filters-width: 18.25%;
     height: 100%;
     float: left;
     width: 75%;
+    position: relative;
     padding-top: 10px;
 
     .search-result-vote-count {
       width: 12%;
-      min-width: 35px;
       text-align: center;
       display: inline-block;
       float: left;
@@ -881,6 +886,9 @@ $side-filters-width: 18.25%;
       display: inline-block;
       float: left;
       padding-top: 1px;
+      position: absolute;
+      left: 12%;
+      right: 0;
 
       .title {
         width: 100%;

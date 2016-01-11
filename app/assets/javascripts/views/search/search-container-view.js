@@ -72,7 +72,6 @@ define(['jquery',
     },
 
     forceCloseSearchBar: function () {
-      var self = this;
       if (this.isOpen) {
         this.contractSearch();
         this.isOpen = false;
@@ -145,20 +144,11 @@ define(['jquery',
     },
 
     expandSearch: function () {
-      var self = this;
-      var searchContainerLeftPos = this.$searchContainer.offset().left;
-      var searchContainerWidth = this.$searchContainer.width();
-      var rightPosOfLogoContainer = $('.header-logo-container').offset().left + $('.header-logo-container').outerWidth(true);
-      var diff = searchContainerLeftPos - rightPosOfLogoContainer;
-      var endWidth = searchContainerWidth + diff - 38;
-      if (endWidth > 0) {
-        this.$searchContainer.width(endWidth);
-      }
+      this.$el.find('.searchbox').addClass('expand');
     },
 
     contractSearch: function () {
-      var self = this;
-      this.$searchContainer.width(250);
+      this.$el.find('.searchbox').removeClass('expand');
     },
 
     showSpinner: function () {
