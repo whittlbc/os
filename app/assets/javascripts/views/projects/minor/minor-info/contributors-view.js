@@ -15,19 +15,24 @@ define(['jquery',
   var ContributorsView = Backbone.View.extend({
 
     initialize: function () {
-      this.maxShownContribs = 13;
+      this.contribItemWidth = 43;
     },
 
     events: {},
 
+    calculateAndPopulate: function () {
+      var totalCanBeShown = Math.floor(this.$contribsList.width() / this.contribItemWidth) * 2;
+      this.shownContributors = this.allContributors.slice(0, totalCanBeShown - 1);
+      this.populate();
+    },
+
     populate: function () {
-      var self = this;
       this.CONTRIBUTORS = [];
-      this.$el.find('#contributorsListView').empty();
+      this.$contribsList.empty();
       for (var i = 0; i < this.shownContributors.length; i++) {
         this.addContrib(this.shownContributors[i], i);
       }
-      if (this.allContributors.length > this.maxShownContribs) {
+      if (this.allContributors.length > this.shownContributors.length) {
         var $seeAllContribsBtn = $('<li>', {
           class: 'see-all-contribs-btn'
         });
@@ -35,7 +40,7 @@ define(['jquery',
         $seeAllContribsBtn.click(function () {
           Backbone.EventBroker.trigger('contribs-modal:show');
         });
-        this.$el.find('#contributorsListView').append($seeAllContribsBtn);
+        this.$contribsList.append($seeAllContribsBtn);
       }
     },
 
@@ -53,7 +58,7 @@ define(['jquery',
       this.listenTo(contribItemView, 'hide-all-other-bubbles', function (view) {
         self.hideAllBubbles(view);
       });
-      this.$el.find('#contributorsListView').append(contribItemView.el);
+      this.$contribsList.append(contribItemView.el);
       this.CONTRIBUTORS.push(contribItemView);
     },
 
@@ -86,9 +91,14 @@ define(['jquery',
         }, 300);
 
       } else {
+        this.$contribsList = this.$el.find('#contributorsListView');
         this.allContributors = options.contributors;
-        this.shownContributors = options.contributors.slice(0, this.maxShownContribs);
-        this.populate();
+        this.calculateAndPopulate();
+
+        $(window).resize(function () {
+          self.calculateAndPopulate();
+        });
+
       }
     }
   });

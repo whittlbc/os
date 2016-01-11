@@ -883,7 +883,10 @@ $light-gray: #C4C5CA;
     width: 35px;
     height: 35px;
     display: inline-block;
-    margin: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 8px;
+    float: left;
     cursor: pointer;
   }
 
@@ -910,9 +913,6 @@ $light-gray: #C4C5CA;
   background-color: white;
   line-height: 11px;
   padding-top: 5px;
-  position: absolute;
-  bottom: 0px;
-  right: 4px;
   font-size: 11px;
   color: $light-gray;
 }
@@ -1139,13 +1139,14 @@ $light-gray: #C4C5CA;
 
   input[name="edit-irc"] {
     width: 34%;
+    margin-right: 2%;
+    float: left;
   }
 
 
   .selectize-control {
     display: inline-block;
     width: 30%;
-    margin-right: 2%;
     float: left;
 
     .selectize-input {
@@ -1246,6 +1247,10 @@ $light-gray: #C4C5CA;
   margin-top: 23px;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.minor-info-subsection-title.communication {
+  margin-top: 19px;
 }
 
 .num-contribs-text:hover {
