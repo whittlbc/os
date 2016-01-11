@@ -48,7 +48,11 @@ define(['jquery',
     },
 
     handleFetchProjects: function (data) {
+      var self = this;
       this.populateFeed(data);
+      setTimeout(function () {
+        self.trigger('projects:populated');
+      }, 5);
     },
 
     populateFeed: function (projects) {

@@ -52,7 +52,7 @@ define(['jquery',
       //this.anonFilters = [];
       this.sortType = OSUtil.SORT_BY_VOTES;
 
-      this.FETCH_MORE_DATA_DECIMAL = 0.8;
+      this.FETCH_MORE_DATA_DECIMAL = 0.775;
 
       this.resetProps();
     },
@@ -338,9 +338,8 @@ define(['jquery',
     },
 
     homeViewScrollListener: function () {
-      if (!master.gettingMoreData) {
-        var pos = $(window).scrollTop();
-        if (pos > (master.FETCH_MORE_DATA_DECIMAL * $('#project-feed').height())) {
+      if (!master.gettingMoreData && master.$thirdToLastProj) {
+        if ((master.$thirdToLastProj.offset().top - $(window).scrollTop()) < window.innerHeight) {
           master.gettingMoreData = true;
           master.getMoreProjects();
         }
@@ -385,7 +384,6 @@ define(['jquery',
 
     addListeners: function () {
       var self = this;
-
       this.$el.find('.project-type > a').mousedown(function (e) {
         self.handleSelectProjectTypeTab(e);
       });
@@ -398,6 +396,10 @@ define(['jquery',
       this.licenseFilters = obj.filters.license || [];
       this.chatFilters = obj.filters.chat || [];
       this.langFiltersOr = obj.lang_filters_or;
+    },
+
+    setProjectToWatchScrollingPos: function () {
+      this.$thirdToLastProj = this.$el.find('ul.project-feed-list').children().last().prev().prev();
     },
 
     render: function (options) {
@@ -419,6 +421,10 @@ define(['jquery',
 
       this.projectFeedView = new ProjectFeedView({
         el: '#project-feed'
+      });
+
+      this.listenTo(this.projectFeedView, 'projects:populated', function () {
+        self.setProjectToWatchScrollingPos();
       });
 
       this.projectFeedView.render();
