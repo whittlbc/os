@@ -72,6 +72,7 @@ $not-quite-black: #1D1E22;
 
         .selectize-dropdown-content::-webkit-scrollbar {
           -webkit-appearance: none;
+          -moz-appearance: none;
         }
 
         .selectize-dropdown-content::-webkit-scrollbar:vertical {
@@ -130,6 +131,10 @@ $not-quite-black: #1D1E22;
       cursor: default;
       z-index: 1;
       opacity: 1;
+      -webkit-transition: opacity 0.3s linear;
+      -moz-transition: opacity 0.3s linear;
+      -ms-transition: opacity 0.3s linear;
+      -o-transition: opacity 0.3s linear;
       transition: opacity 0.3s linear;
 
       i {
@@ -155,6 +160,10 @@ $not-quite-black: #1D1E22;
       z-index: 2;
       display: block;
       opacity: 0;
+      -webkit-transition: opacity 0.3s linear;
+      -moz-transition: opacity 0.3s linear;
+      -ms-transition: opacity 0.3s linear;
+      -o-transition: opacity 0.3s linear;
       transition: opacity 0.3s linear;
 
       .footer-filter-btn {
@@ -181,6 +190,10 @@ $not-quite-black: #1D1E22;
         float: left;
         left: 0;
         right: 67.1%;
+        -webkit-transition: right .3s;
+        -moz-transition: right .3s;
+        -ms-transition: right .3s;
+        -o-transition: right .3s;
         transition: right .3s;
       }
 
@@ -200,6 +213,10 @@ $not-quite-black: #1D1E22;
         float: left;
         left: 34%;
         right: 34%;
+        -webkit-transition: left .29s, right .29s;
+        -moz-transition: left .29s, right .29s;
+        -ms-transition: left .29s, right .29s;
+        -o-transition: left .29s, right .29s;
         transition: left .29s, right .29s;
       }
 
@@ -225,6 +242,10 @@ $not-quite-black: #1D1E22;
         float: right;
         left: 67%;
         right: 0;
+        -webkit-transition: left .3s;
+        -moz-transition: left .3s;
+        -ms-transition: left .3s;
+        -o-transition: left .3s;
         transition: left .3s;
       }
 
@@ -250,6 +271,10 @@ $not-quite-black: #1D1E22;
       width: 38px;
       height: 100%;
       opacity: 0;
+      -webkit-transition: opacity 0.3s linear;
+      -moz-transition: opacity 0.3s linear;
+      -ms-transition: opacity 0.3s linear;
+      -o-transition: opacity 0.3s linear;
       transition: opacity 0.3s linear;
       text-align: center;
       font-size: 18px;
