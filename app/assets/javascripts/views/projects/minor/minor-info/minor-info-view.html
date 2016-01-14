@@ -31,7 +31,7 @@
     {{/linkRepoName}}
     {{/editMode}}
     {{#editMode}}
-    <span class="edit-mode-info-label">Repo name:</span><input type="text" name="repo-name" value="{{editModeRepoName}}"/>
+    <span class="edit-mode-info-label">Repo name:</span><input {{#isFirefox}}class="firefox"{{/isFirefox}} type="text" name="repo-name" value="{{editModeRepoName}}"/>
     {{/editMode}}
 </div>
 {{/showRepoName}}

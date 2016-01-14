@@ -392,7 +392,8 @@ define(['jquery',
         anon: options.anon === true,
         hasTags: hasTags,
         majorActionBtnClass: majorActionBtnClass,
-        majorActionBtnText: majorActionBtnText
+        majorActionBtnText: majorActionBtnText,
+        isFirefox: $('body').attr('browser') === 'firefox'
       }));
 
       if (this.editMode) {

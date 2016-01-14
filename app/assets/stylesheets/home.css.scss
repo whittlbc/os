@@ -538,6 +538,8 @@ $side-filters-width: 18.25%;
     text-transform: uppercase;
     color: $project-type-color;
     font-size: 13px;
+    outline: 0 !important;
+    border: none !important;
   }
 
   a.active {

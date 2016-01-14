@@ -141,6 +141,7 @@ $light-gray: #C4C5CA;
     font-size: 13px !important;
     line-height: 32px !important;
     -webkit-appearance:none;
+    -moz-appearance: none;
   }
 
   .bootstrap-switch-handle-on {
@@ -286,6 +287,10 @@ $light-gray: #C4C5CA;
       background-color: #55ACEE;
     }
 
+    .share-icon.firefox {
+      line-height: 29px;
+    }
+
     .share-icon#reddit {
       margin-right: 9px;
       background-color: #cee3f8;
@@ -337,6 +342,10 @@ $light-gray: #C4C5CA;
 
 .join-btn.regular {
   @extend .z-depth-1;
+  -webkit-transition: box-shadow .3s ease-out, background-color .3s ease-out;
+  -moz-transition: box-shadow .3s ease-out, background-color .3s ease-out;
+  -ms-transition: box-shadow .3s ease-out, background-color .3s ease-out;
+  -o-transition: box-shadow .3s ease-out, background-color .3s ease-out;
   transition: box-shadow .3s ease-out, background-color .3s ease-out;
   background-color: #00A6C9;
   color: white;
@@ -546,6 +555,7 @@ $light-gray: #C4C5CA;
   line-height: 1.5;
   background: white;
   -webkit-appearance: none;
+  -moz-appearance: none;
   float: left;
   margin-left: 13px;
 }
@@ -799,13 +809,26 @@ $light-gray: #C4C5CA;
 
 #minorInfoEvolutionFlipper.flipped {
   -webkit-transform: rotatey(-180deg);
+  -moz-transform: rotatey(-180deg);
+  -ms-transform: rotatey(-180deg);
+  -o-transform: rotatey(-180deg);
+  transform: rotatey(-180deg);
 }
 
 #minorInfoEvolutionFlipper {
   width: 100%;
   height: 100%;
+
   -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
   -webkit-transition: 0.425s;
+  -moz-transition: 0.425s;
+  -ms-transition: 0.425s;
+  -o-transition: 0.425s;
+  transition: 0.425s;
 }
 
 #minorInfoEvolutionFlipper .face {
@@ -813,6 +836,8 @@ $light-gray: #C4C5CA;
   height: 100%;
   position: absolute;
   -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
   z-index: 2;
 }
 
@@ -826,6 +851,10 @@ $light-gray: #C4C5CA;
 }
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
+  -moz-transform: rotatey(-180deg);
+  -ms-transform: rotatey(-180deg);
+  -o-transform: rotatey(-180deg);
+  transform: rotatey(-180deg);
   background-color: white;
   border-top: 1px solid #DDD;
 }
@@ -982,6 +1011,10 @@ $light-gray: #C4C5CA;
     width: 73%;
     line-height: 28px;
   }
+
+  input[name="repo-name"].firefox {
+    width: 124px;
+  }
 }
 
 .edit-mode-info-label {
@@ -1004,6 +1037,7 @@ $light-gray: #C4C5CA;
   line-height: 28px;
   background: white;
   -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 #licenseTypeSelection + label {

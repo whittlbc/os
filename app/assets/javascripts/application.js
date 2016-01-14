@@ -9,8 +9,31 @@ define(['jquery',
    _,
    Router) {
 
+
+
   // Document On Ready Shit
   $(document).ready(function () {
+
+    var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+    var isChrome = !!window.chrome && !isOpera;// Chrome 1+
+
+    var browser = '';
+
+    switch (true) {
+      case isFirefox:
+        browser = 'firefox';
+        break;
+      case isSafari:
+        browser = 'safari';
+        break;
+      case isChrome:
+        browser = 'chrome';
+        break;
+    };
+
+    $('body').attr('browser', browser);
 
     // Hide Header on on scroll down
     var didScroll;

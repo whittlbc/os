@@ -241,7 +241,8 @@ define(['jquery',
         slackRequestSent: options.pending_slack_request,
         hipchatRequestSent: options.pending_hipchat_request,
         editMode: options.editMode,
-        editModeRepoName: options.repo_name
+        editModeRepoName: options.repo_name,
+        isFirefox: $('body').attr('browser') === 'firefox'
       }));
 
       if (!options.editMode) {
