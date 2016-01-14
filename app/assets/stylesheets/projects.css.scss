@@ -519,7 +519,6 @@ $light-gray: #C4C5CA;
   height: 30px;
   font-size: 18px;
   line-height: 30px;
-  font-weight: bold;
   margin-top: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -714,7 +713,6 @@ $light-gray: #C4C5CA;
   margin-right: auto;
   text-align: center;
   padding-top: 85px;
-  font-weight: 300;
   font-size: 14px;
   color: #9B9BA6;
   font-style: italic;
@@ -776,7 +774,6 @@ $light-gray: #C4C5CA;
 
 .info-evolution-toggle-btn.active {
   color: #00A6C9;
-  font-weight: 500;
 }
 
 #info.not-launched {
@@ -993,7 +990,6 @@ $light-gray: #C4C5CA;
 
   a {
     color: black;
-    font-weight: bold;
   }
 
   a:hover {
@@ -1019,7 +1015,6 @@ $light-gray: #C4C5CA;
 
 .edit-mode-info-label {
   font-size: 13px;
-  font-weight: 500;
 }
 
 .edit-mode-info-label.major-info {
@@ -1228,7 +1223,6 @@ $light-gray: #C4C5CA;
   width: 81px;
   height: 40px;
   font-size: 18px;
-  font-weight: 500;
   display: inline-block;
   float: left;
   margin-left: 10px;
@@ -1458,7 +1452,6 @@ $light-gray: #C4C5CA;
 
 .comment-post-time-ago {
   font-size: 10px;
-  font-weight: 300;
   color: #C4C5CA;
   float: right;
   display: inline-block;
@@ -1704,7 +1697,6 @@ $light-gray: #C4C5CA;
 
     .date {
       font-size: 10px;
-      font-weight: 300;
       color: #C4C5CA;
       float: right;
       margin-right: 5px;
@@ -1808,7 +1800,6 @@ $light-gray: #C4C5CA;
 
   .big-message {
     font-size: 30px;
-    font-weight: 300;
     color: #C4C5CA;
     text-align: center;
     width: 100%;

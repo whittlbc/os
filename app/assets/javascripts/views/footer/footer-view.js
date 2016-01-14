@@ -402,7 +402,9 @@ define(['jquery',
 
     render: function () {
       var self = this;
-      this.$el.html(FooterViewTpl());
+      this.$el.html(FooterViewTpl({
+        isSafari: $('body').attr('browser') === 'safari'
+      }));
       this.renderDropdown();
 
       this.moreFiltersDropup = new MoreFiltersDropup({
