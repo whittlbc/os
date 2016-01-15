@@ -13,7 +13,13 @@ define(['jquery',
 		initialize: function () {
 		},
 
-		events: {},
+		events: {
+      'click .got-it-btn': 'onClickedOK'
+    },
+
+    onClickedOK: function () {
+      this.trigger('confirm');
+    },
 
 		render: function () {
       this.$el.html(AboutViewTpl());

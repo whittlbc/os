@@ -830,6 +830,10 @@ define(['jquery',
         el: '#modalAbout'
       });
 
+      this.listenTo(this.aboutModal, 'confirm', function () {
+        self.aboutModal.hideModal();
+      });
+
       this.aboutModal.render();
 
       this.rulesModal = new RulesModal({

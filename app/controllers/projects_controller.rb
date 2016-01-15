@@ -169,7 +169,7 @@ class ProjectsController < ApplicationController
           :langs_and_frames => allowable_params[:langs_and_frames],
           :anon => allowable_params[:anon],
           :privacy => allowable_params[:privacy],
-          :contributor_count => 1
+          :contributors_count => 1
       }
 
       project = Project.new(project_data)

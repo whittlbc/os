@@ -63,7 +63,14 @@ define(['jquery',
     },
 
     isFirstVisit: function () {
-      return !this.authed && this.noCookie;
+      var firstVisit = false;
+
+      if (!this.authed && this.noCookie) {
+        this.noCookie = false;
+        firstVisit = true;
+      }
+
+      return firstVisit;
     },
 
     setUserPic: function () {
