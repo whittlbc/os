@@ -203,8 +203,8 @@ define(['jquery',
       if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
         // Get Contributors
 
-        data.project.owner_gh_username = 'yabwe';
-        data.project.repo_name = 'medium-editor';
+        //data.project.owner_gh_username = 'yabwe';
+        //data.project.repo_name = 'medium-editor';
 
         self.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
           self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);

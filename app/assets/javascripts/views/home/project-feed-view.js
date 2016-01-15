@@ -51,7 +51,7 @@ define(['jquery',
       var self = this;
       this.populateFeed(data);
       setTimeout(function () {
-        self.trigger('projects:populated');
+        self.trigger('projects:populated', data.length);
       }, 5);
     },
 

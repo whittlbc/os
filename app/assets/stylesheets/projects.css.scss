@@ -84,7 +84,7 @@ $light-gray: #C4C5CA;
 
   .selectize-control.multi,
   input[name="edit-subtitle"] {
-    width: 70%;
+    width: 65%;
   }
 
   input[name="edit-title"] {
@@ -200,6 +200,10 @@ $light-gray: #C4C5CA;
   .star.starred {
     color: #F7E00F;
   }
+}
+
+.major-info-project-title.edit {
+  width: 65%;
 }
 
 .project-action-container {
@@ -325,6 +329,10 @@ $light-gray: #C4C5CA;
 
   }
 
+}
+
+.project-action-container.edit {
+  width: 34%;
 }
 
 .join-btn {
@@ -1672,10 +1680,6 @@ $light-gray: #C4C5CA;
     width: 100%;
     float: left;
     border-bottom: 1px solid #DDD;
-  }
-
-  .evolution-feed-item-container:hover {
-    background-color: #F4F6F8;
   }
 
   .evolution-feed-item-container {

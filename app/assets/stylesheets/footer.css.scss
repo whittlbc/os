@@ -11,7 +11,7 @@ $not-quite-black: #1D1E22;
   border-radius: 3px 3px 0 0;
   background-color: white;
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.44);
-  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.44);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.48);
   box-shadow: 0 0 1px rgba(0,0,0,0.44);
 
   .search-container {
@@ -52,10 +52,12 @@ $not-quite-black: #1D1E22;
           color: $light-gray;
         }
         input:-moz-placeholder {
-          color: $light-gray;
+          color: #8D8F98;
+          font-family: 'Proxima-Nova-SemiBold';
         }
         input::-moz-placeholder {
-          color: $light-gray;
+          color: #8D8F98;
+          font-family: 'Proxima-Nova-SemiBold';
         }
         input:-ms-input-placeholder {
           color: $light-gray;

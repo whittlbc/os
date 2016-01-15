@@ -1,6 +1,6 @@
 <div class="major-info-container-view">
     <div class="title-action-container">
-        <div class="major-info-project-title">
+        <div class="major-info-project-title {{#editMode}}edit{{/editMode}}">
             {{^editMode}}
             <div class="star {{#starred}}starred{{/starred}}">
                 <i class="fa {{#starred}}fa-star{{/starred}} {{^starred}}fa-star-o{{/starred}}"></i>
@@ -23,7 +23,7 @@
             </select>
             {{/editMode}}
         </div>{{
-        }}<div class="project-action-container">
+        }}<div class="project-action-container {{#editMode}}edit{{/editMode}}">
             <div class="join-btn {{majorActionBtnClass}}">{{{majorActionBtnText}}}</div>{{
             }}{{^editMode}}<div class="project-page-vote-container {{#voted}}voted{{/voted}}">
                 <div class="new-vote-count-container">

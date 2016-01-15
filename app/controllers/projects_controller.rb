@@ -168,7 +168,8 @@ class ProjectsController < ApplicationController
           :status => allowable_params[:status],
           :langs_and_frames => allowable_params[:langs_and_frames],
           :anon => allowable_params[:anon],
-          :privacy => allowable_params[:privacy]
+          :privacy => allowable_params[:privacy],
+          :contributor_count => 1
       }
 
       project = Project.new(project_data)
@@ -227,7 +228,7 @@ class ProjectsController < ApplicationController
     if params[:user_uuid]
       user = User.find_by(uuid: params[:user_uuid])
     end
-    projects_of_type = Project.includes(:user, :comments, :contributors).where(:status => params[:status]).active.map { |project|
+    projects_of_type = Project.includes(:user).where(:status => params[:status]).active.map { |project|
       {
           :anon => project.anon,
           :title => project.title,
@@ -235,7 +236,7 @@ class ProjectsController < ApplicationController
           :created_at => project.created_at.utc.iso8601,
           :uuid => project.uuid,
           :vote_count => project.vote_count,
-          :total_contributors => project.contributors.count,
+          :total_contributors => project.contributors_count,
           :license => project.license,
           :privacy => project.privacy,
           :langs_and_frames => project.langs_and_frames,
@@ -243,7 +244,7 @@ class ProjectsController < ApplicationController
           :owner_pic => project.get_owner_pic,
           :voted => user ? user.voted_on_project(project.id) : nil,
           :status => project.status,
-          :total_comments => project.comments.count
+          :total_comments => project.comments_count
       }
     }
 
@@ -308,7 +309,7 @@ class ProjectsController < ApplicationController
 
       chat = filters[:chat]
 
-      filtered_projects = Project.includes(:user, :comments, :contributors, :integrations).where!(status: params[:status]).active
+      filtered_projects = Project.includes(:user, :integrations).where!(status: params[:status]).active
 
       filters.each { |filter|
         if filter[0] != 'chat'
@@ -351,7 +352,7 @@ class ProjectsController < ApplicationController
             :created_at => project.created_at.utc.iso8601,
             :uuid => project.uuid,
             :vote_count => project.vote_count,
-            :total_contributors => project.contributors.count,
+            :total_contributors => project.contributors_count,
             :license => project.license,
             :privacy => project.privacy,
             :langs_and_frames => project.langs_and_frames,
@@ -359,7 +360,7 @@ class ProjectsController < ApplicationController
             :owner_pic => project.get_owner_pic,
             :voted => user ? user.voted_on_project(project.id) : nil,
             :status => project.status,
-            :total_comments => project.comments.count
+            :total_comments => project.comments_count
         }
       }
 
@@ -382,6 +383,7 @@ class ProjectsController < ApplicationController
     project = Project.find_by(uuid: params[:uuid])
     if !user.nil? && !project.nil?
       Contributor.new(:uuid => UUIDTools::UUID.random_create.to_s, :project_id => project.id, :user_id => user.id).save!
+      project.update_attributes(:contributors_count => (project.contributors_count + 1))
       render :json => { :message => 'Successfully added contributor' }
     else
       render :json => {:status => 500, :message => 'Could not add user as contributor'}
@@ -443,6 +445,8 @@ class ProjectsController < ApplicationController
             :admin => false
         }
         Contributor.new(contrib_data).save!
+
+        project.update_attributes(:contributors_count => (project.contributors_count + 1))
 
       # otherwise, it was an integrations request
       else
@@ -557,6 +561,8 @@ class ProjectsController < ApplicationController
       }
       comment = Comment.new(comment_info)
       comment.save
+
+      project.update_attributes(:comments_count => (project.comments_count + 1))
 
       all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)
       render :json => all_comments_of_feed_type

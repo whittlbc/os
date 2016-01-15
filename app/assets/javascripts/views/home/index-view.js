@@ -92,8 +92,10 @@ define(['jquery',
         e.preventDefault();
         return;
       } else {
-        this.activeTabIndex = selectedIndex;
-        window.location = $(e.currentTarget).attr('href');
+        setTimeout(function () {
+          self.activeTabIndex = selectedIndex;
+          window.location = $(e.currentTarget).attr('href');
+        }, 300);
       }
     },
 
@@ -398,8 +400,9 @@ define(['jquery',
       this.langFiltersOr = obj.lang_filters_or;
     },
 
-    setProjectToWatchScrollingPos: function () {
-      this.$thirdToLastProj = this.$el.find('ul.project-feed-list').children().last().prev().prev();
+    setProjectToWatchScrollingPos: function (numProjects) {
+      this.$thirdToLastProj = (numProjects >= 30) ?
+        this.$el.find('ul.project-feed-list').children().last().prev().prev() : null;
     },
 
     render: function (options) {
@@ -423,8 +426,8 @@ define(['jquery',
         el: '#project-feed'
       });
 
-      this.listenTo(this.projectFeedView, 'projects:populated', function () {
-        self.setProjectToWatchScrollingPos();
+      this.listenTo(this.projectFeedView, 'projects:populated', function (numProjects) {
+        self.setProjectToWatchScrollingPos(numProjects);
       });
 
       this.projectFeedView.render();
