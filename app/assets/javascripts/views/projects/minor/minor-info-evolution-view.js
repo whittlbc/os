@@ -81,7 +81,8 @@ define(['jquery',
       options = options || {};
 
       this.$el.html(MinorInfoEvolutionViewTpl({
-        launched: options.status == 2
+        launched: options.status == 2,
+        isSafari: $('body').attr('browser') === 'safari'
       }));
 
       this.minorInfoView = new MinorInfoView({

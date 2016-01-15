@@ -28,7 +28,9 @@ define(['jquery',
 
     render: function () {
       var self = this;
-      this.$el.html(ContributorsFeedContainerViewTpl());
+      this.$el.html(ContributorsFeedContainerViewTpl({
+        isSafari: $('body').attr('browser') === 'safari'
+      }));
 
       this.contributorsFeedView = new ContributorsFeedView({
         el: this.$el.find('#contributorsFeedView')

@@ -11,6 +11,7 @@ paths:
     backbone-eventbroker: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/backbone-eventbroker'
     selectize: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/selectize'
     tabs: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/tabs'
+    jquery-transit: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/jquery-transit'
 shim:
     jquery:
         exports: '$'
@@ -46,6 +47,9 @@ shim:
     tabs:
         deps: ['jquery']
         exports: 'tabs'
+    jquery-transit:
+        deps: ['jquery']
+        exports: 'jquery-transit'
 
 modules:
     - name: 'application'

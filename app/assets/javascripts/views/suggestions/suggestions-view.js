@@ -64,7 +64,8 @@ define(['jquery',
       this.$el.html(SuggestionsViewTpl({
         spinnerView: options.spinnerView,
         successView: options.successView,
-        errorView: options.errorView
+        errorView: options.errorView,
+        isSafari: $('body').attr('browser') === 'safari'
       }));
 
       if (options.spinnerView) {

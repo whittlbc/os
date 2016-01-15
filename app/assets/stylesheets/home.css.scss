@@ -789,6 +789,11 @@ $side-filters-width: 18.25%;
   input::-webkit-input-placeholder {
     color: $light-gray;
   }
+
+  input.safari::-webkit-input-placeholder {
+    font-family: 'Proxima-Nova-SemiBold';
+  }
+
   input:-moz-placeholder {
     color: #8D8F98;
     font-family: 'Proxima-Nova-SemiBold';
@@ -1122,6 +1127,20 @@ $side-filters-width: 18.25%;
   }
 }
 
+#langFiltersView.safari {
+  .lang-filter-item {
+    font-family: 'Proxima-Nova-SemiBold';
+  }
+}
+
+#minorFiltersView.safari,
+#langFiltersView.safari {
+  .filter-close-btn {
+    font-family: 'Proxima-Nova-SemiBold';
+    line-height: 14px !important;
+  }
+}
+
 .minor-filters-type-icon {
   display: inline-block;
   float: right;
@@ -1401,7 +1420,6 @@ $side-filters-width: 18.25%;
 #floatingLoginWithGHBtn + .tooltip.top {
 
   .tooltip-inner {
-    width: 100px !important;
     color: white;
     position: relative;
     font-size: 10.5px;
@@ -1409,6 +1427,20 @@ $side-filters-width: 18.25%;
   }
 
 }
+
+#floatingLoginWithGHBtn.not-safari + .tooltip.top {
+  .tooltip-inner {
+    width: 100px !important;
+  }
+}
+
+#floatingLoginWithGHBtn.safari + .tooltip.top {
+  .tooltip-inner {
+    width: 105px !important;
+    font-family: 'Proxima-Nova-SemiBold';
+  }
+}
+
 
 .gh-login-loading {
   width: 50px;
@@ -1486,6 +1518,14 @@ $side-filters-width: 18.25%;
     -o-transform: scale(1.0);
     transform: scale(1.0);
     opacity: 0;
+  }
+}
+
+#modalLogin.safari {
+  .gh-login-btn {
+    .btn-text {
+      font-family: 'Proxima-Nova-SemiBold';
+    }
   }
 }
 

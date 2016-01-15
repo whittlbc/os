@@ -288,7 +288,8 @@ define(['jquery',
         if (self.filterType == null) {
           $(this).addClass('show-filter-btns');
         } else {
-          self.$filterBtns.addClass('show-all');
+          self.$filterBtns.
+            addClass('show-all');
         }
       }, function () {
         if (self.filterType == null) {
@@ -353,24 +354,6 @@ define(['jquery',
             self.preventAddListener = false;
           });
         }
-      }
-    },
-
-    getFiltersWithStatus: function () {
-      var self = this;
-      switch (this.filterType) {
-        case 0:
-          return {
-            selected: this.$el.find('#langFilterChoice'),
-            not: this.$el.find('#licenseFilterChoice')
-          };
-          break;
-        case 1:
-          return {
-            selected: this.$el.find('#licenseFilterChoice'),
-            not: this.$el.find('#langFilterChoice')
-          };
-          break;
       }
     },
 

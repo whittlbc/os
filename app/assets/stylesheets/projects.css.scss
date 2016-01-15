@@ -155,6 +155,13 @@ $light-gray: #C4C5CA;
 
 }
 
+.major-info-container-view.safari {
+  .bootstrap-switch-handle-on,
+  .bootstrap-switch-handle-off {
+    font-family: 'Proxima-Nova-SemiBold' !important;
+  }
+}
+
 .title-action-container {
   width: 100%;
   display: block;
@@ -850,10 +857,15 @@ $light-gray: #C4C5CA;
   position: absolute;
   z-index: 1;
   background-color: $project-minor;
+}
 
-  div {
+#minorInfoView.safari {
+  .minor-info-subsection-title {
+    font-family: 'Proxima-Nova-SemiBold';
   }
 }
+
+
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
   -moz-transform: rotatey(-180deg);

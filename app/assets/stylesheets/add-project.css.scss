@@ -51,6 +51,29 @@ input {
   position: relative;
 }
 
+.add-project-details-view.safari {
+  input::-webkit-input-placeholder,
+  .create-forum,
+  .add-project-privacy-choice,
+  .add-project-anon-choice,
+  .add-project-send-invites-choice,
+  .or {
+    font-family: 'Proxima-Nova-SemiBold';
+  }
+
+  .forum-link-container {
+    input {
+      line-height: 18px !important;
+    }
+  }
+
+  [name="add-project-repo-name"] {
+    line-height: 18px !important;
+    padding-top: 9px;
+    padding-bottom: 8px;
+  }
+}
+
 .project-source-selection-container,
 .project-type-selection-container {
   width: 100%;

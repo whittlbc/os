@@ -987,7 +987,8 @@ define(['jquery',
 
       this.$el.html(MainViewTpl({
         showHomeView: this.showHomeView,
-        showProjectView: this.showProjectView
+        showProjectView: this.showProjectView,
+        isSafari: $('body').attr('browser') === 'safari'
       }));
 
       // CREATE FILTERS

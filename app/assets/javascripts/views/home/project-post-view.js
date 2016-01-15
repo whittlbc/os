@@ -8,7 +8,8 @@ define(['jquery',
   'views/widgets/user-info-bubble',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/home/project-post-view',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'jquery-transit'
 ], function ($,
              Backbone,
              _,
@@ -23,9 +24,10 @@ define(['jquery',
 
   var ProjectPostView = OSView.extend({
 
-    postInitialize: function () {
+    postInitialize: function (options) {
       this.tagsExpanded = false;
       this.MAX_TAGS = 6;
+      this.safari = options.safari;
     },
 
     events: {
@@ -154,14 +156,13 @@ define(['jquery',
     expandTags: function () {
       var self = this;
       this.tagsExpanded = true;
-      var tagCount = 0;
-      var tagsToHide = [];
 
-      _.each(this.$el.find('.tag-name'), function (element) {
-        tagCount++;
-        if (tagCount > self.MAX_TAGS) {
-          tagsToHide.push(element);
-        } else {
+      if (this.safari) {
+        _.each(this.tagsToShow, function (element) {
+          $(element).transition({width: 'auto'}, 285);
+        });
+      } else {
+        _.each(this.tagsToShow, function (element) {
           var prevWidth = element.style.width;
           element.style.width = 'auto';
           var endWidth = getComputedStyle(element).width;
@@ -169,16 +170,16 @@ define(['jquery',
           element.offsetWidth;
           element.style.transition = 'width .285s';
           element.style.width = endWidth;
-        }
-      });
+        });
+      }
 
-      if (!_.isEmpty(tagsToHide)) {
+      if (!_.isEmpty(this.tagsToHide)) {
         setTimeout(function () {
-          _.each(tagsToHide, function (element) {
+          _.each(self.tagsToHide, function (element) {
             $(element).parent().css('display', 'none');
           });
           self.$moreTagsContainer.css('display', 'inline-block');
-        }, 200);
+        }, 100);
       }
     },
 
@@ -186,28 +187,27 @@ define(['jquery',
       var self = this;
 
       if (this.tagsExpanded) {
-        var tagCount = 0;
-        var hiddenTags = [];
 
-        _.each(self.$el.find('.tag-name'), function (element) {
-          tagCount++;
-          if (tagCount > self.MAX_TAGS) {
-            hiddenTags.push(element);
-          } else {
+        if (this.safari) {
+          _.each(this.tagsToShow, function (element) {
+            $(element).transition({width: 0}, 285);
+          });
+        } else {
+          _.each(this.tagsToShow, function (element) {
             element.style.width = getComputedStyle(element).width;
             element.style.transition = 'width .285s';
             element.offsetWidth;
             element.style.width = '0px';
-          }
-        });
+          });
+        }
 
-        if (!_.isEmpty(hiddenTags)) {
+        if (!_.isEmpty(this.tagsToHide)) {
           setTimeout(function () {
             self.$moreTagsContainer.css('display', 'none');
-            _.each(hiddenTags, function (element) {
+            _.each(self.tagsToHide, function (element) {
               $(element).parent().css('display', 'inline-block');
             });
-          }, 200);
+          }, 100);
         }
 
       }
@@ -271,10 +271,19 @@ define(['jquery',
           this.$el.find('.tag-container').append($div);
         }
       }
+
+      this.decideWhichTagsWillBeHiddenOnExpand();
+
     },
 
-    applyAlreadyVoted: function () {
-      this.$el.find('.vote-master-container').addClass('voted');
+    decideWhichTagsWillBeHiddenOnExpand: function () {
+      var $allTagNames = this.$el.find('.tag-name');
+      this.tagsToShow = $allTagNames.slice(0, this.MAX_TAGS);
+      this.tagsToHide = $allTagNames.slice(this.MAX_TAGS);
+
+      if (this.tagsToHide.length == 0) {
+        this.tagsToHide = [];
+      }
     },
 
     render: function () {

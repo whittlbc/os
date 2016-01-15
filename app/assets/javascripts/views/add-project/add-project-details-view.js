@@ -149,7 +149,8 @@ define(['jquery',
         showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
         showPullFromIdeasView: showPullFromIdeasView,
         showCreatingProjectView: showCreatingProjectView,
-        showProjectCreationError: showProjectCreationError
+        showProjectCreationError: showProjectCreationError,
+        isSafari: $('body').attr('browser') === 'safari'
       }));
 
       this.detailsView = new DetailsView({

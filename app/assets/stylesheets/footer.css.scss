@@ -51,6 +51,7 @@ $not-quite-black: #1D1E22;
         input::-webkit-input-placeholder {
           color: $light-gray;
         }
+
         input:-moz-placeholder {
           color: #8D8F98;
           font-family: 'Proxima-Nova-SemiBold';
@@ -103,10 +104,22 @@ $not-quite-black: #1D1E22;
         div.option.active {
           background-color: rgba(110,111,114,1);
         }
-
       }
     }
+  }
 
+  .search-container.safari {
+    input::-webkit-input-placeholder {
+      font-family: 'Proxima-Nova-SemiBold';
+    }
+
+    input {
+      line-height: 20px !important;
+    }
+
+    div.option {
+      font-family: 'Proxima-Nova-SemiBold' !important;
+    }
   }
 
   .line-break {
@@ -323,7 +336,15 @@ $not-quite-black: #1D1E22;
   }
 }
 
-
-.footer-container.up-for-grabs {
-  // dont have chat forum as one
+.footer-container.safari {
+  -webkit-box-shadow: 0 0 1.4px rgba(0, 0, 0, 0.81);
+  box-shadow: 0 0 1.4px rgba(0, 0, 0, 0.81);
 }
+
+
+
+
+
+
+
+

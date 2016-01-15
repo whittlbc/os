@@ -2,10 +2,9 @@
 <!--HOME VIEW-->
 {{#showHomeView}}
 <div id="homeViewContainer"></div>
-<div id="langFiltersView"></div>
-<div id="minorFiltersView"></div>
-<span id="floatingLoginWithGHBtn" class="octicon octicon-mark-github" data-toggle="gh-tooltip" data-placement="top" title="Login with Github"></span>
-
+<div id="langFiltersView" class="{{#isSafari}}safari{{/isSafari}}"></div>
+<div id="minorFiltersView" class="{{#isSafari}}safari{{/isSafari}}"></div>
+<span id="floatingLoginWithGHBtn" class="octicon octicon-mark-github {{#isSafari}}safari{{/isSafari}}{{^isSafari}}not-safari{{/isSafari}}" data-toggle="gh-tooltip" data-placement="top" title="Login with Github"></span>
 {{/showHomeView}}
 
 
@@ -16,7 +15,7 @@
 
 <!--MODALS-->
 <div id="modalCreateProject" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';"></div>
-<div id="modalLogin"></div>
+<div id="modalLogin" class="{{#isSafari}}safari{{/isSafari}}"></div>
 <div id="modalContribs"></div>
 <div id="modalDeleteComment"></div>
 <div id="modalDeleteProject"></div>

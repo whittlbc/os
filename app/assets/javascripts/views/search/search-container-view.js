@@ -204,7 +204,9 @@ define(['jquery',
 
     render: function () {
       var self = this;
-      this.$el.html(SearchContainerViewTpl());
+      this.$el.html(SearchContainerViewTpl({
+        isSafari: $('body').attr('browser') === 'safari'
+      }));
       this.$searchContainer = $('.header-searchbar-container');
       this.$input = this.$el.find('.searchbox > input');
       this.$dropdown = this.$el.find('.search-results-list');

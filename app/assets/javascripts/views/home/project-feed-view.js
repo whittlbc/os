@@ -20,6 +20,7 @@ define(['jquery',
 
     initialize: function () {
       this.getAllLanguages();
+      this.safari = $('body').attr('browser') === 'safari';
     },
 
     getAllLanguages: function () {
@@ -72,7 +73,8 @@ define(['jquery',
 
     addPost: function (data) {
       var projectPostView = new ProjectPostView({
-        tagName: 'li'
+        tagName: 'li',
+        safari: this.safari
       });
       projectPostView.setData(data);
       this.setProjectListeners(projectPostView);
