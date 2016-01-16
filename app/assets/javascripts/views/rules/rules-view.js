@@ -1,26 +1,31 @@
 define(['jquery',
-    'backbone',
-    'underscore',
-    'stache!views/rules/rules-view'
+  'backbone',
+  'underscore',
+  'stache!views/rules/rules-view'
 ], function ($,
              Backbone,
              _,
              RulesViewTpl) {
-    'use strict';
+  'use strict';
 
-    var RulesView = Backbone.View.extend({
+  var RulesView = Backbone.View.extend({
 
-        initialize: function () {
-        },
+    initialize: function () {
+    },
 
-        events: {},
+    events: {
+      'click .got-it-btn': 'heardGotIt'
+    },
 
-        render: function () {
-            var self = this;
-            this.$el.html(RulesViewTpl());
-        }
-    });
+    heardGotIt: function () {
+      this.trigger('confirm');
+    },
 
-    return RulesView;
+    render: function () {
+      this.$el.html(RulesViewTpl());
+    }
+  });
+
+  return RulesView;
 
 });

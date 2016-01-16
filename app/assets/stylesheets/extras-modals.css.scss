@@ -1,5 +1,7 @@
 
 $not-quite-black: #1D1E22;
+$rules-height: 347px;
+$rules-static-container-height: 328px;
 
 #aboutModalView {
 
@@ -26,7 +28,7 @@ $not-quite-black: #1D1E22;
       font-size: 24px;
       color: black;
       padding-top: 8px;
-      padding-left: 30px;
+      padding-left: 35px;
     }
   }
 
@@ -37,13 +39,13 @@ $not-quite-black: #1D1E22;
 
   #aboutContentView {
     width: 100%;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 35px;
+    padding-right: 35px;
     padding-bottom: 4px;
 
 
     .about-text {
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 25px;
       white-space: pre-line;
     }
@@ -77,6 +79,7 @@ $not-quite-black: #1D1E22;
 
   .modal-content {
     border-radius: 8px;
+    height: $rules-height;
   }
 
   .modal-header {
@@ -104,17 +107,115 @@ $not-quite-black: #1D1E22;
 
   .rules-modal-body {
     width: 100%;
+    height: $rules-static-container-height;
+    overflow: hidden;
+    padding-top: 15px;
   }
 
   #rulesContentView {
     width: 100%;
-    padding: 35px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 2px;
+    height: 310px;
+    overflow: scroll;
 
     .rules-text {
-      font-size: 15px;
-      line-height: 25px;
+      font-size: 14px;
+
+      .rule {
+
+        .rule-text {
+          width: 100%;
+          float: left;
+          margin-bottom: 12px;
+
+          .num {
+            display: inline-block;
+            float: left;
+            font-family: 'Proxima-Nova-Bold';
+            position: relative;
+            top: 2px;
+          }
+
+          .text {
+            display: inline-block;
+            float: left;
+            padding-left: 10px;
+            max-width: 97%;
+          }
+
+        }
+
+        .project-type-rule-container {
+          padding-left: 33px;
+
+          .project-type-name {
+            font-family: 'Proxima-Nova-SemiBold';
+            margin-top: 12px;
+            color: #00A6C9;
+          }
+
+          .project-type-name.first {
+            margin-top: 0;
+          }
+
+          .project-type-explanation {
+            padding-left: 18px;
+
+            .scenario {
+              margin-top: 10px;
+              margin-bottom: 10px;
+
+              span {
+                display: inline-block;
+                max-width: 96%;
+              }
+
+              .fa-circle {
+                font-size: 6px;
+                display: inline-block;
+                padding-right: 10px;
+                padding-top: 6px;
+                float: left;
+              }
+
+            }
+
+            .sub-scenario {
+              padding-left: 23px;
+              margin-top: 5px;
+              margin-bottom: 5px;
+            }
+
+          }
+
+        }
+
+      }
+
+      .rule.not-first {
+        margin-top: 8px;
+        float: left;
+      }
+
     }
 
+    .got-it-btn {
+      float: left;
+      width: 115px;
+      height: 34px;
+      line-height: 34px;
+      border-radius: 17px;
+      background-color: #00A6C9;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 3px;
+      margin-left: 215px;
+      margin-bottom: 3px;
+
+    }
   }
 
 }

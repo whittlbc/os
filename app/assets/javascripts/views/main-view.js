@@ -840,6 +840,10 @@ define(['jquery',
         el: '#modalRules'
       });
 
+      this.listenTo(this.rulesModal, 'confirm', function () {
+        self.rulesModal.hideModal();
+      });
+
       this.rulesModal.render();
 
       this.suggestionsModal = new SuggestionsModal({

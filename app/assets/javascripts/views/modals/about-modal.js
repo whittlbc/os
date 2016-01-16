@@ -24,7 +24,7 @@ define(['jquery',
     sizeModal: function () {
       var aboutModalMarginTop = ((window.innerHeight - this.aboutModalHeight - this.currentTopPos) / 2);
       this.$modal.css('margin-top', aboutModalMarginTop + 'px');
-      this.$el.find('#aboutModalContentContainer').width(609);
+      this.$el.find('#aboutModalContentContainer').width(600);
     },
 
     render: function () {
