@@ -17,6 +17,7 @@ define(['jquery',
     initialize: function () {
       this.currentTopPos = 135;
       this.aboutModalHeight = 297;
+      this.isSafari = $('body').attr('browser') === 'safari';
     },
 
     events: {},
@@ -24,7 +25,7 @@ define(['jquery',
     sizeModal: function () {
       var aboutModalMarginTop = ((window.innerHeight - this.aboutModalHeight - this.currentTopPos) / 2);
       this.$modal.css('margin-top', aboutModalMarginTop + 'px');
-      this.$el.find('#aboutModalContentContainer').width(600);
+      this.$el.find('#aboutModalContentContainer').width((this.isSafari ? 618 : 600));
     },
 
     render: function () {

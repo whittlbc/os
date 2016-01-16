@@ -68,11 +68,13 @@ $rules-static-container-height: 328px;
 
 }
 
-#modalAbout.safari {
+#modalAbout.safari,
+#modalRules.safari {
   .got-it-btn {
     font-family: 'Proxima-Nova-SemiBold';
   }
 }
+
 
 
 #rulesModalView {
