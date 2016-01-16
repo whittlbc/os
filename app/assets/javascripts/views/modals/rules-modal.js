@@ -16,11 +16,17 @@ define(['jquery',
 
     initialize: function () {
       this.currentTopPos = 100;
-      this.rulesModalHeight = 410;
+      this.rulesModalHeight = 441;
     },
 
     events: {
-      'click .close': 'resumeDocumentScroll'
+      'click .close': 'resumeDocumentScroll',
+      'click .got-it-btn': 'heardGotIt'
+    },
+
+    heardGotIt: function () {
+      this.resumeDocumentScroll();
+      this.trigger('confirm');
     },
 
     resumeDocumentScroll: function () {
@@ -45,11 +51,6 @@ define(['jquery',
 
       this.rulesFeedView = new RulesView({
         el: this.$el.find('#rulesContentView')
-      });
-
-      this.listenTo(this.rulesFeedView, 'confirm', function () {
-        self.resumeDocumentScroll();
-        self.trigger('confirm');
       });
 
       this.rulesFeedView.render();

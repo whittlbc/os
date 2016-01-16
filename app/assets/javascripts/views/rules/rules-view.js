@@ -14,11 +14,24 @@ define(['jquery',
     },
 
     events: {
-      'click .got-it-btn': 'heardGotIt'
+      'click .project-type-name > span': 'toggleShowScenarios'
     },
 
-    heardGotIt: function () {
-      this.trigger('confirm');
+    toggleShowScenarios: function (e) {
+      var $showScenariosBtn = $(e.currentTarget);
+      var $scenarios = $showScenariosBtn.parent().next();
+      $scenarios.hasClass('expand') ?
+        this.collapseScenarios($scenarios, $showScenariosBtn) : this.expandScenarios($scenarios, $showScenariosBtn);
+    },
+
+    expandScenarios: function ($fuckSafari, $showScenariosBtn) {
+      $showScenariosBtn.html('hide scenarios');
+      $fuckSafari.addClass('expand');
+    },
+
+    collapseScenarios: function $scenarios($fuckSafari, $showScenariosBtn) {
+      $showScenariosBtn.html('show scenarios');
+      $fuckSafari.removeClass('expand');
     },
 
     render: function () {
