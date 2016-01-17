@@ -1,0 +1,39 @@
+<div class="notifications-item-container">
+    <div class="pic-text-container {{#justText}}just-text{{/justText}}">
+        <div class="pic">
+            <a href="{{userGHLink}}" target="_blank"><img src="{{pic}}"/></a>
+        </div>
+        <div class="date-text-container">
+            <div class="date">{{date}}</div>
+            <div class="text">
+                <a href="{{userGHLink}}" target="_blank">{{username}} </a>
+                {{{text}}}
+                <a href="{{projectLink}}">{{projectName}}</a>
+                {{#acceptedIntegration}}. You should expect an email invitation soon!{{/acceptedIntegration}}
+                {{^acceptedIntegration}}.{{/acceptedIntegration}}
+            </div>
+        </div>
+    </div>
+    {{^justText}}
+    <div class="action-btn-master-container">
+        {{^showAccepted}}
+        {{^showRejected}}
+        {{#showActionBtns}}
+        <div class="action-btn-container">
+            <div class="action-btn" id="reject">No thanks</div>
+            <div class="action-btn" id="accept">{{positiveBtnText}}</div>
+        </div>
+        {{/showActionBtns}}
+        {{/showRejected}}
+        {{/showAccepted}}
+
+        {{#showAccepted}}
+        <div class="accepted-view"><i class="fa fa-check"></i>{{acceptedText}}</div>
+        {{/showAccepted}}
+
+        {{#showRejected}}
+        <div class="rejected-view"><i class="fa fa-check"></i>Ignored</div>
+        {{/showRejected}}
+    </div>
+    {{/justText}}
+</div>
