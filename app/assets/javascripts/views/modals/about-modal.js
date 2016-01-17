@@ -20,7 +20,13 @@ define(['jquery',
       this.isSafari = $('body').attr('browser') === 'safari';
     },
 
-    events: {},
+    events: {
+      'click .close': 'heardCloseClick'
+    },
+
+    heardCloseClick: function () {
+      this.trigger('close-btn:clicked');
+    },
 
     sizeModal: function () {
       var aboutModalMarginTop = ((window.innerHeight - this.aboutModalHeight - this.currentTopPos) / 2);

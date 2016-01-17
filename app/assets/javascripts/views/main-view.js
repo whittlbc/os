@@ -24,6 +24,7 @@ define(['jquery',
   'views/footer/footer-view',
   'views/filters/lang-filters-view',
   'views/filters/minor-filters-view',
+  'views/tutorial/tutorial-manager',
   'stache!views/main-view',
   'backbone-eventbroker'
 ], function ($,
@@ -52,6 +53,7 @@ define(['jquery',
    FooterView,
    LangFiltersView,
    MinorFiltersView,
+   TutorialManager,
    MainViewTpl) {
   'use strict';
 
@@ -86,7 +88,8 @@ define(['jquery',
         'open-project': 'openProject',
         'project:confirm-launch': 'confirmProjectLaunch',
         'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin',
-        'all-user-repos:request': 'getAllUserRepos'
+        'all-user-repos:request': 'getAllUserRepos',
+        'window:resize': 'positionFooterAndHeaderTutorialBubbles'
       }, this);
 
       this.cachedFilterType = null;
@@ -832,6 +835,12 @@ define(['jquery',
 
       this.listenTo(this.aboutModal, 'confirm', function () {
         self.aboutModal.hideModal();
+        self.showTutorialIfNeeded();
+      });
+
+      this.listenTo(this.aboutModal, 'close-btn:clicked', function () {
+        self.showTutorialIfNeeded();
+
       });
 
       this.aboutModal.render();
@@ -877,8 +886,36 @@ define(['jquery',
 
       if (this.showAboutModal()) {
         setTimeout(function () {
-          self.aboutModal.showModal();
+          $('#tutorialCover').show();
+          setTimeout(function () {
+            $('#tutorialCover').animate({opacity: 0.3}, 150);
+            document.body.style.overflow = 'hidden';
+            self.aboutModal.showModal(true);
+            self.showingAboutModalForTutorial = true;
+          }, 50);
         }, 400);
+      }
+    },
+
+    showTutorialIfNeeded: function () {
+      var self = this;
+      if (this.showingAboutModalForTutorial) {
+        this.showingAboutModalForTutorial = false;
+        setTimeout(function () {
+          self.tutorialManager.showNextItem();
+
+          // Fuck the old about modal and it's caching options,
+          // just create a new one and overwrite the fucked up one
+          self.aboutModal = new AboutModal({
+            el: '#modalAbout'
+          });
+
+          self.listenTo(self.aboutModal, 'confirm', function () {
+            self.aboutModal.hideModal();
+          });
+
+          self.aboutModal.render();
+        }, 100);
       }
     },
 
@@ -962,6 +999,31 @@ define(['jquery',
       }
     },
 
+    positionFooterAndHeaderTutorialBubbles: function () {
+      // Position Footer Tutorial Item
+      var $footer = $('footer');
+      var footerTutorialRight = window.innerWidth - ($footer.offset().left + $footer.width() - $('.more-filters-btn').width() + 3);
+      var footerTutorialWidth = $footer.find('.btn-container').width();
+
+      this.$el.find('#footer-tutorial-anchor').css({
+        right: footerTutorialRight,
+        width: footerTutorialWidth
+      });
+
+      // Position Header Tutorial Item
+      var $headerBtn = $('#headerAddProjectBtn');
+      var headerTutorialRight = window.innerWidth - ($headerBtn.offset().left + $headerBtn.width());
+      this.$el.find('#anp-tutorial-anchor').css({
+        right: headerTutorialRight,
+        width: $headerBtn.width()
+      });
+
+      this.$el.find('#login-tutorial-anchor').css({
+        right: 20,
+        width: 218
+      });
+    },
+
     renderLoginWithGHBtn: function () {
       var self = this;
       var $loginWithGHBtn = this.$el.find('#floatingLoginWithGHBtn');
@@ -1020,6 +1082,10 @@ define(['jquery',
 
       // CREATE MODALS
       this.renderModals();
+
+      this.tutorialManager = new TutorialManager();
+
+      this.positionFooterAndHeaderTutorialBubbles();
     }
 
   });

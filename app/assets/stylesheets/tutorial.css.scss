@@ -1,0 +1,195 @@
+
+
+$footer-height: 48px;
+
+
+#tutorialCover {
+  position: fixed;
+  top: -68px;
+  bottom: 0;
+  left:0;
+  right: 0;
+  z-index: 110;
+  background-color: rgb(0,0,0);
+  opacity: 0;
+}
+
+.tutorial-anchor {
+  z-index: 150;
+  width: 100%;
+}
+
+.tutorial-bubble-container {
+  position: relative;
+  cursor: default;
+  transition: opacity 0.25s;
+  opacity: 0;
+  z-index: 150;
+
+  .fa-caret-down,
+  .fa-caret-up {
+    position: absolute;
+    font-size: 30px;
+    color: #00A6C9;
+    z-index: 1;
+  }
+
+  .tutorial-item-content {
+    width: 100%;
+    height: auto;
+    background-color: #00A6C9;
+    border-radius: 10px;
+    color: white;
+    position: relative;
+    padding: 15px;
+    padding-bottom: 9px;
+
+    .tutorial-text {
+      white-space: normal;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .confirm-tutorial-item {
+      cursor: pointer;
+      text-align: center;
+      width: 68px;
+      height: 25px;
+      line-height: 25px;
+      text-decoration: underline;
+      color: white;
+      margin-left: auto;
+      margin-top: 9px;
+      margin-right: auto;
+    }
+  }
+
+}
+
+#ufg-tutorial-anchor,
+#otf-tutorial-anchor,
+#launched-tutorial-anchor {
+  display: block;
+  margin-top: -6px;
+}
+
+
+// Up for Grabs
+#ufg-tutorial-anchor {
+  .tutorial-bubble-container {
+    width: 255px;
+
+    .fa-caret-up {
+      top: -20px;
+      left: 118.5px;
+    }
+  }
+}
+
+
+// On the Fence
+#otf-tutorial-anchor {
+  .tutorial-bubble-container {
+    width: 265px;
+
+    .fa-caret-up {
+      top: -20px;
+      left: 123.5px;
+    }
+  }
+}
+
+// Launched
+#launched-tutorial-anchor {
+  .tutorial-bubble-container {
+    width: 235px;
+
+    .fa-caret-up {
+      top: -20px;
+      left: 108.5px;
+    }
+  }
+}
+
+// Footer
+#footer-tutorial-anchor {
+  bottom: 62px;
+  position: absolute;
+
+  .tutorial-bubble-container {
+    width: 272px;
+
+    .tutorial-text {
+      text-align: center;
+    }
+
+    .fa-caret-down {
+      left: 127px;
+      bottom: -17px;
+    }
+  }
+}
+
+// Add New Project
+#anp-tutorial-anchor {
+  top: 69px;
+  position: absolute;
+
+  .tutorial-bubble-container {
+    width: 220px;
+
+    .tutorial-text {
+      text-align: center;
+    }
+
+    .fa-caret-up {
+      top: -20px;
+      left: 102px;
+    }
+  }
+}
+
+// Login
+#login-tutorial-anchor {
+  bottom: 86px;
+  position: absolute;
+
+  .tutorial-bubble-container {
+    width: 218px;
+
+    .tutorial-text {
+      text-align: center;
+    }
+
+    .fa-caret-down {
+      right: 20px;
+      bottom: -17px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

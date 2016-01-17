@@ -54,8 +54,19 @@ define(['jquery',
       }
     },
 
+    userIsOnHomePage: function () {
+      //var onHomePage = _.contains(['', '#', '#on-the-fence', '#up-for-grabs', '#launched'], window.location.hash);
+      //if (onHomePage) {
+      //  // ensure this is false, even if there isn't actually a cookie. We really don't care...
+      //  // ...just trying to make sure that isFirstVisit doesn't return true if user lands on project page for the first time
+      //  this.noCookie = false;
+      //}
+
+      return _.contains(['', '#', '#on-the-fence', '#up-for-grabs', '#launched'], window.location.hash);;
+    },
+
     addTrackingCookie: function () {
-      if (!this.getCookie(OSUtil.BASIC_TRACKING_KEY)) {
+      if (!this.getCookie(OSUtil.BASIC_TRACKING_KEY) && this.userIsOnHomePage()) {
         // doesn't matter what the value is, so just use a random uuid
         this.setCookie(OSUtil.BASIC_TRACKING_KEY, '02e70fc4-ceaa-422f-8d87-707f7ef2615c', 60);
         this.noCookie = true;

@@ -13,8 +13,15 @@ define(['jquery',
 
     events: {},
 
-    showModal: function () {
-      this.$modal.modal('show');
+    showModal: function (preventClickOff, cb) {
+      if (preventClickOff) {
+        this.$modal.modal({backdrop: false, keyboard: false})
+      } else {
+        this.$modal.modal({backdrop: true});
+      }
+      if (cb) {
+        cb();
+      }
     },
 
     hideModal: function () {
