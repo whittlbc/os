@@ -17,6 +17,9 @@ define(['jquery',
 
     initialize: function () {
       Session.checkForSession();
+      Session.fetchGHAppInfo({success: function (data) {
+        OSUtil.setGHClientID(data.client_id);
+      }})
     },
 
     routes: {

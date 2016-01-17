@@ -89,7 +89,8 @@ define(['jquery',
         'project:confirm-launch': 'confirmProjectLaunch',
         'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin',
         'all-user-repos:request': 'getAllUserRepos',
-        'window:resize': 'positionFooterAndHeaderTutorialBubbles'
+        'window:resize': 'positionFooterAndHeaderTutorialBubbles',
+        'tutorial:login-with-gh': 'loginWithGHFromTutorial'
       }, this);
 
       this.cachedFilterType = null;
@@ -97,6 +98,11 @@ define(['jquery',
     },
 
     events: {},
+
+    loginWithGHFromTutorial: function () {
+      this.$el.find('#floatingLoginWithGHBtn').click();
+      this.loginWithGH();
+    },
 
     resetNotifications: function () {
       this.notificationsDropdown.populated = false;
@@ -325,7 +331,7 @@ define(['jquery',
     },
 
     loginWithGH: function () {
-      window.location = 'https://github.com/login/oauth/authorize?client_id=bfdb73ed12138dddbfcc&scope=public_repo';
+      window.location = 'https://github.com/login/oauth/authorize?client_id=' + OSUtil.GH_CLIENT_ID + '&scope=public_repo';
     },
 
     // either show the login modal or vote on the passed projectPostView

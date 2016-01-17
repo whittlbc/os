@@ -2,6 +2,7 @@ Backboneworld::Application.routes.draw do
 
   get '/' => 'home#index'
   get '/login/ghLoginCB' => 'login#gh_login_cb'
+  get '/login/fetchGHAppInfo' => 'login#fetch_gh_app_info'
   root :to => "home#index"
   get '/languages/getAll' => 'languages#get_all'
 

@@ -10,8 +10,8 @@ class LoginController < ApplicationController
   def gh_login_cb
 
     data = {
-      :client_id => User::GH::CLIENT_ID,
-      :client_secret => User::GH::CLIENT_SECRET,
+      :client_id => ENV['GH_CLIENT_ID'],
+      :client_secret => ENV['GH_CLIENT_SECRET'],
       :code => params[:code]
     }
 
@@ -54,6 +54,10 @@ class LoginController < ApplicationController
     cookies['gh_login'] = user_info.to_json
 
     redirect_to controller: 'home', action: 'index'
+  end
+
+  def fetch_gh_app_info
+    render :json => {:client_id => ENV['GH_CLIENT_ID']}
   end
 
 end

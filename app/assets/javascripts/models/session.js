@@ -22,6 +22,16 @@ define(['jquery',
       }, this);
     },
 
+    fetchGHAppInfo: function (options) {
+      var requestInfo = options || {};
+
+      _.extend(requestInfo, {
+        url: 'login/fetchGHAppInfo'
+      });
+
+      return this.sync('fetchGHAppInfo', this, requestInfo);
+    },
+
     signOut: function () {
       this.deleteFromStorage(OSUtil.USER_STORAGE_KEY);
     },
@@ -55,14 +65,7 @@ define(['jquery',
     },
 
     userIsOnHomePage: function () {
-      //var onHomePage = _.contains(['', '#', '#on-the-fence', '#up-for-grabs', '#launched'], window.location.hash);
-      //if (onHomePage) {
-      //  // ensure this is false, even if there isn't actually a cookie. We really don't care...
-      //  // ...just trying to make sure that isFirstVisit doesn't return true if user lands on project page for the first time
-      //  this.noCookie = false;
-      //}
-
-      return _.contains(['', '#', '#on-the-fence', '#up-for-grabs', '#launched'], window.location.hash);;
+      return _.contains(['', '#', '#on-the-fence', '#up-for-grabs', '#launched'], window.location.hash);
     },
 
     addTrackingCookie: function () {

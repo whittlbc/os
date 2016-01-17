@@ -108,7 +108,6 @@ define(['jquery',
 
     done: function () {
       this.currentItem.hideItem();
-      console.log('heard done');
       $('#tutorialCover').animate({opacity: 0}, 150);
       setTimeout(function () {
         $('#tutorialCover').hide();

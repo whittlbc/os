@@ -13,11 +13,6 @@ class User < ActiveRecord::Base
     where(:email => email, :password => password)
   }
 
-  module GH
-    CLIENT_ID = 'bfdb73ed12138dddbfcc'
-    CLIENT_SECRET = '91347eb62e866f7960510aafd81c2f41b2dda2d4'
-  end
-
   PROJECT_ASSET = 0
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2

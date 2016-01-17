@@ -7,6 +7,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
 
     BASIC_TRACKING_KEY: 'sourcehoney',
 
+    setGHClientID: function (clientID) {
+      this.GH_CLIENT_ID = clientID;
+    },
+
     IRC_NETWORKS: [
       {
         "id": "ChLame",
@@ -292,6 +296,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         action: 'read'
       },
       'getNonCachedInfo': {
+        verb: 'GET',
+        action: 'read'
+      },
+      'fetchGHAppInfo': {
         verb: 'GET',
         action: 'read'
       }
