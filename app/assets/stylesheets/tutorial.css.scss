@@ -146,6 +146,10 @@ $footer-height: 48px;
       top: -20px;
       left: 102px;
     }
+
+    .confirm-tutorial-item {
+      margin-top: 4px;
+    }
   }
 }
 
@@ -165,9 +169,85 @@ $footer-height: 48px;
       right: 20px;
       bottom: -17px;
     }
+    
+    .confirm-tutorial-item {
+      margin-top: 4px;
+    }
   }
 }
 
+// SAFARI BULLSHIT
+body[browser="safari"] {
+  .tutorial-text,
+  .confirm-tutorial-item {
+    font-family: 'Proxima-Nova-Bold';
+  }
+
+  // Up for Grabs
+  #ufg-tutorial-anchor {
+    .tutorial-bubble-container {
+      width: 260px;
+
+      .fa-caret-up {
+        left: 121px;
+      }
+    }
+  }
+
+  // On the Fence
+  #otf-tutorial-anchor {
+    .tutorial-bubble-container {
+      width: 275px;
+
+      .fa-caret-up {
+        left: 128.5px;
+      }
+    }
+  }
+
+  // Launched
+  #launched-tutorial-anchor {
+    .tutorial-bubble-container {
+      width: 242px;
+
+      .fa-caret-up {
+        left: 115.5px;
+      }
+    }
+  }
+
+  // Footer
+  #footer-tutorial-anchor {
+
+    .tutorial-bubble-container {
+      width: 284px;
+
+      .fa-caret-down {
+        left: 133px;
+      }
+    }
+  }
+
+  // Add New Project
+  #anp-tutorial-anchor {
+
+    .tutorial-bubble-container {
+      width: 225px;
+
+      .fa-caret-up {
+        left: 104.5px;
+      }
+    }
+  }
+
+  // Login
+  #login-tutorial-anchor {
+    .tutorial-bubble-container {
+      width: 220px;
+    }
+  }
+
+}
 
 
 
