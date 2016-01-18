@@ -220,7 +220,7 @@ define(['jquery',
 
     expandDescription: function (e) {
       var self = this;
-      $(e.currentTarget).velocity({height: 220}, {duration: self.toggleDescriptionSizeDuration});
+      $(e.currentTarget).velocity({height: 175}, {duration: self.toggleDescriptionSizeDuration});
     },
 
     contractDescription: function (e) {
