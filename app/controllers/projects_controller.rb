@@ -795,23 +795,30 @@ class ProjectsController < ApplicationController
   end
 
   def highlight_query(text, query)
+
     # can't do sub because of casing
     start_index = text.downcase.index(query.downcase)
-    if start_index === 0
+    if start_index == 0
       new_text = "<span>#{text[0..(query.length-1)]}</span>#{text[query.length..text.length]}"
-      new_text
-    else
-      text
+    elsif !start_index.nil? && start_index > 0
+      end_of_first_chunk = start_index - 1
+      end_of_second_chunk = end_of_first_chunk + query.length
+      new_text = "#{text[0..end_of_first_chunk]}<span>#{text[(end_of_first_chunk + 1)..(end_of_second_chunk)]}</span>#{text[(end_of_second_chunk + 1)..text.length]}"
+     else
+      new_text = text
     end
+
+    new_text
   end
 
   def search
     projects_table = Project.arel_table
-    query = "#{params[:query]}%"
+    query = "%#{params[:query]}%"
+    limit = params[:limit].present? ? params[:limit].to_i : 10
 
     # return just the title and id of the project
     if params[:upForGrabs]
-      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.map { |project|
+      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.limit(limit).map { |project|
         {
             :uuid => project.uuid,
             :title => project.title,
@@ -822,11 +829,10 @@ class ProjectsController < ApplicationController
       }
 
       sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:title]] }.reverse
-      limit = !params[:limit].nil? ? params[:limit].to_i : 10
-      render :json => {:projects => sorted_projects.slice(0, limit)}
+      render :json => {:projects => sorted_projects}
 
     else
-      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.map { |project|
+      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.limit(limit).map { |project|
         {
             :owner => project.get_owner_gh_username,
             :title => highlight_query(project.title, params[:query]),
@@ -839,9 +845,9 @@ class ProjectsController < ApplicationController
 
       sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:subtitle], project[:title]] }.reverse
 
-      limit = !params[:limit].nil? ? params[:limit].to_i : 10
-      got_all = (limit >= sorted_projects.length)
-      render :json => {:projects => sorted_projects.slice(0, limit), :gotAll => got_all}
+      # got_all = (limit >= sorted_projects.length)
+      # capping it at 10 for now...
+      render :json => {:projects => sorted_projects, :gotAll => true}
 
     end
 

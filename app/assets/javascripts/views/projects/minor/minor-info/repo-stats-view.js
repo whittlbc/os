@@ -17,8 +17,14 @@ define(['jquery',
 
     events: {},
 
+    createHTMLWithData: function () {
+      var self = this;
+
+    },
+
     render: function (options) {
       var self = this;
+      options = options || {};
 
       this.$el.html(RepoStatsViewTpl({
         lastUpdated: options.repoData ? options.repoData.last_updated : '',
@@ -32,7 +38,12 @@ define(['jquery',
         issuesLink: options.repoURL ? options.repoURL + '/issues' : '',
         forks: options.repoData ? options.repoData.forks_count : '',
         showSpinner: options.showSpinner,
-        error: options.error
+        error: options.error,
+        singleStar: options.repoData ? options.repoData.star_count == 1 : false,
+        singleOpenPR: options.repoData ? options.repoData.open_pr_count == 1 : false,
+        singleClosedPR: options.repoData ? options.repoData.closed_pr_count == 1 : false,
+        singleIssue: options.repoData ? options.repoData.open_issues_count == 1 : false,
+        singleFork: options.repoData ? options.repoData.forks_count == 1 : false
       }));
 
       if (options.showSpinner) {
