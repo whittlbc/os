@@ -277,6 +277,7 @@ class ProjectsController < ApplicationController
 
         comment.children.map { |child|
           child.update_attributes(is_destroyed: true)
+          project.update_attributes(:comments_count => (project.comments_count - 1))
         }
 
         all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)

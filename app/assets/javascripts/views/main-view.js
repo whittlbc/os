@@ -208,6 +208,10 @@ define(['jquery',
       $('header').removeClass('header-nav-up').addClass('header-nav-down');
     },
 
+    forceShowFooter: function () {
+      $('footer').removeClass('footer-nav-up').addClass('footer-nav-down');
+    },
+
     forceHideStarredModal: function (id) {
       this.starredModal.hideModal();
       this.switchToProjectAndHideModal(id);
@@ -658,6 +662,9 @@ define(['jquery',
 
     renderHomeView: function (options) {
       var self = this;
+
+      this.forceShowHeader();
+      this.forceShowFooter();
 
       if (this.homeView) {
         this.homeView.$el = this.$el.find('#homeViewContainer');
