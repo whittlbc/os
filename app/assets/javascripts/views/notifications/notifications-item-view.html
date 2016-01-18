@@ -8,7 +8,7 @@
             <div class="text">
                 <a href="{{userGHLink}}" target="_blank">{{username}} </a>
                 {{{text}}}
-                <a href="{{projectLink}}">{{projectName}}</a>
+                <a data-trigger="open-project">{{projectName}}</a>
                 {{#acceptedIntegration}}. You should expect an email invitation soon!{{/acceptedIntegration}}
                 {{^acceptedIntegration}}.{{/acceptedIntegration}}
             </div>

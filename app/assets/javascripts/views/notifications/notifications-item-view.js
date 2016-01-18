@@ -18,7 +18,12 @@ define(['jquery',
     },
 
     events: {
-      'click .action-btn': 'handleActionBtnClick'
+      'click .action-btn': 'handleActionBtnClick',
+      'click [data-trigger="open-project"]': 'openProject'
+    },
+
+    openProject: function (e) {
+      Backbone.EventBroker.trigger('open-project', this.data.project_uuid, e);
     },
 
     handleActionBtnClick: function (e) {
@@ -80,7 +85,6 @@ define(['jquery',
         pic: this.data.pic,
         text: textData.text,
         username: this.data.username,
-        projectLink: '/#projects/' + this.data.project_uuid,
         positiveBtnText: textData.positiveBtnText,
         showAccepted: options.showAccepted,
         acceptedText: this.data.requested_asset === 0 ? 'Accepted' : 'Invited',

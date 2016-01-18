@@ -160,6 +160,10 @@ define(['jquery',
 
     deleteFromStorage: function (key) {
       localStorage.removeItem(key);
+    },
+
+    isMac: function () {
+      return navigator.userAgent.indexOf('Mac OS X') != -1;
     }
 
   });

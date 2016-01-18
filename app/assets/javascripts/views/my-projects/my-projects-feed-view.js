@@ -48,8 +48,8 @@ define(['jquery',
     },
 
     setListener: function (view, data) {
-      view.$el.click(function () {
-        Backbone.EventBroker.trigger('force-hide-my-projects-modal', data.uuid);
+      view.$el.click(function (e) {
+        Backbone.EventBroker.trigger('force-hide-my-projects-modal', data.uuid, e);
       });
     },
 

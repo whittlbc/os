@@ -172,10 +172,20 @@ define(['jquery',
       }});
     },
 
-    openProject: function (uuid) {
+    openProject: function (uuid, e) {
+      var openInNewTab = false;
       this.cachedRemovedFilterItems = this.footerView.footerDropdown.$removedItems;
       this.cachedFilterType = this.footerView.filterType;
-      window.location.hash = '#projects/' + uuid;
+
+      if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
+        openInNewTab = true;
+      }
+
+      if (openInNewTab){
+        window.open((window.location.origin + '/#projects/' + uuid), '_blank');
+      } else {
+        window.location.hash = '#projects/' + uuid;
+      }
     },
 
     showMyProjectsModal: function () {
@@ -212,19 +222,28 @@ define(['jquery',
       $('footer').removeClass('footer-nav-up').addClass('footer-nav-down');
     },
 
-    forceHideStarredModal: function (id) {
-      this.starredModal.hideModal();
-      this.switchToProjectAndHideModal(id);
+    forceHideStarredModal: function (uuid, e) {
+      this.switchToProjectAndHideModal(this.starredModal, uuid, e);
     },
 
-    forceHideMyProjectsModal: function (id) {
-      this.myProjectsModal.hideModal();
-      this.switchToProjectAndHideModal(id);
+    forceHideMyProjectsModal: function (uuid, e) {
+      this.switchToProjectAndHideModal(this.myProjectsModal, uuid, e);
     },
 
-    switchToProjectAndHideModal: function (id) {
-      window.location.hash = '#projects/' + id;
-      this.forceHideModalBackdrop();
+    switchToProjectAndHideModal: function (modal, uuid, e) {
+      var openInNewTab = false;
+
+      if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
+        openInNewTab = true;
+      }
+
+      if (openInNewTab){
+        window.open((window.location.origin + '/#projects/' + uuid), '_blank');
+      } else {
+        window.location.hash = '#projects/' + uuid;
+        modal.hideModal();
+        this.forceHideModalBackdrop();
+      }
 
     },
 

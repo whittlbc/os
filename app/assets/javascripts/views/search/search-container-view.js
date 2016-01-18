@@ -4,6 +4,7 @@ define(['jquery',
   'models/project',
   'views/search/search-result-view',
   'views/widgets/spinner-chasing-dots',
+  'models/session',
   'stache!views/search/search-container-view'
 ], function ($,
    Backbone,
@@ -11,6 +12,7 @@ define(['jquery',
    Project,
    SearchResultView,
    Spinner,
+   Session,
    SearchContainerViewTpl) {
   'use strict';
 
@@ -26,6 +28,9 @@ define(['jquery',
       this.gettingMoreData = false;
       this.spinnerTimeout = null;
       this.GET_MORE_DATA_SCROLL_FRACTION = 0.71;
+
+      this.$noResultsView = $('<div>', {class: 'no-search-results'});
+      this.$noResultsView.html('No Results');
     },
 
     events: {},
@@ -35,12 +40,19 @@ define(['jquery',
       this.RESULTS = [];
       this.spinner.$el.hide();
       this.$dropdown.empty();
+
+      if (!this.dropdownShown) {
+        this.$dropdown.show();
+        this.dropdownShown = true;
+      }
+
       if (projects.length > 0) {
         for (var i = 0; i < projects.length; i++) {
           this.addResult(projects[i]);
         }
       } else {
-        this.$noResults.show();
+        console.log(this.$noResultsView);
+        this.$dropdown.append(this.$noResultsView);
       }
     },
 
@@ -53,15 +65,29 @@ define(['jquery',
       });
 
       searchResultView.$el.click(function (e) {
+        var openInNewTab = false;
         e.stopPropagation();
-        if (window.location.hash == ('#projects/' + data.uuid)) {
-          window.location.reload();
-        } else {
-          window.location.hash = '#projects/' + data.uuid;
-          setTimeout(function () {
-            self.forceCloseSearchBar();
-          }, 50)
+
+        console.log('click', e);
+
+        if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
+          openInNewTab = true;
         }
+
+        if (openInNewTab){
+          console.log('open in new tab');
+          window.open((window.location.origin + '/#projects/' + data.uuid), '_blank');
+        } else {
+          if (window.location.hash == ('#projects/' + data.uuid)) {
+            window.location.reload();
+          } else {
+            window.location.hash = '#projects/' + data.uuid;
+            setTimeout(function () {
+              self.forceCloseSearchBar();
+            }, 50)
+          }
+        }
+
         document.body.style.overflow = 'auto';
       });
 
@@ -107,13 +133,11 @@ define(['jquery',
         if (e.keyCode != 13 && e.keyCode != 9) {
           self.limit = 10;
           self.gettingMoreData = true;
-          if (!self.dropdownShown) {
-            self.dropdownShown = true;
-            self.$dropdown.show();
-          }
+
           if (self.searchTimeout != null) {
             clearTimeout(self.searchTimeout);
           }
+
           self.searchTimeout = setTimeout(function () {
             var query = self.$input.val();
             self.query = query;
@@ -137,7 +161,8 @@ define(['jquery',
       this.$input.keyup(function (e) {
         if (e.keyCode != 13 && e.keyCode != 9) {
           if (_.isEmpty(self.$input.val())) {
-            self.$noResults.show();
+            self.dropdownShown = false;
+            self.$dropdown.hide();
           }
         }
       });

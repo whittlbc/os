@@ -49,8 +49,8 @@ define(['jquery',
       console.log('AJAX ERROR: ', xhr, resp);
     },
 
-    openProjectDetails: function () {
-      Backbone.EventBroker.trigger('open-project', this.uuid);
+    openProjectDetails: function (e) {
+      Backbone.EventBroker.trigger('open-project', this.uuid, e);
     },
 
     handleVote: function () {
