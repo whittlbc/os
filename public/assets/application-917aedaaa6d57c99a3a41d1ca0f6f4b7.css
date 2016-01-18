@@ -9166,6 +9166,11 @@ footer {
 }
 
 /* line 562, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+.major-info-project-description.no-tags {
+  width: 80%;
+}
+
+/* line 566, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectTypeSelection {
   width: 27.75%;
   border: 1px solid #DDD;
@@ -9181,7 +9186,7 @@ footer {
   margin-left: 13px;
 }
 
-/* line 577, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 581, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectTypeSelection + label {
   position: absolute;
   top: 8px;
@@ -9198,13 +9203,13 @@ footer {
   color: white;
   pointer-events: none;
 }
-/* line 593, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 597, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectTypeSelection + label .fa {
   position: relative;
   top: 2px;
 }
 
-/* line 600, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 604, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-description {
   width: 98%;
   height: 236px;
@@ -9218,42 +9223,42 @@ footer {
   padding: 8px;
 }
 
-/* line 613, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 617, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .see-all-description {
   color: #00A6C9;
   cursor: pointer;
 }
 
-/* line 618, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 622, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .see-all-description:hover {
   color: #00A6C9;
 }
 
-/* line 622, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 626, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #communicationView {
   width: 100%;
 }
 
-/* line 626, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 630, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tabs-container {
   width: 100%;
   display: block;
   height: 40px;
 }
-/* line 631, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 635, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tabs-container .indicator {
   border-right: 10px solid white;
   border-left: 10px solid white;
   bottom: -5px !important;
 }
 
-/* line 638, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 642, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-panels-ul {
   max-width: 90% !important;
   margin-left: 4% !important;
 }
 
-/* line 643, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 647, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab {
   height: 100%;
   cursor: pointer;
@@ -9262,54 +9267,54 @@ footer {
   border-top: 3px solid white;
   border-bottom: 3px solid white;
 }
-/* line 651, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 655, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab a {
   color: black;
   text-decoration: none;
   line-height: 40px;
   font-family: 'Proxima-Nova-SemiBold';
 }
-/* line 657, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 661, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab a:hover {
   color: #00A6C9;
 }
-/* line 661, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 665, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab a.active {
   color: #00A6C9;
 }
-/* line 667, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 671, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab a[index="0"],
 .communication-tab a[index="1"],
 .communication-tab a[index="2"] {
   border-right: 1px solid #CCC;
 }
 
-/* line 673, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 677, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab.disabled {
   cursor: default;
 }
-/* line 676, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 680, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab.disabled a.disabled {
   color: #CECFD2;
   cursor: default;
 }
-/* line 680, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 684, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab.disabled a.disabled .fa {
   font-size: 20px;
   color: #DADCE1;
   padding-right: 7px;
 }
-/* line 686, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 690, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab.disabled a.disabled span {
   position: relative;
   top: -1px;
 }
-/* line 692, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 696, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-tab.disabled a.disabled:hover {
   color: #CECFD2;
 }
 
-/* line 699, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 703, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #communicationFeedContainer {
   width: 93%;
   margin-top: 10px;
@@ -9320,7 +9325,7 @@ footer {
   float: left;
 }
 
-/* line 714, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 718, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #generalFeedContainerView,
 #suggestionsFeedContainerView,
 #teamFeedContainerView,
@@ -9331,14 +9336,14 @@ footer {
   height: 100%;
 }
 
-/* line 719, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 723, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .communication-feed-list-view {
   list-style-type: none;
   padding-left: 0;
   margin-bottom: 0;
 }
 
-/* line 725, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 729, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .no-comments {
   display: block;
   margin-left: auto;
@@ -9350,7 +9355,7 @@ footer {
   font-style: italic;
 }
 
-/* line 737, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 741, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectMinorView {
   width: 25%;
   min-width: 237.5px;
@@ -9360,7 +9365,7 @@ footer {
   top: 65px;
 }
 
-/* line 746, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 750, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorJoinFollowContainer {
   width: 100%;
   height: 85px;
@@ -9369,7 +9374,7 @@ footer {
   background-color: white;
 }
 
-/* line 754, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 758, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoEvolutionView {
   width: 100%;
   position: absolute;
@@ -9377,7 +9382,7 @@ footer {
   bottom: 0;
 }
 
-/* line 761, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 765, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoEvolutionContainer {
   -webkit-perspective: 800;
   width: 100%;
@@ -9387,7 +9392,7 @@ footer {
   background-color: #3E4446;
 }
 
-/* line 770, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 774, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #infoEvolutionToggleContainer {
   width: 100%;
   height: 40px;
@@ -9395,7 +9400,7 @@ footer {
   position: relative;
 }
 
-/* line 777, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 781, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .info-evolution-toggle-btn {
   width: 50%;
   height: 100%;
@@ -9409,23 +9414,23 @@ footer {
   top: 0;
 }
 
-/* line 790, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 794, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .info-evolution-toggle-btn.active {
   color: #00A6C9;
 }
 
-/* line 794, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 798, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #info.not-launched {
   width: 100%;
   cursor: default;
 }
 
-/* line 799, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 803, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #info.not-launched.active {
   color: #333;
 }
 
-/* line 803, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 807, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #infoEvolutionTabSeparator {
   display: inline-block;
   background-color: #DDD;
@@ -9437,17 +9442,17 @@ footer {
   z-index: 1;
 }
 
-/* line 814, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 818, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #info {
   left: 0;
 }
 
-/* line 818, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 822, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolution {
   right: 0;
 }
 
-/* line 822, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 826, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoEvolutionFlipper.flipped {
   -webkit-transform: rotatey(-180deg);
   -moz-transform: rotatey(-180deg);
@@ -9456,7 +9461,7 @@ footer {
   transform: rotatey(-180deg);
 }
 
-/* line 830, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 834, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoEvolutionFlipper {
   width: 100%;
   height: 100%;
@@ -9471,7 +9476,7 @@ footer {
   transition: 0.425s;
 }
 
-/* line 846, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 850, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoEvolutionFlipper .face {
   width: 100%;
   height: 100%;
@@ -9482,19 +9487,19 @@ footer {
   z-index: 2;
 }
 
-/* line 856, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 860, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoView {
   position: absolute;
   z-index: 1;
   background-color: white;
 }
 
-/* line 863, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 867, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoView.safari .minor-info-subsection-title {
   font-family: 'Proxima-Nova-SemiBold';
 }
 
-/* line 869, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 873, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
   -moz-transform: rotatey(-180deg);
@@ -9505,7 +9510,7 @@ footer {
   border-top: 1px solid #DDD;
 }
 
-/* line 879, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 883, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .follow-project-btn {
   width: 50%;
   margin-left: 25%;
@@ -9519,13 +9524,13 @@ footer {
   margin-top: 10px;
 }
 
-/* line 892, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 896, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .project-minor-vote-arrow-container {
   height: 35px;
   width: 100%;
 }
 
-/* line 897, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 901, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .project-minor-vote-arrow {
   height: 30px;
   width: 40%;
@@ -9535,7 +9540,7 @@ footer {
   cursor: pointer;
 }
 
-/* line 906, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 910, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .project-minor-vote-count {
   width: 100%;
   height: 30px;
@@ -9544,7 +9549,7 @@ footer {
   font-size: 20px;
 }
 
-/* line 914, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 918, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #contributorsView {
   display: block;
   float: left;
@@ -9552,7 +9557,7 @@ footer {
   min-height: 43px;
 }
 
-/* line 921, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 925, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #contributorsListView {
   width: 95%;
   margin-left: 5px;
@@ -9561,7 +9566,7 @@ footer {
   list-style-type: none;
   position: relative;
 }
-/* line 929, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 933, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #contributorsListView li {
   width: 35px;
   height: 35px;
@@ -9573,20 +9578,20 @@ footer {
   cursor: pointer;
 }
 
-/* line 942, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 946, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .contributors-item-view-container {
   width: 100%;
   height: 100%;
 }
 
-/* line 947, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 951, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .contributors-item-view-pic {
   border-radius: 50%;
   width: 100%;
   height: 100%;
 }
 
-/* line 953, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 957, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .see-all-contribs-btn {
   border-radius: 50%;
   width: 100%;
@@ -9601,18 +9606,18 @@ footer {
   color: #c4c5ca;
 }
 
-/* line 967, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 971, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .see-all-contribs-btn:hover {
   color: #00A6C9;
   border: 2px solid #00A6C9;
 }
 
-/* line 972, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 976, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .contributors-item-view-pic.admin {
   border: 2px solid #00A6C9;
 }
 
-/* line 976, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 980, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoDateContainer {
   height: 40px;
   width: 95.75%;
@@ -9623,7 +9628,7 @@ footer {
   border-bottom: 1px solid #DDD;
 }
 
-/* line 986, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 990, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoLicenseContainer {
   height: 40px;
   padding-left: 10px;
@@ -9634,12 +9639,12 @@ footer {
   position: relative;
 }
 
-/* line 996, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1000, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .highlighted-minor-info {
   font-family: 'Proxima-Nova-Bold';
 }
 
-/* line 1000, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1004, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoURLContainer {
   height: 40px;
   float: left;
@@ -9651,15 +9656,15 @@ footer {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 1011, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1015, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoURLContainer a {
   color: black;
 }
-/* line 1015, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1019, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoURLContainer a:hover {
   color: #00A6C9;
 }
-/* line 1019, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1023, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoURLContainer input[name="repo-name"] {
   border-radius: 4px;
   box-shadow: none;
@@ -9671,22 +9676,22 @@ footer {
   width: 73%;
   line-height: 28px;
 }
-/* line 1031, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1035, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoURLContainer input[name="repo-name"].firefox {
   width: 124px;
 }
 
-/* line 1036, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1040, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-mode-info-label {
   font-size: 13px;
 }
 
-/* line 1040, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1044, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-mode-info-label.major-info {
   margin-right: 8px;
 }
 
-/* line 1044, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1048, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #licenseTypeSelection {
   width: 24%;
   border: 1px solid #DDD;
@@ -9701,7 +9706,7 @@ footer {
   -moz-appearance: none;
 }
 
-/* line 1058, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1062, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #licenseTypeSelection + label {
   position: absolute;
   top: 5px;
@@ -9719,23 +9724,23 @@ footer {
   pointer-events: none;
   float: left;
 }
-/* line 1075, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1079, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #licenseTypeSelection + label .fa {
   position: relative;
   top: 2px;
 }
 
-/* line 1092, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1096, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minorInfoIntegrationContainer.auto-height {
   height: auto;
 }
 
-/* line 1096, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1100, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minorInfoIntegrationContainer.irc-extra-bottom {
   margin-bottom: 33px;
 }
 
-/* line 1100, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1104, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container {
   width: 100%;
   height: 100%;
@@ -9743,7 +9748,7 @@ footer {
   float: left;
   margin-bottom: 10px;
 }
-/* line 1107, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1111, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .integration-link {
   margin-left: 12px;
   float: left;
@@ -9751,7 +9756,7 @@ footer {
   line-height: 38.5px;
   display: inline-block;
 }
-/* line 1114, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1118, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .integration-link a {
   max-width: 175px;
   overflow: hidden;
@@ -9759,7 +9764,7 @@ footer {
   white-space: nowrap;
   float: left;
 }
-/* line 1123, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1127, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .integration-link #slackEllipsis,
 .minor-info-integration-logo-container .integration-link #hipchatEllipsis {
   display: inline-block;
@@ -9767,7 +9772,7 @@ footer {
   height: auto;
   float: left;
 }
-/* line 1130, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1134, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .integration-link #slackEllipsis svg,
 .minor-info-integration-logo-container .integration-link #hipchatEllipsis svg {
   height: 13px;
@@ -9778,7 +9783,7 @@ footer {
   display: inline-block;
   top: 2px;
 }
-/* line 1142, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1146, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .integration-link #slackPopover,
 .minor-info-integration-logo-container .integration-link #hipchatPopover {
   position: absolute;
@@ -9786,7 +9791,7 @@ footer {
   right: -9px;
   width: 145px;
 }
-/* line 1151, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1155, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .linebreak {
   background-color: #DDD;
   width: 1px;
@@ -9794,30 +9799,30 @@ footer {
   margin-top: 9px;
   float: left;
 }
-/* line 1159, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1163, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container a {
   color: black;
 }
-/* line 1162, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1166, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container a:hover {
   color: #00A6C9;
 }
-/* line 1166, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1170, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .irc-channel-text {
   cursor: default;
 }
-/* line 1169, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1173, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .irc-channel-text span {
   color: #B0B0B5;
 }
-/* line 1174, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1178, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .fa-check {
   font-size: 15px;
   position: relative;
   top: 1px;
   color: #00A6C9;
 }
-/* line 1181, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1185, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container input {
   border-radius: 4px;
   border: 1px solid #DDD;
@@ -9826,41 +9831,41 @@ footer {
   padding-top: 5px;
   width: 66%;
 }
-/* line 1190, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1194, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container input[name="edit-irc"] {
   width: 34%;
   margin-right: 2%;
   float: left;
 }
-/* line 1197, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1201, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .selectize-control {
   display: inline-block;
   width: 30%;
   float: left;
 }
-/* line 1202, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1206, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container .selectize-control .selectize-input {
   padding-bottom: 4px;
   padding-top: 7px;
   border: 1px solid #DDD;
 }
 
-/* line 1211, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1215, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-integration-logo-container.add-top-margin {
   margin-top: 10px;
 }
 
-/* line 1215, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1219, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #hipChatContainer.add-top-margin {
   margin-top: 11px;
 }
 
-/* line 1219, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1223, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .last-integration {
   margin-bottom: 0;
 }
 
-/* line 1223, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1227, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-slack-logo {
   width: 85px;
   margin-left: 2px;
@@ -9868,12 +9873,12 @@ footer {
   float: left;
 }
 
-/* line 1230, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1234, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-slack-logo.only-one {
   margin-right: 0;
 }
 
-/* line 1234, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1238, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-hipchat-logo {
   width: 75px;
   margin-right: 10px;
@@ -9882,7 +9887,7 @@ footer {
   float: left;
 }
 
-/* line 1242, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1246, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-irc-logo {
   width: 81px;
   height: 40px;
@@ -9894,43 +9899,43 @@ footer {
   margin-right: 4px;
   padding-top: 7.5px;
 }
-/* line 1253, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1257, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-irc-logo .fa {
   margin-right: 5px;
   position: relative;
   top: -1px;
 }
 
-/* line 1260, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1264, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-irc-logo.only-one {
   width: 67px;
 }
 
-/* line 1264, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1268, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #ircContainer {
   margin-top: -3px;
 }
-/* line 1268, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1272, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #ircContainer .integration-link,
 #ircContainer .linebreak {
   position: relative;
   top: 2px;
 }
-/* line 1273, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1277, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #ircContainer .selectize-dropdown-content {
   max-height: 95px !important;
 }
-/* line 1276, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1280, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #ircContainer .selectize-dropdown-content div.active {
   background-color: #EEEFF3;
 }
 
-/* line 1283, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1287, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #ircContainer.edit {
   margin-top: 7px;
 }
 
-/* line 1287, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1291, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-subsection-title {
   color: #00A6C9;
   font-size: 14px;
@@ -9945,18 +9950,18 @@ footer {
   text-overflow: ellipsis;
 }
 
-/* line 1301, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1305, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-subsection-title.communication {
   margin-top: 19px;
 }
 
-/* line 1305, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1309, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .num-contribs-text:hover {
   text-decoration: underline;
   cursor: pointer;
 }
 
-/* line 1310, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1314, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .send-invites-from-project-page-btn {
   color: #C4C5CA;
   font-size: 12px;
@@ -9967,13 +9972,13 @@ footer {
   top: -1px;
 }
 
-/* line 1320, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1324, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .send-invites-from-project-page-btn:hover {
   text-decoration: underline;
   cursor: pointer;
 }
 
-/* line 1327, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1331, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo div {
   width: 95.75%;
   height: 40px;
@@ -9981,42 +9986,42 @@ footer {
   line-height: 40px;
   border-bottom: 1px solid #DDD;
 }
-/* line 1335, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1339, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon {
   color: #A6A6A6;
 }
-/* line 1339, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1343, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon-star {
   margin-right: 13px;
 }
-/* line 1343, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1347, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon-eye {
   margin-right: 12px;
 }
-/* line 1347, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1351, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon-repo-forked {
   margin-right: 16px;
 }
-/* line 1351, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1355, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon-git-pull-request {
   margin-right: 14px;
 }
-/* line 1355, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1359, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon-check {
   margin-right: 15px;
 }
-/* line 1359, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1363, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo .octicon-issue-opened {
   margin-right: 14px;
 }
 
-/* line 1364, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1368, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .minor-info-unspecified {
   color: #c4c5ca;
   font-style: italic;
 }
 
-/* line 1371, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1375, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .tabs {
   position: relative;
   height: 100%;
@@ -10026,7 +10031,7 @@ footer {
   max-width: 100%;
   padding-left: 0;
 }
-/* line 1380, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1384, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .tabs .tab {
   display: block;
   float: left;
@@ -10035,18 +10040,18 @@ footer {
   margin: 0;
   cursor: pointer;
 }
-/* line 1388, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1392, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .tabs .tab a {
   display: block;
   text-decoration: none;
   width: 100%;
   height: 100%;
 }
-/* line 1393, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1397, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .tabs .tab a:hover {
   color: #00A6C9;
 }
-/* line 1399, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1403, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .tabs .indicator {
   position: absolute;
   bottom: 0;
@@ -10055,14 +10060,14 @@ footer {
   will-change: left, right;
 }
 
-/* line 1410, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1414, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #contribsLoading .sk-circle,
 #repoStatsLoading .sk-circle {
   margin: 0 !important;
   margin-left: 45% !important;
 }
 
-/* line 1419, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1423, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .general-feed-item-container,
 .suggestions-feed-item-container,
 .team-feed-item-container,
@@ -10079,7 +10084,7 @@ footer {
   position: relative;
 }
 
-/* line 1435, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1439, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .general-feed-item-container.reply-container-shown,
 .suggestions-feed-item-container.reply-container-shown,
 .team-feed-item-container.reply-container-shown,
@@ -10087,13 +10092,13 @@ footer {
   border-bottom: none;
 }
 
-/* line 1439, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1443, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .poster-pic-container {
   position: absolute;
   top: 0;
   left: 17px;
 }
-/* line 1444, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1448, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .poster-pic-container .comment-poster-pic {
   width: 30px;
   height: 30px;
@@ -10102,7 +10107,7 @@ footer {
   cursor: pointer;
 }
 
-/* line 1453, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1457, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-details-container {
   display: inline-block;
   height: 100%;
@@ -10111,13 +10116,13 @@ footer {
   float: left;
 }
 
-/* line 1461, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1465, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .poster-name-post-time-container {
   width: 100%;
   height: 21px;
 }
 
-/* line 1466, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1470, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .poster-name {
   font-family: 'Proxima-Nova-Bold';
   font-size: 14px;
@@ -10125,7 +10130,7 @@ footer {
   display: inline-block;
 }
 
-/* line 1473, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1477, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-post-time-ago {
   font-size: 10px;
   color: #C4C5CA;
@@ -10133,7 +10138,7 @@ footer {
   display: inline-block;
 }
 
-/* line 1480, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1484, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-text {
   font-size: 14px;
   display: block;
@@ -10142,7 +10147,7 @@ footer {
   padding-bottom: 5px;
 }
 
-/* line 1488, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1492, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectPageNewCommentContainer {
   margin-top: 21px;
   margin-bottom: 5px;
@@ -10151,7 +10156,7 @@ footer {
   margin-left: 3.5%;
   position: relative;
 }
-/* line 1496, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1500, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectPageNewCommentContainer .comment-textarea {
   display: inline-block;
   width: 85%;
@@ -10168,7 +10173,7 @@ footer {
   padding-top: 5px;
   padding-bottom: 4px;
 }
-/* line 1513, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1517, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectPageNewCommentContainer .add-comment-btn-container {
   display: inline-block;
   width: 14%;
@@ -10178,7 +10183,7 @@ footer {
   bottom: 1px;
   margin-left: 1%;
 }
-/* line 1522, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1526, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #projectPageNewCommentContainer .add-comment-btn-container .add-comment-btn {
   height: 100%;
   width: 100%;
@@ -10193,14 +10198,14 @@ footer {
   cursor: pointer;
 }
 
-/* line 1539, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1543, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .child-comment-list {
   margin-left: 40px;
   padding-left: 0;
   list-style-type: none;
 }
 
-/* line 1553, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1557, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-reply-container {
   width: 100%;
   padding-bottom: 8px;
@@ -10212,7 +10217,7 @@ footer {
   background-color: white;
   position: relative;
 }
-/* line 1564, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1568, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-reply-container .reply-textarea {
   display: inline-block;
   width: 85%;
@@ -10229,7 +10234,7 @@ footer {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-/* line 1581, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1585, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-reply-container .reply-comment-btn-container {
   display: inline-block;
   width: 14%;
@@ -10239,7 +10244,7 @@ footer {
   position: absolute;
   bottom: 10px;
 }
-/* line 1590, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1594, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-reply-container .reply-comment-btn-container .reply-comment-btn {
   height: 100%;
   width: 100%;
@@ -10254,7 +10259,7 @@ footer {
   cursor: pointer;
 }
 
-/* line 1607, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1611, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container {
   width: 100%;
   height: 28px;
@@ -10262,7 +10267,7 @@ footer {
   float: left;
   margin-left: -6px;
 }
-/* line 1614, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1618, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-vote-count-container {
   height: 100%;
   width: 40px;
@@ -10273,30 +10278,30 @@ footer {
   cursor: pointer;
   color: #C4C5CA;
 }
-/* line 1624, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1628, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-vote-count-container .fa {
   font-size: 20px;
   position: relative;
   top: 2px;
 }
-/* line 1630, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1634, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-vote-count-container span {
   font-size: 12px;
   padding-left: 5px;
 }
-/* line 1637, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1641, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-vote-count-container:hover .fa {
   color: #00A6C9;
 }
-/* line 1642, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1646, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-vote-count-container.voted {
   color: #00A6C9;
 }
-/* line 1644, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1648, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-vote-count-container.voted .fa {
   color: #00A6C9;
 }
-/* line 1649, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1653, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-reply-btn {
   width: 50px;
   display: inline-block;
@@ -10307,41 +10312,41 @@ footer {
   line-height: 28px;
   margin-left: 9px;
 }
-/* line 1659, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1663, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-reply-btn span {
   position: relative;
   top: 1px;
 }
-/* line 1665, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1669, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .comment-actions-container .comment-reply-btn:hover {
   color: #00A6C9;
 }
 
-/* line 1672, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1676, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo a {
   color: #333;
   text-decoration: none;
 }
-/* line 1677, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1681, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #minorInfoRepoInfo a:hover {
   text-decoration: underline;
   color: #00A6C9;
 }
 
-/* line 1685, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1689, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionFeedListView {
   list-style-type: none;
   padding-left: 0;
   float: left;
   width: 100%;
 }
-/* line 1691, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1695, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionFeedListView li {
   width: 100%;
   float: left;
   border-bottom: 1px solid #DDD;
 }
-/* line 1697, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1701, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionFeedListView .evolution-feed-item-container {
   float: left;
   width: 100%;
@@ -10350,7 +10355,7 @@ footer {
   padding-left: 20px;
   padding-right: 10px;
 }
-/* line 1705, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1709, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionFeedListView .evolution-feed-item-container .fa-trash {
   color: #C4C5CA;
   float: right;
@@ -10359,7 +10364,7 @@ footer {
   cursor: pointer;
   margin-top: 5px;
 }
-/* line 1714, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1718, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionFeedListView .evolution-feed-item-container .date {
   font-size: 10px;
   color: #C4C5CA;
@@ -10368,7 +10373,7 @@ footer {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-/* line 1723, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1727, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #evolutionFeedListView .evolution-feed-item-container .text {
   padding-right: 5px;
   width: 100%;
@@ -10376,7 +10381,7 @@ footer {
   font-size: 14px;
 }
 
-/* line 1733, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1737, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .delete-comment-icon {
   position: absolute;
   top: 7px;
@@ -10389,7 +10394,7 @@ footer {
   height: 20px;
 }
 
-/* line 1745, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1749, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #noEvolutionItems {
   margin-top: 32px;
   margin-bottom: 32px;
@@ -10400,7 +10405,7 @@ footer {
   text-align: center;
 }
 
-/* line 1756, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1760, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #addEvolutionItemContainer {
   width: 100%;
   margin-top: 10px;
@@ -10412,7 +10417,7 @@ footer {
   background-color: white;
   position: relative;
 }
-/* line 1767, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1771, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #addEvolutionItemContainer textarea {
   display: inline-block;
   width: 85%;
@@ -10429,7 +10434,7 @@ footer {
   padding-top: 6px;
   padding-bottom: 4px;
 }
-/* line 1784, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1788, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #addEvolutionItemContainer .add-evolution-item-btn-container {
   display: inline-block;
   width: 14%;
@@ -10439,7 +10444,7 @@ footer {
   position: absolute;
   bottom: 9px;
 }
-/* line 1793, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1797, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #addEvolutionItemContainer .add-evolution-item-btn-container .add-evolution-item-btn {
   height: 100%;
   width: 100%;
@@ -10454,7 +10459,7 @@ footer {
   cursor: pointer;
 }
 
-/* line 1810, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1814, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .container-404 {
   display: block;
   margin-top: 65px;
@@ -10462,7 +10467,7 @@ footer {
   float: left;
   min-height: 600px;
 }
-/* line 1817, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1821, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .container-404 .big-message {
   font-size: 30px;
   color: #C4C5CA;
@@ -10471,7 +10476,7 @@ footer {
   margin-top: 25px;
   float: left;
 }
-/* line 1826, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1830, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .container-404 .small-message {
   font-size: 17px;
   color: #333;
@@ -10480,33 +10485,33 @@ footer {
   margin-top: 11px;
   float: left;
 }
-/* line 1835, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1839, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .container-404 .not-found-video-container {
   width: 100%;
   float: left;
   display: block;
   margin-top: 36px;
 }
-/* line 1841, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1845, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .container-404 .not-found-video-container .tight-video-container {
   width: 550px;
   height: 350px;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 1847, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1851, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .container-404 .not-found-video-container .tight-video-container iframe {
   width: 100%;
   height: 100%;
   border: none;
 }
 
-/* line 1857, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1861, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .hide-class {
   display: none !important;
 }
 
-/* line 1861, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1865, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-api-key-container {
   width: 100%;
   height: 48px;
@@ -10514,7 +10519,7 @@ footer {
   overflow: hidden;
   float: left;
 }
-/* line 1868, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1872, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-api-key-container .edit-api-key-text {
   width: 45%;
   height: 50px;
@@ -10525,7 +10530,7 @@ footer {
   padding-left: 10px;
   padding-top: 13px;
 }
-/* line 1878, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1882, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-api-key-container .edit-api-key-text .fa {
   margin-left: 2px;
   font-size: 14px;
@@ -10533,7 +10538,7 @@ footer {
   position: relative;
   top: 1px;
 }
-/* line 1887, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1891, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-api-key-container .edit-api-key-input-container {
   width: 55%;
   height: 50px;
@@ -10541,7 +10546,7 @@ footer {
   float: left;
   padding-top: 5px;
 }
-/* line 1894, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1898, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-api-key-container .edit-api-key-input-container input {
   height: 30px;
   line-height: 30px;
@@ -10554,7 +10559,7 @@ footer {
   border-radius: 4px;
 }
 
-/* line 1908, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1912, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .edit-api-key-container + .linebreak {
   height: 1px;
   background-color: #EEE;
@@ -10565,20 +10570,20 @@ footer {
   float: left;
 }
 
-/* line 1919, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1923, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #repoStatsSubsectionTitle,
 #contributorsSubsectionTitle {
   margin-top: 15px;
 }
 
-/* line 1923, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1927, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 #repoStatsView {
   margin-bottom: 25px;
   width: 100%;
   float: left;
 }
 
-/* line 1929, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+/* line 1933, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
 .error-loading-stats {
   color: #c4c5ca;
   padding-left: 12px;
@@ -10586,7 +10591,7 @@ footer {
 }
 
 @media (max-width: 1150px) {
-  /* line 1936, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
+  /* line 1940, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/projects.css.scss */
   .project-page-vote-container {
     margin-right: 7px;
   }

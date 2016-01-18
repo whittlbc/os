@@ -65,7 +65,7 @@
         <input type="text" name="edit-subtitle" placeholder="Subtitle" value="{{subtitle}}"/>
         {{/editMode}}
     </div>
-    <div class="major-info-project-description">
+    <div class="major-info-project-description {{^hasTags}}no-tags{{/hasTags}}">
         {{^editMode}}
         <p>{{description}}</p><a class="see-all-description">See All</a>
         <p class="none">No Description</p>
