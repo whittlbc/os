@@ -818,7 +818,7 @@ class ProjectsController < ApplicationController
 
     # return just the title and id of the project
     if params[:upForGrabs]
-      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.limit(limit).map { |project|
+      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.order('vote_count DESC, LOWER(title)').limit(limit).map { |project|
         {
             :uuid => project.uuid,
             :title => project.title,
@@ -828,11 +828,9 @@ class ProjectsController < ApplicationController
         }
       }
 
-      sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:title]] }.reverse
-      render :json => {:projects => sorted_projects}
-
+      render :json => {:projects => projects}
     else
-      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.limit(limit).map { |project|
+      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.order('vote_count DESC, LOWER(title), LOWER(subtitle)').limit(limit).map { |project|
         {
             :owner => project.get_owner_gh_username,
             :title => highlight_query(project.title, params[:query]),
@@ -843,12 +841,7 @@ class ProjectsController < ApplicationController
         }
       }
 
-      sorted_projects = projects.sort_by { |project| [project[:voteCount], project[:subtitle], project[:title]] }.reverse
-
-      # got_all = (limit >= sorted_projects.length)
-      # capping it at 10 for now...
-      render :json => {:projects => sorted_projects, :gotAll => true}
-
+      render :json => {:projects => projects, :gotAll => true}
     end
 
   end
