@@ -348,7 +348,8 @@ input {
 .add-project-details-scroll-container {
   width: 100%;
   height: 410px;
-  overflow: scroll !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 
 .add-project-details-scroll-container::-webkit-scrollbar {
@@ -952,7 +953,8 @@ input[name="add-project-repo-name"] {
 #pullFromIdeasSearchResults {
   width: 100%;
   height: 272px;
-  overflow: scroll !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
   list-style-type: none;
   padding-left: 0;
 }

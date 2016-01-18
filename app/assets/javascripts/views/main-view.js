@@ -407,7 +407,6 @@ define(['jquery',
 
     addNewProjectBtnClicked: function () {
       var self = this;
-      console.log('addNewProjectBtnClicked', this.currentUser);
       if (this.currentUser) {
         if (this.lastAddProjectPopupShownForGrab) {
           this.lastAddProjectPopupShownForGrab = false;

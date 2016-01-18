@@ -114,7 +114,8 @@ $not-quite-black: #1D1E22;
     padding-right: 30px;
     padding-top: 20px;
     height: 314px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     .rules-text {
       font-size: 14px;
@@ -316,7 +317,8 @@ $not-quite-black: #1D1E22;
         width: 100%;
         height: 120px;
         resize: none;
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
         font-size: 14px;
         padding: 5px 10px;
         border: 1px solid #DDD;
