@@ -12,10 +12,6 @@ $sub-header-color: #F7F7FA;
 $feed-width: 63.5%;
 $side-filters-width: 18.25%;
 
-.home-body {
-  min-height: 700px;
-}
-
 .main-body-container {
   float: left;
   width: 100%;
@@ -29,7 +25,6 @@ $side-filters-width: 18.25%;
 }
 
 #project-feed {
-  min-height: 700px;
   width: $feed-width;
   margin-left: $side-filters-width;
   float: left;

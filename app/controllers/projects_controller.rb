@@ -273,6 +273,7 @@ class ProjectsController < ApplicationController
 
       if !comment.nil?
         comment.update_attributes(is_destroyed: true)
+        project.update_attributes(:comments_count => (project.comments_count - 1))
 
         comment.children.map { |child|
           child.update_attributes(is_destroyed: true)
