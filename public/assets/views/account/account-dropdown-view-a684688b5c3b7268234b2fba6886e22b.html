@@ -1,0 +1,11 @@
+<div class="dropdown-container">
+    <div class="dropdown-arrow back"></div>
+    <div class="dropdown-arrow front"></div>
+    <ul id="accountDropdownList" class="main-list">
+        {{#userAuthed}}
+        <li id="myProjectsTab">My Projects</li>
+        <li id="starredTab">Starred Projects</li>
+        {{/userAuthed}}
+        <li id="signInOutTab" {{^userAuthed}}class="not-authed"{{/userAuthed}}>{{#userAuthed}}Sign Out{{/userAuthed}}{{^userAuthed}}Sign In{{/userAuthed}}</li>
+    </ul>
+</div>
