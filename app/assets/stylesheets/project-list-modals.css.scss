@@ -33,7 +33,7 @@ $not-quite-black: #1D1E22;
   .my-projects-modal-body {
     height: 350px;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     margin-bottom: 20px;
   }
@@ -185,7 +185,7 @@ $not-quite-black: #1D1E22;
   .starred-modal-body {
     height: 350px;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     margin-bottom: 20px;
   }

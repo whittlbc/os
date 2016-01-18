@@ -64,7 +64,7 @@ $more-dropdown-border-radius: 6px;
   ul.main-list {
     min-height: 72px;
     max-height: 325px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden !important;
   }
 
@@ -370,7 +370,7 @@ $more-dropdown-border-radius: 6px;
       border-radius: $more-dropdown-border-radius;
       padding-top: 5px;
       padding-bottom: 5px;
-      overflow-y: scroll !important;
+      overflow-y: auto;
       overflow-x: hidden !important;
       max-height: 105px;
 
@@ -459,7 +459,7 @@ $more-tags-dropdown-border-radius: 4px;
       border-radius: $more-tags-dropdown-border-radius;
       padding-top: 3px;
       padding-bottom: 3px;
-      overflow-y: scroll !important;
+      overflow-y: auto;
       overflow-x: hidden !important;
       max-height: 105px;
 
