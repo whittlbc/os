@@ -21,6 +21,14 @@ a {
   outline: none !important;
 }
 
+.modal {
+  overflow-y: auto;
+}
+
+.modal-open {
+  overflow: auto;
+}
+
 // VARS
 $light-gray: #C4C5CA;
 $header-height: 68px;
