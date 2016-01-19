@@ -8102,47 +8102,57 @@ a {
   outline: none !important;
 }
 
-/* line 35, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 24, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+.modal {
+  overflow-y: auto;
+}
+
+/* line 28, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+.modal-open {
+  overflow: auto;
+}
+
+/* line 43, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-half {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 2px 10px 0 rgba(0, 0, 0, 0.08);
 }
 
-/* line 39, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 47, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-1 {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* line 43, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 51, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-1-half {
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
 
-/* line 47, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 55, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-2 {
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* line 51, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 59, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-3 {
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* line 55, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 63, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-4 {
   box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
 }
 
-/* line 59, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 67, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .z-depth-5 {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
 }
 
-/* line 65, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 73, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .header-nav-up {
   top: -68px;
 }
 
-/* line 69, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 77, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 header {
   height: 68px;
   margin-bottom: 0;
@@ -8157,14 +8167,14 @@ header {
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.07), 0 1px 0 0 rgba(0, 0, 0, 0.045);
 }
 
-/* line 83, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 91, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .header-container {
   float: left;
   width: 100%;
   position: relative;
 }
 
-/* line 89, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 97, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .header-logo-container {
   display: inline-block;
   height: 68px;
@@ -8174,14 +8184,14 @@ header {
   position: absolute;
 }
 
-/* line 98, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 106, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerLogoPic {
   width: 175px;
   margin-top: 19px;
   float: left;
 }
 
-/* line 104, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 112, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .rest-of-header-container {
   height: 68px;
   position: absolute;
@@ -8191,7 +8201,7 @@ header {
   float: left;
 }
 
-/* line 113, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 121, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #header-user-pic {
   background-color: #c4c5ca;
   height: 40px;
@@ -8205,17 +8215,17 @@ header {
   transition: box-shadow .3s ease-out;
 }
 
-/* line 126, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 134, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #header-user-pic:hover {
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
 }
 
-/* line 130, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 138, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #header-user-pic.top-padding {
   padding-top: 6px;
 }
 
-/* line 134, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 142, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerNotificationsIcon {
   height: 40px;
   width: 40px;
@@ -8230,18 +8240,18 @@ header {
   position: relative;
 }
 
-/* line 148, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 156, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerNotificationsIcon > .fa {
   font-size: 31px;
   color: #707277;
 }
 
-/* line 153, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 161, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerNotificationsIcon > .fa:hover {
   color: #8D9098;
 }
 
-/* line 157, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 165, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerNotificationsCount {
   border-radius: 8px;
   background-color: red;
@@ -8257,7 +8267,7 @@ header {
   position: absolute;
 }
 
-/* line 172, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 180, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .header-searchbar-container {
   display: inline-block;
   height: 68px;
@@ -8267,17 +8277,17 @@ header {
   left: 38px;
 }
 
-/* line 181, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 189, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #createNewProjectModal {
   margin-top: 7%;
 }
 
-/* line 185, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 193, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .modal-backdrop.in {
   opacity: 0.3;
 }
 
-/* line 189, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 197, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerAddProjectBtn {
   width: 80px;
   height: 68px;
@@ -8286,7 +8296,7 @@ header {
   float: right;
 }
 
-/* line 197, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 205, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #addNewProject {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
   transition: box-shadow .3s ease-out, background-color .3s ease-out;
@@ -8302,13 +8312,13 @@ header {
   margin-top: 14.5px;
 }
 
-/* line 212, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 220, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #addNewProject:hover {
   background-color: #00B3D7;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
 }
 
-/* line 217, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 225, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerEllipsis {
   width: 68px;
   height: 68px;
@@ -8318,7 +8328,7 @@ header {
   margin-right: 11px;
   cursor: pointer;
 }
-/* line 226, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 234, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerEllipsis .fa {
   font-size: 5px;
   color: #b6b8c0;
@@ -8326,17 +8336,17 @@ header {
   margin-left: 1.5px;
 }
 
-/* line 235, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 243, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #headerEllipsis:hover .fa {
   color: #00A6C9;
 }
 
-/* line 240, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 248, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #createNewProjectModalContentContainer {
   border-radius: 8px;
 }
 
-/* line 245, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 253, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 footer {
   height: 48px;
   width: 65%;
@@ -8349,39 +8359,39 @@ footer {
   z-index: 100;
 }
 
-/* line 257, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 265, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #mainFooter {
   height: 100%;
   width: 100%;
   float: left;
 }
 
-/* line 263, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 271, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .footer-nav-up {
   bottom: -48px;
 }
 
-/* line 267, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 275, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 #mainView {
   min-width: 1000px;
 }
 
-/* line 273, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 281, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .modal-content ::-webkit-scrollbar {
   -webkit-appearance: none;
 }
-/* line 277, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 285, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .modal-content ::-webkit-scrollbar:vertical {
   width: 10px;
 }
-/* line 281, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 289, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .modal-content ::-webkit-scrollbar-thumb {
   border-radius: 8px;
   border: 2px solid white;
   /* should match background, can't be transparent */
   background-color: #dedee9;
 }
-/* line 287, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
+/* line 295, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/main.css.scss */
 .modal-content ::-webkit-scrollbar-track {
   background-color: #fff;
   border-radius: 8px;
