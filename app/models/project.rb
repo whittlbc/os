@@ -38,10 +38,12 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def is_starred?
-    starred_arr = self.try(:user).try(:starred)
-    if !starred_arr.nil?
-      starred_arr.include?(self.id)
+  def is_starred_for_user?(user)
+    if user.nil?
+      false
+    else
+      starred_array = user.starred || []
+      starred_array.include?(self.id)
     end
   end
 

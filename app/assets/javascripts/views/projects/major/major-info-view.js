@@ -44,7 +44,7 @@ define(['jquery',
       'click .see-all-description': 'handleToggleDescriptionSize',
       'click .project-page-vote-container': 'checkIfUserAuthed',
       'click .join-btn': 'checkAuthedStatusOnMajorActionBtnClick',
-      'click .star': 'handleStarProject',
+      'click .star': 'loginOrStar',
       'click .edit-btn': 'handleProjectEdit',
       'click .delete-btn': 'handleProjectDelete',
       'click .cancel-edit-mode': 'handleCancelEditMode',
@@ -104,6 +104,10 @@ define(['jquery',
     handleProjectDelete: function () {
       var self = this;
       Backbone.EventBroker.trigger('project:delete');
+    },
+
+    loginOrStar: function () {
+      Backbone.EventBroker.trigger('project:login-or-star', this);
     },
 
     handleStarProject: function () {

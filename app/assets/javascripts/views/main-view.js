@@ -90,7 +90,8 @@ define(['jquery',
         'project:major-action-btn-clicked': 'majorProjectActionBtnClickOrLogin',
         'all-user-repos:request': 'getAllUserRepos',
         'window:resize': 'positionFooterAndHeaderTutorialBubbles',
-        'tutorial:login-with-gh': 'loginWithGHFromTutorial'
+        'tutorial:login-with-gh': 'loginWithGHFromTutorial',
+        'project:login-or-star': 'loginOrStar'
       }, this);
 
       this.cachedFilterType = null;
@@ -311,6 +312,15 @@ define(['jquery',
           // show an error message
         }
       });
+    },
+
+    loginOrStar: function (view) {
+      if (this.currentUser) {
+        view.handleStarProject();
+      } else {
+        this.loginModal.setMessage('You must be logged in to star projects.');
+        this.loginModal.showModal();
+      }
     },
 
     handleStarProject: function (bool) {

@@ -65,7 +65,7 @@ class ProjectsController < ApplicationController
           :uuid => project.uuid,
           :voted => user ? user.voted_on_project(project.id) : nil,
           :vote_count => project.vote_count,
-          :starred => project.is_starred?,
+          :starred => project.is_starred_for_user?(user),
           :owner_gh_username => owner_gh_username,
           :admin => admin_arr,
           :integrations => project.integrations,
