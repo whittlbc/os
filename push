@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+bundle exec rake assets:precompile --trace 
+git add -A .
+git commit -m "compiled assets"
+git push origin master
+git push heroku master

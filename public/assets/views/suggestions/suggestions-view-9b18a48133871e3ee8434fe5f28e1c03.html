@@ -1,0 +1,38 @@
+<div class="suggestions-view-container {{#isSafari}}safari{{/isSafari}}">
+
+    {{^spinnerView}}{{^successView}}{{^errorView}}
+    <div class="make-a-suggestion-text">Have a suggestion or feedback for Sourcehoney? Tell us your thoughts below.</div>
+    <textarea class="suggestion-textarea"></textarea>
+    {{/errorView}}{{/successView}}{{/spinnerView}}
+
+    {{#spinnerView}}
+    <div id="suggestionsSpinnerView"></div>
+    <div class="sending-suggestion">&nbsp;&nbsp;Sending...</div>
+    {{/spinnerView}}
+
+    {{#successView}}
+    <div id="suggestionsSuccess"><i class="fa fa-check-circle-o"></i></div>
+    <div class="success-text">Thanks for the feedback!</div>
+    {{/successView}}
+
+    {{#errorView}}
+    <div class="suggestions-error-text">There was an error processing your feedback. Please try again at a later time.</div>
+    {{/errorView}}
+
+    <div class="suggestions-footer">
+        {{^spinnerView}}
+        <div class="submit-btn">
+        {{^successView}}{{^errorView}}
+        Send
+        {{/errorView}}{{/successView}}
+        {{#successView}}
+        Close
+        {{/successView}}
+        {{#errorView}}
+        Close
+        {{/errorView}}
+        </div>
+        {{/spinnerView}}
+    </div>
+
+</div>
