@@ -307,9 +307,6 @@ define(['jquery',
       project.destroyProject({uuid: self.projectView.projectUUID}, {
         success: function () {
           window.location.hash = '#on-the-fence';
-          // show tiny success popupchr
-        }, error: function () {
-          // show an error message
         }
       });
     },

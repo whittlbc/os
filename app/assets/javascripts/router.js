@@ -23,29 +23,21 @@ define(['jquery',
     },
 
     routes: {
-      'up-for-grabs': 'upForGrabsRoute',
-      'on-the-fence': 'onTheFenceRoute',
+      'ideas': 'ideasRoute',
       'launched': 'launchedRoute',
       'projects/:uuid': 'projectRoute',
-      '': 'onTheFenceRoute'
+      '': 'ideasRoute'
     },
 
-    // UP FOR GRABS
-    upForGrabsRoute: function () {
-      this.updateHomeView(0);
+    ideasRoute: function () {
+      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ?
+        (window.location.hash = '#ideas') : this.updateHomeView(0);
     },
 
-    // ON THE FENCE
-    onTheFenceRoute: function (something) {
-      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? this.redirectHome() : this.updateHomeView(1);
-    },
-
-    // LAUNCHED
     launchedRoute: function () {
       this.updateHomeView(2);
     },
 
-    // PROJECT
     projectRoute: function (uuid) {
       $('footer').hide();
       this.updateProjectView(uuid);
@@ -71,7 +63,7 @@ define(['jquery',
     },
 
     updateProjectView: function (uuid) {
-      this.mainView = this.mainView || new MainView({ el: '#mainView' });
+      this.mainView = this.mainView || new MainView({el: '#mainView'});
       this.mainView.captureFilters();
       this.mainView.resetNotifications();
 
@@ -80,11 +72,7 @@ define(['jquery',
         uuid: uuid
       });
 
-      document.body.style.overflow='auto';
-    },
-
-    redirectHome: function () {
-      window.location.hash = "#on-the-fence";
+      document.body.style.overflow = 'auto';
     }
 
   });

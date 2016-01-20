@@ -525,14 +525,14 @@ $side-filters-width: 18.25%;
 
 .project-type {
   height: 100%;
-  width: 33.33%;
+  width: 50%;
   cursor: pointer;
 
   a {
     line-height: $sub-header-height;
     text-transform: uppercase;
     color: $project-type-color;
-    font-size: 13px;
+    font-size: 14px;
     outline: 0 !important;
     border: none !important;
   }
@@ -545,7 +545,7 @@ $side-filters-width: 18.25%;
 
 .tab-slider {
   height: 2px;
-  width: 33.33%;
+  width: 50%;
   background-color: #48BEFF;
   margin-right: auto;
   margin-left: auto;
