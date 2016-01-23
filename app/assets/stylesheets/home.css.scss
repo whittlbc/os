@@ -116,8 +116,8 @@ $side-filters-width: 18.25%;
   width: 95%;
   color: #1d1e22;
   font-family: 'Proxima-Nova-SemiBold';
-  margin-top: 29px;
-  font-size: 18px;
+  margin-top: 24px;
+  font-size: 18.5px;
   padding-left: 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -140,12 +140,47 @@ $side-filters-width: 18.25%;
   text-overflow: ellipsis;
   overflow: hidden;
   padding-left: 5px;
-  margin-top: 3px;
+  margin-top: 6.5px;
   margin-bottom: 1px;
 }
 
 .project-post-subtitle-text {
   cursor: pointer;
+}
+
+.tag-containers {
+  float: left;
+  margin-top: 4.5px;
+}
+
+.other-tag-container {
+  padding-left: 5px;
+  display: inline-block;
+  float: left;
+  height: 25px;
+  line-height: 25px;
+  margin-right: 5px;
+
+  .domain-tag {
+    color: $post-gray;
+    display: inline-block;
+    float: left;
+    line-height: 25px;
+    height: 100%;
+    font-size: 11px;
+    font-family: 'Proxima-Nova';
+  }
+}
+
+.other-tag-container + .line-break {
+  width: 1px;
+  height: 12px;
+  display: inline-block;
+  float: left;
+  margin-left: 3px;
+  margin-right: 3px;
+  background-color: rgba(0, 0, 0, 0.15);
+  margin-top: 5.5px;
 }
 
 .tag-container {
@@ -172,6 +207,7 @@ $side-filters-width: 18.25%;
       font-size: 10.5px;
       float: left;
       height: 100%;
+      font-family: 'Proxima-Nova';
       line-height: 25px;
       margin-left: 3px;
       display: inline-block;
