@@ -95,6 +95,7 @@ define(['jquery',
       var self = this;
       this.$licenseContainer.css('opacity', '1');
       this.$privacyContainer.css('opacity', '1');
+      this.$el.find('.seeking').css('opacity', '1');
       this.$date.css('opacity', '1');
     },
 
@@ -102,6 +103,7 @@ define(['jquery',
       var self = this;
       this.$licenseContainer.css('opacity', '0');
       this.$privacyContainer.css('opacity', '0');
+      this.$el.find('.seeking').css('opacity', '0');
       this.$date.css('opacity', '0');
       this.collapseTags();
     },

@@ -59,7 +59,7 @@ define(['jquery',
         });
       }
 
-      document.body.style.overflow='auto';
+      document.body.style.overflow = 'auto';
     },
 
     updateProjectView: function (uuid) {
