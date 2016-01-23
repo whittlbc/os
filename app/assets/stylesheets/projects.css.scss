@@ -1403,6 +1403,8 @@ $light-gray: #C4C5CA;
   .indicator {
     position: absolute;
     bottom: 0;
+    margin-left: 14px;
+    margin-right: 14px;
     height: 2px;
     background-color: #00A6C9;
     will-change: left, right;

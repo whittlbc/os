@@ -107,8 +107,8 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'source3': 'pull-from-ideas'
     },
 
-    PROJECT_TYPES: ['up-for-grabs', 'on-the-fence', 'launched'],
-    GRAMMATICAL_PROJECT_TYPES: ['Up for Grabs', 'On the Fence', 'Launched'],
+    PROJECT_TYPES: ['ideas', 'launched'],
+    GRAMMATICAL_PROJECT_TYPES: ['Ideas', 'Launched'],
 
     UP_FOR_GRABS_STATE: '924bcad2-2e31-4522-9157-ca239c6e5b3b',
     ON_THE_FENCE_STATE: 'ecbc2679-5789-4ce8-aa82-155f4f964d20',
