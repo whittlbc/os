@@ -89,10 +89,11 @@ define(['jquery',
       this.owner_pic = data.owner_pic;
       this.ownerGHUsername = data.owner_gh_username;
       this.anon = data.anon;
+      this.domainTags = data.domain_tags
+      this.seeking = data.seeking
     },
 
     hoverOn: function () {
-      var self = this;
       this.$licenseContainer.css('opacity', '1');
       this.$privacyContainer.css('opacity', '1');
       this.$el.find('.seeking').css('opacity', '1');
@@ -100,7 +101,6 @@ define(['jquery',
     },
 
     hoverOff: function () {
-      var self = this;
       this.$licenseContainer.css('opacity', '0');
       this.$privacyContainer.css('opacity', '0');
       this.$el.find('.seeking').css('opacity', '0');
@@ -109,7 +109,6 @@ define(['jquery',
     },
 
     showBubble: function () {
-      var self = this;
       if (!this.bubbleShown) {
         this.$el.find('.user-info-bubble').show();
         this.bubbleShown = true;
@@ -117,7 +116,6 @@ define(['jquery',
     },
 
     hideBubble: function () {
-      var self = this;
       if (this.bubbleShown) {
         this.$el.find('.user-info-bubble').hide();
         this.bubbleShown = false;
@@ -311,12 +309,16 @@ define(['jquery',
         hasLicense: !_.isEmpty(self.license),
         requestToJoin: self.privacy === OSUtil.REQUEST_PRIVACY,
         open: self.privacy === OSUtil.OPEN_PRIVACY,
-        upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
         searchResult: self.searchResult,
         projectType: self.projectType,
         userPic: self.owner_pic,
         voted: self.voted,
-        hasTags: correctedLangsFramesArray.length > 0
+        hasTags: correctedLangsFramesArray.length > 0,
+        hasDomain: !_.isEmpty(self.domainTags),
+        domainTags: (self.domainTags || []).join(',  '),
+        isIdea: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas'),
+        hasSeeking: !_.isEmpty(self.seeking),
+        seeking: (self.seeking || []).join(',  ')
       }));
       
       this.trigger('addTags', this);
