@@ -246,7 +246,7 @@ class ProjectsController < ApplicationController
           :status => project.status,
           :total_comments => project.comments_count,
           :domain_tags => ['Web Dev'],
-          :seeking => ['Feedback']
+          :seeking => ['Feedback', 'Contributors', 'Users']
       }
     }
 
@@ -364,7 +364,9 @@ class ProjectsController < ApplicationController
             :owner_pic => project.get_owner_pic,
             :voted => user ? user.voted_on_project(project.id) : nil,
             :status => project.status,
-            :total_comments => project.comments_count
+            :total_comments => project.comments_count,
+            :domain_tags => ['Web Dev'],
+            :seeking => ['Feedback', 'Contributors', 'Users']
         }
       }
 

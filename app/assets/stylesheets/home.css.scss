@@ -334,27 +334,33 @@ $side-filters-width: 18.25%;
 
 .post-seeking-container {
   float: right;
+  position: relative;
   margin-top: 3px;
+  opacity: 0;
 
   .seeking {
     height: 40px;
     line-height: 40px;
-    opacity: 0;
     text-transform: uppercase;
     float: right;
     font-size: 10.5px;
     font-family: 'Proxima-Nova';
     text-align: right;
+    margin-right: 16.5px;
     color: $post-gray;
+    max-width: 154px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    .octicon-search {
-      color: $post-gray;
-      font-size: 11.5px;
-      margin-left: 5px;
-      transform: rotatey(180deg);
-      position: relative;
-      top: -1px;
-    }
+  .octicon-search {
+    position: absolute;
+    color: $post-gray;
+    font-size: 11.5px;
+    right: 0;
+    top: 13px;
+    transform: rotatey(180deg);
   }
 }
 

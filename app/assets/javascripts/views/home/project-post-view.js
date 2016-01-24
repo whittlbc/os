@@ -89,21 +89,17 @@ define(['jquery',
       this.owner_pic = data.owner_pic;
       this.ownerGHUsername = data.owner_gh_username;
       this.anon = data.anon;
-      this.domainTags = data.domain_tags
+      this.domainTags = data.domain_tags;
       this.seeking = data.seeking
     },
 
     hoverOn: function () {
-      this.$licenseContainer.css('opacity', '1');
-      this.$privacyContainer.css('opacity', '1');
-      this.$el.find('.seeking').css('opacity', '1');
+      this.$seekingContainer.css('opacity', '1');
       this.$date.css('opacity', '1');
     },
 
     hoverOff: function () {
-      this.$licenseContainer.css('opacity', '0');
-      this.$privacyContainer.css('opacity', '0');
-      this.$el.find('.seeking').css('opacity', '0');
+      this.$seekingContainer.css('opacity', '0');
       this.$date.css('opacity', '0');
       this.collapseTags();
     },
@@ -147,7 +143,7 @@ define(['jquery',
         Backbone.EventBroker.trigger('pull-project', self.uuid);
       });
 
-      this.$el.find('.tag-container').hover(function () {
+      this.$el.find('.tag-containers').hover(function () {
         self.expandTags();
       }, function () {
       });
@@ -322,8 +318,7 @@ define(['jquery',
       }));
       
       this.trigger('addTags', this);
-      this.$licenseContainer = this.$el.find('.project-post-license');
-      this.$privacyContainer = this.$el.find('.project-post-privacy');
+      this.$seekingContainer = this.$el.find('.post-seeking-container');
       this.$date = this.$el.find('.project-extra-details-container .date');
       this.addListeners();
 
