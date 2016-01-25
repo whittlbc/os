@@ -43,10 +43,12 @@ define(['jquery',
       this.filters = null;
       this.langsFramesValue = [];
       this.domainFilters = [];
-      this.seekingFilters = [];
+      this.seekingFilters = {
+        0: [],
+        1: []
+      };
       this.privacyFilters = [];
       this.sortType = OSUtil.SORT_BY_VOTES;
-
       this.resetProps();
     },
 
@@ -71,7 +73,10 @@ define(['jquery',
     clearNonLangFilters: function () {
       this.domainFilters = [];
       this.privacyFilters = [];
-      this.seekingFilters = [];
+      this.seekingFilters = {
+        0: [],
+        1: []
+      };
       this.getFilters();
     },
 
@@ -109,7 +114,7 @@ define(['jquery',
 
     handleNewSeekingFilter: function (data) {
       var self = this;
-      this.seekingFilters = data.dropdownValues;
+      this.seekingFilters[this.projectTypeStatus] = data.dropdownValues;
       this.getFilters();
     },
 
@@ -126,7 +131,7 @@ define(['jquery',
     },
 
     handleRemoveSeekingFilter: function (data) {
-      this.seekingFilters = data.dropdownValues;
+      this.seekingFilters[this.projectTypeStatus] = data.dropdownValues;
       this.getFilters();
     },
 
@@ -136,8 +141,7 @@ define(['jquery',
     },
 
     getFilters: function () {
-      var self = this;
-      var atleastOneFilter = false;
+      var atLeastOneFilter = false;
       this.limit = 30;
       this.gettingMoreData = false;
       var obj = {
@@ -148,34 +152,50 @@ define(['jquery',
 
       if (!_.isEmpty(this.langsFramesValue)) {
         obj.filters.langs_and_frames = this.langsFramesValue;
-        atleastOneFilter = true;
+        atLeastOneFilter = true;
       }
       if (this.privacyFilters.length === 1) {
         obj.filters.privacy = this.privacyFilters;
-        atleastOneFilter = true;
+        atLeastOneFilter = true;
       }
 
       if (!_.isEmpty(this.domainFilters)) {
         obj.filters.domains = this.domainFilters;
-        atleastOneFilter = true;
+        atLeastOneFilter = true;
       }
 
-      if (!_.isEmpty(this.seekingFilters)) {
-        obj.filters.seeking = this.seekingFilters;
-        atleastOneFilter = true;
+      if (!_.isEmpty(this.seekingFilters[this.projectTypeStatus])) {
+        obj.filters.seeking = this.seekingFilters[this.projectTypeStatus];
+        atLeastOneFilter = true;
       }
 
-      this.filters = obj;
+      this.filters = atLeastOneFilter ? obj : null;
 
-      this.getFilteredFeed(obj);
-
-      if (!atleastOneFilter) {
-        this.filters = null;
-      }
+      this.filters == null ? this.getFeed() : this.getFilteredFeed(obj);
     },
 
-    setLangFrameInputProps: function () {
-      this.$el.find('.selectize-dropdown-content').height(120);
+    getFeed: function () {
+      var self = this;
+
+      var data = {
+        status: this.projectTypeStatus,
+        sortType: this.sortType
+      };
+
+      if (this.currentUser) {
+        data.user_uuid = this.currentUser.get('uuid');
+      }
+
+      var project = new Project();
+      project.fetchFeedProjects(data, {
+        success: function (data) {
+          self.limit += 30;
+          if (!data.gotAll) {
+            self.gettingMoreData = false;
+          }
+          self.projectFeedView.handleFetchProjects(data.projects)
+        }
+      });
     },
 
     getFilteredFeed: function (obj) {
@@ -204,15 +224,7 @@ define(['jquery',
     pullFromIdeas: function () {
       var self = this;
       var project = new Project();
-      project.pullFromIdeas({
-        success: function (data) {
-          self.handlePullFromIdeas(data);
-        }
-      });
-    },
-
-    handlePullFromIdeas: function (resp) {
-      console.log(resp);
+      project.pullFromIdeas();
     },
 
     addDomainFilter: function (type) {
@@ -250,40 +262,18 @@ define(['jquery',
     },
 
     populateProjectFeed: function (status, initial) {
-      var self = this;
       this.limit = 30;
       this.gettingMoreData = false;
+
       if (!initial) {
         this.changeActiveTab(status);
       }
-      this.projectTypeStatus = status; // int value
+
+      this.projectTypeStatus = status;
+
       this.projectFeedView.setProjectTypeStatus(status);
-      if (this.filters == null) {
 
-        var data = {
-          status: status,
-          sortType: this.sortType
-        };
-
-        if (this.currentUser) {
-          data.user_uuid = this.currentUser.get('uuid');
-        }
-
-        var project = new Project();
-        project.fetchFeedProjects(data, {
-          success: function (data) {
-            self.limit += 30;
-            if (!data.gotAll) {
-              self.gettingMoreData = false;
-            }
-            self.projectFeedView.handleFetchProjects(data.projects)
-          }
-        });
-      } else {
-        this.filters.status = status;
-        this.filters.sortType = this.sortType;
-        this.getFilteredFeed(this.filters);
-      }
+      this.getFilters();
     },
 
     addScrollLoadListener: function () {
@@ -347,7 +337,10 @@ define(['jquery',
       this.langsFramesValue = obj.filters.langs_and_frames || [];
       this.privacyFilters = obj.filters.privacy || [];
       this.domainFilters = obj.filters.domains || [];
-      this.seekingFilters = obj.filters.seeking || [];
+      this.seekingFilters = obj.filters.seeking || {
+        0: [],
+        1: []
+      };
       this.langFiltersOr = obj.lang_filters_or;
     },
 

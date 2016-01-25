@@ -83,7 +83,8 @@ class ProjectsController < ApplicationController
           :pending_slack_request => user ? user.has_pending_request?(project.id, SLACK_ASSET) : false,
           :pending_hipchat_request => user ? user.has_pending_request?(project.id, HIPCHAT_ASSET) : false,
           :is_slack_member => user ? project.is_slack_member?(user.id) : false,
-          :is_hipchat_member => user ? project.is_hipchat_member?(user.id) : false
+          :is_hipchat_member => user ? project.is_hipchat_member?(user.id) : false,
+          :up_for_grabs => project.up_for_grabs
         }
 
         comments = Comment.where(project_id: project.id)
@@ -371,7 +372,7 @@ class ProjectsController < ApplicationController
       got_all = (limit >= projects.length)
       render :json => {:projects => special_sort(projects, params[:sortType]).slice(0, limit), :gotAll => got_all}
     else
-      render :json => {:status => 500, :message => 'params[:filters] was nil'}
+      render :json => {:message => 'params[:filters] was nil'}, :status => 500
     end
   end
 

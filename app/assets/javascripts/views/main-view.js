@@ -427,6 +427,7 @@ define(['jquery',
     },
 
     changeHomeFeedType: function (index) {
+      this.footerView.changeFeedType(index);
       this.homeView.populateProjectFeed(index);
     },
 
@@ -707,12 +708,14 @@ define(['jquery',
       }
 
       this.homeView.render({
-        index: _.has(options, 'index') ? options.index : 1
+        index: _.has(options, 'index') ? options.index : 0
       });
 
       this.footerView = this.footerView || new FooterView({
         el: '#mainFooter'
       });
+
+      this.footerView.setFeedStatus(options.index);
 
       this.footerView.unbind();
 

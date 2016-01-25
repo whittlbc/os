@@ -58,7 +58,7 @@ define(['jquery',
       this.source2 = OSUtil.REVERSE_SOURCE_MAP['source2'];
 
       this.panelMap = {
-        'type-panel': 0,
+        'stage-panel': 0,
         'source-panel': 1,
         'data-panel': 2
       };

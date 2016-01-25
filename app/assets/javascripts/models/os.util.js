@@ -152,7 +152,18 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       }
     },
 
-    SEEKING_FILTERS : {
+    SEEKING_IDEAS_FILTERS : {
+      "Feedback": {
+        "id": "Feedback",
+        "title": "Feedback"
+      },
+      "Initial Team": {
+        "id": "Initial Team",
+        "title": "Initial Team"
+      }
+    },
+
+    SEEKING_LAUNCHED_FILTERS : {
       "Contributors": {
         "id": "Contributors",
         "title": "Contributors"
@@ -161,22 +172,19 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "id": "Feedback",
         "title": "Feedback"
       },
-      "Initial Team": {
-        "id": "Initial Team",
-        "title": "Initial Team"
-      },
       "New Maintainer": {
         "id": "New Maintainer",
         "title": "New Maintainer"
-      },
-      "Up for Grabs": {
-        "id": "Up for Grabs",
-        "title": "Up for Grabs"
       },
       "Users": {
         "id": "Users",
         "title": "Users"
       }
+    },
+
+    SEEKING_TAGS_TO_REMOVE_FOR_STATUS: {
+      0: ['Initial Team'],
+      1: ['Contributors', 'New Maintainer', 'Users']
     },
 
     customMethodMap: {

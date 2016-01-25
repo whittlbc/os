@@ -33,12 +33,32 @@ define(['jquery',
 
       this.filterType = null;
 
+      this.seekingMap = {
+        0: OSUtil.SEEKING_IDEAS_FILTERS,
+        1: OSUtil.SEEKING_LAUNCHED_FILTERS
+      };
+
       // cache of selected values for each filter type
       this.removedValues = {
         0: {},
         1: {},
-        2: {}
+        2: {
+          0: {},
+          1: {}
+        }
       };
+    },
+
+    setFeedStatus: function (status) {
+      this.status = status;
+    },
+
+    changeFeedType: function (status) {
+      this.status = status;
+      // force reset dropdown if switching feed types while on Seeking filters
+      if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
+        this.resetDropdown(this.filterType, true);
+      }
     },
 
     getAllLanguages: function () {
@@ -84,7 +104,7 @@ define(['jquery',
       if (this.filterType === 2) {
         this.deleteFilter(value);
       } else {
-        delete this.removedValues[2][value];
+        delete this.removedValues[2][this.status][value];
         self.trigger('removeItem', {
           set: 2,
           dropdownValues: self.getDropdownValues(2)
@@ -112,41 +132,42 @@ define(['jquery',
     },
 
     getItemsForDropdown: function () {
-      var allItems;
+      var items = {};
+      var values = [];
+
       switch (this.filterType) {
         case 0:
-          allItems = this.langMap;
-          return this.getItemsStillUpForSelection(0, allItems);
+          items = this.langMap;
           break;
         case 1:
-          allItems = OSUtil.DOMAIN_FILTERS;
-          return this.getItemsStillUpForSelection(1, allItems);
+          items = OSUtil.DOMAIN_FILTERS;
           break;
         case 2:
-          allItems = OSUtil.SEEKING_FILTERS;
-          return this.getItemsStillUpForSelection(2, allItems);
+          items = this.seekingMap[this.status];
           break;
       }
-    },
 
-    getItemsStillUpForSelection: function (int, allItems) {
-      return this.arrayFromMap(allItems);
-    },
-
-    arrayFromMap: function (map) {
-      var values = [];
-      for (var key in map) {
-        values.push(map[key]);
+      for (var key in items) {
+        values.push(items[key]);
       }
+
       return values;
     },
 
     addItemToSelectedMap: function (value) {
-      this.removedValues[this.filterType][value] = value;
+      if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
+        this.removedValues[this.filterType][this.status][value] = value;
+      } else {
+        this.removedValues[this.filterType][value] = value;
+      }
     },
 
     removeItemFromSelectedMap: function (value) {
-      delete this.removedValues[this.filterType][value];
+      if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
+        delete this.removedValues[this.filterType][this.status][value];
+      } else {
+        delete this.removedValues[this.filterType][value];
+      }
     },
 
     hideDropdown: function () {
@@ -161,7 +182,14 @@ define(['jquery',
       if (_.isUndefined(int)) {
         int = this.filterType;
       }
-      return Object.keys(this.removedValues[int]);
+
+      var obj = this.removedValues[int];
+
+      if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
+        obj = obj[this.status];
+      }
+
+      return Object.keys(obj);
     },
 
     renderDropdown: function () {
@@ -289,10 +317,10 @@ define(['jquery',
       }
     },
 
-    resetDropdown: function (filterTypeInt) {
+    resetDropdown: function (filterTypeInt, force) {
       var self = this;
-      // if this is not the same filter type, proceed
-      if (this.filterType != filterTypeInt) {
+
+      if ((this.filterType != filterTypeInt) || force) {
 
         // set the new filterType
         this.filterType = filterTypeInt;
@@ -303,8 +331,12 @@ define(['jquery',
         // add the new dropdown items for the new type, leaving out ones already selected
         this.footerDropdown.addOption(this.getItemsForDropdown());
 
-        // check to see if you have a cache of the removed valuers for this new filter type
+        // check to see if you have a cache of the removed values for this new filter type
         var removedValuesForType = this.removedValues[filterTypeInt];
+
+        if (filterTypeInt === OSUtil.SEEKING_FILTER_SET) {
+          removedValuesForType = removedValuesForType[this.status];
+        }
 
         if (removedValuesForType) {
           this.preventAddListener = true;
