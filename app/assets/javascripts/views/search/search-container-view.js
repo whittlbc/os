@@ -68,24 +68,16 @@ define(['jquery',
         var openInNewTab = false;
         e.stopPropagation();
 
-        console.log('click', e);
-
         if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
           openInNewTab = true;
         }
 
-        if (openInNewTab){
-          console.log('open in new tab');
-          window.open((window.location.origin + '/#projects/' + data.uuid), '_blank');
-        } else {
-          if (window.location.hash == ('#projects/' + data.uuid)) {
-            window.location.reload();
-          } else {
-            window.location.hash = '#projects/' + data.uuid;
-            setTimeout(function () {
-              self.forceCloseSearchBar();
-            }, 50)
-          }
+        OSUtil.navToProject(data.uuid, openInNewTab);
+
+        if (!openInNewTab){
+          setTimeout(function () {
+            self.forceCloseSearchBar();
+          }, 50)
         }
 
         document.body.style.overflow = 'auto';

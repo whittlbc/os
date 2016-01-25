@@ -182,11 +182,7 @@ define(['jquery',
         openInNewTab = true;
       }
 
-      if (openInNewTab){
-        window.open((window.location.origin + '/#projects/' + uuid), '_blank');
-      } else {
-        window.location.hash = '#projects/' + uuid;
-      }
+      OSUtil.navToProject(uuid, openInNewTab);
     },
 
     showMyProjectsModal: function () {
@@ -238,10 +234,9 @@ define(['jquery',
         openInNewTab = true;
       }
 
-      if (openInNewTab){
-        window.open((window.location.origin + '/#projects/' + uuid), '_blank');
-      } else {
-        window.location.hash = '#projects/' + uuid;
+      OSUtil.navToProject(uuid, openInNewTab);
+
+      if (!openInNewTab){
         modal.hideModal();
         this.forceHideModalBackdrop();
       }
@@ -306,7 +301,7 @@ define(['jquery',
       var project = new Project();
       project.destroyProject({uuid: self.projectView.projectUUID}, {
         success: function () {
-          window.location.hash = '#on-the-fence';
+          OSUtil.navToIdeas();
         }
       });
     },

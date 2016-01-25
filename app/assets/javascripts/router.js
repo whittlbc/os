@@ -30,8 +30,7 @@ define(['jquery',
     },
 
     ideasRoute: function () {
-      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ?
-        (window.location.hash = '#ideas') : this.updateHomeView(0);
+      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? OSUtil.navToIdeas() : this.updateHomeView(0);
     },
 
     launchedRoute: function () {

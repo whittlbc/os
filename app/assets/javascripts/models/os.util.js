@@ -11,6 +11,26 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       this.GH_CLIENT_ID = clientID;
     },
 
+    navToIdeas: function () {
+      window.location.hash = '#ideas';
+    },
+
+    navToLaunched: function () {
+      window.location.hash = '#launched';
+    },
+
+    navToProject: function (projectUUID, newTab) {
+      if (newTab){
+        window.open((window.location.origin + '/#projects/' + projectUUID), '_blank');
+      } else {
+        window.location.hash = '#projects/' + projectUUID;
+      }
+    },
+
+    TYPE1: 'ideas',
+
+    TYPE2: 'launched',
+
     IRC_NETWORKS: [
       {
         "id": "ChLame",
@@ -60,20 +80,12 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'hipchat': 2
     },
 
-    LICENSE_COLOR_MAP: {
-      'MIT': '#646464',
-      'GPL': '#9A9A9A',
-      'BSD': '#BBB'
-    },
-
     HOME_PAGE: 'home',
     PROJECT_PAGE: 'project',
 
     LANGS_FILTER_SET: 0,
-    LICENSE_FILTER_SET: 1,
-    CHAT_FILTER_SET: 2,
-
-    NO_USER_PIC: '',
+    DOMAIN_FILTER_SET: 1,
+    SEEKING_FILTER_SET: 2,
 
     SORT_BY_VOTES: 0,
     SORT_BY_TIME: 1,
@@ -82,38 +94,29 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
     OPEN_PRIVACY: 'open',
 
     TYPE_MAP: {
-      'up-for-grabs': 'type1',
-      'on-the-fence': 'type2',
-      'launched': 'type3'
+      'ideas': 'type1',
+      'launched': 'type2'
     },
 
     REVERSE_TYPE_MAP: {
-      'type1': 'up-for-grabs',
-      'type2': 'on-the-fence',
-      'type3': 'launched'
+      'type1': 'ideas',
+      'type2': 'launched'
     },
 
-    TYPE_ARRAY: ['type1', 'type2', 'type3'],
+    TYPE_ARRAY: ['type1', 'type2'],
 
     SOURCE_MAP: {
       'gh': 'source1',
-      'scratch': 'source2',
-      'pull-from-ideas': 'source3'
+      'scratch': 'source2'
     },
 
     REVERSE_SOURCE_MAP: {
       'source1': 'gh',
-      'source2': 'scratch',
-      'source3': 'pull-from-ideas'
+      'source2': 'scratch'
     },
 
     PROJECT_TYPES: ['ideas', 'launched'],
     GRAMMATICAL_PROJECT_TYPES: ['Ideas', 'Launched'],
-
-    UP_FOR_GRABS_STATE: '924bcad2-2e31-4522-9157-ca239c6e5b3b',
-    ON_THE_FENCE_STATE: 'ecbc2679-5789-4ce8-aa82-155f4f964d20',
-    LAUNCHED_STATE: 'fc68f489-fa29-4431-a8b0-e2e9f818107e',
-    PROJECT_STATE: 'eb339bbc-d93f-4c21-a9d2-a43dc249d5fc',
 
     MY_GH_HEADER_TOKEN: '202171c69b06bbe92b666e1a5e3a9b7981a6fced',
 

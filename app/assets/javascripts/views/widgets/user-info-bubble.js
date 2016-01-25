@@ -40,7 +40,7 @@ define(['jquery',
       this.ghProfile = 'https://github.com/' + ghUsername;
 
       this.$el.html(UserInfoBubbleTpl({
-        userPic: options && options.userPic ? options.userPic : OSUtil.NO_USER_PIC,
+        userPic: options.userPic,
         ghUsername: ghUsername,
         showLink: !_.isEmpty(ghUsername),
         ghProfile: this.ghProfile,

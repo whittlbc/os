@@ -59,7 +59,7 @@ define(['jquery',
         height: 25,
         top: 0,
         left: 0,
-        backgroundColor: OSUtil.LICENSE_COLOR_MAP[licenseFilterItemView.name]
+        backgroundColor: 'black'
       });
       $name.css({opacity: 1});
       $name.html(licenseFilterItemView.name);
@@ -117,7 +117,7 @@ define(['jquery',
 
     prepareItemForEntrance: function ($ball, $name, value) {
       var self = this;
-      $ball.css({backgroundColor: OSUtil.LICENSE_COLOR_MAP[value]});
+      $ball.css({backgroundColor: 'black');
       $name.html(value);
     },
 

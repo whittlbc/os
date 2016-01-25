@@ -12,6 +12,9 @@ class ProjectsController < ApplicationController
 
   include ProjectHelper
 
+  IDEAS = 0
+  LAUNCHED = 1
+
   PROJECT_ASSET = 0
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2
@@ -245,8 +248,8 @@ class ProjectsController < ApplicationController
           :voted => user ? user.voted_on_project(project.id) : nil,
           :status => project.status,
           :total_comments => project.comments_count,
-          :domain_tags => [],
-          :seeking => ['Feedback', 'Contributors', 'Users']
+          :domain_tags => project.domains,
+          :seeking => project.seeking
       }
     }
 
@@ -365,8 +368,8 @@ class ProjectsController < ApplicationController
             :voted => user ? user.voted_on_project(project.id) : nil,
             :status => project.status,
             :total_comments => project.comments_count,
-            :domain_tags => ['Web Dev'],
-            :seeking => ['Feedback', 'Contributors', 'Users']
+            :domain_tags => project.domains,
+            :seeking => project.seeking
         }
       }
 
@@ -822,41 +825,25 @@ class ProjectsController < ApplicationController
     query = "%#{params[:query]}%"
     limit = params[:limit].present? ? params[:limit].to_i : 10
 
-    # return just the title and id of the project
-    if params[:upForGrabs]
-      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.order('vote_count DESC, LOWER(title)').limit(limit).map { |project|
-        {
-            :uuid => project.uuid,
-            :title => project.title,
-            :subtitle => project.subtitle,
-            :description => project.description,
-            :langsFrames => project.langs_and_frames
-        }
+    projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.order('vote_count DESC, LOWER(title), LOWER(subtitle)').limit(limit).map { |project|
+      {
+        :owner => project.get_owner_gh_username,
+        :title => highlight_query(project.title, params[:query]),
+        :subtitle => highlight_query(project.subtitle, params[:query]),
+        :status => project.status,
+        :uuid => project.uuid,
+        :voteCount => project.vote_count
       }
+    }
 
-      render :json => {:projects => projects}
-    else
-      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.order('vote_count DESC, LOWER(title), LOWER(subtitle)').limit(limit).map { |project|
-        {
-            :owner => project.get_owner_gh_username,
-            :title => highlight_query(project.title, params[:query]),
-            :subtitle => highlight_query(project.subtitle, params[:query]),
-            :status => project.status,
-            :uuid => project.uuid,
-            :voteCount => project.vote_count
-        }
-      }
-
-      render :json => {:projects => projects, :gotAll => true}
-    end
-
+    render :json => {:projects => projects, :gotAll => true}
   end
 
   def launch
     project = Project.find_by(uuid: params[:uuid])
 
     if project.present?
-      project.update_attributes!(status: 2)
+      project.update_attributes!(status: LAUNCHED)
       render :json => {}, :status => 200
     else
       render :json => {:message => 'Cant find project by that id'}, :status => 500

@@ -48,9 +48,7 @@ define(['jquery',
 
       this.popupContainerHeight = 410;
       this.popupHeight = this.popupContainerHeight - 50;
-
       this.bottomNavDuration = 200;
-
       this.repos = null;
 
       this.slideIndex = 0;
@@ -58,7 +56,6 @@ define(['jquery',
       this.type2 = OSUtil.REVERSE_TYPE_MAP['type2'];
       this.source1 = OSUtil.REVERSE_SOURCE_MAP['source1'];
       this.source2 = OSUtil.REVERSE_SOURCE_MAP['source2'];
-      this.source3 = OSUtil.REVERSE_SOURCE_MAP['source3'];
 
       this.panelMap = {
         'type-panel': 0,
@@ -70,7 +67,7 @@ define(['jquery',
 
         'selectedType': null,
 
-        // Up for Grabs
+        // IDEAS
         'type1': {
           'selectedSource': 'source2',
           // Scratch
@@ -86,58 +83,8 @@ define(['jquery',
           }
         },
 
-        // On the Fence
+        // LAUNCHED
         'type2': {
-          'selectedSource': null,
-          // GH
-          'source1': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          },
-          //Scratch
-          'source2': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          },
-          // Pull from Ideas
-          'source3': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          }
-        },
-
-        //Launched
-        'type3': {
           'selectedSource': null,
           // GH
           'source1': {
@@ -403,7 +350,7 @@ define(['jquery',
         if (self.newProjectData.sendInvites === true) {
           Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
         }
-        window.location.hash = '#projects/' + newProjectUUID;
+        OSUtil.navToProject(newProjectUUID);
         setTimeout(function () {
           self.resetPopup();
         }, 200);
