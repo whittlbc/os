@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160125001844) do
+ActiveRecord::Schema.define(version: 20160125024901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20160125001844) do
     t.integer  "contributors_count", default: 0
     t.string   "domains",            default: [],                 array: true
     t.string   "seeking",            default: [],                 array: true
+    t.boolean  "up_for_grabs",       default: false
   end
 
   add_index "projects", ["anon"], name: "index_projects_on_anon", using: :btree
