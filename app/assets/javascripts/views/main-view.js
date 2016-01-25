@@ -429,6 +429,8 @@ define(['jquery',
     changeHomeFeedType: function (index) {
       this.footerView.changeFeedType(index);
       this.homeView.populateProjectFeed(index);
+      this.forceShowHeader();
+      this.forceShowFooter();
     },
 
     addNewProjectBtnClicked: function () {

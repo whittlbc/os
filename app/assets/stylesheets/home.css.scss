@@ -1239,7 +1239,6 @@ $side-filters-width: 18.25%;
         height: 0;
         width: 0;
         border-radius: 50%;
-        //background-color: $project-type-color;
         margin-left: 10px;
         text-align: center;
         overflow: hidden;
@@ -1249,10 +1248,8 @@ $side-filters-width: 18.25%;
         left: -12.5px;
         top: 12.5px;
 
-        span {
-          color: white;
-          font-size: 15.5px;
-          line-height: 25px;
+        img {
+          height: 100%;
         }
       }
 

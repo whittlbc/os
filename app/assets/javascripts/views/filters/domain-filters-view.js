@@ -58,8 +58,7 @@ define(['jquery',
         width: 25,
         height: 25,
         top: 0,
-        left: 0,
-        backgroundColor: 'black'
+        left: 0
       });
       $name.css({opacity: 1});
       $name.html(domainFilterItemView.name);
@@ -116,8 +115,6 @@ define(['jquery',
     },
 
     prepareItemForEntrance: function ($ball, $name, value) {
-      var self = this;
-      $ball.css({backgroundColor: 'black' });
       $name.html(value);
     },
 
