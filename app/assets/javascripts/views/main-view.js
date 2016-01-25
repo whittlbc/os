@@ -569,9 +569,14 @@ define(['jquery',
         }
         this.footerView.footerDropdown.addItems(filters.langs_and_frames);
       }
-      if (filters.license) {
-        for (var j = 0; j < filters.license.length; j++) {
-          this.licenseFiltersView.addItem({value: filters.license[j], animate: false});
+      if (filters.domains) {
+        for (var j = 0; j < filters.domain.length; j++) {
+          this.domainFiltersView.addItem({value: filters.domains[j], animate: false});
+        }
+      }
+      if (filters.seeking) {
+        for (var j = 0; j < filters.seeking.length; j++) {
+          this.seekingFiltersView.addItem({value: filters.seeking[j], animate: false});
         }
       }
       this.footerView.footerDropdown.$removedItems = this.cachedRemovedFilterItems;
@@ -632,23 +637,23 @@ define(['jquery',
         }, 200);
       }
 
-      // LICENSES
-      else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-        self.minorFiltersView.addLicenseItem(data);
+      // DOMAINS
+      else if (data.set === OSUtil.DOMAIN_FILTER_SET) {
+        self.minorFiltersView.addDomainItem(data);
 
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
-          self.homeView.handleNewLicenseFilter(data);
+          self.homeView.handleNewDomainFilter(data);
         }, 200);
       }
 
-      // CHAT
-      else if (data.set === OSUtil.CHAT_FILTER_SET) {
-        self.minorFiltersView.addChatItem(data);
+      // SEEKING
+      else if (data.set === OSUtil.SEEKING_FILTER_SET) {
+        self.minorFiltersView.addSeekingItem(data);
 
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
-          self.homeView.handleNewChatFilter(data);
+          self.homeView.handleNewSeekingFilter(data);
         }, 200);
       }
     },
@@ -657,12 +662,12 @@ define(['jquery',
       var self = this;
       if (data.set === OSUtil.LANGS_FILTER_SET) {
         self.homeView.handleRemoveLangFilter(data);
-      } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-        self.minorFiltersView.removeLicenseItem();
-        self.homeView.handleRemoveLicenseFilter(data);
-      } else if (data.set === OSUtil.CHAT_FILTER_SET) {
-        self.minorFiltersView.removeChatItem();
-        self.homeView.handleRemoveChatFilter(data);
+      } else if (data.set === OSUtil.DOMAIN_FILTER_SET) {
+        self.minorFiltersView.removeDomainItem();
+        self.homeView.handleRemoveDomainFilter(data);
+      } else if (data.set === OSUtil.SEEKING_FILTER_SET) {
+        self.minorFiltersView.removeSeekingItem();
+        self.homeView.handleRemoveSeekingFilter(data);
       }
     },
 

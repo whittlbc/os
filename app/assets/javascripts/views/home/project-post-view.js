@@ -88,10 +88,10 @@ define(['jquery',
       this.owner_pic = data.owner_pic;
       this.ownerGHUsername = data.owner_gh_username;
       this.anon = data.anon;
-      this.domainTags = data.domain_tags || [];
+      this.domains = data.domains || [];
       this.seeking = data.seeking || [];
 
-      this.MAX_TAGS = 6 - this.domainTags.length;
+      this.MAX_TAGS = 6 - this.domains.length;
     },
 
     hoverOn: function () {
@@ -310,8 +310,8 @@ define(['jquery',
         userPic: self.owner_pic,
         voted: self.voted,
         hasTags: correctedLangsFramesArray.length > 0,
-        hasDomain: !_.isEmpty(self.domainTags),
-        domainTags: self.domainTags.join(',  '),
+        hasDomain: !_.isEmpty(self.domains),
+        domains: self.domains.join(',  '),
         isIdea: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas'),
         hasSeeking: !_.isEmpty(self.seeking),
         seeking: self.seeking.join(',  ')

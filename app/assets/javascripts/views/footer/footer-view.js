@@ -27,39 +27,9 @@ define(['jquery',
 
       Backbone.EventBroker.register({
         'deleteLangFilter': 'deleteLangFilter',
-        'deleteLicenseFilter': 'deleteLicenseFilter',
-        'deleteChatFilter': 'deleteChatFilter'
+        'deleteDomainFilter': 'deleteDomainFilter',
+        'deleteSeekingFilter': 'deleteSeekingFilter'
       }, this);
-
-      this.licenseData = {
-        "MIT": {
-          "id": "MIT",
-          "title": "MIT"
-        },
-        "GPL": {
-          "id": "GPL",
-          "title": "GPL"
-        },
-        "BSD": {
-          "id": "BSD",
-          "title": "BSD"
-        }
-      };
-
-      this.chatData = {
-        "Slack": {
-          "id": "Slack",
-          "title": "Slack"
-        },
-        "HipChat": {
-          "id": "HipChat",
-          "title": "HipChat"
-        },
-        "IRC": {
-          "id": "IRC",
-          "title": "IRC"
-        }
-      };
 
       this.filterType = null;
 
@@ -96,7 +66,7 @@ define(['jquery',
 
     },
 
-    deleteLicenseFilter: function (value) {
+    deleteDomainFilter: function (value) {
       var self = this;
       if (this.filterType === 1) {
         this.deleteFilter(value);
@@ -109,7 +79,7 @@ define(['jquery',
       }
     },
 
-    deleteChatFilter: function (value) {
+    deleteSeekingFilter: function (value) {
       var self = this;
       if (this.filterType === 2) {
         this.deleteFilter(value);
@@ -149,29 +119,17 @@ define(['jquery',
           return this.getItemsStillUpForSelection(0, allItems);
           break;
         case 1:
-          allItems = this.licenseData;
+          allItems = OSUtil.DOMAIN_FILTERS;
           return this.getItemsStillUpForSelection(1, allItems);
           break;
         case 2:
-          allItems = this.chatData;
+          allItems = OSUtil.SEEKING_FILTERS;
           return this.getItemsStillUpForSelection(2, allItems);
           break;
       }
     },
 
     getItemsStillUpForSelection: function (int, allItems) {
-      //var alreadySelectedItems = this.removedValues[int];
-      //
-      //// return all items if none exist inside the removedValues map for that filter type
-      //if (_.isEmpty(alreadySelectedItems)) {
-      //  return this.arrayFromMap(allItems);
-      //}
-      //
-      //var alreadySelectedItemsArray = Object.keys(alreadySelectedItems);
-      //
-      //for (var i = 0; i < alreadySelectedItemsArray.length; i++) {
-      //  delete allItems[alreadySelectedItemsArray[i]];
-      //}
       return this.arrayFromMap(allItems);
     },
 
@@ -312,19 +270,19 @@ define(['jquery',
       switch (e.currentTarget.id) {
         case 'langFilterChoice':
           $(e.currentTarget).addClass('selected-filter');
-          this.$licenseFilterBtn.addClass('not-selected-hide-right');
-          this.$chatFilterBtn.addClass('not-selected');
+          this.$domainFilterBtn.addClass('not-selected-hide-right');
+          this.$seekingFilterBtn.addClass('not-selected');
           this.resetDropdown(0);
           break;
-        case 'licenseFilterChoice':
+        case 'domainFilterChoice':
           this.$langFilterBtn.addClass('not-selected');
           $(e.currentTarget).addClass('selected-filter');
-          this.$chatFilterBtn.addClass('not-selected');
+          this.$seekingFilterBtn.addClass('not-selected');
           this.resetDropdown(1);
           break;
-        case 'chatFilterChoice':
+        case 'seekingFilterChoice':
           this.$langFilterBtn.addClass('not-selected');
-          this.$licenseFilterBtn.addClass('not-selected-hide-left');
+          this.$domainFilterBtn.addClass('not-selected-hide-left');
           $(e.currentTarget).addClass('selected-filter');
           this.resetDropdown(2);
           break;
@@ -366,7 +324,7 @@ define(['jquery',
           $filterBtn = self.$el.find('#langFilterChoice');
           break;
         case 1:
-          $filterBtn = self.$el.find('#licenseFilterChoice');
+          $filterBtn = self.$el.find('#domainFilterChoice');
           break;
 
       }
@@ -383,6 +341,11 @@ define(['jquery',
       this.$el.find('#filterChoices').children().eq(int).click();
     },
 
+    removeAllFilters: function () {
+      var self = this;
+      // do this
+    },
+
     render: function () {
       var self = this;
       this.$el.html(FooterViewTpl({
@@ -395,7 +358,8 @@ define(['jquery',
       });
 
       this.listenTo(this.moreFiltersDropup, 'item:clicked', function (id) {
-        self.trigger('more-filters-toggle', id);
+        self.removeAllFilters();
+        //self.trigger('more-filters-toggle', id);
       });
 
       this.moreFiltersDropup.render();
@@ -413,8 +377,8 @@ define(['jquery',
       this.vEllipsis.render();
 
       this.$langFilterBtn = this.$el.find('#langFilterChoice');
-      this.$licenseFilterBtn = this.$el.find('#licenseFilterChoice');
-      this.$chatFilterBtn = this.$el.find('#chatFilterChoice');
+      this.$domainFilterBtn = this.$el.find('#domainFilterChoice');
+      this.$seekingFilterBtn = this.$el.find('#seekingFilterChoice');
       this.$filterChoiceContainer = this.$el.find('.filter-choice-container');
       this.$filterBtns = this.$el.find('.footer-filter-btn');
       this.addHoverListeners();

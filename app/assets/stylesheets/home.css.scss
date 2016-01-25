@@ -688,7 +688,7 @@ $side-filters-width: 18.25%;
   padding-right: auto;
 }
 
-#licenseFilterContainer {
+#domainFilterContainer {
   width: 100%;
   margin-top: 35px;
 }
@@ -708,7 +708,7 @@ $side-filters-width: 18.25%;
   text-decoration: underline;
 }
 
-.licenseFilters,
+.domainFilters,
 .privacyFilters,
 .anonFilters {
   width: 100%;
@@ -716,7 +716,7 @@ $side-filters-width: 18.25%;
   padding-right: 30px;
 }
 
-.licenseFilterBtn,
+.domainFilterBtn,
 .privacyFilterBtn,
 .anonFilterBtn {
   width: 100%;
@@ -727,7 +727,7 @@ $side-filters-width: 18.25%;
   cursor: pointer;
 }
 
-.licenseFilterBtn > p,
+.domainFilterBtn > p,
 .privacyFilterBtn > p,
 .anonFilterBtn > p {
   padding-right: 17px;
@@ -745,7 +745,7 @@ $side-filters-width: 18.25%;
   }
 }
 
-.licenseFilterBtnSelected,
+.domainFilterBtnSelected,
 .privacyFilterBtnSelected,
 .anonFilterBtnSelected {
   background-color: #000000;
@@ -1200,7 +1200,7 @@ $side-filters-width: 18.25%;
   }
 }
 
-#licenseFiltersView.license-nav-up {
+#domainFiltersView.domain-nav-up {
   right: -51px;
 }
 
@@ -1212,13 +1212,13 @@ $side-filters-width: 18.25%;
   right: 0;
 }
 
-#licenseFiltersView {
+#domainFiltersView {
   width: 100%;
   height: auto;
   float: right;
   margin-bottom: 20px;
 
-  .license-filters-list {
+  .domain-filters-list {
     width: 100%;
     height: auto;
     list-style-type: none;
@@ -1234,7 +1234,7 @@ $side-filters-width: 18.25%;
       float: right;
       display: block;
 
-      .license-filter-item {
+      .domain-filter-item {
         float: right;
         height: 0;
         width: 0;
@@ -1301,13 +1301,13 @@ $side-filters-width: 18.25%;
   }
 }
 
-#chatFiltersView {
+#seekingFiltersView {
   width: 100%;
   height: auto;
   float: right;
   margin-bottom: 20px;
 
-  .chat-filters-list {
+  .seeking-filters-list {
     width: 100%;
     height: auto;
     list-style-type: none;
@@ -1323,7 +1323,7 @@ $side-filters-width: 18.25%;
       float: right;
       display: block;
 
-      .chat-filter-item {
+      .seeking-filter-item {
         float: right;
         height: 0;
         width: 0;

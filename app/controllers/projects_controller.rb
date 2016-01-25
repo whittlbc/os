@@ -19,6 +19,8 @@ class ProjectsController < ApplicationController
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2
 
+  LANG_FILTERS_NAME = 'langs_and_frames'
+
   def service_for_asset(asset)
     case asset
       when SLACK_ASSET
@@ -59,6 +61,8 @@ class ProjectsController < ApplicationController
           :langs_and_frames => project.langs_and_frames,
           :license => project.license,
           :privacy => project.privacy,
+          :domains => project.domains,
+          :seeking => project.seeking,
           :repo_name => project.repo_name,
           :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
           :status => project.status,
@@ -172,6 +176,8 @@ class ProjectsController < ApplicationController
           :langs_and_frames => allowable_params[:langs_and_frames],
           :anon => allowable_params[:anon],
           :privacy => allowable_params[:privacy],
+          :domains => allowable_params[:domains],
+          :seeking => allowable_params[:seeking],
           :contributors_count => 1
       }
 
@@ -248,7 +254,7 @@ class ProjectsController < ApplicationController
           :voted => user ? user.voted_on_project(project.id) : nil,
           :status => project.status,
           :total_comments => project.comments_count,
-          :domain_tags => project.domains,
+          :domains => project.domains,
           :seeking => project.seeking
       }
     }
@@ -311,45 +317,33 @@ class ProjectsController < ApplicationController
     if params[:user_uuid]
       user = User.find_by(uuid: params[:user_uuid])
     end
+
     filters = params[:filters]
-    if !filters.nil?
 
-      chat = filters[:chat]
+    if filters.present?
 
-      filtered_projects = Project.includes(:user, :integrations).where!(status: params[:status]).active
+      filtered_projects = Project.includes(:user).where!(status: params[:status]).active
 
       filters.each { |filter|
-        if filter[0] != 'chat'
-          if filter[0] == 'langs_and_frames'
-            # OR - only needs to contain at least one
-            if params[:lang_filters_or] === true
-              filtered_projects.where!.overlap(filter[0] => filter[1])
-            # default - AND - must contain ALL languages included
-            else
-              filtered_projects.where!.contains(filter[0] => filter[1])
-            end
+        if filter[0] == LANG_FILTERS_NAME
+
+          # OR - only needs to contain at least one
+          if params[:lang_filters_or] === true
+            filtered_projects.where!.overlap(filter[0] => filter[1])
+
+          # default - AND - must contain ALL languages included
           else
-            if filter[1].is_a?(Array)
-              filtered_projects.where!.overlap(filter[0] => filter[1])
-            else
-              filtered_projects.where!(filter[0] => filter[1])
-            end
+            filtered_projects.where!.contains(filter[0] => filter[1])
+          end
+
+        else
+          if filter[1].is_a?(Array)
+            filtered_projects.where!.overlap(filter[0] => filter[1])
+          else
+            filtered_projects.where!(filter[0] => filter[1])
           end
         end
       }
-
-      if chat
-        sql = ''
-        counter = 0
-        chat.each { |service|
-          counter += 1
-          sql += "integrations.service ='#{service}'"
-          if counter < chat.length
-            sql += ' OR '
-          end
-        }
-        filtered_projects.where!(sql)
-      end
 
       projects = filtered_projects.map { |project|
         {
@@ -368,7 +362,7 @@ class ProjectsController < ApplicationController
             :voted => user ? user.voted_on_project(project.id) : nil,
             :status => project.status,
             :total_comments => project.comments_count,
-            :domain_tags => project.domains,
+            :domains => project.domains,
             :seeking => project.seeking
         }
       }
@@ -853,7 +847,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :subtitle, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [])
+    params.require(:project).permit(:title, :subtitle, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [], :domains => [], :seeking => [])
   end
 
 

@@ -34,7 +34,7 @@ define(['jquery',
     },
 
     launchedRoute: function () {
-      this.updateHomeView(2);
+      this.updateHomeView(1);
     },
 
     projectRoute: function (uuid) {

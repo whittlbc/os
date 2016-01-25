@@ -32,27 +32,20 @@ define(['jquery',
       master = this;
 
       Backbone.EventBroker.register({
-        //'deleteLangFilter': 'deleteLangFilter',
-        //'clearLangFilters': 'clearLangFilters',
-        'addLicenseFilter': 'addLicenseFilter',
-        'removeLicenseFilter': 'removeLicenseFilter',
+        'addDomainFilter': 'addDomainFilter',
+        'removeDomainFilter': 'removeDomainFilter',
         'addPrivacyFilter': 'addPrivacyFilter',
         'removePrivacyFilter': 'removePrivacyFilter',
         'lang-filters-scope:change': 'updateLangFiltersScope',
-        //'addAnonFilter': 'addAnonFilter',
-        //'removeAnonFilter': 'removeAnonFilter',
         'clearNonLangFilters': 'clearNonLangFilters',
         'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort'
       }, this);
       this.filters = null;
       this.langsFramesValue = [];
-      this.licenseFilters = [];
-      this.chatFilters = [];
+      this.domainFilters = [];
+      this.seekingFilters = [];
       this.privacyFilters = [];
-      //this.anonFilters = [];
       this.sortType = OSUtil.SORT_BY_VOTES;
-
-      this.FETCH_MORE_DATA_DECIMAL = 0.775;
 
       this.resetProps();
     },
@@ -76,10 +69,9 @@ define(['jquery',
     },
 
     clearNonLangFilters: function () {
-      this.licenseFilters = [];
+      this.domainFilters = [];
       this.privacyFilters = [];
-      this.chatFilters = [];
-      //this.anonFilters = [];
+      this.seekingFilters = [];
       this.getFilters();
     },
 
@@ -109,15 +101,15 @@ define(['jquery',
       this.getFilters();
     },
 
-    handleNewLicenseFilter: function (data) {
+    handleNewDomainFilter: function (data) {
       var self = this;
-      this.licenseFilters = data.dropdownValues;
+      this.domainFilters = data.dropdownValues;
       this.getFilters();
     },
 
-    handleNewChatFilter: function (data) {
+    handleNewSeekingFilter: function (data) {
       var self = this;
-      this.chatFilters = data.dropdownValues;
+      this.seekingFilters = data.dropdownValues;
       this.getFilters();
     },
 
@@ -127,14 +119,14 @@ define(['jquery',
       this.getFilters();
     },
 
-    handleRemoveLicenseFilter: function (data) {
+    handleRemoveDomainFilter: function (data) {
       var self = this;
-      this.licenseFilters = data.dropdownValues;
+      this.domainFilters = data.dropdownValues;
       this.getFilters();
     },
 
-    handleRemoveChatFilter: function (data) {
-      this.chatFilters = data.dropdownValues;
+    handleRemoveSeekingFilter: function (data) {
+      this.seekingFilters = data.dropdownValues;
       this.getFilters();
     },
 
@@ -163,13 +155,13 @@ define(['jquery',
         atleastOneFilter = true;
       }
 
-      if (!_.isEmpty(this.licenseFilters)) {
-        obj.filters.license = this.licenseFilters;
+      if (!_.isEmpty(this.domainFilters)) {
+        obj.filters.domains = this.domainFilters;
         atleastOneFilter = true;
       }
 
-      if (!_.isEmpty(this.chatFilters)) {
-        obj.filters.chat = this.chatFilters;
+      if (!_.isEmpty(this.seekingFilters)) {
+        obj.filters.seeking = this.seekingFilters;
         atleastOneFilter = true;
       }
 
@@ -223,18 +215,18 @@ define(['jquery',
       console.log(resp);
     },
 
-    addLicenseFilter: function (type) {
+    addDomainFilter: function (type) {
       var self = this;
-      if (!_.contains(this.licenseFilters, type)) {
-        this.licenseFilters.push(type);
+      if (!_.contains(this.domainFilters, type)) {
+        this.domainFilters.push(type);
       }
       self.getFilters();
     },
 
-    removeLicenseFilter: function (type) {
+    removeDomainFilter: function (type) {
       var self = this;
-      if (_.contains(this.licenseFilters, type)) {
-        this.licenseFilters.splice(this.licenseFilters.indexOf(type), 1);
+      if (_.contains(this.domainFilters, type)) {
+        this.domainFilters.splice(this.domainFilters.indexOf(type), 1);
       }
       self.getFilters();
     },
@@ -249,46 +241,6 @@ define(['jquery',
       this.getFilters();
     },
 
-    //addAnonFilter: function (val) {
-    //    var self = this;
-    //    if (val === 'anonYes') {
-    //        val = true;
-    //    }
-    //    if (val === 'anonNo') {
-    //        val = false;
-    //    }
-    //    if (!_.contains(this.anonFilters, val)) {
-    //        this.anonFilters.push(val);
-    //    }
-    //    self.getFilters();
-    //},
-
-    //removeAnonFilter: function (val) {
-    //    var self = this;
-    //    if (val === 'anonYes') {
-    //        val = true;
-    //    }
-    //    if (val === 'anonNo') {
-    //        val = false;
-    //    }
-    //    if (_.contains(this.anonFilters, val)) {
-    //        this.anonFilters.splice(this.anonFilters.indexOf(val), 1);
-    //    }
-    //    self.getFilters();
-    //},
-
-    //toggleAnonFilters: function (status) {
-    //    if (status == 0) {
-    //        this.nonLangFiltersView.showAnon();
-    //    } else {
-    //        this.nonLangFiltersView.hideAnon();
-    //        if (this.filters && this.filters.filters && this.filters.filters.hasOwnProperty('anon')) {
-    //            delete this.filters.filters.anon;
-    //        }
-    //        this.anonFilters = [];
-    //    }
-    //},
-
     changeActiveTab: function (status) {
       var self = this;
       var shouldBeActiveTab = this.$el.find('li.project-type > a')[status];
@@ -301,7 +253,6 @@ define(['jquery',
       var self = this;
       this.limit = 30;
       this.gettingMoreData = false;
-      //this.toggleAnonFilters(status);
       if (!initial) {
         this.changeActiveTab(status);
       }
@@ -395,8 +346,8 @@ define(['jquery',
       this.filters = obj;
       this.langsFramesValue = obj.filters.langs_and_frames || [];
       this.privacyFilters = obj.filters.privacy || [];
-      this.licenseFilters = obj.filters.license || [];
-      this.chatFilters = obj.filters.chat || [];
+      this.domainFilters = obj.filters.domains || [];
+      this.seekingFilters = obj.filters.seeking || [];
       this.langFiltersOr = obj.lang_filters_or;
     },
 
@@ -407,18 +358,16 @@ define(['jquery',
 
     render: function (options) {
       var self = this;
-      var onTheFenceActive = false;
+      var ideasActive = false;
 
-      if (!options || !options.hasOwnProperty('index') || options.index == 1) {
-        onTheFenceActive = true;
+      if (!options || !options.hasOwnProperty('index') || options.index == 0) {
+        ideasActive = true;
       }
 
-      var upForGrabsActive = options && options.hasOwnProperty('index') ? options.index == 0 : false;
-      var launchedActive = options && options.hasOwnProperty('index') ? options.index == 2 : false;
+      var launchedActive = options && options.hasOwnProperty('index') ? options.index == 1 : false;
 
       this.$el.html(IndexViewTpl({
-        upForGrabsActive: upForGrabsActive,
-        onTheFenceActive: onTheFenceActive,
+        ideasActive: ideasActive,
         launchedActive: launchedActive
       }));
 
@@ -432,7 +381,7 @@ define(['jquery',
 
       this.projectFeedView.render();
 
-      var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;
+      var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 0;
 
       this.nonLangFiltersView = new NonLangFiltersView({
         el: '#nonLangFiltersContainer',

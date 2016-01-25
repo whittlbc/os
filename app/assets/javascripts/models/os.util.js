@@ -125,6 +125,60 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       return $.timeago(moment.utc(date).utcOffset(date.getTimezoneOffset()).format("MM-DD-YYYY HH:mm Z"));
     },
 
+    DOMAIN_FILTERS : {
+      "Academia": {
+        "id": "Academia",
+        "title": "Academia"
+      },
+      "Browser Extensions": {
+        "id": "Browser Extensions",
+        "title": "Browser Extensions"
+      },
+      "Mobile": {
+        "id": "Mobile",
+        "title": "Mobile"
+      },
+      "Scientific": {
+        "id": "Scientific",
+        "title": "Scientific"
+      },
+      "Tablet": {
+        "id": "Tablet",
+        "title": "Tablet"
+      },
+      "Web": {
+        "id": "Web",
+        "title": "Web"
+      }
+    },
+
+    SEEKING_FILTERS : {
+      "Contributors": {
+        "id": "Contributors",
+        "title": "Contributors"
+      },
+      "Feedback": {
+        "id": "Feedback",
+        "title": "Feedback"
+      },
+      "Initial Team": {
+        "id": "Initial Team",
+        "title": "Initial Team"
+      },
+      "New Maintainer": {
+        "id": "New Maintainer",
+        "title": "New Maintainer"
+      },
+      "Up for Grabs": {
+        "id": "Up for Grabs",
+        "title": "Up for Grabs"
+      },
+      "Users": {
+        "id": "Users",
+        "title": "Users"
+      }
+    },
+
     customMethodMap: {
       'create': {
         verb: 'POST',
