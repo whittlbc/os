@@ -26,7 +26,6 @@ define(['jquery',
 
     postInitialize: function (options) {
       this.tagsExpanded = false;
-      this.MAX_TAGS = 6;
       this.safari = options.safari;
     },
 
@@ -89,8 +88,10 @@ define(['jquery',
       this.owner_pic = data.owner_pic;
       this.ownerGHUsername = data.owner_gh_username;
       this.anon = data.anon;
-      this.domainTags = data.domain_tags;
-      this.seeking = data.seeking
+      this.domainTags = data.domain_tags || [];
+      this.seeking = data.seeking || [];
+
+      this.MAX_TAGS = 6 - this.domainTags.length;
     },
 
     hoverOn: function () {
@@ -220,7 +221,6 @@ define(['jquery',
 
     addTags: function (namesAndColorsArray) {
       var self = this;
-      this.tagWidths = [];
       var extraTags = [];
       var $div;
 
@@ -311,12 +311,12 @@ define(['jquery',
         voted: self.voted,
         hasTags: correctedLangsFramesArray.length > 0,
         hasDomain: !_.isEmpty(self.domainTags),
-        domainTags: (self.domainTags || []).join(',  '),
+        domainTags: self.domainTags.join(',  '),
         isIdea: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas'),
         hasSeeking: !_.isEmpty(self.seeking),
-        seeking: (self.seeking || []).join(',  ')
+        seeking: self.seeking.join(',  ')
       }));
-      
+
       this.trigger('addTags', this);
       this.$seekingContainer = this.$el.find('.post-seeking-container');
       this.$date = this.$el.find('.project-extra-details-container .date');
