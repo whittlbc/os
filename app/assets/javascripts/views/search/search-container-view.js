@@ -5,6 +5,7 @@ define(['jquery',
   'views/search/search-result-view',
   'views/widgets/spinner-chasing-dots',
   'models/session',
+  'models/os.util',
   'stache!views/search/search-container-view'
 ], function ($,
    Backbone,
@@ -13,6 +14,7 @@ define(['jquery',
    SearchResultView,
    Spinner,
    Session,
+   OSUtil,
    SearchContainerViewTpl) {
   'use strict';
 
