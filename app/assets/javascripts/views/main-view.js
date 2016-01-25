@@ -553,39 +553,7 @@ define(['jquery',
       }
     },
 
-    prePopulateFilters: function () {
-      var self = this;
-      this.footerView.preventAddListener = true;
-
-      if (this.cachedFilterType != null) {
-        this.footerView.filterType = this.cachedFilterType;
-        this.footerView.forceSetFilter();
-        this.footerView.resetDropdown(this.cachedFilterType);
-      }
-
-      var filters = this.homeView.filters.filters;
-      if (filters.langs_and_frames) {
-        for (var i = 0; i < filters.langs_and_frames.length; i++) {
-          this.langFiltersView.addItem({value: filters.langs_and_frames[i], animate: false});
-        }
-        this.footerView.footerDropdown.addItems(filters.langs_and_frames);
-      }
-      if (filters.domains) {
-        for (var j = 0; j < filters.domain.length; j++) {
-          this.domainFiltersView.addItem({value: filters.domains[j], animate: false});
-        }
-      }
-      if (filters.seeking) {
-        for (var j = 0; j < filters.seeking.length; j++) {
-          this.seekingFiltersView.addItem({value: filters.seeking[j], animate: false});
-        }
-      }
-      this.footerView.footerDropdown.$removedItems = this.cachedRemovedFilterItems;
-      this.footerView.preventAddListener = false;
-    },
-
     captureFilters: function () {
-      var self = this;
       if (this.showHomeView) {
         this.cachedFilters = this.homeView.filters;
         this.cachedItems = this.footerView.removedValues;
@@ -706,12 +674,14 @@ define(['jquery',
         self.minorFiltersView.adjustSeekingFilters(seekingFilters);
       });
 
+      var index = _.has(options, 'index') ? options.index : 0;
+
       if (this.cachedFilters) {
-        this.homeView.passFilters(this.cachedFilters);
+        this.homeView.passFilters(this.cachedFilters, index);
       }
 
       this.homeView.render({
-        index: _.has(options, 'index') ? options.index : 0
+        index: index
       });
 
       this.footerView = this.footerView || new FooterView({

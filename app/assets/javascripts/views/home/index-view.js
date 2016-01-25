@@ -117,13 +117,17 @@ define(['jquery',
 
       // if Feedback is included in selected filters, make sure it's included in both seekingFilters hashes
       if (_.contains(data.dropdownValues, 'Feedback')) {
-        var otherStatus = this.projectTypeStatus === 0 ? 1 : 0;
-        if (!_.contains(this.seekingFilters[otherStatus], 'Feedback')) {
-          this.seekingFilters[otherStatus].push('Feedback');
-        }
+        this.addFeedbackFilterToOtherSeekingFilter(this.projectTypeStatus);
       }
 
       this.getFilters();
+    },
+
+    addFeedbackFilterToOtherSeekingFilter: function (status) {
+      var otherStatus = (status === 0) ? 1 : 0;
+      if (!_.contains(this.seekingFilters[otherStatus], 'Feedback')) {
+        this.seekingFilters[otherStatus].push('Feedback');
+      }
     },
 
     handleRemoveLangFilter: function (data) {
@@ -282,9 +286,9 @@ define(['jquery',
     populateProjectFeed: function (status, initial) {
       this.limit = 30;
       this.gettingMoreData = false;
+      this.trigger('adjust-seeking-filters', this.seekingFilters[status]);
 
       if (!initial) {
-        this.trigger('adjust-seeking-filters', this.seekingFilters[status]);
         this.changeActiveTab(status);
       }
 
@@ -351,15 +355,21 @@ define(['jquery',
       });
     },
 
-    passFilters: function (obj) {
+    passFilters: function (obj, index) {
       this.filters = obj;
       this.langsFramesValue = obj.filters.langs_and_frames || [];
       this.privacyFilters = obj.filters.privacy || [];
       this.domainFilters = obj.filters.domains || [];
-      this.seekingFilters = obj.filters.seeking || {
+      this.seekingFilters = {
         0: [],
         1: []
       };
+      this.seekingFilters[index] = obj.filters.seeking;
+
+      if (_.contains(obj.filters.seeking, 'Feedback')) {
+        this.addFeedbackFilterToOtherSeekingFilter(index);
+      }
+
       this.langFiltersOr = obj.lang_filters_or;
     },
 
