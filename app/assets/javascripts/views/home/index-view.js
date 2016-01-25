@@ -113,8 +113,16 @@ define(['jquery',
     },
 
     handleNewSeekingFilter: function (data) {
-      var self = this;
       this.seekingFilters[this.projectTypeStatus] = data.dropdownValues;
+
+      // if Feedback is included in selected filters, make sure it's included in both seekingFilters hashes
+      if (_.contains(data.dropdownValues, 'Feedback')) {
+        var otherStatus = this.projectTypeStatus === 0 ? 1 : 0;
+        if (!_.contains(this.seekingFilters[otherStatus], 'Feedback')) {
+          this.seekingFilters[otherStatus].push('Feedback');
+        }
+      }
+
       this.getFilters();
     },
 
@@ -131,7 +139,17 @@ define(['jquery',
     },
 
     handleRemoveSeekingFilter: function (data) {
+      var currentSeekingFiltersHasFeedback = _.contains(this.seekingFilters[this.projectTypeStatus], 'Feedback');
+      var newSeekingFiltersHasFeedback = _.contains(data.dropdownValues, 'Feedback');
+
+      // If Feedback was removed, also remove it from the other seekingFilters hash
+      if (currentSeekingFiltersHasFeedback && !newSeekingFiltersHasFeedback) {
+        var otherStatus = this.projectTypeStatus === 0 ? 1 : 0;
+        this.seekingFilters[otherStatus].splice('Feedback', 1);
+      }
+
       this.seekingFilters[this.projectTypeStatus] = data.dropdownValues;
+
       this.getFilters();
     },
 
@@ -154,6 +172,7 @@ define(['jquery',
         obj.filters.langs_and_frames = this.langsFramesValue;
         atLeastOneFilter = true;
       }
+
       if (this.privacyFilters.length === 1) {
         obj.filters.privacy = this.privacyFilters;
         atLeastOneFilter = true;
@@ -254,7 +273,6 @@ define(['jquery',
     },
 
     changeActiveTab: function (status) {
-      var self = this;
       var shouldBeActiveTab = this.$el.find('li.project-type > a')[status];
       if (!$(shouldBeActiveTab).hasClass('active')) {
         $(shouldBeActiveTab).click();
@@ -266,6 +284,7 @@ define(['jquery',
       this.gettingMoreData = false;
 
       if (!initial) {
+        this.trigger('adjust-seeking-filters', this.seekingFilters[status]);
         this.changeActiveTab(status);
       }
 

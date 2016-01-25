@@ -19,6 +19,9 @@ define(['jquery',
     initialize: function (options) {
       options = options || {};
       this.SEEKING_FILTERS = [];
+
+      Backbone.EventBroker.register({
+      }, this);
     },
 
     events: {
@@ -33,10 +36,10 @@ define(['jquery',
       this.$el.find('.minor-filters-type-icon').animate({opacity: opacity}, duration);
     },
 
-    handleDeleteSeekingFilter: function (view) {
-      var self = this;
+    handleDeleteSeekingFilter: function (view, preventTrigger) {
       this.$list.empty();
       var tempArray = [];
+
       for (var i = 0; i < this.SEEKING_FILTERS.length; i++) {
         if (this.SEEKING_FILTERS[i].name != view.name) {
           var seekingFilterItemView = this.SEEKING_FILTERS[i];
@@ -46,8 +49,12 @@ define(['jquery',
           tempArray.push(seekingFilterItemView);
         }
       }
+
       this.SEEKING_FILTERS = tempArray;
-      Backbone.EventBroker.trigger('deleteSeekingFilter', view.name);
+
+      if (!preventTrigger) {
+        Backbone.EventBroker.trigger('deleteSeekingFilter', view.name);
+      }
     },
 
     forceAddItem: function (seekingFilterItemView) {
@@ -124,6 +131,24 @@ define(['jquery',
     animateItemIn: function ($ball, $name) {
       $ball.velocity({width: 25, height: 25, top: 0, left: 0}, 690, [100, 15]);
       $name.animate({opacity: 1}, {duration: 300, queue: false});
+    },
+
+    namesForFilters: function () {
+      var names = _.map(this.SEEKING_FILTERS, function (view) {
+        return view.name
+      });
+
+      return names;
+    },
+
+    forceDeleteItem: function (name) {
+      for (var i = 0; i < this.SEEKING_FILTERS.length; i++) {
+        var view = this.SEEKING_FILTERS[i];
+        if (view.name === name) {
+          this.handleDeleteSeekingFilter(view, true);
+          break;
+        }
+      }
     },
 
     render: function () {

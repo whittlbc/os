@@ -701,7 +701,10 @@ define(['jquery',
           el: this.$el.find('#homeViewContainer')
         });
       }
-      this.listenTo(this.homeView, 'languages:all');
+
+      this.listenTo(this.homeView, 'adjust-seeking-filters', function (seekingFilters) {
+        self.minorFiltersView.adjustSeekingFilters(seekingFilters);
+      });
 
       if (this.cachedFilters) {
         this.homeView.passFilters(this.cachedFilters);

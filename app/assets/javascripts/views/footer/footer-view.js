@@ -157,6 +157,10 @@ define(['jquery',
     addItemToSelectedMap: function (value) {
       if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
         this.removedValues[this.filterType][this.status][value] = value;
+        if (value === 'Feedback') {
+          var otherStatus = this.status === 0 ? 1 : 0;
+          this.removedValues[this.filterType][otherStatus][value] = value;
+        }
       } else {
         this.removedValues[this.filterType][value] = value;
       }
@@ -165,6 +169,10 @@ define(['jquery',
     removeItemFromSelectedMap: function (value) {
       if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
         delete this.removedValues[this.filterType][this.status][value];
+        if (value === 'Feedback') {
+          var otherStatus = this.status === 0 ? 1 : 0;
+          delete this.removedValues[this.filterType][otherStatus][value];
+        }
       } else {
         delete this.removedValues[this.filterType][value];
       }

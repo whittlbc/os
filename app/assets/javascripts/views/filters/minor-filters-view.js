@@ -119,7 +119,6 @@ define(['jquery',
     },
 
     removeSeekingItem: function () {
-      var self = this;
       if (this.seekingFiltersView.isEmpty()) {
         this.removeSeekingFilters();
       }
@@ -135,12 +134,46 @@ define(['jquery',
           animate: false
         });
       });
-      _.each(cachedSeekingFilters, function (domain) {
+      _.each(cachedSeekingFilters, function (seeking) {
         self.addSeekingItem({
-          value: domain,
+          value: seeking,
           animate: false
         });
       });
+    },
+
+    adjustSeekingFilters: function (seekingFilters) {
+      var self = this;
+
+      // if filters aren't supposed to be there, but they are, remove them
+      if (_.isEmpty(seekingFilters) && !this.filterTypeDoesntExist('#seekingFiltersView')) {
+        this.removeSeekingFilters();
+      }
+      // if seeking filters should exist, proceed
+      else if (!_.isEmpty(seekingFilters)){
+        if (this.filterTypeDoesntExist('#seekingFiltersView')) {
+          this.addSeekingFilters();
+        }
+
+        var currentFilters = this.seekingFiltersView.namesForFilters();
+
+        // first add filters that SHOULD exist but don't
+        _.each(seekingFilters, function (filter) {
+          if (!_.contains(currentFilters, filter)) {
+            self.addSeekingItem({
+              value: filter,
+              animate: false
+            });
+          }
+        });
+
+        // then remove filters that exist but SHOULD NOT
+        _.each(currentFilters, function (filter) {
+          if (!_.contains(seekingFilters, filter)) {
+            self.seekingFiltersView.forceDeleteItem(filter);
+          }
+        });
+      }
     },
 
     render: function () {
