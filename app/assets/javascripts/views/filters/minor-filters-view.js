@@ -178,6 +178,10 @@ define(['jquery',
 
     render: function () {
       this.$el.html(MinorFiltersViewTpl());
+
+      $(window).resize(function () {
+        Backbone.EventBroker.trigger('resize-minor-filter-names');
+      });
     }
   });
 

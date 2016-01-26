@@ -1,7 +1,8 @@
 define(['jquery',
   'backbone',
   'underscore',
-  'stache!views/filters/domain-filter-item-view'
+  'stache!views/filters/domain-filter-item-view',
+  'backbone-eventbroker'
 ], function ($,
              Backbone,
              _,
@@ -15,6 +16,10 @@ define(['jquery',
       this.name = options.name;
       this.toggleDetailsDuration = 130;
       this.closeBtnDiameter = 18;
+
+      Backbone.EventBroker.register({
+        'resize-minor-filter-names': 'setMaxWidthForName'
+      }, this);
     },
 
     fadeIn: function () {
@@ -46,6 +51,12 @@ define(['jquery',
       }, self.toggleDetailsDuration);
     },
 
+    setMaxWidthForName: function () {
+      this.$el.find('.name').css({
+        maxWidth: (window.innerWidth * .155) - 82
+      });
+    },
+
     render: function () {
       var self = this;
 
@@ -53,9 +64,7 @@ define(['jquery',
         name: self.name
       }));
 
-      this.$el.find('.name').css({
-        maxWidth: (window.innerWidth * .155) - 82
-      });
+      this.setMaxWidthForName();
     }
   });
 
