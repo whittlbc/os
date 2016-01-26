@@ -1403,21 +1403,43 @@ $side-filters-width: 18.25%;
   margin-bottom: 27px;
 }
 
-.more-dropdown-container {
-  margin-top: 1px;
-  margin-left: 11px;
-  width: 160px;
-  float: left;
-
-  .more-count {
-    font-size: 11px;
+#langFiltersView {
+  .more-dropdown-container {
+    margin-top: 1px;
+    margin-left: 11px;
+    width: 160px;
     float: left;
-    margin-top: 7px;
-    cursor: pointer;
-    color: #00A6C9;
-    text-decoration: underline;
+
+    .more-count {
+      font-size: 11px;
+      float: left;
+      margin-top: 7px;
+      cursor: pointer;
+      color: #00A6C9;
+      text-decoration: underline;
+    }
   }
 }
+
+#domainFiltersView,
+#seekingFiltersView {
+  .more-dropdown-container {
+    margin-top: 1px;
+    margin-right: 19px;
+    width: 160px;
+    float: right;
+
+    .more-count {
+      font-size: 11px;
+      float: right;
+      cursor: pointer;
+      color: #00A6C9;
+      text-decoration: underline;
+    }
+  }
+}
+
+
 
 .more-tags-container {
   position: relative;

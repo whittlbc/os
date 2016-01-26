@@ -17,6 +17,7 @@ define(['jquery',
       options = options || {};
       this.interactive = options.interactive;
       this.ITEMS = [];
+      this.deleteEvent = options.deleteEvent;
     },
 
     events: {},
@@ -60,7 +61,7 @@ define(['jquery',
       this.listenTo(item, 'item:remove', function (name) {
         self.trigger('item:remove');
         self.stripItemAndRepopulate(name);
-        Backbone.EventBroker.trigger('deleteLangFilter', name);
+        Backbone.EventBroker.trigger(this.deleteEvent, name);
       });
     },
 

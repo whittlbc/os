@@ -3,6 +3,7 @@ define(['jquery',
   'underscore',
   'models/os.util',
   'views/filters/seeking-filter-item-view',
+  'views/widgets/more-dropdown/more-dropdown',
   'stache!views/filters/seeking-filters-view',
   'velocity',
   'backbone-eventbroker'
@@ -11,6 +12,7 @@ define(['jquery',
              _,
              OSUtil,
              SeekingFilterItemView,
+             MoreDropdown,
              SeekingFiltersViewTpl) {
   'use strict';
 
@@ -20,6 +22,7 @@ define(['jquery',
       options = options || {};
       this.SEEKING_FILTERS = [];
       this.fullSize = 32;
+      this.requiredBottomSpacing = 300;
     },
 
     events: {
@@ -86,24 +89,37 @@ define(['jquery',
     },
 
     addItem: function (data) {
-      var seekingFilterItemView = new SeekingFilterItemView({
-        tagName: 'li',
-        name: data.value
-      });
-      seekingFilterItemView.render();
-      this.addHoverListener(seekingFilterItemView);
-
-      if (data.animate) {
-        var $ball = seekingFilterItemView.$el.find('.seeking-filter-item');
-        var $name = seekingFilterItemView.$el.find('.name');
-        this.prepareItemForEntrance($ball, $name, data.value);
-        this.$list.append(seekingFilterItemView.el);
-        this.animateItemIn($ball, $name);
+      if (this.shownFiltersFull()) {
+        this.toggleMoreFiltersContainer(true);
+        this.$el.find('.more-count > span').html(this.moreDropdown.getNumItems() + 1);
+        this.moreDropdown.addItem(data.value);
       } else {
-        this.forceAddItem(seekingFilterItemView);
-      }
+        var seekingFilterItemView = new SeekingFilterItemView({
+          tagName: 'li',
+          name: data.value
+        });
+        seekingFilterItemView.render();
+        this.addHoverListener(seekingFilterItemView);
 
-      this.SEEKING_FILTERS.push(seekingFilterItemView);
+        if (data.animate) {
+          var $ball = seekingFilterItemView.$el.find('.seeking-filter-item');
+          var $name = seekingFilterItemView.$el.find('.name');
+          this.prepareItemForEntrance($ball, $name, data.value);
+          this.$list.append(seekingFilterItemView.el);
+          this.animateItemIn($ball, $name);
+        } else {
+          this.forceAddItem(seekingFilterItemView);
+        }
+
+        this.SEEKING_FILTERS.push(seekingFilterItemView);
+      }
+    },
+
+    shownFiltersFull: function () {
+      var $list = this.$el.find('.seeking-filters-list');
+      var currentBottomPos = $list.offset().top + $list.height();
+      var verticalSpaceLeft = window.innerHeight - currentBottomPos;
+      return verticalSpaceLeft < this.requiredBottomSpacing;
     },
 
     addHoverListener: function (view) {
@@ -146,10 +162,44 @@ define(['jquery',
       }
     },
 
+    forceHideDropdown: function () {
+      this.moreDropdown.hideDropdown();
+    },
+
+    toggleMoreFiltersContainer: function (show) {
+      var $btn = this.$el.find('.more-dropdown-container');
+      show ? $btn.show() : $btn.hide();
+    },
+
+    decreaseMoreDropdownCount: function () {
+      var $countEl = this.$el.find('.more-count > span');
+      $countEl.html(Number($countEl.html()) - 1);
+    },
+
     render: function () {
       var self = this;
       this.$el.html(SeekingFiltersViewTpl());
       this.$list = this.$el.find('.seeking-filters-list');
+
+      this.moreDropdown = new MoreDropdown({
+        el: self.$el.find('#moreSeekingFilters'),
+        interactive: true,
+        deleteEvent: 'deleteSeekingFilter'
+      });
+
+      this.listenTo(this.moreDropdown, 'item:remove', function () {
+        self.decreaseMoreDropdownCount();
+      });
+
+      this.listenTo(this.moreDropdown, 'list:empty', function () {
+        self.toggleMoreFiltersContainer(false);
+      });
+
+      this.moreDropdown.render();
+
+      $(document).click(function () {
+        self.forceHideDropdown();
+      });
     }
   });
 

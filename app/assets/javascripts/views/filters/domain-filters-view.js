@@ -3,6 +3,7 @@ define(['jquery',
   'underscore',
   'models/os.util',
   'views/filters/domain-filter-item-view',
+  'views/widgets/more-dropdown/more-dropdown',
   'stache!views/filters/domain-filters-view',
   'velocity',
   'backbone-eventbroker'
@@ -11,6 +12,7 @@ define(['jquery',
              _,
              OSUtil,
              DomainFilterItemView,
+             MoreDropdown,
              DomainFiltersViewTpl) {
   'use strict';
 
@@ -20,6 +22,7 @@ define(['jquery',
       options = options || {};
       this.DOMAIN_FILTERS = [];
       this.fullSize = 32;
+      this.requiredBottomSpacing = 300;
     },
 
     events: {
@@ -82,25 +85,38 @@ define(['jquery',
     },
 
     addItem: function (data) {
-      var domainFilterItemView = new DomainFilterItemView({
-        tagName: 'li',
-        name: data.value
-      });
-
-      domainFilterItemView.render();
-      this.addHoverListener(domainFilterItemView);
-
-      if (data.animate) {
-        var $ball = domainFilterItemView.$el.find('.domain-filter-item');
-        var $name = domainFilterItemView.$el.find('.name');
-        this.prepareItemForEntrance($ball, $name, data.value);
-        this.$list.append(domainFilterItemView.el);
-        this.animateItemIn($ball, $name);
+      if (this.shownFiltersFull()) {
+        this.toggleMoreFiltersContainer(true);
+        this.$el.find('.more-count > span').html(this.moreDropdown.getNumItems() + 1);
+        this.moreDropdown.addItem(data.value);
       } else {
-        this.forceAddItem(domainFilterItemView);
-      }
+        var domainFilterItemView = new DomainFilterItemView({
+          tagName: 'li',
+          name: data.value
+        });
 
-      this.DOMAIN_FILTERS.push(domainFilterItemView);
+        domainFilterItemView.render();
+        this.addHoverListener(domainFilterItemView);
+
+        if (data.animate) {
+          var $ball = domainFilterItemView.$el.find('.domain-filter-item');
+          var $name = domainFilterItemView.$el.find('.name');
+          this.prepareItemForEntrance($ball, $name, data.value);
+          this.$list.append(domainFilterItemView.el);
+          this.animateItemIn($ball, $name);
+        } else {
+          this.forceAddItem(domainFilterItemView);
+        }
+
+        this.DOMAIN_FILTERS.push(domainFilterItemView);
+      }
+    },
+
+    shownFiltersFull: function () {
+      var $list = this.$el.find('.domain-filters-list');
+      var currentBottomPos = $list.offset().top + $list.height();
+      var verticalSpaceLeft = window.innerHeight - currentBottomPos;
+      return verticalSpaceLeft < this.requiredBottomSpacing;
     },
 
     addHoverListener: function (view) {
@@ -127,10 +143,44 @@ define(['jquery',
       $name.animate({opacity: 1}, {duration: 300, queue: false});
     },
 
+    forceHideDropdown: function () {
+      this.moreDropdown.hideDropdown();
+    },
+
+    toggleMoreFiltersContainer: function (show) {
+      var $btn = this.$el.find('.more-dropdown-container');
+      show ? $btn.show() : $btn.hide();
+    },
+
+    decreaseMoreDropdownCount: function () {
+      var $countEl = this.$el.find('.more-count > span');
+      $countEl.html(Number($countEl.html()) - 1);
+    },
+
     render: function () {
       var self = this;
       this.$el.html(DomainFiltersViewTpl());
       this.$list = this.$el.find('.domain-filters-list');
+
+      this.moreDropdown = new MoreDropdown({
+        el: self.$el.find('#moreDomainFilters'),
+        interactive: true,
+        deleteEvent: 'deleteDomainFilter'
+      });
+
+      this.listenTo(this.moreDropdown, 'item:remove', function () {
+        self.decreaseMoreDropdownCount();
+      });
+
+      this.listenTo(this.moreDropdown, 'list:empty', function () {
+        self.toggleMoreFiltersContainer(false);
+      });
+
+      this.moreDropdown.render();
+
+      $(document).click(function () {
+        self.forceHideDropdown();
+      });
     }
   });
 
