@@ -51,6 +51,10 @@ define(['jquery',
       this.$el.html(SeekingFilterItemViewTpl({
         name: self.name
       }));
+
+      this.$el.find('.name').css({
+        maxWidth: (window.innerWidth * .155) - 82
+      });
     }
   });
 

@@ -1,7 +1,7 @@
 
 $header-height: 68px;
 $sub-header-height: 66px;
-$minor-filters-right-offset: 28px;
+$minor-filters-right-offset: 20px;
 
 $not-quite-black: #1D1E22;
 $light-gray: #C4C5CA;
@@ -1207,7 +1207,7 @@ $side-filters-width: 18.25%;
 #minorFiltersView {
   position: fixed;
   top: 150px;
-  width: 11%;
+  width: 15.5%;
   height: auto;
   right: 0;
 }
@@ -1225,7 +1225,7 @@ $side-filters-width: 18.25%;
     padding-left: 0;
     margin-bottom: 0;
     float: right;
-    margin-right: $minor-filters-right-offset;
+    padding-right: $minor-filters-right-offset;
 
     // REGULAR
     li {
@@ -1233,6 +1233,8 @@ $side-filters-width: 18.25%;
       height: auto;
       float: right;
       display: block;
+      position: relative;
+      margin-bottom: 8px;
 
       .domain-filter-item {
         float: right;
@@ -1255,22 +1257,20 @@ $side-filters-width: 18.25%;
 
       .name {
         float: right;
-        padding-top: 6px;
+        margin-top: 8px;
         font-size: 12px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        margin-left: 12px;
         cursor: default;
         color: $not-quite-black;
         opacity: 0;
-        text-align: right;
       }
 
       .filter-close-btn {
         display: none;
         float: right;
-        margin-top: 6px;
+        margin-top: 8px;
         height: 0;
         width: 0;
         border-radius: 50%;
@@ -1280,6 +1280,8 @@ $side-filters-width: 18.25%;
         text-align: center;
         cursor: pointer;
         line-height: 16px;
+        position: relative;
+        left: -5px;
       }
 
     }
@@ -1311,7 +1313,7 @@ $side-filters-width: 18.25%;
     padding-left: 0;
     margin-bottom: 0;
     float: right;
-    margin-right: $minor-filters-right-offset;
+    padding-right: $minor-filters-right-offset;
 
     // REGULAR
     li {
@@ -1319,51 +1321,50 @@ $side-filters-width: 18.25%;
       height: auto;
       float: right;
       display: block;
+      position: relative;
+      margin-bottom: 8px;
 
       .seeking-filter-item {
         float: right;
         height: 0;
         width: 0;
         border-radius: 50%;
-        //background-color: white;
         margin-left: 10px;
+        text-align: center;
+        overflow: hidden;
+        background-color: #C4C5CA;
         display: inline-block;
         position: relative;
-        overflow: hidden;
-        //box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.08);
         left: -12.5px;
         top: 12.5px;
-        //border: 1px solid #EEE;
 
-
-        img {
-          width: 0;
-          height: 0;
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
+        span {
+          text-align: center;
+          color: white;
+          font-size: 15px;
+          padding-top: 7px;
           position: relative;
+          left: -0.5px;
         }
       }
 
       .name {
         float: right;
-        padding-top: 6px;
+        margin-top: 8px;
         font-size: 12px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        margin-left: 12px;
         cursor: default;
         color: $not-quite-black;
         opacity: 0;
-        text-align: right;
       }
 
       .filter-close-btn {
         display: none;
         float: right;
-        margin-top: 6px;
+        margin-top: 8px;
         height: 0;
         width: 0;
         border-radius: 50%;
@@ -1373,6 +1374,8 @@ $side-filters-width: 18.25%;
         text-align: center;
         cursor: pointer;
         line-height: 16px;
+        position: relative;
+        left: -5px;
       }
 
     }

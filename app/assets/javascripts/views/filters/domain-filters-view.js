@@ -19,6 +19,7 @@ define(['jquery',
     initialize: function (options) {
       options = options || {};
       this.DOMAIN_FILTERS = [];
+      this.fullSize = 32;
     },
 
     events: {
@@ -55,8 +56,8 @@ define(['jquery',
       var $ball = domainFilterItemView.$el.find('.domain-filter-item');
       var $name = domainFilterItemView.$el.find('.name');
       $ball.css({
-        width: 25,
-        height: 25,
+        width: this.fullSize,
+        height: this.fullSize,
         top: 0,
         left: 0
       });
@@ -85,6 +86,7 @@ define(['jquery',
         tagName: 'li',
         name: data.value
       });
+
       domainFilterItemView.render();
       this.addHoverListener(domainFilterItemView);
 
@@ -103,12 +105,14 @@ define(['jquery',
 
     addHoverListener: function (view) {
       var self = this;
+
       view.$el.hover(function () {
           view.$el.addClass('expand');
         }, function () {
           view.$el.removeClass('expand');
         }
       );
+
       view.$el.find('.filter-close-btn').click(function () {
         self.handleDeleteDomainFilter(view);
       });
@@ -119,7 +123,7 @@ define(['jquery',
     },
 
     animateItemIn: function ($ball, $name) {
-      $ball.velocity({width: 25, height: 25, top: 0, left: 0}, 690, [100, 15]);
+      $ball.velocity({width: this.fullSize, height: this.fullSize, top: 0, left: 0}, 690, [100, 15]);
       $name.animate({opacity: 1}, {duration: 300, queue: false});
     },
 

@@ -19,9 +19,7 @@ define(['jquery',
     initialize: function (options) {
       options = options || {};
       this.SEEKING_FILTERS = [];
-
-      Backbone.EventBroker.register({
-      }, this);
+      this.fullSize = 32;
     },
 
     events: {
@@ -62,11 +60,10 @@ define(['jquery',
       var $ball = seekingFilterItemView.$el.find('.seeking-filter-item');
       var $name = seekingFilterItemView.$el.find('.name');
       $ball.css({
-        width: 25,
-        height: 25,
+        width: this.fullSize,
+        height: this.fullSize,
         top: 0,
-        left: 0,
-        backgroundColor: 'black'
+        left: 0
       });
       $name.css({opacity: 1});
       $name.html(seekingFilterItemView.name);
@@ -123,13 +120,11 @@ define(['jquery',
     },
 
     prepareItemForEntrance: function ($ball, $name, value) {
-      var self = this;
-      $ball.css({backgroundColor: 'black' });
       $name.html(value);
     },
 
     animateItemIn: function ($ball, $name) {
-      $ball.velocity({width: 25, height: 25, top: 0, left: 0}, 690, [100, 15]);
+      $ball.velocity({width: this.fullSize, height: this.fullSize, top: 0, left: 0}, 690, [100, 15]);
       $name.animate({opacity: 1}, {duration: 300, queue: false});
     },
 
