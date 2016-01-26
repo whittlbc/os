@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'views/os.view',
   'views/filters/domain-filter-item-view',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/filters/domain-filters-view',
@@ -11,18 +12,18 @@ define(['jquery',
              Backbone,
              _,
              OSUtil,
+             OSView,
              DomainFilterItemView,
              MoreDropdown,
              DomainFiltersViewTpl) {
   'use strict';
 
-  var DomainFiltersView = Backbone.View.extend({
+  var DomainFiltersView = OSView.extend({
 
-    initialize: function (options) {
+    postInitialize: function (options) {
       options = options || {};
       this.DOMAIN_FILTERS = [];
       this.fullSize = 32;
-      this.requiredBottomSpacing = 300;
     },
 
     events: {
@@ -116,7 +117,11 @@ define(['jquery',
       var $list = this.$el.find('.domain-filters-list');
       var currentBottomPos = $list.offset().top + $list.height();
       var verticalSpaceLeft = window.innerHeight - currentBottomPos;
-      return verticalSpaceLeft < this.requiredBottomSpacing;
+      return verticalSpaceLeft < this.getRequiredBottomSpacing();
+    },
+
+    getRequiredBottomSpacing: function () {
+      return this.currentUser ? 160 : 245;
     },
 
     addHoverListener: function (view) {

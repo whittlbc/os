@@ -149,6 +149,30 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       "Web": {
         "id": "Web",
         "title": "Web"
+      },
+      "Academia2": {
+        "id": "Academia2",
+        "title": "Academia2"
+      },
+      "Browser Extensions2": {
+        "id": "Browser Extension2",
+        "title": "Browser Extension2"
+      },
+      "Mobile2": {
+        "id": "Mobile2",
+        "title": "Mobile2"
+      },
+      "Scientific2": {
+        "id": "Scientific2",
+        "title": "Scientific2"
+      },
+      "Tablet2": {
+        "id": "Tablet2",
+        "title": "Tablet2"
+      },
+      "Web2": {
+        "id": "Web2",
+        "title": "Web2"
       }
     },
 

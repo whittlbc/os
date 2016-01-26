@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'views/os.view',
   'views/filters/seeking-filter-item-view',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/filters/seeking-filters-view',
@@ -11,18 +12,18 @@ define(['jquery',
              Backbone,
              _,
              OSUtil,
+             OSView,
              SeekingFilterItemView,
              MoreDropdown,
              SeekingFiltersViewTpl) {
   'use strict';
 
-  var SeekingFiltersView = Backbone.View.extend({
+  var SeekingFiltersView = OSView.extend({
 
-    initialize: function (options) {
+    postInitialize: function (options) {
       options = options || {};
       this.SEEKING_FILTERS = [];
       this.fullSize = 32;
-      this.requiredBottomSpacing = 300;
     },
 
     events: {
@@ -119,7 +120,11 @@ define(['jquery',
       var $list = this.$el.find('.seeking-filters-list');
       var currentBottomPos = $list.offset().top + $list.height();
       var verticalSpaceLeft = window.innerHeight - currentBottomPos;
-      return verticalSpaceLeft < this.requiredBottomSpacing;
+      return verticalSpaceLeft < this.getRequiredBottomSpacing();
+    },
+
+    getRequiredBottomSpacing: function () {
+      return this.currentUser ? 160 : 245;
     },
 
     addHoverListener: function (view) {
