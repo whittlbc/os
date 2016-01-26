@@ -131,7 +131,21 @@ define(['jquery',
 
       view.$el.find('.filter-close-btn').click(function () {
         self.handleDeleteDomainFilter(view);
+        self.moveItemUpFromDropdownIfNeeded();
       });
+    },
+
+    moveItemUpFromDropdownIfNeeded: function () {
+      // if the extras dropdown has some items, move the top one out
+      if (this.moreDropdown.hasItems()) {
+        var itemToMoveUpFromDrodown = this.moreDropdown.getTopItem();
+        this.addItem({
+          value: itemToMoveUpFromDrodown,
+          animate: false
+        });
+        this.moreDropdown.stripItemAndRepopulate(itemToMoveUpFromDrodown);
+        this.decreaseMoreDropdownCount();
+      }
     },
 
     prepareItemForEntrance: function ($ball, $name, value) {

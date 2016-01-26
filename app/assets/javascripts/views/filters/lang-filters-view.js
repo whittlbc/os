@@ -109,22 +109,25 @@ define(['jquery',
       view.$el.find('.filter-close-btn').click(function () {
         // delete the filter they clicked on
         self.handleDeleteLangFilter(view);
-
-        // if the extras dropdown has some langs, move the top one up out of the dropdown
-        if (self.moreDropdown.hasItems()) {
-          var langToMoveUpFromDrodown = self.moreDropdown.getTopItem();
-          self.addItem({
-            value: langToMoveUpFromDrodown,
-            animate: false
-          });
-          self.moreDropdown.stripItemAndRepopulate(langToMoveUpFromDrodown);
-          self.decreaseMoreDropdownCount();
-        }
+        self.moveItemUpFromDropdownIfNeeded();
 
         if (self.needToHideInfoIcon()) {
           self.$el.find('.lang-filters-options > .fa').hide();
         }
       });
+    },
+
+    moveItemUpFromDropdownIfNeeded: function () {
+      // if the extras dropdown has some items, move the top one out
+      if (this.moreDropdown.hasItems()) {
+        var itemToMoveUpFromDrodown = this.moreDropdown.getTopItem();
+        this.addItem({
+          value: itemToMoveUpFromDrodown,
+          animate: false
+        });
+        this.moreDropdown.stripItemAndRepopulate(itemToMoveUpFromDrodown);
+        this.decreaseMoreDropdownCount();
+      }
     },
 
     needToShowInfoIcon: function () {
