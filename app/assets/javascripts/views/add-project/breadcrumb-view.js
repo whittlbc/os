@@ -24,8 +24,15 @@ define(['jquery',
       }
     },
 
+    step2UFG: function () {
+      this.$el.find('#source-panel .title-div > span').html('Up for Grabs');
+    },
+
+    step2Source: function () {
+      this.$el.find('#source-panel .title-div > span').html('Source');
+    },
+
     render: function (options) {
-      var self = this;
       var allDone = options.breadCrumb1Done && options.breadCrumb2Done && options.breadCrumb3Done;
       this.$el.html(BreadCrumbViewTpl({
         breadCrumb1Clickable: !allDone && options.breadCrumb1Clickable,

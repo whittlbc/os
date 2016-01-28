@@ -37,7 +37,6 @@ define(['jquery',
         'send-invites:updated': 'handleSendInvitesUpdate',
         'license:updated': 'handleLicenseUpdate',
         'privacy:updated': 'handlePrivacyUpdate',
-        'anon:updated': 'handleAnonUpdate',
         'slackURL:updated': 'handleSlackURLUpdate',
         'slackAPIKey:updated': 'handleSlackAPIKeyUpdate',
         'hipChat:updated': 'handleHipChatUpdate',
@@ -67,20 +66,15 @@ define(['jquery',
 
         'selectedType': null,
 
-        // IDEAS
+        // IDEA
         'type1': {
-          'selectedSource': 'source2',
-          // Scratch
-          'source2': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'anon': false
-          }
+          'title': null,
+          'subtitle': null,
+          'description': null,
+          'langsFrames': null,
+          'repoName': null,
+          'license': null,
+          'privacy': null
         },
 
         // LAUNCHED
@@ -127,7 +121,6 @@ define(['jquery',
 
       // these were set by default in the beginning, so set them again
       this.masterMap['type1']['selectedSource'] = 'source2';
-      this.masterMap['type1']['source2']['anon'] = false;
     },
 
     formatForPullProject: function (uuid) {
@@ -221,13 +214,6 @@ define(['jquery',
       }
     },
 
-    handleAnonUpdate: function (anon) {
-      var sourceObj = this.getSelectedSourceObj();
-      if (sourceObj != null) {
-        sourceObj['anon'] = anon;
-      }
-    },
-
     handleSlackURLUpdate: function (slackURL) {
       var sourceObj = this.getSelectedSourceObj();
       if (sourceObj != null) {
@@ -304,7 +290,6 @@ define(['jquery',
         license: this.newProjectData.license ? [this.newProjectData.license] : [],
         status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
         langs_and_frames: this.newProjectData.langsFrames,
-        anon: this.newProjectData.anon,
         privacy: (this.newProjectData.privacy && this.status != 0) ? [this.newProjectData.privacy] : [],
         slackURL: this.newProjectData.slackURL,
         hipChatURL: this.newProjectData.hipChatURL,
@@ -489,29 +474,39 @@ define(['jquery',
     },
 
     handleTypeSelected: function (type) {
-      var self = this;
       var options = {};
+
       if (this.masterMap['selectedType'] != OSUtil.TYPE_MAP[type] && this.masterMap['selectedType'] != null) {
         var switchedTypes = true;
       }
+
       this.masterMap['selectedType'] = OSUtil.TYPE_MAP[type];
+
       this.panel3.passType(OSUtil.TYPE_MAP[type]);
+
       if (type == this.type1) {
-        // if it's type "up-for-grabs", the source is already known --> 'scratch',
-        // so skip step 2 and go straight to step 3
-        this.panel2.selectedSource = this.masterMap['type1']['selectedSource'];
-        this.panel2.render({upForGrabsType: true});
-        this.handleSourceSelected(this.source2);
-        return;
+
+        this.breadCrumbView.step2UFG();
+        //this.panel2.selectedSource = this.masterMap['type1']['selectedSource'];
+        options.idea = true;
+
+        this.panel2.render({ idea: true });
+
+      } else {
+
+        this.breadCrumbView.step2Source();
       }
-      type == this.type2 ? options.showPullFromIdeas = true : options.showPullFromIdeas = false;
+
       this.slideIndex = 1;
       var selectedSource = this.getSourceForType(OSUtil.TYPE_MAP[type]);
-      options.selectedSource = (selectedSource == null) ? null : selectedSource;
+      options.selectedSource = selectedSource || null;
+
       this.panel2.render(options);
+
       this.owl.goTo(this.slideIndex);
+
       this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
-      //this.showModalFooterTopBorder();
+
       this.renderBreadCrumbView();
 
       // if the user switched types and a source is already selected, re-render panel 3 to ensure
