@@ -31,12 +31,21 @@ define(['jquery',
       this.requiredBottomSpacing = 160;
 
       Backbone.EventBroker.register({
-        'hide-more-langs-dropdown': 'forceHideDropdown'
+        'hide-more-langs-dropdown': 'forceHideDropdown',
+        'filters:remove-all': 'removeAllFilters'
       }, this);
     },
 
     events: {
       'click #clearLangFiltersBtn': 'clearLangFilters'
+    },
+
+    removeAllFilters: function () {
+      this.LANG_FILTERS = [];
+      this.$list.empty();
+      this.moreDropdown.reset();
+      this.toggleMoreFiltersContainer(false);
+      this.hideInfoIcon();
     },
 
     getAllLanguages: function () {
@@ -94,7 +103,7 @@ define(['jquery',
       }
 
       if (this.needToShowInfoIcon()) {
-        this.$el.find('.lang-filters-options > .fa').css('display', 'block');
+        this.showInfoIcon();
       }
     },
 
@@ -112,9 +121,17 @@ define(['jquery',
         self.moveItemUpFromDropdownIfNeeded();
 
         if (self.needToHideInfoIcon()) {
-          self.$el.find('.lang-filters-options > .fa').hide();
+          self.hideInfoIcon();
         }
       });
+    },
+
+    showInfoIcon: function () {
+      this.$el.find('.lang-filters-options > .fa').show();
+    },
+
+    hideInfoIcon: function () {
+      this.$el.find('.lang-filters-options > .fa').hide();
     },
 
     moveItemUpFromDropdownIfNeeded: function () {

@@ -18,9 +18,25 @@ define(['jquery',
   var MinorFiltersView = Backbone.View.extend({
 
     initialize: function () {
+      Backbone.EventBroker.register({
+        'filters:remove-all': 'removeAllFilters'
+      }, this);
     },
 
     events: {},
+
+    removeAllFilters: function () {
+      var minorFilterViews = [
+        this.domainFiltersView,
+        this.seekingFiltersView
+      ];
+
+      _.each(minorFilterViews, function (view) {
+        if (view) {
+          view.removeAllFilters();
+        }
+      });
+    },
 
     addDomainFilters: function () {
       var self = this;

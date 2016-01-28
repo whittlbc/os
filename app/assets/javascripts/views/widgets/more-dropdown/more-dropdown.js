@@ -22,6 +22,12 @@ define(['jquery',
 
     events: {},
 
+    reset: function () {
+      this.ITEMS = [];
+      this.$list.empty();
+      this.hideDropdown();
+    },
+
     getNumItems: function () {
       return this.ITEMS.length;
     },

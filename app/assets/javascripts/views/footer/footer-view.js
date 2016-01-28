@@ -38,6 +38,10 @@ define(['jquery',
         1: OSUtil.SEEKING_LAUNCHED_FILTERS
       };
 
+      this.emptyRemovedValues();
+    },
+
+    emptyRemovedValues: function () {
       // cache of selected values for each filter type
       this.removedValues = {
         0: {},
@@ -355,22 +359,6 @@ define(['jquery',
       }
     },
 
-    forceSetFilter: function () {
-      var self = this;
-      var $filterBtn;
-      this.$el.find('.filter-choice-container').addClass('hover-none-selected');
-      switch (this.filterType) {
-        case 0:
-          $filterBtn = self.$el.find('#langFilterChoice');
-          break;
-        case 1:
-          $filterBtn = self.$el.find('#domainFilterChoice');
-          break;
-
-      }
-      $filterBtn.addClass('selected-color selected-filter');
-    },
-
     passCachedItems: function (data) {
       this.removedValues = data;
     },
@@ -382,8 +370,9 @@ define(['jquery',
     },
 
     removeAllFilters: function () {
-      var self = this;
-      // do this
+      this.emptyRemovedValues();
+      this.resetDropdown(null, true);
+      Backbone.EventBroker.trigger('filters:remove-all', true);
     },
 
     render: function () {
@@ -398,8 +387,13 @@ define(['jquery',
       });
 
       this.listenTo(this.moreFiltersDropup, 'item:clicked', function (id) {
-        self.removeAllFilters();
-        //self.trigger('more-filters-toggle', id);
+        switch (id) {
+          case 'removeAll':
+            self.removeAllFilters();
+            break;
+          case 'upForGrabs':
+            break;
+        }
       });
 
       this.moreFiltersDropup.render();

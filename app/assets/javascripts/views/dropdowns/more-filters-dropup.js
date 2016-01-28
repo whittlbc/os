@@ -12,9 +12,8 @@ define(['jquery',
   var MoreFiltersDropup = Backbone.View.extend({
 
     initialize: function () {
-      //Backbone.EventBroker.register({
-      //  'forceRemovePrivacyFilters': 'forceClickPrivacy'
-      //}, this);
+      Backbone.EventBroker.register({
+      }, this);
     },
 
     events: {
@@ -23,13 +22,19 @@ define(['jquery',
 
     handleClick: function (e) {
       e.stopPropagation();
+
       this.trigger('item:clicked', e.currentTarget.id);
-      //var $target = $(e.currentTarget);
-      //$target.hasClass('selected') ? $target.removeClass('selected') : $target.addClass('selected');
+
+      if (e.currentTarget.id != 'removeAll') {
+        var $target = $(e.currentTarget);
+        $target.hasClass('selected') ? $target.removeClass('selected') : $target.addClass('selected');
+      }
     },
 
     render: function () {
-      this.$el.html(MoreFiltersDropupTpl());
+      this.$el.html(MoreFiltersDropupTpl({
+        showUpForGrabs: false
+      }));
     }
   });
 

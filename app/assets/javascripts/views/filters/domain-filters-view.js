@@ -30,6 +30,13 @@ define(['jquery',
       'click #clearDomainFiltersBtn': 'clearDomainFilters'
     },
 
+    removeAllFilters: function () {
+      this.DOMAIN_FILTERS = [];
+      this.$list.empty();
+      this.moreDropdown.reset();
+      this.toggleMoreFiltersContainer(false);
+    },
+
     isEmpty: function () {
       return this.$list.children().length === 0;
     },

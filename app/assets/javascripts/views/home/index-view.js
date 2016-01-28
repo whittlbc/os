@@ -38,8 +38,17 @@ define(['jquery',
         'removePrivacyFilter': 'removePrivacyFilter',
         'lang-filters-scope:change': 'updateLangFiltersScope',
         'clearNonLangFilters': 'clearNonLangFilters',
-        'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort'
+        'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort',
+        'filters:remove-all': 'resetAllFilters'
       }, this);
+
+      this.resetAllFilters();
+
+      this.sortType = OSUtil.SORT_BY_VOTES;
+      this.resetProps();
+    },
+
+    resetAllFilters: function (andFetch) {
       this.filters = null;
       this.langsFramesValue = [];
       this.domainFilters = [];
@@ -48,8 +57,10 @@ define(['jquery',
         1: []
       };
       this.privacyFilters = [];
-      this.sortType = OSUtil.SORT_BY_VOTES;
-      this.resetProps();
+
+      if (andFetch) {
+        this.getFilters();
+      }
     },
 
     fetchProjectsWithSpecifiedSort: function (type) {

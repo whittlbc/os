@@ -30,6 +30,13 @@ define(['jquery',
       'click #clearSeekingFiltersBtn': 'clearSeekingFilters'
     },
 
+    removeAllFilters: function () {
+      this.SEEKING_FILTERS = [];
+      this.$list.empty();
+      this.moreDropdown.reset();
+      this.toggleMoreFiltersContainer(false);
+    },
+
     isEmpty: function () {
       return this.$list.children().length === 0;
     },
