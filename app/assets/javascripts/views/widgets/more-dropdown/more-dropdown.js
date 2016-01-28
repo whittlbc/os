@@ -33,7 +33,6 @@ define(['jquery',
     },
 
     populate: function (items) {
-      var self = this;
       this.ITEMS = [];
       this.$list.empty();
       for (var i = 0; i < items.length; i++) {

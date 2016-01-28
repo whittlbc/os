@@ -135,19 +135,12 @@ define(['jquery',
     prePopulateFilters: function (filtersMap) {
       var self = this;
       var cachedDomainFilters = Object.keys(filtersMap[1]);
-      var cachedSeekingFilters = Object.keys(filtersMap[2]);
       _.each(cachedDomainFilters, function (domain) {
         self.addDomainItem({
           value: domain,
           animate: false
         });
       });
-      //_.each(cachedSeekingFilters, function (seeking) {
-      //  self.addSeekingItem({
-      //    value: seeking,
-      //    animate: false
-      //  });
-      //});
     },
 
     adjustSeekingFilters: function (seekingFilters) {
@@ -163,26 +156,12 @@ define(['jquery',
           this.addSeekingFilters();
         }
 
-        var currentFilters = this.seekingFiltersView.namesForFilters();
-
-        // first add filters that SHOULD exist but don't
-
-        console.log(seekingFilters, currentFilters);
-
-        _.each(seekingFilters, function (filter) {
-          if (!_.contains(currentFilters, filter)) {
-            self.addSeekingItem({
-              value: filter,
-              animate: false
-            });
-          }
-        });
-
-        // then remove filters that exist but SHOULD NOT
-        _.each(currentFilters, function (filter) {
-          if (!_.contains(seekingFilters, filter)) {
-            self.seekingFiltersView.forceDeleteItem(filter);
-          }
+        this.seekingFiltersView.removeAllFilters();
+        _.each(seekingFilters, function (name) {
+          self.seekingFiltersView.addItem({
+            value: name,
+            animate: false
+          });
         });
       }
     },
