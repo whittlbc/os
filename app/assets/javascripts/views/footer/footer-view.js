@@ -57,12 +57,20 @@ define(['jquery',
       this.status = status;
     },
 
+    showOrHideUpForGrabsFilter: function () {
+      this.status == OSUtil.PROJECT_TYPES.indexOf('ideas') ?
+        this.moreFiltersDropup.render({ showUpForGrabs: true }) :
+        this.moreFiltersDropup.render();
+    },
+
     changeFeedType: function (status) {
       this.status = status;
       // force reset dropdown if switching feed types while on Seeking filters
       if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
         this.resetDropdown(this.filterType, true);
       }
+
+      this.showOrHideUpForGrabsFilter();
     },
 
     getAllLanguages: function () {
@@ -396,7 +404,7 @@ define(['jquery',
         }
       });
 
-      this.moreFiltersDropup.render();
+      this.showOrHideUpForGrabsFilter();
 
       this.$el.find('.search-container').click(function (e) {
         e.stopPropagation();

@@ -108,12 +108,10 @@ define(['jquery',
     },
 
     events: {
-      'click .project-post-view': 'onSelectProject',
-      'click .feed-sort-type-btn': 'handleSortTypeClick'
+      'click .project-post-view': 'onSelectProject'
     },
 
     handleSortTypeClick: function (e) {
-      var self = this;
       if (!$(e.currentTarget).hasClass('active')) {
         this.$el.find('.feed-sort-type-btn').removeClass('active');
         $(e.currentTarget).addClass('active');
@@ -129,6 +127,10 @@ define(['jquery',
     render: function () {
       var self = this;
       this.$el.html(ProjectFeedViewTpl());
+
+      this.$el.find('.feed-sort-type-btn').click(function (e) {
+        self.handleSortTypeClick(e);
+      });
     }
   });
 

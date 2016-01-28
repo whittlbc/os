@@ -27,13 +27,22 @@ define(['jquery',
 
       if (e.currentTarget.id != 'removeAll') {
         var $target = $(e.currentTarget);
-        $target.hasClass('selected') ? $target.removeClass('selected') : $target.addClass('selected');
+        if ($target.hasClass('selected')) {
+          $target.removeClass('selected');
+          this.upForGrabsSelected = false;
+        } else {
+          $target.addClass('selected');
+          this.upForGrabsSelected = true;
+        }
       }
     },
 
-    render: function () {
+    render: function (options) {
+      options = options || {};
+
       this.$el.html(MoreFiltersDropupTpl({
-        showUpForGrabs: false
+        showUpForGrabs: options.showUpForGrabs,
+        upForGrabsSelected: this.upForGrabsSelected
       }));
     }
   });

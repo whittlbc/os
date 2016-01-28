@@ -3,9 +3,9 @@
     <div class="dropup-arrow back"></div>
     <div class="dropup-arrow front"></div>
     <ul id="moreFiltersList" class="main-list">
-        {{#showUpForGrabs}}
-        <li id="upForGrabsFilter"><i class="fa fa-check"></i>Up for Grabs</li>
-        {{/showUpForGrabs}}
         <li id="removeAll">Remove All</li>
+        {{#showUpForGrabs}}
+        <li id="upForGrabsFilter" class="{{#upForGrabsSelected}}selected{{/upForGrabsSelected}}"><i class="fa fa-check"></i>Up for Grabs</li>
+        {{/showUpForGrabs}}
     </ul>
 </div>
