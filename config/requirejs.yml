@@ -1,4 +1,4 @@
-waitSeconds: 0
+waitSeconds: 30
 enforceDefine: true
 
 paths:

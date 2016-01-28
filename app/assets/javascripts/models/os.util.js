@@ -94,7 +94,7 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
     OPEN_PRIVACY: 'open',
 
     TYPE_MAP: {
-      'ideas': 'type1',
+      'idea': 'type1',
       'launched': 'type2'
     },
 

@@ -1,18 +1,13 @@
 <div class="select-project-type-view">
-    <div class="select-project-type-text">Select your project type:</div>
-    <div class="project-type-selection-container {{#hideUpForGrabs}}only-two-choices{{/hideUpForGrabs}} {{#onlyOnTheFence}}only-one-choice{{/onlyOnTheFence}}">
-        {{^onlyOnTheFence}}{{^hideUpForGrabs}}
-        <div class="project-type-selection {{#upForGrabsSelected}}selected-type{{/upForGrabsSelected}}" data-project-type-index="up-for-grabs">
-            <div class="create-project-icon"></div>
-            <div class="project-type-selection-text">Up for Grabs</div>
-        </div>{{/hideUpForGrabs}}{{/onlyOnTheFence}}{{
-        }}<div class="project-type-selection {{#onTheFenceSelected}}selected-type{{/onTheFenceSelected}} {{#hideUpForGrabs}}only-two-choices{{/hideUpForGrabs}} {{#onlyOnTheFence}}only-one-choice{{/onlyOnTheFence}}" data-project-type-index="on-the-fence">
+    <div class="select-project-type-text">At what stage is your project?</div>
+    <div class="project-type-selection-container only-two-choices">
+        <div class="project-type-selection {{#ideaSelected}}selected-type{{/ideaSelected}} only-two-choices" data-project-type-index="idea">
             <div class="create-project-icon"></div>
             <div class="project-type-selection-text">On the Fence</div>
         </div>{{
-        }}{{^onlyOnTheFence}}<div class="project-type-selection {{#launchedSelected}}selected-type{{/launchedSelected}} {{#hideUpForGrabs}}only-two-choices{{/hideUpForGrabs}}" data-project-type-index="launched">
+        }}<div class="project-type-selection {{#launchedSelected}}selected-type{{/launchedSelected}} only-two-choices" data-project-type-index="launched">
             <div class="create-project-icon"></div>
             <div class="project-type-selection-text">Launched</div>
-        </div>{{/onlyOnTheFence}}
+        </div>
     </div>
 </div>
