@@ -3,7 +3,8 @@ define(['jquery',
   "events",
   'views/main-view',
   'models/os.util',
-  'models/session'
+  'models/session',
+  'backbone-eventbroker'
 ],
   function ($,
   Backbone,
@@ -65,6 +66,7 @@ define(['jquery',
       this.mainView = this.mainView || new MainView({el: '#mainView'});
       this.mainView.captureFilters();
       this.mainView.resetNotifications();
+      Backbone.EventBroker.trigger('seeking-filters:reset');
 
       this.mainView.render({
         view: OSUtil.PROJECT_PAGE,

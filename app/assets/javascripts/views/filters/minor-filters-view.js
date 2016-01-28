@@ -19,7 +19,8 @@ define(['jquery',
 
     initialize: function () {
       Backbone.EventBroker.register({
-        'filters:remove-all': 'removeAllFilters'
+        'filters:remove-all': 'removeAllFilters',
+        'adjust-seeking-filters': 'adjustSeekingFilters'
       }, this);
     },
 
@@ -39,20 +40,15 @@ define(['jquery',
     },
 
     addDomainFilters: function () {
-      var self = this;
-      // create a div on the fly and append it as the last child of #minorFiltersView -- this will be your anchor for your filter view
       var $div = $('<div>', {id: 'domainFiltersView'});
       this.$el.append($div);
 
-      this.domainFiltersView = new DomainFiltersView({
-        el: '#domainFiltersView'
-      });
-
+      this.domainFiltersView = this.domainFiltersView || new DomainFiltersView();
+      this.domainFiltersView.$el = $('#domainFiltersView');
       this.domainFiltersView.render();
     },
 
     removeDomainFilters: function () {
-      var self = this;
       this.domainFiltersView.remove();
       this.domainFiltersView.unbind();
     },
@@ -61,15 +57,12 @@ define(['jquery',
       var $div = $('<div>', {id: 'seekingFiltersView'});
       this.$el.append($div);
 
-      this.seekingFiltersView = new SeekingFiltersView({
-        el: '#seekingFiltersView'
-      });
-
+      this.seekingFiltersView = this.seekingFiltersView || new SeekingFiltersView();
+      this.seekingFiltersView.$el = $('#seekingFiltersView');
       this.seekingFiltersView.render();
     },
 
     removeSeekingFilters: function () {
-      var self = this;
       var $seekingFilters = this.$el.find('#seekingFiltersView');
       $seekingFilters.remove();
       $seekingFilters.unbind();
@@ -128,7 +121,6 @@ define(['jquery',
     },
 
     removeDomainItem: function () {
-      var self = this;
       if (this.domainFiltersView.isEmpty()) {
         this.removeDomainFilters();
       }
@@ -150,12 +142,12 @@ define(['jquery',
           animate: false
         });
       });
-      _.each(cachedSeekingFilters, function (seeking) {
-        self.addSeekingItem({
-          value: seeking,
-          animate: false
-        });
-      });
+      //_.each(cachedSeekingFilters, function (seeking) {
+      //  self.addSeekingItem({
+      //    value: seeking,
+      //    animate: false
+      //  });
+      //});
     },
 
     adjustSeekingFilters: function (seekingFilters) {
@@ -174,6 +166,9 @@ define(['jquery',
         var currentFilters = this.seekingFiltersView.namesForFilters();
 
         // first add filters that SHOULD exist but don't
+
+        console.log(seekingFilters, currentFilters);
+
         _.each(seekingFilters, function (filter) {
           if (!_.contains(currentFilters, filter)) {
             self.addSeekingItem({

@@ -91,10 +91,10 @@ define(['jquery',
         'all-user-repos:request': 'getAllUserRepos',
         'window:resize': 'positionFooterAndHeaderTutorialBubbles',
         'tutorial:login-with-gh': 'loginWithGHFromTutorial',
-        'project:login-or-star': 'loginOrStar'
+        'project:login-or-star': 'loginOrStar',
+        'header-footer:force-show': 'forceShowHeaderFooter'
       }, this);
 
-      this.cachedFilterType = null;
       this.lastAddProjectPopupShownForGrab = false;
     },
 
@@ -175,8 +175,6 @@ define(['jquery',
 
     openProject: function (uuid, e) {
       var openInNewTab = false;
-      this.cachedRemovedFilterItems = this.footerView.footerDropdown.$removedItems;
-      this.cachedFilterType = this.footerView.filterType;
 
       if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
         openInNewTab = true;
@@ -209,6 +207,11 @@ define(['jquery',
           }
         });
       }
+    },
+
+    forceShowHeaderFooter: function () {
+      this.forceShowHeader();
+      this.forceShowFooter();
     },
 
     forceShowHeader: function () {
@@ -672,10 +675,6 @@ define(['jquery',
         });
       }
 
-      this.listenTo(this.homeView, 'adjust-seeking-filters', function (seekingFilters) {
-        self.minorFiltersView.adjustSeekingFilters(seekingFilters);
-      });
-
       var index = _.has(options, 'index') ? options.index : 0;
 
       if (this.cachedFilters) {
@@ -992,9 +991,8 @@ define(['jquery',
     renderFilters: function () {
       var self = this;
 
-      this.langFiltersView = new LangFiltersView({
-        el: '#langFiltersView'
-      });
+      this.langFiltersView = this.langFiltersView || new LangFiltersView();
+      this.langFiltersView.$el = this.$el.find('#langFiltersView');
 
       this.langFiltersView.render({
         orSelected: (this.cachedFilters || {}).lang_filters_or
@@ -1004,9 +1002,8 @@ define(['jquery',
         this.langFiltersView.prePopulateFilters(this.cachedItems);
       }
 
-      this.minorFiltersView = new MinorFiltersView({
-        el: '#minorFiltersView'
-      });
+      this.minorFiltersView = this.minorFiltersView || new MinorFiltersView();
+      this.minorFiltersView.$el = this.$el.find('#minorFiltersView');
 
       this.minorFiltersView.render();
 

@@ -24,10 +24,17 @@ define(['jquery',
       options = options || {};
       this.SEEKING_FILTERS = [];
       this.fullSize = 32;
+      Backbone.EventBroker.register({
+        'seeking-filters:reset': 'resetSeekingFilters'
+      }, this);
     },
 
     events: {
       'click #clearSeekingFiltersBtn': 'clearSeekingFilters'
+    },
+
+    resetSeekingFilters: function () {
+      this.SEEKING_FILTERS = [];
     },
 
     removeAllFilters: function () {
@@ -129,12 +136,13 @@ define(['jquery',
     },
 
     getMaxHeightOfList: function () {
+      var projectFeedTopOffset = 134;
       var collectiveBottomMarginForMinorFilterViews = 20 + 20;
       var marginTopForTopMinorFilter = 16;
       var heightOfDropdown = 109;
 
       var heightOfMinorFilters = window.innerHeight
-        - $('#project-feed').offset().top
+        - projectFeedTopOffset
         - marginTopForTopMinorFilter
         - collectiveBottomMarginForMinorFilterViews
         - heightOfDropdown;

@@ -6,7 +6,6 @@ define(['jquery',
   'views/home/project-feed-view',
   'models/project',
   'models/user',
-  'views/home/non-lang-filters-view',
   'stache!views/home/index-view',
   'selectize',
   'velocity',
@@ -20,7 +19,6 @@ define(['jquery',
    ProjectFeedView,
    Project,
    User,
-   NonLangFiltersView,
    IndexViewTpl) {
   'use strict';
 
@@ -223,6 +221,7 @@ define(['jquery',
       var project = new Project();
       project.fetchFeedProjects(data, {
         success: function (data) {
+          Backbone.EventBroker.trigger('header-footer:force-show');
           self.limit += 30;
           if (!data.gotAll) {
             self.gettingMoreData = false;
@@ -242,6 +241,7 @@ define(['jquery',
 
       project.filteredFeed(obj, {
         success: function (data) {
+          Backbone.EventBroker.trigger('header-footer:force-show');
           self.limit += 30;
           if (!data.gotAll) {
             self.gettingMoreData = false;
@@ -297,7 +297,7 @@ define(['jquery',
     populateProjectFeed: function (status, initial) {
       this.limit = 30;
       this.gettingMoreData = false;
-      this.trigger('adjust-seeking-filters', this.seekingFilters[status]);
+      Backbone.EventBroker.trigger('adjust-seeking-filters', this.seekingFilters[status]);
 
       if (!initial) {
         this.changeActiveTab(status);
@@ -404,9 +404,9 @@ define(['jquery',
         launchedActive: launchedActive
       }));
 
-      this.projectFeedView = new ProjectFeedView({
-        el: '#project-feed'
-      });
+      this.projectFeedView = this.projectFeedView || new ProjectFeedView();
+
+      this.projectFeedView.$el = this.$el.find('#project-feed');
 
       this.listenTo(this.projectFeedView, 'projects:populated', function (numProjects) {
         self.setProjectToWatchScrollingPos(numProjects);
@@ -415,13 +415,6 @@ define(['jquery',
       this.projectFeedView.render();
 
       var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 0;
-
-      this.nonLangFiltersView = new NonLangFiltersView({
-        el: '#nonLangFiltersContainer',
-        filters: self.filters
-      });
-
-      this.nonLangFiltersView.render();
 
       this.populateProjectFeed(projectTypeStatus, true);
 

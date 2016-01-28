@@ -126,12 +126,13 @@ define(['jquery',
     },
 
     getMaxHeightOfList: function () {
+      var projectFeedTopOffset = 134;
       var collectiveBottomMarginForMinorFilterViews = 20 + 20;
       var marginTopForTopMinorFilter = 16;
-      var heightOfDropdown = 114; // not exactly the same I know
+      var heightOfDropdown = 109;
 
       var heightOfMinorFilters = window.innerHeight
-        - $('#project-feed').offset().top
+        - projectFeedTopOffset
         - marginTopForTopMinorFilter
         - collectiveBottomMarginForMinorFilterViews
         - heightOfDropdown;
