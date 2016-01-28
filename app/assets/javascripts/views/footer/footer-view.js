@@ -390,19 +390,22 @@ define(['jquery',
       }));
       this.renderDropdown();
 
-      this.moreFiltersDropup = new MoreFiltersDropup({
-        el: '#moreFiltersDropUp'
-      });
+      if (!this.moreFiltersDropup) {
+        this.moreFiltersDropup = new MoreFiltersDropup();
 
-      this.listenTo(this.moreFiltersDropup, 'item:clicked', function (id) {
-        switch (id) {
-          case 'removeAll':
-            self.removeAllFilters();
-            break;
-          case 'upForGrabs':
-            break;
-        }
-      });
+        this.listenTo(this.moreFiltersDropup, 'item:clicked', function (data) {
+          switch (data.id) {
+            case 'removeAll':
+              self.removeAllFilters();
+              break;
+            case 'upForGrabsFilter':
+              Backbone.EventBroker.trigger('up-for-grabs-filter:toggled', data.selected);
+              break;
+          }
+        });
+      }
+
+      this.moreFiltersDropup.$el = this.$el.find('#moreFiltersDropUp');
 
       this.showOrHideUpForGrabsFilter();
 

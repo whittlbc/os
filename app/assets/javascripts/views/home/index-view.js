@@ -37,13 +37,20 @@ define(['jquery',
         'lang-filters-scope:change': 'updateLangFiltersScope',
         'clearNonLangFilters': 'clearNonLangFilters',
         'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort',
-        'filters:remove-all': 'resetAllFilters'
+        'filters:remove-all': 'resetAllFilters',
+        'up-for-grabs-filter:toggled': 'toggleUpForGrabsFilter'
       }, this);
 
       this.resetAllFilters();
 
       this.sortType = OSUtil.SORT_BY_VOTES;
+      this.upForGrabsFilter = false;
       this.resetProps();
+    },
+
+    toggleUpForGrabsFilter: function () {
+      this.upForGrabsFilter = !this.upForGrabsFilter;
+      this.getFilters();
     },
 
     resetAllFilters: function (andFetch) {
@@ -198,6 +205,11 @@ define(['jquery',
 
       if (!_.isEmpty(this.seekingFilters[this.projectTypeStatus])) {
         obj.filters.seeking = this.seekingFilters[this.projectTypeStatus];
+        atLeastOneFilter = true;
+      }
+
+      if ((this.projectTypeStatus === OSUtil.PROJECT_TYPES.indexOf('ideas')) && this.upForGrabsFilter === true) {
+        obj.filters.up_for_grabs = true;
         atLeastOneFilter = true;
       }
 

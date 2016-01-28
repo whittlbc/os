@@ -16,17 +16,16 @@ define(['jquery',
       }, this);
     },
 
-    events: {
-      'click ul#moreFiltersList > li': 'handleClick'
-    },
-
     handleClick: function (e) {
       e.stopPropagation();
 
-      this.trigger('item:clicked', e.currentTarget.id);
+      var data = {
+        id: e.currentTarget.id
+      };
 
       if (e.currentTarget.id != 'removeAll') {
         var $target = $(e.currentTarget);
+
         if ($target.hasClass('selected')) {
           $target.removeClass('selected');
           this.upForGrabsSelected = false;
@@ -34,16 +33,26 @@ define(['jquery',
           $target.addClass('selected');
           this.upForGrabsSelected = true;
         }
+
+        data.selected = this.upForGrabsSelected;
       }
+
+      this.trigger('item:clicked', data);
     },
 
     render: function (options) {
+      var self = this;
       options = options || {};
 
       this.$el.html(MoreFiltersDropupTpl({
         showUpForGrabs: options.showUpForGrabs,
         upForGrabsSelected: this.upForGrabsSelected
       }));
+
+      this.$el.find('ul#moreFiltersList > li').click(function (e) {
+        self.handleClick(e);
+      });
+
     }
   });
 
