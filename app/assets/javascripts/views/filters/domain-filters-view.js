@@ -114,14 +114,26 @@ define(['jquery',
     },
 
     shownFiltersFull: function () {
-      var $list = this.$el.find('.domain-filters-list');
-      var currentBottomPos = $list.offset().top + $list.height();
-      var verticalSpaceLeft = window.innerHeight - currentBottomPos;
-      return verticalSpaceLeft < this.getRequiredBottomSpacing();
+      var expectedHeightAfterAddingAnotherItem = this.$el.find('.domain-filters-list').height() + 43;
+      return expectedHeightAfterAddingAnotherItem > this.getMaxHeightOfList();
     },
 
-    getRequiredBottomSpacing: function () {
-      return this.currentUser ? 160 : 245;
+    getMaxHeightOfList: function () {
+      var collectiveBottomMarginForMinorFilterViews = 20 + 20;
+      var marginTopForTopMinorFilter = 16;
+      var heightOfDropdown = 114; // not exactly the same I know
+
+      var heightOfMinorFilters = window.innerHeight
+        - $('#project-feed').offset().top
+        - marginTopForTopMinorFilter
+        - collectiveBottomMarginForMinorFilterViews
+        - heightOfDropdown;
+
+      if (!this.currentUser) {
+        heightOfMinorFilters -= 92;
+      }
+
+      return 0.6 * heightOfMinorFilters;
     },
 
     addHoverListener: function (view) {

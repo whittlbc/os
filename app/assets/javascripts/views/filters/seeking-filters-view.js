@@ -117,14 +117,26 @@ define(['jquery',
     },
 
     shownFiltersFull: function () {
-      var $list = this.$el.find('.seeking-filters-list');
-      var currentBottomPos = $list.offset().top + $list.height();
-      var verticalSpaceLeft = window.innerHeight - currentBottomPos;
-      return verticalSpaceLeft < this.getRequiredBottomSpacing();
+      var expectedHeightAfterAddingAnotherItem = this.$el.find('.seeking-filters-list').height() + 43;
+      return expectedHeightAfterAddingAnotherItem > this.getMaxHeightOfList();
     },
 
-    getRequiredBottomSpacing: function () {
-      return this.currentUser ? 160 : 245;
+    getMaxHeightOfList: function () {
+      var collectiveBottomMarginForMinorFilterViews = 20 + 20;
+      var marginTopForTopMinorFilter = 16;
+      var heightOfDropdown = 109;
+
+      var heightOfMinorFilters = window.innerHeight
+        - $('#project-feed').offset().top
+        - marginTopForTopMinorFilter
+        - collectiveBottomMarginForMinorFilterViews
+        - heightOfDropdown;
+
+      if (!this.currentUser) {
+        heightOfMinorFilters -= 85;
+      }
+
+      return 0.4 * heightOfMinorFilters;
     },
 
     addHoverListener: function (view) {
