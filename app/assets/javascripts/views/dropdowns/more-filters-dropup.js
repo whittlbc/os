@@ -23,7 +23,10 @@ define(['jquery',
         id: e.currentTarget.id
       };
 
-      if (e.currentTarget.id != 'removeAll') {
+      if (e.currentTarget.id === 'removeAll') {
+        this.$el.find('#upForGrabsFilter').removeClass('selected');
+        this.upForGrabsSelected = false;
+      } else {
         var $target = $(e.currentTarget);
 
         if ($target.hasClass('selected')) {

@@ -44,7 +44,6 @@ define(['jquery',
       this.resetAllFilters();
 
       this.sortType = OSUtil.SORT_BY_VOTES;
-      this.upForGrabsFilter = false;
       this.resetProps();
     },
 
@@ -62,6 +61,7 @@ define(['jquery',
         1: []
       };
       this.privacyFilters = [];
+      this.upForGrabsFilter = false;
 
       if (andFetch) {
         this.getFilters();
