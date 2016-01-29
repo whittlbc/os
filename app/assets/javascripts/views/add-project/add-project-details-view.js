@@ -55,8 +55,8 @@ define(['jquery',
       this.detailsView.setRepoInfo(data);
     },
 
-    passType: function (type) {
-      this.selectedType = type;
+    passStage: function (stage) {
+      this.selectedStage = stage;
     },
 
     scrollToDetailsView: function (repos, duration) {
@@ -71,25 +71,6 @@ define(['jquery',
           specialEasing: 'easeInOutCubic'
         });
       }
-    },
-
-    autoSelectUpForGrabsProject: function (projectUUID) {
-      var self = this;
-      this.oldPullFromIdeasUUID = projectUUID;
-
-      var project = new Project();
-      project.getUpForGrabsDetails({uuid: projectUUID}, {
-        success: function (data) {
-          var options = {
-            hideDetailsView: false,
-            projectData: data
-          };
-          self.detailsView.render(options);
-          setTimeout(function () {
-            self.scrollToDetailsView(false, 0);
-          }, 150);
-        }
-      });
     },
 
     allowCreate: function () {
@@ -114,132 +95,127 @@ define(['jquery',
       });
     },
 
-    render: function (options) {
+    scrollToBottomOfDetailsView: function () {
       var self = this;
-      var showCreatingProjectView = false;
-      var showProjectCreationError = false;
-      var showPullFromIdeasView = false;
-      if (options && options.selectedSource == OSUtil.SOURCE_MAP['gh'] && selectedRepo == null) {
-        options.hideDetailsView = (this.selectedSource == options.selectedSource) ? false : true;
-      }
 
-      if (options && options.selectedSource == OSUtil.SOURCE_MAP['pull-from-ideas']) {
-        options.hideDetailsView = true;
-        showPullFromIdeasView = true;
-      }
+      setTimeout(function () {
+        var $container = self.$el.find('.add-project-details-scroll-container');
+        $container.scrollTop($container[0].scrollHeight);
+      }, 50);
+    },
 
-      if (options && options.selectedSource) {
-        this.selectedSource = options.selectedSource;
-      }
+    scrollToError: function () {
+      var $scrollContainer = this.$el.find('.add-project-details-scroll-container');
+      var top = this.$el.find('.enter-details-message').offset().top;
+      $scrollContainer.animate({ scrollTop: top }, { duration: 500 });
+    },
 
-      if (options && options.showCreatingProjectView) {
-        showCreatingProjectView = true;
-      }
-
-      if (options && options.showProjectCreationError) {
-        showProjectCreationError = true;
-      }
-
-      var selectedRepo = null;
-      if (this.selectedSource == OSUtil.SOURCE_MAP['gh'] && this.repoListView) {
-        selectedRepo = this.repoListView.getSelectedRepo();
-      }
-
-      this.$el.html(AddProjectDetailsViewTpl({
-        showReposView: this.selectedSource == OSUtil.SOURCE_MAP['gh'],
-        showPullFromIdeasView: showPullFromIdeasView,
-        showCreatingProjectView: showCreatingProjectView,
-        showProjectCreationError: showProjectCreationError,
-        isSafari: $('body').attr('browser') === 'safari'
-      }));
+    renderDetailsView: function (options) {
+      var self = this;
 
       this.detailsView = new DetailsView({
-        el: '#detailsView'
+        el: this.$el.find('#detailsView')
       });
 
       this.listenTo(this.detailsView, 'scroll:bottom', function () {
-        setTimeout(function () {
-          var $container = self.$el.find('.add-project-details-scroll-container');
-          $container.scrollTop($container[0].scrollHeight);
-        }, 50);
+        self.scrollToBottomOfDetailsView();
       });
 
       this.listenTo(this.detailsView, 'scroll-to-error', function () {
-        var $scrollContainer = self.$el.find('.add-project-details-scroll-container');
-        var top = this.$el.find('.enter-details-message').offset().top;
-
-        $scrollContainer.animate({ scrollTop: top }, { duration: 500 });
+        self.scrollToError();
       });
 
-      if (this.selectedType) {
-        this.detailsView.passType(this.selectedType);
+      if (this.selectedStage) {
+        this.detailsView.passStage(this.selectedStage);
       }
 
       if (this.tags) {
         this.detailsView.passTags(this.tags);
       }
 
-      if (!showCreatingProjectView && !showProjectCreationError) {
+      // ensure details view is hidden when loading repos
+      options.hideDetailsView = options.showReposLoadingView;
+
+      if (!options.showCreatingProjectView && !options.showProjectCreationError) {
         this.detailsView.render(options);
       }
+    },
+
+    handleRepoSelected: function (name) {
+      var self = this;
+
+      this.trigger('repo:getDetails', name);
+      this.detailsView.render({ hideDetailsView: false });
+      setTimeout(function () {
+        self.scrollToDetailsView(true, 500);
+      }, 10);
+    },
+
+    renderRepoList: function (options) {
+      var self = this;
 
       this.repoListView = new RepoListView({
-        el: '#reposView'
+        el: this.$el.find('#reposView')
       });
-      this.listenTo(this.repoListView, 'repo:selected', function (name) {
-        self.trigger('repo:getDetails', name);
-        self.detailsView.render({hideDetailsView: false});
-        setTimeout(function () {
-          self.scrollToDetailsView(true, 500);
-        }, 10);
+
+      this.listenTo(this.repoListView, 'repo:selected', function (repoName) {
+        self.handleRepoSelected(repoName);
       });
+
       if (this.repos) {
         this.repoListView.passUserRepos(this.repos);
       }
-      var repoListViewOptions = {};
-      if (options && options.showReposLoadingView) {
-        repoListViewOptions.showReposLoadingView = options.showReposLoadingView;
-      }
-      this.repoListView.render(repoListViewOptions);
 
-      if (this.repos && this.selectedSource == OSUtil.SOURCE_MAP['gh']) {
+      this.repoListView.render({
+        showReposLoadingView: options.showReposLoadingView
+      });
+
+      if (this.repos && this.selectedSource == OSUtil.SOURCE_TYPES[0]) {
         this.populateUIRepoList();
       }
+    },
 
-      if (showPullFromIdeasView) {
-        this.pullFromIdeasView = new PullFromIdeasView({
-          el: '#pullFromIdeasView'
-        });
-        this.listenTo(this.pullFromIdeasView, 'project:selected', function (data) {
-          self.oldPullFromIdeasID = data.id;
-          var options = {
-            hideDetailsView: false,
-            projectData: data
-          };
-          self.detailsView.render(options);
-          setTimeout(function () {
-            self.scrollToDetailsView(false, 500);
-          }, 10);
-        });
-        this.pullFromIdeasView.render();
+    renderCreatingProject: function () {
+      this.creatingProjectView = new CreatingProjectView({
+        el: this.$el.find('#creatingProjectView')
+      });
+      this.creatingProjectView.setMessage('Creating project...');
+      this.creatingProjectView.render();
+    },
+
+    renderErrorView: function () {
+      this.projectCreationErrorView  = true;
+      this.projectCreationErrorView = new ProjectCreationErrorView({
+        el: this.$el.find('#projectCreationError')
+      });
+      this.projectCreationErrorView.render();
+    },
+
+    render: function (options) {
+      var self = this;
+      options = options || {};
+
+      if (options.selectedSource) {
+        this.selectedSource = options.selectedSource;
       }
 
-      if (showCreatingProjectView) {
-        this.creatingProjectView = new CreatingProjectView({
-          el: '#creatingProjectView'
-        });
-        this.creatingProjectView.setMessage('Creating project...');
-        this.creatingProjectView.render();
+      this.$el.html(AddProjectDetailsViewTpl({
+        showReposView: this.selectedSource == OSUtil.SOURCE_TYPES[0],
+        showCreatingProjectView: options.showCreatingProjectView,
+        showProjectCreationError: options.showProjectCreationError,
+        isSafari: $('body').attr('browser') === 'safari'
+      }));
+
+      this.renderDetailsView(options);
+
+      this.renderRepoList(options);
+
+      if (options.showCreatingProjectView) {
+        this.renderCreatingProject();
       }
 
-      if (showProjectCreationError) {
-        this.projectCreationErrorShown = true;
-        this.projectCreationErrorView = new ProjectCreationErrorView({
-          el: '#projectCreationError'
-        });
-        this.projectCreationErrorView.render();
-      } else {
-        this.projectCreationErrorShown = false;
+      if (options.showProjectCreationError) {
+        this.renderErrorView();
       }
 
       this.addClickToBlurListeners();

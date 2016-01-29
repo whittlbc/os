@@ -382,7 +382,7 @@ define(['jquery',
       this.tags = data;
     },
 
-    passType: function (type) {
+    passStage: function (type) {
       this.selectedType = type;
     },
 

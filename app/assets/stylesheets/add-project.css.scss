@@ -36,7 +36,7 @@ input {
   width: 100%;
 }
 
-.select-project-type-view {
+.select-project-stage-view {
   width: 100%;
   position: relative;
 }
@@ -75,7 +75,7 @@ input {
 }
 
 .project-source-selection-container,
-.project-type-selection-container {
+.project-stage-selection-container {
   width: 100%;
   position: absolute;
   top: 130px;
@@ -83,21 +83,16 @@ input {
   display: block;
 }
 
-.project-type-selection-container.only-two-choices,
-.project-source-selection-container.only-two-choices {
+.project-stage-selection-container,
+.project-source-selection-container {
   margin-left: 10%;
 }
 
-.project-type-selection-container.only-one-choice,
-.project-source-selection-container.only-one-choice {
-  margin-left: 20%;
-}
-
 .project-source-selection,
-.project-type-selection {
+.project-stage-selection {
   display: inline-block;
   height: 200px;
-  width: 33.33%;
+  width: 40%;
   cursor: pointer;
   float: left;
   position: relative;
@@ -113,7 +108,7 @@ input {
   }
 }
 
-.project-type-selection {
+.project-stage-selection {
   svg {
     height: 120px;
     margin-top: 15px;
@@ -123,18 +118,8 @@ input {
   }
 }
 
-.project-type-selection.only-two-choices,
-.project-source-selection.only-two-choices {
-    width: 40%;
-}
-
-.project-type-selection.only-one-choice,
-.project-source-selection.only-one-choice {
-  width: 60%;
-}
-
 .project-source-selection-text,
-.project-type-selection-text {
+.project-stage-selection-text {
   height: 40px;
   width: 100%;
   color: black;
@@ -147,7 +132,7 @@ input {
 }
 
 .select-project-source-text,
-.select-project-type-text{
+.select-project-stage-text {
   height: 50px;
   line-height: 50px;
   width: 100%;
@@ -156,14 +141,6 @@ input {
   color: black;
   text-align: center;
   font-size: 20px;
-}
-
-.no-pull-from-ideas {
-  width: 50%;
-}
-
-.up-for-grabs-type-selected {
-  width: 100%;
 }
 
 .modal-footer {

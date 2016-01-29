@@ -11,6 +11,7 @@ define(['jquery',
   var BreadCrumbView = Backbone.View.extend({
 
     initialize: function () {
+      this.step2Text = 'Source';
     },
 
     events: {
@@ -18,18 +19,14 @@ define(['jquery',
     },
 
     handleBreadCrumbClick: function (e) {
-      var self = this;
-      if (_.contains(e.currentTarget.classList, 'breadcrumb-clickable')) {
+      if ($(e.currentTarget).hasClass('breadcrumb-clickable')) {
         this.trigger('breadCrumbNav', e.currentTarget.id);
       }
     },
 
-    step2UFG: function () {
-      this.$el.find('#source-panel .title-div > span').html('Up for Grabs');
-    },
-
-    step2Source: function () {
-      this.$el.find('#source-panel .title-div > span').html('Source');
+    setStep2Text: function (text) {
+      this.$el.find('#source-panel .title-div > span').html(text);
+      this.step2Text = text;
     },
 
     render: function (options) {
@@ -44,6 +41,7 @@ define(['jquery',
         breadCrumb1Current: options.breadCrumb1Current,
         breadCrumb2Current: options.breadCrumb2Current,
         breadCrumb3Current: options.breadCrumb3Current,
+        step2Text: this.step2Text,
         isSafari: $('body').attr('browser') === 'safari'
       }));
     }

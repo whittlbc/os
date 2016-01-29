@@ -118,6 +118,8 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
     PROJECT_TYPES: ['ideas', 'launched'],
     GRAMMATICAL_PROJECT_TYPES: ['Ideas', 'Launched'],
 
+    SOURCE_TYPES: ['gh', 'scratch'],
+
     MY_GH_HEADER_TOKEN: '202171c69b06bbe92b666e1a5e3a9b7981a6fced',
 
     getTimeAgo: function (dateStr) {
