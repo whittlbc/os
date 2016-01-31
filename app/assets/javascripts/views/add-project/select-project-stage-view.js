@@ -60,7 +60,7 @@ define(['jquery',
       // IDEA
       this.stage1 = new SVG({
         el: this.$el.find('[data-stage=ideas] > .create-project-icon'),
-        svg: 'on-the-fence'
+        svg: 'idea'
       });
 
       this.$stage1Text = this.$el.find('[data-stage=ideas] > .project-stage-selection-text');
