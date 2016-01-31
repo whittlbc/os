@@ -335,8 +335,8 @@ define(['jquery',
           }
         },
         onBlur: function () {
-          self.seekings = self.seekingSelectize.getValue();
-          Backbone.EventBroker.trigger('seeking:updated', self.seekings);  // prolly don't need
+          self.seeking = self.seekingSelectize.getValue();
+          Backbone.EventBroker.trigger('seeking:updated', self.seeking);  // prolly don't need
         },
         selectOnTab: false,
         render: {
@@ -356,12 +356,12 @@ define(['jquery',
       this.seekingSelectize.on('item_add', function (value, $item) {
         $item.css('color', '#00A6C9');
         $item.css('border', '2px solid #00A6C9');
-        self.seekings = self.seekingSelectize.getValue();
+        self.seeking = self.seekingSelectize.getValue();
         self.adjustHeightOfSeekingInput();
       });
 
       this.seekingSelectize.on('item_remove', function (value, $item) {
-        self.seekings = self.seekingSelectize.getValue();
+        self.seeking = self.seekingSelectize.getValue();
         self.adjustHeightOfSeekingInput();
       });
     },
@@ -391,11 +391,13 @@ define(['jquery',
       var $licenseSelect = this.$el.find('#add-project-license-selection').selectize(options);
       var licenseSelectize = $licenseSelect[0].selectize;
       this.licenseSelectize = licenseSelectize;
+
       this.licenseSelectize.on('item_add', function () {
-        self.licenseValue = self.licenseSelectize.getValue();
+        self.license = self.licenseSelectize.getValue();
       });
+
       this.licenseSelectize.on('item_remove', function () {
-        self.licenseValue = self.licenseSelectize.getValue();
+        self.license = self.licenseSelectize.getValue();
       });
     },
 
@@ -507,7 +509,7 @@ define(['jquery',
 
     getData: function () {
 
-      if (_.isEmpty(this.irc.channel.trim()) || _.isEmpty(this.irc.network)) {
+      if (_.isEmpty((this.irc.channel || '').trim()) || _.isEmpty(this.irc.network)) {
         this.irc = null;
       }
 
@@ -516,16 +518,20 @@ define(['jquery',
         subtitle: this.subtitle,
         description: this.description,
         langsFrames: this.langsFrames,
-        domains: this.domain,
+        domains: this.domains,
         seeking: this.seeking,
         repoName: this.repoName,
         sendInvites: this.sendInvites,
-        license: this.license,
-        privacy: this.privacy,
+        license: this.license ? [this.license] : [],
+        privacy: this.getPrivacy(),
         slackURL: this.slackURL,
         hipChatURL: this.hipChatURL,
         irc: this.irc
       };
+    },
+
+    getPrivacy: function () {
+      return (this.showPrivacy && this.privacy) ? [this.privacy] : [];
     },
 
     blurAllInputs: function () {
@@ -659,6 +665,8 @@ define(['jquery',
 
       this.storeOptions(options);
 
+      this.showPrivacy = this.stageIsIdea() && !options.upForGrabs;
+
       this.$el.html(DetailsViewTpl({
         launched: this.stageIsLaunched(),
         hideDetailsView: options.hideDetailsView,
@@ -670,9 +678,9 @@ define(['jquery',
         showLicense: this.stageIsLaunched(),
         showSeeking: !options.upForGrabs,
         sendInvites: this.sendInvites,
-        showPrivacy: this.stageIsIdea() && !options.upForGrabs,
+        showPrivacy: this.showPrivacy,
         requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
-        openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
+        openPrivacy: this.privacy === OSUtil.OPEN_PRIVACY,
         showIntegrations: this.stageIsLaunched(),
         slackURL: this.slackURL,
         hipChatURL: this.hipChatURL,

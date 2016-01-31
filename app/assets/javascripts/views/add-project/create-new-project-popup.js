@@ -215,11 +215,18 @@ define(['jquery',
     createProject: function () {
       var self = this;
       this.createBtnClickCount = 0;
+
       this.hideSlideOutConfirmCreateMessage();
+
       this.hideFooter();
+
       this.newProjectData = this.panel3.detailsView.getData();
+
       this.renderBreadCrumbView(true);
-      this.panel3.render({showCreatingProjectView: true});
+
+      this.panel3.render({ showCreatingProjectView: true });
+
+      var newProjectStatus = OSUtil.PROJECT_TYPES.indexOf(this.panel1.selectedStage);
 
       var projectData = {
         user_uuid: this.currentUser.get('uuid'),
@@ -227,13 +234,16 @@ define(['jquery',
         subtitle: this.newProjectData.subtitle,
         repo_name: this.newProjectData.repoName,
         description: this.newProjectData.description,
-        license: this.newProjectData.license ? [this.newProjectData.license] : [],
-        status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
         langs_and_frames: this.newProjectData.langsFrames,
-        privacy: (this.newProjectData.privacy && this.status != 0) ? [this.newProjectData.privacy] : [],
+        domains: this.newProjectData.domains,
+        seeking: this.newProjectData.seeking,
+        license: this.newProjectData.license,
+        status: newProjectStatus,
+        privacy: this.newProjectData.privacy,
         slackURL: this.newProjectData.slackURL,
         hipChatURL: this.newProjectData.hipChatURL,
-        irc: this.newProjectData.irc
+        irc: this.newProjectData.irc,
+        up_for_grabs: newProjectStatus == 0 && this.panel2.upForGrabs === true
       };
 
       this.disableAddProjectBtn();
@@ -241,10 +251,10 @@ define(['jquery',
       var project = new Project();
       project.create(projectData, {
         success: function (project) {
-          console.log('SUCCESSFULLY CREATED PROJECT!');
-          self.showProjectCreationSuccess(project.uuid);
+          setTimeout(function () {
+            self.showProjectCreationSuccess(project.uuid);
+          }, 1000);
         }, error: function () {
-          console.log('ERROR CREATING PROJECT');
           self.showProjectCreationError();
         }
       });
@@ -267,19 +277,18 @@ define(['jquery',
 
     showProjectCreationSuccess: function (newProjectUUID) {
       var self = this;
-      if (this.masterMap[this.masterMap['selectedType']]['selectedSource'] == OSUtil.SOURCE_MAP['pull-from-ideas']) {
-        this.inactivateOldUpForGrabsProject();
+
+      Backbone.EventBroker.trigger('create-project-modal:hide');
+
+      if (self.newProjectData.sendInvites === true) {
+        Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
       }
+
+      OSUtil.navToProject(newProjectUUID);
+
       setTimeout(function () {
-        Backbone.EventBroker.trigger('create-project-modal:hide');
-        if (self.newProjectData.sendInvites === true) {
-          Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
-        }
-        OSUtil.navToProject(newProjectUUID);
-        setTimeout(function () {
-          self.resetPopup();
-        }, 200);
-      }, 1000);
+        self.resetPopup();
+      }, 200);
     },
 
     showProjectCreationError: function () {
