@@ -420,58 +420,6 @@ define(['jquery',
       this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
 
       this.renderBreadCrumbView();
-
-
-
-      //
-      //var options = {};
-      //
-      //if (this.masterMap['selectedType'] != OSUtil.TYPE_MAP[type] && this.masterMap['selectedType'] != null) {
-      //  var switchedTypes = true;
-      //}
-      //
-      //this.masterMap['selectedType'] = OSUtil.TYPE_MAP[type];
-      //
-      //this.panel3.passType(OSUtil.TYPE_MAP[type]);
-      //
-      //if (type == this.type1) {
-      //
-      //  this.breadCrumbView.step2UFG();
-      //  //this.panel2.selectedSource = this.masterMap['type1']['selectedSource'];
-      //  options.idea = true;
-      //
-      //  this.panel2.render({ idea: true });
-      //
-      //} else {
-      //
-      //  this.breadCrumbView.step2Source();
-      //}
-      //
-      //this.slideIndex = 1;
-      //var selectedSource = this.getSourceForType(OSUtil.TYPE_MAP[type]);
-      //options.selectedSource = selectedSource || null;
-      //
-      //this.panel2.render(options);
-      //
-      //this.owl.goTo(this.slideIndex);
-      //
-      //this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
-      //
-      //this.renderBreadCrumbView();
-      //
-      //// if the user switched types and a source is already selected, re-render panel 3 to ensure
-      //// it will show the correct UI if the user decides to nav with the next btn
-      //if (switchedTypes && selectedSource != null) {
-      //  var options = {
-      //    selectedSource: selectedSource,
-      //    projectData: this.getSelectedSourceObj()
-      //  };
-      //  if (OSUtil.REVERSE_SOURCE_MAP[selectedSource] == this.source1 && this.repos == null) {
-      //    options.showReposLoadingView = true;
-      //    this.getGHRepos();
-      //  }
-      //  this.panel3.render(options);
-      //}
     },
 
     handleSourceSelected: function (source) {

@@ -36,16 +36,9 @@ input {
   width: 100%;
 }
 
-.select-project-stage-view {
-  width: 100%;
-  position: relative;
-}
-
-.select-project-source-view {
-  width: 100%;
-  position: relative;
-}
-
+.select-project-stage-view,
+.select-project-source-view
+.select-ufg-view,
 .add-project-details-view {
   width: 100%;
   position: relative;
@@ -75,7 +68,8 @@ input {
 }
 
 .project-source-selection-container,
-.project-stage-selection-container {
+.project-stage-selection-container,
+.select-ufg-container {
   width: 100%;
   position: absolute;
   top: 130px;
@@ -84,12 +78,15 @@ input {
 }
 
 .project-stage-selection-container,
-.project-source-selection-container {
+.project-source-selection-container,
+.select-ufg-container {
   margin-left: 10%;
 }
 
 .project-source-selection,
-.project-stage-selection {
+.project-stage-selection,
+.select-ufg-icon-container,
+.select-ufg-choice-container {
   display: inline-block;
   height: 200px;
   width: 40%;
@@ -98,13 +95,62 @@ input {
   position: relative;
 }
 
-.project-source-selection {
+.select-ufg-icon-container,
+.select-ufg-choice-container {
+  cursor: default;
+}
+
+.ufg-choice-container {
+  height: 50%;
+  padding-top: 10px;
+}
+
+.ufg-choice {
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Proxima-Nova-SemiBold';
+  cursor: pointer;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  line-height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ufg-choice.selected {
+  background-color: #00A6C9;
+  color: white;
+}
+
+.ufg-choice.selected:hover {
+  background-color: #00A6C9;
+  color: white;
+}
+
+.ufg-choice:hover {
+  background-color: #F1F1F9;
+}
+
+.project-source-selection,
+.select-ufg-icon-container {
   svg {
-    height: 115px;
     margin-top: 17.5px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+.project-source-selection {
+  svg {
+    height: 115px;
+  }
+}
+
+.select-ufg-icon-container {
+  svg {
+   height: 150px;
   }
 }
 
@@ -132,7 +178,8 @@ input {
 }
 
 .select-project-source-text,
-.select-project-stage-text {
+.select-project-stage-text,
+.select-ufg-text {
   height: 50px;
   line-height: 50px;
   width: 100%;

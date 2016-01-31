@@ -23,6 +23,8 @@ define(['jquery',
 
     initialize: function () {
       var self = this;
+      this.upForGrabs = null;
+
       var types = OSUtil.PROJECT_TYPES;
       var templates = [SelectUpForGrabsTpl, SelectProjectSourceViewTpl];
       var options = ['getUpForGrabsOptions', 'getSourceOptions'];
@@ -86,7 +88,7 @@ define(['jquery',
       }
     },
 
-    renderIcons: function () {
+    renderIcons: function (options) {
       var self = this;
 
       // Github
@@ -120,10 +122,23 @@ define(['jquery',
       });
 
       this.createFromScratch.render();
+
+      if (options.selectedStage === OSUtil.PROJECT_TYPES[0]) {
+        console.log('should have rendered icon', this.$el.find('.ufg-icon'));
+        this.ufgIcon = new SVG({
+          el: this.$el.find('.ufg-icon'),
+          svg: 'up-for-grabs'
+        });
+
+        this.ufgIcon.render();
+      }
     },
 
     getUpForGrabsOptions: function () {
-      return { upForGrabs: this.upForGrabs };
+      return {
+        upForGrabsYes: this.upForGrabs === true,
+        upForGrabsNo: this.upForGrabs === false
+      };
     },
 
     getSourceOptions: function () {
@@ -137,11 +152,11 @@ define(['jquery',
       options = options || {};
 
       var template = this.templateMap[options.selectedStage || OSUtil.PROJECT_TYPES[1]];
-      var options = this[this.optionsMap[options.selectedStage || OSUtil.PROJECT_TYPES[1]]]();
+      var templateOptions = this[this.optionsMap[options.selectedStage || OSUtil.PROJECT_TYPES[1]]]();
 
-      this.$el.html(template(options));
+      this.$el.html(template(templateOptions));
 
-      this.renderIcons();
+      this.renderIcons(options);
 
       if (this.selectedSource) {
         this.toggleHighlight(OSUtil.SOURCE_TYPES.indexOf(this.selectedSource), true);
