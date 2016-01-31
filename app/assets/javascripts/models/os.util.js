@@ -127,6 +127,21 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       return $.timeago(moment.utc(date).utcOffset(date.getTimezoneOffset()).format("MM-DD-YYYY HH:mm Z"));
     },
 
+    LICENSE_OPTIONS: [
+      {
+        "id": "MIT",
+        "title": "MIT"
+      },
+      {
+        "id": "GPL",
+        "title": "GPL"
+      },
+      {
+        "id": "BSD",
+        "title": "BSD"
+      }
+    ],
+
     DOMAIN_FILTERS : {
       "Academia": {
         "id": "Academia",

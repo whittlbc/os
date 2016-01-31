@@ -70,32 +70,32 @@ define(['jquery',
     },
 
     getSelectedSource: function () {
-      var selectedType = this.masterMap['selectedType'];
-      if (selectedType == null) {
-        return null;
-      }
-      var typeObj = this.masterMap[selectedType];
-      if (typeObj == null) {
-        return null;
-      }
-      var selectedSource = typeObj['selectedSource'];
-      return (selectedSource != null) ? selectedSource : null;
+      //var selectedType = this.masterMap['selectedType'];
+      //if (selectedType == null) {
+      //  return null;
+      //}
+      //var typeObj = this.masterMap[selectedType];
+      //if (typeObj == null) {
+      //  return null;
+      //}
+      //var selectedSource = typeObj['selectedSource'];
+      //return (selectedSource != null) ? selectedSource : null;
     },
 
     getSelectedSourceObj: function () {
-      var selectedType = this.masterMap['selectedType'];
-      if (selectedType == null) {
-        return null;
-      }
-      var typeObj = this.masterMap[selectedType];
-      if (typeObj == null) {
-        return null;
-      }
-      var selectedSource = typeObj['selectedSource'];
-      if (selectedSource == null) {
-        return null;
-      }
-      return typeObj[selectedSource];
+      //var selectedType = this.masterMap['selectedType'];
+      //if (selectedType == null) {
+      //  return null;
+      //}
+      //var typeObj = this.masterMap[selectedType];
+      //if (typeObj == null) {
+      //  return null;
+      //}
+      //var selectedSource = typeObj['selectedSource'];
+      //if (selectedSource == null) {
+      //  return null;
+      //}
+      //return typeObj[selectedSource];
     },
 
     handleTitleUpdate: function (title) {
@@ -476,6 +476,7 @@ define(['jquery',
 
     handleSourceSelected: function (source) {
       this.stepInfo.source = source;
+
       var options = { selectedSource: source };
 
       if (source == OSUtil.SOURCE_TYPES[0] && this.repos == null) {
@@ -483,6 +484,18 @@ define(['jquery',
         this.getGHRepos();
       }
 
+      this.continueWithPanel2Selection(options);
+    },
+
+    handleUFGSelected: function (bool) {
+      this.stepInfo.ufg = bool;
+
+      this.continueWithPanel2Selection({
+        upForGrabs: bool
+      });
+    },
+
+    continueWithPanel2Selection: function (options) {
       this.panel3.render(options);
 
       this.slideIndex = 2;
@@ -544,12 +557,19 @@ define(['jquery',
 
     addPanelListeners: function () {
       var self = this;
+
       this.listenTo(this.panel1, 'stage:selected', function (stage) {
         self.handleStageSelected(stage);
       });
+
       this.listenTo(this.panel2, 'source:selected', function (source) {
         self.handleSourceSelected(source);
       });
+
+      this.listenTo(this.panel2, 'ufg:selected', function (ufg) {
+        self.handleUFGSelected(ufg);
+      });
+
       this.listenTo(this.panel3, 'repo:getDetails', function (name) {
         self.getRepoDetails(name);
       });

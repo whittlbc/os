@@ -8,35 +8,21 @@ define(['jquery',
   'selectize',
   'velocity'
 ], function ($,
-             Backbone,
-             _,
-             OSUtil,
-             AllLangs,
-             TextInfoBubble,
-             DetailsViewTpl) {
+   Backbone,
+   _,
+   OSUtil,
+   AllLangs,
+   TextInfoBubble,
+   DetailsViewTpl) {
   'use strict';
 
   var DetailsView = Backbone.View.extend({
 
     initialize: function () {
       this.getAllLanguages();
+      this.formatDomains();
       this.extraInfoExpandDuration = 200;
       this.toggleDescriptionSizeDuration = 275;
-      this.licenseItems = [
-        {
-          "id": "MIT",
-          "title": "MIT"
-        },
-        {
-          "id": "GPL",
-          "title": "GPL"
-        },
-        {
-          "id": "BSD",
-          "title": "BSD"
-        }
-      ];
-
       this.preventKeys = [8, 9, 13];
     },
 
@@ -51,7 +37,6 @@ define(['jquery',
       'blur [name=slack-api-key]': 'handleSlackAPIKeyBlur',
       'blur [name=hipchat]': 'handleHipChatBlur',
       'blur [name=irc]': 'handleIRCChannelBlur',
-      'click .add-project-anon-choice': 'handleAnonSelection',
       //'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
       'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
       'keyup [name=add-project-repo-name]': 'handleKeyUpRepoName',
@@ -64,6 +49,14 @@ define(['jquery',
       this.dropdownItems = this.allLangs.dropdown_items;
       this.allFrames = this.allLangs.all_frames;
       this.colors_and_initials = this.allLangs.colors_and_initials;
+    },
+
+    formatDomains: function () {
+      this.domainOptions = [];
+
+      for (var key in OSUtil.DOMAIN_FILTERS) {
+        this.domainOptions.push(OSUtil.DOMAIN_FILTERS[key]);
+      }
     },
 
     hideErrorMessage: function (e) {
@@ -164,12 +157,6 @@ define(['jquery',
       }
     },
 
-    handleAnonSelection: function (e) {
-      if (!$(e.currentTarget).hasClass('active-anon')) {
-        ($(e.currentTarget).attr('name') == 'anon-yes') ? this.switchToAnon() : this.switchToKnown();
-      }
-    },
-
     handleSendInvitesSelection: function (e) {
       if (!$(e.currentTarget).hasClass('active-send-invites')) {
         ($(e.currentTarget).attr('name') == 'send-invites-yes') ? this.switchToSendInvitesYes() : this.switchToSendInvitesNo();
@@ -188,20 +175,6 @@ define(['jquery',
       this.$el.find('[name=request]').addClass('active-privacy');
       this.privacy = OSUtil.REQUEST_PRIVACY;
       Backbone.EventBroker.trigger('privacy:updated', this.privacy);
-    },
-
-    switchToKnown: function () {
-      this.$el.find('[name=anon-yes]').removeClass('active-anon');
-      this.$el.find('[name=anon-no]').addClass('active-anon');
-      this.anon = false;
-      Backbone.EventBroker.trigger('anon:updated', this.anon);
-    },
-
-    switchToAnon: function () {
-      this.$el.find('[name=anon-no]').removeClass('active-anon');
-      this.$el.find('[name=anon-yes]').addClass('active-anon');
-      this.anon = true;
-      Backbone.EventBroker.trigger('anon:updated', this.anon);
     },
 
     switchToSendInvitesYes: function () {
@@ -230,13 +203,29 @@ define(['jquery',
       Backbone.EventBroker.trigger('description:updated', this.description);
     },
 
-    adjustHeightOfParent: function () {
-      var inputHeight = this.$el.find('.selectize-control.multi').height();
-      if (inputHeight > 40) {
-        this.$el.find('.add-project-langs-frames-container').height(inputHeight + 22);
+    adjustHeightOfLangsFramesInput: function () {
+      this.adjustHeightOfInput('.add-project-langs-frames-container');
+    },
+
+    adjustHeightOfDomainInput: function () {
+      this.adjustHeightOfInput('.add-project-domains-container');
+    },
+
+    adjustHeightOfSeekingInput: function () {
+      this.adjustHeightOfInput('.add-project-seeking-container');
+    },
+
+    adjustHeightOfInput: function (className) {
+      var inputHeight = this.$el.find(className +  ' .selectize-control.multi').height();
+      var height;
+
+      if (inputHeight > 45) {
+        height = inputHeight + 18;
       } else {
-        this.$el.find('.add-project-langs-frames-container').height(60);
+        height = 60;
       }
+
+      this.$el.find(className).height(height);
     },
 
     initLangFramesDropdown: function () {
@@ -269,18 +258,112 @@ define(['jquery',
         $item.css('color', self.colors_and_initials[value]['color']);
         $item.css('border', '2px solid ' + self.colors_and_initials[value]['color']);
         if (self.allFrames[value] && !_.contains(self.langsFramesValue, self.allFrames[value])) {
-          self.langsFramesValue = self.langFrameSelectize.getValue();
+          self.langsFrames = self.langFrameSelectize.getValue();
           self.langFrameSelectize.addItem(self.allFrames[value]);
         } else {
-          self.langsFramesValue = self.langFrameSelectize.getValue();
+          self.langsFrames = self.langFrameSelectize.getValue();
         }
-        self.adjustHeightOfParent();
+        self.adjustHeightOfLangsFramesInput();
       });
       this.langFrameSelectize.on('item_remove', function (value, $item) {
-        self.langsFramesValue = self.langFrameSelectize.getValue();
-        self.adjustHeightOfParent();
+        self.langsFrames = self.langFrameSelectize.getValue();
+        self.adjustHeightOfLangsFramesInput();
       });
 
+    },
+
+    initDomainsDropdown: function () {
+      var self = this;
+      var options = {
+        theme: 'links',
+        maxItems: null,
+        valueField: 'id',
+        searchField: 'title',
+        options: this.domainOptions,
+        onFocus: function () {
+          if (self.stageIsIdea()) {
+            setTimeout(function () {
+              self.trigger('scroll:bottom');
+            }, 5);
+          }
+        },
+        onBlur: function () {
+          self.domains = self.domainSelectize.getValue();
+          Backbone.EventBroker.trigger('domains:updated', self.domains);  // prolly don't need
+        },
+        selectOnTab: false,
+        render: {
+          option: function (data, escape) {
+            return '<div class="option title">' + escape(data.title) + '</div>';
+          },
+          item: function (data, escape) {
+            return '<div class="item">' + escape(data.title) + '</div>';
+          }
+        }
+      };
+
+      var $domainSelect = this.$el.find('#add-project-domains-selection').selectize(options);
+      var domainSelectize = $domainSelect[0].selectize;
+      this.domainSelectize = domainSelectize;
+
+      this.domainSelectize.on('item_add', function (value, $item) {
+        $item.css('color', '#00A6C9');
+        $item.css('border', '2px solid #00A6C9');
+        self.domains = self.domainSelectize.getValue();
+        self.adjustHeightOfDomainInput();
+      });
+
+      this.domainSelectize.on('item_remove', function (value, $item) {
+        self.domains = self.domainSelectize.getValue();
+        self.adjustHeightOfDomainInput();
+      });
+    },
+
+    initSeekingDropdown: function () {
+      var self = this;
+      var options = {
+        theme: 'links',
+        maxItems: null,
+        valueField: 'id',
+        searchField: 'title',
+        options: this.getSeekingOptions(),
+        onFocus: function () {
+          if (self.stageIsIdea()) {
+            setTimeout(function () {
+              self.trigger('scroll:bottom');
+            }, 1);
+          }
+        },
+        onBlur: function () {
+          self.seekings = self.seekingSelectize.getValue();
+          Backbone.EventBroker.trigger('seeking:updated', self.seekings);  // prolly don't need
+        },
+        selectOnTab: false,
+        render: {
+          option: function (data, escape) {
+            return '<div class="option title">' + escape(data.title) + '</div>';
+          },
+          item: function (data, escape) {
+            return '<div class="item">' + escape(data.title) + '</div>';
+          }
+        }
+      };
+
+      var $seekingSelect = this.$el.find('#add-project-seeking-selection').selectize(options);
+      var seekingSelectize = $seekingSelect[0].selectize;
+      this.seekingSelectize = seekingSelectize;
+
+      this.seekingSelectize.on('item_add', function (value, $item) {
+        $item.css('color', '#00A6C9');
+        $item.css('border', '2px solid #00A6C9');
+        self.seekings = self.seekingSelectize.getValue();
+        self.adjustHeightOfSeekingInput();
+      });
+
+      this.seekingSelectize.on('item_remove', function (value, $item) {
+        self.seekings = self.seekingSelectize.getValue();
+        self.adjustHeightOfSeekingInput();
+      });
     },
 
     initLicenseDropdown: function () {
@@ -290,7 +373,7 @@ define(['jquery',
         maxItems: 1,
         valueField: 'id',
         searchField: 'title',
-        options: this.licenseItems,
+        options: OSUtil.LICENSE_OPTIONS,
         onBlur: function () {
           self.license = self.licenseSelectize.getValue();
           Backbone.EventBroker.trigger('license:updated', self.license);
@@ -352,8 +435,15 @@ define(['jquery',
       }
     },
 
-    checkIfShowRepoNameAndLicense: function () {
-      return ((this.selectedType == OSUtil.TYPE_MAP['on-the-fence']) || this.selectedType == OSUtil.TYPE_MAP['launched']);
+    getSeekingOptions: function () {
+      var options = [];
+      var map = this.stageIsIdea() ? OSUtil.SEEKING_IDEAS_FILTERS : OSUtil.SEEKING_LAUNCHED_FILTERS;
+
+      for (var key in map) {
+        options.push(map[key]);
+      }
+
+      return options;
     },
 
     resetInfo: function () {
@@ -382,8 +472,8 @@ define(['jquery',
       this.tags = data;
     },
 
-    passStage: function (type) {
-      this.selectedType = type;
+    passStage: function (stage) {
+      this.selectedStage = stage;
     },
 
     checkIfHasTitle: function () {
@@ -417,7 +507,7 @@ define(['jquery',
 
     getData: function () {
 
-      if (_.isEmpty(this.irc.channel) || _.isEmpty(this.irc.network)) {
+      if (_.isEmpty(this.irc.channel.trim()) || _.isEmpty(this.irc.network)) {
         this.irc = null;
       }
 
@@ -426,13 +516,13 @@ define(['jquery',
         subtitle: this.subtitle,
         description: this.description,
         langsFrames: this.langsFrames,
+        domains: this.domain,
+        seeking: this.seeking,
         repoName: this.repoName,
         sendInvites: this.sendInvites,
         license: this.license,
         privacy: this.privacy,
-        anon: this.anon,
         slackURL: this.slackURL,
-        slackAPIKey: this.slackAPIKey,
         hipChatURL: this.hipChatURL,
         irc: this.irc
       };
@@ -458,6 +548,14 @@ define(['jquery',
       if (this.ircNetworkSelectize) {
         this.ircNetworkSelectize.blur();
       }
+
+      if (this.domainSelectize) {
+        this.domainSelectize.blur();
+      }
+
+      if (this.seekingSelectize) {
+        this.seekingSelectize.blur();
+      }
     },
 
     addStopPropagationListeners: function () {
@@ -481,60 +579,35 @@ define(['jquery',
       });
     },
 
-    render: function (options) {
-      var self = this;
-      options = options || {};
-
+    storeOptions: function (options) {
       if (options.selectedSource) {
         this.selectedSource = options.selectedSource;
       }
 
-      this.title = (options.projectData) ? options.projectData.title : null;
-      this.subtitle = (options.projectData) ? options.projectData.subtitle : null;
-      this.description = (options.projectData) ? options.projectData.description : null;
-      this.langsFrames = (options.projectData) ? options.projectData.langsFrames : null;
-      this.repoName = (options.projectData) ? options.projectData.repoName : null;
-      this.sendInvites = (options.projectData) ? options.projectData.sendInvites : false;
-      this.license = (options.projectData) ? options.projectData.license : null;
-      this.privacy = (options.projectData) ? options.projectData.privacy : OSUtil.REQUEST_PRIVACY;
-      if (this.privacy == null) {
-        this.privacy = OSUtil.OPEN_PRIVACY;
-      }
-      this.anon = (options.projectData) ? options.projectData.anon : false;
+      this.title = (options.projectData || {}).title || null;
+      this.subtitle = (options.projectData || {}).subtitle || null;
+      this.description = (options.projectData || {}).description || null;
+      this.langsFrames = (options.projectData || {}).langsFrames || null;
+      this.repoName = (options.projectData || {}).repoName || null;
+      this.sendInvites = (options.projectData || {}).sendInvites || false;
+      this.license = (options.projectData || {}).license || null;
+      this.privacy = (options.projectData || {}).privacy || OSUtil.OPEN_PRIVACY;
+      this.slackURL = (options.projectData || {}).slackURL || null;
+      this.slackAPIKey = (options.projectData || {}).slackAPIKey || null;
+      this.hipChatURL = (options.projectData || {}).hipChatURL || null;
+      this.irc = (options.projectData || {}).irc || {};
+    },
 
-      this.slackURL = (options.projectData) ? options.projectData.slackURL : null;
-      this.slackAPIKey = (options.projectData) ? options.projectData.slackAPIKey : null;
-      this.hipChatURL = (options.projectData) ? options.projectData.hipChatURL : null;
-      this.irc = (options.projectData && options.projectData.irc) ? options.projectData.irc : {};
+    stageIsIdea: function () {
+      return this.selectedStage === OSUtil.PROJECT_TYPES[0];
+    },
 
-      var hideDetailsView = options.hideDetailsView;
-      var showRepoNameAndLicense = this.checkIfShowRepoNameAndLicense();
+    stageIsLaunched: function () {
+      return this.selectedStage === OSUtil.PROJECT_TYPES[1];
+    },
 
-      var showPrivacy = this.selectedType != OSUtil.TYPE_MAP['up-for-grabs'];
-      var showIntegrations = showPrivacy;
-
-      this.$el.html(DetailsViewTpl({
-        onTheFenceOrLaunchedNoPullFromIdeas: showRepoNameAndLicense,
-        launched: this.selectedType == OSUtil.TYPE_MAP['launched'],
-        hideDetailsView: hideDetailsView,
-        title: this.title,
-        subtitle: this.subtitle,
-        description: this.description,
-        repoName: this.repoName,
-        sendInvites: this.sendInvites,
-        showPrivacy: showPrivacy,
-        requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
-        openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
-        showAnon: this.selectedType == OSUtil.TYPE_MAP['up-for-grabs'],
-        postAnon: this.anon,
-        showIntegrations: showIntegrations,
-        slackURL: this.slackURL,
-        slackAPIKey: this.slackAPIKey,
-        hipChatURL: this.hipChatURL,
-        ircChannel: this.irc && this.irc.channel ? this.irc.channel : null
-      }));
-
-      if (this.dropdownItems && !options.hideDetailsView) {
+    renderLangsFramesDropdown: function () {
+      if (this.dropdownItems) {
         this.initLangFramesDropdown();
         if (this.langsFrames != null) {
           for (var i = 0; i < this.langsFrames.length; i++) {
@@ -542,57 +615,85 @@ define(['jquery',
           }
         }
       }
+    },
 
-      if (!options.hideDetailsView && showRepoNameAndLicense) {
+    renderDomainsDropdown: function () {
+      var self = this;
+      this.initDomainsDropdown();
+
+      if (!_.isEmpty(this.domains)) {
+        _.each(this.domains, function (domain) {
+          self.domainSelectize.addItem(domain);
+        });
+      }
+    },
+
+    renderSeekingDropdown: function () {
+      var self = this;
+      this.initSeekingDropdown();
+
+      if (!_.isEmpty(this.seeking)) {
+        _.each(this.seeking, function (item) {
+          self.seekingSelectize.addItem(item);
+        });
+      }
+    },
+
+    renderLicenseDropdown: function () {
+      if (this.stageIsLaunched()) {
         this.initLicenseDropdown();
         if (this.license != null) {
           this.licenseSelectize.addItem(this.license);
         }
       }
+    },
 
-      if (!options.hideDetailsView && showIntegrations) {
+    renderIntegrations: function () {
+      if (this.stageIsLaunched()) {
         this.initIRCNetworkDropdown();
       }
+    },
 
-      if (this.repoName) {
-        this.showInviteUsersQuestion();
+    render: function (options) {
+      options = options || {};
+
+      this.storeOptions(options);
+
+      this.$el.html(DetailsViewTpl({
+        launched: this.stageIsLaunched(),
+        hideDetailsView: options.hideDetailsView,
+        title: this.title,
+        subtitle: this.subtitle,
+        description: this.description,
+        repoName: this.repoName,
+        showRepo: this.stageIsLaunched(),
+        showLicense: this.stageIsLaunched(),
+        showSeeking: !options.upForGrabs,
+        sendInvites: this.sendInvites,
+        showPrivacy: this.stageIsIdea() && !options.upForGrabs,
+        requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
+        openPrivacy: this.privacy == OSUtil.OPEN_PRIVACY,
+        showIntegrations: this.stageIsLaunched(),
+        slackURL: this.slackURL,
+        hipChatURL: this.hipChatURL,
+        ircChannel: this.irc.channel
+      }));
+
+      if (!options.hideDetailsView) {
+        this.renderLangsFramesDropdown();
+        this.renderDomainsDropdown();
+
+        if (!options.upForGrabs) {
+          this.renderSeekingDropdown();
+        }
+
+        this.renderLicenseDropdown();
+        this.renderIntegrations();
       }
 
-      //this.findAPIKeyBubble = new TextInfoBubble({
-      //  el: '#findAPIKeyBubble'
-      //});
-      //
-      //this.findAPIKeyBubble.render({
-      //  text: 'Visit <a href="https://api.slack.com/web" target="_blank">api.slack.com/web</a> and scroll to the bottom of the page. If the key doesn\'t already exist, you can create one there.'
-      //});
-
-      //this.$infoBubble = this.findAPIKeyBubble.$el;
-      //this.$findKeyText = this.$el.find('.api-key-find > span');
-
-      // Hover listener for user info bubble
-      //this.$findKeyText.hover(function () {
-      //  if (!self.bubbleShown) {
-      //    self.$infoBubble.show();
-      //    self.bubbleShown = true;
-      //  }
-      //}, function () {
-      //  if (self.bubbleShown) {
-      //    self.$infoBubble.hide();
-      //    self.bubbleShown = false;
-      //  }
-      //});
-      //
-      //this.$infoBubble.hover(function () {
-      //  if (!self.bubbleShown) {
-      //    self.$infoBubble.show();
-      //    self.bubbleShown = true;
-      //  }
-      //}, function () {
-      //  if (self.bubbleShown) {
-      //    self.$infoBubble.hide();
-      //    self.bubbleShown = false;
-      //  }
-      //});
+      if (this.stageIsLaunched() && this.repoName) {
+        this.showInviteUsersQuestion();
+      }
 
       this.addStopPropagationListeners();
     }

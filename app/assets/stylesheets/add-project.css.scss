@@ -608,6 +608,7 @@ textarea[name="add-project-description"] {
 
 
 #detailsView {
+  padding-bottom: 20px;
 
   .selectize-control.single,
   .selectize-control.multi {
@@ -624,7 +625,10 @@ textarea[name="add-project-description"] {
 }
 
 
-.add-project-langs-frames-container {
+.add-project-langs-frames-container,
+.add-project-domains-container,
+.add-project-seeking-container {
+  min-height: 60px;
 
   .selectize-input {
     .item {
@@ -637,6 +641,8 @@ textarea[name="add-project-description"] {
 }
 
 .add-project-langs-frames-container,
+.add-project-domains-container,
+.add-project-seeking-container,
 .add-project-repo-name-container,
 .send-invites-question-container,
 .add-project-license-container,
@@ -650,11 +656,9 @@ textarea[name="add-project-description"] {
   position: relative;
 }
 
-.add-project-langs-frames-container {
-  min-height: 60px;
-}
-
 .add-project-langs-frames-text,
+.add-project-domains-text,
+.add-project-seeking-text,
 .add-project-repo-name-text,
 .add-project-license-text,
 .add-project-privacy-text,
@@ -672,7 +676,9 @@ textarea[name="add-project-description"] {
 
 .add-project-repo-name-text,
 .add-project-license-text,
-.add-project-langs-frames-text {
+.add-project-langs-frames-text,
+.add-project-domains-text,
+.add-project-seeking-text {
   width: 52.5%;
 }
 
@@ -682,6 +688,8 @@ textarea[name="add-project-description"] {
 }
 
 .add-project-langs-frames-selection-container,
+.add-project-domains-selection-container,
+.add-project-seeking-selection-container,
 .add-project-repo-name-input-container,
 .add-project-license-selection-container,
 .add-project-privacy-choices,
@@ -697,7 +705,9 @@ textarea[name="add-project-description"] {
 
 .add-project-repo-name-input-container,
 .add-project-license-selection-container,
-.add-project-langs-frames-selection-container {
+.add-project-langs-frames-selection-container,
+.add-project-domains-selection-container,
+.add-project-seeking-selection-container {
   width: 47.5%;
 }
 

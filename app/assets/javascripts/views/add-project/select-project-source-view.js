@@ -37,7 +37,19 @@ define(['jquery',
     },
 
     events: {
-      'click .project-source-selection': 'handleSourceSelected'
+      'click .project-source-selection': 'handleSourceSelected',
+      'click .ufg-choice': 'handleChoseUpForGrabs'
+    },
+
+    handleChoseUpForGrabs: function (e) {
+      var $target = $(e.currentTarget);
+      this.upForGrabs = $target.attr('data-ufg') === 'yes';
+
+      this.render({
+        selectedStage: OSUtil.PROJECT_TYPES[0]
+      });
+
+      this.trigger('ufg:selected', this.upForGrabs);
     },
 
     handleSourceSelected: function (e) {
