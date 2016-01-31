@@ -146,7 +146,7 @@ input {
 
 .project-source-selection {
   svg {
-    height: 115px;
+    height: 124px;
   }
 }
 
@@ -158,12 +158,20 @@ input {
 
 .project-stage-selection {
   svg {
-    height: 120px;
+    height: 129px;
     margin-top: 15px;
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+[data-stage="ideas"] {
+  svg {
+    height: 144px;
+    margin-top: -2px;
+  }
+
 }
 
 .project-source-selection-text,
@@ -175,7 +183,7 @@ input {
   line-height: 40px;
   font-size: 16px;
   position: absolute;
-  bottom: 0;
+  bottom: -9px;
   left: 0;
 }
 
