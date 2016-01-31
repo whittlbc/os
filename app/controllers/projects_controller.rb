@@ -165,21 +165,21 @@ class ProjectsController < ApplicationController
       user = User.find_by(uuid: allowable_params[:user_uuid])
 
       project_data = {
-          :title => allowable_params[:title],
-          :subtitle => allowable_params[:subtitle],
-          :user_id => user.id,
-          :uuid => UUIDTools::UUID.random_create.to_s,
-          :repo_name => allowable_params[:repo_name],
-          :description => allowable_params[:description],
-          :vote_count => 0,
-          :license => allowable_params[:license],
-          :status => allowable_params[:status],
-          :langs_and_frames => allowable_params[:langs_and_frames],
-          :anon => allowable_params[:anon],
-          :privacy => allowable_params[:privacy],
-          :domains => allowable_params[:domains],
-          :seeking => allowable_params[:seeking],
-          :contributors_count => 1
+        :title => allowable_params[:title],
+        :subtitle => allowable_params[:subtitle],
+        :user_id => user.id,
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :repo_name => allowable_params[:repo_name],
+        :description => allowable_params[:description],
+        :vote_count => 0,
+        :license => allowable_params[:license],
+        :status => allowable_params[:status],
+        :langs_and_frames => allowable_params[:langs_and_frames],
+        :privacy => allowable_params[:privacy],
+        :domains => allowable_params[:domains],
+        :seeking => allowable_params[:seeking],
+        :up_for_grabs => allowable_params[:up_for_grabs],
+        :contributors_count => 1
       }
 
       project = Project.new(project_data)
@@ -191,6 +191,7 @@ class ProjectsController < ApplicationController
           :user_id => user.id,
           :admin => true
       }
+
       Contributor.new(contrib_data).save!
 
       if !allowable_params[:slackURL].nil? && !allowable_params[:slackURL].empty?
