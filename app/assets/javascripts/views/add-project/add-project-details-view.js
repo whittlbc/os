@@ -45,6 +45,12 @@ define(['jquery',
     setHeight: function (height) {
     },
 
+    nullifySelectedRepo: function () {
+      if (this.repoListView) {
+        this.repoListView.nullifySelectedRepo();
+      }
+    },
+
     passTags: function (data) {
       this.tags = data;
     },
@@ -113,9 +119,8 @@ define(['jquery',
     renderDetailsView: function (options) {
       var self = this;
 
-      this.detailsView = new DetailsView({
-        el: this.$el.find('#detailsView')
-      });
+      this.detailsView = this.detailsView || new DetailsView();
+      this.detailsView.$el = this.$el.find('#detailsView');
 
       this.listenTo(this.detailsView, 'scroll:bottom', function () {
         self.scrollToBottomOfDetailsView();
@@ -154,11 +159,12 @@ define(['jquery',
     renderRepoList: function (options) {
       var self = this;
 
-      this.repoListView = new RepoListView({
-        el: this.$el.find('#reposView')
-      });
+      this.repoListView = this.repoListView || new RepoListView();
+
+      this.repoListView.$el = this.$el.find('#reposView');
 
       this.listenTo(this.repoListView, 'repo:selected', function (repoName) {
+        self.trigger('show-create-btn');
         self.handleRepoSelected(repoName);
       });
 
@@ -200,7 +206,7 @@ define(['jquery',
       }
 
       this.$el.html(AddProjectDetailsViewTpl({
-        showReposView: this.selectedSource == OSUtil.SOURCE_TYPES[0],
+        showReposView: this.selectedStage == OSUtil.PROJECT_TYPES[1] && this.selectedSource == OSUtil.SOURCE_TYPES[0],
         showCreatingProjectView: options.showCreatingProjectView,
         showProjectCreationError: options.showProjectCreationError,
         isSafari: $('body').attr('browser') === 'safari'

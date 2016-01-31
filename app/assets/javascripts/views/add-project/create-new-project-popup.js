@@ -414,6 +414,8 @@ define(['jquery',
 
 
     handleStageSelected: function (stage) {
+      this.stageChanged = (this.stepInfo.stage != stage);
+
       this.stepInfo.stage = stage;
 
       this.panel3.passStage(stage);
@@ -432,7 +434,12 @@ define(['jquery',
     },
 
     handleSourceSelected: function (source) {
-      this.stepInfo.source = source;
+      var changed = false;
+
+      if (this.stepInfo.source != source) {
+        this.stepInfo.source = source;
+        changed = true;
+      }
 
       var options = { selectedSource: source };
 
@@ -441,19 +448,26 @@ define(['jquery',
         this.getGHRepos();
       }
 
-      this.continueWithPanel2Selection(options);
+      this.continueWithPanel2Selection(options, changed);
     },
 
     handleUFGSelected: function (bool) {
-      this.stepInfo.ufg = bool;
+      var changed = false;
+
+      if (this.stepInfo.ufg != bool) {
+        this.stepInfo.ufg = bool;
+        changed = true;
+      }
 
       this.continueWithPanel2Selection({
         upForGrabs: bool
-      });
+      }, changed);
     },
 
-    continueWithPanel2Selection: function (options) {
-      this.panel3.render(options);
+    continueWithPanel2Selection: function (options, changed) {
+      if (changed) {
+        this.panel3.render(options);
+      }
 
       this.slideIndex = 2;
 
@@ -461,9 +475,16 @@ define(['jquery',
 
       this.toggleBottomNav(1, 0);
 
-      this.showCreateBtn();
+      if (!options.showReposLoadingView) {
+        this.showCreateBtn();
+      }
 
       this.renderBreadCrumbView();
+
+      if (this.stepInfo.source === OSUtil.SOURCE_TYPES[1]) {
+        this.panel3.nullifySelectedRepo();
+      }
+
     },
 
     showCreateBtn: function () {
@@ -529,6 +550,10 @@ define(['jquery',
 
       this.listenTo(this.panel3, 'repo:getDetails', function (name) {
         self.getRepoDetails(name);
+      });
+
+      this.listenTo(this.panel3, 'show-create-btn', function () {
+        self.showCreateBtn();
       });
     },
 

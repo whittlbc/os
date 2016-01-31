@@ -20,6 +20,10 @@ define(['jquery',
 
     events: {},
 
+    nullifySelectedRepo: function () {
+      this.selectedRepo = null;
+    },
+
     populate: function () {
       this.REPOS = [];
       this.$el.find('#addNewProjectRepoList').empty();
@@ -31,6 +35,7 @@ define(['jquery',
     },
 
     addRepoToList: function (name) {
+      var self = this;
       var repoListItem = new RepoListItem({
         tagName: 'li'
       });
@@ -42,6 +47,10 @@ define(['jquery',
       repoListItem.render();
       this.$el.find('#addNewProjectRepoList').append(repoListItem.el);
       this.REPOS.push(repoListItem);
+
+      if (name == this.selectedRepo) {
+        repoListItem.$el.addClass('selected');
+      }
     },
 
     setItemListeners: function (repoListItem) {
@@ -49,6 +58,8 @@ define(['jquery',
       this.listenTo(repoListItem, 'repo:selected', function (name) {
         self.selectedRepo = name;
         self.trigger('repo:selected', name);
+        self.$el.find('#addNewProjectRepoList > li').removeClass('selected');
+        repoListItem.$el.addClass('selected');
       });
     },
 

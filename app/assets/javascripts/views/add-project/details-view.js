@@ -26,23 +26,7 @@ define(['jquery',
       this.preventKeys = [8, 9, 13];
     },
 
-    events: {
-      'focus [name=add-project-description]': 'expandDescription',
-      'blur [name=add-project-description]': 'contractDescription',
-      'click .add-project-privacy-choice': 'handlePrivacySelection',
-      'blur [name=add-project-title]': 'handleTitleBlur',
-      'blur [name=add-project-subtitle]': 'handleSubtitleBlur',
-      'blur [name=add-project-repo-name]': 'handleRepoNameBlur',
-      'blur [name=slack]': 'handleSlackURLBlur',
-      'blur [name=slack-api-key]': 'handleSlackAPIKeyBlur',
-      'blur [name=hipchat]': 'handleHipChatBlur',
-      'blur [name=irc]': 'handleIRCChannelBlur',
-      //'keydown [name=slack]': 'handleKeyDownAPIKeyContainer',
-      'keydown [name=add-project-repo-name]': 'handleKeyDownRepoName',
-      'keyup [name=add-project-repo-name]': 'handleKeyUpRepoName',
-      'click .add-project-send-invites-choice': 'handleSendInvitesSelection',
-      'keydown [name=add-project-title], [name=add-project-subtitle]': 'hideErrorMessage'
-    },
+    events: {},
 
     getAllLanguages: function () {
       this.allLangs = AllLangs.getAll();
@@ -599,7 +583,6 @@ define(['jquery',
       this.license = (options.projectData || {}).license || null;
       this.privacy = (options.projectData || {}).privacy || OSUtil.OPEN_PRIVACY;
       this.slackURL = (options.projectData || {}).slackURL || null;
-      this.slackAPIKey = (options.projectData || {}).slackAPIKey || null;
       this.hipChatURL = (options.projectData || {}).hipChatURL || null;
       this.irc = (options.projectData || {}).irc || {};
     },
@@ -660,6 +643,66 @@ define(['jquery',
       }
     },
 
+    addListeners: function () {
+      var self = this;
+
+      this.$el.find('[name=add-project-description]').focus(function (e) {
+        self.expandDescription(e);
+      });
+
+      this.$el.find('[name=add-project-description]').blur(function (e) {
+        self.contractDescription(e);
+      });
+
+      this.$el.find('.add-project-privacy-choice').click(function (e) {
+        self.handlePrivacySelection(e);
+      });
+
+      this.$el.find('[name=add-project-title]').blur(function (e) {
+        self.handleTitleBlur(e);
+      });
+
+      this.$el.find('[name=add-project-subtitle]').blur(function (e) {
+        self.handleSubtitleBlur(e);
+      });
+
+      this.$el.find('[name=add-project-repo-name]').blur(function (e) {
+        self.handleRepoNameBlur(e);
+      });
+
+      this.$el.find('[name=slack]').blur(function (e) {
+        self.handleSlackURLBlur(e);
+      });
+
+      this.$el.find('[name=hipchat]').blur(function (e) {
+        self.handleHipChatBlur(e);
+      });
+
+      this.$el.find('[name=irc]').blur(function (e) {
+        self.handleIRCChannelBlur(e);
+      });
+
+      this.$el.find('[name=add-project-repo-name]').keydown(function (e) {
+        self.handleKeyDownRepoName(e);
+      });
+
+      this.$el.find('[name=add-project-repo-name]').keyup(function (e) {
+        self.handleKeyUpRepoName(e);
+      });
+
+      this.$el.find('.add-project-send-invites-choice').click(function (e) {
+        self.handleSendInvitesSelection(e);
+      });
+
+      this.$el.find('[name=add-project-title]').keydown(function (e) {
+        self.hideErrorMessage(e);
+      });
+
+      this.$el.find('[name=add-project-subtitle]').keydown(function (e) {
+        self.hideErrorMessage(e);
+      });
+    },
+
     render: function (options) {
       options = options || {};
 
@@ -703,6 +746,7 @@ define(['jquery',
         this.showInviteUsersQuestion();
       }
 
+      this.addListeners();
       this.addStopPropagationListeners();
     }
   });

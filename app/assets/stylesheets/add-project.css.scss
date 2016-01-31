@@ -486,6 +486,12 @@ textarea[name="add-project-description"] {
   border-top: 1px solid #EEE;
 }
 
+#addNewProjectRepoList > li.selected {
+  span {
+    color: #00A6C9;
+  }
+}
+
 .repo-list-item {
   width: 100%;
   height: 40px;
