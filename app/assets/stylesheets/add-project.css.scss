@@ -102,34 +102,36 @@ input {
 
 .ufg-choice-container {
   height: 50%;
-  padding-top: 10px;
+  padding-top: 5px;
+}
+
+.ufg-choice-container:last-child {
+  padding-top: 15px;
 }
 
 .ufg-choice {
   text-align: center;
+  -webkit-transition: all 150ms;
+  -moz-transition: all 150ms;
+  -ms-transition: all 150ms;
+  -o-transition: all 150ms;
+  transition: all 150ms;
   font-size: 18px;
   font-family: 'Proxima-Nova-SemiBold';
   cursor: pointer;
   border-radius: 50%;
   height: 80px;
+  background-color: #F1F1F9;
   width: 80px;
   line-height: 80px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.ufg-choice:hover,
 .ufg-choice.selected {
   background-color: #00A6C9;
   color: white;
-}
-
-.ufg-choice.selected:hover {
-  background-color: #00A6C9;
-  color: white;
-}
-
-.ufg-choice:hover {
-  background-color: #F1F1F9;
 }
 
 .project-source-selection,
@@ -214,7 +216,7 @@ input {
   line-height: 45px;
   border-radius: 10px;
   color: white;
-  background-color: lightgray;
+  background-color: #C4C5CA;
   font-size: 20px;
   text-align: center;
   margin-top: 17.5px;
