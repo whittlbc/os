@@ -309,7 +309,6 @@ define(['jquery',
       this.slideIndex = 0;
       this.showFooter();
       this.enableAddProjectBtn();
-      this.resetMasterMap(this.masterMap);
       this.panel1.setUpForGrabsToggle(false);
       this.panel1.setOnlyOnTheFenceToggle(false);
       this.renderPanels(true);

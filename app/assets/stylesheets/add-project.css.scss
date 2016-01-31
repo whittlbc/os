@@ -102,11 +102,13 @@ input {
 
 .ufg-choice-container {
   height: 50%;
-  padding-top: 5px;
+  padding-top: 11px;
+  position: relative;
+  left: -20px;
 }
 
 .ufg-choice-container:last-child {
-  padding-top: 15px;
+  padding-top: 21px;
 }
 
 .ufg-choice {
@@ -134,9 +136,9 @@ input {
   color: white;
 }
 
-.project-source-selection,
-.select-ufg-icon-container {
+.project-source-selection {
   svg {
+    height: 124px;
     margin-top: 17.5px;
     display: block;
     margin-left: auto;
@@ -144,15 +146,12 @@ input {
   }
 }
 
-.project-source-selection {
-  svg {
-    height: 124px;
-  }
-}
-
 .select-ufg-icon-container {
   svg {
-   height: 150px;
+    height: 200px;
+    margin-top: 0;
+    display: block;
+    margin-left: 60px;
   }
 }
 

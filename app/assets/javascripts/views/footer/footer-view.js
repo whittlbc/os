@@ -381,6 +381,7 @@ define(['jquery',
       this.emptyRemovedValues();
       this.resetDropdown(null, true);
       Backbone.EventBroker.trigger('filters:remove-all', true);
+      this.$el.find('.footer-filter-btn').removeClass('selected-filter');
     },
 
     render: function () {
