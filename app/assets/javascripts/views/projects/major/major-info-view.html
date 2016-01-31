@@ -11,17 +11,6 @@
             <div class="no-title-error">* Please enter a project title</div>
             <input type="text" name="edit-title" placeholder="Title" value="{{title}}"/>
             {{/editMode}}
-            <div class="major-info-project-type-divider {{#editMode}}edit{{/editMode}}"></div>
-            {{^editMode}}
-            <span class="major-info-project-type">{{projectType}}</span>
-            {{/editMode}}
-            {{#editMode}}
-            <select id="projectTypeSelection">
-                <option value="0">Up for Grabs</option>
-                <option value="1">On the Fence</option>
-                <option value="2">Launched</option>
-            </select>
-            {{/editMode}}
         </div>{{
         }}<div class="project-action-container {{#editMode}}edit{{/editMode}}">
             <div class="join-btn {{majorActionBtnClass}}">{{{majorActionBtnText}}}</div>{{

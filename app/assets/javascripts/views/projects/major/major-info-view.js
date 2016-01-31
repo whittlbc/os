@@ -340,6 +340,29 @@ define(['jquery',
       this.langsFrames = this.langFrameSelectize.getValue();
     },
 
+    getMajorActionBtnInfo: function (options) {
+      // For other button for UFG projects, will need something like:
+      //if (options.pending_project_request) {
+      //  text = 'pending';
+      //  text = 'Request Sent';
+      //}
+      //else {
+      //  text = (options.privacy[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
+      //}
+
+      var obj = {};
+
+      if (options.editMode) {
+        obj.className = 'regular';
+        obj.text = 'Save';
+      } else {
+        obj.className = 'launched';
+        obj.text = (options.status == 0) ? 'Grab' : '<i class="fa fa-check"></i>Launched';
+      }
+
+      return obj;
+    },
+
     render: function (options) {
       var self = this;
       options = options || {};
@@ -357,27 +380,7 @@ define(['jquery',
 
       var hasTags = !_.isEmpty(options.langs_and_frames);
 
-      var majorActionBtnClass = 'regular';
-      var majorActionBtnText;
-
-      if (options.editMode) {
-        majorActionBtnText = 'Save';
-      } else {
-        if (options.status == 0) {
-          majorActionBtnText = 'Grab';
-        }
-        else if (options.is_contributor) {
-          majorActionBtnClass = 'contributor';
-          majorActionBtnText = '<i class="fa fa-check"></i>On Project';
-        }
-        else if (options.pending_project_request) {
-          majorActionBtnClass = 'pending';
-          majorActionBtnText = 'Request Sent';
-        }
-        else {
-          majorActionBtnText = (options.privacy[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
-        }
-      }
+      var majorActionBtnInfo = this.getMajorActionBtnInfo(options);
 
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
@@ -393,10 +396,9 @@ define(['jquery',
         upForGrabsType: this.upForGrabsType,
         otf: options.status == 1,
         open: options.privacy && (options.privacy[0] === OSUtil.OPEN_PRIVACY),
-        anon: options.anon === true,
         hasTags: hasTags,
-        majorActionBtnClass: majorActionBtnClass,
-        majorActionBtnText: majorActionBtnText,
+        majorActionBtnClass: majorActionBtnInfo.className || 'regular',
+        majorActionBtnText: majorActionBtnInfo.text,
         isFirefox: $('body').attr('browser') === 'firefox',
         isSafari: $('body').attr('browser') === 'safari'
       }));

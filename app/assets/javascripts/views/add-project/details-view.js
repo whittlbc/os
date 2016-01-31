@@ -338,8 +338,8 @@ define(['jquery',
       this.seekingSelectize = seekingSelectize;
 
       this.seekingSelectize.on('item_add', function (value, $item) {
-        $item.css('color', '#C4C5CA');
-        $item.css('border', '2px solid #C4C5CA');
+        $item.css('color', '#9797A5');
+        $item.css('border', '2px solid #9797A5');
         self.seeking = self.seekingSelectize.getValue();
         self.adjustHeightOfSeekingInput();
       });

@@ -179,13 +179,14 @@ $light-gray: #C4C5CA;
   margin-top: 2px;
 
   .project-title-span {
-    width: auto;
     display: inline-block;
-    max-width: 74%;
     overflow: hidden;
-    float: left;
     white-space: nowrap;
     text-overflow: ellipsis;
+    position: absolute;
+    left: 31px;
+    top: 0;
+    right: 0;
   }
 
   .star {
@@ -195,7 +196,6 @@ $light-gray: #C4C5CA;
     font-size: 20px;
     float: left;
     margin-top: 7px;
-    margin-right: 11px;
     color: #B2B3B7;
     cursor: pointer;
   }
@@ -372,11 +372,12 @@ $light-gray: #C4C5CA;
   background-color: #00B3D7;
 }
 
+.join-btn.launched,
 .join-btn.contributor {
   background-color: white;
   color: #00A6C9;
   border: 2px solid #00A6C9;
-  line-height: 32px;
+  line-height: 31px;
   border-radius: 6px;
   cursor: default;
 
