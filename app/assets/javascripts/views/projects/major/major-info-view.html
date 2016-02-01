@@ -53,7 +53,6 @@
     {{#hasTags}}
     <div class="major-info-tag-container">
         <div class="major-info-domain-tags">
-            <img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/domain.svg"/>
             <div class="domain-tags-content"></div>
         </div>
         {{#needsLineBreak}}
@@ -66,7 +65,9 @@
     {{/hasTags}}
     {{#hasSeeking}}
     <div class="major-info-seeking-tags">
-        <span class="octicon octicon-search"></span>
+        <div class="seeking-icon-container">
+            <span class="octicon octicon-search"></span>
+        </div>
         <div class="seeking-tags-content"></div>
     </div>
     {{/hasSeeking}}

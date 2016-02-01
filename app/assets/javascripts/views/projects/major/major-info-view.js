@@ -183,7 +183,7 @@ define(['jquery',
     addTags: function (options) {
       this.addDomainTags((options.domains || []), (options.langs_and_frames || []));
       this.addLangFrameTags(options.langs_and_frames || []);
-      this.addSeekingTags(options.seeking || []);
+      //this.addSeekingTags(options.seeking || []);
     },
 
     addDomainTags: function (domains, langsFrames) {
@@ -191,12 +191,11 @@ define(['jquery',
       var $domainTagContent = this.$el.find('.domain-tags-content');
       var content = '';
       var domainTagsWidth = 0;
-      var domainIconWith = 28;
       var extraTags = [];
       var maxWidth = _.isEmpty(langsFrames) ? 0.95 : 0.5;
 
       for (var i = 0; i < domains.length; i++) {
-        if (((domainTagsWidth + domainIconWith + 100)/ bothTagsContainerWidth) > maxWidth) {
+        if (((domainTagsWidth + 100)/ bothTagsContainerWidth) > maxWidth) {
           extraTags.push(domains[i]);
 
           if (i === domains.length - 1) {
@@ -236,29 +235,29 @@ define(['jquery',
         }
       }
     },
-
-    addSeekingTags: function (seeking) {
-      var containerWidth = this.$el.find('.major-info-seeking-tags').width();
-      var $seekingTagContent = this.$el.find('.seeking-tags-content');
-      var content = '';
-      var seekingTagsWidth = 0;
-      var seekingIconWith = 28;
-      var extraTags = [];
-
-      for (var i = 0; i < seeking.length; i++) {
-        if (((seekingTagsWidth + seekingIconWith + 100)/ containerWidth) > 0.95) {
-          extraTags.push(seeking[i]);
-
-          if (i === seeking.length - 1) {
-            this.populateMoreSeekingTagsDropdown(extraTags);
-          }
-        } else {
-          content += ((i == 0) ? seeking[i] : (', ' + seeking[i]));
-          $seekingTagContent.html(content);
-          seekingTagsWidth = $seekingTagContent.outerWidth(true);
-        }
-      }
-    },
+    //
+    //addSeekingTags: function (seeking) {
+    //  var containerWidth = this.$el.find('.major-info-seeking-tags').width();
+    //  var $seekingTagContent = this.$el.find('.seeking-tags-content');
+    //  var content = '';
+    //  var seekingTagsWidth = 0;
+    //  var seekingIconWith = 28;
+    //  var extraTags = [];
+    //
+    //  for (var i = 0; i < seeking.length; i++) {
+    //    if (((seekingTagsWidth + seekingIconWith + 100)/ containerWidth) > 0.95) {
+    //      extraTags.push(seeking[i]);
+    //
+    //      if (i === seeking.length - 1) {
+    //        this.populateMoreSeekingTagsDropdown(extraTags);
+    //      }
+    //    } else {
+    //      content += ((i == 0) ? seeking[i] : (', ' + seeking[i]));
+    //      $seekingTagContent.html(content);
+    //      seekingTagsWidth = $seekingTagContent.outerWidth(true);
+    //    }
+    //  }
+    //},
 
     populateMoreDomainTagsDropdown: function (extraTags) {
       var self = this;
@@ -310,30 +309,30 @@ define(['jquery',
       });
     },
 
-    populateMoreSeekingTagsDropdown: function (extraTags) {
-      var self = this;
-      var $div = $('<div>', {class: 'more-project-tags-container'});
-      var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
-      var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
-      $div.append($moreTagsCount);
-      $div.append($moreTagsDropdown);
-      this.$el.find('.major-info-seeking-tags').append($div);
-
-      $moreTagsCount.html(extraTags.length + ' more');
-
-      this.moreTagsSeekingDropdown = new MoreDropdown({
-        el: this.$el.find('.major-info-seeking-tags .more-tags-dropdown')
-      });
-
-      this.moreTagsSeekingDropdown.render();
-      this.moreTagsSeekingDropdown.populate(extraTags);
-
-      $moreTagsCount.hover(function () {
-        self.moreTagsSeekingDropdown.showDropdown();
-      }, function () {
-        self.moreTagsSeekingDropdown.hideDropdown();
-      });
-    },
+    //populateMoreSeekingTagsDropdown: function (extraTags) {
+    //  var self = this;
+    //  var $div = $('<div>', {class: 'more-project-tags-container'});
+    //  var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
+    //  var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
+    //  $div.append($moreTagsCount);
+    //  $div.append($moreTagsDropdown);
+    //  this.$el.find('.major-info-seeking-tags').append($div);
+    //
+    //  $moreTagsCount.html(extraTags.length + ' more');
+    //
+    //  this.moreTagsSeekingDropdown = new MoreDropdown({
+    //    el: this.$el.find('.major-info-seeking-tags .more-tags-dropdown')
+    //  });
+    //
+    //  this.moreTagsSeekingDropdown.render();
+    //  this.moreTagsSeekingDropdown.populate(extraTags);
+    //
+    //  $moreTagsCount.hover(function () {
+    //    self.moreTagsSeekingDropdown.showDropdown();
+    //  }, function () {
+    //    self.moreTagsSeekingDropdown.hideDropdown();
+    //  });
+    //},
 
     showEditMode: function (data) {
       data.editMode = true;
@@ -474,7 +473,6 @@ define(['jquery',
       this.title = options.title || '';
 
       options.domains = ['Academia', 'Mobile', 'Web'];
-      options.seeking = ['Contributors', 'Feedback'];
 
       var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
 
@@ -497,7 +495,7 @@ define(['jquery',
         hasTags: hasTags,
         hasLangsFrames: !_.isEmpty(options.langs_and_frames),
         needsLineBreak: !_.isEmpty(options.domains) && !_.isEmpty(options.langs_and_frames),
-        hasSeeking: !_.isEmpty(options.seeking),
+        //hasSeeking: !_.isEmpty(options.seeking),
         majorActionBtnClass: majorActionBtnInfo.className || 'regular',
         majorActionBtnText: majorActionBtnInfo.text,
         isFirefox: $('body').attr('browser') === 'firefox',
