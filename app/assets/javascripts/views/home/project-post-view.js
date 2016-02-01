@@ -7,6 +7,7 @@ define(['jquery',
   'models/all-langs',
   'views/widgets/user-info-bubble',
   'views/widgets/more-dropdown/more-dropdown',
+  'views/svgs/svg-view',
   'stache!views/home/project-post-view',
   'backbone-eventbroker',
   'jquery-transit'
@@ -19,6 +20,7 @@ define(['jquery',
              AllLangs,
              UserInfoBubble,
              MoreDropdown,
+             SVG,
              ProjectPostViewTpl) {
   'use strict';
 
@@ -90,6 +92,7 @@ define(['jquery',
       this.anon = data.anon;
       this.domains = data.domains || [];
       this.seeking = data.seeking || [];
+      this.upForGrabs = data.up_for_grabs || false;
 
       this.MAX_TAGS = 6 - this.domains.length;
     },
@@ -312,7 +315,8 @@ define(['jquery',
         hasTags: correctedLangsFramesArray.length > 0,
         hasDomain: !_.isEmpty(self.domains),
         domains: self.domains.join(',  '),
-        isIdea: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas'),
+        showContribsCount: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas') && !self.upForGrabs,
+        upForGrabs: self.upForGrabs,
         hasSeeking: !_.isEmpty(self.seeking),
         seeking: self.seeking.join(',  ')
       }));
@@ -331,6 +335,18 @@ define(['jquery',
         ghUsername: self.ownerGHUsername,
         anon: self.anon
       });
+
+      if (this.upForGrabs) {
+
+        this.ufgIcon = new SVG({
+          el: this.$el.find('.project-post-ufg-icon'),
+          svg: 'up-for-grabs'
+        });
+
+        this.ufgIcon.render();
+
+        this.ufgIcon.changeColor('#1D1E22');
+      }
 
       this.$el.find('[data-toggle="tooltip"]').tooltip();
     }

@@ -248,7 +248,8 @@ class ProjectsController < ApplicationController
           :status => project.status,
           :total_comments => project.comments_count,
           :domains => project.domains,
-          :seeking => project.seeking
+          :seeking => project.seeking,
+          :up_for_grabs => project.up_for_grabs
       }
     }
 
@@ -356,7 +357,8 @@ class ProjectsController < ApplicationController
             :status => project.status,
             :total_comments => project.comments_count,
             :domains => project.domains,
-            :seeking => project.seeking
+            :seeking => project.seeking,
+            :up_for_grabs => project.up_for_grabs
         }
       }
 
