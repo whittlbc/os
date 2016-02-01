@@ -52,12 +52,12 @@ define(['jquery',
       'click #twitter': 'handleTwitterShareClick',
       'click #facebook': 'handleFacebookShareClick',
       'click #hackerNews': 'handleHackerNewsShareClick',
-      'click .launch-btn': 'handleLaunchProject'
+      //'click .launch-btn': 'handleLaunchProject'
     },
 
-    handleLaunchProject: function () {
-      Backbone.EventBroker.trigger('project:confirm-launch');
-    },
+    //handleLaunchProject: function () {
+    //  Backbone.EventBroker.trigger('project:confirm-launch');
+    //},
 
     handleRedditShareClick: function () {
       window.open("http:\/\/reddit.com\/submit?url=" + encodeURIComponent(window.location) + "&title=" + encodeURIComponent(this.title));
@@ -80,20 +80,16 @@ define(['jquery',
     },
 
     checkAuthedStatusOnMajorActionBtnClick: function () {
-      Backbone.EventBroker.trigger('project:major-action-btn-clicked', {
-        view: this,
-        status: this.projectStatus
-      });
+      if (this.majorBtnEvent) {
+        Backbone.EventBroker.trigger('project:major-action-btn-clicked', {
+          view: this,
+          upForGrabs: this.upForGrabs
+        });
+      }
     },
 
     handleProjectMajorActionBtnClick: function () {
-      if (this.editMode) {
-        Backbone.EventBroker.trigger('project:save-edit');
-      } else if (this.upForGrabsType) {
-        Backbone.EventBroker.trigger('pull-project', this.uuid);
-      } else if (!this.pendingProjectRequest && !this.isContributor) {
-        Backbone.EventBroker.trigger('project:join');
-      }
+      Backbone.EventBroker.trigger(this.majorBtnEvent, this.uuid);
     },
 
     handleProjectEdit: function () {
@@ -436,23 +432,47 @@ define(['jquery',
     },
 
     getMajorActionBtnInfo: function (options) {
-      // For other button for UFG projects, will need something like:
-      //if (options.pending_project_request) {
-      //  text = 'pending';
-      //  text = 'Request Sent';
-      //}
-      //else {
-      //  text = (options.privacy[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
-      //}
+      var self = this;
 
-      var obj = {};
+      var obj = {
+        className: 'regular'
+      };
 
       if (options.editMode) {
-        obj.className = 'regular';
         obj.text = 'Save';
+        this.majorBtnEvent = 'project:save-edit';
       } else {
-        obj.className = 'launched';
-        obj.text = (options.status == 0) ? 'Grab' : '<i class="fa fa-check"></i>Launched';
+        switch (options.status) {
+          case OSUtil.PROJECT_TYPES.indexOf('ideas'):
+            // UP FOR GRABS
+            if (options.up_for_grabs === true) {
+              obj.text = 'Grab';
+              self.majorBtnEvent = 'pull-project';
+            }
+            // NOT Up for Grabs
+            else {
+              if (self.isContributor) {
+                if (self.isOwner) {
+                  obj.text = 'Launch';
+                  self.majorBtnEvent = 'project:confirm-launch';
+                } else {
+                  obj.className = 'contributor';
+                  obj.text = '<i class="fa fa-check"></i>On Team';
+                }
+              } else if (self.pendingProjectRequest) {
+                obj.className = 'pending';
+                obj.text = 'Request Sent';
+              } else {
+                obj.text = ((options.privacy || [])[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
+                self.majorBtnEvent = 'project:save-edit';
+              }
+            }
+            break;
+          case OSUtil.PROJECT_TYPES.indexOf('launched'):
+            obj.className = 'launched';
+            obj.text = '<i class="fa fa-check"></i>Launched';
+            break;
+        }
       }
 
       return obj;
@@ -467,10 +487,10 @@ define(['jquery',
       this.privacy = options.privacy;
       this.projectStatus = options.status;
       this.voted = options.voted;
-
-      this.upForGrabsType = (options.status == 0);
+      this.upForGrabs = options.up_for_grabs;
       this.pendingProjectRequest = options.pending_project_request;
       this.isContributor = options.is_contributor;
+      this.isOwner = options.is_owner;
       this.title = options.title || '';
 
       var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
@@ -486,15 +506,12 @@ define(['jquery',
         starred: options.starred,
         voted: options.voted,
         isAdmin: options.is_admin,
-        isOwner: options.is_owner,
+        isOwner: this.isOwner,
         editMode: options.editMode,
-        upForGrabsType: this.upForGrabsType,
-        otf: options.status == 1,
         open: options.privacy && (options.privacy[0] === OSUtil.OPEN_PRIVACY),
         hasTags: hasTags,
         hasLangsFrames: !_.isEmpty(options.langs_and_frames),
         needsLineBreak: !_.isEmpty(options.domains) && !_.isEmpty(options.langs_and_frames),
-        //hasSeeking: !_.isEmpty(options.seeking),
         majorActionBtnClass: majorActionBtnInfo.className || 'regular',
         majorActionBtnText: majorActionBtnInfo.text,
         isFirefox: $('body').attr('browser') === 'firefox',

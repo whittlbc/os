@@ -143,21 +143,8 @@ define(['jquery',
       if (this.currentUser) {
         data.view.handleProjectMajorActionBtnClick();
       } else {
-        var loginModalText;
-
-        switch (data.status) {
-          case 0:
-            loginModalText = 'You must be logged in to grab a project.';
-            break;
-          case 1:
-            loginModalText = 'You must be logged in to join a project.';
-            break;
-          case 2:
-            loginModalText = 'You must be logged in to join a project.';
-            break;
-        }
-
-        this.loginModal.setMessage(loginModalText);
+        var text = data.upForGrabs ? 'You must be logged in to grab an idea.' : 'You must be logged in to join a project.';
+        this.loginModal.setMessage(text);
         this.loginModal.showModal();
       }
     },

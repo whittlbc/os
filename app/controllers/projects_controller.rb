@@ -106,7 +106,7 @@ class ProjectsController < ApplicationController
             others.push(obj)
           end
 
-          if !user.nil? && obj['login'] === user.gh_username
+          if user.present? && obj['login'] === user.gh_username
             project_details[:is_contributor] = true
           end
         }
