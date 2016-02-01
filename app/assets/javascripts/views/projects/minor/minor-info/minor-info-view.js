@@ -35,6 +35,14 @@ define(['jquery',
       'click #hipchatEllipsis': 'toggleHipChatPopover'
     },
 
+    isIdea: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('ideas');
+    },
+
+    isLaunched: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('launched');
+    },
+
     toggleSlackPopover: function (e) {
       e.stopPropagation();
       this.hipchatPopover.$el.hide();
@@ -97,19 +105,26 @@ define(['jquery',
       var data = {};
 
       if (!$('.project-body').hasClass('up-for-grabs-edit')) {
-        var licenseVal = this.$el.find('#licenseTypeSelection').val();
-        data.license = (licenseVal === 'none') ? [] : [licenseVal];
 
-        data.repo_name = this.$el.find('[name="repo-name"]').val();
+        if (this.isLaunched()) {
+          data.license = (this.$el.find('#licenseTypeSelection').val() === 'none') ? [] : [licenseVal];
+          data.repo_name = this.$el.find('[name="repo-name"]').val();
+        }
 
-        data.integrations = {
-          slack: this.$el.find('[name="edit-slack"]').val(),
-          hipchat: this.$el.find('[name="edit-hipchat"]').val(),
-          irc: {
-            channel: this.$el.find('[name="edit-irc"]').val(),
-            network: this.irc.network
-          }
-        };
+        if (this.isLaunched() || (this.isIdea() && !this.upForGrabs)) {
+          data.integrations = {
+            slack: this.$el.find('[name="edit-slack"]').val(),
+            hipchat: this.$el.find('[name="edit-hipchat"]').val(),
+            irc: {
+              channel: this.$el.find('[name="edit-irc"]').val(),
+              network: this.irc.network
+            }
+          };
+        }
+
+        if (!this.upForGrabs) {
+          data.seeking = this.seeking;
+        }
       }
 
       return data;
@@ -175,6 +190,9 @@ define(['jquery',
       var slackObj = null;
       var hipChatObj = null;
       var ircObj = null;
+
+      this.status = options.status;
+      this.upForGrabs = options.up_for_grabs;
 
       // project is NOT an "Up for Grabs" type
       if (options.status != 0) {

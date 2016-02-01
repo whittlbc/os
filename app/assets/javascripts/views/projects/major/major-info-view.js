@@ -51,13 +51,16 @@ define(['jquery',
       'click #reddit': 'handleRedditShareClick',
       'click #twitter': 'handleTwitterShareClick',
       'click #facebook': 'handleFacebookShareClick',
-      'click #hackerNews': 'handleHackerNewsShareClick',
-      //'click .launch-btn': 'handleLaunchProject'
+      'click #hackerNews': 'handleHackerNewsShareClick'
     },
 
-    //handleLaunchProject: function () {
-    //  Backbone.EventBroker.trigger('project:confirm-launch');
-    //},
+    isIdea: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('ideas');
+    },
+
+    isLaunched: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('launched');
+    },
 
     handleRedditShareClick: function () {
       window.open("http:\/\/reddit.com\/submit?url=" + encodeURIComponent(window.location) + "&title=" + encodeURIComponent(this.title));
@@ -366,13 +369,11 @@ define(['jquery',
         subtitle: this.$el.find('[name="edit-subtitle"]').val(),
         description: this.$el.find('.edit-description').val(),
         langs_and_frames: this.langsFrames,
-        status: Number(this.$el.find('#projectTypeSelection').val())
+        domains: this.domains
       };
 
       // if Up for Grabs
-      if (data.status == 0) {
-        data.anon = this.$el.find('[name="anon-edit"]').is(':checked');
-      } else {
+      if (this.isIdea() && this.upForGrabs) {
         data.privacy = this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY];
       }
 
@@ -485,8 +486,8 @@ define(['jquery',
       this.editMode = options.editMode;
       this.uuid = options.uuid;
       this.privacy = options.privacy;
-      this.projectStatus = options.status;
       this.voted = options.voted;
+      this.status = options.status;
       this.upForGrabs = options.up_for_grabs;
       this.pendingProjectRequest = options.pending_project_request;
       this.isContributor = options.is_contributor;

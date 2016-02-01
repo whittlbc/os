@@ -4,6 +4,7 @@ module ProjectHelper
 
   CREATION_PARAMS_IDEA = [
       :user_uuid,
+      :status,
       :privacy,
       :seeking,
       :up_for_grabs
@@ -11,11 +12,13 @@ module ProjectHelper
 
   CREATION_PARAMS_IDEA_UFG = [
       :user_uuid,
+      :status,
       :up_for_grabs
   ]
 
   CREATION_PARAMS_LAUNCHED = [
     :user_uuid,
+    :status,
     :seeking,
     :repo_name,
     :license,
@@ -24,8 +27,19 @@ module ProjectHelper
     :irc
   ]
 
-  EDIT_PARAMS = [
-    :integrations
+  EDIT_PARAMS_IDEA = [
+    :seeking,
+    :integrations,
+    :privacy,
+  ]
+
+  EDIT_PARAMS_IDEA_UFG = []
+
+  EDIT_PARAMS_LAUNCHED = [
+    :seeking,
+    :integrations,
+    :license,
+    :repo_name
   ]
 
   def self.fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_id)
@@ -54,7 +68,6 @@ module ProjectHelper
       :title => data[:title],
       :subtitle => data[:subtitle],
       :description => data[:description],
-      :status => data[:status],
       :langs_and_frames => data[:langs_and_frames],
       :domains => data[:domains]
     }
@@ -70,7 +83,11 @@ module ProjectHelper
         extra_params = CREATION_PARAMS_LAUNCHED
       end
     else
-      extra_params = EDIT_PARAMS
+      if data[:status] == IDEA_STATUS
+        extra_params = data[:up_for_grabs] ? EDIT_PARAMS_IDEA_UFG : EDIT_PARAMS_IDEA
+      else
+        extra_params = EDIT_PARAMS_LAUNCHED
+      end
     end
 
     extra_params.each { |key|

@@ -104,49 +104,25 @@ define(['jquery',
     },
 
     handleSaveEditProject: function () {
+      var self = this;
+
       if (this.projectMajorView.majorInfoView.checkIfCanSave()) {
+        var projectData = {};
         var majorProjectData = this.projectMajorView.getSavedEditData();
         var minorProjectData = this.projectMinorView.getSavedEditData();
 
-        var data = {
-          title: majorProjectData.title,
-          subtitle: majorProjectData.subtitle,
-          description: majorProjectData.description,
-          langs_and_frames: majorProjectData.langs_and_frames,
-          status: majorProjectData.status
-        };
-
-        if (data.status == 0) {
-          data.anon = majorProjectData.anon;
-          data.privacy = [];
-          data.license = [];
-          data.repo_name = null;
-          data.integrations = {
-            slack: '',
-            hipchat: '',
-            irc: {
-              channel: '',
-              network: ''
-            }
-          };
-
-        } else {
-          data.anon = false;
-          data.privacy = majorProjectData.privacy;
-          if (minorProjectData.hasOwnProperty('license')) {
-            data.license = minorProjectData.license;
-          }
-          if (minorProjectData.hasOwnProperty('repo_name')) {
-            data.repo_name = minorProjectData.repo_name;
-          }
-
-          if (minorProjectData.hasOwnProperty('integrations')) {
-            data.integrations = minorProjectData.integrations;
-          }
-        }
+        _.extend(projectData, majorProjectData);
+        _.extend(projectData, minorProjectData);
+        _.extend(projectData, {
+          status: self.data.project.status,
+          up_for_grabs: self.data.project.up_for_grabs
+        });
 
         var project = new Project();
-        project.edit({uuid: this.projectUUID, data: data}, {
+        project.edit({
+          uuid: self.projectUUID,
+          data: projectData
+        }, {
           success: function () {
             window.location.reload();
           }, error: function () {
