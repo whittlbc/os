@@ -26,6 +26,7 @@ define(['jquery',
 
     postInitialize: function () {
       this.getAllLanguages();
+      this.formatDomains();
       this.descriptionMaxHeight = 135;
 
       Backbone.EventBroker.register({
@@ -38,6 +39,14 @@ define(['jquery',
       this.dropdownItems = this.allLangs.dropdown_items;
       this.allFrames = this.allLangs.all_frames;
       this.colors_and_initials = this.allLangs.colors_and_initials;
+    },
+
+    formatDomains: function () {
+      this.domainOptions = [];
+
+      for (var key in OSUtil.DOMAIN_FILTERS) {
+        this.domainOptions.push(OSUtil.DOMAIN_FILTERS[key]);
+      }
     },
 
     events: {
@@ -421,6 +430,10 @@ define(['jquery',
         }
       });
 
+      this.langFrameSelectize.on('item_remove', function () {
+        self.langsFrames = self.langFrameSelectize.getValue();
+      });
+
       if (!_.isEmpty(langFrames)) {
         this.preventAddingMore = true;
         for (var i = 0; i < langFrames.length; i++) {
@@ -430,6 +443,51 @@ define(['jquery',
       }
 
       this.langsFrames = this.langFrameSelectize.getValue();
+    },
+
+    initDomainsDropdown: function (domains) {
+      var self = this;
+      var options = {
+        theme: 'links',
+        maxItems: null,
+        valueField: 'id',
+        searchField: 'title',
+        options: this.domainOptions,
+        onBlur: function () {
+          self.domains = self.domainSelectize.getValue();
+        },
+        selectOnTab: false,
+        render: {
+          option: function (data, escape) {
+            return '<div class="option title">' + escape(data.title) + '</div>';
+          },
+          item: function (data, escape) {
+            return '<div class="item">' + escape(data.title) + '</div>';
+          }
+        }
+      };
+
+      var $domainSelect = this.$el.find('#editDomains').selectize(options);
+      var domainSelectize = $domainSelect[0].selectize;
+      this.domainSelectize = domainSelectize;
+
+      this.domainSelectize.on('item_add', function (value, $item) {
+        $item.css('color', '#00A6C9');
+        $item.css('border', '2px solid #00A6C9');
+        self.domains = self.domainSelectize.getValue();
+      });
+
+      this.domainSelectize.on('item_remove', function () {
+        self.domains = self.domainSelectize.getValue();
+      });
+
+      if (!_.isEmpty(domains)) {
+        for (var i = 0; i < domains.length; i++) {
+          this.domainSelectize.addItem(domains[i]);
+        }
+      }
+
+      this.domains = this.domainSelectize.getValue();
     },
 
     getMajorActionBtnInfo: function (options) {
@@ -509,6 +567,7 @@ define(['jquery',
         isAdmin: options.is_admin,
         isOwner: this.isOwner,
         editMode: options.editMode,
+        showPrivacy: this.isIdea() && !this.upForGrabs,
         open: options.privacy && (options.privacy[0] === OSUtil.OPEN_PRIVACY),
         hasTags: hasTags,
         hasLangsFrames: !_.isEmpty(options.langs_and_frames),
@@ -521,23 +580,12 @@ define(['jquery',
 
       if (this.editMode) {
         this.initLangFramesDropdown(options.langs_and_frames);
+        this.initDomainsDropdown(options.domains);
 
         this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
           onText: 'Open',
           offText: 'Request'
         });
-
-        this.$el.find('[name="anon-edit"]').bootstrapSwitch({
-          onText: 'Yes',
-          offText: 'No'
-        });
-
-        //var $projectStatusDropdown = this.$el.find('#projectTypeSelection');
-        //$projectStatusDropdown.val(options.status.toString());
-
-        //$projectStatusDropdown.change(function () {
-        //  Backbone.EventBroker.trigger('project:edit:change-type', Number($(this).val()));
-        //});
 
         this.$el.find('[name="edit-title"]').keydown(function () {
           self.$el.find('.no-title-error').hide();

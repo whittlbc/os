@@ -107,7 +107,8 @@ define(['jquery',
       if (!$('.project-body').hasClass('up-for-grabs-edit')) {
 
         if (this.isLaunched()) {
-          data.license = (this.$el.find('#licenseTypeSelection').val() === 'none') ? [] : [licenseVal];
+          var licenseVal = this.$el.find('#licenseTypeSelection').val();
+          data.license = (licenseVal === 'none') ? [] : [licenseVal];
           data.repo_name = this.$el.find('[name="repo-name"]').val();
         }
 
@@ -195,46 +196,54 @@ define(['jquery',
       this.upForGrabs = options.up_for_grabs;
 
       // project is NOT an "Up for Grabs" type
-      if (options.status != 0) {
+
+      if (this.isLaunched()) {
         showRepoName = true;
         showLicense = true;
         repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
+        this.repoURL = 'https://' + repoName;
         license = (!_.isEmpty(options.license) && Array.isArray(options.license)) ? options.license[0] : null;
-
-        if (Array.isArray(options.integrations)) {
-          for (var i = 0; i < options.integrations.length; i++) {
-            showIntegrations = true;
-            if (options.integrations[i].service == 'Slack') {
-              hasSlack = true;
-              slackObj = options.integrations[i];
-            } else if (options.integrations[i].service == 'HipChat') {
-              hasHipChat = true;
-              hipChatObj = options.integrations[i];
-            } else if (options.integrations[i].service == 'IRC') {
-              hasIRC = true;
-              ircObj = options.integrations[i].irc;
-            }
-          }
-        }
       }
 
-      this.repoURL = 'https://' + repoName;
+      if (!this.upForGrabs) {
+        var integrations = options.integrations || [];
+
+        _.each(integrations, function (integration) {
+          showIntegrations = true;
+
+          if (integration.service == 'Slack') {
+            hasSlack = true;
+            slackObj = integration;
+          } else if (integration.service == 'HipChat') {
+            hasHipChat = true;
+            hipChatObj = integration;
+          } else if (integration.service == 'IRC') {
+            hasIRC = true;
+            ircObj = integration.irc;
+          }
+        });
+      }
 
       if (options.editMode) {
-        showRepoName = true;
-        showLicense = true;
-        showIntegrations = true;
+
+        if (!this.upForGrabs) {
+          showIntegrations = true;
+        }
+
         hasSlack = hasHipChat = hasIRC = true;
+
         slackObj = slackObj || {
-            url: ''
-          };
+          url: ''
+        };
+
         hipChatObj = hipChatObj || {
-            url: ''
-          };
+          url: ''
+        };
+
         ircObj = ircObj || {
-            channel: '',
-            network: ''
-          };
+          channel: '',
+          network: ''
+        };
       }
 
       this.$el.html(MinorInfoViewTpl({

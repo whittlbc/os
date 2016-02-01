@@ -372,9 +372,6 @@ define(['jquery',
     },
 
     showEditMode: function () {
-      if (this.data.project.status == 0) {
-        this.$el.find('.project-body').addClass('up-for-grabs-edit');
-      }
       this.projectMajorView.showEditMode(this.data);
       this.projectMinorView.showEditMode(this.data.project);
     },

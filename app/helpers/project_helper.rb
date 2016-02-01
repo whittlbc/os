@@ -7,7 +7,10 @@ module ProjectHelper
       :status,
       :privacy,
       :seeking,
-      :up_for_grabs
+      :up_for_grabs,
+      :slackURL,
+      :hipChatURL,
+      :irc
   ]
 
   CREATION_PARAMS_IDEA_UFG = [

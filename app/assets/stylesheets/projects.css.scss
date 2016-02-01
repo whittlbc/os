@@ -60,7 +60,9 @@ $post-gray: #B6B8C0;
   position: relative;
 
   .selectize-control.multi {
-    margin-top: 20px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    width: 70%;
 
     .selectize-input {
       border: 1px solid #DDD;
@@ -82,16 +84,6 @@ $post-gray: #B6B8C0;
     }
   }
 
-
-  .selectize-control.multi,
-  input[name="edit-subtitle"] {
-    width: 65%;
-  }
-
-  input[name="edit-title"] {
-    width: 65%;
-  }
-
   input[name="edit-title"],
   input[name="edit-subtitle"] {
     border-radius: 4px;
@@ -102,9 +94,15 @@ $post-gray: #B6B8C0;
     float: left;
   }
 
+  input[name="edit-title"] {
+    width: 100%;
+  }
+
   input[name="edit-subtitle"] {
     float: left;
     margin-bottom: 18px;
+    margin-top: 10px;
+    width: 100%;
   }
 
   .no-title-error,

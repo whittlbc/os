@@ -265,7 +265,7 @@ define(['jquery',
         searchField: 'title',
         options: this.domainOptions,
         onFocus: function () {
-          if (self.stageIsIdea()) {
+          if (self.stageIsIdea() && !self.upForGrabs) {
             setTimeout(function () {
               self.trigger('scroll:bottom');
             }, 5);
@@ -312,7 +312,7 @@ define(['jquery',
         searchField: 'title',
         options: this.getSeekingOptions(),
         onFocus: function () {
-          if (self.stageIsIdea()) {
+          if (self.stageIsIdea() && !self.upForGrabs) {
             setTimeout(function () {
               self.trigger('scroll:bottom');
             }, 1);
@@ -638,7 +638,7 @@ define(['jquery',
     },
 
     renderIntegrations: function () {
-      if (this.stageIsLaunched()) {
+      if (this.shouldShowIntegrations()) {
         this.initIRCNetworkDropdown();
       }
     },
@@ -703,10 +703,16 @@ define(['jquery',
       });
     },
 
+    shouldShowIntegrations: function () {
+      return this.stageIsLaunched() || (this.stageIsIdea() && !this.upForGrabs)
+    },
+
     render: function (options) {
       options = options || {};
 
       this.storeOptions(options);
+
+      this.upForGrabs = options.upForGrabs;
 
       this.showPrivacy = this.stageIsIdea() && !options.upForGrabs;
 
@@ -724,7 +730,7 @@ define(['jquery',
         showPrivacy: this.showPrivacy,
         requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
         openPrivacy: this.privacy === OSUtil.OPEN_PRIVACY,
-        showIntegrations: this.stageIsLaunched(),
+        showIntegrations: this.shouldShowIntegrations(),
         slackURL: this.slackURL,
         hipChatURL: this.hipChatURL,
         ircChannel: this.irc.channel
