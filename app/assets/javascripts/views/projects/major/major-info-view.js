@@ -180,63 +180,158 @@ define(['jquery',
       this.$el.find('p.none').hide();
     },
 
-    addTags: function (langsFrames) {
-      var $tagContainer = this.$el.find('.major-info-tag-container');
-      var tagContainerWidth = $tagContainer.width();
-      var tagsWidth = 0;
+    addTags: function (options) {
+      this.addDomainTags((options.domains || []), (options.langs_and_frames || []));
+      this.addLangFrameTags(options.langs_and_frames || []);
+      this.addSeekingTags(options.seeking || []);
+    },
+
+    addDomainTags: function (domains, langsFrames) {
+      var bothTagsContainerWidth = this.$el.find('.major-info-tag-container').width();
+      var $domainTagContent = this.$el.find('.domain-tags-content');
+      var content = '';
+      var domainTagsWidth = 0;
+      var domainIconWith = 28;
+      var extraTags = [];
+      var maxWidth = _.isEmpty(langsFrames) ? 0.95 : 0.5;
+
+      for (var i = 0; i < domains.length; i++) {
+        if (((domainTagsWidth + domainIconWith + 100)/ bothTagsContainerWidth) > maxWidth) {
+          extraTags.push(domains[i]);
+
+          if (i === domains.length - 1) {
+            this.populateMoreDomainTagsDropdown(extraTags);
+          }
+        } else {
+          content += ((i == 0) ? domains[i] : (', ' + domains[i]));
+          $domainTagContent.html(content);
+          domainTagsWidth = $domainTagContent.outerWidth(true);
+        }
+      }
+    },
+
+    addLangFrameTags: function (langsFrames) {
+      var bothTagsContainerWidth = this.$el.find('.major-info-tag-container').width();
+      var $langFrameTagContainer = this.$el.find('.lang-frame-tags');
+      var langFrameTagsWidth = 21; // start with width of linebreak separating tag containers
       var extraTags = [];
 
-      if (Array.isArray(langsFrames)) {
-        for (var i = 0; i < langsFrames.length; i++) {
-          if (tagContainerWidth - tagsWidth < 100) {
-            extraTags.push(langsFrames[i]);
+      for (var i = 0; i < langsFrames.length; i++) {
+        if (((langFrameTagsWidth + 100) / bothTagsContainerWidth) > 0.5) {
+          extraTags.push(langsFrames[i]);
 
-            if (i === langsFrames.length - 1) {
-              this.populatMoreTagsDropdown(extraTags);
-            }
-          } else {
-            var $tag = $('<div>', {
-              class: 'major-info-tag'
-            });
-            $tag.html(langsFrames[i]);
-            var colors_and_initials = this.allLangs['colors_and_initials'];
-            var langFrame = colors_and_initials[langsFrames[i]];
-            if (langFrame) {
-              var color = langFrame['color'];
-              $tag.css({
-                color: color,
-                border: '2px solid ' + color
-              });
-              $tagContainer.append($tag);
-              tagsWidth += $tag.outerWidth(true);
-            }
+          if (i === langsFrames.length - 1) {
+            this.populateMoreLFTagsDropdown(extraTags);
+          }
+        } else {
+          var colors_and_initials = this.allLangs['colors_and_initials'];
+          var langFrame = colors_and_initials[langsFrames[i]];
+          if (langFrame) {
+            var color = langFrame['color'];
+            var $tag = $('<div>', {class: 'project-lf-tag'});
+            $tag.html('<i class="fa fa-circle" style="color:' + color + '"></i><div class="tag-name">' + langsFrames[i] + '&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+            $langFrameTagContainer.append($tag);
+            langFrameTagsWidth += $tag.outerWidth(true);
           }
         }
       }
     },
 
-    populatMoreTagsDropdown: function (extraTags) {
+    addSeekingTags: function (seeking) {
+      var containerWidth = this.$el.find('.major-info-seeking-tags').width();
+      var $seekingTagContent = this.$el.find('.seeking-tags-content');
+      var content = '';
+      var seekingTagsWidth = 0;
+      var seekingIconWith = 28;
+      var extraTags = [];
+
+      for (var i = 0; i < seeking.length; i++) {
+        if (((seekingTagsWidth + seekingIconWith + 100)/ containerWidth) > 0.95) {
+          extraTags.push(seeking[i]);
+
+          if (i === seeking.length - 1) {
+            this.populateMoreSeekingTagsDropdown(extraTags);
+          }
+        } else {
+          content += ((i == 0) ? seeking[i] : (', ' + seeking[i]));
+          $seekingTagContent.html(content);
+          seekingTagsWidth = $seekingTagContent.outerWidth(true);
+        }
+      }
+    },
+
+    populateMoreDomainTagsDropdown: function (extraTags) {
       var self = this;
       var $div = $('<div>', {class: 'more-project-tags-container'});
       var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
       var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
       $div.append($moreTagsCount);
       $div.append($moreTagsDropdown);
-      this.$el.find('.major-info-tag-container').append($div);
+      this.$el.find('.major-info-domain-tags').append($div);
 
       $moreTagsCount.html(extraTags.length + ' more');
 
-      this.moreTagsDropdown = new MoreDropdown({
-        el: this.$el.find('.more-tags-dropdown')
+      this.moreTagsDomainDropdown = new MoreDropdown({
+        el: this.$el.find('.major-info-domain-tags .more-tags-dropdown')
       });
 
-      this.moreTagsDropdown.render();
-      this.moreTagsDropdown.populate(extraTags);
+      this.moreTagsDomainDropdown.render();
+      this.moreTagsDomainDropdown.populate(extraTags);
 
       $moreTagsCount.hover(function () {
-        self.moreTagsDropdown.showDropdown();
+        self.moreTagsDomainDropdown.showDropdown();
       }, function () {
-        self.moreTagsDropdown.hideDropdown();
+        self.moreTagsDomainDropdown.hideDropdown();
+      });
+    },
+
+    populateMoreLFTagsDropdown: function (extraTags) {
+      var self = this;
+      var $div = $('<div>', {class: 'more-project-tags-container'});
+      var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
+      var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
+      $div.append($moreTagsCount);
+      $div.append($moreTagsDropdown);
+      this.$el.find('.lang-frame-tags').append($div);
+
+      $moreTagsCount.html(extraTags.length + ' more');
+
+      this.moreTagsLFDropdown = new MoreDropdown({
+        el: this.$el.find('.lang-frame-tags .more-tags-dropdown')
+      });
+
+      this.moreTagsLFDropdown.render();
+      this.moreTagsLFDropdown.populate(extraTags);
+
+      $moreTagsCount.hover(function () {
+        self.moreTagsLFDropdown.showDropdown();
+      }, function () {
+        self.moreTagsLFDropdown.hideDropdown();
+      });
+    },
+
+    populateMoreSeekingTagsDropdown: function (extraTags) {
+      var self = this;
+      var $div = $('<div>', {class: 'more-project-tags-container'});
+      var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
+      var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
+      $div.append($moreTagsCount);
+      $div.append($moreTagsDropdown);
+      this.$el.find('.major-info-seeking-tags').append($div);
+
+      $moreTagsCount.html(extraTags.length + ' more');
+
+      this.moreTagsSeekingDropdown = new MoreDropdown({
+        el: this.$el.find('.major-info-seeking-tags .more-tags-dropdown')
+      });
+
+      this.moreTagsSeekingDropdown.render();
+      this.moreTagsSeekingDropdown.populate(extraTags);
+
+      $moreTagsCount.hover(function () {
+        self.moreTagsSeekingDropdown.showDropdown();
+      }, function () {
+        self.moreTagsSeekingDropdown.hideDropdown();
       });
     },
 
@@ -378,7 +473,10 @@ define(['jquery',
       this.isContributor = options.is_contributor;
       this.title = options.title || '';
 
-      var hasTags = !_.isEmpty(options.langs_and_frames);
+      options.domains = ['Academia', 'Mobile', 'Web'];
+      options.seeking = ['Contributors', 'Feedback'];
+
+      var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
 
       var majorActionBtnInfo = this.getMajorActionBtnInfo(options);
 
@@ -397,6 +495,9 @@ define(['jquery',
         otf: options.status == 1,
         open: options.privacy && (options.privacy[0] === OSUtil.OPEN_PRIVACY),
         hasTags: hasTags,
+        hasLangsFrames: !_.isEmpty(options.langs_and_frames),
+        needsLineBreak: !_.isEmpty(options.domains) && !_.isEmpty(options.langs_and_frames),
+        hasSeeking: !_.isEmpty(options.seeking),
         majorActionBtnClass: majorActionBtnInfo.className || 'regular',
         majorActionBtnText: majorActionBtnInfo.text,
         isFirefox: $('body').attr('browser') === 'firefox',
@@ -416,12 +517,12 @@ define(['jquery',
           offText: 'No'
         });
 
-        var $projectStatusDropdown = this.$el.find('#projectTypeSelection');
-        $projectStatusDropdown.val(options.status.toString());
+        //var $projectStatusDropdown = this.$el.find('#projectTypeSelection');
+        //$projectStatusDropdown.val(options.status.toString());
 
-        $projectStatusDropdown.change(function () {
-          Backbone.EventBroker.trigger('project:edit:change-type', Number($(this).val()));
-        });
+        //$projectStatusDropdown.change(function () {
+        //  Backbone.EventBroker.trigger('project:edit:change-type', Number($(this).val()));
+        //});
 
         this.$el.find('[name="edit-title"]').keydown(function () {
           self.$el.find('.no-title-error').hide();
@@ -434,8 +535,9 @@ define(['jquery',
       } else {
 
         if (hasTags) {
-          this.addTags(options.langs_and_frames);
+          this.addTags(options);
         }
+
         this.$descriptionContainer = this.$el.find('.major-info-project-description');
         this.originalDescriptionHeight = this.$descriptionContainer.height();
         this.$descriptionContainer.dotdotdot({

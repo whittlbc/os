@@ -37,11 +37,6 @@
             {{/editMode}}
         </div>
     </div>
-    {{^editMode}}
-    {{#hasTags}}
-    <div class="major-info-tag-container"></div>
-    {{/hasTags}}
-    {{/editMode}}
     {{#editMode}}
     <select id="editLangFrames" placeholder="Languages and frameworks"></select>
     {{/editMode}}
@@ -54,6 +49,28 @@
         <input type="text" name="edit-subtitle" placeholder="Subtitle" value="{{subtitle}}"/>
         {{/editMode}}
     </div>
+    {{^editMode}}
+    {{#hasTags}}
+    <div class="major-info-tag-container">
+        <div class="major-info-domain-tags">
+            <img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/domain.svg"/>
+            <div class="domain-tags-content"></div>
+        </div>
+        {{#needsLineBreak}}
+        <div class="tags-line-break"></div>
+        {{/needsLineBreak}}
+        {{#hasLangsFrames}}
+        <div class="lang-frame-tags"></div>
+        {{/hasLangsFrames}}
+    </div>
+    {{/hasTags}}
+    {{#hasSeeking}}
+    <div class="major-info-seeking-tags">
+        <span class="octicon octicon-search"></span>
+        <div class="seeking-tags-content"></div>
+    </div>
+    {{/hasSeeking}}
+    {{/editMode}}
     <div class="major-info-project-description {{^hasTags}}no-tags{{/hasTags}}">
         {{^editMode}}
         <p>{{description}}</p><a class="see-all-description">See All</a>

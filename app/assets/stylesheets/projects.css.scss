@@ -1,6 +1,7 @@
 
 $project-minor: white;
 $light-gray: #C4C5CA;
+$post-gray: #B6B8C0;
 
 
 .z-depth-half {
@@ -485,14 +486,74 @@ $light-gray: #C4C5CA;
 
 .major-info-tag-container {
   width: 72%;
-  height: auto;
-  margin-top: 12px;
+  margin-top: 11px;
+  float: left;
+  height: 31px;
+  margin-bottom: 2px;
+
+  .major-info-domain-tags,
+  .lang-frame-tags {
+    display: inline-block;
+    float: left;
+  }
+
+  .major-info-domain-tags {
+    img {
+      height: 21px;
+      margin-right: 7px;
+      float: left;
+    }
+
+    .domain-tags-content {
+      display: inline-block;
+      float: left;
+      color: $light-gray;
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+
+  .tags-line-break {
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 1px;
+    background-color: rgba(0,0,0,0.15);
+    float: left;
+  }
+
+  .project-lf-tag {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+
+    .fa-circle {
+      font-size: 8.5px;
+      float: left;
+      height: 100%;
+      line-height: 25px;
+    }
+
+    .tag-name {
+      transform: translate3d(0,0,0);
+      -webkit-transform: translate3d(0,0,0);
+      font-size: 11.5px;
+      float: left;
+      height: 100%;
+      font-family: 'Proxima-Nova';
+      line-height: 25px;
+      margin-left: 3px;
+      display: inline-block;
+      overflow-x: hidden;
+    }
+
+  }
 
   .more-project-tags-container {
     display: inline-block;
     position: relative;
-    margin-left: 3px;
-    top: 6px;
+    margin-left: 8px;
+    top: 0px;
 
     .more-tags-count {
       font-size: 11px;
@@ -510,6 +571,62 @@ $light-gray: #C4C5CA;
     }
 
   }
+
+  .lang-frame-tags {
+    .more-project-tags-container {
+      top: -11.5px;
+      margin-left: 0;
+    }
+  }
+}
+
+.major-info-seeking-tags {
+  height: 31px;
+  margin-bottom: 2px;
+  width: 72%;
+
+  .octicon-search {
+    height: 21px;
+    width: 21px;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 14px;
+    background-color: $post-gray;
+    margin-right: 7px;
+    float: left;
+  }
+
+  .seeking-tags-content {
+    display: inline-block;
+    float: left;
+    color: $light-gray;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .more-project-tags-container {
+    display: inline-block;
+    position: relative;
+    margin-left: 8px;
+    top: 0px;
+
+    .more-tags-count {
+      font-size: 11px;
+      color: $light-gray;
+      text-decoration: underline;
+    }
+
+    .more-tags-dropdown {
+      position: absolute;
+
+      .hover-cover {
+        left: 4px;
+        top: -22px;
+      }
+    }
+
+  }
+
 }
 
 .major-info-tag {
@@ -548,6 +665,7 @@ $light-gray: #C4C5CA;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 20px;
+  float: left;
 
   p {
     font-size: 14px;
@@ -626,6 +744,7 @@ $light-gray: #C4C5CA;
 
 #communicationView {
   width: 100%;
+  float: left;
 }
 
 .communication-tabs-container {

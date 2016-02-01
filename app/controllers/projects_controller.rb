@@ -44,25 +44,20 @@ class ProjectsController < ApplicationController
     if !project.nil? && project.is_active?
       owner_gh_username = project.get_owner_gh_username
       admin_arr = Contributor.admin(project.id).map { |contrib|
-        if project.anon
-          'Anonymous'
-        else
-          contrib.try(:user).try(:gh_username)
-        end
+        contrib.try(:user).try(:gh_username)
       }
 
       is_owner = user ? (user.gh_username === project.try(:user).try(:gh_username)) : false
 
       if !project.blank?
         project_details = {
-          :anon => project.anon,
           :post_date => project.created_at.utc.iso8601,
           :description => project.description,
           :langs_and_frames => project.langs_and_frames,
           :license => project.license,
           :privacy => project.privacy,
-          :domains => project.domains,
-          :seeking => project.seeking,
+          :domains => project.domains || [],
+          :seeking => project.seeking || [],
           :repo_name => project.repo_name,
           :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
           :status => project.status,

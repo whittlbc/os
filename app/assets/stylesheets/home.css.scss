@@ -912,93 +912,50 @@ $side-filters-width: 18.25%;
   border-bottom: 1px solid #DDD;
   display: block;
   cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
 
-  .left-container {
-    display: inline-block;
-    height: 100%;
-    float: left;
-    width: 75%;
-    position: relative;
-    padding-top: 10px;
+  .title {
+    width: 100%;
+    margin-bottom: 4px;
+    margin-top: 3px;
+    font-size: 14px;
+    font-family: 'Proxima-Nova-SemiBold';
+    color: $not-quite-black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
-    .search-result-vote-count {
-      width: 12%;
-      text-align: center;
-      display: inline-block;
-      float: left;
-      font-size: 14px;
-      padding-top: 27px;
-      color: $post-gray;
-    }
-
-    .search-result-title-subtitle-container {
-      width: 88%;
-      display: inline-block;
-      float: left;
-      padding-top: 1px;
-      position: absolute;
-      left: 12%;
-      right: 0;
-
-      .title {
-        width: 100%;
-        margin-bottom: 4px;
-        margin-top: 3px;
-        font-size: 14px;
-        font-family: 'Proxima-Nova-SemiBold';
-        color: $not-quite-black;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        span {
-          color: #00A6C9;
-          text-decoration: underline;
-        }
-      }
-
-      .subtitle {
-        width: 100%;
-        font-size: 12.5px;
-        color: $post-gray;
-        margin-bottom: 2.5px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        span {
-          color: #00A6C9;
-          text-decoration: underline;
-        }
-      }
-
-      .owner {
-        width: 100%;
-        font-size: 11px;
-        color: $post-gray;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-
-  }
-
-  .right-container {
-    display: inline-block;
-    height: 100%;
-    float: left;
-    width: 25%;
-
-    .search-result-type {
-      width: 100%;
-      padding-top: 35px;
-      text-align: center;
-      font-size: 13px;
-      color: #C4C5CA;
+    span {
+      color: #00A6C9;
+      text-decoration: underline;
     }
   }
 
+  .subtitle {
+    width: 100%;
+    font-size: 12.5px;
+    color: $post-gray;
+    margin-bottom: 2.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    span {
+      color: #00A6C9;
+      text-decoration: underline;
+    }
+  }
+
+  .owner {
+    width: 100%;
+    font-size: 11px;
+    color: $post-gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .search-result:hover {
