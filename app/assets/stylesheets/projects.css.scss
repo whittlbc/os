@@ -615,7 +615,7 @@ $post-gray: #B6B8C0;
 .major-info-project-description {
   width: 100%;
   margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   float: left;
 
   p {
@@ -737,9 +737,9 @@ $post-gray: #B6B8C0;
     color: #00A6C9;
   }
 
-  a[index="0"],
-  a[index="1"],
-  a[index="2"] {
+  a[data-feed="general"],
+  a[data-feed="team"],
+  a[data-feed="implementations"] {
     border-right: 1px solid #CCC;
   }
 

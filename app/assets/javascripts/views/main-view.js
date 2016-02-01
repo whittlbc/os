@@ -342,10 +342,12 @@ define(['jquery',
     },
 
     showContribsModal: function () {
-      var self = this;
       if (this.projectView && this.projectView.contributors) {
-        this.contribsModal.setAnonStatus(this.projectView.data.project.anon); // jesus christ
-        this.contribsModal.populate(this.projectView.contributors);
+        this.contribsModal.populate({
+          contribs: this.projectView.contributors,
+          showContributions: this.projectView.projectHasRepo
+        });
+
         this.contribsModal.showModal();
       }
     },

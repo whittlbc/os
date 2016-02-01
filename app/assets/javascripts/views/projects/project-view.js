@@ -196,42 +196,75 @@ define(['jquery',
       self.owner_gh_username = data.project.owner_gh_username;
     },
 
-    handleFetchedDetails: function (data) {
+    checkIfProjectHasRepo: function (project) {
+      this.projectHasRepo = project.getting_repo_data && project.repo_name && project.owner_gh_username;
+      return this.projectHasRepo;
+    },
+
+    revertContribsToSHOnly: function (project) {
+      this.contributors = _.union(project.contributors.admin, project.contributors.others);
+      this.cachedProjectData.project.contributors = this.contributors;
+      this.projectMinorView.lazyLoadContribs(this.contributors, true);
+    },
+
+    fetchGHContribs: function (project) {
       var self = this;
 
-      // if project has a repo assigned to it
-      if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-        // Get Contributors
+      this.github.getContributors(project.owner_gh_username, project.repo_name, function (contribData) {
+        var shContribs = _.union(project.contributors.admin, project.contributors.others);
+        var allContribs = _.union(shContribs, contribData);
+        self.handleFetchedGHContribs(allContribs, project.owner_gh_username);
+      }, function () {
+        self.revertContribsToSHOnly(project);
+      });
+    },
 
-        //data.project.owner_gh_username = 'yabwe';
-        //data.project.repo_name = 'medium-editor';
+    fetchRepoStats: function (project) {
+      var self = this;
 
-        self.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
-          self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
-        }, function () {
-          // revert back to non-GH-pulled contributors
-          self.contributors = data.project.contributors;
-          data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
-          self.cachedProjectData.project.contributors = data.project.contributors;
-          self.projectMinorView.lazyLoadContribs(data.project.contributors, true);
-        });
+      this.github.fetchRepoStats(project.owner_gh_username, project.repo_name, function (data) {
+        self.handleFetchedGHRepoStats(data);
+      }, function () {
+        Backbone.EventBroker.trigger('repo-stats:fetch-error');
+      });
+    },
 
-        // Get Repo Stats
-        self.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
-          self.handleFetchedGHRepoStats(data);
-        }, function () {
-          Backbone.EventBroker.trigger('repo-stats:fetch-error');
-        });
+    useSHOnlyContribs: function (project) {
+      this.contributors = project.contributors;
 
-      } else {
-        this.contributors = data.project.contributors;
-        data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
+      project.contributors = _.union(project.contributors.admin, project.contributors.others);
+
+      var contribUsernames = _.map(project.contributors, function (contrib) {
+        return contrib.login;
+      });
+
+      if (this.currentUser && _.contains(contribUsernames, this.currentUser.gh_username)) {
+        project.is_contributor = true;
       }
 
-      this.fetchComments(0);
+      return project;
+    },
+
+    handleFetchedDetails: function (data) {
+      var self = this;
+      var project = data.project || {};
+
+      if (this.checkIfProjectHasRepo(project)) {
+
+        this.fetchGHContribs(project);
+
+        this.fetchRepoStats(project);
+
+      } else {
+        project = this.useSHOnlyContribs(project);
+      }
+
+      data.project = project;
       this.setProjectProperties(data);
       this.cachedProjectData = data;
       this.render(data);
+
+      this.fetchComments(0);
     },
 
     fetchComments: function (feedStatus) {
@@ -253,12 +286,18 @@ define(['jquery',
       });
     },
 
-    handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
-      var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
+    handleFetchedGHContribs: function (contribs, owner_gh_username) {
+      var sortedContribs = this.sortContribs(contribs, owner_gh_username);
       this.contributors = sortedContribs;
       var unionContribs = _.union(sortedContribs.admin, sortedContribs.others);
       this.cachedProjectData.project.contributors = unionContribs;
       this.projectMinorView.lazyLoadContribs(unionContribs);
+
+      var justUsernames = _.map(unionContribs, function (contrib) {
+        return contrib.login;
+      });
+
+      Backbone.EventBroker.trigger('contribs:fetched', justUsernames);
     },
 
     handleFetchedGHRepoStats: function (data) {
@@ -266,28 +305,31 @@ define(['jquery',
       this.projectMinorView.lazyLoadRepoStats(data);
     },
 
-    sortContribs: function (contribs, admin, owner_gh_username) {
+    sortContribs: function (contribs, owner_gh_username) {
       var owner = [];
-      var adminNotOwner = [];
+      var owner_username = [];
+
       var others = [];
-      for (var i = 0; i < contribs.length; i++) {
-        if (contribs[i].login === owner_gh_username) {
-          contribs[i].admin = true;
-          owner.push(contribs[i]);
-        } else if (_.contains(admin, contribs[i].login)) {
-          contribs[i].admin = true;
-          adminNotOwner.push(contribs[i]);
+      var other_usernames = [];
+
+      _.each(contribs, function (contrib) {
+        var username = contrib.login;
+
+        if (username === owner_gh_username) {
+          if (!_.contains(owner_username, username)) {
+            contrib.admin = true;
+
+            owner_username.push(username);
+            owner.push(contrib);
+          }
         } else {
-          others.push(contribs[i]);
-        }
-      }
-      adminNotOwner = adminNotOwner.sort(function (a, b) {
-        if (a.contributions === b.contributions) {
-          return (a.login.toLowerCase() > b.login.toLowerCase()) ? 1 : ((b.login.toLowerCase() > a.login.toLowerCase()) ? -1 : 0);
-        } else {
-          return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
+          if (!_.contains(other_usernames, username)) {
+            other_usernames.push(username);
+            others.push(contrib);
+          }
         }
       });
+
       others = others.sort(function (a, b) {
         if (a.contributions === b.contributions) {
           return (a.login.toLowerCase() > b.login.toLowerCase()) ? 1 : ((b.login.toLowerCase() > a.login.toLowerCase()) ? -1 : 0);
@@ -295,8 +337,9 @@ define(['jquery',
           return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
         }
       });
+
       return {
-        admin: _.union(owner, adminNotOwner),
+        admin: owner,
         others: others
       };
     },

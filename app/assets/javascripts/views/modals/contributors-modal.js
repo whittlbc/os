@@ -26,7 +26,6 @@ define(['jquery',
     },
 
     populate: function (data) {
-      var self = this;
       this.contributorsFeedContainerView.populate(data);
     },
 

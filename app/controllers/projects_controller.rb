@@ -94,15 +94,11 @@ class ProjectsController < ApplicationController
               'html_url' => "https://github.com/#{contrib.try(:user).try(:gh_username)}",
               'avatar_url' => contrib.try(:user).try(:pic),
               'admin' => contrib.admin,
-              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id),
+              'not_gh' => true,
+              'contributions' => 0
           }
           if obj['owner']
-            # Do this for the owner just in case it's an anon project
-            if project.anon
-              obj['avatar_url'] = project.get_owner_pic
-              obj['login'] = project.get_owner_gh_username
-              obj['html_url'] = nil
-            end
             owner.push(obj)
           elsif obj['admin']
             admin.push(obj)
