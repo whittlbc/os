@@ -39,6 +39,10 @@ define(['jquery',
       }
     },
 
+    getActiveFeedStatus: function () {
+      return this.statusForFeed[this.activeFeed];
+    },
+
     handleTabClick: function (e) {
       if (!$(e.currentTarget).hasClass('disabled')) {
         var selectedFeed = $(e.currentTarget).attr('data-feed');
@@ -46,7 +50,7 @@ define(['jquery',
         if (this.activeFeed != selectedFeed) {
           this.activeFeed = selectedFeed;
 
-          var statusForFeed = this.statusForFeed[this.activeFeed];
+          var statusForFeed = this.getActiveFeedStatus();
 
           if (statusForFeed == -1) {
             Backbone.EventBroker.trigger('implementations:fetch');

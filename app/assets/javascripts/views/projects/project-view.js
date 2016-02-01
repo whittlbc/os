@@ -166,6 +166,11 @@ define(['jquery',
       });
     },
 
+    getCurrentCommentFeed: function () {
+      var tabsView = ((this.projectMajorView || {}).communicationView || {}).communicationTabsView;
+      return tabsView ? tabsView.getActiveFeedStatus() : 0;
+    },
+
     handleAddComment: function (data) {
       var self = this;
 
@@ -173,7 +178,7 @@ define(['jquery',
         text: data.text,
         poster_uuid: this.currentUser.get('uuid'),
         uuid: this.projectUUID,
-        feed: data.feed,
+        feed: this.getCurrentCommentFeed(),
         parent_uuid: data.parentUUID
       };
 
