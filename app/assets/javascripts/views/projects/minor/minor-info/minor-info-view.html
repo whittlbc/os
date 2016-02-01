@@ -1,11 +1,20 @@
-{{#hasSeeking}}
+{{^editMode}}
+{{#showSeekingNormally}}
 <div id="minorInfoSeekingContainer">
     <div class="seeking-icon-container">
         <span class="octicon octicon-search"></span>
     </div>
     <div class="seeking" data-toggle="tooltip" data-placement="top" title="{{seeking}}">{{seeking}}</div>
 </div>
-{{/hasSeeking}}
+{{/showSeekingNormally}}
+{{/editMode}}
+{{#editMode}}
+{{#showSeekingDuringEdit}}
+<div id="minorInfoSeekingContainer">
+    <select id="editSeeking" placeholder="Seeking"></select>
+</div>
+{{/showSeekingDuringEdit}}
+{{/editMode}}
 <div id="minorInfoDateContainer">posted {{postDate}}</div>
 {{#showLicense}}
 <div id="minorInfoLicenseContainer">

@@ -169,6 +169,62 @@ define(['jquery',
       }
     },
 
+    getSeekingOptions: function () {
+      var options = [];
+      var map = this.isIdea() ? OSUtil.SEEKING_IDEAS_FILTERS : OSUtil.SEEKING_LAUNCHED_FILTERS;
+
+      for (var key in map) {
+        options.push(map[key]);
+      }
+
+      return options;
+    },
+
+    initSeekingDropdown: function (seeking) {
+      var self = this;
+      var options = {
+        theme: 'links',
+        maxItems: null,
+        valueField: 'id',
+        searchField: 'title',
+        options: this.getSeekingOptions(),
+        onBlur: function () {
+          self.seeking = self.seekingSelectize.getValue();
+        },
+        selectOnTab: false,
+        render: {
+          option: function (data, escape) {
+            return '<div class="option title">' + escape(data.title) + '</div>';
+          },
+          item: function (data, escape) {
+            return '<div class="item">' + escape(data.title) + '</div>';
+          }
+        }
+      };
+
+      var $seekingSelect = this.$el.find('#editSeeking').selectize(options);
+      var seekingSelectize = $seekingSelect[0].selectize;
+      this.seekingSelectize = seekingSelectize;
+
+      this.seekingSelectize.on('item_add', function (value, $item) {
+        $item.css('color', '#9797A5');
+        $item.css('border', '2px solid #9797A5');
+        self.seeking = self.seekingSelectize.getValue();
+      });
+
+      this.seekingSelectize.on('item_remove', function () {
+        self.seeking = self.seekingSelectize.getValue();
+      });
+
+      if (!_.isEmpty(seeking)) {
+        for (var i = 0; i < seeking.length; i++) {
+          this.seekingSelectize.addItem(seeking[i]);
+        }
+      }
+
+      this.seeking = this.seekingSelectize.getValue();
+    },
+
     checkIfNeedToShowSeekingTooltip: function () {
       var $seeking = this.$el.find('.seeking');
       // if text is overflowing, enable the tooltip
@@ -247,7 +303,8 @@ define(['jquery',
       }
 
       this.$el.html(MinorInfoViewTpl({
-        hasSeeking: !_.isEmpty(options.seeking),
+        showSeekingDuringEdit: !this.upForGrabs,
+        showSeekingNormally: !this.upForGrabs && !_.isEmpty(options.seeking),
         seeking: (options.seeking || []).join(', '),
         postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
         showRepoName: showRepoName,
@@ -344,6 +401,10 @@ define(['jquery',
       if (options.editMode && showIntegrations) {
         this.irc = ircObj;
         this.initIRCNetworkDropdown();
+      }
+
+      if (options.editMode && !this.upForGrabs) {
+        this.initSeekingDropdown(options.seeking);
       }
 
       this.slackEllipsis = new SVG({

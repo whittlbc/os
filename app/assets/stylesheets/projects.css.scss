@@ -811,6 +811,38 @@ $post-gray: #B6B8C0;
   display: inline-block;
   position: absolute;
   top: 65px;
+
+  .selectize-control.multi {
+    width: 97%;
+    margin-top: 2px;
+    height: 40px;
+
+    .selectize-input {
+      border: 1px solid #DDD;
+      padding-top: 8px;
+      padding-left: 7px;
+      padding-right: 7px;
+      padding-bottom: 7px;
+
+      .item {
+        border-radius: 6px;
+        background-color: white;
+        position: relative;
+        top: -1px;
+      }
+    }
+
+    .selectize-input.has-items {
+      padding-top: 4px;
+      padding-bottom: 0px;
+    }
+  }
+
+  .selectize-dropdown-content {
+    div.active {
+      background-color: #F1F2FC;
+    }
+  }
 }
 
 #minorJoinFollowContainer {
@@ -934,7 +966,6 @@ $post-gray: #B6B8C0;
     font-family: 'Proxima-Nova-SemiBold';
   }
 }
-
 
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
