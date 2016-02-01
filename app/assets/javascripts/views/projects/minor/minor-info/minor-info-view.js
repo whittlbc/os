@@ -153,6 +153,14 @@ define(['jquery',
       }
     },
 
+    checkIfNeedToShowSeekingTooltip: function () {
+      var $seeking = this.$el.find('.seeking');
+      // if text is overflowing, enable the tooltip
+      if ($seeking[0].scrollWidth > $seeking.innerWidth()) {
+        $seeking.tooltip();
+      }
+    },
+
     render: function (options) {
       options = options || {};
       var self = this;
@@ -211,7 +219,11 @@ define(['jquery',
           };
       }
 
+      options.seeking = ['Contributors', 'Seeking', 'Feedback', 'Users'];
+
       this.$el.html(MinorInfoViewTpl({
+        hasSeeking: !_.isEmpty(options.seeking),
+        seeking: (options.seeking || []).join(', '),
         postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
         showRepoName: showRepoName,
         repoName: repoName,
@@ -296,6 +308,8 @@ define(['jquery',
           self.hidePopovers();
         });
 
+        // THIS IS FUCKING UP - TOOLTIP WON'T GO AWAY WHEN HOVER OFF SOMETIMES
+        //this.checkIfNeedToShowSeekingTooltip();
       }
 
       if (options.editMode && showLicense) {
@@ -332,8 +346,6 @@ define(['jquery',
       }, function () {
         self.hipchatEllipsis.changeColor('#cecece');
       });
-
-      this.$el.find('[data-toggle="tooltip"]').tooltip();
 
     }
   });

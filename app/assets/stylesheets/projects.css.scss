@@ -580,64 +580,6 @@ $post-gray: #B6B8C0;
   }
 }
 
-.major-info-seeking-tags {
-  height: 31px;
-  margin-bottom: 2px;
-  width: 72%;
-
-  .seeking-icon-container {
-    height: 21px;
-    width: 21px;
-    border-radius: 50%;
-    display: inline-block;
-    background-color: $post-gray;
-    margin-right: 7px;
-    float: left;
-
-    .octicon-search {
-      line-height: 21px;
-      text-align: center;
-      font-size: 11.5px;
-      position: relative;
-      left: -1px;
-      color: white;
-    }
-  }
-
-
-  .seeking-tags-content {
-    display: inline-block;
-    float: left;
-    color: $light-gray;
-    font-size: 14px;
-    line-height: 22px;
-  }
-
-  .more-project-tags-container {
-    display: inline-block;
-    position: relative;
-    margin-left: 8px;
-    top: 0px;
-
-    .more-tags-count {
-      font-size: 11px;
-      color: $light-gray;
-      text-decoration: underline;
-    }
-
-    .more-tags-dropdown {
-      position: absolute;
-
-      .hover-cover {
-        left: 4px;
-        top: -22px;
-      }
-    }
-
-  }
-
-}
-
 .major-info-tag {
   display: inline-block;
   max-width: 120px;
@@ -1104,6 +1046,44 @@ $post-gray: #B6B8C0;
 
 .contributors-item-view-pic.admin {
   border: 2px solid #00A6C9;
+}
+
+#minorInfoSeekingContainer {
+  height: 40px;
+  width: 95.75%;
+  float: left;
+  padding-left: 10px;
+  line-height: 40px;
+  border-top: 1px solid #DDD;
+
+  .seeking-icon-container {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #e0e0e9;
+    margin-right: 7px;
+    float: left;
+    margin-top: 6.5px;
+    text-align: center;
+
+    .octicon-search {
+      text-align: center;
+      font-size: 12.5px;
+      position: relative;
+      top: -8px;
+      color: white;
+    }
+  }
+
+  .seeking {
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+  }
+
 }
 
 #minorInfoDateContainer {
