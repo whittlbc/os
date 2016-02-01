@@ -4,13 +4,18 @@ define(['jquery',
   'views/os.view',
   'models/os.util',
   'models/project',
+  'views/widgets/user-info-bubble',
+  'stache!views/projects/major/communication/communication-feed-item-view',
   'backbone-eventbroker'
 ], function ($,
-             Backbone,
-             _,
-             OSView,
-             OSUtil,
-             Project) {
+   Backbone,
+   _,
+   OSView,
+   OSUtil,
+   Project,
+   UserInfoBubble,
+   CommunicationFeedItemViewTpl
+) {
   'use strict';
 
   var CommunicationFeedItemView = OSView.extend({
@@ -27,10 +32,10 @@ define(['jquery',
     handleVote: function () {
       var self = this;
       this.voted = true;
-      var $voteCountEl = this.getVoteCountEl();
+      var $voteCountEl = this.$el.find('#comment-' + this.commentNumber + ' .comment-vote-count-container > span');
       var newVoteCount = Number($voteCountEl.html()) + 1;
       $voteCountEl.html(newVoteCount);
-      var $voteCountContainer = this.getVoteCountContainerEl();
+      var $voteCountContainer = this.$el.find('#comment-' + this.commentNumber + ' .comment-vote-count-container');
       $voteCountContainer.addClass('voted');
 
       var project = new Project();
@@ -63,7 +68,7 @@ define(['jquery',
 
     showBubble: function () {
       var self = this;
-      var $infoBubble = this.getInfoBubbleEl();
+      var $infoBubble = this.$el.find('#comment-' + this.commentNumber + ' .poster-info-bubble');
       if (!this.bubbleShown) {
         $infoBubble.show();
         this.bubbleShown = true;
@@ -72,7 +77,7 @@ define(['jquery',
 
     hideBubble: function () {
       var self = this;
-      var $infoBubble = this.getInfoBubbleEl();
+      var $infoBubble = this.$el.find('#comment-' + this.commentNumber + ' .poster-info-bubble');
       if (this.bubbleShown) {
         $infoBubble.hide();
         this.bubbleShown = false;
@@ -81,14 +86,14 @@ define(['jquery',
 
     addListeners: function () {
       var self = this;
-      var $comment = this.getCommentEl();
-      var $infoBubble = this.getInfoBubbleEl();
-      var $trashcan = this.getTrashcanEl();
-      var $posterPic = this.getPosterPicEl();
-      var $voteCountContainer = this.getVoteCountContainerEl();
-      var $replyBtn = this.getReplyBtnEl();
-      var $submitReplyBtn = this.getSubmitReplyBtn();
-      var $replyTextarea = this.getReplyTextarea();
+      var $comment = this.$el.find('#comment-' + this.commentNumber);
+      var $infoBubble = this.$el.find('#comment-' + this.commentNumber + ' .poster-info-bubble');
+      var $trashcan = this.$el.find('#comment-' + this.commentNumber + ' .delete-comment-icon');
+      var $posterPic = this.$el.find('#comment-' + this.commentNumber + ' .comment-poster-pic');
+      var $voteCountContainer = this.$el.find('#comment-' + this.commentNumber + ' .comment-vote-count-container');
+      var $replyBtn = this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn');
+      var $submitReplyBtn = this.$el.find('#reply-comment-' + this.commentNumber + ' .reply-comment-btn');
+      var $replyTextarea = this.$el.find('#reply-comment-' + this.commentNumber + ' textarea');
 
       // Hover listener for user info bubble
       $comment.hover(function () {
@@ -126,7 +131,7 @@ define(['jquery',
 
       // Reply Btn Click - Submit Reply Comment
       $submitReplyBtn.click(function () {
-        var $input = self.getReplyInputEl();
+        var $input = self.$el.find('#reply-comment-' + self.commentNumber + ' .reply-textarea');
         var text = $input.val();
         if (!_.isEmpty(text)) {
           Backbone.EventBroker.trigger('comment:add', {
@@ -148,21 +153,48 @@ define(['jquery',
     },
 
     showReplyArea: function () {
-      var $replyBtn = this.getReplyBtnEl();
-      var $replyCommentContainer = this.getReplyCommentContainerEl();
-      var $comment = this.getCommentEl();
+      var $replyBtn = this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn');
+      var $replyCommentContainer = this.$el.find('#reply-comment-' + this.commentNumber);
+      var $comment = this.$el.find('#comment-' + this.commentNumber);
       $replyBtn.hide();
       $replyCommentContainer.show();
       $comment.addClass('reply-container-shown');
     },
 
     hideReplyArea: function () {
-      var $replyBtn = this.getReplyBtnEl();
-      var $replyCommentContainer = this.getReplyCommentContainerEl();
-      var $comment = this.getCommentEl();
+      var $replyBtn = this.$el.find('#comment-' + this.commentNumber + ' .comment-reply-btn');
+      var $replyCommentContainer = this.$el.find('#reply-comment-' + this.commentNumber);
+      var $comment = this.$el.find('#comment-' + this.commentNumber);
       $replyBtn.show();
       $replyCommentContainer.hide();
       $comment.removeClass('reply-container-shown');
+    },
+
+    render: function () {
+      var self = this;
+
+      this.$el.html(CommunicationFeedItemViewTpl({
+        userPic: this.userPic,
+        posterGHUsername: this.posterGHUsername,
+        voteCount: this.voteCount,
+        voted: this.voted,
+        postTime: this.postTime,
+        isPoster: this.isPoster,
+        text: this.text,
+        hasChildren: this.hasChildren,
+        commentNumber: this.commentNumber
+      }));
+
+      this.addListeners();
+
+      this.userInfoBubble = new UserInfoBubble({
+        el: this.$el.find('#comment-' + this.commentNumber + ' .poster-info-bubble')
+      });
+
+      this.userInfoBubble.render({
+        userPic: this.userPic,
+        ghUsername: this.posterGHUsername
+      });
     }
 
   });

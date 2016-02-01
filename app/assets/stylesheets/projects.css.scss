@@ -781,10 +781,7 @@ $post-gray: #B6B8C0;
   float: left;
 }
 
-#generalFeedContainerView,
-#suggestionsFeedContainerView,
-#teamFeedContainerView,
-#adminFeedContainerView,
+#containerViewBindPoint,
 .communication-feed-view,
 .communication-feed-list-view {
   width: 100%;
@@ -1062,7 +1059,7 @@ $post-gray: #B6B8C0;
     border-radius: 50%;
     display: inline-block;
     background-color: #e0e0e9;
-    margin-right: 8px;
+    margin-right: px;
     float: left;
     margin-top: 6.5px;
     text-align: center;
@@ -1526,10 +1523,7 @@ $post-gray: #B6B8C0;
   }
 }
 
-.general-feed-item-container,
-.suggestions-feed-item-container,
-.team-feed-item-container,
-.admin-feed-item-container {
+.feed-item-container {
   width: 100%;
   float: left;
   background-color: white;
@@ -1542,10 +1536,7 @@ $post-gray: #B6B8C0;
   position: relative;
 }
 
-.general-feed-item-container.reply-container-shown,
-.suggestions-feed-item-container.reply-container-shown,
-.team-feed-item-container.reply-container-shown,
-.admin-feed-item-container.reply-container-shown {
+.feed-item-container.reply-container-shown {
   border-bottom: none;
 }
 
@@ -1653,14 +1644,6 @@ $post-gray: #B6B8C0;
   margin-left: 40px;
   padding-left: 0;
   list-style-type: none;
-
-  .general-feed-item-container,
-  .suggestions-feed-item-container,
-  .team-feed-item-container,
-  .admin-feed-item-container {
-    //border-left: 1px solid #DDD;
-  }
-
 }
 
 .comment-reply-container {

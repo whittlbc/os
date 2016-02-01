@@ -1,8 +1,12 @@
 define(['jquery',
   'backbone',
+  'views/projects/major/communication/communication-feed-item-view',
+  'stache!views/projects/major/communication/communication-feed-view',
   'underscore'
 ], function ($,
    Backbone,
+   FeedItemView,
+   CommunicationFeedViewTpl,
    _) {
   'use strict';
 
@@ -28,7 +32,7 @@ define(['jquery',
         this.render();
       }
       this.ALL_COMMENTS = [];
-      var $mainCommentList = this.getMainListElement();
+      var $mainCommentList = this.$el.find('#feedListView');
       $mainCommentList.empty();
       this.commentNumber = 0;
       for (var i = 0; i < data.comments.length; i++) {
@@ -40,7 +44,9 @@ define(['jquery',
       var self = this;
       var hasChildren = data.children && data.children.length > 0;
       this.commentNumber++;
-      var itemView = this.getFeedItemView();
+      var itemView = new FeedItemView({
+        tagName: 'li'
+      });
       data.comment.commentNumber = this.commentNumber;
       itemView.setData(data.comment);
 
@@ -85,6 +91,14 @@ define(['jquery',
 
     passComments: function (data) {
       data.comments.length > 0 ? this.populateComments(data) : this.render({showNoComments: true});
+    },
+
+    render: function (options) {
+      this.noCommentsShown = options && options.showNoComments;
+
+      this.$el.html(CommunicationFeedViewTpl({
+        showNoComments: this.noCommentsShown
+      }));
     }
 
   });

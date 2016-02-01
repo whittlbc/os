@@ -219,8 +219,6 @@ define(['jquery',
           };
       }
 
-      options.seeking = ['Contributors', 'Seeking', 'Feedback', 'Users'];
-
       this.$el.html(MinorInfoViewTpl({
         hasSeeking: !_.isEmpty(options.seeking),
         seeking: (options.seeking || []).join(', '),

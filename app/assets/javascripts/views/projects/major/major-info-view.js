@@ -182,7 +182,7 @@ define(['jquery',
 
     addTags: function (options) {
       this.addDomainTags((options.domains || []), (options.langs_and_frames || []));
-      this.addLangFrameTags(options.langs_and_frames || []);
+      this.addLangFrameTags((options.langs_and_frames || []), (options.domains || []));
       //this.addSeekingTags(options.seeking || []);
     },
 
@@ -209,14 +209,15 @@ define(['jquery',
       }
     },
 
-    addLangFrameTags: function (langsFrames) {
+    addLangFrameTags: function (langsFrames, domains) {
       var bothTagsContainerWidth = this.$el.find('.major-info-tag-container').width();
       var $langFrameTagContainer = this.$el.find('.lang-frame-tags');
       var langFrameTagsWidth = 21; // start with width of linebreak separating tag containers
       var extraTags = [];
+      var maxWidth = _.isEmpty(domains) ? 0.95 : 0.5;
 
       for (var i = 0; i < langsFrames.length; i++) {
-        if (((langFrameTagsWidth + 100) / bothTagsContainerWidth) > 0.5) {
+        if (((langFrameTagsWidth + 100) / bothTagsContainerWidth) > maxWidth) {
           extraTags.push(langsFrames[i]);
 
           if (i === langsFrames.length - 1) {
@@ -471,8 +472,6 @@ define(['jquery',
       this.pendingProjectRequest = options.pending_project_request;
       this.isContributor = options.is_contributor;
       this.title = options.title || '';
-
-      options.domains = ['Academia', 'Mobile', 'Web'];
 
       var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
 
