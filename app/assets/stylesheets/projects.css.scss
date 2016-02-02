@@ -371,6 +371,7 @@ $post-gray: #B6B8C0;
   background-color: #00B3D7;
 }
 
+.join-btn.up-for-grabs,
 .join-btn.launched,
 .join-btn.contributor {
   background-color: white;
@@ -385,6 +386,14 @@ $post-gray: #B6B8C0;
     right: 6px;
     font-size: 18px;
     top: 1px;
+  }
+
+  img {
+    display: inline-block;
+    height: 17px;
+    position: relative;
+    right: 7px;
+    top: -1.5px;
   }
 }
 

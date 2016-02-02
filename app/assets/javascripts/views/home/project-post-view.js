@@ -7,21 +7,19 @@ define(['jquery',
   'models/all-langs',
   'views/widgets/user-info-bubble',
   'views/widgets/more-dropdown/more-dropdown',
-  'views/svgs/svg-view',
   'stache!views/home/project-post-view',
   'backbone-eventbroker',
   'jquery-transit'
 ], function ($,
-             Backbone,
-             _,
-             Project,
-             OSUtil,
-             OSView,
-             AllLangs,
-             UserInfoBubble,
-             MoreDropdown,
-             SVG,
-             ProjectPostViewTpl) {
+   Backbone,
+   _,
+   Project,
+   OSUtil,
+   OSView,
+   AllLangs,
+   UserInfoBubble,
+   MoreDropdown,
+   ProjectPostViewTpl) {
   'use strict';
 
   var ProjectPostView = OSView.extend({
@@ -335,18 +333,6 @@ define(['jquery',
         ghUsername: self.ownerGHUsername,
         anon: self.anon
       });
-
-      if (this.upForGrabs) {
-
-        this.ufgIcon = new SVG({
-          el: this.$el.find('.project-post-ufg-icon'),
-          svg: 'up-for-grabs'
-        });
-
-        this.ufgIcon.render();
-
-        this.ufgIcon.changeColor('#1D1E22');
-      }
 
       this.$el.find('[data-toggle="tooltip"]').tooltip();
     }

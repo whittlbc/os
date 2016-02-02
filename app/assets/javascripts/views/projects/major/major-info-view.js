@@ -505,8 +505,8 @@ define(['jquery',
           case OSUtil.PROJECT_TYPES.indexOf('ideas'):
             // UP FOR GRABS
             if (options.up_for_grabs === true) {
-              obj.text = 'Grab';
-              self.majorBtnEvent = 'pull-project';
+              obj.className = 'up-for-grabs';
+              obj.text = '<img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/bulb_blue.svg" />Up for Grabs';
             }
             // NOT Up for Grabs
             else {
