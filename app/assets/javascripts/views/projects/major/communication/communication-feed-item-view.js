@@ -4,6 +4,7 @@ define(['jquery',
   'views/os.view',
   'models/os.util',
   'models/project',
+  'models/session',
   'views/widgets/user-info-bubble',
   'stache!views/projects/major/communication/communication-feed-item-view',
   'backbone-eventbroker'
@@ -13,6 +14,7 @@ define(['jquery',
    OSView,
    OSUtil,
    Project,
+   Session,
    UserInfoBubble,
    CommunicationFeedItemViewTpl
 ) {
@@ -21,9 +23,18 @@ define(['jquery',
   var CommunicationFeedItemView = OSView.extend({
 
     postInitialize: function () {
+      Backbone.EventBroker.register({
+        'comments:hide-empty-replies': 'checkIfShouldHideReplyArea'
+      }, this);
     },
 
     events: {},
+
+    checkIfShouldHideReplyArea: function () {
+      if (_.isEmpty((this.$el.find('#reply-comment-' + this.commentNumber + ' .reply-textarea').val() || '').trim())) {
+        this.hideReplyArea();
+      }
+    },
 
     checkIfUserAuthed: function (channel) {
       Backbone.EventBroker.trigger(channel, this);
@@ -84,6 +95,10 @@ define(['jquery',
       }
     },
 
+    controlEnter: function (e) {
+      return e.keyCode == 13 && ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey));
+    },
+
     addListeners: function () {
       var self = this;
       var $comment = this.$el.find('#comment-' + this.commentNumber);
@@ -125,25 +140,42 @@ define(['jquery',
       });
 
       // Reply Btn Click - Show Comment Area
-      $replyBtn.click(function () {
+      $replyBtn.click(function (e) {
+        e.stopPropagation();
         self.checkIfUserAuthed('comment:reply');
       });
 
+      $replyTextarea.click(function (e) {
+        e.stopPropagation();
+      });
+
       // Reply Btn Click - Submit Reply Comment
-      $submitReplyBtn.click(function () {
-        var $input = self.$el.find('#reply-comment-' + self.commentNumber + ' .reply-textarea');
-        var text = $input.val();
-        if (!_.isEmpty(text)) {
-          Backbone.EventBroker.trigger('comment:add', {
-            text: text,
-            feed: self.feed,
-            parentUUID: self.uuid
-          });
+      $submitReplyBtn.click(function (e) {
+        self.shouldSubmitComment = true;
+        e.stopPropagation();
+        if (!self.submittingComment) {
+          self.submittingComment = true;
+          self.submitComment();
+        }
+      });
+
+      $replyTextarea.keydown(function (e) {
+        if (self.controlEnter(e)) {
+          self.shouldSubmitComment = true;
         }
       });
 
       // Auto-resize reply textarea
-      $replyTextarea.on('keyup input', function () {
+      $replyTextarea.on('keyup input', function (e) {
+        if (self.shouldSubmitComment) {
+          e.preventDefault();
+          if (!self.submittingComment) {
+            self.submittingComment = true;
+            self.submitComment();
+          }
+          return;
+        }
+
         $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);
       });
 
@@ -159,6 +191,7 @@ define(['jquery',
       $replyBtn.hide();
       $replyCommentContainer.show();
       $comment.addClass('reply-container-shown');
+      $replyCommentContainer.find('textarea').focus();
     },
 
     hideReplyArea: function () {
@@ -168,6 +201,19 @@ define(['jquery',
       $replyBtn.show();
       $replyCommentContainer.hide();
       $comment.removeClass('reply-container-shown');
+    },
+
+    submitComment: function () {
+      var $input = this.$el.find('#reply-comment-' + this.commentNumber + ' .reply-textarea');
+      var text = $input.val();
+      $input.blur();
+      if (!_.isEmpty(text)) {
+        Backbone.EventBroker.trigger('comment:add', {
+          text: text,
+          parentUUID: this.uuid
+        });
+      }
+      this.shouldSubmitComment = false;
     },
 
     render: function () {

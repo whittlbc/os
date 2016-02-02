@@ -1,12 +1,14 @@
 define(['jquery',
   'backbone',
   'underscore',
+  'models/session',
   'views/projects/major/communication/communication-feed-container-view',
   'stache!views/projects/major/communication/communication-panels-view',
   'backbone-eventbroker'
 ], function ($,
    Backbone,
    _,
+   Session,
    CommunicationFeedContainerView,
    CommunicationPanelsViewTpl) {
   'use strict';
@@ -43,6 +45,9 @@ define(['jquery',
 
       $textarea.val('');
       $textarea.css('height', '31px');
+      $textarea.blur();
+
+      this.shouldSubmitComment = false;
     },
 
     showNewComment: function (data) {
@@ -59,11 +64,28 @@ define(['jquery',
     //  $('html, body').animate({scrollTop: feedContainerHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
     //},
 
+    controlEnter: function (e) {
+      return e.keyCode == 13 && ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey));
+    },
+
     addListeners: function () {
       var self = this;
+      var $commentArea = this.$el.find('.comment-textarea');
 
-      // Auto-resize comment textarea
-      this.$el.find('.comment-textarea').on('keyup input', function () {
+      $commentArea.keydown(function (e) {
+        if (self.controlEnter(e)) {
+          self.shouldSubmitComment = true;
+        }
+      });
+
+      // Auto-resize reply textarea
+      $commentArea.on('keyup input', function (e) {
+        if (self.shouldSubmitComment) {
+          e.preventDefault();
+          self.handleAddComment();
+          return;
+        }
+
         $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);
       });
     },

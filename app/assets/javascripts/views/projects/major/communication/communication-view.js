@@ -50,6 +50,10 @@ define(['jquery',
         el: '#panelsView'
       });
       this.communicationPanelsView.render();
+
+      $(document).click(function () {
+        Backbone.EventBroker.trigger('comments:hide-empty-replies');
+      });
     }
   });
 
