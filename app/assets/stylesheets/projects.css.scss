@@ -1455,6 +1455,11 @@ $post-gray: #B6B8C0;
   cursor: pointer;
 }
 
+.num-contribs-text.ufg:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
 .send-invites-from-project-page-btn {
   color: #C4C5CA;
   font-size: 12px;

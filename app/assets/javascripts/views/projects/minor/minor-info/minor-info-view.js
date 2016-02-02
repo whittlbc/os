@@ -60,8 +60,10 @@ define(['jquery',
       this.hipchatPopover.$el.hide()
     },
 
-    showContribsModal: function () {
-      Backbone.EventBroker.trigger('contribs-modal:show');
+    showContribsModal: function (e) {
+      if (!$(e.currentTarget).hasClass('ufg')) {
+        Backbone.EventBroker.trigger('contribs-modal:show');
+      }
     },
 
     showSendInvitesModal: function () {
@@ -334,6 +336,7 @@ define(['jquery',
         hipchatAccepted: options.is_hipchat_member,
         slackRequestSent: options.pending_slack_request,
         hipchatRequestSent: options.pending_hipchat_request,
+        upForGrabs: this.upForGrabs,
         editMode: options.editMode,
         editModeRepoName: options.repo_name,
         isFirefox: $('body').attr('browser') === 'firefox'
