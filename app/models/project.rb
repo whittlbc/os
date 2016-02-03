@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
   has_many :comments
   has_many :evolutions
   has_many :pending_requests
+  has_many :implementations
 
   scope :active, -> { where(:is_destroyed => false, :was_pulled => false) }
 

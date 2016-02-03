@@ -775,9 +775,9 @@ $post-gray: #B6B8C0;
     color: #CECFD2;
   }
 
-
 }
 
+.imp-list-view,
 #communicationFeedContainer {
   width: 93%;
   margin-top: 10px;
@@ -786,6 +786,11 @@ $post-gray: #B6B8C0;
   background-color: #F1F1F9;
   min-height: 300px;
   float: left;
+}
+
+.imp-list-view {
+  min-height: 347px;
+  margin-top: 20px;
 }
 
 #containerViewBindPoint,
@@ -801,6 +806,7 @@ $post-gray: #B6B8C0;
   margin-bottom: 0;
 }
 
+.no-imps-view,
 .no-comments {
   display: block;
   margin-left: auto;

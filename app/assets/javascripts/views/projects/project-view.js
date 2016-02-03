@@ -55,6 +55,7 @@ define(['jquery',
         'project:join': 'checkProjectPrivacy',
         'comment:add': 'handleAddComment',
         'comments:fetch': 'fetchComments',
+        'implementations:fetch': 'fetchImplementations',
         'evolution:fetch': 'fetchProjectEvolution',
         'project:save-edit': 'handleSaveEditProject',
         'edit-mode:cancel': 'cancelEditMode',
@@ -245,7 +246,9 @@ define(['jquery',
       this.cachedProjectData = data;
       this.render(data);
 
-      this.fetchComments(0);
+      if (!data.project.up_for_grabs) {
+        this.fetchComments(0);
+      }
     },
 
     fetchComments: function (feedStatus) {
@@ -263,6 +266,25 @@ define(['jquery',
       project.fetchComments(data, {
         success: function (comments) {
           self.projectMajorView.passComments({ comments: comments });
+        }
+      });
+    },
+
+    fetchImplementations: function () {
+      var self = this;
+      var project = new Project();
+
+      var data = {
+        uuid: self.projectUUID
+      };
+
+      if (this.currentUser) {
+        data.user_uuid = this.currentUser.get('uuid');
+      }
+
+      project.fetchImplementations(data, {
+        success: function (implementations) {
+          self.projectMajorView.passImplementations({ implementations: implementations });
         }
       });
     },

@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/session',
+  'views/projects/major/implementation/implementation-view',
   'views/projects/major/communication/communication-feed-container-view',
   'stache!views/projects/major/communication/communication-panels-view',
   'backbone-eventbroker'
@@ -9,13 +10,18 @@ define(['jquery',
    Backbone,
    _,
    Session,
+   ImplementationView,
    CommunicationFeedContainerView,
    CommunicationPanelsViewTpl) {
   'use strict';
 
   var CommunicationPanelsView = Backbone.View.extend({
 
-    initialize: function () {
+    initialize: function (options) {
+      options = options || {};
+
+      this.ufg = options.ufg;
+      this.showComments = !this.ufg;
     },
 
     events: {
@@ -55,14 +61,22 @@ define(['jquery',
     },
 
     passComments: function (data) {
+      if (!this.showComments) {
+        this.showComments = true;
+        this.render();
+      }
+
       this.feedContainerView.passComments(data);
     },
 
-    //scrollToNewComment: function () {
-    //  var self = this;
-    //  var feedContainerHeight = this.$el.find('#communicationFeedContainer').height();
-    //  $('html, body').animate({scrollTop: feedContainerHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
-    //},
+    passImplementations: function (data) {
+      if (this.showComments) {
+        this.showComments = false;
+        this.render();
+      }
+
+      this.implementationView.populate(data);
+    },
 
     controlEnter: function (e) {
       return e.keyCode == 13 && ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey));
@@ -92,13 +106,23 @@ define(['jquery',
 
     render: function () {
 
-      this.$el.html(CommunicationPanelsViewTpl());
+      this.$el.html(CommunicationPanelsViewTpl({
+        showComments: this.showComments
+      }));
 
       this.feedContainerView = new CommunicationFeedContainerView({
         el: this.$el.find('#containerViewBindPoint')
       });
 
       this.feedContainerView.render();
+
+      if (!this.showComments) {
+        this.implementationView = new ImplementationView({
+          el: this.$el.find('#implementationView')
+        });
+
+        this.implementationView.render();
+      }
 
       this.addListeners();
     }

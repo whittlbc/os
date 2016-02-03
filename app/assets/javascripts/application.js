@@ -77,8 +77,7 @@ define(['jquery',
         hasScrolled();
         didScroll = false;
       }
-    }, 200);
-
+    }, 20);
 
     //// Highlight the current Project Type based on the initial has upon site entrance
     var initialPath = window.location.hash;

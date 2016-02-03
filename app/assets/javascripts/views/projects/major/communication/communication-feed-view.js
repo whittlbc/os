@@ -99,6 +99,7 @@ define(['jquery',
       this.$el.html(CommunicationFeedViewTpl({
         showNoComments: this.noCommentsShown
       }));
+
     }
 
   });

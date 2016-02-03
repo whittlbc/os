@@ -333,6 +333,14 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         verb: 'GET',
         action: 'read'
       },
+      'fetchImplementations': {
+        verb: 'GET',
+        action: 'read'
+      },
+      'addImplementation': {
+        verb: 'POST',
+        action: 'create'
+      },
       'commentVote': {
         verb: 'PUT',
         action: 'update'

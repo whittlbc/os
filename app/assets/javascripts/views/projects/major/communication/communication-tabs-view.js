@@ -15,12 +15,15 @@ define(['jquery',
 
   var CommunicationTabsView = OSView.extend({
 
-    postInitialize: function () {
+    postInitialize: function (options) {
+      options = options || {};
+
       Backbone.EventBroker.trigger({
         'contribs:fetched': 'checkIfOnTeam'
       }, this);
 
-      this.activeFeed = 'general';
+      this.activeFeed = options.ufg ? 'implementations' : 'general';
+      this.ufg = options.ufg;
 
       this.statusForFeed = {
         implementations: -1,

@@ -7,24 +7,28 @@ define(['jquery',
   'velocity',
   'tabs'
 ], function ($,
-             Backbone,
-             _,
-             CommunicationTabsView,
-             CommunicationPanelsView,
-             CommunicationViewTpl) {
+   Backbone,
+   _,
+   CommunicationTabsView,
+   CommunicationPanelsView,
+   CommunicationViewTpl) {
   'use strict';
 
   var CommunicationView = Backbone.View.extend({
 
-    initialize: function () {
+    initialize: function (options) {
+      options = options || {};
+
+      this.ufg = options.ufg;
+
+      $(document).click(function () {
+        Backbone.EventBroker.trigger('comments:hide-empty-replies');
+      });
     },
 
     events: {},
 
     handleTabSelected: function (index) {
-      //this.communicationPanelsView.render({
-      //  activePanel: index
-      //});
     },
 
     showNewComment: function (data) {
@@ -35,25 +39,30 @@ define(['jquery',
       this.communicationPanelsView.passComments(data);
     },
 
+    passImplementations: function (data) {
+      this.communicationPanelsView.passImplementations(data);
+    },
+
     render: function (options) {
       var self = this;
 
-      this.$el.html(CommunicationViewTpl({}));
+      this.$el.html(CommunicationViewTpl());
 
       this.communicationTabsView = new CommunicationTabsView({
-        el: '#tabsView'
+        el: '#tabsView',
+        ufg: this.ufg
       });
+
       this.listenTo(this.communicationTabsView, 'tab:selected', this.handleTabSelected);
+
       this.communicationTabsView.render(options);
 
       this.communicationPanelsView = new CommunicationPanelsView({
-        el: '#panelsView'
+        el: '#panelsView',
+        ufg: this.ufg
       });
-      this.communicationPanelsView.render();
 
-      $(document).click(function () {
-        Backbone.EventBroker.trigger('comments:hide-empty-replies');
-      });
+      this.communicationPanelsView.render();
     }
   });
 

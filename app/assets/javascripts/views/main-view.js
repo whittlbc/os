@@ -21,6 +21,7 @@ define(['jquery',
   'views/modals/about-modal',
   'views/modals/rules-modal',
   'views/modals/suggestions-modal',
+  'views/modals/add-implementation-modal',
   'views/footer/footer-view',
   'views/filters/lang-filters-view',
   'views/filters/minor-filters-view',
@@ -50,6 +51,7 @@ define(['jquery',
    AboutModal,
    RulesModal,
    SuggestionsModal,
+   AddImplementationModal,
    FooterView,
    LangFiltersView,
    MinorFiltersView,
@@ -92,7 +94,8 @@ define(['jquery',
         'window:resize': 'positionFooterAndHeaderTutorialBubbles',
         'tutorial:login-with-gh': 'loginWithGHFromTutorial',
         'project:login-or-star': 'loginOrStar',
-        'header-footer:force-show': 'forceShowHeaderFooter'
+        'header-footer:force-show': 'forceShowHeaderFooter',
+        'login-or-add-implementation': 'loginOrAddImplementation'
       }, this);
 
       this.lastAddProjectPopupShownForGrab = false;
@@ -399,6 +402,15 @@ define(['jquery',
       var self = this;
       if (!this.currentUser) {
         this.loginModal.setMessage('You must be logged in to participate in the discussion.');
+        this.loginModal.showModal();
+      }
+    },
+
+    loginOrAddImplementation: function () {
+      if (this.currentUser) {
+        this.addImplementationModal.showModal();
+      } else {
+        this.loginModal.setMessage('You must be logged in to add an implementation.');
         this.loginModal.showModal();
       }
     },
@@ -864,6 +876,12 @@ define(['jquery',
       });
 
       this.suggestionsModal.render();
+
+      this.addImplementationModal = new AddImplementationModal({
+        el: '#addImplementationModal'
+      });
+
+      this.addImplementationModal.render();
 
       this.listenTo(this.extrasDropdown, 'item:clicked', function (id) {
         switch (id) {
