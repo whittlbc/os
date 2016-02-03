@@ -46,17 +46,21 @@ define(['jquery',
         model: new Implementation(data)
       });
 
-      this.addListeners(itemView);
-
       itemView.render();
 
       this.$list.append(itemView.el);
     },
 
     render: function () {
+      var self = this;
+
       this.$el.html(ImplementationViewTpl());
       this.$list = this.$el.find('.imp-list-view');
-      this.$noItemsView = this.$list = this.$el.find('.no-imps-view');;
+      this.$noItemsView = this.$el.find('.no-imps-view');
+
+      this.$list.click(function () {
+        self.handleAddImplementation();
+      });
     }
 
   });

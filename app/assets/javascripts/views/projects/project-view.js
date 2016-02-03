@@ -284,7 +284,7 @@ define(['jquery',
 
       project.fetchImplementations(data, {
         success: function (implementations) {
-          self.projectMajorView.passImplementations({ implementations: implementations });
+          self.projectMajorView.passImplementations(implementations);
         }
       });
     },
