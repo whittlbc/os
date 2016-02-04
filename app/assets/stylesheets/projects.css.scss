@@ -806,7 +806,42 @@ $post-gray: #B6B8C0;
   margin-bottom: 0;
 }
 
-.no-imps-view,
+#implementationView {
+  position: relative;
+}
+
+.no-imps-view {
+  display: block;
+  padding-top: 100px;
+  position: absolute;
+  width: 100%;
+
+  .text {
+    font-size: 14.5px;
+    color: #9B9BA6;
+    text-align: center;
+  }
+
+  .add-implementation-btn-container {
+    margin-top: 22px;
+    width: 100%;
+    display: block;
+    text-align: center;
+
+    .add-implementation-btn {
+      text-align: center;
+      padding: 6px 16px;
+      color: white;
+      background-color: #00A6C9;
+      border-radius: 4px;
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+  }
+}
+
 .no-comments {
   display: block;
   margin-left: auto;
