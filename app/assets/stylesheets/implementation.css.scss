@@ -40,7 +40,14 @@
     padding-left: 35px;
     padding-right: 35px;
     padding-bottom: 4px;
+    height: 315px;
+  }
 
+  .add-implementation-scroll-container {
+    overflow-y: auto;
+    overflow-x: hidden !important;
+    float: left;
+    height: 100%;
   }
 
 }

@@ -19,7 +19,7 @@ define(['jquery',
     },
 
     events: {
-      'click .add-implementation': 'handleAddImplementation'
+      'click .add-implementation-btn': 'handleAddImplementation'
     },
 
     handleAddImplementation: function () {
@@ -57,10 +57,6 @@ define(['jquery',
       this.$el.html(ImplementationViewTpl());
       this.$list = this.$el.find('.imp-list-view');
       this.$noItemsView = this.$el.find('.no-imps-view');
-
-      this.$list.click(function () {
-        self.handleAddImplementation();
-      });
     }
 
   });

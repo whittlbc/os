@@ -812,31 +812,33 @@ $post-gray: #B6B8C0;
 
 .no-imps-view {
   display: block;
-  padding-top: 100px;
+  padding-top: 110px;
   position: absolute;
   width: 100%;
 
   .text {
-    font-size: 14.5px;
+    font-size: 15px;
     color: #9B9BA6;
     text-align: center;
   }
 
   .add-implementation-btn-container {
-    margin-top: 22px;
+    margin-top: 30px;
     width: 100%;
     display: block;
     text-align: center;
 
     .add-implementation-btn {
       text-align: center;
-      padding: 6px 16px;
+      padding: 6.5px 19px;
       color: white;
       background-color: #00A6C9;
       border-radius: 4px;
       display: inline-block;
       margin-left: auto;
+      font-size: 15px;
       margin-right: auto;
+      cursor: pointer;
     }
 
   }
