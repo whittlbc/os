@@ -1,4 +1,55 @@
 <div class="add-implementation-scroll-container">
+    <div data-question="is_owner">
+        <div class="question">Is this your own project?</div>
+        <div class="answers">
+            <div data-answer="yes">
+                <div class="data-answer-btn">Yes</div>
+            </div>
+            <div data-answer="no">
+                <div class="data-answer-btn">No</div>
+            </div>
+        </div>
+    </div>
+    <div class="questions-pending">
+        <div data-question="done">
+            <div class="question">Is a working version already done?</div>
+            <div class="answers">
+                <div data-answer="yes">
+                    <div class="data-answer-btn">Yes</div>
+                </div>
+                <div data-answer="no">
+                    <div class="data-answer-btn">No</div>
+                </div>
+            </div>
+        </div>
+        <div data-question="seeking_contributors">
+            <div class="question">Are you looking for more contributors?</div>
+            <div class="answers">
+                <div data-answer="yes">
+                    <div class="data-answer-btn">Yes</div>
+                </div>
+                <div data-answer="no">
+                    <div class="data-answer-btn">No</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-implementation-description-container">
+        <div class="description-question">How does this project differ from the original idea (if at all)?</div>
+        <textarea placeholder="Differences"></textarea>
+    </div>
+    <div class="add-implementation-url-container">
+        <div class="url-type">Github repo url:</div>
+        <div class="url-input-container">
+            <input type="text" name="gh-repo" placeholder="Full Github url"/>
+        </div>
+    </div>
+    <div class="add-implementation-url-container">
+        <div class="url-type">Other url:</div>
+        <div class="url-input-container">
+            <input type="text" name="other-url" placeholder="Other url"/>
+        </div>
+    </div>
     <div class="add-implementation-integrations-container">
         <!--IRC-->
         <div class="integration-container" id="detailsViewIRCContainer">
@@ -33,4 +84,8 @@
             <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
         </div>
     </div>
+</div>
+<div class="modal-footer">
+    <div class="fake-top-border"></div>
+    <div class="bottom-nav-create-btn">Add</div>
 </div>

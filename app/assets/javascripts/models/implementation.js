@@ -10,9 +10,7 @@ define(['jquery',
 ) {
   'use strict';
 
-  var Implementation = OSModel.extend({
-
-  });
+  var Implementation = OSModel.extend();
 
   return Implementation;
 

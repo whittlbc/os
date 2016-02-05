@@ -95,7 +95,7 @@ define(['jquery',
         'tutorial:login-with-gh': 'loginWithGHFromTutorial',
         'project:login-or-star': 'loginOrStar',
         'header-footer:force-show': 'forceShowHeaderFooter',
-        'login-or-add-implementation': 'loginOrAddImplementation'
+        'login-or-add-implementation': 'loginOrShowAddImplementationModal'
       }, this);
 
       this.lastAddProjectPopupShownForGrab = false;
@@ -406,7 +406,7 @@ define(['jquery',
       }
     },
 
-    loginOrAddImplementation: function () {
+    loginOrShowAddImplementationModal: function () {
       if (this.currentUser) {
         this.addImplementationModal.showModal();
       } else {

@@ -56,6 +56,7 @@ define(['jquery',
         'comment:add': 'handleAddComment',
         'comments:fetch': 'fetchComments',
         'implementations:fetch': 'fetchImplementations',
+        'implementation:add': 'addImplementation',
         'evolution:fetch': 'fetchProjectEvolution',
         'project:save-edit': 'handleSaveEditProject',
         'edit-mode:cancel': 'cancelEditMode',
@@ -283,6 +284,25 @@ define(['jquery',
       }
 
       project.fetchImplementations(data, {
+        success: function (implementations) {
+          self.projectMajorView.passImplementations(implementations);
+        }
+      });
+    },
+
+    addImplementation: function (data) {
+      var self = this;
+      var project = new Project();
+
+      _.extend(data, {
+        uuid: self.projectUUID
+      });
+
+      if (this.currentUser) {
+        data.user_uuid = this.currentUser.get('uuid');
+      }
+
+      project.addImplementation(data, {
         success: function (implementations) {
           self.projectMajorView.passImplementations(implementations);
         }

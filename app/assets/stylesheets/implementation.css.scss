@@ -1,6 +1,10 @@
 
 // ADD IMPLEMENTATION MODAL
 
+$question-height: 68px;
+$answer-btn-height: 48px;
+$answer-margin-top: ($question-height - $answer-btn-height) / 2;
+
 #addImplementationModalView {
 
   .modal-content {
@@ -32,22 +36,197 @@
 
   .add-implementation-modal-body {
     width: 100%;
-    margin-bottom: 20px;
   }
 
   #addImplementationContentView {
     width: 100%;
-    padding-left: 35px;
-    padding-right: 35px;
     padding-bottom: 4px;
-    height: 315px;
+    height: 380px;
   }
 
   .add-implementation-scroll-container {
     overflow-y: auto;
     overflow-x: hidden !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 42px;
+    padding-right: 30px;
     float: left;
-    height: 100%;
+    height: 310px;
+  }
+
+  .modal-footer {
+    float: left;
+    width: 100%;
+    height: 70px !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    position: relative;
+
+    .bottom-nav-create-btn {
+      opacity: 1;
+      margin-top: 12.5px;
+      margin-right: 0px;
+    }
+
+    .bottom-nav-create-btn:active {
+      background-color: #02BADF;
+    }
+  }
+
+  [data-question] {
+    height: $question-height;
+
+    .question,
+    .answers {
+      display: inline-block;
+      float: left;
+    }
+
+    .question {
+      width: 72%;
+      height: 100%;
+      line-height: $question-height;
+      font-size: 14px;
+    }
+
+    .answers {
+      width: 28%;
+      height: 100%;
+      font-size: 14px;
+
+      [data-answer] {
+        width: 50%;
+        height: 100%;
+        display: inline-block;
+        float: left;
+
+        .data-answer-btn {
+          width: $answer-btn-height;
+          height: $answer-btn-height;
+          line-height: $answer-btn-height;
+          margin-top: $answer-margin-top;
+          font-size: 13.5px;
+          color: black;
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 50%;
+          background-color: #F1F1F9;
+          -webkit-transition: all 150ms;
+          -moz-transition: all 150ms;
+          -ms-transition: all 150ms;
+          -o-transition: all 150ms;
+          transition: all 150ms;
+          cursor: pointer;
+        }
+
+        .data-answer-btn.selected,
+        .data-answer-btn:hover {
+          background-color: #00A6C9;
+          color: white;
+        }
+
+        .data-answer-btn:active {
+          background-color: #02BADF;
+        }
+      }
+    }
+  }
+
+  .questions-pending {
+    overflow: hidden;
+    height: 0;
+  }
+
+  .add-implementation-description-container {
+    height: auto;
+    margin-top: 5px;
+    margin-bottom: 13px;
+    float: left;
+
+    .description-question {
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      float: left;
+    }
+
+    textarea {
+      width: 100%;
+      display: block;
+      height: 90px;
+      padding: 6px;
+      font-size: 14px;
+      resize: none;
+      border: 1px solid #cecece;
+      border-radius: 4px;
+      outline: none;
+      box-shadow: none;
+    }
+
+  }
+
+  .add-implementation-url-container {
+    width: 98.5%;
+    height: $question-height;
+    float: left;
+
+    .url-type {
+      width: 40%;
+      height: 100%;
+      line-height: $question-height;
+      font-size: 14px;
+      float: left;
+    }
+
+    .url-input-container {
+      width: 60%;
+      height: 100%;
+      float: left;
+
+      input {
+        width: 100%;
+        line-height: 31px;
+        border-radius: 4px;
+        border: 1px solid #cecece;
+        margin-top: 19px;
+        padding-left: 6px;
+        font-size: 13px;
+      }
+
+    }
+
+  }
+
+  .add-implementation-integrations-container {
+    width: 104%;
+    padding-left: 0;
+    margin-left: -4%;
+    float: left;
+
+    .integration-container {
+      margin-top: -7px;
+
+      .logo-container,
+      .irc {
+        width: 42%;
+      }
+
+      #ircNetworkContainer {
+        width: 21.5%;
+      }
+
+      .or {
+        width: 6%;
+        text-align: center;
+      }
+
+      .create-forum {
+        width: 15.5%;
+        text-align: right;
+      }
+    }
   }
 
 }
