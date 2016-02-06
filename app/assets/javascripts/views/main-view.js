@@ -95,13 +95,23 @@ define(['jquery',
         'tutorial:login-with-gh': 'loginWithGHFromTutorial',
         'project:login-or-star': 'loginOrStar',
         'header-footer:force-show': 'forceShowHeaderFooter',
-        'login-or-add-implementation': 'loginOrShowAddImplementationModal'
+        'login-or-add-implementation': 'loginOrShowAddImplementationModal',
+        'hide-add-implementations-modal': 'hideImplementationModal'
       }, this);
 
       this.lastAddProjectPopupShownForGrab = false;
     },
 
     events: {},
+
+    hideImplementationModal: function () {
+      var self = this;
+      this.addImplementationModal.hideModal();
+
+      setTimeout(function () {
+        self.addImplementationModal.render();
+      }, 100);
+    },
 
     loginWithGHFromTutorial: function () {
       this.$el.find('#floatingLoginWithGHBtn').click();

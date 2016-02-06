@@ -1,6 +1,7 @@
+{{^spinnerView}}
 <div class="add-implementation-scroll-container">
     <div data-question="is_owner">
-        <div class="question">Is this your own project?</div>
+        <div class="question"><span>*</span>Is this your own project?</div>
         <div class="answers">
             <div data-answer="yes">
                 <div class="data-answer-btn">Yes</div>
@@ -12,7 +13,7 @@
     </div>
     <div class="questions-pending">
         <div data-question="done">
-            <div class="question">Is a working version already done?</div>
+            <div class="question"><span>*</span>Is a working version already done?</div>
             <div class="answers">
                 <div data-answer="yes">
                     <div class="data-answer-btn">Yes</div>
@@ -23,7 +24,7 @@
             </div>
         </div>
         <div data-question="seeking_contributors">
-            <div class="question">Are you looking for more contributors?</div>
+            <div class="question"><span>*</span>Are you looking for more contributors?</div>
             <div class="answers">
                 <div data-answer="yes">
                     <div class="data-answer-btn">Yes</div>
@@ -87,5 +88,11 @@
 </div>
 <div class="modal-footer">
     <div class="fake-top-border"></div>
-    <div class="bottom-nav-create-btn">Add</div>
+    <div class="bottom-nav-create-btn" data-trigger="create">Add</div>
+    <div class="add-url-error-message">* Please add at least one url for the project</div>
 </div>
+{{/spinnerView}}
+{{#spinnerView}}
+<div id="addImplementationSpinner"></div>
+<div class="add-implementation-message">Adding Project...</div>
+{{/spinnerView}}

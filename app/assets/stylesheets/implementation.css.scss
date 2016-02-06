@@ -49,7 +49,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
     overflow-x: hidden !important;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 42px;
+    padding-left: 30px;
     padding-right: 30px;
     float: left;
     height: 310px;
@@ -70,7 +70,18 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
     }
 
     .bottom-nav-create-btn:active {
-      background-color: #02BADF;
+      background-color: #05C6EC;
+    }
+
+    .add-url-error-message {
+      position: absolute;
+      width: 50%;
+      left: 24%;
+      top: 26px;
+      font-size: 13px;
+      display: none;
+      color: red;
+      text-align: center;
     }
   }
 
@@ -86,8 +97,19 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
     .question {
       width: 72%;
       height: 100%;
+      padding-left: 12px;
       line-height: $question-height;
       font-size: 14px;
+      position: relative;
+
+      span {
+        position: absolute;
+        left: 0;
+        top: 4px;
+        font-size: 20px;
+        color: red;
+        display: none;
+      }
     }
 
     .answers {
@@ -137,11 +159,21 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
   .questions-pending {
     overflow: hidden;
     height: 0;
+    -webkit-transition: height 0.3s;
+    -moz-transition: height 0.3s;
+    -ms-transition: height 0.3s;
+    -o-transition: height 0.3s;
+    transition: height 0.3s;
+  }
+
+  .questions-pending.expand {
+    height: 136px;
   }
 
   .add-implementation-description-container {
     height: auto;
     margin-top: 5px;
+    padding-left: 12px;
     margin-bottom: 13px;
     float: left;
 
@@ -170,6 +202,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
   .add-implementation-url-container {
     width: 98.5%;
     height: $question-height;
+    padding-left: 12px;
     float: left;
 
     .url-type {
@@ -201,7 +234,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
   .add-implementation-integrations-container {
     width: 104%;
-    padding-left: 0;
+    padding-left: 12px;
     margin-left: -4%;
     float: left;
 
@@ -229,19 +262,31 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
     }
   }
 
+  #addImplementationSpinner {
+    width: auto;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+
+    .sk-circle {
+      margin: 0 auto;
+      top: 70px;
+    }
+  }
+
+  .add-implementation-message {
+    width: 100%;
+    margin-top: 105px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: black;
+    font-size: 17px;
+  }
+
 }
 
 #addImplementationModal.safari {
 
 }
-
-
-
-
-
-
-
-
-
-
-// IMPLEMENTATION VIEW AND ITEMS

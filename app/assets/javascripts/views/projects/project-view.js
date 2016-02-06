@@ -305,6 +305,8 @@ define(['jquery',
       project.addImplementation(data, {
         success: function (implementations) {
           self.projectMajorView.passImplementations(implementations);
+          Backbone.EventBroker.trigger('hide-add-implementations-modal');
+          document.body.style.overflow = 'auto';
         }
       });
     },
