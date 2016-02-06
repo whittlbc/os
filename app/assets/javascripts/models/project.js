@@ -209,6 +209,17 @@ define(['jquery',
       return this.sync('addImplementation', this, requestInfo);
     },
 
+    implementationVote: function (info, options) {
+      var requestInfo = options || {};
+
+      _.extend(requestInfo, {
+        url: this.extension + '/implementationVote',
+        data: info
+      });
+
+      return this.sync('implementationVote', this, requestInfo);
+    },
+
     commentVote: function (info, options) {
       var requestInfo = options || {};
 

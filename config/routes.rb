@@ -36,6 +36,7 @@ Backboneworld::Application.routes.draw do
       put :saw_notifications, :path => '/sawNotifications'
       get :fetch_implementations, :path => '/fetchImplementations'
       post :add_implementation, :path => '/addImplementation'
+      put :implementation_vote, :path => '/implementationVote'
     end
   end
 

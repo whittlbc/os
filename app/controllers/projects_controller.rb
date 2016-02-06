@@ -598,9 +598,9 @@ class ProjectsController < ApplicationController
         seeking_contributors: params[:seeking_contributors],
         description: params[:description],
         title: params[:title],
-        main_url: ensureURL(params[:main_url]),
-        slack_url: ensureURL(params[:slack_url]),
-        hipchat_url: ensureURL(params[:hipchat_url]),
+        main_url: params[:main_url],
+        slack_url: params[:slack_url],
+        hipchat_url: params[:hipchat_url],
         irc: params[:irc]
       ).save!
 
@@ -613,11 +613,31 @@ class ProjectsController < ApplicationController
 
   end
 
+  def implementation_vote
+    implementation = Implementation.find_by(uuid: params[:uuid])
+
+    if implementation.present?
+
+      implementation.update_attributes(:vote_count => (implementation.vote_count + 1))
+
+      user = User.find_by(uuid: params[:user_uuid])
+
+      if user.present?
+        user.update_attributes(:upvoted_implementations => user.upvoted_implementations + [implementation.id])
+      end
+
+      render :json => {}, :status => 200
+    else
+      render :json => {}, :status => 500
+    end
+  end
+
   def get_formatted_implementations(project, user)
     implementations = special_sort(project.implementations.active, 0)
 
     formatted_imps = implementations.map { |i|
       {
+          :uuid => i.uuid,
           :post_date => i.created_at.utc.iso8601,
           :vote_count => i.vote_count,
           :voted => user ? user.voted_on_implementation(i.id) : nil,
@@ -625,7 +645,6 @@ class ProjectsController < ApplicationController
           :main_url => i.main_url,
           :description => i.description,
           :is_owner => i.is_owner,
-          :has_non_main_url => i.check_for_integrations_and_tags,
           :slack_url => i.slack_url,
           :hipchat_url => i.hipchat_url,
           :irc_url => i.create_irc_url,
@@ -638,7 +657,6 @@ class ProjectsController < ApplicationController
 
     formatted_imps
   end
-
 
   def fetch_implementations
     project = Project.find_by(uuid: params[:uuid])

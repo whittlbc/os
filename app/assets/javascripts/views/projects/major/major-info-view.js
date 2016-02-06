@@ -146,11 +146,7 @@ define(['jquery',
       this.$el.find('.project-page-vote-container').addClass('voted');
 
       var project = new Project();
-      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
-        success: function (data) {
-          Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
-        }
-      });
+      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')});
     },
 
     handleToggleDescriptionSize: function () {

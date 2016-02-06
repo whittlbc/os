@@ -96,7 +96,8 @@ define(['jquery',
         'project:login-or-star': 'loginOrStar',
         'header-footer:force-show': 'forceShowHeaderFooter',
         'login-or-add-implementation': 'loginOrShowAddImplementationModal',
-        'hide-add-implementations-modal': 'hideImplementationModal'
+        'hide-add-implementations-modal': 'hideImplementationModal',
+        'login-or-implementation-vote': 'loginOrImplementationVote'
       }, this);
 
       this.lastAddProjectPopupShownForGrab = false;
@@ -421,6 +422,17 @@ define(['jquery',
         this.addImplementationModal.showModal();
       } else {
         this.loginModal.setMessage('You must be logged in to add an implementation.');
+        this.loginModal.showModal();
+      }
+    },
+
+    loginOrImplementationVote: function (view) {
+      if (this.currentUser) {
+        if (!view.model.get('voted')) {
+          view.handleVote(this.currentUser.get('uuid'));
+        }
+      } else {
+        this.loginModal.setMessage('You must be logged in to vote on implementations.');
         this.loginModal.showModal();
       }
     },

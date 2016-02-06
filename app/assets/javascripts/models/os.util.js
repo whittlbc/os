@@ -416,6 +416,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'fetchGHAppInfo': {
         verb: 'GET',
         action: 'read'
+      },
+      'implementationVote': {
+        verb: 'PUT',
+        action: 'update'
       }
     }
 
