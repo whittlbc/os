@@ -604,7 +604,8 @@ class ProjectsController < ApplicationController
         irc: params[:irc]
       ).save!
 
-      implementations = special_sort(project.implementations.active, 0)
+      implementations = get_formatted_implementations(project, user)
+
       render json: implementations, status: 200
     else
       render json: { message: 'Either User or Project not found' }, status: 500
@@ -612,11 +613,39 @@ class ProjectsController < ApplicationController
 
   end
 
+  def get_formatted_implementations(project, user)
+    implementations = special_sort(project.implementations.active, 0)
+
+    formatted_imps = implementations.map { |i|
+      {
+          :post_date => i.created_at.utc.iso8601,
+          :vote_count => i.vote_count,
+          :voted => user ? user.voted_on_implementation(i.id) : nil,
+          :title => i.get_most_relevant_url,
+          :description => i.description,
+          :is_owner => i.is_owner,
+          :has_non_main_url => i.check_if_has_non_main_url_or_tags,
+          :slack_url => i.slack_url,
+          :hichat_url => i.hipchat_url,
+          :irc_url => i.create_irc_url,
+          :other_url => i.other_url,
+          :in_progress => i.in_progress,
+          :seeking_contributors => i.seeking_contributors,
+          :poster_pic => i.user.pic,
+          :poster_gh_username => i.user.gh_username
+      }
+    }
+
+    formatted_imps
+  end
+
+
   def fetch_implementations
     project = Project.find_by(uuid: params[:uuid])
+    user = User.find_by(uuid: params[:user_uuid])
 
     if project.present?
-      implementations = special_sort(project.implementations.active, 0)
+      implementations = get_formatted_implementations(project, user)
       render json: implementations, status: 200
     else
       render json: { message: 'Project not found' }, status: 500

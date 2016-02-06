@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
     self.upvoted_comments.include?(comment_id)
   end
 
+  def voted_on_implementation(id)
+    self.upvoted_implementations.include?(id)
+  end
+
   def has_pending_request?(project_id, asset)
     has_request = false
     PendingRequest.where(:requester_id => self.id).each { |request|

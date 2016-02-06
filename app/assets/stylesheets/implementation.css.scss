@@ -62,6 +62,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
     padding-top: 0 !important;
     border-top: none !important;
     position: relative;
+    padding-right: 35px;
 
     .bottom-nav-create-btn {
       opacity: 1;
@@ -199,22 +200,32 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
   }
 
-  .add-implementation-url-container {
+  .add-implementation-title-container {
     width: 98.5%;
     height: $question-height;
     padding-left: 12px;
     float: left;
 
-    .url-type {
-      width: 40%;
+    .title-text {
+      width: 10%;
       height: 100%;
       line-height: $question-height;
       font-size: 14px;
       float: left;
+      position: relative;
+
+      span {
+        position: absolute;
+        left: 0;
+        top: 4px;
+        font-size: 20px;
+        color: red;
+        display: none;
+      }
     }
 
-    .url-input-container {
-      width: 60%;
+    .title-input-container {
+      width: 90%;
       height: 100%;
       float: left;
 
@@ -223,7 +234,51 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
         line-height: 31px;
         border-radius: 4px;
         border: 1px solid #cecece;
-        margin-top: 19px;
+        margin-top: 10px;
+        padding-left: 6px;
+        font-size: 13px;
+      }
+
+    }
+
+  }
+
+  .add-implementation-url-container {
+    width: 98.5%;
+    height: $question-height;
+    padding-left: 12px;
+    float: left;
+
+    .url-type {
+      width: 10%;
+      height: 100%;
+      line-height: $question-height;
+      font-size: 14px;
+      float: left;
+      position: relative;
+
+      span {
+        position: absolute;
+        left: 0;
+        top: 4px;
+        font-size: 20px;
+        color: red;
+        display: none;
+      }
+
+    }
+
+    .url-input-container {
+      width: 90%;
+      height: 100%;
+      float: left;
+
+      input {
+        width: 100%;
+        line-height: 31px;
+        border-radius: 4px;
+        border: 1px solid #cecece;
+        margin-top: 10px;
         padding-left: 6px;
         font-size: 13px;
       }
@@ -289,4 +344,279 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
 #addImplementationModal.safari {
 
+}
+
+
+// Implementation View
+
+#implementationView {
+  position: relative;
+}
+
+.imps-exist {
+  display: block;
+  width: 93%;
+  margin-left: 3.5%;
+  margin-top: 18px;
+  background-color: #F1F1F9;
+  height: 45px;
+  text-align: center;
+  border: 1px solid #efefef;
+
+  .imps-exist-content {
+    display: inline-block;
+
+    .text {
+      display: inline-block;
+      height: 100%;
+      line-height: 45px;
+      float: left;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .add-implementation-btn-container {
+      display: inline-block;
+      height: 100%;
+      float: left;
+      margin-left: 15px;
+
+      .add-implementation-btn {
+        text-align: center;
+        padding: 4px 11px;
+        margin-top: 9px;
+        color: white;
+        background-color: #00A6C9;
+        border-radius: 4px;
+        display: inline-block;
+        margin-left: auto;
+        font-size: 13px;
+        margin-right: auto;
+        cursor: pointer;
+      }
+
+    }
+
+  }
+
+}
+
+.imp-list-view {
+  width: 93%;
+  margin-bottom: 15px;
+  margin-left: 3.5%;
+  background-color: #F1F1F9;
+  min-height: 347px;
+  float: left;
+  padding: 0;
+  list-style-type: none;
+
+  .implementation-item {
+    display: block;
+    float: left;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #DDD;
+    position: relative;
+
+    .vote-container {
+      display: inline-block;
+      width: 65px;
+      float: left;
+      height: 100%;
+
+      .imp-vote-count {
+        width: 40px;
+        cursor: pointer;
+        height: 45px;
+        margin-left: auto;
+        margin-right: auto;
+        color: #1d1e22;
+        line-height: 18px;
+        text-align: center;
+        font-size: 15px;
+
+        .fa {
+          font-size: 18.5px;
+        }
+      }
+
+      .imp-vote-count.voted,
+      .imp-vote-count:hover {
+        color: #00A6C9;
+      }
+    }
+
+    .content {
+      display: inline-block;
+      position: absolute;
+      left: 65px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      .top {
+        height: 45px;
+
+        .title {
+          width: 70%;
+          display: block;
+          height: 100%;
+          line-height: 55px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          a {
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: black;
+            font-family: 'Promixa-Nova-SemiBold';
+          }
+
+          a:hover {
+            text-decoration: underline;
+            color: #00A6C9;;
+          }
+
+        }
+
+        .posted-by {
+          position: absolute;
+          right: 15px;
+          top: 8px;
+
+          span {
+            display: inline-block;
+            float: right;
+            font-size: 10px;
+            color: #C4C5CA;
+          }
+
+          img {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            display: inline-block;
+            float: right;
+            line-height: 24px;
+            margin-right: 9px;
+          }
+
+        }
+
+      }
+
+      .middle {
+        height: auto;
+        padding-right: 3.5%;
+        font-size: 12.5px;
+        color: #B6B8C0;
+        white-space: pre-line;
+        margin: 5px 0;
+      }
+
+      .bottom {
+        width: 100%;
+        height: 35px;
+        display: block;
+        padding-right: 3.5%;
+
+        .links {
+          display: inline-block;
+          width: 60%;
+          height: 100%;
+          float: left;
+
+          a {
+            float: left;
+            display: inline-block;
+            margin-right: 5px;
+            height: 100%;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: 'Proxima-Nova-SemiBold';
+            font-size: 11px;
+            text-align: center;
+            line-height: 35px;
+            color: black;
+
+            img {
+              display: inline-block;
+              height: 100%;
+            }
+
+          }
+
+        }
+
+        .tags {
+          display: inline-block;
+          width: 40%;
+          height: 100%;
+          float: right;
+
+          .imp-tag {
+            float: right;
+            display: inline-block;
+            padding: 4px 8px;
+            margin-top: 3px;
+            font-size: 11px;
+            color: white;
+          }
+
+          .img-tag.seeking-contribs {
+            background-color: black;
+          }
+
+          .img-tag.in-progress {
+            background-color: blue;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+.no-imps-view {
+  display: block;
+  padding-top: 100px;
+  position: absolute;
+  width: 92.8%;
+  border-top: 1px solid #eee;
+  margin-left: 35px;
+  margin-top: 20px;
+
+  .text {
+    font-size: 15px;
+    color: #9B9BA6;
+    text-align: center;
+  }
+
+  .add-implementation-btn-container {
+    margin-top: 30px;
+    width: 100%;
+    display: block;
+    text-align: center;
+
+    .add-implementation-btn {
+      text-align: center;
+      padding: 6.5px 19px;
+      color: white;
+      background-color: #00A6C9;
+      border-radius: 4px;
+      display: inline-block;
+      margin-left: auto;
+      font-size: 15px;
+      margin-right: auto;
+      cursor: pointer;
+    }
+
+  }
 }

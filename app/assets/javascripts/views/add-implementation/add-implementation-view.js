@@ -41,10 +41,21 @@ define(['jquery',
     validate: function () {
       var validations = [];
       var data = this.getData();
-      var questionHeight = this.$el.find('[data-question="is_owner"]').height();
-      var questionHeightMultiplier = null;
+      var errorScrollToSelector;
 
-      validations.push(this.ensureSomeURLExists(data));
+      var hasMainURL = !!data.main_url;
+      validations.push(hasMainURL);
+      if (!hasMainURL) {
+        this.$el.find('.url-type > span').show();
+        errorScrollToSelector = '[name="main_url"]';
+      }
+
+      var hasTitle = !!data.title;
+      validations.push(hasTitle);
+      if (!hasTitle) {
+        this.$el.find('.title-text > span').show();
+        errorScrollToSelector = '[name="title"]';
+      }
 
       var ownerSelected = this.ensureOwnerSelected(data);
 
@@ -57,22 +68,22 @@ define(['jquery',
           validations.push(seekingContribsSelected);
 
           if (!seekingContribsSelected) {
-            questionHeightMultiplier = 2
+            errorScrollToSelector = '[data-question="seeking_contributors"]'
           }
 
           if (!doneSelected) {
-            questionHeightMultiplier = 1;
+            errorScrollToSelector = '[data-question="done"]'
           }
         }
       } else {
-        questionHeightMultiplier = 0;
+        errorScrollToSelector = '[data-question="is_owner"]'
       }
 
       for (var i = 0; i < validations.length; i++) {
         if (!validations[i]) {
-          if (questionHeightMultiplier != null) {
+          if (errorScrollToSelector) {
             this.$el.find('.add-implementation-scroll-container').animate({
-              scrollTop: (questionHeight * questionHeightMultiplier)
+              scrollTop: this.$el.find(errorScrollToSelector).scrollTop()
             }, {
               duration: 300,
               specialEasing: 'easeInOutCubic'
@@ -113,41 +124,14 @@ define(['jquery',
       return true;
     },
 
-    ensureSomeURLExists: function (data) {
-      if (data.irc.channel && data.irc.network) {
-        return true;
-      }
-
-      var someURLExists = false;
-
-      var keys = [
-        'github_url',
-        'other_url',
-        'slack_url',
-        'hipchat_url'
-      ];
-
-      _.each(keys, function (key) {
-        if (data[key]) {
-          someURLExists = true;
-        }
-      });
-
-      if (!someURLExists) {
-        this.$el.find('.add-url-error-message').show();
-      }
-
-      return someURLExists;
-    },
-
     getData: function () {
       return {
         is_owner: this.is_owner,
         done: this.done,
         seeking_contributors: this.seeking_contributors,
+        title: this.$el.find('[name="title"]').val().trim() || null,
+        main_url: this.$el.find('[name="main_url"]').val().trim() || null,
         description: this.$description.val().trim() || null,
-        github_url: this.$el.find('[name="gh-repo"]').val().trim() || null,
-        other_url: this.$el.find('[name="other-url"]').val().trim() || null,
         slack_url: this.$el.find('[name="slack"]').val().trim() || null,
         hipchat_url: this.$el.find('[name="hipchat"]').val().trim() || null,
         irc: {
@@ -254,12 +238,13 @@ define(['jquery',
 
     addKeyDownListeners: function () {
       var self = this;
-      var names = ['gh-repo', 'other-url', 'slack', 'hipchat', 'irc'];
 
-      _.each(names, function (name) {
-        self.$el.find('[name="' + name + '"]').keydown(function () {
-          self.$el.find('.add-url-error-message').hide();
-        });
+      this.$el.find('[name="title"]').keydown(function () {
+        self.$el.find('.title-text > span').hide();
+      });
+
+      this.$el.find('[name="main_url"]').keydown(function () {
+        self.$el.find('.url-type > span').hide();
       });
     },
 
@@ -280,9 +265,7 @@ define(['jquery',
         this.spinner.render();
       } else {
         this.initIRCNetworkDropdown();
-
         this.$description = this.$el.find('.add-implementation-description-container > textarea');
-
         this.addKeyDownListeners();
       }
 		}

@@ -35,21 +35,21 @@
             </div>
         </div>
     </div>
+    <div class="add-implementation-title-container">
+        <div class="title-text"><span>*</span>Title:</div>
+        <div class="title-input-container">
+            <input type="text" name="title" placeholder="Title or repo name"/>
+        </div>
+    </div>
+    <div class="add-implementation-url-container">
+        <div class="url-type"><span>*</span>URL:</div>
+        <div class="url-input-container">
+            <input type="text" name="main_url" placeholder="URL"/>
+        </div>
+    </div>
     <div class="add-implementation-description-container">
         <div class="description-question">How does this project differ from the original idea (if at all)?</div>
         <textarea placeholder="Differences"></textarea>
-    </div>
-    <div class="add-implementation-url-container">
-        <div class="url-type">Github repo url:</div>
-        <div class="url-input-container">
-            <input type="text" name="gh-repo" placeholder="Full Github url"/>
-        </div>
-    </div>
-    <div class="add-implementation-url-container">
-        <div class="url-type">Other url:</div>
-        <div class="url-input-container">
-            <input type="text" name="other-url" placeholder="Other url"/>
-        </div>
     </div>
     <div class="add-implementation-integrations-container">
         <!--IRC-->
@@ -89,7 +89,6 @@
 <div class="modal-footer">
     <div class="fake-top-border"></div>
     <div class="bottom-nav-create-btn" data-trigger="create">Add</div>
-    <div class="add-url-error-message">* Please add at least one url for the project</div>
 </div>
 {{/spinnerView}}
 {{#spinnerView}}

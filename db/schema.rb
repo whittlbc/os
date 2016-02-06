@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206064312) do
+ActiveRecord::Schema.define(version: 20160206101502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,15 +71,16 @@ ActiveRecord::Schema.define(version: 20160206064312) do
     t.boolean  "done",                 default: false
     t.boolean  "seeking_contributors", default: false
     t.text     "description"
-    t.string   "github_url"
     t.string   "slack_url"
     t.string   "hipchat_url"
     t.json     "irc"
-    t.string   "other_url"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "is_destroyed",         default: false
+    t.integer  "vote_count",           default: 0
+    t.string   "main_url"
+    t.string   "title"
   end
 
   create_table "integrations", force: true do |t|
@@ -157,13 +158,14 @@ ActiveRecord::Schema.define(version: 20160206064312) do
     t.string   "name"
     t.string   "gh_username"
     t.string   "password"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "pic"
-    t.integer  "upvoted_projects", default: [],              array: true
-    t.integer  "following",        default: [],              array: true
-    t.integer  "starred",          default: [],              array: true
-    t.integer  "upvoted_comments", default: [],              array: true
+    t.integer  "upvoted_projects",        default: [],              array: true
+    t.integer  "following",               default: [],              array: true
+    t.integer  "starred",                 default: [],              array: true
+    t.integer  "upvoted_comments",        default: [],              array: true
+    t.integer  "upvoted_implementations", default: [],              array: true
   end
 
   add_index "users", ["gh_username"], name: "index_users_on_gh_username", using: :btree

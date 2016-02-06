@@ -777,7 +777,6 @@ $post-gray: #B6B8C0;
 
 }
 
-.imp-list-view,
 #communicationFeedContainer {
   width: 93%;
   margin-top: 10px;
@@ -786,11 +785,6 @@ $post-gray: #B6B8C0;
   background-color: #F1F1F9;
   min-height: 300px;
   float: left;
-}
-
-.imp-list-view {
-  min-height: 347px;
-  margin-top: 20px;
 }
 
 #containerViewBindPoint,
@@ -804,47 +798,6 @@ $post-gray: #B6B8C0;
   list-style-type: none;
   padding-left: 0;
   margin-bottom: 0;
-}
-
-#implementationView {
-  position: relative;
-}
-
-.no-imps-view {
-  display: block;
-  padding-top: 100px;
-  position: absolute;
-  width: 92.8%;
-  border-top: 1px solid #eee;
-  margin-left: 35px;
-  margin-top: 20px;
-
-  .text {
-    font-size: 15px;
-    color: #9B9BA6;
-    text-align: center;
-  }
-
-  .add-implementation-btn-container {
-    margin-top: 30px;
-    width: 100%;
-    display: block;
-    text-align: center;
-
-    .add-implementation-btn {
-      text-align: center;
-      padding: 6.5px 19px;
-      color: white;
-      background-color: #00A6C9;
-      border-radius: 4px;
-      display: inline-block;
-      margin-left: auto;
-      font-size: 15px;
-      margin-right: auto;
-      cursor: pointer;
-    }
-
-  }
 }
 
 .no-comments {
