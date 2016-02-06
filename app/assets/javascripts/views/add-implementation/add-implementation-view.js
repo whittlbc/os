@@ -41,54 +41,29 @@ define(['jquery',
     validate: function () {
       var validations = [];
       var data = this.getData();
-      var errorScrollToSelector;
 
       var hasMainURL = !!data.main_url;
       validations.push(hasMainURL);
       if (!hasMainURL) {
         this.$el.find('.url-type > span').show();
-        errorScrollToSelector = '[name="main_url"]';
       }
 
       var hasTitle = !!data.title;
       validations.push(hasTitle);
       if (!hasTitle) {
         this.$el.find('.title-text > span').show();
-        errorScrollToSelector = '[name="title"]';
       }
 
       var ownerSelected = this.ensureOwnerSelected(data);
 
-      if (ownerSelected) {
-        if (data.is_owner) {
-          var doneSelected = this.ensureDoneSelected(data);
-          validations.push(doneSelected);
-
-          var seekingContribsSelected = this.ensureSeekingContribsSelected(data);
-          validations.push(seekingContribsSelected);
-
-          if (!seekingContribsSelected) {
-            errorScrollToSelector = '[data-question="seeking_contributors"]'
-          }
-
-          if (!doneSelected) {
-            errorScrollToSelector = '[data-question="done"]'
-          }
-        }
-      } else {
-        errorScrollToSelector = '[data-question="is_owner"]'
+      if (ownerSelected && data.is_owner) {
+        validations.push(this.ensureDoneSelected(data));
+        validations.push(this.ensureSeekingContribsSelected(data));
       }
 
       for (var i = 0; i < validations.length; i++) {
         if (!validations[i]) {
-          if (errorScrollToSelector) {
-            this.$el.find('.add-implementation-scroll-container').animate({
-              scrollTop: this.$el.find(errorScrollToSelector).scrollTop()
-            }, {
-              duration: 300,
-              specialEasing: 'easeInOutCubic'
-            });
-          }
+          this.$el.find('.add-implementation-scroll-container').animate({ scrollTop: 0 }, { duration: 400 });
           return;
         }
       }

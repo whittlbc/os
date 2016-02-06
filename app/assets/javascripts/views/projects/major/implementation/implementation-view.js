@@ -32,8 +32,12 @@ define(['jquery',
 
       if (_.isEmpty(implementations)) {
         this.$noItemsView.show();
+        this.$addItemWhileItemsExist.hide();
+        this.$list.removeClass('has-items');
       } else {
         this.$noItemsView.hide();
+        this.$addItemWhileItemsExist.show();
+        this.$list.addClass('has-items');
         _.each(implementations, function (data) {
           self.addItem(data);
         });
@@ -57,6 +61,7 @@ define(['jquery',
       this.$el.html(ImplementationViewTpl());
       this.$list = this.$el.find('.imp-list-view');
       this.$noItemsView = this.$el.find('.no-imps-view');
+      this.$addItemWhileItemsExist = this.$el.find('.imps-exist');
     }
 
   });

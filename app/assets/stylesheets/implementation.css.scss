@@ -202,21 +202,21 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
   .add-implementation-title-container {
     width: 98.5%;
-    height: $question-height;
+    height: 65px;
     padding-left: 12px;
     float: left;
 
     .title-text {
       width: 10%;
       height: 100%;
-      line-height: $question-height;
+      line-height: 65px;
       font-size: 14px;
       float: left;
       position: relative;
 
       span {
         position: absolute;
-        left: 0;
+        left: -10px;
         top: 4px;
         font-size: 20px;
         color: red;
@@ -234,7 +234,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
         line-height: 31px;
         border-radius: 4px;
         border: 1px solid #cecece;
-        margin-top: 10px;
+        margin-top: 15px;
         padding-left: 6px;
         font-size: 13px;
       }
@@ -245,21 +245,21 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
   .add-implementation-url-container {
     width: 98.5%;
-    height: $question-height;
+    height: 65px;
     padding-left: 12px;
     float: left;
 
     .url-type {
       width: 10%;
       height: 100%;
-      line-height: $question-height;
+      line-height: 65px;
       font-size: 14px;
       float: left;
       position: relative;
 
       span {
         position: absolute;
-        left: 0;
+        left: -10px;
         top: 4px;
         font-size: 20px;
         color: red;
@@ -278,7 +278,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
         line-height: 31px;
         border-radius: 4px;
         border: 1px solid #cecece;
-        margin-top: 10px;
+        margin-top: 15px;
         padding-left: 6px;
         font-size: 13px;
       }
@@ -408,8 +408,13 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
   background-color: #F1F1F9;
   min-height: 347px;
   float: left;
+  margin-top: 20px;
   padding: 0;
   list-style-type: none;
+
+  &.has-items {
+    margin-top: 0;
+  }
 
   .implementation-item {
     display: block;
@@ -452,17 +457,19 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
       position: absolute;
       left: 65px;
       right: 0;
+      right: 0;
       top: 0;
       bottom: 0;
 
       .top {
-        height: 45px;
+        height: 30px;
+        margin-top: 17px;
 
         .title {
           width: 70%;
           display: block;
           height: 100%;
-          line-height: 55px;
+          line-height: 30px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -472,7 +479,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
             cursor: pointer;
             font-size: 15px;
             color: black;
-            font-family: 'Promixa-Nova-SemiBold';
+            font-family: 'Proxima-Nova-SemiBold';
           }
 
           a:hover {
@@ -484,13 +491,15 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
         .posted-by {
           position: absolute;
-          right: 15px;
-          top: 8px;
+          right: 12px;
+          top: 11px;
 
           span {
             display: inline-block;
             float: right;
             font-size: 10px;
+            margin-right: 9px;
+            margin-top: 5px;
             color: #C4C5CA;
           }
 
@@ -510,18 +519,20 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
       .middle {
         height: auto;
-        padding-right: 3.5%;
+        padding-right: 20px;
         font-size: 12.5px;
         color: #B6B8C0;
         white-space: pre-line;
-        margin: 5px 0;
+        margin-bottom: 10px;
+        margin-top: 2px;
       }
 
       .bottom {
         width: 100%;
-        height: 35px;
+        height: 19px;
         display: block;
-        padding-right: 3.5%;
+        padding-right: 20px;
+        margin-bottom: 15px;
 
         .links {
           display: inline-block;
@@ -532,19 +543,25 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
           a {
             float: left;
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 10px;
             height: 100%;
             text-decoration: none;
             cursor: pointer;
             font-family: 'Proxima-Nova-SemiBold';
-            font-size: 11px;
+            font-size: 14px;
             text-align: center;
-            line-height: 35px;
+            line-height: 21px;
             color: black;
 
             img {
               display: inline-block;
               height: 100%;
+              float: left;
+            }
+
+            img.hipchat {
+              height: 85%;
+              margin-top: 2px;
             }
 
           }
@@ -555,6 +572,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
           display: inline-block;
           width: 40%;
           height: 100%;
+          margin-top: -4px;
           float: right;
 
           .imp-tag {
@@ -563,15 +581,17 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
             padding: 4px 8px;
             margin-top: 3px;
             font-size: 11px;
+            margin-left: 8px;
             color: white;
+            border-radius: 4px;
           }
 
-          .img-tag.seeking-contribs {
-            background-color: black;
+          .imp-tag.seeking-contribs {
+            background-color: #c4c5ca;
           }
 
-          .img-tag.in-progress {
-            background-color: blue;
+          .imp-tag.in-progress {
+            background-color: #40C487;
           }
 
         }
