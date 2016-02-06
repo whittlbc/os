@@ -186,7 +186,7 @@ class ProjectsController < ApplicationController
       Contributor.new(contrib_data).save!
 
       if !allowable_params[:slackURL].nil? && !allowable_params[:slackURL].empty?
-        slackURL = ensureURL(allowable_params[:slackURL])
+        slackURL = allowable_params[:slackURL]
         slack_data = {
             :service => 'Slack',
             :project_id => project.id,
@@ -200,7 +200,7 @@ class ProjectsController < ApplicationController
       end
 
       if !allowable_params[:hipChatURL].nil? && !allowable_params[:hipChatURL].empty?
-        hipChatURL = ensureURL(allowable_params[:hipChatURL])
+        hipChatURL = allowable_params[:hipChatURL]
         Integration.new(service: 'HipChat', project_id: project.id, url: hipChatURL, users: [user.id]).save!
       end
 
@@ -825,11 +825,11 @@ class ProjectsController < ApplicationController
               slack_data = {
                   :service => 'Slack',
                   :project_id => project.id,
-                  :url => ensureURL(integrations[:slack]),
+                  :url => integrations[:slack],
               }
               Integration.new(slack_data).save!
             else
-              slackURL = ensureURL(integrations[:slack])
+              slackURL = integrations[:slack]
               slack_integration.first.update_attributes(url: slackURL)
             end
           end
@@ -845,10 +845,10 @@ class ProjectsController < ApplicationController
             end
           else
             if hipchat_integration.blank?
-              hipchatURL = ensureURL(integrations[:hipchat])
+              hipchatURL = integrations[:hipchat]
               Integration.new(service: 'HipChat', project_id: project.id, url: hipchatURL).save!
             else
-              hipchatURL = ensureURL(integrations[:hipchat])
+              hipchatURL = integrations[:hipchat]
               hipchat_integration.first.update_attributes(url: hipchatURL)
             end
           end
