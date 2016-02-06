@@ -28,6 +28,10 @@ define(['jquery',
       this.trigger('close-btn:clicked');
     },
 
+    reset: function () {
+      this.addImplementationFeedView.reset();
+    },
+
     sizeModal: function () {
       var addImplementationModalMarginTop = ((window.innerHeight - this.addImplementationModalHeight - this.currentTopPos) / 2);
       this.$modal.css('margin-top', addImplementationModalMarginTop + 'px');

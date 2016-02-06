@@ -109,7 +109,7 @@ define(['jquery',
       this.addImplementationModal.hideModal();
 
       setTimeout(function () {
-        self.addImplementationModal.render();
+        self.addImplementationModal.reset();
       }, 100);
     },
 

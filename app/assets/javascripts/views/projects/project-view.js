@@ -302,11 +302,33 @@ define(['jquery',
         data.user_uuid = this.currentUser.get('uuid');
       }
 
+      if (!data.irc.channel || !data.irc.network) {
+        data.irc = null;
+      }
+
+      var requestTookMoreThanOneSec = false;
+      setTimeout(function () {
+        requestTookMoreThanOneSec = true;
+      }, 1000);
+
       project.addImplementation(data, {
         success: function (implementations) {
-          self.projectMajorView.passImplementations(implementations);
-          Backbone.EventBroker.trigger('hide-add-implementations-modal');
-          document.body.style.overflow = 'auto';
+          var perform = function () {
+            self.projectMajorView.passImplementations(implementations);
+            Backbone.EventBroker.trigger('hide-add-implementations-modal');
+            document.body.style.overflow = 'auto';
+          };
+
+          // if request was < 1 sec, wait another 350ms
+          if (!requestTookMoreThanOneSec) {
+            setTimeout(function () {
+              perform();
+            }, 350);
+          }
+          // otherwise, just go ahead
+          else {
+            perform();
+          }
         }
       });
     },

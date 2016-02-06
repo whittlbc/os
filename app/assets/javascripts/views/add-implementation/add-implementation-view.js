@@ -17,10 +17,19 @@ define(['jquery',
 	var AddImplementationView = Backbone.View.extend({
 
 		initialize: function () {
+      this.setInitialVars();
+		},
+
+    reset: function () {
+      this.setInitialVars();
+      this.render();
+    },
+
+    setInitialVars: function () {
       this.is_owner = null;
       this.done = null;
       this.seeking_contributors = null;
-		},
+    },
 
 		events: {
       'click [data-question="is_owner"] .data-answer-btn': 'handleChoseIsOwner',
@@ -74,7 +83,7 @@ define(['jquery',
       }
 
       this.render({ spinnerView: true });
-      //Backbone.EventBroker.trigger('implementation:add', data);
+      Backbone.EventBroker.trigger('implementation:add', data);
     },
 
     ensureOwnerSelected: function (data) {
@@ -132,20 +141,20 @@ define(['jquery',
     },
 
     getData: function () {
-      return{
+      return {
         is_owner: this.is_owner,
         done: this.done,
         seeking_contributors: this.seeking_contributors,
-        description: this.$description.val(),
-        github_url: this.$el.find('[name="gh-repo"]').val(),
-        other_url: this.$el.find('[name="other-url"]').val(),
-        slack_url: this.$el.find('[name="slack"]').val(),
-        hipchat_url: this.$el.find('[name="hipchat"]').val(),
+        description: this.$description.val().trim() || null,
+        github_url: this.$el.find('[name="gh-repo"]').val().trim() || null,
+        other_url: this.$el.find('[name="other-url"]').val().trim() || null,
+        slack_url: this.$el.find('[name="slack"]').val().trim() || null,
+        hipchat_url: this.$el.find('[name="hipchat"]').val().trim() || null,
         irc: {
-          channel: this.$el.find('[name="irc"]').val(),
+          channel: this.$el.find('[name="irc"]').val().trim() || null,
           network: this.irc.network
         }
-      }
+      };
     },
 
     handleChoseIsOwner: function (e) {

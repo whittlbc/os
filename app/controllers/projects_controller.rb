@@ -594,17 +594,18 @@ class ProjectsController < ApplicationController
         project_id: project.id,
         user_id: user.id,
         is_owner: params[:is_owner],
-        in_progress: params[:in_progress],
+        done: params[:done],
         seeking_contributors: params[:seeking_contributors],
         description: params[:description],
         github_url: params[:github_url],
+        other_url: params[:other_url],
         slack_url: params[:slack_url],
         hipchat_url: params[:hipchat_url],
-        owner_url: params[:owner_url],
         irc: params[:irc]
       ).save!
 
-      render json: {}, status: 200
+      implementations = special_sort(project.implementations.active, 0)
+      render json: implementations, status: 200
     else
       render json: { message: 'Either User or Project not found' }, status: 500
     end
