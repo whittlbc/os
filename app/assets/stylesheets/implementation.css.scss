@@ -426,7 +426,8 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
     .vote-container {
       display: inline-block;
-      width: 65px;
+      width: 7.3%;
+      max-width: 75px;
       float: left;
       height: 100%;
 
@@ -454,12 +455,8 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
     .content {
       display: inline-block;
-      position: absolute;
-      left: 65px;
-      right: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
+      float: left;
+      width: 92.7%;
 
       .top {
         height: 30px;

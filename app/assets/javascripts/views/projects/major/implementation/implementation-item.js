@@ -3,7 +3,8 @@ define(['jquery',
 	'underscore',
   'models/os.util',
   'models/project',
-	'stache!views/projects/major/implementation/implementation-item'
+	'stache!views/projects/major/implementation/implementation-item',
+  'backbone-eventbroker'
     ], function ($,
    Backbone,
    _,
@@ -40,27 +41,20 @@ define(['jquery',
       project.implementationVote({ uuid: this.model.get('uuid'), user_uuid: userUUID });
     },
 
-    resizeHeight: function () {
-      var totalHeight =
-        this.$el.find('.top').outerHeight(true) +
-        this.$el.find('.middle').outerHeight(true) +
-        this.$el.find('.bottom').outerHeight(true);
-
-      this.$el.find('.content').height(totalHeight);
-      this.$el.find('.implementation-item').height(totalHeight);
-      this.$el.find('.vote-container').height(totalHeight);
+    setMarginTopOfVoteContainer: function () {
       var $voteCount = this.$el.find('.imp-vote-count');
-      $voteCount.css({ marginTop: ((totalHeight - $voteCount.height()) / 2) });
+      $voteCount.css({ marginTop: ((this.$el.find('.implementation-item').height() - $voteCount.height()) / 2) });
+    },
+
+    setWidthOfContent: function () {
+      var width = (this.$el.find('.implementation-item').width() - this.$el.find('.vote-container'));
+      this.$el.find('.content').width(width);
     },
 
 		render: function () {
       var self = this;
 
-      var showBottom = !!this.model.get('slack_url') ||
-        !!this.model.get('hipchat_url') ||
-        !!this.model.get('irc_url') ||
-        !!this.model.get('in_progress') ||
-        !!this.model.get('seeking_contributors');
+      var showBottom = !!this.model.get('slack_url') || !!this.model.get('hipchat_url') || !!this.model.get('irc_url') || !!this.model.get('in_progress') || !!this.model.get('seeking_contributors');
 
       var display = this.model.toJSON();
 
@@ -71,10 +65,10 @@ define(['jquery',
       this.$el.html(ImplementationItemTpl(display));
 
       setTimeout(function () {
-        self.resizeHeight();
-      }, 5);
+        self.setMarginTopOfVoteContainer();
+      }, 3);
 
-		}
+    }
 
 	});
 
