@@ -3,13 +3,15 @@ define(['jquery',
 	'underscore',
   'models/os.util',
   'models/project',
-	'stache!views/projects/major/implementation/implementation-item',
+  'views/widgets/user-info-bubble',
+  'stache!views/projects/major/implementation/implementation-item',
   'backbone-eventbroker'
     ], function ($,
    Backbone,
    _,
    OSUtil,
    Project,
+   UserInfoBubble,
    ImplementationItemTpl) {
 	'use strict';
 
@@ -46,9 +48,18 @@ define(['jquery',
       $voteCount.css({ marginTop: ((this.$el.find('.implementation-item').height() - $voteCount.height()) / 2) });
     },
 
-    setWidthOfContent: function () {
-      var width = (this.$el.find('.implementation-item').width() - this.$el.find('.vote-container'));
-      this.$el.find('.content').width(width);
+    showBubble: function () {
+      if (!this.bubbleShown) {
+        this.$el.find('.poster-info-bubble').show();
+        this.bubbleShown = true;
+      }
+    },
+
+    hideBubble: function () {
+      if (this.bubbleShown) {
+        this.$el.find('.poster-info-bubble').hide();
+        this.bubbleShown = false;
+      }
     },
 
 		render: function () {
@@ -68,6 +79,22 @@ define(['jquery',
         self.setMarginTopOfVoteContainer();
       }, 3);
 
+      this.userInfoBubble = new UserInfoBubble({
+        el: this.$el.find('.poster-info-bubble')
+      });
+
+      this.userInfoBubble.render({
+        userPic: this.model.get('poster_pic'),
+        ghUsername: this.model.get('poster_gh_username')
+      });
+
+      _.each(['.posted-by > img', '.poster-info-bubble'], function (selector) {
+        self.$el.find(selector).hover(function () {
+          self.showBubble();
+        }, function () {
+          self.hideBubble();
+        });
+      });
     }
 
 	});

@@ -750,6 +750,21 @@ $post-gray: #B6B8C0;
     border-right: 1px solid #CCC;
   }
 
+  a[data-feed="implementations"] {
+    position: relative;
+
+    i {
+      position: absolute;
+      top: 6px;
+      left: 5px;
+      height: 23px;
+      width: 23px;
+      border-radius: 50%;
+      color: white;
+      background-color: #00A6C9;
+    }
+  }
+
 }
 
 .communication-tab.disabled {
@@ -782,7 +797,7 @@ $post-gray: #B6B8C0;
   margin-top: 10px;
   margin-bottom: 15px;
   margin-left: 3.5%;
-  background-color: #F1F1F9;
+  background-color: #F0F0F8;
   min-height: 300px;
   float: left;
 }

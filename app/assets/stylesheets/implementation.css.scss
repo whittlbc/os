@@ -358,10 +358,11 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
   width: 93%;
   margin-left: 3.5%;
   margin-top: 18px;
-  background-color: #F1F1F9;
+  background-color: #f0f0f8;
   height: 45px;
   text-align: center;
   border: 1px solid #efefef;
+  border-radius: 3px;
 
   .imps-exist-content {
     display: inline-block;
@@ -379,11 +380,11 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
       display: inline-block;
       height: 100%;
       float: left;
-      margin-left: 15px;
+      margin-left: 11px;
 
       .add-implementation-btn {
         text-align: center;
-        padding: 4px 11px;
+        padding: 4px 8px;
         margin-top: 9px;
         color: white;
         background-color: #00A6C9;
@@ -405,12 +406,13 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
   width: 93%;
   margin-bottom: 15px;
   margin-left: 3.5%;
-  background-color: #F1F1F9;
+  //background-color: #F1F1F9;
   min-height: 347px;
   float: left;
   margin-top: 20px;
   padding: 0;
   list-style-type: none;
+  //border-top: 1px solid #DDD;
 
   &.has-items {
     margin-top: 0;
@@ -490,26 +492,26 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
           position: absolute;
           right: 12px;
           top: 11px;
+        }
 
-          span {
-            display: inline-block;
-            float: right;
-            font-size: 10px;
-            margin-right: 9px;
-            margin-top: 5px;
-            color: #C4C5CA;
-          }
+        .posted-by > span {
+          display: inline-block;
+          float: right;
+          font-size: 10px;
+          margin-right: 9px;
+          margin-top: 5px;
+          color: #C4C5CA;
+        }
 
-          img {
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
-            display: inline-block;
-            float: right;
-            line-height: 24px;
-            margin-right: 9px;
-          }
-
+        .posted-by > img {
+          height: 24px;
+          width: 24px;
+          border-radius: 50%;
+          display: inline-block;
+          float: right;
+          line-height: 24px;
+          margin-right: 9px;
+          cursor: pointer;
         }
 
       }
