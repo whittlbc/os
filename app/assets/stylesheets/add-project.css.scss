@@ -807,7 +807,7 @@ input[name="add-project-repo-name"] {
   padding-top: 10px;
   width: 100%;
   text-align: center;
-  color: lightgray;
+  color: #c4c5ca;
   font-size: 15px;
   background-color: white;
   cursor: pointer;
@@ -826,9 +826,9 @@ input[name="add-project-repo-name"] {
 #add-project-send-invites-yes {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  border-left: 2px solid lightgray;
-  border-top: 2px solid lightgray;
-  border-bottom: 2px solid lightgray;
+  border-left: 2px solid #c4c5ca;
+  border-top: 2px solid #c4c5ca;
+  border-bottom: 2px solid #c4c5ca;
 }
 
 #add-project-privacy-open,
@@ -836,9 +836,9 @@ input[name="add-project-repo-name"] {
 #add-project-send-invites-no {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  border-right: 2px solid lightgray;
-  border-top: 2px solid lightgray;
-  border-bottom: 2px solid lightgray;
+  border-right: 2px solid #c4c5ca;
+  border-top: 2px solid #c4c5ca;
+  border-bottom: 2px solid #c4c5ca;
 }
 
 #add-project-privacy-request.active-privacy,
@@ -1158,7 +1158,7 @@ input[name="add-project-repo-name"] {
       float: left;
       padding-top: 35px;
       font-size: 12px;
-      color: lightgray;
+      color: #c4c5ca;
     }
 
     .create-forum {

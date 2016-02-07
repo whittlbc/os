@@ -29,10 +29,8 @@ define(['jquery',
 
     addListeners: function () {
       var self = this;
-      this.$el.find('.contributors-feed-item-pic').click(function () {
-        self.openContributorGHPage();
-      });
-      this.$el.find('.name > span').click(function () {
+
+      this.$el.click(function () {
         self.openContributorGHPage();
       });
     },

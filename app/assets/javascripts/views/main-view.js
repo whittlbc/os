@@ -631,7 +631,7 @@ define(['jquery',
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
           self.homeView.handleNewLangFilter(data);
-        }, 200);
+        }, 250);
       }
 
       // DOMAINS
@@ -641,7 +641,7 @@ define(['jquery',
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
           self.homeView.handleNewDomainFilter(data);
-        }, 200);
+        }, 250);
       }
 
       // SEEKING
@@ -651,7 +651,7 @@ define(['jquery',
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
           self.homeView.handleNewSeekingFilter(data);
-        }, 200);
+        }, 250);
       }
     },
 
