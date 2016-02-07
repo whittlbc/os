@@ -134,7 +134,7 @@
             <i class="fa fa-check"></i>
             {{/isContributor}}
             {{#isContributor}}
-            <span class="irc-channel-text">{{ircChannel}}{{#hasIRCNetwork}}<span> ({{ircNetwork}})</span>{{/hasIRCNetwork}}</span>
+            <a href="{{ircURL}}" target="_blank">{{ircChannel}}</a>{{#hasIRCNetwork}}&nbsp;<span class="irc-channel-text">({{ircNetwork}})</span>{{/hasIRCNetwork}}
             {{/isContributor}}
         </span>
             {{/editMode}}

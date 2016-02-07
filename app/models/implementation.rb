@@ -5,7 +5,11 @@ class Implementation < ActiveRecord::Base
   scope :active, -> { where(:is_destroyed => false) }
 
   def create_irc_url
-    nil
+    if self.irc && self.irc['channel'] && self.irc['network']
+      "irc://#{self.irc['channel']}@#{self.irc['network']}"
+    else
+      nil
+    end
   end
 
   def in_progress
