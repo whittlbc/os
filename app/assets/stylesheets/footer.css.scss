@@ -10,9 +10,9 @@ $not-quite-black: #1D1E22;
   height: 100%;
   border-radius: 3px 3px 0 0;
   background-color: white;
-  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.44);
-  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.48);
-  box-shadow: 0 0 1px rgba(0,0,0,0.44);
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.46);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.5);
+  box-shadow: 0 0 1px rgba(0,0,0,0.46);
 
   .search-container {
     width: 53%;
@@ -66,9 +66,9 @@ $not-quite-black: #1D1E22;
       }
 
       .selectize-dropdown {
-        -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
-        -moz-box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
-        box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
+        -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.46) !important;
+        -moz-box-shadow: 0 0 1px rgba(0,0,0,0.46) !important;
+        box-shadow: 0 0 1px rgba(0,0,0,0.46) !important;
         border: none !important;
         background: transparent;
 
