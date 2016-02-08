@@ -76,11 +76,8 @@
             {{^editMode}}
             <span class="linebreak"></span>
         <span class="integration-link">
-            {{^isContributor}}
-            <i class="fa fa-check"></i>
-            {{/isContributor}}
-            {{#isContributor}}
             <a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>
+            {{#isContributor}}
             {{^isOwner}}
             {{^slackAccepted}}
             <div id="slackEllipsis"></div><div id="slackPopover" hidden></div>
@@ -102,11 +99,8 @@
             {{^editMode}}
             <span class="linebreak"></span>
         <span class="integration-link" id="hipChatSpan">
-            {{^isContributor}}
-            <i class="fa fa-check"></i>
-            {{/isContributor}}
-            {{#isContributor}}
             <a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>
+            {{#isContributor}}
             {{^isOwner}}
             {{^hipchatAccepted}}
             <div id="hipchatEllipsis"></div><div id="hipchatPopover" hidden></div>
@@ -130,12 +124,7 @@
             {{^editMode}}
             <span class="linebreak"></span>
         <span class="integration-link">
-            {{^isContributor}}
-            <i class="fa fa-check"></i>
-            {{/isContributor}}
-            {{#isContributor}}
             <a href="{{ircURL}}" target="_blank">{{ircChannel}}</a>{{#hasIRCNetwork}}&nbsp;<span class="irc-channel-text">({{ircNetwork}})</span>{{/hasIRCNetwork}}
-            {{/isContributor}}
         </span>
             {{/editMode}}
             {{#editMode}}

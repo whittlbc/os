@@ -893,6 +893,12 @@ $side-filters-width: 18.25%;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
     display: none;
     overflow-y: auto;
+
+    li.active {
+      .search-result {
+        background-color: #F4F6F8;
+      }
+    }
   }
 
   .search-results-list::-webkit-scrollbar {
@@ -997,10 +1003,6 @@ $side-filters-width: 18.25%;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-}
-
-.search-result:hover {
-  background-color: #F4F6F8;
 }
 
 .toggle-sort-type-container {

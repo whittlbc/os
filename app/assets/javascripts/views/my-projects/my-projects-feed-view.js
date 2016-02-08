@@ -18,33 +18,30 @@ define(['jquery',
     events: {},
 
     populate: function (projects) {
-      // populate owned projects
-      if (projects.own.length > 0) {
-        this.$el.find('#owned-projects-list').empty();
-        for (var i = 0; i < projects.own.length; i++) {
-          this.addProject(projects.own[i], 0);
-        }
-      }
+      var self = this;
+      this.$list.empty();
 
-      // populate contributions
-      if (projects.contribute.length > 0) {
-        this.$el.find('#contributing-projects-list').empty();
-        for (var j = 0; j < projects.contribute.length; j++) {
-          this.addProject(projects.contribute[j], 1);
+      if (_.isEmpty(projects)) {
+        this.$el.find('.no-others-exist').show();
+      } else {
+        this.$el.find('.no-others-exist').hide();
+        for (var i = 0; i < projects.length; i++) {
+          this.addProject(projects[i]);
         }
       }
     },
 
-    addProject: function (data, listInt) {
-      var self = this;
+    addProject: function (data) {
       var myProjectsItemView = new MyProjectsItemView({
         tagName: 'li',
         data: data
       });
+
       this.setListener(myProjectsItemView, data);
+
       myProjectsItemView.render();
-      var $list = (listInt === 0) ? this.$el.find('#owned-projects-list') : this.$el.find('#contributing-projects-list');
-      $list.append(myProjectsItemView.el);
+
+      this.$list.append(myProjectsItemView.el);
     },
 
     setListener: function (view, data) {
@@ -54,8 +51,8 @@ define(['jquery',
     },
 
     render: function () {
-      var self = this;
       this.$el.html(MyProjectsFeedViewTpl());
+      this.$list = this.$el.find('#my-projects-feed-list');
     }
   });
 
