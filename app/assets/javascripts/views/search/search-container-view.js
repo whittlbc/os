@@ -217,7 +217,7 @@ define(['jquery',
       }
 
       if (newPos || newPos === 0) {
-        this.$dropdown.scrollTop(newPos);
+        this.$dropdown.animate({ scrollTop: newPos }, { duration: 100 });
       }
     },
 
