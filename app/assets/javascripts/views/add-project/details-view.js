@@ -4,6 +4,7 @@ define(['jquery',
   'models/os.util',
   'models/all-langs',
   'views/widgets/text-info-bubble',
+  'views/widgets/spinner-chasing-dots',
   'stache!views/add-project/details-view',
   'selectize',
   'velocity'
@@ -13,6 +14,7 @@ define(['jquery',
    OSUtil,
    AllLangs,
    TextInfoBubble,
+   Spinner,
    DetailsViewTpl) {
   'use strict';
 
@@ -452,6 +454,8 @@ define(['jquery',
       if (this.repoName) {
         this.showInviteUsersQuestion();
       }
+
+      this.hideLoadingReposView();
     },
 
     passTags: function (data) {
@@ -705,6 +709,44 @@ define(['jquery',
 
     shouldShowIntegrations: function () {
       return this.stageIsLaunched() || (this.stageIsIdea() && !this.upForGrabs)
+    },
+
+    showReposLoadingView: function () {
+      var self = this;
+
+      $('#detailsView > div').addClass('hide-details');
+
+      this.spinner = new Spinner({
+        el: '#loadingRepoSpinner',
+        width: '95px',
+        height: '95px'
+      });
+
+      this.spinner.render();
+
+      this.$el.find('.loading-repo-view').show();
+
+      this.reposLoadingUnder1Sec = true;
+      setTimeout(function () {
+        self.reposLoadingUnder1Sec = false
+      }, 1000);
+    },
+
+    hideLoadingReposView: function () {
+      var self = this;
+
+      var hide = function () {
+        $('#detailsView > div').removeClass('hide-details');
+        self.$el.find('.loading-repo-view').hide();
+      };
+
+      if (this.reposLoadingUnder1Sec) {
+        setTimeout(function () {
+          hide();
+        }, 300);
+      } else {
+        hide();
+      }
     },
 
     render: function (options) {

@@ -151,6 +151,7 @@ define(['jquery',
 
       this.trigger('repo:getDetails', name);
       this.detailsView.render({ hideDetailsView: false });
+      this.detailsView.showReposLoadingView();
       setTimeout(function () {
         self.scrollToDetailsView(true, 500);
       }, 10);

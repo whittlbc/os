@@ -675,6 +675,7 @@ textarea[name="add-project-description"] {
 
 #detailsView {
   padding-bottom: 20px;
+  position: relative;
 
   .selectize-control.single,
   .selectize-control.multi {
@@ -690,6 +691,42 @@ textarea[name="add-project-description"] {
   }
 }
 
+.loading-repo-view {
+  width: 100%;
+  height: 400px;
+  z-index: 1;
+  background-color: white;
+  display: none;
+  position: absolute;
+  top: 0;
+
+  #loadingRepoSpinner {
+    width: auto;
+    height: auto;
+    margin-top: 105px;
+
+    .sk-circle {
+      margin: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .loading-repo-message {
+    width: 100%;
+    margin-top: 30px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: black;
+    font-size: 17px;
+  }
+
+}
+
+.hide-details {
+  display: none;
+}
 
 .add-project-langs-frames-container,
 .add-project-domains-container,

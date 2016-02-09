@@ -569,6 +569,9 @@ define(['jquery',
       this.currentUser.getRepoDetails({ repo_name: repoName }, {
         success: function (data) {
           self.handleRepoDetails(data);
+        },
+        error: function () {
+          self.panel3.detailsView.hideReposLoadingView();
         }
       });
     },
