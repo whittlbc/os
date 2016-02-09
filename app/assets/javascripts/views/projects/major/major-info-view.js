@@ -7,7 +7,6 @@ define(['jquery',
   'models/all-langs',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/projects/major/major-info-view',
-  'dotdotdot',
   'selectize',
   'toggle',
   'backbone-eventbroker'
@@ -27,7 +26,7 @@ define(['jquery',
     postInitialize: function () {
       this.getAllLanguages();
       this.formatDomains();
-      this.descriptionMaxHeight = 135;
+      this.truncated = false;
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode',
@@ -50,7 +49,7 @@ define(['jquery',
     },
 
     events: {
-      'click .see-all-description': 'handleToggleDescriptionSize',
+      'click .see-more-description': 'handleToggleDescriptionSize',
       'click .project-page-vote-container': 'checkIfUserAuthed',
       'click .join-btn': 'checkAuthedStatusOnMajorActionBtnClick',
       'click .star': 'loginOrStar',
@@ -150,44 +149,36 @@ define(['jquery',
     },
 
     handleToggleDescriptionSize: function () {
-      this.$descriptionContainer.hasClass('is-truncated') ? this.showMoreDescription() : this.showLessDescription();
-      //this.$descriptionContainer.height(this.descriptionMaxHeight);
-      //this.$descriptionContainer.css('overflow', 'hidden');
-      //this.$el.find('.major-info-project-description > p').height(this.descriptionMaxHeight);
-      //this.$el.find('.major-info-project-description > p').css('overflow', 'hidden');
-      //setTimeout(function () {
-      //    self.$descriptionContainer.trigger('destroy');
-      //    self.$descriptionContainer.removeClass('is-truncated');
-      //    self.$el.find('.major-info-project-description > p').css('display', 'inline');
-      //    self.$el.find('.see-all-description').html('See Less');
-      //    self.$el.find('.see-all-description').css('margin-left', '8px');
-      //self.$descriptionContainer.animate({height: self.originalDescriptionHeight}, {duration: 300});
-      //}, 5);
+      this.truncated ? this.showMoreDescription() : this.showLessDescription();
     },
 
     showMoreDescription: function () {
-      this.$descriptionContainer.trigger('destroy');
-      this.$descriptionContainer.removeClass('is-truncated');
-      this.$el.find('.major-info-project-description > p').css('display', 'inline');
-      this.$el.find('.see-all-description').html('See Less');
-      this.$el.find('.see-all-description').css('margin-left', '8px');
-      this.$el.find('p.none').hide();
+      var $description = this.$el.find('.major-info-project-description > p');
+      var description = $description[0];
+      var prevHeight = $description.height();
+      $description.height('auto');
+      var endHeight = getComputedStyle(description).height;
+      $description.height(prevHeight);
+      description.offsetHeight;
+      $description.css({ transition: 'height 0.3s' });
+      $description.height(endHeight);
+      this.$el.find('.see-more-description').html('See Less');
+      this.truncated = false;
     },
 
     showLessDescription: function () {
-      this.$descriptionContainer.dotdotdot({
-        height: this.descriptionMaxHeight,
-        after: '.see-all-description'
-      });
-      this.$el.find('.see-all-description').html('See All');
-      this.$el.find('.see-all-description').css('margin-left', '0');
-      this.$el.find('p.none').hide();
+      var $description = this.$el.find('.major-info-project-description > p');
+      var description = $description[0];
+      $description.height(getComputedStyle(description).height);
+      description.offsetHeight;
+      $description.height(100);
+      this.$el.find('.see-more-description').html('See More');
+      this.truncated = true;
     },
 
     addTags: function (options) {
       this.addDomainTags((options.domains || []), (options.langs_and_frames || []));
       this.addLangFrameTags((options.langs_and_frames || []), (options.domains || []));
-      //this.addSeekingTags(options.seeking || []);
     },
 
     addDomainTags: function (domains, langsFrames) {
@@ -240,29 +231,6 @@ define(['jquery',
         }
       }
     },
-    //
-    //addSeekingTags: function (seeking) {
-    //  var containerWidth = this.$el.find('.major-info-seeking-tags').width();
-    //  var $seekingTagContent = this.$el.find('.seeking-tags-content');
-    //  var content = '';
-    //  var seekingTagsWidth = 0;
-    //  var seekingIconWith = 28;
-    //  var extraTags = [];
-    //
-    //  for (var i = 0; i < seeking.length; i++) {
-    //    if (((seekingTagsWidth + seekingIconWith + 100)/ containerWidth) > 0.95) {
-    //      extraTags.push(seeking[i]);
-    //
-    //      if (i === seeking.length - 1) {
-    //        this.populateMoreSeekingTagsDropdown(extraTags);
-    //      }
-    //    } else {
-    //      content += ((i == 0) ? seeking[i] : (', ' + seeking[i]));
-    //      $seekingTagContent.html(content);
-    //      seekingTagsWidth = $seekingTagContent.outerWidth(true);
-    //    }
-    //  }
-    //},
 
     populateMoreDomainTagsDropdown: function (extraTags) {
       var self = this;
@@ -313,31 +281,6 @@ define(['jquery',
         self.moreTagsLFDropdown.hideDropdown();
       });
     },
-
-    //populateMoreSeekingTagsDropdown: function (extraTags) {
-    //  var self = this;
-    //  var $div = $('<div>', {class: 'more-project-tags-container'});
-    //  var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
-    //  var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
-    //  $div.append($moreTagsCount);
-    //  $div.append($moreTagsDropdown);
-    //  this.$el.find('.major-info-seeking-tags').append($div);
-    //
-    //  $moreTagsCount.html(extraTags.length + ' more');
-    //
-    //  this.moreTagsSeekingDropdown = new MoreDropdown({
-    //    el: this.$el.find('.major-info-seeking-tags .more-tags-dropdown')
-    //  });
-    //
-    //  this.moreTagsSeekingDropdown.render();
-    //  this.moreTagsSeekingDropdown.populate(extraTags);
-    //
-    //  $moreTagsCount.hover(function () {
-    //    self.moreTagsSeekingDropdown.showDropdown();
-    //  }, function () {
-    //    self.moreTagsSeekingDropdown.hideDropdown();
-    //  });
-    //},
 
     showEditMode: function (data) {
       data.editMode = true;
@@ -533,6 +476,16 @@ define(['jquery',
       return obj;
     },
 
+    determineDescriptionHeight: function () {
+      var $description = this.$el.find('.major-info-project-description > p');
+
+      if ($description.height() > 100) {
+        $description.height(100);
+        this.$el.find('.see-more-description').show();
+        this.truncated = true;
+      }
+    },
+
     render: function (options) {
       var self = this;
       options = options || {};
@@ -597,22 +550,11 @@ define(['jquery',
           this.addTags(options);
         }
 
-        this.$descriptionContainer = this.$el.find('.major-info-project-description');
-        this.originalDescriptionHeight = this.$descriptionContainer.height();
-        this.$descriptionContainer.dotdotdot({
-          height: this.descriptionMaxHeight,
-          after: '.see-all-description'
-        });
-        var isTruncated = this.$descriptionContainer.triggerHandler('isTruncated');
-        if (!isTruncated) {
-          this.$el.find('.see-all-description').hide();
-        }
-
-        // if no description, say so
         if (_.isEmpty(options.description)) {
           this.$el.find('p.none').show();
         } else {
           this.$el.find('p.none').hide();
+          this.determineDescriptionHeight();
         }
       }
 

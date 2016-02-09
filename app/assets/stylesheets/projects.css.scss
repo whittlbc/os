@@ -628,11 +628,24 @@ $post-gray: #B6B8C0;
   p {
     font-size: 14px;
     white-space: pre-line;
+    overflow: hidden;
   }
 
   p.none {
     font-style: italic;
     color: $light-gray;
+  }
+
+  .see-more-description {
+    display: none;
+    float: left;
+    color: #00A6C9;
+    cursor: pointer;
+    margin-top: -3px;
+  }
+
+  .see-more-description:hover {
+    text-decoration: underline;
   }
 }
 
@@ -689,15 +702,6 @@ $post-gray: #B6B8C0;
   font-size: 14px;
   color: #30313C;
   padding: 8px;
-}
-
-.see-all-description {
-  color: #00A6C9;
-  cursor: pointer;
-}
-
-.see-all-description:hover {
-  color: #00A6C9;
 }
 
 #communicationView {
