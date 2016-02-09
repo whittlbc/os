@@ -16,8 +16,9 @@ define(['jquery',
       options = options || {};
 
       var textToTypeMap = {
-        'ideas': 'Here you will find ideas for projects posted by people who know of something that could benefit the OSS community but just don\'t have the time to build it themselves. All of these are up for grabs.',
+        'ideas': 'Here you will find ideas for projects posted by people seeking feedback or initial teammates. You will also see ideas that are Up for Grabs - ideas meant for other members of the community to grab and form their own projects around.',
         'launched': 'Here you will find projects that have already been launched whose maintainers are now looking to spread the word about their projects or find more contributors.'
+
       };
 
       this.text = textToTypeMap[options.type];
