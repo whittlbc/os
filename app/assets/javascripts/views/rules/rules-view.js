@@ -14,7 +14,12 @@ define(['jquery',
     },
 
     events: {
-      'click .project-type-name > span': 'toggleShowScenarios'
+      'click .project-type-name > span': 'toggleShowScenarios',
+      'click .link-to-suggestions': 'openSuggestions'
+    },
+
+    openSuggestions: function () {
+      this.trigger('close-rules-open-suggestions');
     },
 
     toggleShowScenarios: function (e) {

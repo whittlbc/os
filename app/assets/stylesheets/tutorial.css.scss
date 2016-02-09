@@ -88,35 +88,21 @@ $footer-height: 48px;
 
 }
 
-#ufg-tutorial-anchor,
-#otf-tutorial-anchor,
+#ideas-tutorial-anchor,
 #launched-tutorial-anchor {
   display: block;
   margin-top: -6px;
 }
 
 
-// Up for Grabs
-#ufg-tutorial-anchor {
+// Ideas
+#ideas-tutorial-anchor {
   .tutorial-bubble-container {
     width: 255px;
 
     .fa-caret-up {
       top: -20px;
       left: 118.5px;
-    }
-  }
-}
-
-
-// On the Fence
-#otf-tutorial-anchor {
-  .tutorial-bubble-container {
-    width: 265px;
-
-    .fa-caret-up {
-      top: -20px;
-      left: 123.5px;
     }
   }
 }
@@ -207,23 +193,12 @@ body[browser="safari"] {
   }
 
   // Up for Grabs
-  #ufg-tutorial-anchor {
+  #ideas-tutorial-anchor {
     .tutorial-bubble-container {
       width: 260px;
 
       .fa-caret-up {
         left: 121px;
-      }
-    }
-  }
-
-  // On the Fence
-  #otf-tutorial-anchor {
-    .tutorial-bubble-container {
-      width: 275px;
-
-      .fa-caret-up {
-        left: 128.5px;
       }
     }
   }

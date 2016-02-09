@@ -891,6 +891,14 @@ define(['jquery',
         self.rulesModal.hideModal();
       });
 
+      this.listenTo(this.rulesModal, 'close-rules-open-suggestions', function () {
+        self.rulesModal.hideModal();
+        setTimeout(function () {
+          self.suggestionsModal.showModal();
+        }, 150);
+      });
+
+
       this.rulesModal.render();
 
       this.suggestionsModal = new SuggestionsModal({
