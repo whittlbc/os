@@ -27,6 +27,7 @@ define(['jquery',
       this.getAllLanguages();
       this.formatDomains();
       this.truncated = false;
+      this.isSafari = ($('body').attr('browser') === 'safari');
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode',
@@ -149,17 +150,41 @@ define(['jquery',
     },
 
     handleToggleDescriptionSize: function () {
-      this.truncated ? this.showMoreDescription() : this.showLessDescription();
+      var self = this;
+
+      if (this.isSafari) {
+        if (this.truncated) {
+          this.showMoreDescription();
+
+          if (!this.hasShownMoreBefore) {
+            setTimeout(function () {
+              self.hasShownMoreBefore = true;
+              self.entireDescriptionHeight = self.$el.find('.major-info-project-description > p').height();
+            }, 305);
+          }
+        } else {
+          this.showLessDescription();
+        }
+      } else {
+        this.truncated ? this.showMoreDescription() : this.showLessDescription();
+      }
     },
 
     showMoreDescription: function () {
       var $description = this.$el.find('.major-info-project-description > p');
-      var description = $description[0];
-      var prevHeight = $description.height();
-      $description.height('auto');
-      var endHeight = getComputedStyle(description).height;
-      $description.height(prevHeight);
-      description.offsetHeight;
+      var endHeight;
+
+      if (this.entireDescriptionHeight) {
+        endHeight = this.entireDescriptionHeight;
+      } else {
+        var description = $description[0];
+        var prevHeight = $description.height();
+        $description.height('auto');
+        endHeight = getComputedStyle(description).height;
+        $description.height(prevHeight);
+        description.offsetHeight;
+      }
+
       $description.css({ transition: 'height 0.3s' });
       $description.height(endHeight);
       this.$el.find('.see-more-description').html('See Less');

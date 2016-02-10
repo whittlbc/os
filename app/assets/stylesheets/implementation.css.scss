@@ -344,6 +344,28 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
 #addImplementationModal.safari {
 
+  input::-webkit-input-placeholder,
+  .create-forum,
+  .or {
+    font-family: 'Proxima-Nova-SemiBold';
+  }
+
+  input {
+    line-height: 18px !important;
+  }
+
+  [name="title"],
+  [name="main_url"] {
+    padding-top: 8px;
+    padding-bottom: 7px;
+  }
+
+  .add-implementation-description-container {
+    textarea {
+      width: 107.4%;
+    }
+  }
+
 }
 
 
