@@ -640,12 +640,14 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 
 .no-imps-view {
   display: block;
-  padding-top: 100px;
+  padding-top: 80px;
   position: absolute;
   width: 92.8%;
   border-top: 1px solid #eee;
   margin-left: 35px;
   margin-top: 20px;
+  height: 347px;
+  background-color: #F0F0F8;
 
   .text {
     font-size: 15px;
@@ -654,7 +656,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
   }
 
   .add-implementation-btn-container {
-    margin-top: 30px;
+    margin-top: 25px;
     width: 100%;
     display: block;
     text-align: center;

@@ -309,19 +309,9 @@ define(['jquery',
       this.slideIndex = 0;
       this.showFooter();
       this.enableAddProjectBtn();
-      this.panel1.setUpForGrabsToggle(false);
-      this.panel1.setOnlyOnTheFenceToggle(false);
       this.renderPanels(true);
       this.renderBreadCrumbView();
       this.handleUserRepos(this.repos);
-    },
-
-    inactivateOldUpForGrabsProject: function () {
-      var projectUUID = this.panel3.getOldPullFromIdeasUUID();
-      if (projectUUID) {
-        var project = new Project();
-        project.pullProject({uuid: projectUUID});
-      }
     },
 
     showFooter: function () {
