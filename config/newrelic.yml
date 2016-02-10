@@ -47,3 +47,7 @@ staging:
 
 production:
   <<: *default_settings
+  app_name: os-prod
+  license_key: 4b36497e375034f168a6f7e9a2518cb74a97dd58
+
+
