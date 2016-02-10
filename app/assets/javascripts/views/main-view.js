@@ -132,21 +132,15 @@ define(['jquery',
 
       if (this.currentUser) {
         this.currentUser.getNonCachedInfo({ success: function (data) {
-          self.ghAccessToken = data.gh_access_token;
           self.notifications = data.notifications;
           self.notificationsDropdown.populate(self.notifications);
-          self.createGHInstance();
+          Github.setToken(data.gh_access_token);
         }});
       }
     },
 
-    createGHInstance: function () {
-      this.github = Github;
-      this.github.setToken(this.ghAccessToken);
-    },
-
     getAllUserRepos: function () {
-      this.github.getReposForUser(this.currentUser.get('gh_username'), function (repos) {
+      Github.getReposForUser(this.currentUser.get('gh_username'), function (repos) {
         var repoNames = _.map(repos, function (repo) { return repo.name });
 
         Backbone.EventBroker.trigger('all-user-repos:response', repoNames);
@@ -248,10 +242,9 @@ define(['jquery',
     },
 
     // used to get people to send email invites to
-    getAllContributorsForRepo: function (projectUUID) {
+    getAllContributorsForRepo: function (project) {
       var self = this;
-      this.github.getContributors('cosmicexplorer', 'imposters', function (contribData) {
-      //this.github.getContributors(this.currentUser.get('gh_username'), project.repo_name, function (contribData) {
+      Github.getContributors(this.currentUser.get('gh_username'), project.repo_name, function (contribData) {
         var usernames = [];
 
         _.each(contribData, function (contributor) {
@@ -260,10 +253,11 @@ define(['jquery',
           }
         });
 
-        var project = new Project();
-        project.sendInviteEmails({
+        var projectModel = new Project();
+
+        projectModel.sendInviteEmails({
           user_uuid: self.currentUser.get('uuid'),
-          uuid: projectUUID,
+          uuid: project.uuid,
           usernames: usernames
         });
       });
@@ -362,7 +356,7 @@ define(['jquery',
     },
 
     loginWithGH: function () {
-      window.location = 'https://github.com/login/oauth/authorize?client_id=' + OSUtil.GH_CLIENT_ID + '&scope=public_repo';
+      window.location = 'https://github.com/login/oauth/authorize?client_id=' + OSUtil.GH_CLIENT_ID;
     },
 
     // either show the login modal or vote on the passed projectPostView
@@ -829,7 +823,7 @@ define(['jquery',
       });
 
       this.listenTo(this.sendInvitesModal, 'confirm', function () {
-        self.getAllContributorsForRepo(self.projectView.uuid);
+        self.getAllContributorsForRepo(self.projectView);
       });
 
       this.sendInvitesModal.render();

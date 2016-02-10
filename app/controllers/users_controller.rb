@@ -30,6 +30,8 @@ class UsersController < ApplicationController
     render :json => {:repos => repo_list}
   end
 
+
+  # DEPRECATED -- Called from Front End Github model instead now
   def get_repo_details
     user = User.find_by(uuid: params[:uuid])
     client = Octokit::Client.new(:access_token => user.password)

@@ -66,9 +66,6 @@ define(['jquery',
         'hipchat:join': 'requestToJoin'
       }, this);
 
-      this.github = Github;
-      this.github.setToken('202171c69b06bbe92b666e1a5e3a9b7981a6fced');
-
     },
 
     reInitialize: function (uuid) {
@@ -174,8 +171,8 @@ define(['jquery',
       var self = this;
       self.privacy = data.project.privacy;
       self.owner_id = data.project.user_id;
-      self.repo_name = data.project.repo_name;
-      self.uuid = data.project.uuid;
+      self.repo_name = data.project.repo_name; // don't remove (getAllContributorsForRepo relying on this)
+      self.uuid = data.project.uuid; // don't remove (getAllContributorsForRepo relying on this)
       self.owner_gh_username = data.project.owner_gh_username;
     },
 
@@ -193,7 +190,7 @@ define(['jquery',
     fetchGHContribs: function (project) {
       var self = this;
 
-      this.github.getContributors(project.owner_gh_username, project.repo_name, function (contribData) {
+      Github.getContributors(project.owner_gh_username, project.repo_name, function (contribData) {
         var shContribs = _.union(project.contributors.admin, project.contributors.others);
         var allContribs = _.union(shContribs, contribData);
         self.handleFetchedGHContribs(allContribs, project.owner_gh_username);
@@ -205,7 +202,7 @@ define(['jquery',
     fetchRepoStats: function (project) {
       var self = this;
 
-      this.github.fetchRepoStats(project.owner_gh_username, project.repo_name, function (data) {
+      Github.fetchRepoStats(project.owner_gh_username, project.repo_name, function (data) {
         self.handleFetchedGHRepoStats(data);
       }, function () {
         Backbone.EventBroker.trigger('repo-stats:fetch-error');

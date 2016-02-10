@@ -8,7 +8,9 @@ define(['jquery',
              OSUtil) {
   'use strict';
 
-  var Github = {
+  var instance;
+
+  var GithubModel = Backbone.Model.extend({
 
     endpoint: 'https://api.github.com/',
 
@@ -19,6 +21,9 @@ define(['jquery',
           break;
         case 'repo':
           return this.endpoint + 'repos/' + username + '/' + repo;
+          break;
+        case 'languages':
+          return this.endpoint + 'repos/' + username + '/' + repo + '/languages';
           break;
         case 'contributors':
           return this.endpoint + 'repos/' + username + '/' + repo + '/contributors?per_page=100&page=1';
@@ -158,6 +163,11 @@ define(['jquery',
       this.fetchAsset(url, cb, errorCb);
     },
 
+    getLanguages: function (username, repo, cb, errorCb) {
+      var url = this.getURLFor('languages', username, repo);
+      this.fetchAsset(url, cb, errorCb);
+    },
+
     getOpenPRCount: function (username, repo, cb) {
       var url = this.getURLFor('openPRs', username, repo);
       this.fetchTotalAssetCount(url, cb);
@@ -232,10 +242,51 @@ define(['jquery',
           cb(self.statsObj);
         }
       });
+    },
+
+    getDetailsAndLangs: function (username, repo, cb, errorCb) {
+      var self = this;
+
+      this.getRepo(username, repo, function (data) {
+
+        var info = {
+          name: data.name,
+          description: data.description
+        };
+
+        self.getLanguages(username, repo, function (data) {
+          if (data) {
+            info.languages = Object.keys(data);
+          }
+
+          cb(info);
+
+        }, function () {
+          if (errorCb) {
+            errorCb();
+          }
+        });
+
+      }, function () {
+        if (errorCb) {
+          errorCb();
+        }
+      });
+    }
+
+  });
+
+  var Github = {
+
+    getInstance: function() {
+      if (!instance) {
+        instance = new GithubModel();
+      }
+      return instance;
     }
 
   };
 
-  return Github;
+  return Github.getInstance();
 
 });

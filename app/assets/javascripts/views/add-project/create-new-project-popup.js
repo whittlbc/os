@@ -8,6 +8,7 @@ define(['jquery',
   'models/project',
   'models/os.util',
   'views/os.view',
+  'integrations/github',
   'stache!views/add-project/create-new-project-popup',
   'owl-carousel',
   'backbone-eventbroker'
@@ -21,6 +22,7 @@ define(['jquery',
    Project,
    OSUtil,
    OSView,
+   Github,
    IndexViewTpl) {
   'use strict';
 
@@ -252,7 +254,7 @@ define(['jquery',
       project.create(projectData, {
         success: function (project) {
           setTimeout(function () {
-            self.showProjectCreationSuccess(project.uuid);
+            self.showProjectCreationSuccess(project);
           }, 1000);
         }, error: function () {
           self.showProjectCreationError();
@@ -275,16 +277,16 @@ define(['jquery',
       $confirmMessage.css('opacity', 0);
     },
 
-    showProjectCreationSuccess: function (newProjectUUID) {
+    showProjectCreationSuccess: function (project) {
       var self = this;
 
       Backbone.EventBroker.trigger('create-project-modal:hide');
 
       if (self.newProjectData.sendInvites === true) {
-        Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
+        Backbone.EventBroker.trigger('invite-gh-contributors', project);
       }
 
-      OSUtil.navToProject(newProjectUUID);
+      OSUtil.navToProject(project.uuid);
 
       setTimeout(function () {
         self.resetPopup();
@@ -556,13 +558,11 @@ define(['jquery',
 
     getRepoDetails: function (repoName) {
       var self = this;
-      this.currentUser.getRepoDetails({ repo_name: repoName }, {
-        success: function (data) {
-          self.handleRepoDetails(data);
-        },
-        error: function () {
-          self.panel3.detailsView.hideReposLoadingView();
-        }
+
+      Github.getDetailsAndLangs(this.currentUser.get('gh_username'), repoName, function (data) {
+        self.handleRepoDetails(data);
+      }, function () {
+        self.panel3.detailsView.hideReposLoadingView();
       });
     },
 
