@@ -34,6 +34,9 @@ Backboneworld::Application.routes.draw do
       post :send_invite_emails, :path => '/sendInviteEmails'
       put :respond_to_request, :path => '/respondToRequest'
       put :saw_notifications, :path => '/sawNotifications'
+      get :fetch_implementations, :path => '/fetchImplementations'
+      post :add_implementation, :path => '/addImplementation'
+      put :implementation_vote, :path => '/implementationVote'
     end
   end
 

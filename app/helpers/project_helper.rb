@@ -1,16 +1,48 @@
 module ProjectHelper
 
-  UP_FOR_GRABS = 0
+  IDEA_STATUS = 0
 
-  CREATION_SPECIFIC_PARAMS = [
+  CREATION_PARAMS_IDEA = [
+      :user_uuid,
+      :status,
+      :privacy,
+      :seeking,
+      :up_for_grabs,
+      :slackURL,
+      :hipChatURL,
+      :irc
+  ]
+
+  CREATION_PARAMS_IDEA_UFG = [
+      :user_uuid,
+      :status,
+      :up_for_grabs
+  ]
+
+  CREATION_PARAMS_LAUNCHED = [
     :user_uuid,
+    :status,
+    :seeking,
+    :repo_name,
+    :license,
     :slackURL,
     :hipChatURL,
     :irc
   ]
 
-  EDIT_SPECIFIC_PARAMS = [
-    :integrations
+  EDIT_PARAMS_IDEA = [
+    :seeking,
+    :integrations,
+    :privacy,
+  ]
+
+  EDIT_PARAMS_IDEA_UFG = []
+
+  EDIT_PARAMS_LAUNCHED = [
+    :seeking,
+    :integrations,
+    :license,
+    :repo_name
   ]
 
   def self.fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_id)
@@ -39,19 +71,27 @@ module ProjectHelper
       :title => data[:title],
       :subtitle => data[:subtitle],
       :description => data[:description],
-      :status => data[:status],
       :langs_and_frames => data[:langs_and_frames],
-      :repo_name => data[:repo_name],
-      :license => data[:license],
-      :privacy => data[:privacy],
-      :anon => data[:anon]
+      :domains => data[:domains]
     }
   end
 
   def self.get_allowables(data, creation)
     allowed = get_always_allowed(data)
 
-    extra_params = creation ? CREATION_SPECIFIC_PARAMS : EDIT_SPECIFIC_PARAMS
+    if creation
+      if data[:status] == IDEA_STATUS
+        extra_params = data[:up_for_grabs] ? CREATION_PARAMS_IDEA_UFG : CREATION_PARAMS_IDEA
+      else
+        extra_params = CREATION_PARAMS_LAUNCHED
+      end
+    else
+      if data[:status] == IDEA_STATUS
+        extra_params = data[:up_for_grabs] ? EDIT_PARAMS_IDEA_UFG : EDIT_PARAMS_IDEA
+      else
+        extra_params = EDIT_PARAMS_LAUNCHED
+      end
+    end
 
     extra_params.each { |key|
       allowed[key] = data[key]

@@ -187,6 +187,39 @@ define(['jquery',
       return this.sync('fetchComments', this, requestInfo);
     },
 
+    fetchImplementations: function (info, options) {
+      var requestInfo = options || {};
+
+      _.extend(requestInfo, {
+        url: this.extension + '/fetchImplementations',
+        data: info
+      });
+
+      return this.sync('fetchImplementations', this, requestInfo);
+    },
+
+    addImplementation: function (info, options) {
+      var requestInfo = options || {};
+
+      _.extend(requestInfo, {
+        url: this.extension + '/addImplementation',
+        data: info
+      });
+
+      return this.sync('addImplementation', this, requestInfo);
+    },
+
+    implementationVote: function (info, options) {
+      var requestInfo = options || {};
+
+      _.extend(requestInfo, {
+        url: this.extension + '/implementationVote',
+        data: info
+      });
+
+      return this.sync('implementationVote', this, requestInfo);
+    },
+
     commentVote: function (info, options) {
       var requestInfo = options || {};
 

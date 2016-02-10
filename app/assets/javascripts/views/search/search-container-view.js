@@ -5,6 +5,7 @@ define(['jquery',
   'views/search/search-result-view',
   'views/widgets/spinner-chasing-dots',
   'models/session',
+  'models/os.util',
   'stache!views/search/search-container-view'
 ], function ($,
    Backbone,
@@ -13,6 +14,7 @@ define(['jquery',
    SearchResultView,
    Spinner,
    Session,
+   OSUtil,
    SearchContainerViewTpl) {
   'use strict';
 
@@ -50,8 +52,8 @@ define(['jquery',
         for (var i = 0; i < projects.length; i++) {
           this.addResult(projects[i]);
         }
+        this.$el.find('.search-results-list > li:first-child').addClass('active');
       } else {
-        console.log(this.$noResultsView);
         this.$dropdown.append(this.$noResultsView);
       }
     },
@@ -68,24 +70,16 @@ define(['jquery',
         var openInNewTab = false;
         e.stopPropagation();
 
-        console.log('click', e);
-
         if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
           openInNewTab = true;
         }
 
-        if (openInNewTab){
-          console.log('open in new tab');
-          window.open((window.location.origin + '/#projects/' + data.uuid), '_blank');
-        } else {
-          if (window.location.hash == ('#projects/' + data.uuid)) {
-            window.location.reload();
-          } else {
-            window.location.hash = '#projects/' + data.uuid;
-            setTimeout(function () {
-              self.forceCloseSearchBar();
-            }, 50)
-          }
+        OSUtil.navToProject(data.uuid, openInNewTab);
+
+        if (!openInNewTab){
+          setTimeout(function () {
+            self.forceCloseSearchBar();
+          }, 50)
         }
 
         document.body.style.overflow = 'auto';
@@ -129,8 +123,27 @@ define(['jquery',
         self.forceCloseSearchBar();
       });
 
+      this.$dropdown.on('mouseenter', 'li', function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+      });
+
       this.$input.keydown(function (e) {
-        if (e.keyCode != 13 && e.keyCode != 9) {
+        // UP ARROW
+        if (e.which == 38) {
+          self.navUpToFocus();
+        }
+        // DOWN ARROW
+        else if (e.which == 40) {
+          self.navDownToFocus();
+        }
+        else if (e.which == 13) {
+          var $activeResult = self.$dropdown.find('li.active');
+          if ($activeResult) {
+            $activeResult.click();
+          }
+        }
+        else if (e.which != 13 && e.which != 9) {
           self.limit = 10;
           self.gettingMoreData = true;
 
@@ -166,6 +179,50 @@ define(['jquery',
           }
         }
       });
+    },
+
+    navUpToFocus: function () {
+      var $currentFocusedItem = this.getCurrentFocusedItem();
+
+      if ($currentFocusedItem && $currentFocusedItem.prev()) {
+        this.focusOnItem($currentFocusedItem.prev(), false);
+      }
+    },
+
+    navDownToFocus: function () {
+      var $currentFocusedItem = this.getCurrentFocusedItem();
+
+      if ($currentFocusedItem &&
+        $currentFocusedItem.next() &&
+        $currentFocusedItem.index() < (this.$dropdown.children().length - 1)) {
+
+        this.focusOnItem($currentFocusedItem.next(), true);
+      }
+    },
+
+    focusOnItem: function ($item, down) {
+      $item.addClass('active');
+      $item.siblings().removeClass('active');
+      var topOfItem = $item.index() * $item.outerHeight();
+      var bottomOfItem = topOfItem + $item.outerHeight();
+      var topScrollPos = this.$dropdown.scrollTop();
+      var bottomScrollPos = topScrollPos + 220;
+      var newPos;
+
+      if (down && bottomOfItem > bottomScrollPos) {
+        newPos = topOfItem;
+      }
+      else if (!down && topOfItem < topScrollPos) {
+        newPos = bottomOfItem - 220;
+      }
+
+      if (newPos || newPos === 0) {
+        this.$dropdown.animate({ scrollTop: newPos }, { duration: 100 });
+      }
+    },
+
+    getCurrentFocusedItem: function () {
+      return this.$el.find('.search-results-list > li.active');
     },
 
     expandSearch: function () {
@@ -232,7 +289,6 @@ define(['jquery',
       this.$el.html(SearchContainerViewTpl({
         isSafari: $('body').attr('browser') === 'safari'
       }));
-      this.$searchContainer = $('.header-searchbar-container');
       this.$input = this.$el.find('.searchbox > input');
       this.$dropdown = this.$el.find('.search-results-list');
       this.$noResults = this.$el.find('.no-search-results');

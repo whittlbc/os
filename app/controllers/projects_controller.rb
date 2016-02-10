@@ -12,9 +12,14 @@ class ProjectsController < ApplicationController
 
   include ProjectHelper
 
+  IDEAS = 0
+  LAUNCHED = 1
+
   PROJECT_ASSET = 0
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2
+
+  LANG_FILTERS_NAME = 'langs_and_frames'
 
   def service_for_asset(asset)
     case asset
@@ -39,23 +44,20 @@ class ProjectsController < ApplicationController
     if !project.nil? && project.is_active?
       owner_gh_username = project.get_owner_gh_username
       admin_arr = Contributor.admin(project.id).map { |contrib|
-        if project.anon
-          'Anonymous'
-        else
-          contrib.try(:user).try(:gh_username)
-        end
+        contrib.try(:user).try(:gh_username)
       }
 
       is_owner = user ? (user.gh_username === project.try(:user).try(:gh_username)) : false
 
       if !project.blank?
         project_details = {
-          :anon => project.anon,
           :post_date => project.created_at.utc.iso8601,
           :description => project.description,
           :langs_and_frames => project.langs_and_frames,
           :license => project.license,
           :privacy => project.privacy,
+          :domains => project.domains || [],
+          :seeking => project.seeking || [],
           :repo_name => project.repo_name,
           :getting_repo_data => !project.repo_name.blank? && !owner_gh_username.blank?,
           :status => project.status,
@@ -76,7 +78,8 @@ class ProjectsController < ApplicationController
           :pending_slack_request => user ? user.has_pending_request?(project.id, SLACK_ASSET) : false,
           :pending_hipchat_request => user ? user.has_pending_request?(project.id, HIPCHAT_ASSET) : false,
           :is_slack_member => user ? project.is_slack_member?(user.id) : false,
-          :is_hipchat_member => user ? project.is_hipchat_member?(user.id) : false
+          :is_hipchat_member => user ? project.is_hipchat_member?(user.id) : false,
+          :up_for_grabs => project.up_for_grabs
         }
 
         comments = Comment.where(project_id: project.id)
@@ -91,15 +94,11 @@ class ProjectsController < ApplicationController
               'html_url' => "https://github.com/#{contrib.try(:user).try(:gh_username)}",
               'avatar_url' => contrib.try(:user).try(:pic),
               'admin' => contrib.admin,
-              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id)
+              'owner' => contrib.try(:user).try(:id) == project.try(:user).try(:id),
+              'not_gh' => true,
+              'contributions' => 0
           }
           if obj['owner']
-            # Do this for the owner just in case it's an anon project
-            if project.anon
-              obj['avatar_url'] = project.get_owner_pic
-              obj['login'] = project.get_owner_gh_username
-              obj['html_url'] = nil
-            end
             owner.push(obj)
           elsif obj['admin']
             admin.push(obj)
@@ -107,7 +106,7 @@ class ProjectsController < ApplicationController
             others.push(obj)
           end
 
-          if !user.nil? && obj['login'] === user.gh_username
+          if user.present? && obj['login'] === user.gh_username
             project_details[:is_contributor] = true
           end
         }
@@ -157,19 +156,21 @@ class ProjectsController < ApplicationController
       user = User.find_by(uuid: allowable_params[:user_uuid])
 
       project_data = {
-          :title => allowable_params[:title],
-          :subtitle => allowable_params[:subtitle],
-          :user_id => user.id,
-          :uuid => UUIDTools::UUID.random_create.to_s,
-          :repo_name => allowable_params[:repo_name],
-          :description => allowable_params[:description],
-          :vote_count => 0,
-          :license => allowable_params[:license],
-          :status => allowable_params[:status],
-          :langs_and_frames => allowable_params[:langs_and_frames],
-          :anon => allowable_params[:anon],
-          :privacy => allowable_params[:privacy],
-          :contributors_count => 1
+        :title => allowable_params[:title],
+        :subtitle => allowable_params[:subtitle],
+        :user_id => user.id,
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :repo_name => allowable_params[:repo_name],
+        :description => allowable_params[:description],
+        :vote_count => 0,
+        :license => allowable_params[:license],
+        :status => allowable_params[:status],
+        :langs_and_frames => allowable_params[:langs_and_frames],
+        :privacy => allowable_params[:privacy],
+        :domains => allowable_params[:domains],
+        :seeking => allowable_params[:seeking],
+        :up_for_grabs => allowable_params[:up_for_grabs],
+        :contributors_count => 1
       }
 
       project = Project.new(project_data)
@@ -181,10 +182,11 @@ class ProjectsController < ApplicationController
           :user_id => user.id,
           :admin => true
       }
+
       Contributor.new(contrib_data).save!
 
       if !allowable_params[:slackURL].nil? && !allowable_params[:slackURL].empty?
-        slackURL = ensureURL(allowable_params[:slackURL])
+        slackURL = allowable_params[:slackURL]
         slack_data = {
             :service => 'Slack',
             :project_id => project.id,
@@ -198,7 +200,7 @@ class ProjectsController < ApplicationController
       end
 
       if !allowable_params[:hipChatURL].nil? && !allowable_params[:hipChatURL].empty?
-        hipChatURL = ensureURL(allowable_params[:hipChatURL])
+        hipChatURL = allowable_params[:hipChatURL]
         Integration.new(service: 'HipChat', project_id: project.id, url: hipChatURL, users: [user.id]).save!
       end
 
@@ -244,7 +246,10 @@ class ProjectsController < ApplicationController
           :owner_pic => project.get_owner_pic,
           :voted => user ? user.voted_on_project(project.id) : nil,
           :status => project.status,
-          :total_comments => project.comments_count
+          :total_comments => project.comments_count,
+          :domains => project.domains,
+          :seeking => project.seeking,
+          :up_for_grabs => project.up_for_grabs
       }
     }
 
@@ -306,45 +311,33 @@ class ProjectsController < ApplicationController
     if params[:user_uuid]
       user = User.find_by(uuid: params[:user_uuid])
     end
+
     filters = params[:filters]
-    if !filters.nil?
 
-      chat = filters[:chat]
+    if filters.present?
 
-      filtered_projects = Project.includes(:user, :integrations).where!(status: params[:status]).active
+      filtered_projects = Project.includes(:user).where!(status: params[:status]).active
 
       filters.each { |filter|
-        if filter[0] != 'chat'
-          if filter[0] == 'langs_and_frames'
-            # OR - only needs to contain at least one
-            if params[:lang_filters_or] === true
-              filtered_projects.where!.overlap(filter[0] => filter[1])
-            # default - AND - must contain ALL languages included
-            else
-              filtered_projects.where!.contains(filter[0] => filter[1])
-            end
+        if filter[0] == LANG_FILTERS_NAME
+
+          # OR - only needs to contain at least one
+          if params[:lang_filters_or] === true
+            filtered_projects.where!.overlap(filter[0] => filter[1])
+
+          # default - AND - must contain ALL languages included
           else
-            if filter[1].is_a?(Array)
-              filtered_projects.where!.overlap(filter[0] => filter[1])
-            else
-              filtered_projects.where!(filter[0] => filter[1])
-            end
+            filtered_projects.where!.contains(filter[0] => filter[1])
+          end
+
+        else
+          if filter[1].is_a?(Array)
+            filtered_projects.where!.overlap(filter[0] => filter[1])
+          else
+            filtered_projects.where!(filter[0] => filter[1])
           end
         end
       }
-
-      if chat
-        sql = ''
-        counter = 0
-        chat.each { |service|
-          counter += 1
-          sql += "integrations.service ='#{service}'"
-          if counter < chat.length
-            sql += ' OR '
-          end
-        }
-        filtered_projects.where!(sql)
-      end
 
       projects = filtered_projects.map { |project|
         {
@@ -362,7 +355,10 @@ class ProjectsController < ApplicationController
             :owner_pic => project.get_owner_pic,
             :voted => user ? user.voted_on_project(project.id) : nil,
             :status => project.status,
-            :total_comments => project.comments_count
+            :total_comments => project.comments_count,
+            :domains => project.domains,
+            :seeking => project.seeking,
+            :up_for_grabs => project.up_for_grabs
         }
       }
 
@@ -370,7 +366,7 @@ class ProjectsController < ApplicationController
       got_all = (limit >= projects.length)
       render :json => {:projects => special_sort(projects, params[:sortType]).slice(0, limit), :gotAll => got_all}
     else
-      render :json => {:status => 500, :message => 'params[:filters] was nil'}
+      render :json => {:message => 'params[:filters] was nil'}, :status => 500
     end
   end
 
@@ -587,6 +583,93 @@ class ProjectsController < ApplicationController
     render :json => comments
   end
 
+  def add_implementation
+    project = Project.find_by(uuid: params[:uuid])
+    user = User.find_by(uuid: params[:user_uuid])
+
+    if user.present? && project.present?
+
+      Implementation.new(
+        uuid: UUIDTools::UUID.random_create.to_s,
+        project_id: project.id,
+        user_id: user.id,
+        is_owner: params[:is_owner],
+        done: params[:done],
+        seeking_contributors: params[:seeking_contributors],
+        description: params[:description],
+        title: params[:title],
+        main_url: params[:main_url],
+        slack_url: params[:slack_url],
+        hipchat_url: params[:hipchat_url],
+        irc: params[:irc]
+      ).save!
+
+      implementations = get_formatted_implementations(project, user)
+
+      render json: implementations, status: 200
+    else
+      render json: { message: 'Either User or Project not found' }, status: 500
+    end
+
+  end
+
+  def implementation_vote
+    implementation = Implementation.find_by(uuid: params[:uuid])
+
+    if implementation.present?
+
+      implementation.update_attributes(:vote_count => (implementation.vote_count + 1))
+
+      user = User.find_by(uuid: params[:user_uuid])
+
+      if user.present?
+        user.update_attributes(:upvoted_implementations => user.upvoted_implementations + [implementation.id])
+      end
+
+      render :json => {}, :status => 200
+    else
+      render :json => {}, :status => 500
+    end
+  end
+
+  def get_formatted_implementations(project, user)
+    implementations = special_sort(project.implementations.active, 0)
+
+    formatted_imps = implementations.map { |i|
+      {
+          :uuid => i.uuid,
+          :post_date => i.created_at.utc.iso8601,
+          :vote_count => i.vote_count,
+          :voted => user ? user.voted_on_implementation(i.id) : nil,
+          :title => i.title,
+          :main_url => i.main_url,
+          :description => i.description,
+          :is_owner => i.is_owner,
+          :slack_url => i.slack_url,
+          :hipchat_url => i.hipchat_url,
+          :irc_url => i.create_irc_url,
+          :in_progress => i.in_progress,
+          :seeking_contributors => i.seeking_contributors,
+          :poster_pic => i.user.pic,
+          :poster_gh_username => i.user.gh_username
+      }
+    }
+
+    formatted_imps
+  end
+
+  def fetch_implementations
+    project = Project.find_by(uuid: params[:uuid])
+    user = User.find_by(uuid: params[:user_uuid])
+
+    if project.present?
+      implementations = get_formatted_implementations(project, user)
+      render json: implementations, status: 200
+    else
+      render json: { message: 'Project not found' }, status: 500
+    end
+  end
+
   def comments_for_feed(project_id, feed_status, user)
     comments = []
     Comment.includes(:user).top_level(project_id, feed_status).not_destroyed.vote_and_time_sort.each { |comment|
@@ -742,11 +825,11 @@ class ProjectsController < ApplicationController
               slack_data = {
                   :service => 'Slack',
                   :project_id => project.id,
-                  :url => ensureURL(integrations[:slack]),
+                  :url => integrations[:slack],
               }
               Integration.new(slack_data).save!
             else
-              slackURL = ensureURL(integrations[:slack])
+              slackURL = integrations[:slack]
               slack_integration.first.update_attributes(url: slackURL)
             end
           end
@@ -762,10 +845,10 @@ class ProjectsController < ApplicationController
             end
           else
             if hipchat_integration.blank?
-              hipchatURL = ensureURL(integrations[:hipchat])
+              hipchatURL = integrations[:hipchat]
               Integration.new(service: 'HipChat', project_id: project.id, url: hipchatURL).save!
             else
-              hipchatURL = ensureURL(integrations[:hipchat])
+              hipchatURL = integrations[:hipchat]
               hipchat_integration.first.update_attributes(url: hipchatURL)
             end
           end
@@ -818,41 +901,25 @@ class ProjectsController < ApplicationController
     query = "%#{params[:query]}%"
     limit = params[:limit].present? ? params[:limit].to_i : 10
 
-    # return just the title and id of the project
-    if params[:upForGrabs]
-      projects = Project.includes(:user).where(projects_table[:title].matches(query)).up_for_grabs.active.order('vote_count DESC, LOWER(title)').limit(limit).map { |project|
-        {
-            :uuid => project.uuid,
-            :title => project.title,
-            :subtitle => project.subtitle,
-            :description => project.description,
-            :langsFrames => project.langs_and_frames
-        }
+    projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.order('vote_count DESC, LOWER(title), LOWER(subtitle)').limit(limit).map { |project|
+      {
+        :owner => project.get_owner_gh_username,
+        :title => highlight_query(project.title, params[:query]),
+        :subtitle => highlight_query(project.subtitle, params[:query]),
+        :status => project.status,
+        :uuid => project.uuid,
+        :voteCount => project.vote_count
       }
+    }
 
-      render :json => {:projects => projects}
-    else
-      projects = Project.includes(:user).where(projects_table[:title].matches(query).or(projects_table[:subtitle].matches(query))).active.order('vote_count DESC, LOWER(title), LOWER(subtitle)').limit(limit).map { |project|
-        {
-            :owner => project.get_owner_gh_username,
-            :title => highlight_query(project.title, params[:query]),
-            :subtitle => highlight_query(project.subtitle, params[:query]),
-            :status => project.status,
-            :uuid => project.uuid,
-            :voteCount => project.vote_count
-        }
-      }
-
-      render :json => {:projects => projects, :gotAll => true}
-    end
-
+    render :json => {:projects => projects, :gotAll => true}
   end
 
   def launch
     project = Project.find_by(uuid: params[:uuid])
 
     if project.present?
-      project.update_attributes!(status: 2)
+      project.update_attributes!(status: LAUNCHED)
       render :json => {}, :status => 200
     else
       render :json => {:message => 'Cant find project by that id'}, :status => 500
@@ -862,7 +929,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :subtitle, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [])
+    params.require(:project).permit(:title, :subtitle, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [], :domains => [], :seeking => [])
   end
 
 

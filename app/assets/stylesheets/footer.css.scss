@@ -10,9 +10,9 @@ $not-quite-black: #1D1E22;
   height: 100%;
   border-radius: 3px 3px 0 0;
   background-color: white;
-  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.44);
-  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.48);
-  box-shadow: 0 0 1px rgba(0,0,0,0.44);
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.46);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.5);
+  box-shadow: 0 0 1px rgba(0,0,0,0.46);
 
   .search-container {
     width: 53%;
@@ -66,9 +66,9 @@ $not-quite-black: #1D1E22;
       }
 
       .selectize-dropdown {
-        -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
-        -moz-box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
-        box-shadow: 0 0 1px rgba(0,0,0,0.44) !important;
+        -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.46) !important;
+        -moz-box-shadow: 0 0 1px rgba(0,0,0,0.46) !important;
+        box-shadow: 0 0 1px rgba(0,0,0,0.46) !important;
         border: none !important;
         background: transparent;
 
@@ -204,8 +204,8 @@ $not-quite-black: #1D1E22;
       }
 
       #langFilterChoice,
-      #licenseFilterChoice,
-      #chatFilterChoice {
+      #domainFilterChoice,
+      #seekingFilterChoice {
         transform: translate3d(0,0,0);
         -webkit-transform: translate3d(0,0,0);
       }
@@ -234,7 +234,7 @@ $not-quite-black: #1D1E22;
         right: 67.1% !important;
       }
 
-      #licenseFilterChoice {
+      #domainFilterChoice {
         float: left;
         left: 34%;
         right: 34%;
@@ -245,25 +245,25 @@ $not-quite-black: #1D1E22;
         transition: left .29s, right .29s;
       }
 
-      #licenseFilterChoice.selected-filter {
+      #domainFilterChoice.selected-filter {
         left: 0 !important;
         right: 0 !important;
       }
 
-      #licenseFilterChoice.not-selected-hide-left {
+      #domainFilterChoice.not-selected-hide-left {
         right: 67% !important;
       }
 
-      #licenseFilterChoice.not-selected-hide-right {
+      #domainFilterChoice.not-selected-hide-right {
         left: 67% !important;
       }
 
-      #licenseFilterChoice.show-all {
+      #domainFilterChoice.show-all {
         left: 34% !important;
         right: 34% !important;
       }
 
-      #chatFilterChoice {
+      #seekingFilterChoice {
         float: right;
         left: 67%;
         right: 0;
@@ -274,15 +274,15 @@ $not-quite-black: #1D1E22;
         transition: left .3s;
       }
 
-      #chatFilterChoice.selected-filter {
+      #seekingFilterChoice.selected-filter {
         left: 0 !important;
       }
 
-      #chatFilterChoice.not-selected {
+      #seekingFilterChoice.not-selected {
         left: 100% !important;
       }
 
-      #chatFilterChoice.show-all {
+      #seekingFilterChoice.show-all {
         left: 67% !important;
       }
 
@@ -322,7 +322,7 @@ $not-quite-black: #1D1E22;
 
     #moreFiltersDropUp {
       position: absolute;
-      top: -56px;
+      bottom: 59px;
       right: -9px;
       width: 165px;
       border-radius: 5px;

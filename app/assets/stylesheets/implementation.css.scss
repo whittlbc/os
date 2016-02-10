@@ -1,0 +1,655 @@
+
+// ADD IMPLEMENTATION MODAL
+
+$question-height: 68px;
+$answer-btn-height: 48px;
+$answer-margin-top: ($question-height - $answer-btn-height) / 2;
+
+#addImplementationModalView {
+
+  .modal-content {
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #EEE !important;
+    position: relative;
+
+    button {
+      margin-right: 22px;
+      margin-top: 22px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 55px;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 35px;
+    }
+  }
+
+  .add-implementation-modal-body {
+    width: 100%;
+  }
+
+  #addImplementationContentView {
+    width: 100%;
+    padding-bottom: 4px;
+    height: 380px;
+  }
+
+  .add-implementation-scroll-container {
+    overflow-y: auto;
+    overflow-x: hidden !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    float: left;
+    height: 310px;
+  }
+
+  .modal-footer {
+    float: left;
+    width: 100%;
+    height: 70px !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    position: relative;
+    padding-right: 35px;
+
+    .bottom-nav-create-btn {
+      opacity: 1;
+      margin-top: 12.5px;
+      margin-right: 0px;
+    }
+
+    .bottom-nav-create-btn:active {
+      background-color: #05C6EC;
+    }
+
+    .add-url-error-message {
+      position: absolute;
+      width: 50%;
+      left: 24%;
+      top: 26px;
+      font-size: 13px;
+      display: none;
+      color: red;
+      text-align: center;
+    }
+  }
+
+  [data-question] {
+    height: $question-height;
+
+    .question,
+    .answers {
+      display: inline-block;
+      float: left;
+    }
+
+    .question {
+      width: 72%;
+      height: 100%;
+      padding-left: 12px;
+      line-height: $question-height;
+      font-size: 14px;
+      position: relative;
+
+      span {
+        position: absolute;
+        left: 0;
+        top: 4px;
+        font-size: 20px;
+        color: red;
+        display: none;
+      }
+    }
+
+    .answers {
+      width: 28%;
+      height: 100%;
+      font-size: 14px;
+
+      [data-answer] {
+        width: 50%;
+        height: 100%;
+        display: inline-block;
+        float: left;
+
+        .data-answer-btn {
+          width: $answer-btn-height;
+          height: $answer-btn-height;
+          line-height: $answer-btn-height;
+          margin-top: $answer-margin-top;
+          font-size: 13.5px;
+          color: black;
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 50%;
+          background-color: #F1F1F9;
+          -webkit-transition: all 150ms;
+          -moz-transition: all 150ms;
+          -ms-transition: all 150ms;
+          -o-transition: all 150ms;
+          transition: all 150ms;
+          cursor: pointer;
+        }
+
+        .data-answer-btn.selected,
+        .data-answer-btn:hover {
+          background-color: #00A6C9;
+          color: white;
+        }
+
+        .data-answer-btn:active {
+          background-color: #02BADF;
+        }
+      }
+    }
+  }
+
+  .questions-pending {
+    overflow: hidden;
+    height: 0;
+    -webkit-transition: height 0.3s;
+    -moz-transition: height 0.3s;
+    -ms-transition: height 0.3s;
+    -o-transition: height 0.3s;
+    transition: height 0.3s;
+  }
+
+  .questions-pending.expand {
+    height: 136px;
+  }
+
+  .add-implementation-description-container {
+    height: auto;
+    margin-top: 5px;
+    padding-left: 12px;
+    margin-bottom: 13px;
+    float: left;
+
+    .description-question {
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      float: left;
+    }
+
+    textarea {
+      width: 100%;
+      display: block;
+      height: 90px;
+      padding: 6px;
+      font-size: 14px;
+      resize: none;
+      border: 1px solid #cecece;
+      border-radius: 4px;
+      outline: none;
+      box-shadow: none;
+    }
+
+  }
+
+  .add-implementation-title-container {
+    width: 98.5%;
+    height: 65px;
+    padding-left: 12px;
+    float: left;
+
+    .title-text {
+      width: 10%;
+      height: 100%;
+      line-height: 65px;
+      font-size: 14px;
+      float: left;
+      position: relative;
+
+      span {
+        position: absolute;
+        left: -10px;
+        top: 4px;
+        font-size: 20px;
+        color: red;
+        display: none;
+      }
+    }
+
+    .title-input-container {
+      width: 90%;
+      height: 100%;
+      float: left;
+
+      input {
+        width: 100%;
+        line-height: 31px;
+        border-radius: 4px;
+        border: 1px solid #cecece;
+        margin-top: 15px;
+        padding-left: 6px;
+        font-size: 13px;
+      }
+
+    }
+
+  }
+
+  .add-implementation-url-container {
+    width: 98.5%;
+    height: 65px;
+    padding-left: 12px;
+    float: left;
+
+    .url-type {
+      width: 10%;
+      height: 100%;
+      line-height: 65px;
+      font-size: 14px;
+      float: left;
+      position: relative;
+
+      span {
+        position: absolute;
+        left: -10px;
+        top: 4px;
+        font-size: 20px;
+        color: red;
+        display: none;
+      }
+
+    }
+
+    .url-input-container {
+      width: 90%;
+      height: 100%;
+      float: left;
+
+      input {
+        width: 100%;
+        line-height: 31px;
+        border-radius: 4px;
+        border: 1px solid #cecece;
+        margin-top: 15px;
+        padding-left: 6px;
+        font-size: 13px;
+      }
+
+    }
+
+  }
+
+  .add-implementation-integrations-container {
+    width: 104%;
+    padding-left: 12px;
+    margin-left: -4%;
+    float: left;
+
+    .integration-container {
+      margin-top: -7px;
+
+      .logo-container,
+      .irc {
+        width: 42%;
+      }
+
+      #ircNetworkContainer {
+        width: 21.5%;
+      }
+
+      .or {
+        width: 6%;
+        text-align: center;
+      }
+
+      .create-forum {
+        width: 15.5%;
+        text-align: right;
+      }
+    }
+  }
+
+  #addImplementationSpinner {
+    width: auto;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+
+    .sk-circle {
+      margin: 0 auto;
+      top: 70px;
+    }
+  }
+
+  .add-implementation-message {
+    width: 100%;
+    margin-top: 105px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: black;
+    font-size: 17px;
+  }
+
+}
+
+#addImplementationModal.safari {
+
+}
+
+
+// Implementation View
+
+#implementationView {
+  position: relative;
+}
+
+.imps-exist {
+  display: block;
+  width: 93%;
+  margin-left: 3.5%;
+  margin-top: 18px;
+  background-color: #f0f0f8;
+  height: 45px;
+  text-align: center;
+  border: 1px solid #efefef;
+  border-radius: 3px;
+
+  .imps-exist-content {
+    display: inline-block;
+
+    .text {
+      display: inline-block;
+      height: 100%;
+      line-height: 45px;
+      float: left;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .add-implementation-btn-container {
+      display: inline-block;
+      height: 100%;
+      float: left;
+      margin-left: 11px;
+
+      .add-implementation-btn {
+        text-align: center;
+        padding: 4px 8px;
+        margin-top: 9px;
+        color: white;
+        background-color: #00A6C9;
+        border-radius: 4px;
+        display: inline-block;
+        margin-left: auto;
+        font-size: 13px;
+        margin-right: auto;
+        cursor: pointer;
+      }
+
+    }
+
+  }
+
+}
+
+.imp-list-view {
+  width: 93%;
+  margin-bottom: 15px;
+  margin-left: 3.5%;
+  //background-color: #F1F1F9;
+  min-height: 347px;
+  float: left;
+  margin-top: 20px;
+  padding: 0;
+  list-style-type: none;
+  //border-top: 1px solid #DDD;
+
+  &.has-items {
+    margin-top: 0;
+  }
+
+  .implementation-item {
+    display: block;
+    float: left;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #DDD;
+    position: relative;
+
+    .vote-container {
+      display: inline-block;
+      width: 7.3%;
+      max-width: 75px;
+      float: left;
+      height: 100%;
+
+      .imp-vote-count {
+        width: 40px;
+        cursor: pointer;
+        height: 45px;
+        margin-left: auto;
+        margin-right: auto;
+        color: #1d1e22;
+        line-height: 18px;
+        text-align: center;
+        font-size: 15px;
+
+        .fa {
+          font-size: 18.5px;
+        }
+      }
+
+      .imp-vote-count.voted,
+      .imp-vote-count:hover {
+        color: #00A6C9;
+      }
+    }
+
+    .content {
+      display: inline-block;
+      float: left;
+      width: 92.7%;
+
+      .top {
+        height: 30px;
+        margin-top: 15px;
+
+        .title {
+          width: 70%;
+          display: block;
+          height: 100%;
+          line-height: 30px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          a {
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: black;
+            font-family: 'Proxima-Nova-SemiBold';
+          }
+
+          a:hover {
+            text-decoration: underline;
+            color: #00A6C9;;
+          }
+
+        }
+
+        .posted-by {
+          position: absolute;
+          right: 12px;
+          top: 11px;
+        }
+
+        .posted-by > span {
+          display: inline-block;
+          float: right;
+          font-size: 10px;
+          margin-right: 9px;
+          margin-top: 5px;
+          color: #C4C5CA;
+        }
+
+        .posted-by > img {
+          height: 24px;
+          width: 24px;
+          border-radius: 50%;
+          display: inline-block;
+          float: right;
+          line-height: 24px;
+          margin-right: 9px;
+          cursor: pointer;
+        }
+
+      }
+
+      .top.no-description {
+        height: 40px;
+      }
+
+      .top.no-description.no-bottom {
+        height: 55px;
+        margin-top: 25px;
+      }
+
+      .middle {
+        height: auto;
+        padding-right: 20px;
+        font-size: 12.5px;
+        color: #B6B8C0;
+        white-space: pre-line;
+        margin-bottom: 10px;
+        margin-top: 2px;
+
+        &.no-bottom {
+          margin-bottom: 21px;
+        }
+      }
+
+      .bottom {
+        width: 100%;
+        height: 18px;
+        display: block;
+        padding-right: 20px;
+        margin-bottom: 16px;
+
+        .links {
+          display: inline-block;
+          width: 60%;
+          height: 100%;
+          float: left;
+
+          a {
+            float: left;
+            display: inline-block;
+            margin-right: 10px;
+            height: 100%;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: 'Proxima-Nova-SemiBold';
+            font-size: 14px;
+            text-align: center;
+            line-height: 21px;
+            color: black;
+
+            img {
+              display: inline-block;
+              height: 100%;
+              float: left;
+            }
+
+            img.hipchat {
+              height: 85%;
+              margin-top: 2px;
+            }
+
+          }
+
+        }
+
+        .tags {
+          display: inline-block;
+          width: 40%;
+          height: 100%;
+          margin-top: -4px;
+          float: right;
+
+          .imp-tag {
+            float: right;
+            display: inline-block;
+            padding: 3.5px 6.5px;
+            margin-top: 3px;
+            font-size: 10.5px;
+            margin-left: 8px;
+            color: white;
+            border-radius: 4px;
+            cursor: default;
+          }
+
+          .imp-tag.seeking-contribs {
+            background-color: #c4c5ca;
+          }
+
+          .imp-tag.in-progress {
+            background-color: #40C487;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+.no-imps-view {
+  display: block;
+  padding-top: 100px;
+  position: absolute;
+  width: 92.8%;
+  border-top: 1px solid #eee;
+  margin-left: 35px;
+  margin-top: 20px;
+
+  .text {
+    font-size: 15px;
+    color: #9B9BA6;
+    text-align: center;
+  }
+
+  .add-implementation-btn-container {
+    margin-top: 30px;
+    width: 100%;
+    display: block;
+    text-align: center;
+
+    .add-implementation-btn {
+      text-align: center;
+      padding: 6.5px 19px;
+      color: white;
+      background-color: #00A6C9;
+      border-radius: 4px;
+      display: inline-block;
+      margin-left: auto;
+      font-size: 15px;
+      margin-right: auto;
+      cursor: pointer;
+    }
+
+  }
+}

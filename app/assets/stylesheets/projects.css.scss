@@ -1,6 +1,7 @@
 
 $project-minor: white;
 $light-gray: #C4C5CA;
+$post-gray: #B6B8C0;
 
 
 .z-depth-half {
@@ -59,7 +60,9 @@ $light-gray: #C4C5CA;
   position: relative;
 
   .selectize-control.multi {
-    margin-top: 20px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    width: 70%;
 
     .selectize-input {
       border: 1px solid #DDD;
@@ -81,16 +84,6 @@ $light-gray: #C4C5CA;
     }
   }
 
-
-  .selectize-control.multi,
-  input[name="edit-subtitle"] {
-    width: 65%;
-  }
-
-  input[name="edit-title"] {
-    width: 65%;
-  }
-
   input[name="edit-title"],
   input[name="edit-subtitle"] {
     border-radius: 4px;
@@ -101,9 +94,15 @@ $light-gray: #C4C5CA;
     float: left;
   }
 
+  input[name="edit-title"] {
+    width: 100%;
+  }
+
   input[name="edit-subtitle"] {
     float: left;
     margin-bottom: 18px;
+    margin-top: 10px;
+    width: 100%;
   }
 
   .no-title-error,
@@ -174,18 +173,19 @@ $light-gray: #C4C5CA;
   font-size: 30px;
   display: inline-block;
   position: absolute;
-  top: 0;
+  top: 2;
   left: 0;
   margin-top: 2px;
 
   .project-title-span {
-    width: auto;
     display: inline-block;
-    max-width: 74%;
     overflow: hidden;
-    float: left;
     white-space: nowrap;
     text-overflow: ellipsis;
+    position: absolute;
+    left: 31px;
+    top: 0;
+    right: 0;
   }
 
   .star {
@@ -195,7 +195,6 @@ $light-gray: #C4C5CA;
     font-size: 20px;
     float: left;
     margin-top: 7px;
-    margin-right: 11px;
     color: #B2B3B7;
     cursor: pointer;
   }
@@ -222,7 +221,7 @@ $light-gray: #C4C5CA;
 
   .admin-action-container {
     position: absolute;
-    top: 101px;
+    top: 96px;
     right: 9px;
     display: block;
 
@@ -271,7 +270,7 @@ $light-gray: #C4C5CA;
 
   .share-icons-container {
     position: absolute;
-    top: 58px;
+    top: 56px;
     right: 17px;
     display: block;
 
@@ -372,11 +371,13 @@ $light-gray: #C4C5CA;
   background-color: #00B3D7;
 }
 
+.join-btn.up-for-grabs,
+.join-btn.launched,
 .join-btn.contributor {
   background-color: white;
   color: #00A6C9;
   border: 2px solid #00A6C9;
-  line-height: 32px;
+  line-height: 31px;
   border-radius: 6px;
   cursor: default;
 
@@ -385,6 +386,14 @@ $light-gray: #C4C5CA;
     right: 6px;
     font-size: 18px;
     top: 1px;
+  }
+
+  img {
+    display: inline-block;
+    height: 14px;
+    position: relative;
+    right: 6.5px;
+    top: -1px;
   }
 }
 
@@ -484,14 +493,74 @@ $light-gray: #C4C5CA;
 
 .major-info-tag-container {
   width: 72%;
-  height: auto;
-  margin-top: 12px;
+  margin-top: 13px;
+  float: left;
+  height: 31px;
+  margin-bottom: 2px;
+
+  .major-info-domain-tags,
+  .lang-frame-tags {
+    display: inline-block;
+    float: left;
+  }
+
+  .major-info-domain-tags {
+    img {
+      height: 21px;
+      margin-right: 7px;
+      float: left;
+    }
+
+    .domain-tags-content {
+      display: inline-block;
+      float: left;
+      color: $light-gray;
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+
+  .tags-line-break {
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 1px;
+    background-color: rgba(0,0,0,0.15);
+    float: left;
+  }
+
+  .project-lf-tag {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+
+    .fa-circle {
+      font-size: 8.5px;
+      float: left;
+      height: 100%;
+      line-height: 25px;
+    }
+
+    .tag-name {
+      transform: translate3d(0,0,0);
+      -webkit-transform: translate3d(0,0,0);
+      font-size: 11.5px;
+      float: left;
+      height: 100%;
+      font-family: 'Proxima-Nova';
+      line-height: 25px;
+      margin-left: 3px;
+      display: inline-block;
+      overflow-x: hidden;
+    }
+
+  }
 
   .more-project-tags-container {
     display: inline-block;
     position: relative;
-    margin-left: 3px;
-    top: 6px;
+    margin-left: 8px;
+    top: 0px;
 
     .more-tags-count {
       font-size: 11px;
@@ -508,6 +577,13 @@ $light-gray: #C4C5CA;
       }
     }
 
+  }
+
+  .lang-frame-tags {
+    .more-project-tags-container {
+      top: -11.5px;
+      margin-left: 0;
+    }
   }
 }
 
@@ -534,7 +610,7 @@ $light-gray: #C4C5CA;
   height: 30px;
   font-size: 18px;
   line-height: 30px;
-  margin-top: 10px;
+  margin-top: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -545,17 +621,31 @@ $light-gray: #C4C5CA;
 
 .major-info-project-description {
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 12px;
+  float: left;
 
   p {
     font-size: 14px;
     white-space: pre-line;
+    overflow: hidden;
   }
 
   p.none {
     font-style: italic;
     color: $light-gray;
+  }
+
+  .see-more-description {
+    display: none;
+    float: left;
+    color: #00A6C9;
+    cursor: pointer;
+    margin-top: -3px;
+  }
+
+  .see-more-description:hover {
+    text-decoration: underline;
   }
 }
 
@@ -614,17 +704,9 @@ $light-gray: #C4C5CA;
   padding: 8px;
 }
 
-.see-all-description {
-  color: #00A6C9;
-  cursor: pointer;
-}
-
-.see-all-description:hover {
-  color: #00A6C9;
-}
-
 #communicationView {
   width: 100%;
+  float: left;
 }
 
 .communication-tabs-container {
@@ -666,10 +748,25 @@ $light-gray: #C4C5CA;
     color: #00A6C9;
   }
 
-  a[index="0"],
-  a[index="1"],
-  a[index="2"] {
+  a[data-feed="general"],
+  a[data-feed="team"],
+  a[data-feed="implementations"] {
     border-right: 1px solid #CCC;
+  }
+
+  a[data-feed="implementations"] {
+    position: relative;
+
+    i {
+      position: absolute;
+      top: 6px;
+      left: 5px;
+      height: 23px;
+      width: 23px;
+      border-radius: 50%;
+      color: white;
+      background-color: #00A6C9;
+    }
   }
 
 }
@@ -697,7 +794,6 @@ $light-gray: #C4C5CA;
     color: #CECFD2;
   }
 
-
 }
 
 #communicationFeedContainer {
@@ -705,15 +801,12 @@ $light-gray: #C4C5CA;
   margin-top: 10px;
   margin-bottom: 15px;
   margin-left: 3.5%;
-  background-color: #F1F1F9;
+  background-color: #F0F0F8;
   min-height: 300px;
   float: left;
 }
 
-#generalFeedContainerView,
-#suggestionsFeedContainerView,
-#teamFeedContainerView,
-#adminFeedContainerView,
+#containerViewBindPoint,
 .communication-feed-view,
 .communication-feed-list-view {
   width: 100%;
@@ -745,6 +838,38 @@ $light-gray: #C4C5CA;
   display: inline-block;
   position: absolute;
   top: 65px;
+
+  .selectize-control.multi {
+    width: 97%;
+    margin-top: 2px;
+    height: 40px;
+
+    .selectize-input {
+      border: 1px solid #DDD;
+      padding-top: 8px;
+      padding-left: 7px;
+      padding-right: 7px;
+      padding-bottom: 7px;
+
+      .item {
+        border-radius: 6px;
+        background-color: white;
+        position: relative;
+        top: -1px;
+      }
+    }
+
+    .selectize-input.has-items {
+      padding-top: 4px;
+      padding-bottom: 0px;
+    }
+  }
+
+  .selectize-dropdown-content {
+    div.active {
+      background-color: #F1F2FC;
+    }
+  }
 }
 
 #minorJoinFollowContainer {
@@ -869,7 +994,6 @@ $light-gray: #C4C5CA;
   }
 }
 
-
 #evolutionView {
   -webkit-transform: rotatey(-180deg);
   -moz-transform: rotatey(-180deg);
@@ -975,6 +1099,44 @@ $light-gray: #C4C5CA;
 
 .contributors-item-view-pic.admin {
   border: 2px solid #00A6C9;
+}
+
+#minorInfoSeekingContainer {
+  height: 40px;
+  width: 95.75%;
+  float: left;
+  padding-left: 10px;
+  line-height: 40px;
+  border-top: 1px solid #DDD;
+
+  .seeking-icon-container {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #d0d0d9;
+    margin-right: 8px;
+    float: left;
+    margin-top: 6.5px;
+    text-align: center;
+
+    .octicon-search {
+      text-align: center;
+      font-size: 12.5px;
+      position: relative;
+      top: -8px;
+      color: white;
+    }
+  }
+
+  .seeking {
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+  }
+
 }
 
 #minorInfoDateContainer {
@@ -1168,11 +1330,7 @@ $light-gray: #C4C5CA;
   }
 
   .irc-channel-text {
-    cursor: default;
-
-    span {
-      color: #B0B0B5;
-    }
+    color: #B0B0B5;
   }
 
   .fa-check {
@@ -1311,6 +1469,11 @@ $light-gray: #C4C5CA;
   cursor: pointer;
 }
 
+.num-contribs-text.ufg:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
 .send-invites-from-project-page-btn {
   color: #C4C5CA;
   font-size: 12px;
@@ -1417,10 +1580,7 @@ $light-gray: #C4C5CA;
   }
 }
 
-.general-feed-item-container,
-.suggestions-feed-item-container,
-.team-feed-item-container,
-.admin-feed-item-container {
+.feed-item-container {
   width: 100%;
   float: left;
   background-color: white;
@@ -1433,10 +1593,7 @@ $light-gray: #C4C5CA;
   position: relative;
 }
 
-.general-feed-item-container.reply-container-shown,
-.suggestions-feed-item-container.reply-container-shown,
-.team-feed-item-container.reply-container-shown,
-.admin-feed-item-container.reply-container-shown {
+.feed-item-container.reply-container-shown {
   border-bottom: none;
 }
 
@@ -1544,14 +1701,6 @@ $light-gray: #C4C5CA;
   margin-left: 40px;
   padding-left: 0;
   list-style-type: none;
-
-  .general-feed-item-container,
-  .suggestions-feed-item-container,
-  .team-feed-item-container,
-  .admin-feed-item-container {
-    //border-left: 1px solid #DDD;
-  }
-
 }
 
 .comment-reply-container {

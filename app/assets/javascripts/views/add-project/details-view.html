@@ -15,33 +15,36 @@
 
 <!--Description-->
 <div class="add-project-description-container">
-    <textarea name="add-project-description" placeholder="Description" value="{{description}}">{{description}}</textarea>
+    <textarea name="add-project-description" placeholder="Details" value="{{description}}">{{description}}</textarea>
 </div>
 
 <!--Languages and Frameworks-->
 <div class="add-project-langs-frames-container">
-    <div class="add-project-langs-frames-text">What languages/frameworks are involved?</div>{{
+    <div class="add-project-langs-frames-text">What languages/frameworks are {{#launched}}involved?{{/launched}}{{^launched}}you proposing?{{/launched}}</div>{{
     }}<div class="add-project-langs-frames-selection-container">
         <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
     </div>
 </div>
 
-<!--Anon-->
-{{#showAnon}}
-<div class="add-project-anon-container">
-    <div class="add-project-anon-text">Want to post anonymously?</div>{{
-    }}<div class="add-project-anon-choices">
-        <div class="add-project-anon-choice-container">
-            <div id="add-project-anon-yes" name="anon-yes" class="add-project-anon-choice {{#postAnon}}active-anon{{/postAnon}}">Yes</div>
-        </div>{{
-        }}<div class="add-project-anon-choice-container">
-            <div id="add-project-anon-no" name="anon-no" class="add-project-anon-choice {{^postAnon}}active-anon{{/postAnon}}">No</div>
-        </div>
+<!--Domains-->
+<div class="add-project-domains-container">
+    <div class="add-project-domains-text">What domain(s) {{#launched}}do{{/launched}}{{^launched}}will{{/launched}} this project occupy?</div>{{
+    }}<div class="add-project-domains-selection-container">
+        <select id="add-project-domains-selection" placeholder="Domains"></select>
     </div>
 </div>
-{{/showAnon}}
 
-{{#onTheFenceOrLaunchedNoPullFromIdeas}}
+{{#showSeeking}}
+<!--Seeking-->
+<div class="add-project-seeking-container">
+    <div class="add-project-seeking-text">What are you seeking by posting this project?</div>{{
+    }}<div class="add-project-seeking-selection-container">
+        <select id="add-project-seeking-selection" placeholder="Seeking"></select>
+    </div>
+</div>
+{{/showSeeking}}
+
+{{#showRepo}}
 <!--Repo Name-->
 <div class="add-project-repo-name-container">
     <div class="add-project-repo-name-text">What is the name of your Github repo?</div>{{
@@ -61,15 +64,17 @@
         </div>
     </div>
 </div>
+{{/showRepo}}
 
+{{#showLicense}}
 <!--License-->
 <div class="add-project-license-container">
-    <div class="add-project-license-text">What license are you proposing?</div>{{
+    <div class="add-project-license-text">What license does this project have?</div>{{
     }}<div class="add-project-license-selection-container">
         <select id="add-project-license-selection" placeholder="License"></select>
     </div>
 </div>
-{{/onTheFenceOrLaunchedNoPullFromIdeas}}
+{{/showLicense}}
 
 {{#showPrivacy}}
 <!--Privacy-->
@@ -106,7 +111,7 @@
             <img id="slack" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_logo.png"/>
         </div>
         <div class="forum-link-container">
-            <input name="slack" placeholder="Enter Slack team URL" type="text" value="{{slackURL}}"/>
+            <input name="slack" placeholder="Full Slack team URL" type="text" value="{{slackURL}}"/>
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
@@ -117,13 +122,18 @@
             <img id="hipchat" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.png"/>
         </div>
         <div class="forum-link-container">
-            <input name="hipchat" placeholder="Enter HipChat team URL" type="text" value="{{hipChatURL}}"/>
+            <input name="hipchat" placeholder="Full HipChat team URL" type="text" value="{{hipChatURL}}"/>
         </div>
         <div class="or">OR</div>
         <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
     </div>
 </div>
 {{/showIntegrations}}
+
+<div class="loading-repo-view">
+    <div id="loadingRepoSpinner"></div>
+    <div class="loading-repo-message">Fetching Repo Data...</div>
+</div>
 
 {{/hideDetailsView}}
 

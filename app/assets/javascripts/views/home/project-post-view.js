@@ -11,22 +11,21 @@ define(['jquery',
   'backbone-eventbroker',
   'jquery-transit'
 ], function ($,
-             Backbone,
-             _,
-             Project,
-             OSUtil,
-             OSView,
-             AllLangs,
-             UserInfoBubble,
-             MoreDropdown,
-             ProjectPostViewTpl) {
+   Backbone,
+   _,
+   Project,
+   OSUtil,
+   OSView,
+   AllLangs,
+   UserInfoBubble,
+   MoreDropdown,
+   ProjectPostViewTpl) {
   'use strict';
 
   var ProjectPostView = OSView.extend({
 
     postInitialize: function (options) {
       this.tagsExpanded = false;
-      this.MAX_TAGS = 6;
       this.safari = options.safari;
     },
 
@@ -61,11 +60,7 @@ define(['jquery',
       self.$el.find('.vote-master-container').addClass('voted');
 
       var project = new Project();
-      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
-        success: function (data) {
-          Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
-        }
-      });
+      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')});
     },
 
     setData: function (data) {
@@ -89,25 +84,25 @@ define(['jquery',
       this.owner_pic = data.owner_pic;
       this.ownerGHUsername = data.owner_gh_username;
       this.anon = data.anon;
+      this.domains = data.domains || [];
+      this.seeking = data.seeking || [];
+      this.upForGrabs = data.up_for_grabs || false;
+
+      this.MAX_TAGS = 6 - this.domains.length;
     },
 
     hoverOn: function () {
-      var self = this;
-      this.$licenseContainer.css('opacity', '1');
-      this.$privacyContainer.css('opacity', '1');
+      this.$seekingContainer.css('opacity', '1');
       this.$date.css('opacity', '1');
     },
 
     hoverOff: function () {
-      var self = this;
-      this.$licenseContainer.css('opacity', '0');
-      this.$privacyContainer.css('opacity', '0');
+      this.$seekingContainer.css('opacity', '0');
       this.$date.css('opacity', '0');
       this.collapseTags();
     },
 
     showBubble: function () {
-      var self = this;
       if (!this.bubbleShown) {
         this.$el.find('.user-info-bubble').show();
         this.bubbleShown = true;
@@ -115,7 +110,6 @@ define(['jquery',
     },
 
     hideBubble: function () {
-      var self = this;
       if (this.bubbleShown) {
         this.$el.find('.user-info-bubble').hide();
         this.bubbleShown = false;
@@ -147,7 +141,7 @@ define(['jquery',
         Backbone.EventBroker.trigger('pull-project', self.uuid);
       });
 
-      this.$el.find('.tag-container').hover(function () {
+      this.$el.find('.tag-containers').hover(function () {
         self.expandTags();
       }, function () {
       });
@@ -224,7 +218,6 @@ define(['jquery',
 
     addTags: function (namesAndColorsArray) {
       var self = this;
-      this.tagWidths = [];
       var extraTags = [];
       var $div;
 
@@ -309,17 +302,21 @@ define(['jquery',
         hasLicense: !_.isEmpty(self.license),
         requestToJoin: self.privacy === OSUtil.REQUEST_PRIVACY,
         open: self.privacy === OSUtil.OPEN_PRIVACY,
-        upForGrabsType: self.status == OSUtil.PROJECT_TYPES.indexOf('up-for-grabs'),
         searchResult: self.searchResult,
         projectType: self.projectType,
         userPic: self.owner_pic,
         voted: self.voted,
-        hasTags: correctedLangsFramesArray.length > 0
+        hasTags: correctedLangsFramesArray.length > 0,
+        hasDomain: !_.isEmpty(self.domains),
+        domains: self.domains.join(',  '),
+        showContribsCount: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas') && !self.upForGrabs,
+        upForGrabs: self.upForGrabs,
+        hasSeeking: !_.isEmpty(self.seeking),
+        seeking: self.seeking.join(',  ')
       }));
-      
+
       this.trigger('addTags', this);
-      this.$licenseContainer = this.$el.find('.project-post-license');
-      this.$privacyContainer = this.$el.find('.project-post-privacy');
+      this.$seekingContainer = this.$el.find('.post-seeking-container');
       this.$date = this.$el.find('.project-extra-details-container .date');
       this.addListeners();
 

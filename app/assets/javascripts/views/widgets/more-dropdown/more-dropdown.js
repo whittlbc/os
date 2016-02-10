@@ -17,16 +17,22 @@ define(['jquery',
       options = options || {};
       this.interactive = options.interactive;
       this.ITEMS = [];
+      this.deleteEvent = options.deleteEvent;
     },
 
     events: {},
+
+    reset: function () {
+      this.ITEMS = [];
+      this.$list.empty();
+      this.hideDropdown();
+    },
 
     getNumItems: function () {
       return this.ITEMS.length;
     },
 
     populate: function (items) {
-      var self = this;
       this.ITEMS = [];
       this.$list.empty();
       for (var i = 0; i < items.length; i++) {
@@ -60,7 +66,7 @@ define(['jquery',
       this.listenTo(item, 'item:remove', function (name) {
         self.trigger('item:remove');
         self.stripItemAndRepopulate(name);
-        Backbone.EventBroker.trigger('deleteLangFilter', name);
+        Backbone.EventBroker.trigger(this.deleteEvent, name);
       });
     },
 

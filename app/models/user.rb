@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :evolutions
   has_many :suggestions
+  has_many :implementations
 
 
   scope :username_login, -> (username, password) {
@@ -23,6 +24,10 @@ class User < ActiveRecord::Base
 
   def voted_on_comment(comment_id)
     self.upvoted_comments.include?(comment_id)
+  end
+
+  def voted_on_implementation(id)
+    self.upvoted_implementations.include?(id)
   end
 
   def has_pending_request?(project_id, asset)

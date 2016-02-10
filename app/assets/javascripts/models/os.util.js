@@ -11,6 +11,26 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       this.GH_CLIENT_ID = clientID;
     },
 
+    navToIdeas: function () {
+      window.location.hash = '#ideas';
+    },
+
+    navToLaunched: function () {
+      window.location.hash = '#launched';
+    },
+
+    navToProject: function (projectUUID, newTab) {
+      if (newTab){
+        window.open((window.location.origin + '/#projects/' + projectUUID), '_blank');
+      } else {
+        window.location.hash = '#projects/' + projectUUID;
+      }
+    },
+
+    TYPE1: 'ideas',
+
+    TYPE2: 'launched',
+
     IRC_NETWORKS: [
       {
         "id": "ChLame",
@@ -60,20 +80,12 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'hipchat': 2
     },
 
-    LICENSE_COLOR_MAP: {
-      'MIT': '#646464',
-      'GPL': '#9A9A9A',
-      'BSD': '#BBB'
-    },
-
     HOME_PAGE: 'home',
     PROJECT_PAGE: 'project',
 
     LANGS_FILTER_SET: 0,
-    LICENSE_FILTER_SET: 1,
-    CHAT_FILTER_SET: 2,
-
-    NO_USER_PIC: '',
+    DOMAIN_FILTER_SET: 1,
+    SEEKING_FILTER_SET: 2,
 
     SORT_BY_VOTES: 0,
     SORT_BY_TIME: 1,
@@ -82,44 +94,322 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
     OPEN_PRIVACY: 'open',
 
     TYPE_MAP: {
-      'up-for-grabs': 'type1',
-      'on-the-fence': 'type2',
-      'launched': 'type3'
+      'idea': 'type1',
+      'launched': 'type2'
     },
 
     REVERSE_TYPE_MAP: {
-      'type1': 'up-for-grabs',
-      'type2': 'on-the-fence',
-      'type3': 'launched'
+      'type1': 'ideas',
+      'type2': 'launched'
     },
 
-    TYPE_ARRAY: ['type1', 'type2', 'type3'],
+    TYPE_ARRAY: ['type1', 'type2'],
 
     SOURCE_MAP: {
       'gh': 'source1',
-      'scratch': 'source2',
-      'pull-from-ideas': 'source3'
+      'scratch': 'source2'
     },
 
     REVERSE_SOURCE_MAP: {
       'source1': 'gh',
-      'source2': 'scratch',
-      'source3': 'pull-from-ideas'
+      'source2': 'scratch'
     },
 
-    PROJECT_TYPES: ['up-for-grabs', 'on-the-fence', 'launched'],
-    GRAMMATICAL_PROJECT_TYPES: ['Up for Grabs', 'On the Fence', 'Launched'],
+    PROJECT_TYPES: ['ideas', 'launched'],
+    GRAMMATICAL_PROJECT_TYPES: ['Ideas', 'Launched'],
 
-    UP_FOR_GRABS_STATE: '924bcad2-2e31-4522-9157-ca239c6e5b3b',
-    ON_THE_FENCE_STATE: 'ecbc2679-5789-4ce8-aa82-155f4f964d20',
-    LAUNCHED_STATE: 'fc68f489-fa29-4431-a8b0-e2e9f818107e',
-    PROJECT_STATE: 'eb339bbc-d93f-4c21-a9d2-a43dc249d5fc',
+    SOURCE_TYPES: ['gh', 'scratch'],
 
     MY_GH_HEADER_TOKEN: '202171c69b06bbe92b666e1a5e3a9b7981a6fced',
 
     getTimeAgo: function (dateStr) {
       var date = new Date(dateStr);
       return $.timeago(moment.utc(date).utcOffset(date.getTimezoneOffset()).format("MM-DD-YYYY HH:mm Z"));
+    },
+
+    LICENSE_OPTIONS: [
+      {
+        "id": "MIT",
+        "title": "MIT"
+      },
+      {
+        "id": "GPL",
+        "title": "GPL"
+      },
+      {
+        "id": "BSD",
+        "title": "BSD"
+      }
+    ],
+
+    DOMAIN_FILTERS : {
+      "AI": {
+        "id": "AI",
+        "title": "AI"
+      },
+      "Academia": {
+        "id": "Academia",
+        "title": "Academia"
+      },
+      "Android": {
+        "id": "Android",
+        "title": "Android"
+      },
+      "Big Data": {
+        "id": "Big Data",
+        "title": "Big Data"
+      },
+      "Buffers": {
+        "id": "Buffers",
+        "title": "Buffers"
+      },
+      "CLI": {
+        "id": "CLI",
+        "title": "CLI"
+      },
+      "CLoud": {
+        "id": "CLoud",
+        "title": "CLoud"
+      },
+      "CMS": {
+        "id": "CMS",
+        "title": "CMS"
+      },
+      "Code Linters": {
+        "id": "Code Linters",
+        "title": "Code Linters"
+      },
+      "Comedy": {
+        "id": "Comedy",
+        "title": "Comedy"
+      },
+      "Compilers": {
+        "id": "Compilers",
+        "title": "Compilers"
+      },
+      "Compression": {
+        "id": "Compression",
+        "title": "Compression"
+      },
+      "Courses": {
+        "id": "Courses",
+        "title": "Courses"
+      },
+      "Cryptography": {
+        "id": "Cryptography",
+        "title": "Cryptography"
+      },
+      "Data Formats": {
+        "id": "Data Formats",
+        "title": "Data Formats"
+      },
+      "Data Visualization": {
+        "id": "Data Visualization",
+        "title": "Data Visualization"
+      },
+      "Databases": {
+        "id": "Databases",
+        "title": "Databases"
+      },
+      "Deployment": {
+        "id": "Deployment",
+        "title": "Deployment"
+      },
+      "Design Essentials": {
+        "id": "Design Essentials",
+        "title": "Design Essentials"
+      },
+      "Dev Ops": {
+        "id": "Dev Ops",
+        "title": "Dev Ops"
+      },
+      "Dev Tools": {
+        "id": "Dev Tools",
+        "title": "Dev Tools"
+      },
+      "Distributed Computing": {
+        "id": "Distributed Computing",
+        "title": "Distributed Computing"
+      },
+      "Documentation": {
+        "id": "Documentation",
+        "title": "Documentation"
+      },
+      "Editors": {
+        "id": "Editors",
+        "title": "Editors"
+      },
+      "Education": {
+        "id": "Education",
+        "title": "Education"
+      },
+      "Extensions": {
+        "id": "Extensions",
+        "title": "Extensions"
+      },
+      "Frameworks": {
+        "id": "Frameworks",
+        "title": "Frameworks"
+      },
+      "Game Engines": {
+        "id": "Game Engines",
+        "title": "Game Engines"
+      },
+      "Games": {
+        "id": "Games",
+        "title": "Games"
+      },
+      "IDE": {
+        "id": "IDE",
+        "title": "IDE"
+      },
+      "Image Processing": {
+        "id": "Image Processing",
+        "title": "Image Processing"
+      },
+      "iOS": {
+        "id": "iOS",
+        "title": "iOS"
+      },
+      "Languages": {
+        "id": "Languages",
+        "title": "Languages"
+      },
+      "Machine Learning": {
+        "id": "Machine Learning",
+        "title": "Machine Learning"
+      },
+      "Messaging": {
+        "id": "Messaging",
+        "title": "Messaging"
+      },
+      "Mobile": {
+        "id": "Mobile",
+        "title": "Mobile"
+      },
+      "Monitoring": {
+        "id": "Monitoring",
+        "title": "Monitoring"
+      },
+      "Music": {
+        "id": "Music",
+        "title": "Music"
+      },
+      "NLP": {
+        "id": "NLP",
+        "title": "NLP"
+      },
+      "Network": {
+        "id": "Network",
+        "title": "Network"
+      },
+      "NoSQL": {
+        "id": "NoSQL",
+        "title": "NoSQL"
+      },
+      "Operating Systems": {
+        "id": "Operating Systems",
+        "title": "Operating Systems"
+      },
+      "Package Managers": {
+        "id": "Package Managers",
+        "title": "Package Managers"
+      },
+      "Productivity Tools": {
+        "id": "Productivity Tools",
+        "title": "Productivity Tools"
+      },
+      "Protocols": {
+        "id": "Protocols",
+        "title": "Protocols"
+      },
+      "Research": {
+        "id": "Research",
+        "title": "Research"
+      },
+      "SQL": {
+        "id": "SQL",
+        "title": "SQL"
+      },
+      "Science": {
+        "id": "Science",
+        "title": "Science"
+      },
+      "Security": {
+        "id": "Security",
+        "title": "Security"
+      },
+      "Statistics": {
+        "id": "Statistics",
+        "title": "Statistics"
+      },
+      "Streams": {
+        "id": "Streams",
+        "title": "Streams"
+      },
+      "Testing": {
+        "id": "Testing",
+        "title": "Testing"
+      },
+      "Text Processing": {
+        "id": "Text Processing",
+        "title": "Text Processing"
+      },
+      "Tutotials": {
+        "id": "Tutotials",
+        "title": "Tutotials"
+      },
+      "UI": {
+        "id": "UI",
+        "title": "UI"
+      },
+      "UX": {
+        "id": "UX",
+        "title": "UX"
+      },
+      "Video": {
+        "id": "Video",
+        "title": "Video"
+      },
+      "Web": {
+        "id": "Web",
+        "title": "Web"
+      }
+    },
+
+    SEEKING_IDEAS_FILTERS : {
+      "Feedback": {
+        "id": "Feedback",
+        "title": "Feedback"
+      },
+      "Initial Team": {
+        "id": "Initial Team",
+        "title": "Initial Team"
+      }
+    },
+
+    SEEKING_LAUNCHED_FILTERS : {
+      "Contributors": {
+        "id": "Contributors",
+        "title": "Contributors"
+      },
+      "Feedback": {
+        "id": "Feedback",
+        "title": "Feedback"
+      },
+      "New Maintainer": {
+        "id": "New Maintainer",
+        "title": "New Maintainer"
+      },
+      "Users": {
+        "id": "Users",
+        "title": "Users"
+      }
+    },
+
+    SEEKING_TAGS_TO_REMOVE_FOR_STATUS: {
+      0: ['Initial Team'],
+      1: ['Contributors', 'New Maintainer', 'Users']
     },
 
     customMethodMap: {
@@ -227,6 +517,14 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         verb: 'GET',
         action: 'read'
       },
+      'fetchImplementations': {
+        verb: 'GET',
+        action: 'read'
+      },
+      'addImplementation': {
+        verb: 'POST',
+        action: 'create'
+      },
       'commentVote': {
         verb: 'PUT',
         action: 'update'
@@ -302,6 +600,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'fetchGHAppInfo': {
         verb: 'GET',
         action: 'read'
+      },
+      'implementationVote': {
+        verb: 'PUT',
+        action: 'update'
       }
     }
 

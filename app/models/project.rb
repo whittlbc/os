@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
   has_many :comments
   has_many :evolutions
   has_many :pending_requests
+  has_many :implementations
 
   scope :active, -> { where(:is_destroyed => false, :was_pulled => false) }
 
@@ -12,11 +13,9 @@ class Project < ActiveRecord::Base
 
   scope :not_destroyed, -> { where(:is_destroyed => false) }
 
-  scope :up_for_grabs, -> { where(:status => 0) }
+  scope :ideas, -> { where(:status => 0) }
 
-  scope :on_the_fence, -> { where(:status => 1) }
-
-  scope :launched, -> { where(:status => 2) }
+  scope :launched, -> { where(:status => 1) }
 
   def get_owner_gh_username
     if self.is_anon?

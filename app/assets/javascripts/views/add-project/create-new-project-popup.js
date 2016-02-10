@@ -1,7 +1,7 @@
 define(['jquery',
   'backbone',
   'underscore',
-  'views/add-project/select-project-type-view',
+  'views/add-project/select-project-stage-view',
   'views/add-project/select-project-source-view',
   'views/add-project/add-project-details-view',
   'views/add-project/breadcrumb-view',
@@ -37,7 +37,6 @@ define(['jquery',
         'send-invites:updated': 'handleSendInvitesUpdate',
         'license:updated': 'handleLicenseUpdate',
         'privacy:updated': 'handlePrivacyUpdate',
-        'anon:updated': 'handleAnonUpdate',
         'slackURL:updated': 'handleSlackURLUpdate',
         'slackAPIKey:updated': 'handleSlackAPIKeyUpdate',
         'hipChat:updated': 'handleHipChatUpdate',
@@ -48,174 +47,55 @@ define(['jquery',
 
       this.popupContainerHeight = 410;
       this.popupHeight = this.popupContainerHeight - 50;
-
       this.bottomNavDuration = 200;
-
       this.repos = null;
 
       this.slideIndex = 0;
-      this.type1 = OSUtil.REVERSE_TYPE_MAP['type1'];
-      this.type2 = OSUtil.REVERSE_TYPE_MAP['type2'];
-      this.source1 = OSUtil.REVERSE_SOURCE_MAP['source1'];
-      this.source2 = OSUtil.REVERSE_SOURCE_MAP['source2'];
-      this.source3 = OSUtil.REVERSE_SOURCE_MAP['source3'];
+
+      this.stepInfo = {
+        stage: null,
+        source: null,
+        ufg: null
+      };
 
       this.panelMap = {
-        'type-panel': 0,
+        'stage-panel': 0,
         'source-panel': 1,
         'data-panel': 2
       };
-
-      this.masterMap = {
-
-        'selectedType': null,
-
-        // Up for Grabs
-        'type1': {
-          'selectedSource': 'source2',
-          // Scratch
-          'source2': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'anon': false
-          }
-        },
-
-        // On the Fence
-        'type2': {
-          'selectedSource': null,
-          // GH
-          'source1': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          },
-          //Scratch
-          'source2': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          },
-          // Pull from Ideas
-          'source3': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          }
-        },
-
-        //Launched
-        'type3': {
-          'selectedSource': null,
-          // GH
-          'source1': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          },
-          // Scratch
-          'source2': {
-            'title': null,
-            'subtitle': null,
-            'description': null,
-            'langsFrames': null,
-            'repoName': null,
-            'license': null,
-            'privacy': null,
-            'slackURL': null,
-            'slackAPIKey': null,
-            'hipChatURL': null,
-            'irc': null,
-            'sendInvites': null
-          }
-        }
-      };
     },
 
-    resetMasterMap: function (obj) {
-      for (var key in obj) {
-        (typeof(obj[key]) === 'object' && !Array.isArray(obj[key])) ? this.resetMasterMap(obj[key]) : obj[key] = null;
-      }
-
-      // these were set by default in the beginning, so set them again
-      this.masterMap['type1']['selectedSource'] = 'source2';
-      this.masterMap['type1']['source2']['anon'] = false;
-    },
-
-    formatForPullProject: function (uuid) {
-      var self = this;
-      this.projectUUIDToPullFrom = uuid;
-      this.autoSelectPanelsOneAndTwo();
+    stageIsIdea: function () {
+      return this.stepInfo.stage === OSUtil.PROJECT_TYPES[0];
     },
 
     getSelectedSource: function () {
-      var selectedType = this.masterMap['selectedType'];
-      if (selectedType == null) {
-        return null;
-      }
-      var typeObj = this.masterMap[selectedType];
-      if (typeObj == null) {
-        return null;
-      }
-      var selectedSource = typeObj['selectedSource'];
-      return (selectedSource != null) ? selectedSource : null;
+      //var selectedType = this.masterMap['selectedType'];
+      //if (selectedType == null) {
+      //  return null;
+      //}
+      //var typeObj = this.masterMap[selectedType];
+      //if (typeObj == null) {
+      //  return null;
+      //}
+      //var selectedSource = typeObj['selectedSource'];
+      //return (selectedSource != null) ? selectedSource : null;
     },
 
     getSelectedSourceObj: function () {
-      var selectedType = this.masterMap['selectedType'];
-      if (selectedType == null) {
-        return null;
-      }
-      var typeObj = this.masterMap[selectedType];
-      if (typeObj == null) {
-        return null;
-      }
-      var selectedSource = typeObj['selectedSource'];
-      if (selectedSource == null) {
-        return null;
-      }
-      return typeObj[selectedSource];
+      //var selectedType = this.masterMap['selectedType'];
+      //if (selectedType == null) {
+      //  return null;
+      //}
+      //var typeObj = this.masterMap[selectedType];
+      //if (typeObj == null) {
+      //  return null;
+      //}
+      //var selectedSource = typeObj['selectedSource'];
+      //if (selectedSource == null) {
+      //  return null;
+      //}
+      //return typeObj[selectedSource];
     },
 
     handleTitleUpdate: function (title) {
@@ -271,13 +151,6 @@ define(['jquery',
       var sourceObj = this.getSelectedSourceObj();
       if (sourceObj != null) {
         sourceObj['privacy'] = privacy;
-      }
-    },
-
-    handleAnonUpdate: function (anon) {
-      var sourceObj = this.getSelectedSourceObj();
-      if (sourceObj != null) {
-        sourceObj['anon'] = anon;
       }
     },
 
@@ -342,11 +215,18 @@ define(['jquery',
     createProject: function () {
       var self = this;
       this.createBtnClickCount = 0;
+
       this.hideSlideOutConfirmCreateMessage();
+
       this.hideFooter();
+
       this.newProjectData = this.panel3.detailsView.getData();
+
       this.renderBreadCrumbView(true);
-      this.panel3.render({showCreatingProjectView: true});
+
+      this.panel3.render({ showCreatingProjectView: true });
+
+      var newProjectStatus = OSUtil.PROJECT_TYPES.indexOf(this.panel1.selectedStage);
 
       var projectData = {
         user_uuid: this.currentUser.get('uuid'),
@@ -354,14 +234,16 @@ define(['jquery',
         subtitle: this.newProjectData.subtitle,
         repo_name: this.newProjectData.repoName,
         description: this.newProjectData.description,
-        license: this.newProjectData.license ? [this.newProjectData.license] : [],
-        status: OSUtil.TYPE_ARRAY.indexOf(this.masterMap['selectedType']),
         langs_and_frames: this.newProjectData.langsFrames,
-        anon: this.newProjectData.anon,
-        privacy: (this.newProjectData.privacy && this.status != 0) ? [this.newProjectData.privacy] : [],
+        domains: this.newProjectData.domains,
+        seeking: this.newProjectData.seeking,
+        license: this.newProjectData.license,
+        status: newProjectStatus,
+        privacy: this.newProjectData.privacy,
         slackURL: this.newProjectData.slackURL,
         hipChatURL: this.newProjectData.hipChatURL,
-        irc: this.newProjectData.irc
+        irc: this.newProjectData.irc,
+        up_for_grabs: newProjectStatus == 0 && this.panel2.upForGrabs === true
       };
 
       this.disableAddProjectBtn();
@@ -369,10 +251,10 @@ define(['jquery',
       var project = new Project();
       project.create(projectData, {
         success: function (project) {
-          console.log('SUCCESSFULLY CREATED PROJECT!');
-          self.showProjectCreationSuccess(project.uuid);
+          setTimeout(function () {
+            self.showProjectCreationSuccess(project.uuid);
+          }, 1000);
         }, error: function () {
-          console.log('ERROR CREATING PROJECT');
           self.showProjectCreationError();
         }
       });
@@ -395,19 +277,18 @@ define(['jquery',
 
     showProjectCreationSuccess: function (newProjectUUID) {
       var self = this;
-      if (this.masterMap[this.masterMap['selectedType']]['selectedSource'] == OSUtil.SOURCE_MAP['pull-from-ideas']) {
-        this.inactivateOldUpForGrabsProject();
+
+      Backbone.EventBroker.trigger('create-project-modal:hide');
+
+      if (self.newProjectData.sendInvites === true) {
+        Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
       }
+
+      OSUtil.navToProject(newProjectUUID);
+
       setTimeout(function () {
-        Backbone.EventBroker.trigger('create-project-modal:hide');
-        if (self.newProjectData.sendInvites === true) {
-          Backbone.EventBroker.trigger('invite-gh-contributors', newProjectUUID);
-        }
-        window.location.hash = '#projects/' + newProjectUUID;
-        setTimeout(function () {
-          self.resetPopup();
-        }, 200);
-      }, 1000);
+        self.resetPopup();
+      }, 200);
     },
 
     showProjectCreationError: function () {
@@ -428,7 +309,6 @@ define(['jquery',
       this.slideIndex = 0;
       this.showFooter();
       this.enableAddProjectBtn();
-      this.resetMasterMap(this.masterMap);
       this.panel1.setUpForGrabsToggle(false);
       this.panel1.setOnlyOnTheFenceToggle(false);
       this.renderPanels(true);
@@ -518,7 +398,6 @@ define(['jquery',
     },
 
     setSizeForPopup: function () {
-      var self = this;
       this.$el.find('#createNewProjectModalBody').height(this.popupContainerHeight);
       this.$popup.height(this.popupHeight);
       this.panel1.$el.height(this.popupHeight);
@@ -529,76 +408,82 @@ define(['jquery',
     },
 
     checkIfProjectSourceSelected: function () {
-      var sourceSelected = 0;
-      if (this.masterMap['selectedType'] != null && this.masterMap[this.masterMap['selectedType']]['selectedSource'] != null) {
-        sourceSelected = 1;
-      }
-      return sourceSelected;
+      return this.stageIsIdea() ? (this.stepInfo.ufg != null) : !!this.stepInfo.source
     },
 
-    // will return 'source1', 'source2', or 'source3'
-    getSourceForType: function (type) {
-      return this.masterMap[type]['selectedSource'];
-    },
 
-    handleTypeSelected: function (type) {
-      var self = this;
-      var options = {};
-      if (this.masterMap['selectedType'] != OSUtil.TYPE_MAP[type] && this.masterMap['selectedType'] != null) {
-        var switchedTypes = true;
-      }
-      this.masterMap['selectedType'] = OSUtil.TYPE_MAP[type];
-      this.panel3.passType(OSUtil.TYPE_MAP[type]);
-      if (type == this.type1) {
-        // if it's type "up-for-grabs", the source is already known --> 'scratch',
-        // so skip step 2 and go straight to step 3
-        this.panel2.selectedSource = this.masterMap['type1']['selectedSource'];
-        this.panel2.render({upForGrabsType: true});
-        this.handleSourceSelected(this.source2);
-        return;
-      }
-      type == this.type2 ? options.showPullFromIdeas = true : options.showPullFromIdeas = false;
+    handleStageSelected: function (stage) {
+      this.stageChanged = (this.stepInfo.stage != stage);
+
+      this.stepInfo.stage = stage;
+
+      this.panel3.passStage(stage);
+
+      this.panel2.render({ selectedStage: stage });
+
+      this.breadCrumbView.setStep2Text(this.stageIsIdea() ? 'Up for Grabs' : 'Source');
+
       this.slideIndex = 1;
-      var selectedSource = this.getSourceForType(OSUtil.TYPE_MAP[type]);
-      options.selectedSource = (selectedSource == null) ? null : selectedSource;
-      this.panel2.render(options);
-      this.owl.goTo(this.slideIndex);
-      this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
-      //this.showModalFooterTopBorder();
-      this.renderBreadCrumbView();
 
-      // if the user switched types and a source is already selected, re-render panel 3 to ensure
-      // it will show the correct UI if the user decides to nav with the next btn
-      if (switchedTypes && selectedSource != null) {
-        var options = {
-          selectedSource: selectedSource,
-          projectData: this.getSelectedSourceObj()
-        };
-        if (OSUtil.REVERSE_SOURCE_MAP[selectedSource] == this.source1 && this.repos == null) {
-          options.showReposLoadingView = true;
-          this.getGHRepos();
-        }
-        this.panel3.render(options);
-      }
+      this.owl.goTo(this.slideIndex);
+
+      this.toggleBottomNav(1, this.checkIfProjectSourceSelected());
+
+      this.renderBreadCrumbView();
     },
 
     handleSourceSelected: function (source) {
-      var self = this;
-      this.slideIndex = 2;
-      this.masterMap[this.masterMap['selectedType']]['selectedSource'] = OSUtil.SOURCE_MAP[source];
-      var options = {
-        selectedSource: OSUtil.SOURCE_MAP[source],
-        projectData: this.getSelectedSourceObj()
-      };
-      if (source == this.source1 && this.repos == null) {
+      var changed = false;
+
+      if (this.stepInfo.source != source) {
+        this.stepInfo.source = source;
+        changed = true;
+      }
+
+      var options = { selectedSource: source };
+
+      if (source == OSUtil.SOURCE_TYPES[0] && this.repos == null) {
         options.showReposLoadingView = true;
         this.getGHRepos();
       }
-      this.panel3.render(options);
+
+      this.continueWithPanel2Selection(options, changed);
+    },
+
+    handleUFGSelected: function (bool) {
+      var changed = false;
+
+      if (this.stepInfo.ufg != bool) {
+        this.stepInfo.ufg = bool;
+        changed = true;
+      }
+
+      this.continueWithPanel2Selection({
+        upForGrabs: bool
+      }, changed);
+    },
+
+    continueWithPanel2Selection: function (options, changed) {
+      if (changed) {
+        this.panel3.render(options);
+      }
+
+      this.slideIndex = 2;
+
       this.owl.goTo(this.slideIndex);
+
       this.toggleBottomNav(1, 0);
-      this.showCreateBtn();
+
+      if (!options.showReposLoadingView) {
+        this.showCreateBtn();
+      }
+
       this.renderBreadCrumbView();
+
+      if (this.stepInfo.source === OSUtil.SOURCE_TYPES[1]) {
+        this.panel3.nullifySelectedRepo();
+      }
+
     },
 
     showCreateBtn: function () {
@@ -649,14 +534,25 @@ define(['jquery',
 
     addPanelListeners: function () {
       var self = this;
-      this.listenTo(this.panel1, 'type:selected', function (type) {
-        self.handleTypeSelected(type);
+
+      this.listenTo(this.panel1, 'stage:selected', function (stage) {
+        self.handleStageSelected(stage);
       });
+
       this.listenTo(this.panel2, 'source:selected', function (source) {
         self.handleSourceSelected(source);
       });
+
+      this.listenTo(this.panel2, 'ufg:selected', function (ufg) {
+        self.handleUFGSelected(ufg);
+      });
+
       this.listenTo(this.panel3, 'repo:getDetails', function (name) {
         self.getRepoDetails(name);
+      });
+
+      this.listenTo(this.panel3, 'show-create-btn', function () {
+        self.showCreateBtn();
       });
     },
 
@@ -673,6 +569,9 @@ define(['jquery',
       this.currentUser.getRepoDetails({ repo_name: repoName }, {
         success: function (data) {
           self.handleRepoDetails(data);
+        },
+        error: function () {
+          self.panel3.detailsView.hideReposLoadingView();
         }
       });
     },
@@ -729,11 +628,11 @@ define(['jquery',
 
     renderBreadCrumbView: function (creatingProject) {
       this.breadCrumbView.render({
-        breadCrumb1Clickable: this.masterMap['selectedType'] != null,
-        breadCrumb2Clickable: this.masterMap['selectedType'] != null,
-        breadCrumb3Clickable: !!this.checkIfProjectSourceSelected(),
-        breadCrumb1Done: this.masterMap['selectedType'] != null,
-        breadCrumb2Done: this.masterMap['selectedType'] != null && this.masterMap[this.masterMap['selectedType']]['selectedSource'] != null,
+        breadCrumb1Clickable: !!this.stepInfo.stage,
+        breadCrumb2Clickable: !!this.stepInfo.stage,
+        breadCrumb3Clickable: this.checkIfProjectSourceSelected(),
+        breadCrumb1Done: !!this.stepInfo.stage,
+        breadCrumb2Done: !!this.stepInfo.stage && !!this.stepInfo.source,
         breadCrumb3Done: creatingProject, // set this later once you have data to use,
         breadCrumb1Current: this.slideIndex == 0,
         breadCrumb2Current: this.slideIndex == 1,
@@ -741,19 +640,7 @@ define(['jquery',
       });
     },
 
-    autoSelectPanelsOneAndTwo: function () {
-      var self = this;
-      this.panel1.setOnlyOnTheFenceToggle(true);
-      this.panel1.autoSelectType();
-      this.handleTypeSelected(this.type2);
-      this.panel2.setOnlyPullFromIdeasToggle(true);
-      this.panel2.autoSelectSource();
-      this.handleSourceSelected(this.source3);
-      this.panel3.autoSelectUpForGrabsProject(this.projectUUIDToPullFrom);
-    },
-
     renderPanels: function (ignoreListeners) {
-      var self = this;
       this.panel1 = new SelectProjectTypeView({
         el: '#newProjectPanel1'
       });
@@ -777,10 +664,10 @@ define(['jquery',
       }
     },
 
-    render: function () {
-      var self = this;
-      this.$el.html(IndexViewTpl());
-      this.$popup = this.$el.find("#popup-owl");
+    renderPopup: function () {
+
+      this.$popup = this.$el.find('#popup-owl');
+
       this.$popup.owlCarousel({
         autoPlay: false,
         rewindNav: false,
@@ -797,10 +684,19 @@ define(['jquery',
       });
 
       this.owl = this.$popup.data('owlCarousel');
+    },
+
+    render: function () {
+      var self = this;
+
+      this.$el.html(IndexViewTpl());
+
+      this.renderPopup();
 
       this.breadCrumbView = new BreadCrumbView({
-        el: '#createProjectBreadCrumbView'
+        el: this.$el.find('#createProjectBreadCrumbView')
       });
+
       this.listenTo(this.breadCrumbView, 'breadCrumbNav', function (id) {
         self.handleBreadCrumbNav(id);
       });

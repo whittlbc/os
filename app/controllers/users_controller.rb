@@ -88,7 +88,7 @@ class UsersController < ApplicationController
           :subtitle => project.subtitle,
           :status => project.status
         }
-      }.sort_by { |p| p[:title].try(:downcase) }
+      }
 
       contributing_project_ids = Contributor.where(:user_id => user.id).map(&:project_id)
       just_contributing_projects = []
@@ -105,9 +105,10 @@ class UsersController < ApplicationController
           })
         end
       }
-      just_contributing_projects = just_contributing_projects.sort_by { |p| p[:title].try(:downcase) }
 
-      render :json => {:own => my_projects, :contribute => just_contributing_projects}
+      all_projects = (my_projects + just_contributing_projects).sort_by { |p| p[:title].try(:downcase) }
+
+      render :json => all_projects
     else
       render :json => {:error => 'Tried to get your projects, but user was nil'}, :status => 500
     end

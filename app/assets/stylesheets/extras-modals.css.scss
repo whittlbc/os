@@ -113,7 +113,7 @@ $not-quite-black: #1D1E22;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-    height: 314px;
+    height: 263px;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -121,6 +121,8 @@ $not-quite-black: #1D1E22;
       font-size: 14px;
 
       .rule {
+        margin-top: 15px;
+        float: left;
 
         .rule-text {
           width: 100%;
@@ -140,6 +142,19 @@ $not-quite-black: #1D1E22;
             float: left;
             padding-left: 10px;
             max-width: 97%;
+
+            .link-to-suggestions {
+              color: #00A6C9;
+              cursor: pointer;
+            }
+
+            .link-to-suggestions:hover {
+              text-decoration: underline;
+            }
+
+            .rule-bold {
+              font-family: 'Proxima-Nova-SemiBold';
+            }
           }
 
         }
@@ -229,16 +244,10 @@ $not-quite-black: #1D1E22;
       }
 
       .rule.first {
-        margin-bottom: 5px;
-      }
-
-      .rule.not-first {
         margin-top: 11px;
-        float: left;
       }
 
     }
-
 
   }
 
@@ -252,7 +261,7 @@ $not-quite-black: #1D1E22;
     color: white;
     cursor: pointer;
     text-align: center;
-    margin-top: 13px;
+    margin-top: 9px;
     margin-left: 247px;
     margin-bottom: 13px;
 

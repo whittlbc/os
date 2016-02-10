@@ -1,145 +1,133 @@
 define(['jquery',
-    'backbone',
-    'underscore',
-    'views/projects/major/communication/general/general-feed-container-view',
-    'views/projects/major/communication/suggestions/suggestions-feed-container-view',
-    'views/projects/major/communication/team/team-feed-container-view',
-    'views/projects/major/communication/admin/admin-feed-container-view',
-    'stache!views/projects/major/communication/communication-panels-view',
-    'backbone-eventbroker'
+  'backbone',
+  'underscore',
+  'models/session',
+  'views/projects/major/implementation/implementation-view',
+  'views/projects/major/communication/communication-feed-container-view',
+  'stache!views/projects/major/communication/communication-panels-view',
+  'backbone-eventbroker'
 ], function ($,
-     Backbone,
-     _,
-     GeneralFeedContainerView,
-     SuggestionsFeedContainerView,
-     TeamFeedContainerView,
-     AdminFeedContainerView,
-     CommunicationPanelsViewTpl) {
-    'use strict';
+   Backbone,
+   _,
+   Session,
+   ImplementationView,
+   CommunicationFeedContainerView,
+   CommunicationPanelsViewTpl) {
+  'use strict';
 
-    var CommunicationPanelsView = Backbone.View.extend({
+  var CommunicationPanelsView = Backbone.View.extend({
 
-        initialize: function () {
-        },
+    initialize: function (options) {
+      options = options || {};
 
-        events: {
-            'click .add-comment-btn': 'checkIfUserAuthedOnPostClick',
-            'click .comment-textarea': 'checkIfUserAuthedOnInputClick'
-        },
+      this.ufg = options.ufg;
+      this.showComments = !this.ufg;
+    },
 
-        checkIfUserAuthedOnPostClick: function () {
-            Backbone.EventBroker.trigger('post-comment:click', this);
-        },
+    events: {
+      'click .add-comment-btn': 'checkIfUserAuthedOnPostClick',
+      'click .comment-textarea': 'checkIfUserAuthedOnInputClick'
+    },
 
-        checkIfUserAuthedOnInputClick: function () {
-            Backbone.EventBroker.trigger('comment-input:click', this);
-        },
+    checkIfUserAuthedOnPostClick: function () {
+      Backbone.EventBroker.trigger('post-comment:click', this);
+    },
 
-        handleAddComment: function () {
-            var self = this;
-            var $textarea = this.$el.find('.comment-textarea');
-            var text = $textarea.val();
-            var data = {
-                text: text,
-                feed: this.activeFeedIndex,
-                parent_id: null
-            };
-            Backbone.EventBroker.trigger('comment:add', data);
-            var text = $textarea.val('');
-            $textarea.css('height', '31px');
-        },
+    checkIfUserAuthedOnInputClick: function () {
+      Backbone.EventBroker.trigger('comment-input:click', this);
+    },
 
-        showNewComment: function (data) {
-          this.activePanel.passComments(data);
-        },
+    handleAddComment: function () {
+      var self = this;
+      var $textarea = this.$el.find('.comment-textarea');
+      var text = $textarea.val();
 
-        passComments: function (data) {
-          this.activePanel.passComments(data);
-        },
+      var data = {
+        text: text,
+        parent_id: null
+      };
 
-        scrollToNewComment: function () {
-            var self = this;
-            var feedContainerHeight = this.$el.find('#communicationFeedContainer').height();
-            $('html, body').animate({scrollTop: feedContainerHeight}, {duration: 500, specialEasing: 'easeInOutCubic'});
-        },
+      Backbone.EventBroker.trigger('comment:add', data);
 
-        addListeners: function () {
-            var self = this;
+      $textarea.val('');
+      $textarea.css('height', '31px');
+      $textarea.blur();
 
-            // Auto-resize comment textarea
-            this.$el.find('.comment-textarea').on('keyup input', function() {
-                $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);
-            });
-        },
+      this.shouldSubmitComment = false;
+    },
 
-        render: function (options) {
-            var self = this;
-            var generalActive;
+    showNewComment: function (data) {
+      this.feedContainerView.passComments(data);
+    },
 
-            if (options && options.hasOwnProperty('activePanel')) {
-                generalActive = options.activePanel == 0;
-            } else {
-                generalActive = true;
-            }
+    passComments: function (data) {
+      if (!this.showComments) {
+        this.showComments = true;
+        this.render();
+      }
 
-            this.$el.html(CommunicationPanelsViewTpl({
-                generalActive: generalActive,
-                suggestionsActive: options && options.activePanel == 1,
-                teamActive: options && options.activePanel == 2,
-                adminActive: options && options.activePanel == 3
-            }));
+      this.feedContainerView.passComments(data);
+    },
 
-            this.generalFeedContainerView = new GeneralFeedContainerView({
-                el: '#generalFeedContainerView'
-            });
+    passImplementations: function (data) {
+      if (this.showComments) {
+        this.showComments = false;
+        this.render();
+      }
 
-            this.suggestionsFeedContainerView = new SuggestionsFeedContainerView({
-                el: '#suggestionsFeedContainerView'
-            });
+      this.implementationView.populate(data);
+    },
 
-            this.teamFeedContainerView = new TeamFeedContainerView({
-                el: '#teamFeedContainerView'
-            });
+    controlEnter: function (e) {
+      return e.keyCode == 13 && ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey));
+    },
 
-            this.adminFeedContainerView = new AdminFeedContainerView({
-                el: '#adminFeedContainerView'
-            });
+    addListeners: function () {
+      var self = this;
+      var $commentArea = this.$el.find('.comment-textarea');
 
-            if (options && options.hasOwnProperty('activePanel')) {
-
-                this.activeFeedIndex = options.activePanel;
-
-                switch (options.activePanel) {
-                    case 0:
-                        this.generalFeedContainerView.render();
-                        this.activePanel = this.generalFeedContainerView;
-                        break;
-                    case 1:
-                        this.suggestionsFeedContainerView.render();
-                        this.activePanel = this.suggestionsFeedContainerView;
-                        break;
-                    case 2:
-                        this.teamFeedContainerView.render();
-                        this.activePanel = this.teamFeedContainerView;
-                        break;
-                    case 3:
-                        this.adminFeedContainerView.render();
-                        this.activePanel = this.adminFeedContainerView;
-                        break;
-                    default:
-                        this.generalFeedContainerView.render();
-                        this.activePanel = this.generalFeedContainerView;
-                }
-            } else {
-                this.activeFeedIndex = 0;
-                this.activePanel = this.generalFeedContainerView;
-                this.generalFeedContainerView.render();
-            }
-
-            this.addListeners();
+      $commentArea.keydown(function (e) {
+        if (self.controlEnter(e)) {
+          self.shouldSubmitComment = true;
         }
-    });
+      });
 
-    return CommunicationPanelsView;
+      // Auto-resize reply textarea
+      $commentArea.on('keyup input', function (e) {
+        if (self.shouldSubmitComment) {
+          e.preventDefault();
+          self.handleAddComment();
+          return;
+        }
+
+        $(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);
+      });
+    },
+
+    render: function () {
+
+      this.$el.html(CommunicationPanelsViewTpl({
+        showComments: this.showComments
+      }));
+
+      this.feedContainerView = new CommunicationFeedContainerView({
+        el: this.$el.find('#containerViewBindPoint')
+      });
+
+      this.feedContainerView.render();
+
+      if (!this.showComments) {
+        this.implementationView = new ImplementationView({
+          el: this.$el.find('#implementationView')
+        });
+
+        this.implementationView.render();
+      }
+
+      this.addListeners();
+    }
+  });
+
+  return CommunicationPanelsView;
 
 });

@@ -35,6 +35,14 @@ define(['jquery',
       'click #hipchatEllipsis': 'toggleHipChatPopover'
     },
 
+    isIdea: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('ideas');
+    },
+
+    isLaunched: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('launched');
+    },
+
     toggleSlackPopover: function (e) {
       e.stopPropagation();
       this.hipchatPopover.$el.hide();
@@ -52,8 +60,10 @@ define(['jquery',
       this.hipchatPopover.$el.hide()
     },
 
-    showContribsModal: function () {
-      Backbone.EventBroker.trigger('contribs-modal:show');
+    showContribsModal: function (e) {
+      if (!$(e.currentTarget).hasClass('ufg')) {
+        Backbone.EventBroker.trigger('contribs-modal:show');
+      }
     },
 
     showSendInvitesModal: function () {
@@ -97,19 +107,27 @@ define(['jquery',
       var data = {};
 
       if (!$('.project-body').hasClass('up-for-grabs-edit')) {
-        var licenseVal = this.$el.find('#licenseTypeSelection').val();
-        data.license = (licenseVal === 'none') ? [] : [licenseVal];
 
-        data.repo_name = this.$el.find('[name="repo-name"]').val();
+        if (this.isLaunched()) {
+          var licenseVal = this.$el.find('#licenseTypeSelection').val();
+          data.license = (licenseVal === 'none') ? [] : [licenseVal];
+          data.repo_name = this.$el.find('[name="repo-name"]').val();
+        }
 
-        data.integrations = {
-          slack: this.$el.find('[name="edit-slack"]').val(),
-          hipchat: this.$el.find('[name="edit-hipchat"]').val(),
-          irc: {
-            channel: this.$el.find('[name="edit-irc"]').val(),
-            network: this.irc.network
-          }
-        };
+        if (this.isLaunched() || (this.isIdea() && !this.upForGrabs)) {
+          data.integrations = {
+            slack: this.$el.find('[name="edit-slack"]').val(),
+            hipchat: this.$el.find('[name="edit-hipchat"]').val(),
+            irc: {
+              channel: this.$el.find('[name="edit-irc"]').val(),
+              network: this.irc.network
+            }
+          };
+        }
+
+        if (!this.upForGrabs) {
+          data.seeking = this.seeking;
+        }
       }
 
       return data;
@@ -153,6 +171,70 @@ define(['jquery',
       }
     },
 
+    getSeekingOptions: function () {
+      var options = [];
+      var map = this.isIdea() ? OSUtil.SEEKING_IDEAS_FILTERS : OSUtil.SEEKING_LAUNCHED_FILTERS;
+
+      for (var key in map) {
+        options.push(map[key]);
+      }
+
+      return options;
+    },
+
+    initSeekingDropdown: function (seeking) {
+      var self = this;
+      var options = {
+        theme: 'links',
+        maxItems: null,
+        valueField: 'id',
+        searchField: 'title',
+        options: this.getSeekingOptions(),
+        onBlur: function () {
+          self.seeking = self.seekingSelectize.getValue();
+        },
+        selectOnTab: false,
+        render: {
+          option: function (data, escape) {
+            return '<div class="option title">' + escape(data.title) + '</div>';
+          },
+          item: function (data, escape) {
+            return '<div class="item">' + escape(data.title) + '</div>';
+          }
+        }
+      };
+
+      var $seekingSelect = this.$el.find('#editSeeking').selectize(options);
+      var seekingSelectize = $seekingSelect[0].selectize;
+      this.seekingSelectize = seekingSelectize;
+
+      this.seekingSelectize.on('item_add', function (value, $item) {
+        $item.css('color', '#9797A5');
+        $item.css('border', '2px solid #9797A5');
+        self.seeking = self.seekingSelectize.getValue();
+      });
+
+      this.seekingSelectize.on('item_remove', function () {
+        self.seeking = self.seekingSelectize.getValue();
+      });
+
+      if (!_.isEmpty(seeking)) {
+        for (var i = 0; i < seeking.length; i++) {
+          this.seekingSelectize.addItem(seeking[i]);
+        }
+      }
+
+      this.seeking = this.seekingSelectize.getValue();
+    },
+
+    checkIfNeedToShowSeekingTooltip: function () {
+      var $seeking = this.$el.find('.seeking');
+      // if text is overflowing, enable the tooltip
+      if ($seeking[0].scrollWidth > $seeking.innerWidth()) {
+        $seeking.tooltip();
+      }
+    },
+
     render: function (options) {
       options = options || {};
       var self = this;
@@ -168,50 +250,64 @@ define(['jquery',
       var hipChatObj = null;
       var ircObj = null;
 
+      this.status = options.status;
+      this.upForGrabs = options.up_for_grabs;
+
       // project is NOT an "Up for Grabs" type
-      if (options.status != 0) {
+
+      if (this.isLaunched()) {
         showRepoName = true;
         showLicense = true;
         repoName = (options.owner_gh_username && options.repo_name) ? 'github.com/' + options.owner_gh_username + '/' + options.repo_name : null;
+        this.repoURL = 'https://' + repoName;
         license = (!_.isEmpty(options.license) && Array.isArray(options.license)) ? options.license[0] : null;
-
-        if (Array.isArray(options.integrations)) {
-          for (var i = 0; i < options.integrations.length; i++) {
-            showIntegrations = true;
-            if (options.integrations[i].service == 'Slack') {
-              hasSlack = true;
-              slackObj = options.integrations[i];
-            } else if (options.integrations[i].service == 'HipChat') {
-              hasHipChat = true;
-              hipChatObj = options.integrations[i];
-            } else if (options.integrations[i].service == 'IRC') {
-              hasIRC = true;
-              ircObj = options.integrations[i].irc;
-            }
-          }
-        }
       }
 
-      this.repoURL = 'https://' + repoName;
+      if (!this.upForGrabs) {
+        var integrations = options.integrations || [];
+
+        _.each(integrations, function (integration) {
+          showIntegrations = true;
+
+          if (integration.service == 'Slack') {
+            hasSlack = true;
+            slackObj = integration;
+          } else if (integration.service == 'HipChat') {
+            hasHipChat = true;
+            hipChatObj = integration;
+          } else if (integration.service == 'IRC') {
+            hasIRC = true;
+            ircObj = integration.irc;
+          }
+        });
+      }
 
       if (options.editMode) {
-        showRepoName = true;
-        showLicense = true;
-        showIntegrations = true;
+
+        if (!this.upForGrabs) {
+          showIntegrations = true;
+        }
+
         hasSlack = hasHipChat = hasIRC = true;
+
         slackObj = slackObj || {
-            url: ''
-          };
+          url: ''
+        };
+
         hipChatObj = hipChatObj || {
-            url: ''
-          };
+          url: ''
+        };
+
         ircObj = ircObj || {
-            channel: '',
-            network: ''
-          };
+          channel: '',
+          network: ''
+        };
       }
 
       this.$el.html(MinorInfoViewTpl({
+        showSeekingDuringEdit: !this.upForGrabs,
+        showSeekingNormally: !this.upForGrabs && !_.isEmpty(options.seeking),
+        seeking: (options.seeking || []).join(', '),
         postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
         showRepoName: showRepoName,
         repoName: repoName,
@@ -231,6 +327,7 @@ define(['jquery',
         ircChannel: hasIRC ? ircObj.channel : null,
         hasIRCNetwork: hasIRC && ircObj.network,
         ircNetwork: hasIRC ? ircObj.network : null,
+        ircURL: hasIRC ? 'irc://' + ircObj.channel + '@' + ircObj.network : null,
         showLicense: showLicense,
         license: license,
         licenseSpecified: license != null,
@@ -240,6 +337,7 @@ define(['jquery',
         hipchatAccepted: options.is_hipchat_member,
         slackRequestSent: options.pending_slack_request,
         hipchatRequestSent: options.pending_hipchat_request,
+        upForGrabs: this.upForGrabs,
         editMode: options.editMode,
         editModeRepoName: options.repo_name,
         isFirefox: $('body').attr('browser') === 'firefox'
@@ -296,6 +394,8 @@ define(['jquery',
           self.hidePopovers();
         });
 
+        // THIS IS FUCKING UP - TOOLTIP WON'T GO AWAY WHEN HOVER OFF SOMETIMES
+        //this.checkIfNeedToShowSeekingTooltip();
       }
 
       if (options.editMode && showLicense) {
@@ -305,6 +405,10 @@ define(['jquery',
       if (options.editMode && showIntegrations) {
         this.irc = ircObj;
         this.initIRCNetworkDropdown();
+      }
+
+      if (options.editMode && !this.upForGrabs) {
+        this.initSeekingDropdown(options.seeking);
       }
 
       this.slackEllipsis = new SVG({
@@ -332,8 +436,6 @@ define(['jquery',
       }, function () {
         self.hipchatEllipsis.changeColor('#cecece');
       });
-
-      this.$el.find('[data-toggle="tooltip"]').tooltip();
 
     }
   });

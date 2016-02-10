@@ -42,7 +42,7 @@ $not-quite-black: #1D1E22;
     z-index: 10;
     position: absolute;
     top: -101px;
-    left: -32px;
+    left: -31.5px;
   }
 
   .bubble-content-container {
@@ -58,7 +58,7 @@ ul[data-project-type="0"] {
       z-index: 10;
       position: absolute;
       top: -101px;
-      left: -22px;
+      left: -31.5px;
     }
   }
 }
@@ -206,4 +206,18 @@ ul[data-project-type="0"] {
 
 }
 
+.posted-by {
 
+  .poster-info-bubble {
+    width: 110px;
+    z-index: 10;
+    position: absolute;
+    top: -107px;
+    right: -33px;
+  }
+
+  .bubble-content-container {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
+
+}

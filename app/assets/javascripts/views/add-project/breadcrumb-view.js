@@ -11,6 +11,7 @@ define(['jquery',
   var BreadCrumbView = Backbone.View.extend({
 
     initialize: function () {
+      this.step2Text = 'Source';
     },
 
     events: {
@@ -18,14 +19,17 @@ define(['jquery',
     },
 
     handleBreadCrumbClick: function (e) {
-      var self = this;
-      if (_.contains(e.currentTarget.classList, 'breadcrumb-clickable')) {
+      if ($(e.currentTarget).hasClass('breadcrumb-clickable')) {
         this.trigger('breadCrumbNav', e.currentTarget.id);
       }
     },
 
+    setStep2Text: function (text) {
+      this.$el.find('#source-panel .title-div > span').html(text);
+      this.step2Text = text;
+    },
+
     render: function (options) {
-      var self = this;
       var allDone = options.breadCrumb1Done && options.breadCrumb2Done && options.breadCrumb3Done;
       this.$el.html(BreadCrumbViewTpl({
         breadCrumb1Clickable: !allDone && options.breadCrumb1Clickable,
@@ -37,6 +41,7 @@ define(['jquery',
         breadCrumb1Current: options.breadCrumb1Current,
         breadCrumb2Current: options.breadCrumb2Current,
         breadCrumb3Current: options.breadCrumb3Current,
+        step2Text: this.step2Text,
         isSafari: $('body').attr('browser') === 'safari'
       }));
     }

@@ -1,0 +1,43 @@
+<div class="implementation-item">
+    <div class="vote-container">
+        <div class="imp-vote-count {{#voted}}voted{{/voted}}">
+            <i class="fa fa-caret-up"></i><br><span>{{vote_count}}</span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="top {{^description}}no-description{{/description}} {{^showBottom}}no-bottom{{/showBottom}}">
+            <div class="title"><a href="{{main_url}}" target="_blank">{{title}}</a></div>
+            <div class="posted-by">
+                <img src="{{poster_pic}}"/>
+                <span>{{#is_owner}}posted{{/is_owner}}{{^is_owner}}shared{{/is_owner}} {{post_date}} by </span>
+                <div class="poster-info-bubble" hidden></div>
+            </div>
+        </div>
+        {{#description}}
+        <div class="middle {{^showBottom}}no-bottom{{/showBottom}}">{{description}}</div>
+        {{/description}}
+        {{#showBottom}}
+        <div class="bottom">
+            <div class="links">
+                {{#slack_url}}
+                <a href="{{slack_url}}" target="_blank"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_icon.svg" class="imp-link slack" /></a>
+                {{/slack_url}}
+                {{#hipchat_url}}
+                <a href="{{hipchat_url}}" target="_blank"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.svg" class="imp-link hipchat" /></a>
+                {{/hipchat_url}}
+                {{#irc_url}}
+                <a class="irc" href="{{irc_url}}" target="_blank">IRC</a>
+                {{/irc_url}}
+            </div>
+            <div class="tags">
+                {{#in_progress}}
+                <div class="imp-tag in-progress">In Progress</div>
+                {{/in_progress}}
+                {{#seeking_contributors}}
+                <div class="imp-tag seeking-contribs">Seeking Contributors</div>
+                {{/seeking_contributors}}
+            </div>
+        </div>
+        {{/showBottom}}
+    </div>
+</div>

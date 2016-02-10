@@ -16,7 +16,7 @@ define(['jquery',
 
     initialize: function () {
       this.currentTopPos = 100;
-      this.rulesModalHeight = 441;
+      this.rulesModalHeight = 390;
     },
 
     events: {
@@ -51,6 +51,10 @@ define(['jquery',
 
       this.rulesFeedView = new RulesView({
         el: this.$el.find('#rulesContentView')
+      });
+
+      this.listenTo(this.rulesFeedView, 'close-rules-open-suggestions', function () {
+        self.trigger('close-rules-open-suggestions');
       });
 
       this.rulesFeedView.render();

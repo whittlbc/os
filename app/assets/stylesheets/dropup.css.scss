@@ -20,6 +20,7 @@
     overflow: hidden;
 
     li {
+      position: relative;
       float: left;
       height: 43px;
       border-bottom: 1px solid #EEE;
@@ -34,10 +35,14 @@
         color: #00A6C9;
         font-size: 17px;
         position: absolute;
-        left: 20px;
+        left: 11px;
         top: 12px;
         display: none;
       }
+    }
+
+    li#removeAll {
+      font-family: 'Proxima-Nova'
     }
 
     li.selected {
@@ -59,6 +64,10 @@
 
     li:hover {
       background-color: #F1F1F9;
+    }
+
+    li:active {
+      background-color: #E3E3EF;
     }
   }
 

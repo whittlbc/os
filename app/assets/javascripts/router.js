@@ -3,7 +3,8 @@ define(['jquery',
   "events",
   'views/main-view',
   'models/os.util',
-  'models/session'
+  'models/session',
+  'backbone-eventbroker'
 ],
   function ($,
   Backbone,
@@ -23,29 +24,20 @@ define(['jquery',
     },
 
     routes: {
-      'up-for-grabs': 'upForGrabsRoute',
-      'on-the-fence': 'onTheFenceRoute',
+      'ideas': 'ideasRoute',
       'launched': 'launchedRoute',
       'projects/:uuid': 'projectRoute',
-      '': 'onTheFenceRoute'
+      '': 'ideasRoute'
     },
 
-    // UP FOR GRABS
-    upForGrabsRoute: function () {
-      this.updateHomeView(0);
+    ideasRoute: function () {
+      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? OSUtil.navToIdeas() : this.updateHomeView(0);
     },
 
-    // ON THE FENCE
-    onTheFenceRoute: function (something) {
-      (_.isEmpty(window.location.hash) && window.location.pathname == '/') ? this.redirectHome() : this.updateHomeView(1);
-    },
-
-    // LAUNCHED
     launchedRoute: function () {
-      this.updateHomeView(2);
+      this.updateHomeView(1);
     },
 
-    // PROJECT
     projectRoute: function (uuid) {
       $('footer').hide();
       this.updateProjectView(uuid);
@@ -67,24 +59,21 @@ define(['jquery',
         });
       }
 
-      document.body.style.overflow='auto';
+      document.body.style.overflow = 'auto';
     },
 
     updateProjectView: function (uuid) {
-      this.mainView = this.mainView || new MainView({ el: '#mainView' });
+      this.mainView = this.mainView || new MainView({el: '#mainView'});
       this.mainView.captureFilters();
       this.mainView.resetNotifications();
+      Backbone.EventBroker.trigger('seeking-filters:reset');
 
       this.mainView.render({
         view: OSUtil.PROJECT_PAGE,
         uuid: uuid
       });
 
-      document.body.style.overflow='auto';
-    },
-
-    redirectHome: function () {
-      window.location.hash = "#on-the-fence";
+      document.body.style.overflow = 'auto';
     }
 
   });

@@ -11,17 +11,6 @@
             <div class="no-title-error">* Please enter a project title</div>
             <input type="text" name="edit-title" placeholder="Title" value="{{title}}"/>
             {{/editMode}}
-            <div class="major-info-project-type-divider {{#editMode}}edit{{/editMode}}"></div>
-            {{^editMode}}
-            <span class="major-info-project-type">{{projectType}}</span>
-            {{/editMode}}
-            {{#editMode}}
-            <select id="projectTypeSelection">
-                <option value="0">Up for Grabs</option>
-                <option value="1">On the Fence</option>
-                <option value="2">Launched</option>
-            </select>
-            {{/editMode}}
         </div>{{
         }}<div class="project-action-container {{#editMode}}edit{{/editMode}}">
             <div class="join-btn {{majorActionBtnClass}}">{{{majorActionBtnText}}}</div>{{
@@ -39,7 +28,6 @@
             <div class="admin-action-container">
                 {{#isOwner}}<div class="delete-btn"><i class="fa fa-trash"></i></div>{{/isOwner}}
                 <div class="edit-btn"><i class="fa fa-pencil-square-o"></i></div>
-                {{#isOwner}}{{#otf}}<div class="launch-btn">Launch Project</div>{{/otf}}{{/isOwner}}
             </div>
             {{/isAdmin}}
             {{/editMode}}
@@ -48,14 +36,6 @@
             {{/editMode}}
         </div>
     </div>
-    {{^editMode}}
-    {{#hasTags}}
-    <div class="major-info-tag-container"></div>
-    {{/hasTags}}
-    {{/editMode}}
-    {{#editMode}}
-    <select id="editLangFrames" placeholder="Languages and frameworks"></select>
-    {{/editMode}}
     <div class="major-info-project-subtitle {{^editMode}}hide-overflow{{/editMode}}">
         {{^editMode}}
         {{subtitle}}
@@ -65,21 +45,40 @@
         <input type="text" name="edit-subtitle" placeholder="Subtitle" value="{{subtitle}}"/>
         {{/editMode}}
     </div>
+    {{^editMode}}
+    {{#hasTags}}
+    <div class="major-info-tag-container">
+        <div class="major-info-domain-tags">
+            <div class="domain-tags-content"></div>
+        </div>
+        {{#needsLineBreak}}
+        <div class="tags-line-break"></div>
+        {{/needsLineBreak}}
+        {{#hasLangsFrames}}
+        <div class="lang-frame-tags"></div>
+        {{/hasLangsFrames}}
+    </div>
+    {{/hasTags}}
+    {{/editMode}}
+    {{#editMode}}
+    <select id="editDomains" placeholder="Domains"></select>
+    <select id="editLangFrames" placeholder="Languages and frameworks"></select>
+    {{/editMode}}
     <div class="major-info-project-description {{^hasTags}}no-tags{{/hasTags}}">
         {{^editMode}}
-        <p>{{description}}</p><a class="see-all-description">See All</a>
+        <p>{{description}}</p>
+        <div class="see-more-description">See More</div>
         <p class="none">No Description</p>
         {{/editMode}}
         {{#editMode}}
-        <textarea class="edit-description" placeholder="Description">{{description}}</textarea>
+        <textarea class="edit-description" placeholder="Details">{{description}}</textarea>
         {{/editMode}}
     </div>
     {{#editMode}}
+    {{#showPrivacy}}
     <div class="edit-privacy">
         <span class="edit-mode-info-label major-info">Privacy:</span><input type="checkbox" name="privacy-edit" {{#open}}checked{{/open}}>
     </div>
-    <div class="edit-anon">
-        <span class="edit-mode-info-label major-info">Anonymous:</span><input type="checkbox" name="anon-edit" {{#anon}}checked{{/anon}}>
-    </div>
+    {{/showPrivacy}}
     {{/editMode}}
 </div>

@@ -21,6 +21,7 @@ define(['jquery',
   'views/modals/about-modal',
   'views/modals/rules-modal',
   'views/modals/suggestions-modal',
+  'views/modals/add-implementation-modal',
   'views/footer/footer-view',
   'views/filters/lang-filters-view',
   'views/filters/minor-filters-view',
@@ -50,6 +51,7 @@ define(['jquery',
    AboutModal,
    RulesModal,
    SuggestionsModal,
+   AddImplementationModal,
    FooterView,
    LangFiltersView,
    MinorFiltersView,
@@ -91,14 +93,26 @@ define(['jquery',
         'all-user-repos:request': 'getAllUserRepos',
         'window:resize': 'positionFooterAndHeaderTutorialBubbles',
         'tutorial:login-with-gh': 'loginWithGHFromTutorial',
-        'project:login-or-star': 'loginOrStar'
+        'project:login-or-star': 'loginOrStar',
+        'header-footer:force-show': 'forceShowHeaderFooter',
+        'login-or-add-implementation': 'loginOrShowAddImplementationModal',
+        'hide-add-implementations-modal': 'hideImplementationModal',
+        'login-or-implementation-vote': 'loginOrImplementationVote'
       }, this);
 
-      this.cachedFilterType = null;
       this.lastAddProjectPopupShownForGrab = false;
     },
 
     events: {},
+
+    hideImplementationModal: function () {
+      var self = this;
+      this.addImplementationModal.hideModal();
+
+      setTimeout(function () {
+        self.addImplementationModal.reset();
+      }, 100);
+    },
 
     loginWithGHFromTutorial: function () {
       this.$el.find('#floatingLoginWithGHBtn').click();
@@ -143,21 +157,8 @@ define(['jquery',
       if (this.currentUser) {
         data.view.handleProjectMajorActionBtnClick();
       } else {
-        var loginModalText;
-
-        switch (data.status) {
-          case 0:
-            loginModalText = 'You must be logged in to grab a project.';
-            break;
-          case 1:
-            loginModalText = 'You must be logged in to join a project.';
-            break;
-          case 2:
-            loginModalText = 'You must be logged in to join a project.';
-            break;
-        }
-
-        this.loginModal.setMessage(loginModalText);
+        var text = data.upForGrabs ? 'You must be logged in to grab an idea.' : 'You must be logged in to join a project.';
+        this.loginModal.setMessage(text);
         this.loginModal.showModal();
       }
     },
@@ -175,18 +176,12 @@ define(['jquery',
 
     openProject: function (uuid, e) {
       var openInNewTab = false;
-      this.cachedRemovedFilterItems = this.footerView.footerDropdown.$removedItems;
-      this.cachedFilterType = this.footerView.filterType;
 
       if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
         openInNewTab = true;
       }
 
-      if (openInNewTab){
-        window.open((window.location.origin + '/#projects/' + uuid), '_blank');
-      } else {
-        window.location.hash = '#projects/' + uuid;
-      }
+      OSUtil.navToProject(uuid, openInNewTab);
     },
 
     showMyProjectsModal: function () {
@@ -215,6 +210,11 @@ define(['jquery',
       }
     },
 
+    forceShowHeaderFooter: function () {
+      this.forceShowHeader();
+      this.forceShowFooter();
+    },
+
     forceShowHeader: function () {
       $('header').removeClass('header-nav-up').addClass('header-nav-down');
     },
@@ -238,10 +238,9 @@ define(['jquery',
         openInNewTab = true;
       }
 
-      if (openInNewTab){
-        window.open((window.location.origin + '/#projects/' + uuid), '_blank');
-      } else {
-        window.location.hash = '#projects/' + uuid;
+      OSUtil.navToProject(uuid, openInNewTab);
+
+      if (!openInNewTab){
         modal.hideModal();
         this.forceHideModalBackdrop();
       }
@@ -306,10 +305,7 @@ define(['jquery',
       var project = new Project();
       project.destroyProject({uuid: self.projectView.projectUUID}, {
         success: function () {
-          window.location.hash = '#on-the-fence';
-          // show tiny success popupchr
-        }, error: function () {
-          // show an error message
+          OSUtil.navToIdeas();
         }
       });
     },
@@ -347,10 +343,12 @@ define(['jquery',
     },
 
     showContribsModal: function () {
-      var self = this;
       if (this.projectView && this.projectView.contributors) {
-        this.contribsModal.setAnonStatus(this.projectView.data.project.anon); // jesus christ
-        this.contribsModal.populate(this.projectView.contributors);
+        this.contribsModal.populate({
+          contribs: this.projectView.contributors,
+          showContributions: this.projectView.projectHasRepo
+        });
+
         this.contribsModal.showModal();
       }
     },
@@ -419,6 +417,26 @@ define(['jquery',
       }
     },
 
+    loginOrShowAddImplementationModal: function () {
+      if (this.currentUser) {
+        this.addImplementationModal.showModal();
+      } else {
+        this.loginModal.setMessage('You must be logged in to add an implementation.');
+        this.loginModal.showModal();
+      }
+    },
+
+    loginOrImplementationVote: function (view) {
+      if (this.currentUser) {
+        if (!view.model.get('voted')) {
+          view.handleVote(this.currentUser.get('uuid'));
+        }
+      } else {
+        this.loginModal.setMessage('You must be logged in to vote on implementations.');
+        this.loginModal.showModal();
+      }
+    },
+
     showCreateModalOnPullProject: function (uuid) {
       var self = this;
       if (this.currentUser) {
@@ -435,7 +453,10 @@ define(['jquery',
     },
 
     changeHomeFeedType: function (index) {
+      this.footerView.changeFeedType(index);
       this.homeView.populateProjectFeed(index);
+      this.forceShowHeader();
+      this.forceShowFooter();
     },
 
     addNewProjectBtnClicked: function () {
@@ -560,34 +581,7 @@ define(['jquery',
       }
     },
 
-    prePopulateFilters: function () {
-      var self = this;
-      this.footerView.preventAddListener = true;
-
-      if (this.cachedFilterType != null) {
-        this.footerView.filterType = this.cachedFilterType;
-        this.footerView.forceSetFilter();
-        this.footerView.resetDropdown(this.cachedFilterType);
-      }
-
-      var filters = this.homeView.filters.filters;
-      if (filters.langs_and_frames) {
-        for (var i = 0; i < filters.langs_and_frames.length; i++) {
-          this.langFiltersView.addItem({value: filters.langs_and_frames[i], animate: false});
-        }
-        this.footerView.footerDropdown.addItems(filters.langs_and_frames);
-      }
-      if (filters.license) {
-        for (var j = 0; j < filters.license.length; j++) {
-          this.licenseFiltersView.addItem({value: filters.license[j], animate: false});
-        }
-      }
-      this.footerView.footerDropdown.$removedItems = this.cachedRemovedFilterItems;
-      this.footerView.preventAddListener = false;
-    },
-
     captureFilters: function () {
-      var self = this;
       if (this.showHomeView) {
         this.cachedFilters = this.homeView.filters;
         this.cachedItems = this.footerView.removedValues;
@@ -637,27 +631,27 @@ define(['jquery',
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
           self.homeView.handleNewLangFilter(data);
-        }, 200);
+        }, 250);
       }
 
-      // LICENSES
-      else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-        self.minorFiltersView.addLicenseItem(data);
+      // DOMAINS
+      else if (data.set === OSUtil.DOMAIN_FILTER_SET) {
+        self.minorFiltersView.addDomainItem(data);
 
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
-          self.homeView.handleNewLicenseFilter(data);
-        }, 200);
+          self.homeView.handleNewDomainFilter(data);
+        }, 250);
       }
 
-      // CHAT
-      else if (data.set === OSUtil.CHAT_FILTER_SET) {
-        self.minorFiltersView.addChatItem(data);
+      // SEEKING
+      else if (data.set === OSUtil.SEEKING_FILTER_SET) {
+        self.minorFiltersView.addSeekingItem(data);
 
         // keep setTimeout so that filter animation is smooth
         setTimeout(function () {
-          self.homeView.handleNewChatFilter(data);
-        }, 200);
+          self.homeView.handleNewSeekingFilter(data);
+        }, 250);
       }
     },
 
@@ -665,12 +659,12 @@ define(['jquery',
       var self = this;
       if (data.set === OSUtil.LANGS_FILTER_SET) {
         self.homeView.handleRemoveLangFilter(data);
-      } else if (data.set === OSUtil.LICENSE_FILTER_SET) {
-        self.minorFiltersView.removeLicenseItem();
-        self.homeView.handleRemoveLicenseFilter(data);
-      } else if (data.set === OSUtil.CHAT_FILTER_SET) {
-        self.minorFiltersView.removeChatItem();
-        self.homeView.handleRemoveChatFilter(data);
+      } else if (data.set === OSUtil.DOMAIN_FILTER_SET) {
+        self.minorFiltersView.removeDomainItem();
+        self.homeView.handleRemoveDomainFilter(data);
+      } else if (data.set === OSUtil.SEEKING_FILTER_SET) {
+        self.minorFiltersView.removeSeekingItem();
+        self.homeView.handleRemoveSeekingFilter(data);
       }
     },
 
@@ -703,19 +697,22 @@ define(['jquery',
           el: this.$el.find('#homeViewContainer')
         });
       }
-      this.listenTo(this.homeView, 'languages:all');
+
+      var index = _.has(options, 'index') ? options.index : 0;
 
       if (this.cachedFilters) {
-        this.homeView.passFilters(this.cachedFilters);
+        this.homeView.passFilters(this.cachedFilters, index);
       }
 
       this.homeView.render({
-        index: _.has(options, 'index') ? options.index : 1
+        index: index
       });
 
       this.footerView = this.footerView || new FooterView({
         el: '#mainFooter'
       });
+
+      this.footerView.setFeedStatus(options.index);
 
       this.footerView.unbind();
 
@@ -894,6 +891,14 @@ define(['jquery',
         self.rulesModal.hideModal();
       });
 
+      this.listenTo(this.rulesModal, 'close-rules-open-suggestions', function () {
+        self.rulesModal.hideModal();
+        setTimeout(function () {
+          self.suggestionsModal.showModal();
+        }, 150);
+      });
+
+
       this.rulesModal.render();
 
       this.suggestionsModal = new SuggestionsModal({
@@ -901,6 +906,12 @@ define(['jquery',
       });
 
       this.suggestionsModal.render();
+
+      this.addImplementationModal = new AddImplementationModal({
+        el: '#addImplementationModal'
+      });
+
+      this.addImplementationModal.render();
 
       this.listenTo(this.extrasDropdown, 'item:clicked', function (id) {
         switch (id) {
@@ -1017,9 +1028,8 @@ define(['jquery',
     renderFilters: function () {
       var self = this;
 
-      this.langFiltersView = new LangFiltersView({
-        el: '#langFiltersView'
-      });
+      this.langFiltersView = this.langFiltersView || new LangFiltersView();
+      this.langFiltersView.$el = this.$el.find('#langFiltersView');
 
       this.langFiltersView.render({
         orSelected: (this.cachedFilters || {}).lang_filters_or
@@ -1029,9 +1039,8 @@ define(['jquery',
         this.langFiltersView.prePopulateFilters(this.cachedItems);
       }
 
-      this.minorFiltersView = new MinorFiltersView({
-        el: '#minorFiltersView'
-      });
+      this.minorFiltersView = this.minorFiltersView || new MinorFiltersView();
+      this.minorFiltersView.$el = this.$el.find('#minorFiltersView');
 
       this.minorFiltersView.render();
 

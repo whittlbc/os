@@ -7,7 +7,6 @@ define(['jquery',
   'models/all-langs',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/projects/major/major-info-view',
-  'dotdotdot',
   'selectize',
   'toggle',
   'backbone-eventbroker'
@@ -26,7 +25,8 @@ define(['jquery',
 
     postInitialize: function () {
       this.getAllLanguages();
-      this.descriptionMaxHeight = 135;
+      this.formatDomains();
+      this.truncated = false;
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode',
@@ -40,8 +40,16 @@ define(['jquery',
       this.colors_and_initials = this.allLangs.colors_and_initials;
     },
 
+    formatDomains: function () {
+      this.domainOptions = [];
+
+      for (var key in OSUtil.DOMAIN_FILTERS) {
+        this.domainOptions.push(OSUtil.DOMAIN_FILTERS[key]);
+      }
+    },
+
     events: {
-      'click .see-all-description': 'handleToggleDescriptionSize',
+      'click .see-more-description': 'handleToggleDescriptionSize',
       'click .project-page-vote-container': 'checkIfUserAuthed',
       'click .join-btn': 'checkAuthedStatusOnMajorActionBtnClick',
       'click .star': 'loginOrStar',
@@ -51,12 +59,15 @@ define(['jquery',
       'click #reddit': 'handleRedditShareClick',
       'click #twitter': 'handleTwitterShareClick',
       'click #facebook': 'handleFacebookShareClick',
-      'click #hackerNews': 'handleHackerNewsShareClick',
-      'click .launch-btn': 'handleLaunchProject'
+      'click #hackerNews': 'handleHackerNewsShareClick'
     },
 
-    handleLaunchProject: function () {
-      Backbone.EventBroker.trigger('project:confirm-launch');
+    isIdea: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('ideas');
+    },
+
+    isLaunched: function () {
+      return this.status == OSUtil.PROJECT_TYPES.indexOf('launched');
     },
 
     handleRedditShareClick: function () {
@@ -80,20 +91,16 @@ define(['jquery',
     },
 
     checkAuthedStatusOnMajorActionBtnClick: function () {
-      Backbone.EventBroker.trigger('project:major-action-btn-clicked', {
-        view: this,
-        status: this.projectStatus
-      });
+      if (this.majorBtnEvent) {
+        Backbone.EventBroker.trigger('project:major-action-btn-clicked', {
+          view: this,
+          upForGrabs: this.upForGrabs
+        });
+      }
     },
 
     handleProjectMajorActionBtnClick: function () {
-      if (this.editMode) {
-        Backbone.EventBroker.trigger('project:save-edit');
-      } else if (this.upForGrabsType) {
-        Backbone.EventBroker.trigger('pull-project', this.uuid);
-      } else if (!this.pendingProjectRequest && !this.isContributor) {
-        Backbone.EventBroker.trigger('project:join');
-      }
+      Backbone.EventBroker.trigger(this.majorBtnEvent, this.uuid);
     },
 
     handleProjectEdit: function () {
@@ -138,105 +145,140 @@ define(['jquery',
       this.$el.find('.project-page-vote-container').addClass('voted');
 
       var project = new Project();
-      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')}, {
-        success: function (data) {
-          Backbone.EventBroker.trigger('updateUpvotedProjectsArray', data);
-        }
-      });
+      project.vote({uuid: self.uuid, user_uuid: this.currentUser.get('uuid')});
     },
 
     handleToggleDescriptionSize: function () {
-      this.$descriptionContainer.hasClass('is-truncated') ? this.showMoreDescription() : this.showLessDescription();
-      //this.$descriptionContainer.height(this.descriptionMaxHeight);
-      //this.$descriptionContainer.css('overflow', 'hidden');
-      //this.$el.find('.major-info-project-description > p').height(this.descriptionMaxHeight);
-      //this.$el.find('.major-info-project-description > p').css('overflow', 'hidden');
-      //setTimeout(function () {
-      //    self.$descriptionContainer.trigger('destroy');
-      //    self.$descriptionContainer.removeClass('is-truncated');
-      //    self.$el.find('.major-info-project-description > p').css('display', 'inline');
-      //    self.$el.find('.see-all-description').html('See Less');
-      //    self.$el.find('.see-all-description').css('margin-left', '8px');
-      //self.$descriptionContainer.animate({height: self.originalDescriptionHeight}, {duration: 300});
-      //}, 5);
+      this.truncated ? this.showMoreDescription() : this.showLessDescription();
     },
 
     showMoreDescription: function () {
-      this.$descriptionContainer.trigger('destroy');
-      this.$descriptionContainer.removeClass('is-truncated');
-      this.$el.find('.major-info-project-description > p').css('display', 'inline');
-      this.$el.find('.see-all-description').html('See Less');
-      this.$el.find('.see-all-description').css('margin-left', '8px');
-      this.$el.find('p.none').hide();
+      var $description = this.$el.find('.major-info-project-description > p');
+      var description = $description[0];
+      var prevHeight = $description.height();
+      $description.height('auto');
+      var endHeight = getComputedStyle(description).height;
+      $description.height(prevHeight);
+      description.offsetHeight;
+      $description.css({ transition: 'height 0.3s' });
+      $description.height(endHeight);
+      this.$el.find('.see-more-description').html('See Less');
+      this.truncated = false;
     },
 
     showLessDescription: function () {
-      this.$descriptionContainer.dotdotdot({
-        height: this.descriptionMaxHeight,
-        after: '.see-all-description'
-      });
-      this.$el.find('.see-all-description').html('See All');
-      this.$el.find('.see-all-description').css('margin-left', '0');
-      this.$el.find('p.none').hide();
+      var $description = this.$el.find('.major-info-project-description > p');
+      var description = $description[0];
+      $description.height(getComputedStyle(description).height);
+      description.offsetHeight;
+      $description.height(100);
+      this.$el.find('.see-more-description').html('See More');
+      this.truncated = true;
     },
 
-    addTags: function (langsFrames) {
-      var $tagContainer = this.$el.find('.major-info-tag-container');
-      var tagContainerWidth = $tagContainer.width();
-      var tagsWidth = 0;
+    addTags: function (options) {
+      this.addDomainTags((options.domains || []), (options.langs_and_frames || []));
+      this.addLangFrameTags((options.langs_and_frames || []), (options.domains || []));
+    },
+
+    addDomainTags: function (domains, langsFrames) {
+      var bothTagsContainerWidth = this.$el.find('.major-info-tag-container').width();
+      var $domainTagContent = this.$el.find('.domain-tags-content');
+      var content = '';
+      var domainTagsWidth = 0;
       var extraTags = [];
+      var maxWidth = _.isEmpty(langsFrames) ? 0.95 : 0.5;
 
-      if (Array.isArray(langsFrames)) {
-        for (var i = 0; i < langsFrames.length; i++) {
-          if (tagContainerWidth - tagsWidth < 100) {
-            extraTags.push(langsFrames[i]);
+      for (var i = 0; i < domains.length; i++) {
+        if (((domainTagsWidth + 100)/ bothTagsContainerWidth) > maxWidth) {
+          extraTags.push(domains[i]);
 
-            if (i === langsFrames.length - 1) {
-              this.populatMoreTagsDropdown(extraTags);
-            }
-          } else {
-            var $tag = $('<div>', {
-              class: 'major-info-tag'
-            });
-            $tag.html(langsFrames[i]);
-            var colors_and_initials = this.allLangs['colors_and_initials'];
-            var langFrame = colors_and_initials[langsFrames[i]];
-            if (langFrame) {
-              var color = langFrame['color'];
-              $tag.css({
-                color: color,
-                border: '2px solid ' + color
-              });
-              $tagContainer.append($tag);
-              tagsWidth += $tag.outerWidth(true);
-            }
+          if (i === domains.length - 1) {
+            this.populateMoreDomainTagsDropdown(extraTags);
+          }
+        } else {
+          content += ((i == 0) ? domains[i] : (', ' + domains[i]));
+          $domainTagContent.html(content);
+          domainTagsWidth = $domainTagContent.outerWidth(true);
+        }
+      }
+    },
+
+    addLangFrameTags: function (langsFrames, domains) {
+      var bothTagsContainerWidth = this.$el.find('.major-info-tag-container').width();
+      var $langFrameTagContainer = this.$el.find('.lang-frame-tags');
+      var langFrameTagsWidth = 21; // start with width of linebreak separating tag containers
+      var extraTags = [];
+      var maxWidth = _.isEmpty(domains) ? 0.95 : 0.5;
+
+      for (var i = 0; i < langsFrames.length; i++) {
+        if (((langFrameTagsWidth + 100) / bothTagsContainerWidth) > maxWidth) {
+          extraTags.push(langsFrames[i]);
+
+          if (i === langsFrames.length - 1) {
+            this.populateMoreLFTagsDropdown(extraTags);
+          }
+        } else {
+          var colors_and_initials = this.allLangs['colors_and_initials'];
+          var langFrame = colors_and_initials[langsFrames[i]];
+          if (langFrame) {
+            var color = langFrame['color'];
+            var $tag = $('<div>', {class: 'project-lf-tag'});
+            $tag.html('<i class="fa fa-circle" style="color:' + color + '"></i><div class="tag-name">' + langsFrames[i] + '&nbsp;&nbsp;&nbsp;&nbsp;</div>');
+            $langFrameTagContainer.append($tag);
+            langFrameTagsWidth += $tag.outerWidth(true);
           }
         }
       }
     },
 
-    populatMoreTagsDropdown: function (extraTags) {
+    populateMoreDomainTagsDropdown: function (extraTags) {
       var self = this;
       var $div = $('<div>', {class: 'more-project-tags-container'});
       var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
       var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
       $div.append($moreTagsCount);
       $div.append($moreTagsDropdown);
-      this.$el.find('.major-info-tag-container').append($div);
+      this.$el.find('.major-info-domain-tags').append($div);
 
       $moreTagsCount.html(extraTags.length + ' more');
 
-      this.moreTagsDropdown = new MoreDropdown({
-        el: this.$el.find('.more-tags-dropdown')
+      this.moreTagsDomainDropdown = new MoreDropdown({
+        el: this.$el.find('.major-info-domain-tags .more-tags-dropdown')
       });
 
-      this.moreTagsDropdown.render();
-      this.moreTagsDropdown.populate(extraTags);
+      this.moreTagsDomainDropdown.render();
+      this.moreTagsDomainDropdown.populate(extraTags);
 
       $moreTagsCount.hover(function () {
-        self.moreTagsDropdown.showDropdown();
+        self.moreTagsDomainDropdown.showDropdown();
       }, function () {
-        self.moreTagsDropdown.hideDropdown();
+        self.moreTagsDomainDropdown.hideDropdown();
+      });
+    },
+
+    populateMoreLFTagsDropdown: function (extraTags) {
+      var self = this;
+      var $div = $('<div>', {class: 'more-project-tags-container'});
+      var $moreTagsCount = $('<div>', {class: 'more-tags-count'});
+      var $moreTagsDropdown = $('<div>', {class: 'more-tags-dropdown'});
+      $div.append($moreTagsCount);
+      $div.append($moreTagsDropdown);
+      this.$el.find('.lang-frame-tags').append($div);
+
+      $moreTagsCount.html(extraTags.length + ' more');
+
+      this.moreTagsLFDropdown = new MoreDropdown({
+        el: this.$el.find('.lang-frame-tags .more-tags-dropdown')
+      });
+
+      this.moreTagsLFDropdown.render();
+      this.moreTagsLFDropdown.populate(extraTags);
+
+      $moreTagsCount.hover(function () {
+        self.moreTagsLFDropdown.showDropdown();
+      }, function () {
+        self.moreTagsLFDropdown.hideDropdown();
       });
     },
 
@@ -275,13 +317,11 @@ define(['jquery',
         subtitle: this.$el.find('[name="edit-subtitle"]').val(),
         description: this.$el.find('.edit-description').val(),
         langs_and_frames: this.langsFrames,
-        status: Number(this.$el.find('#projectTypeSelection').val())
+        domains: this.domains
       };
 
       // if Up for Grabs
-      if (data.status == 0) {
-        data.anon = this.$el.find('[name="anon-edit"]').is(':checked');
-      } else {
+      if (this.isIdea() && this.upForGrabs) {
         data.privacy = this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY];
       }
 
@@ -329,6 +369,10 @@ define(['jquery',
         }
       });
 
+      this.langFrameSelectize.on('item_remove', function () {
+        self.langsFrames = self.langFrameSelectize.getValue();
+      });
+
       if (!_.isEmpty(langFrames)) {
         this.preventAddingMore = true;
         for (var i = 0; i < langFrames.length; i++) {
@@ -340,6 +384,108 @@ define(['jquery',
       this.langsFrames = this.langFrameSelectize.getValue();
     },
 
+    initDomainsDropdown: function (domains) {
+      var self = this;
+      var options = {
+        theme: 'links',
+        maxItems: null,
+        valueField: 'id',
+        searchField: 'title',
+        options: this.domainOptions,
+        onBlur: function () {
+          self.domains = self.domainSelectize.getValue();
+        },
+        selectOnTab: false,
+        render: {
+          option: function (data, escape) {
+            return '<div class="option title">' + escape(data.title) + '</div>';
+          },
+          item: function (data, escape) {
+            return '<div class="item">' + escape(data.title) + '</div>';
+          }
+        }
+      };
+
+      var $domainSelect = this.$el.find('#editDomains').selectize(options);
+      var domainSelectize = $domainSelect[0].selectize;
+      this.domainSelectize = domainSelectize;
+
+      this.domainSelectize.on('item_add', function (value, $item) {
+        $item.css('color', '#00A6C9');
+        $item.css('border', '2px solid #00A6C9');
+        self.domains = self.domainSelectize.getValue();
+      });
+
+      this.domainSelectize.on('item_remove', function () {
+        self.domains = self.domainSelectize.getValue();
+      });
+
+      if (!_.isEmpty(domains)) {
+        for (var i = 0; i < domains.length; i++) {
+          this.domainSelectize.addItem(domains[i]);
+        }
+      }
+
+      this.domains = this.domainSelectize.getValue();
+    },
+
+    getMajorActionBtnInfo: function (options) {
+      var self = this;
+
+      var obj = {
+        className: 'regular'
+      };
+
+      if (options.editMode) {
+        obj.text = 'Save';
+        this.majorBtnEvent = 'project:save-edit';
+      } else {
+        switch (options.status) {
+          case OSUtil.PROJECT_TYPES.indexOf('ideas'):
+            // UP FOR GRABS
+            if (options.up_for_grabs === true) {
+              obj.className = 'up-for-grabs';
+              obj.text = '<img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/bulb_blue.svg" />Up for Grabs';
+            }
+            // NOT Up for Grabs
+            else {
+              if (self.isContributor) {
+                if (self.isOwner) {
+                  obj.text = 'Launch';
+                  self.majorBtnEvent = 'project:confirm-launch';
+                } else {
+                  obj.className = 'contributor';
+                  obj.text = '<i class="fa fa-check"></i>On Team';
+                }
+              } else if (self.pendingProjectRequest) {
+                obj.className = 'pending';
+                obj.text = 'Request Sent';
+              } else {
+                obj.text = ((options.privacy || [])[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
+                self.majorBtnEvent = 'project:save-edit';
+              }
+            }
+            break;
+          case OSUtil.PROJECT_TYPES.indexOf('launched'):
+            obj.className = 'launched';
+            obj.text = '<i class="fa fa-check"></i>Launched';
+            break;
+        }
+      }
+
+      return obj;
+    },
+
+    determineDescriptionHeight: function () {
+      var $description = this.$el.find('.major-info-project-description > p');
+
+      if ($description.height() > 100) {
+        $description.height(100);
+        this.$el.find('.see-more-description').show();
+        this.truncated = true;
+      }
+    },
+
     render: function (options) {
       var self = this;
       options = options || {};
@@ -347,37 +493,17 @@ define(['jquery',
       this.editMode = options.editMode;
       this.uuid = options.uuid;
       this.privacy = options.privacy;
-      this.projectStatus = options.status;
       this.voted = options.voted;
-
-      this.upForGrabsType = (options.status == 0);
+      this.status = options.status;
+      this.upForGrabs = options.up_for_grabs;
       this.pendingProjectRequest = options.pending_project_request;
       this.isContributor = options.is_contributor;
+      this.isOwner = options.is_owner;
       this.title = options.title || '';
 
-      var hasTags = !_.isEmpty(options.langs_and_frames);
+      var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
 
-      var majorActionBtnClass = 'regular';
-      var majorActionBtnText;
-
-      if (options.editMode) {
-        majorActionBtnText = 'Save';
-      } else {
-        if (options.status == 0) {
-          majorActionBtnText = 'Grab';
-        }
-        else if (options.is_contributor) {
-          majorActionBtnClass = 'contributor';
-          majorActionBtnText = '<i class="fa fa-check"></i>On Project';
-        }
-        else if (options.pending_project_request) {
-          majorActionBtnClass = 'pending';
-          majorActionBtnText = 'Request Sent';
-        }
-        else {
-          majorActionBtnText = (options.privacy[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
-        }
-      }
+      var majorActionBtnInfo = this.getMajorActionBtnInfo(options);
 
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
@@ -388,37 +514,26 @@ define(['jquery',
         starred: options.starred,
         voted: options.voted,
         isAdmin: options.is_admin,
-        isOwner: options.is_owner,
+        isOwner: this.isOwner,
         editMode: options.editMode,
-        upForGrabsType: this.upForGrabsType,
-        otf: options.status == 1,
+        showPrivacy: this.isIdea() && !this.upForGrabs,
         open: options.privacy && (options.privacy[0] === OSUtil.OPEN_PRIVACY),
-        anon: options.anon === true,
         hasTags: hasTags,
-        majorActionBtnClass: majorActionBtnClass,
-        majorActionBtnText: majorActionBtnText,
+        hasLangsFrames: !_.isEmpty(options.langs_and_frames),
+        needsLineBreak: !_.isEmpty(options.domains) && !_.isEmpty(options.langs_and_frames),
+        majorActionBtnClass: majorActionBtnInfo.className || 'regular',
+        majorActionBtnText: majorActionBtnInfo.text,
         isFirefox: $('body').attr('browser') === 'firefox',
         isSafari: $('body').attr('browser') === 'safari'
       }));
 
       if (this.editMode) {
         this.initLangFramesDropdown(options.langs_and_frames);
+        this.initDomainsDropdown(options.domains);
 
         this.$el.find('[name="privacy-edit"]').bootstrapSwitch({
           onText: 'Open',
           offText: 'Request'
-        });
-
-        this.$el.find('[name="anon-edit"]').bootstrapSwitch({
-          onText: 'Yes',
-          offText: 'No'
-        });
-
-        var $projectStatusDropdown = this.$el.find('#projectTypeSelection');
-        $projectStatusDropdown.val(options.status.toString());
-
-        $projectStatusDropdown.change(function () {
-          Backbone.EventBroker.trigger('project:edit:change-type', Number($(this).val()));
         });
 
         this.$el.find('[name="edit-title"]').keydown(function () {
@@ -432,24 +547,14 @@ define(['jquery',
       } else {
 
         if (hasTags) {
-          this.addTags(options.langs_and_frames);
-        }
-        this.$descriptionContainer = this.$el.find('.major-info-project-description');
-        this.originalDescriptionHeight = this.$descriptionContainer.height();
-        this.$descriptionContainer.dotdotdot({
-          height: this.descriptionMaxHeight,
-          after: '.see-all-description'
-        });
-        var isTruncated = this.$descriptionContainer.triggerHandler('isTruncated');
-        if (!isTruncated) {
-          this.$el.find('.see-all-description').hide();
+          this.addTags(options);
         }
 
-        // if no description, say so
         if (_.isEmpty(options.description)) {
           this.$el.find('p.none').show();
         } else {
           this.$el.find('p.none').hide();
+          this.determineDescriptionHeight();
         }
       }
 

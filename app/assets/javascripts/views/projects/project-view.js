@@ -55,6 +55,8 @@ define(['jquery',
         'project:join': 'checkProjectPrivacy',
         'comment:add': 'handleAddComment',
         'comments:fetch': 'fetchComments',
+        'implementations:fetch': 'fetchImplementations',
+        'implementation:add': 'addImplementation',
         'evolution:fetch': 'fetchProjectEvolution',
         'project:save-edit': 'handleSaveEditProject',
         'edit-mode:cancel': 'cancelEditMode',
@@ -104,49 +106,25 @@ define(['jquery',
     },
 
     handleSaveEditProject: function () {
+      var self = this;
+
       if (this.projectMajorView.majorInfoView.checkIfCanSave()) {
+        var projectData = {};
         var majorProjectData = this.projectMajorView.getSavedEditData();
         var minorProjectData = this.projectMinorView.getSavedEditData();
 
-        var data = {
-          title: majorProjectData.title,
-          subtitle: majorProjectData.subtitle,
-          description: majorProjectData.description,
-          langs_and_frames: majorProjectData.langs_and_frames,
-          status: majorProjectData.status
-        };
-
-        if (data.status == 0) {
-          data.anon = majorProjectData.anon;
-          data.privacy = [];
-          data.license = [];
-          data.repo_name = null;
-          data.integrations = {
-            slack: '',
-            hipchat: '',
-            irc: {
-              channel: '',
-              network: ''
-            }
-          };
-
-        } else {
-          data.anon = false;
-          data.privacy = majorProjectData.privacy;
-          if (minorProjectData.hasOwnProperty('license')) {
-            data.license = minorProjectData.license;
-          }
-          if (minorProjectData.hasOwnProperty('repo_name')) {
-            data.repo_name = minorProjectData.repo_name;
-          }
-
-          if (minorProjectData.hasOwnProperty('integrations')) {
-            data.integrations = minorProjectData.integrations;
-          }
-        }
+        _.extend(projectData, majorProjectData);
+        _.extend(projectData, minorProjectData);
+        _.extend(projectData, {
+          status: self.data.project.status,
+          up_for_grabs: self.data.project.up_for_grabs
+        });
 
         var project = new Project();
-        project.edit({uuid: this.projectUUID, data: data}, {
+        project.edit({
+          uuid: self.projectUUID,
+          data: projectData
+        }, {
           success: function () {
             window.location.reload();
           }, error: function () {
@@ -166,6 +144,11 @@ define(['jquery',
       });
     },
 
+    getCurrentCommentFeed: function () {
+      var tabsView = ((this.projectMajorView || {}).communicationView || {}).communicationTabsView;
+      return tabsView ? tabsView.getActiveFeedStatus() : 0;
+    },
+
     handleAddComment: function (data) {
       var self = this;
 
@@ -173,7 +156,7 @@ define(['jquery',
         text: data.text,
         poster_uuid: this.currentUser.get('uuid'),
         uuid: this.projectUUID,
-        feed: data.feed,
+        feed: this.getCurrentCommentFeed(),
         parent_uuid: data.parentUUID
       };
 
@@ -196,42 +179,77 @@ define(['jquery',
       self.owner_gh_username = data.project.owner_gh_username;
     },
 
-    handleFetchedDetails: function (data) {
+    checkIfProjectHasRepo: function (project) {
+      this.projectHasRepo = project.getting_repo_data && project.repo_name && project.owner_gh_username;
+      return this.projectHasRepo;
+    },
+
+    revertContribsToSHOnly: function (project) {
+      this.contributors = _.union(project.contributors.admin, project.contributors.others);
+      this.cachedProjectData.project.contributors = this.contributors;
+      this.projectMinorView.lazyLoadContribs(this.contributors, true);
+    },
+
+    fetchGHContribs: function (project) {
       var self = this;
 
-      // if project has a repo assigned to it
-      if (data.project.getting_repo_data && data.project.repo_name && data.project.owner_gh_username) {
-        // Get Contributors
+      this.github.getContributors(project.owner_gh_username, project.repo_name, function (contribData) {
+        var shContribs = _.union(project.contributors.admin, project.contributors.others);
+        var allContribs = _.union(shContribs, contribData);
+        self.handleFetchedGHContribs(allContribs, project.owner_gh_username);
+      }, function () {
+        self.revertContribsToSHOnly(project);
+      });
+    },
 
-        //data.project.owner_gh_username = 'yabwe';
-        //data.project.repo_name = 'medium-editor';
+    fetchRepoStats: function (project) {
+      var self = this;
 
-        self.github.getContributors(data.project.owner_gh_username, data.project.repo_name, function (contribData) {
-          self.handleFetchedGHContribs(contribData, data.project.admin, data.project.owner_gh_username);
-        }, function () {
-          // revert back to non-GH-pulled contributors
-          self.contributors = data.project.contributors;
-          data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
-          self.cachedProjectData.project.contributors = data.project.contributors;
-          self.projectMinorView.lazyLoadContribs(data.project.contributors, true);
-        });
+      this.github.fetchRepoStats(project.owner_gh_username, project.repo_name, function (data) {
+        self.handleFetchedGHRepoStats(data);
+      }, function () {
+        Backbone.EventBroker.trigger('repo-stats:fetch-error');
+      });
+    },
 
-        // Get Repo Stats
-        self.github.fetchRepoStats(data.project.owner_gh_username, data.project.repo_name, function (data) {
-          self.handleFetchedGHRepoStats(data);
-        }, function () {
-          Backbone.EventBroker.trigger('repo-stats:fetch-error');
-        });
+    useSHOnlyContribs: function (project) {
+      this.contributors = project.contributors;
 
-      } else {
-        this.contributors = data.project.contributors;
-        data.project.contributors = _.union(data.project.contributors.admin, data.project.contributors.others);
+      project.contributors = _.union(project.contributors.admin, project.contributors.others);
+
+      var contribUsernames = _.map(project.contributors, function (contrib) {
+        return contrib.login;
+      });
+
+      if (this.currentUser && _.contains(contribUsernames, this.currentUser.gh_username)) {
+        project.is_contributor = true;
       }
 
-      this.fetchComments(0);
+      return project;
+    },
+
+    handleFetchedDetails: function (data) {
+      var self = this;
+      var project = data.project || {};
+
+      if (this.checkIfProjectHasRepo(project)) {
+
+        this.fetchGHContribs(project);
+
+        this.fetchRepoStats(project);
+
+      } else {
+        project = this.useSHOnlyContribs(project);
+      }
+
+      data.project = project;
       this.setProjectProperties(data);
       this.cachedProjectData = data;
       this.render(data);
+
+      if (!data.project.up_for_grabs) {
+        this.fetchComments(0);
+      }
     },
 
     fetchComments: function (feedStatus) {
@@ -253,12 +271,80 @@ define(['jquery',
       });
     },
 
-    handleFetchedGHContribs: function (contribs, admin, owner_gh_username) {
-      var sortedContribs = this.sortContribs(contribs, admin, owner_gh_username);
+    fetchImplementations: function () {
+      var self = this;
+      var project = new Project();
+
+      var data = {
+        uuid: self.projectUUID
+      };
+
+      if (this.currentUser) {
+        data.user_uuid = this.currentUser.get('uuid');
+      }
+
+      project.fetchImplementations(data, {
+        success: function (implementations) {
+          self.projectMajorView.passImplementations(implementations);
+        }
+      });
+    },
+
+    addImplementation: function (data) {
+      var self = this;
+      var project = new Project();
+
+      _.extend(data, {
+        uuid: self.projectUUID
+      });
+
+      if (this.currentUser) {
+        data.user_uuid = this.currentUser.get('uuid');
+      }
+
+      if (!data.irc.channel || !data.irc.network) {
+        data.irc = null;
+      }
+
+      var requestTookMoreThanOneSec = false;
+      setTimeout(function () {
+        requestTookMoreThanOneSec = true;
+      }, 1000);
+
+      project.addImplementation(data, {
+        success: function (implementations) {
+          var perform = function () {
+            self.projectMajorView.passImplementations(implementations);
+            Backbone.EventBroker.trigger('hide-add-implementations-modal');
+            document.body.style.overflow = 'auto';
+          };
+
+          // if request was < 1 sec, wait another 350ms
+          if (!requestTookMoreThanOneSec) {
+            setTimeout(function () {
+              perform();
+            }, 350);
+          }
+          // otherwise, just go ahead
+          else {
+            perform();
+          }
+        }
+      });
+    },
+
+    handleFetchedGHContribs: function (contribs, owner_gh_username) {
+      var sortedContribs = this.sortContribs(contribs, owner_gh_username);
       this.contributors = sortedContribs;
       var unionContribs = _.union(sortedContribs.admin, sortedContribs.others);
       this.cachedProjectData.project.contributors = unionContribs;
       this.projectMinorView.lazyLoadContribs(unionContribs);
+
+      var justUsernames = _.map(unionContribs, function (contrib) {
+        return contrib.login;
+      });
+
+      Backbone.EventBroker.trigger('contribs:fetched', justUsernames);
     },
 
     handleFetchedGHRepoStats: function (data) {
@@ -266,28 +352,31 @@ define(['jquery',
       this.projectMinorView.lazyLoadRepoStats(data);
     },
 
-    sortContribs: function (contribs, admin, owner_gh_username) {
+    sortContribs: function (contribs, owner_gh_username) {
       var owner = [];
-      var adminNotOwner = [];
+      var owner_username = [];
+
       var others = [];
-      for (var i = 0; i < contribs.length; i++) {
-        if (contribs[i].login === owner_gh_username) {
-          contribs[i].admin = true;
-          owner.push(contribs[i]);
-        } else if (_.contains(admin, contribs[i].login)) {
-          contribs[i].admin = true;
-          adminNotOwner.push(contribs[i]);
+      var other_usernames = [];
+
+      _.each(contribs, function (contrib) {
+        var username = contrib.login;
+
+        if (username === owner_gh_username) {
+          if (!_.contains(owner_username, username)) {
+            contrib.admin = true;
+
+            owner_username.push(username);
+            owner.push(contrib);
+          }
         } else {
-          others.push(contribs[i]);
-        }
-      }
-      adminNotOwner = adminNotOwner.sort(function (a, b) {
-        if (a.contributions === b.contributions) {
-          return (a.login.toLowerCase() > b.login.toLowerCase()) ? 1 : ((b.login.toLowerCase() > a.login.toLowerCase()) ? -1 : 0);
-        } else {
-          return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
+          if (!_.contains(other_usernames, username)) {
+            other_usernames.push(username);
+            others.push(contrib);
+          }
         }
       });
+
       others = others.sort(function (a, b) {
         if (a.contributions === b.contributions) {
           return (a.login.toLowerCase() > b.login.toLowerCase()) ? 1 : ((b.login.toLowerCase() > a.login.toLowerCase()) ? -1 : 0);
@@ -295,8 +384,9 @@ define(['jquery',
           return (a.contributions < b.contributions) ? 1 : ((b.contributions < a.contributions) ? -1 : 0);
         }
       });
+
       return {
-        admin: _.union(owner, adminNotOwner),
+        admin: owner,
         others: others
       };
     },
@@ -348,9 +438,6 @@ define(['jquery',
     },
 
     showEditMode: function () {
-      if (this.data.project.status == 0) {
-        this.$el.find('.project-body').addClass('up-for-grabs-edit');
-      }
       this.projectMajorView.showEditMode(this.data);
       this.projectMinorView.showEditMode(this.data.project);
     },

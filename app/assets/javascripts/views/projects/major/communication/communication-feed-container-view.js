@@ -1,20 +1,35 @@
 define(['jquery',
-    'backbone',
-    'underscore'
+  'backbone',
+  'views/projects/major/communication/communication-feed-view',
+  'stache!views/projects/major/communication/communication-feed-container-view',
+  'underscore'
 ], function ($,
-     Backbone,
-     _) {
-    'use strict';
+   Backbone,
+   CommunicationFeedView,
+   CommunicationFeedContainerViewTpl,
+   _) {
+  'use strict';
 
-    var CommunicationFeedContainerView = Backbone.View.extend({
+  var CommunicationFeedContainerView = Backbone.View.extend({
 
-        initialize: function () {
-        },
+    initialize: function () {
+    },
 
-        events: {},
+    passComments: function (data) {
+      this.feedView.passComments(data);
+    },
 
-    });
+    render: function () {
+      this.$el.html(CommunicationFeedContainerViewTpl());
 
-    return CommunicationFeedContainerView;
+      this.feedView = new CommunicationFeedView({
+        el: this.$el.find('#feedView')
+      });
+      this.feedView.render();
+    }
+
+  });
+
+  return CommunicationFeedContainerView;
 
 });

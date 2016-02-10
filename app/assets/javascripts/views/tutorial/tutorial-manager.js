@@ -27,15 +27,8 @@ define(['jquery',
         {
           view: ProjectTypeItem,
           options: {
-            type: 'up-for-grabs',
-            el: '#ufg-tutorial-anchor'
-          }
-        },
-        {
-          view: ProjectTypeItem,
-          options: {
-            type: 'on-the-fence',
-            el: '#otf-tutorial-anchor'
+            type: 'ideas',
+            el: '#ideas-tutorial-anchor'
           }
         },
         {

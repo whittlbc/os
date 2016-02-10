@@ -29,6 +29,10 @@ define(['jquery',
       this.communicationView.passComments(data);
     },
 
+    passImplementations: function (data) {
+      this.communicationView.passImplementations(data);
+    },
+
     showEditMode: function (data) {
       this.majorInfoView.showEditMode(data.project);
     },
@@ -51,13 +55,16 @@ define(['jquery',
 
       this.majorInfoView.render(options.project);
 
-      var majorInfoHeight = window.innerHeight - this.$el.find('#majorInfoView').height(); // adding 10 because of the stupid margin-top: -10px you had to do for some reason
-
       this.communicationView = new CommunicationView({
         el: '#communicationView',
-        height: majorInfoHeight
+        ufg: options.project.up_for_grabs === true
       });
+
       this.communicationView.render(options);
+
+      if (options.project.up_for_grabs === true) {
+        Backbone.EventBroker.trigger('implementations:fetch');
+      }
     }
   });
 

@@ -1,43 +1,64 @@
 define(['jquery',
-    'backbone',
-    'underscore',
-    'stache!views/dropdowns/more-filters-dropup',
-    'backbone-eventbroker'
+  'backbone',
+  'underscore',
+  'stache!views/dropdowns/more-filters-dropup',
+  'backbone-eventbroker'
 ], function ($,
-     Backbone,
-     _,
-     MoreFiltersDropupTpl) {
-    'use strict';
+             Backbone,
+             _,
+             MoreFiltersDropupTpl) {
+  'use strict';
 
-    var MoreFiltersDropup = Backbone.View.extend({
+  var MoreFiltersDropup = Backbone.View.extend({
 
-        initialize: function () {
-            Backbone.EventBroker.register({
-                'forceRemovePrivacyFilters': 'forceClickPrivacy'
-            }, this);
-        },
+    initialize: function () {
+      Backbone.EventBroker.register({
+      }, this);
+    },
 
-        events: {
-            'click ul#moreFiltersList > li': 'handleClick'
-        },
+    handleClick: function (e) {
+      e.stopPropagation();
 
-        forceClickPrivacy: function () {
-            var self = this;
-            this.$el.find('#privacy').click();
-        },
+      var data = {
+        id: e.currentTarget.id
+      };
 
-        handleClick: function (e) {
-            e.stopPropagation();
-            var $target = $(e.currentTarget);
-            this.trigger('item:clicked', e.currentTarget.id);
-            $target.hasClass('selected') ? $target.removeClass('selected') : $target.addClass('selected');
-        },
+      if (e.currentTarget.id === 'removeAll') {
+        this.$el.find('#upForGrabsFilter').removeClass('selected');
+        this.upForGrabsSelected = false;
+      } else {
+        var $target = $(e.currentTarget);
 
-        render: function () {
-            this.$el.html(MoreFiltersDropupTpl());
+        if ($target.hasClass('selected')) {
+          $target.removeClass('selected');
+          this.upForGrabsSelected = false;
+        } else {
+          $target.addClass('selected');
+          this.upForGrabsSelected = true;
         }
-    });
 
-    return MoreFiltersDropup;
+        data.selected = this.upForGrabsSelected;
+      }
+
+      this.trigger('item:clicked', data);
+    },
+
+    render: function (options) {
+      var self = this;
+      options = options || {};
+
+      this.$el.html(MoreFiltersDropupTpl({
+        showUpForGrabs: options.showUpForGrabs,
+        upForGrabsSelected: this.upForGrabsSelected
+      }));
+
+      this.$el.find('ul#moreFiltersList > li').click(function (e) {
+        self.handleClick(e);
+      });
+
+    }
+  });
+
+  return MoreFiltersDropup;
 
 });

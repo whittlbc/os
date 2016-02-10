@@ -1,60 +1,71 @@
 define(['jquery',
-	'backbone',
-	'underscore',
-    'views/projects/major/communication/communication-tabs-view',
-    'views/projects/major/communication/communication-panels-view',
-    'stache!views/projects/major/communication/communication-view',
-    'velocity',
-    'tabs'
-    ], function ($,
-     Backbone,
-     _,
-     CommunicationTabsView,
-     CommunicationPanelsView,
-     CommunicationViewTpl) {
-	'use strict';
+  'backbone',
+  'underscore',
+  'views/projects/major/communication/communication-tabs-view',
+  'views/projects/major/communication/communication-panels-view',
+  'stache!views/projects/major/communication/communication-view',
+  'velocity',
+  'tabs'
+], function ($,
+   Backbone,
+   _,
+   CommunicationTabsView,
+   CommunicationPanelsView,
+   CommunicationViewTpl) {
+  'use strict';
 
-	var CommunicationView = Backbone.View.extend({
+  var CommunicationView = Backbone.View.extend({
 
-		initialize: function () {
-        },
+    initialize: function (options) {
+      options = options || {};
 
-		events: {
-        },
+      this.ufg = options.ufg;
 
-        handleTabSelected: function (index) {
-            this.communicationPanelsView.render({
-                activePanel: index
-            });
-        },
+      $(document).click(function () {
+        Backbone.EventBroker.trigger('comments:hide-empty-replies');
+      });
+    },
 
-        showNewComment: function (data) {
-          this.communicationPanelsView.showNewComment(data);
-        },
+    events: {},
 
-        passComments: function (data) {
-          this.communicationPanelsView.passComments(data);
-        },
+    handleTabSelected: function (index) {
+    },
 
-        render: function (options) {
-			var self = this;
+    showNewComment: function (data) {
+      this.communicationPanelsView.showNewComment(data);
+    },
 
-            this.$el.html(CommunicationViewTpl({
-            }));
+    passComments: function (data) {
+      this.communicationPanelsView.passComments(data);
+    },
 
-            this.communicationTabsView = new CommunicationTabsView({
-                el: '#tabsView'
-            });
-            this.listenTo(this.communicationTabsView, 'tab:selected', this.handleTabSelected);
-            this.communicationTabsView.render(options);
+    passImplementations: function (data) {
+      this.communicationPanelsView.passImplementations(data);
+    },
 
-            this.communicationPanelsView = new CommunicationPanelsView({
-                el: '#panelsView'
-            });
-            this.communicationPanelsView.render();
-        }
-	});
+    render: function (options) {
+      var self = this;
 
-	return CommunicationView;
+      this.$el.html(CommunicationViewTpl());
+
+      this.communicationTabsView = new CommunicationTabsView({
+        el: '#tabsView',
+        ufg: this.ufg
+      });
+
+      this.listenTo(this.communicationTabsView, 'tab:selected', this.handleTabSelected);
+
+      this.communicationTabsView.render(options);
+
+      this.communicationPanelsView = new CommunicationPanelsView({
+        el: '#panelsView',
+        ufg: this.ufg
+      });
+
+      this.communicationPanelsView.render();
+    }
+  });
+
+  return CommunicationView;
 
 });

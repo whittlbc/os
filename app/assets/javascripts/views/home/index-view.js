@@ -6,7 +6,6 @@ define(['jquery',
   'views/home/project-feed-view',
   'models/project',
   'models/user',
-  'views/home/non-lang-filters-view',
   'stache!views/home/index-view',
   'selectize',
   'velocity',
@@ -20,7 +19,6 @@ define(['jquery',
    ProjectFeedView,
    Project,
    User,
-   NonLangFiltersView,
    IndexViewTpl) {
   'use strict';
 
@@ -32,29 +30,42 @@ define(['jquery',
       master = this;
 
       Backbone.EventBroker.register({
-        //'deleteLangFilter': 'deleteLangFilter',
-        //'clearLangFilters': 'clearLangFilters',
-        'addLicenseFilter': 'addLicenseFilter',
-        'removeLicenseFilter': 'removeLicenseFilter',
+        'addDomainFilter': 'addDomainFilter',
+        'removeDomainFilter': 'removeDomainFilter',
         'addPrivacyFilter': 'addPrivacyFilter',
         'removePrivacyFilter': 'removePrivacyFilter',
         'lang-filters-scope:change': 'updateLangFiltersScope',
-        //'addAnonFilter': 'addAnonFilter',
-        //'removeAnonFilter': 'removeAnonFilter',
         'clearNonLangFilters': 'clearNonLangFilters',
-        'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort'
+        'projects:fetch-by-sort-type': 'fetchProjectsWithSpecifiedSort',
+        'filters:remove-all': 'resetAllFilters',
+        'up-for-grabs-filter:toggled': 'toggleUpForGrabsFilter'
       }, this);
+
+      this.resetAllFilters();
+
+      this.sortType = OSUtil.SORT_BY_VOTES;
+      this.resetProps();
+    },
+
+    toggleUpForGrabsFilter: function () {
+      this.upForGrabsFilter = !this.upForGrabsFilter;
+      this.getFilters();
+    },
+
+    resetAllFilters: function (andFetch) {
       this.filters = null;
       this.langsFramesValue = [];
-      this.licenseFilters = [];
-      this.chatFilters = [];
+      this.domainFilters = [];
+      this.seekingFilters = {
+        0: [],
+        1: []
+      };
       this.privacyFilters = [];
-      //this.anonFilters = [];
-      this.sortType = OSUtil.SORT_BY_VOTES;
+      this.upForGrabsFilter = false;
 
-      this.FETCH_MORE_DATA_DECIMAL = 0.775;
-
-      this.resetProps();
+      if (andFetch) {
+        this.getFilters();
+      }
     },
 
     fetchProjectsWithSpecifiedSort: function (type) {
@@ -76,10 +87,12 @@ define(['jquery',
     },
 
     clearNonLangFilters: function () {
-      this.licenseFilters = [];
+      this.domainFilters = [];
       this.privacyFilters = [];
-      this.chatFilters = [];
-      //this.anonFilters = [];
+      this.seekingFilters = {
+        0: [],
+        1: []
+      };
       this.getFilters();
     },
 
@@ -109,16 +122,28 @@ define(['jquery',
       this.getFilters();
     },
 
-    handleNewLicenseFilter: function (data) {
+    handleNewDomainFilter: function (data) {
       var self = this;
-      this.licenseFilters = data.dropdownValues;
+      this.domainFilters = data.dropdownValues;
       this.getFilters();
     },
 
-    handleNewChatFilter: function (data) {
-      var self = this;
-      this.chatFilters = data.dropdownValues;
+    handleNewSeekingFilter: function (data) {
+      this.seekingFilters[this.projectTypeStatus] = data.dropdownValues;
+
+      // if Feedback is included in selected filters, make sure it's included in both seekingFilters hashes
+      if (_.contains(data.dropdownValues, 'Feedback')) {
+        this.addFeedbackFilterToOtherSeekingFilter(this.projectTypeStatus);
+      }
+
       this.getFilters();
+    },
+
+    addFeedbackFilterToOtherSeekingFilter: function (status) {
+      var otherStatus = (status === 0) ? 1 : 0;
+      if (!_.contains(this.seekingFilters[otherStatus], 'Feedback')) {
+        this.seekingFilters[otherStatus].push('Feedback');
+      }
     },
 
     handleRemoveLangFilter: function (data) {
@@ -127,14 +152,24 @@ define(['jquery',
       this.getFilters();
     },
 
-    handleRemoveLicenseFilter: function (data) {
+    handleRemoveDomainFilter: function (data) {
       var self = this;
-      this.licenseFilters = data.dropdownValues;
+      this.domainFilters = data.dropdownValues;
       this.getFilters();
     },
 
-    handleRemoveChatFilter: function (data) {
-      this.chatFilters = data.dropdownValues;
+    handleRemoveSeekingFilter: function (data) {
+      var currentSeekingFiltersHasFeedback = _.contains(this.seekingFilters[this.projectTypeStatus], 'Feedback');
+      var newSeekingFiltersHasFeedback = _.contains(data.dropdownValues, 'Feedback');
+
+      // If Feedback was removed, also remove it from the other seekingFilters hash
+      if (currentSeekingFiltersHasFeedback && !newSeekingFiltersHasFeedback) {
+        var otherStatus = this.projectTypeStatus === 0 ? 1 : 0;
+        this.seekingFilters[otherStatus].splice('Feedback', 1);
+      }
+
+      this.seekingFilters[this.projectTypeStatus] = data.dropdownValues;
+
       this.getFilters();
     },
 
@@ -144,8 +179,7 @@ define(['jquery',
     },
 
     getFilters: function () {
-      var self = this;
-      var atleastOneFilter = false;
+      var atLeastOneFilter = false;
       this.limit = 30;
       this.gettingMoreData = false;
       var obj = {
@@ -156,34 +190,57 @@ define(['jquery',
 
       if (!_.isEmpty(this.langsFramesValue)) {
         obj.filters.langs_and_frames = this.langsFramesValue;
-        atleastOneFilter = true;
+        atLeastOneFilter = true;
       }
+
       if (this.privacyFilters.length === 1) {
         obj.filters.privacy = this.privacyFilters;
-        atleastOneFilter = true;
+        atLeastOneFilter = true;
       }
 
-      if (!_.isEmpty(this.licenseFilters)) {
-        obj.filters.license = this.licenseFilters;
-        atleastOneFilter = true;
+      if (!_.isEmpty(this.domainFilters)) {
+        obj.filters.domains = this.domainFilters;
+        atLeastOneFilter = true;
       }
 
-      if (!_.isEmpty(this.chatFilters)) {
-        obj.filters.chat = this.chatFilters;
-        atleastOneFilter = true;
+      if (!_.isEmpty(this.seekingFilters[this.projectTypeStatus])) {
+        obj.filters.seeking = this.seekingFilters[this.projectTypeStatus];
+        atLeastOneFilter = true;
       }
 
-      this.filters = obj;
-
-      this.getFilteredFeed(obj);
-
-      if (!atleastOneFilter) {
-        this.filters = null;
+      if ((this.projectTypeStatus === OSUtil.PROJECT_TYPES.indexOf('ideas')) && this.upForGrabsFilter === true) {
+        obj.filters.up_for_grabs = true;
+        atLeastOneFilter = true;
       }
+
+      this.filters = atLeastOneFilter ? obj : null;
+
+      this.filters == null ? this.getFeed() : this.getFilteredFeed(obj);
     },
 
-    setLangFrameInputProps: function () {
-      this.$el.find('.selectize-dropdown-content').height(120);
+    getFeed: function () {
+      var self = this;
+
+      var data = {
+        status: this.projectTypeStatus,
+        sortType: this.sortType
+      };
+
+      if (this.currentUser) {
+        data.user_uuid = this.currentUser.get('uuid');
+      }
+
+      var project = new Project();
+      project.fetchFeedProjects(data, {
+        success: function (data) {
+          Backbone.EventBroker.trigger('header-footer:force-show');
+          self.limit += 30;
+          if (!data.gotAll) {
+            self.gettingMoreData = false;
+          }
+          self.projectFeedView.handleFetchProjects(data.projects)
+        }
+      });
     },
 
     getFilteredFeed: function (obj) {
@@ -196,6 +253,7 @@ define(['jquery',
 
       project.filteredFeed(obj, {
         success: function (data) {
+          Backbone.EventBroker.trigger('header-footer:force-show');
           self.limit += 30;
           if (!data.gotAll) {
             self.gettingMoreData = false;
@@ -212,29 +270,21 @@ define(['jquery',
     pullFromIdeas: function () {
       var self = this;
       var project = new Project();
-      project.pullFromIdeas({
-        success: function (data) {
-          self.handlePullFromIdeas(data);
-        }
-      });
+      project.pullFromIdeas();
     },
 
-    handlePullFromIdeas: function (resp) {
-      console.log(resp);
-    },
-
-    addLicenseFilter: function (type) {
+    addDomainFilter: function (type) {
       var self = this;
-      if (!_.contains(this.licenseFilters, type)) {
-        this.licenseFilters.push(type);
+      if (!_.contains(this.domainFilters, type)) {
+        this.domainFilters.push(type);
       }
       self.getFilters();
     },
 
-    removeLicenseFilter: function (type) {
+    removeDomainFilter: function (type) {
       var self = this;
-      if (_.contains(this.licenseFilters, type)) {
-        this.licenseFilters.splice(this.licenseFilters.indexOf(type), 1);
+      if (_.contains(this.domainFilters, type)) {
+        this.domainFilters.splice(this.domainFilters.indexOf(type), 1);
       }
       self.getFilters();
     },
@@ -249,48 +299,7 @@ define(['jquery',
       this.getFilters();
     },
 
-    //addAnonFilter: function (val) {
-    //    var self = this;
-    //    if (val === 'anonYes') {
-    //        val = true;
-    //    }
-    //    if (val === 'anonNo') {
-    //        val = false;
-    //    }
-    //    if (!_.contains(this.anonFilters, val)) {
-    //        this.anonFilters.push(val);
-    //    }
-    //    self.getFilters();
-    //},
-
-    //removeAnonFilter: function (val) {
-    //    var self = this;
-    //    if (val === 'anonYes') {
-    //        val = true;
-    //    }
-    //    if (val === 'anonNo') {
-    //        val = false;
-    //    }
-    //    if (_.contains(this.anonFilters, val)) {
-    //        this.anonFilters.splice(this.anonFilters.indexOf(val), 1);
-    //    }
-    //    self.getFilters();
-    //},
-
-    //toggleAnonFilters: function (status) {
-    //    if (status == 0) {
-    //        this.nonLangFiltersView.showAnon();
-    //    } else {
-    //        this.nonLangFiltersView.hideAnon();
-    //        if (this.filters && this.filters.filters && this.filters.filters.hasOwnProperty('anon')) {
-    //            delete this.filters.filters.anon;
-    //        }
-    //        this.anonFilters = [];
-    //    }
-    //},
-
     changeActiveTab: function (status) {
-      var self = this;
       var shouldBeActiveTab = this.$el.find('li.project-type > a')[status];
       if (!$(shouldBeActiveTab).hasClass('active')) {
         $(shouldBeActiveTab).click();
@@ -298,41 +307,19 @@ define(['jquery',
     },
 
     populateProjectFeed: function (status, initial) {
-      var self = this;
       this.limit = 30;
       this.gettingMoreData = false;
-      //this.toggleAnonFilters(status);
+      Backbone.EventBroker.trigger('adjust-seeking-filters', this.seekingFilters[status]);
+
       if (!initial) {
         this.changeActiveTab(status);
       }
-      this.projectTypeStatus = status; // int value
+
+      this.projectTypeStatus = status;
+
       this.projectFeedView.setProjectTypeStatus(status);
-      if (this.filters == null) {
 
-        var data = {
-          status: status,
-          sortType: this.sortType
-        };
-
-        if (this.currentUser) {
-          data.user_uuid = this.currentUser.get('uuid');
-        }
-
-        var project = new Project();
-        project.fetchFeedProjects(data, {
-          success: function (data) {
-            self.limit += 30;
-            if (!data.gotAll) {
-              self.gettingMoreData = false;
-            }
-            self.projectFeedView.handleFetchProjects(data.projects)
-          }
-        });
-      } else {
-        this.filters.status = status;
-        this.filters.sortType = this.sortType;
-        this.getFilteredFeed(this.filters);
-      }
+      this.getFilters();
     },
 
     addScrollLoadListener: function () {
@@ -391,12 +378,21 @@ define(['jquery',
       });
     },
 
-    passFilters: function (obj) {
+    passFilters: function (obj, index) {
       this.filters = obj;
       this.langsFramesValue = obj.filters.langs_and_frames || [];
       this.privacyFilters = obj.filters.privacy || [];
-      this.licenseFilters = obj.filters.license || [];
-      this.chatFilters = obj.filters.chat || [];
+      this.domainFilters = obj.filters.domains || [];
+      this.seekingFilters = {
+        0: [],
+        1: []
+      };
+      this.seekingFilters[index] = obj.filters.seeking;
+
+      if (_.contains(obj.filters.seeking, 'Feedback')) {
+        this.addFeedbackFilterToOtherSeekingFilter(index);
+      }
+
       this.langFiltersOr = obj.lang_filters_or;
     },
 
@@ -407,24 +403,22 @@ define(['jquery',
 
     render: function (options) {
       var self = this;
-      var onTheFenceActive = false;
+      var ideasActive = false;
 
-      if (!options || !options.hasOwnProperty('index') || options.index == 1) {
-        onTheFenceActive = true;
+      if (!options || !options.hasOwnProperty('index') || options.index == 0) {
+        ideasActive = true;
       }
 
-      var upForGrabsActive = options && options.hasOwnProperty('index') ? options.index == 0 : false;
-      var launchedActive = options && options.hasOwnProperty('index') ? options.index == 2 : false;
+      var launchedActive = options && options.hasOwnProperty('index') ? options.index == 1 : false;
 
       this.$el.html(IndexViewTpl({
-        upForGrabsActive: upForGrabsActive,
-        onTheFenceActive: onTheFenceActive,
+        ideasActive: ideasActive,
         launchedActive: launchedActive
       }));
 
-      this.projectFeedView = new ProjectFeedView({
-        el: '#project-feed'
-      });
+      this.projectFeedView = this.projectFeedView || new ProjectFeedView();
+
+      this.projectFeedView.$el = this.$el.find('#project-feed');
 
       this.listenTo(this.projectFeedView, 'projects:populated', function (numProjects) {
         self.setProjectToWatchScrollingPos(numProjects);
@@ -432,14 +426,7 @@ define(['jquery',
 
       this.projectFeedView.render();
 
-      var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 1;
-
-      this.nonLangFiltersView = new NonLangFiltersView({
-        el: '#nonLangFiltersContainer',
-        filters: self.filters
-      });
-
-      this.nonLangFiltersView.render();
+      var projectTypeStatus = options && options.hasOwnProperty('index') ? options.index : 0;
 
       this.populateProjectFeed(projectTypeStatus, true);
 

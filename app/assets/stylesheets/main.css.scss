@@ -26,7 +26,9 @@ a {
 }
 
 .modal-open {
-  overflow: auto;
+  margin-right: 0!important;
+  padding-right: 0!important;
+  overflow: hidden;
 }
 
 // VARS

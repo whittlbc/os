@@ -10,7 +10,9 @@ define(['jquery',
 
   var ContributorsFeedItemView = Backbone.View.extend({
 
-    initialize: function () {
+    initialize: function (options) {
+      options = options || {};
+      this.showContributions = options.showContributions;
     },
 
     events: {},
@@ -27,10 +29,8 @@ define(['jquery',
 
     addListeners: function () {
       var self = this;
-      this.$el.find('.contributors-feed-item-pic').click(function () {
-        self.openContributorGHPage();
-      });
-      this.$el.find('.name > span').click(function () {
+
+      this.$el.click(function () {
         self.openContributorGHPage();
       });
     },
@@ -43,7 +43,7 @@ define(['jquery',
       this.$el.html(ContributorsFeedItemViewTpl({
         ghUsername: this.data.login,
         pic: this.data.avatar_url,
-        showContributions: this.data.hasOwnProperty('contributions'),
+        showContributions: this.showContributions && this.data.hasOwnProperty('contributions'),
         contributions: this.data.contributions,
         singular: this.data.contributions == 1,
         anon: options.anon

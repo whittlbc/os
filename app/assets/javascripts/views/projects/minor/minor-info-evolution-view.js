@@ -3,6 +3,7 @@ define(['jquery',
   'underscore',
   'views/projects/minor/minor-info/minor-info-view',
   'views/projects/minor/evolution/evolution-view',
+  'models/os.util',
   'stache!views/projects/minor/minor-info-evolution-view',
   'tabs',
   'backbone-eventbroker'
@@ -11,6 +12,7 @@ define(['jquery',
              _,
              MinorInfoView,
              EvolutionView,
+             OSUtil,
              MinorInfoEvolutionViewTpl) {
   'use strict';
 
@@ -81,7 +83,7 @@ define(['jquery',
       options = options || {};
 
       this.$el.html(MinorInfoEvolutionViewTpl({
-        launched: options.status == 2,
+        launched: options.status == OSUtil.PROJECT_TYPES.indexOf('launched'),
         isSafari: $('body').attr('browser') === 'safari'
       }));
 
