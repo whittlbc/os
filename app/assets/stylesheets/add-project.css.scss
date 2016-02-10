@@ -310,10 +310,16 @@ input {
   text-align: center;
   background-color: white;
   font-size: 18px;
-  font-family: 'Lato';
   color: #00A6C9;
   border-top: 1px solid #00A6C9;
   border-bottom: 1px solid #00A6C9;
+}
+
+#modalCreateProject.safari {
+
+  .create-project-breadcrumb {
+    font-family: 'Proxima-Nova-SemiBold';
+  }
 }
 
 .breadcrumb-clickable {

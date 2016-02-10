@@ -5,7 +5,8 @@ define(['jquery',
   'models/project',
   'views/widgets/user-info-bubble',
   'stache!views/projects/major/implementation/implementation-item',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'toggle'
     ], function ($,
    Backbone,
    _,
@@ -95,6 +96,8 @@ define(['jquery',
           self.hideBubble();
         });
       });
+
+      this.$el.find('[data-toggle="tooltip"]').tooltip();
     }
 
 	});

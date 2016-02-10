@@ -20,10 +20,10 @@
         <div class="bottom">
             <div class="links">
                 {{#slack_url}}
-                <a href="{{slack_url}}" target="_blank"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_icon.svg" class="imp-link slack" /></a>
+                <a href="{{slack_url}}" target="_blank" data-toggle="tooltip" data-placement="top" title="Slack"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_icon.svg" class="imp-link slack" /></a>
                 {{/slack_url}}
                 {{#hipchat_url}}
-                <a href="{{hipchat_url}}" target="_blank"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.svg" class="imp-link hipchat" /></a>
+                <a href="{{hipchat_url}}" target="_blank" data-toggle="tooltip" data-placement="top" title="HipChat"><img src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.svg" class="imp-link hipchat" /></a>
                 {{/hipchat_url}}
                 {{#irc_url}}
                 <a class="irc" href="{{irc_url}}" target="_blank">IRC</a>
