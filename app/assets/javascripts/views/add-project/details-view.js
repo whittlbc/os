@@ -267,7 +267,7 @@ define(['jquery',
         searchField: 'title',
         options: this.domainOptions,
         onFocus: function () {
-          if (self.stageIsIdea() && !self.upForGrabs) {
+          if (self.upForGrabs) {
             setTimeout(function () {
               self.trigger('scroll:bottom');
             }, 5);
@@ -313,13 +313,6 @@ define(['jquery',
         valueField: 'id',
         searchField: 'title',
         options: this.getSeekingOptions(),
-        onFocus: function () {
-          if (self.stageIsIdea() && !self.upForGrabs) {
-            setTimeout(function () {
-              self.trigger('scroll:bottom');
-            }, 1);
-          }
-        },
         onBlur: function () {
           self.seeking = self.seekingSelectize.getValue();
           Backbone.EventBroker.trigger('seeking:updated', self.seeking);  // prolly don't need

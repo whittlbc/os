@@ -159,6 +159,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "id": "Big Data",
         "title": "Big Data"
       },
+      "Boilerplate": {
+        "id": "Boilerplate",
+        "title": "Boilerplate"
+      },
       "Buffers": {
         "id": "Buffers",
         "title": "Buffers"
@@ -355,9 +359,9 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "id": "Text Processing",
         "title": "Text Processing"
       },
-      "Tutotials": {
-        "id": "Tutotials",
-        "title": "Tutotials"
+      "Tutorials": {
+        "id": "Tutorials",
+        "title": "Tutorials"
       },
       "UI": {
         "id": "UI",
