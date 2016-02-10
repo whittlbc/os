@@ -657,6 +657,7 @@ define(['jquery',
 
     handleFilterRemoved: function (data) {
       var self = this;
+
       if (data.set === OSUtil.LANGS_FILTER_SET) {
         self.homeView.handleRemoveLangFilter(data);
       } else if (data.set === OSUtil.DOMAIN_FILTER_SET) {

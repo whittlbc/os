@@ -113,10 +113,17 @@ define(['jquery',
 
     deleteSeekingFilter: function (value) {
       var self = this;
+
       if (this.filterType === 2) {
         this.deleteFilter(value);
       } else {
         delete this.removedValues[2][this.status][value];
+
+        if (value === 'Feedback') {
+          var otherStatus = this.status === 0 ? 1 : 0;
+          delete this.removedValues[2][otherStatus][value];
+        }
+
         self.trigger('removeItem', {
           set: 2,
           dropdownValues: self.getDropdownValues(2)
@@ -205,7 +212,7 @@ define(['jquery',
 
       var obj = this.removedValues[int];
 
-      if (this.filterType === OSUtil.SEEKING_FILTER_SET) {
+      if (int === OSUtil.SEEKING_FILTER_SET) {
         obj = obj[this.status];
       }
 
