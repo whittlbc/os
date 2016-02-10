@@ -23,7 +23,7 @@ define(['jquery',
 
       this.$el.html(HorizontalToggleTpl({
         id: this.id,
-        orSelected: options.orSelected
+        andSelected: options.andSelected
       }));
 
       this.$el.find('input').change(function () {

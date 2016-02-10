@@ -321,13 +321,13 @@ class ProjectsController < ApplicationController
       filters.each { |filter|
         if filter[0] == LANG_FILTERS_NAME
 
-          # OR - only needs to contain at least one
-          if params[:lang_filters_or] === true
-            filtered_projects.where!.overlap(filter[0] => filter[1])
-
-          # default - AND - must contain ALL languages included
-          else
+          # AND
+          if params[:lang_filters_and] === true
             filtered_projects.where!.contains(filter[0] => filter[1])
+
+          # OR (default)
+          else
+            filtered_projects.where!.overlap(filter[0] => filter[1])
           end
 
         else

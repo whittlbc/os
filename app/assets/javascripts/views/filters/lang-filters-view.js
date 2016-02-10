@@ -241,7 +241,7 @@ define(['jquery',
       });
 
       this.optionsBubble.render({
-        orSelected: options.orSelected
+        andSelected: options.andSelected
       });
 
       $(document).click(function () {

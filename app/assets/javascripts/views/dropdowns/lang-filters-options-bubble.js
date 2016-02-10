@@ -41,7 +41,7 @@ define(['jquery',
       });
 
       this.hToggle.render({
-        orSelected: options.orSelected
+        andSelected: options.andSelected
       });
     }
   });

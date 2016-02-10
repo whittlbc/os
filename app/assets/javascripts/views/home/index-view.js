@@ -75,7 +75,7 @@ define(['jquery',
 
     resetProps: function () {
       this.gettingMoreData = false;
-      this.langFiltersOr = false;
+      this.langFiltersAnd = false;
     },
 
     deleteLangFilter: function (name) {
@@ -174,7 +174,7 @@ define(['jquery',
     },
 
     updateLangFiltersScope: function (checked) {
-      this.langFiltersOr = !checked;
+      this.langFiltersAnd = checked;
       this.getFilters();
     },
 
@@ -184,7 +184,7 @@ define(['jquery',
       this.gettingMoreData = false;
       var obj = {
         status: this.projectTypeStatus,
-        lang_filters_or: this.langFiltersOr,
+        lang_filters_and: this.langFiltersAnd,
         filters: {}
       };
 
@@ -393,7 +393,7 @@ define(['jquery',
         this.addFeedbackFilterToOtherSeekingFilter(index);
       }
 
-      this.langFiltersOr = obj.lang_filters_or;
+      this.langFiltersAnd = obj.lang_filters_and;
     },
 
     setProjectToWatchScrollingPos: function (numProjects) {

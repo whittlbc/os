@@ -1032,7 +1032,7 @@ define(['jquery',
       this.langFiltersView.$el = this.$el.find('#langFiltersView');
 
       this.langFiltersView.render({
-        orSelected: (this.cachedFilters || {}).lang_filters_or
+        andSelected: (this.cachedFilters || {}).lang_filters_and
       });
 
       if (this.showHomeView && this.cachedItems) {
