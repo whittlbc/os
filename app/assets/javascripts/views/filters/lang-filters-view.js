@@ -174,6 +174,7 @@ define(['jquery',
 
     prePopulateFilters: function (filtersMap) {
       var self = this;
+      this.LANG_FILTERS = [];
       var filters = Object.keys(filtersMap[0]);
 
       _.each(filters, function (lang) {
