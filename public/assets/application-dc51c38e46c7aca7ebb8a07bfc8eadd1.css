@@ -9433,13 +9433,21 @@ footer {
   min-height: 130px;
 }
 /* line 49, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+#myProjectsModalView #myProjectsFeedView .list-container .no-others-exist {
+  color: #cecece;
+  font-style: italic;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 50px;
+}
+/* line 57, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container .my-projects-type-title-container {
   height: 20px;
   width: 100%;
   display: block;
   float: left;
 }
-/* line 55, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 63, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container .my-projects-type-title-container .my-projects-type-title {
   line-height: 18px;
   height: 100%;
@@ -9450,7 +9458,7 @@ footer {
   display: inline-block;
   color: #00A6C9;
 }
-/* line 66, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 74, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container .my-projects-type-title-container .line-break {
   height: 1px;
   background-color: #EEE;
@@ -9459,15 +9467,15 @@ footer {
   padding-left: 10px;
   padding-right: 10px;
 }
-/* line 75, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 83, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container .my-projects-type-title-container .line-break#myProjectsLB {
   width: 88%;
 }
-/* line 78, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 86, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container .my-projects-type-title-container .line-break#contributionsLB {
   width: 84%;
 }
-/* line 84, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 92, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container ul {
   width: 100%;
   padding-left: 0;
@@ -9475,7 +9483,7 @@ footer {
   float: left;
   margin-bottom: 25px;
 }
-/* line 92, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 100, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container ul .my-projects-none-message {
   color: #C4C5CA;
   font-style: italic;
@@ -9484,25 +9492,25 @@ footer {
   margin-top: 46px;
   width: 100%;
 }
-/* line 101, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 109, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container ul li {
   width: 100%;
   height: 45px;
   float: left;
   cursor: pointer;
 }
-/* line 108, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 116, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container ul li:hover {
   background-color: #F4F6F8;
 }
-/* line 112, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 120, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container ul .my-projects-item-container {
   width: 100%;
   heigth: 100%;
   float: left;
   display: block;
 }
-/* line 118, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 126, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #myProjectsModalView #myProjectsFeedView .list-container ul .my-projects-item-container .title {
   width: 100%;
   padding-left: 30px;
@@ -9517,11 +9525,11 @@ footer {
   text-overflow: ellipsis;
 }
 
-/* line 144, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 152, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView .modal-content {
   border-radius: 8px;
 }
-/* line 148, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 156, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView .modal-header {
   height: 65px;
   width: 100%;
@@ -9529,13 +9537,13 @@ footer {
   margin-bottom: 10px;
   position: relative;
 }
-/* line 155, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 163, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView .modal-header button {
   margin-right: 22px;
   margin-top: 22px;
   font-size: 22px;
 }
-/* line 161, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 169, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView .modal-header .header-text {
   width: 75%;
   margin-left: auto;
@@ -9549,7 +9557,7 @@ footer {
   position: relative;
   left: 9px;
 }
-/* line 176, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 184, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView .modal-header .fa-star,
 #starredModalView .modal-header .fa-star-o {
   color: #F7E00F;
@@ -9558,7 +9566,7 @@ footer {
   left: 185px;
   top: 20.5px;
 }
-/* line 185, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 193, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView .starred-modal-body {
   height: 350px;
   width: 100%;
@@ -9566,17 +9574,17 @@ footer {
   overflow-x: hidden;
   margin-bottom: 20px;
 }
-/* line 193, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 201, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView {
   width: 100%;
 }
-/* line 196, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 204, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container {
   width: 100%;
   float: left;
   min-height: 130px;
 }
-/* line 201, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 209, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container .no-others-exist {
   color: #cecece;
   font-style: italic;
@@ -9584,32 +9592,32 @@ footer {
   text-align: center;
   margin-top: 50px;
 }
-/* line 209, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 217, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container ul {
   width: 100%;
   padding-left: 0;
   list-style-type: none;
   float: left;
 }
-/* line 215, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 223, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container ul li {
   width: 100%;
   height: 45px;
   float: left;
   cursor: pointer;
 }
-/* line 222, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 230, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container ul li:hover {
   background-color: #F4F6F8;
 }
-/* line 226, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 234, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container ul .starred-item-container {
   width: 100%;
   heigth: 100%;
   float: left;
   display: block;
 }
-/* line 232, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
+/* line 240, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/project-list-modals.css.scss */
 #starredModalView #starredFeedView .list-container ul .starred-item-container .title {
   width: 100%;
   padding-left: 30px;
