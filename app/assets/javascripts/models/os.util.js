@@ -143,53 +143,237 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
     ],
 
     DOMAIN_FILTERS : {
+      "AI": {
+        "id": "AI",
+        "title": "AI"
+      },
       "Academia": {
         "id": "Academia",
         "title": "Academia"
       },
-      "Browser Extensions": {
-        "id": "Browser Extension",
-        "title": "Browser Extension"
+      "Android": {
+        "id": "Android",
+        "title": "Android"
+      },
+      "Big Data": {
+        "id": "Big Data",
+        "title": "Big Data"
+      },
+      "Buffers": {
+        "id": "Buffers",
+        "title": "Buffers"
+      },
+      "CLI": {
+        "id": "CLI",
+        "title": "CLI"
+      },
+      "CLoud": {
+        "id": "CLoud",
+        "title": "CLoud"
+      },
+      "CMS": {
+        "id": "CMS",
+        "title": "CMS"
+      },
+      "Code Linters": {
+        "id": "Code Linters",
+        "title": "Code Linters"
+      },
+      "Comedy": {
+        "id": "Comedy",
+        "title": "Comedy"
+      },
+      "Compilers": {
+        "id": "Compilers",
+        "title": "Compilers"
+      },
+      "Compression": {
+        "id": "Compression",
+        "title": "Compression"
+      },
+      "Courses": {
+        "id": "Courses",
+        "title": "Courses"
+      },
+      "Cryptography": {
+        "id": "Cryptography",
+        "title": "Cryptography"
+      },
+      "Data Formats": {
+        "id": "Data Formats",
+        "title": "Data Formats"
+      },
+      "Data Visualization": {
+        "id": "Data Visualization",
+        "title": "Data Visualization"
+      },
+      "Databases": {
+        "id": "Databases",
+        "title": "Databases"
+      },
+      "Deployment": {
+        "id": "Deployment",
+        "title": "Deployment"
+      },
+      "Design Essentials": {
+        "id": "Design Essentials",
+        "title": "Design Essentials"
+      },
+      "Dev Ops": {
+        "id": "Dev Ops",
+        "title": "Dev Ops"
+      },
+      "Dev Tools": {
+        "id": "Dev Tools",
+        "title": "Dev Tools"
+      },
+      "Distributed Computing": {
+        "id": "Distributed Computing",
+        "title": "Distributed Computing"
+      },
+      "Documentation": {
+        "id": "Documentation",
+        "title": "Documentation"
+      },
+      "Editors": {
+        "id": "Editors",
+        "title": "Editors"
+      },
+      "Education": {
+        "id": "Education",
+        "title": "Education"
+      },
+      "Extensions": {
+        "id": "Extensions",
+        "title": "Extensions"
+      },
+      "Frameworks": {
+        "id": "Frameworks",
+        "title": "Frameworks"
+      },
+      "Game Engines": {
+        "id": "Game Engines",
+        "title": "Game Engines"
+      },
+      "Games": {
+        "id": "Games",
+        "title": "Games"
+      },
+      "IDE": {
+        "id": "IDE",
+        "title": "IDE"
+      },
+      "Image Processing": {
+        "id": "Image Processing",
+        "title": "Image Processing"
+      },
+      "iOS": {
+        "id": "iOS",
+        "title": "iOS"
+      },
+      "Languages": {
+        "id": "Languages",
+        "title": "Languages"
+      },
+      "Machine Learning": {
+        "id": "Machine Learning",
+        "title": "Machine Learning"
+      },
+      "Messaging": {
+        "id": "Messaging",
+        "title": "Messaging"
       },
       "Mobile": {
         "id": "Mobile",
         "title": "Mobile"
       },
-      "Scientific": {
-        "id": "Scientific",
-        "title": "Scientific"
+      "Monitoring": {
+        "id": "Monitoring",
+        "title": "Monitoring"
       },
-      "Tablet": {
-        "id": "Tablet",
-        "title": "Tablet"
+      "Music": {
+        "id": "Music",
+        "title": "Music"
+      },
+      "NLP": {
+        "id": "NLP",
+        "title": "NLP"
+      },
+      "Network": {
+        "id": "Network",
+        "title": "Network"
+      },
+      "NoSQL": {
+        "id": "NoSQL",
+        "title": "NoSQL"
+      },
+      "Operating Systems": {
+        "id": "Operating Systems",
+        "title": "Operating Systems"
+      },
+      "Package Managers": {
+        "id": "Package Managers",
+        "title": "Package Managers"
+      },
+      "Productivity Tools": {
+        "id": "Productivity Tools",
+        "title": "Productivity Tools"
+      },
+      "Protocols": {
+        "id": "Protocols",
+        "title": "Protocols"
+      },
+      "Research": {
+        "id": "Research",
+        "title": "Research"
+      },
+      "SQL": {
+        "id": "SQL",
+        "title": "SQL"
+      },
+      "Science": {
+        "id": "Science",
+        "title": "Science"
+      },
+      "Security": {
+        "id": "Security",
+        "title": "Security"
+      },
+      "Statistics": {
+        "id": "Statistics",
+        "title": "Statistics"
+      },
+      "Streams": {
+        "id": "Streams",
+        "title": "Streams"
+      },
+      "Testing": {
+        "id": "Testing",
+        "title": "Testing"
+      },
+      "Text Processing": {
+        "id": "Text Processing",
+        "title": "Text Processing"
+      },
+      "Tutotials": {
+        "id": "Tutotials",
+        "title": "Tutotials"
+      },
+      "UI": {
+        "id": "UI",
+        "title": "UI"
+      },
+      "UX": {
+        "id": "UX",
+        "title": "UX"
+      },
+      "Video": {
+        "id": "Video",
+        "title": "Video"
       },
       "Web": {
         "id": "Web",
         "title": "Web"
-      },
-      "Academia2": {
-        "id": "Academia2",
-        "title": "Academia2"
-      },
-      "Browser Extensions2": {
-        "id": "Browser Extension2",
-        "title": "Browser Extension2"
-      },
-      "Mobile2": {
-        "id": "Mobile2",
-        "title": "Mobile2"
-      },
-      "Scientific2": {
-        "id": "Scientific2",
-        "title": "Scientific2"
-      },
-      "Tablet2": {
-        "id": "Tablet2",
-        "title": "Tablet2"
-      },
-      "Web2": {
-        "id": "Web2",
-        "title": "Web2"
       }
     },
 
