@@ -15,4 +15,15 @@ class UserMailer < ActionMailer::Base
       mail(to: email, subject: subject)
     end
   end
+
+  def notify_admin_of_suggestion(user: nil, text: nil)
+    @username = user.present? ? user.gh_username : 'Unauthed User'
+    @text = text
+    @redirect_base_url = ENV['URL']
+    @company_logo = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/sourcehoney.png'
+    subject = 'New Suggestion!'
+
+    mail(to: ENV['ADMIN_EMAIL'], subject: subject)
+  end
+
 end
