@@ -5,7 +5,7 @@
             <div class="star {{#starred}}starred{{/starred}}">
                 <i class="fa {{#starred}}fa-star{{/starred}} {{^starred}}fa-star-o{{/starred}}"></i>
             </div>
-            <span class="project-title-span">{{title}}</span>
+            <span class="project-title-span" data-toggle="tooltip" data-placement="top" title="{{title}}">{{title}}</span>
             {{/editMode}}
             {{#editMode}}
             <div class="no-title-error">* Please enter a project title</div>
@@ -36,7 +36,7 @@
             {{/editMode}}
         </div>
     </div>
-    <div class="major-info-project-subtitle {{^editMode}}hide-overflow{{/editMode}}">
+    <div class="major-info-project-subtitle {{^editMode}}hide-overflow{{/editMode}}" data-toggle="tooltip" data-placement="top" title="{{subtitle}}">
         {{^editMode}}
         {{subtitle}}
         {{/editMode}}

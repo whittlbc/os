@@ -511,6 +511,20 @@ define(['jquery',
       }
     },
 
+    checkForTitleSubTitleOverflow: function () {
+      var $title = this.$el.find('.project-title-span');
+      var $subtitle = this.$el.find('.major-info-project-subtitle');
+
+      // if text is overflowing, enable the tooltip
+      if ($title[0].scrollWidth > $title.innerWidth()) {
+        $title.tooltip();
+      }
+
+      if ($subtitle[0].scrollWidth > $subtitle.innerWidth()) {
+        $subtitle.tooltip();
+      }
+    },
+
     render: function (options) {
       var self = this;
       options = options || {};
@@ -581,6 +595,8 @@ define(['jquery',
           this.$el.find('p.none').hide();
           this.determineDescriptionHeight();
         }
+
+        this.checkForTitleSubTitleOverflow();
       }
 
       this.$el.find('[data-toggle="tooltip"]').tooltip();
