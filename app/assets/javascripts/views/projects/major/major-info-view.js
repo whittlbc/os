@@ -607,7 +607,7 @@ define(['jquery',
         this.checkForTitleSubTitleOverflow();
       }
 
-      this.$el.find('[data-toggle="tooltip"]').tooltip();
+      this.$el.find('.share-icons-container > [data-toggle="tooltip"]').tooltip();
 
     }
   });

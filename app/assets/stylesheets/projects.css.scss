@@ -613,6 +613,11 @@ $post-gray: #B6B8C0;
   margin-top: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  a,
+  a:hover {
+    color: #00A6C9;
+  }
 }
 
 .major-info-project-subtitle.hide-overflow {
@@ -646,6 +651,11 @@ $post-gray: #B6B8C0;
 
   .see-more-description:hover {
     text-decoration: underline;
+  }
+
+  a,
+  a:hover {
+    color: #00A6C9;
   }
 }
 

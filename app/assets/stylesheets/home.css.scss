@@ -146,6 +146,10 @@ $side-filters-width: 18.25%;
 
 .project-post-subtitle-text {
   cursor: pointer;
+  a,
+  a:hover {
+    color: #00A6C9;
+  }
 }
 
 .tag-containers {
