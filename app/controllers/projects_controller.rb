@@ -135,7 +135,7 @@ class ProjectsController < ApplicationController
     if !sender.nil? && !project.nil?
       project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
       client = Octokit::Client.new(:access_token => User.find_by(email: 'benwhittle31@gmail.com').password)
-      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.id)
+      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.uuid)
       render :json => {}, :status => 200
     else
       render :json => {:message => 'Either sender was nil or project was nil by uuid'}, :status => 500
@@ -549,13 +549,13 @@ class ProjectsController < ApplicationController
 
     if user.present?
       comment_info = {
-          :uuid => UUIDTools::UUID.random_create.to_s,
-          :text => params[:text],
-          :project_id => project.id,
-          :user_id => user.id,
-          :vote_count => 0,
-          :feed => params[:feed],
-          :parent_id => parent_comment.try(:id)
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :text => params[:text],
+        :project_id => project.id,
+        :user_id => user.id,
+        :vote_count => 0,
+        :feed => params[:feed],
+        :parent_id => parent_comment.try(:id)
       }
       comment = Comment.new(comment_info)
       comment.save
@@ -563,6 +563,22 @@ class ProjectsController < ApplicationController
       project.update_attributes(:comments_count => (project.comments_count + 1))
 
       all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)
+
+      if parent_comment.present?
+        UserMailer.delay.notify_user_of_comment_reply(
+          user: parent_comment.user,
+          comment: comment,
+          parent_comment: parent_comment,
+          project: project
+        )
+      else
+        UserMailer.delay.notify_user_of_comment(
+          user: parent_comment.user,
+          comment: comment,
+          project: project
+        )
+      end
+
       render :json => all_comments_of_feed_type
     else
       render :json => {:status => 500}
