@@ -9,7 +9,9 @@ define(['jquery',
   'stache!views/projects/major/major-info-view',
   'selectize',
   'toggle',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'linkify',
+  'linkify-jquery'
 ], function ($,
    Backbone,
    _,
@@ -575,11 +577,18 @@ define(['jquery',
           this.addTags(options);
         }
 
+        this.$el.find('.major-info-project-subtitle').linkify({
+          target: '_blank'
+        });
+
         if (_.isEmpty(options.description)) {
           this.$el.find('p.none').show();
         } else {
           this.$el.find('p.none').hide();
           this.determineDescriptionHeight();
+          this.$el.find('.major-info-project-description > p').linkify({
+            target: '_blank'
+          });
         }
       }
 

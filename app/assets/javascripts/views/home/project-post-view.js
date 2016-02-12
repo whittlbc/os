@@ -9,7 +9,9 @@ define(['jquery',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/home/project-post-view',
   'backbone-eventbroker',
-  'jquery-transit'
+  'jquery-transit',
+  'linkify',
+  'linkify-jquery'
 ], function ($,
    Backbone,
    _,
@@ -319,6 +321,10 @@ define(['jquery',
       this.$seekingContainer = this.$el.find('.post-seeking-container');
       this.$date = this.$el.find('.project-extra-details-container .date');
       this.addListeners();
+
+      this.$el.find('.project-post-subtitle-text').linkify({
+        target: '_blank'
+      });
 
       this.userInfoBubble = new UserInfoBubble({
         el: this.$el.find('.user-info-bubble')
