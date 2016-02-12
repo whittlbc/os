@@ -7,10 +7,10 @@ define(['jquery',
   'models/all-langs',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/projects/major/major-info-view',
+  'marked',
   'selectize',
   'toggle',
-  'backbone-eventbroker',
-  'markdown'
+  'backbone-eventbroker'
 ], function ($,
    Backbone,
    _,
@@ -19,7 +19,8 @@ define(['jquery',
    Project,
    AllLangs,
    MoreDropdown,
-   MajorInfoViewTpl) {
+   MajorInfoViewTpl,
+   marked) {
   'use strict';
 
   var MajorInfoView = OSView.extend({
@@ -29,10 +30,6 @@ define(['jquery',
       this.formatDomains();
       this.truncated = false;
       this.isSafari = ($('body').attr('browser') === 'safari');
-
-      this.markdown = markdown.formatter({
-
-      });
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode',
@@ -537,7 +534,7 @@ define(['jquery',
 
       var description = options.description || '';
       if (!this.editMode) {
-        description = this.markdown(description);
+        description = marked(description);
       }
 
       this.$el.html(MajorInfoViewTpl({
