@@ -951,6 +951,10 @@ define(['jquery',
         setTimeout(function () {
           self.tutorialManager.showNextItem();
 
+          $('#tutorialCover').click(function () {
+            self.tutorialManager.done();
+          });
+
           // Fuck the old about modal and it's caching options,
           // just create a new one and overwrite the fucked up one
           self.aboutModal = new AboutModal({
