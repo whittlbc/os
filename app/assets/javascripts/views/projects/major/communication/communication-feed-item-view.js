@@ -7,7 +7,8 @@ define(['jquery',
   'models/session',
   'views/widgets/user-info-bubble',
   'stache!views/projects/major/communication/communication-feed-item-view',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'markdown'
 ], function ($,
    Backbone,
    _,
@@ -26,6 +27,10 @@ define(['jquery',
       Backbone.EventBroker.register({
         'comments:hide-empty-replies': 'checkIfShouldHideReplyArea'
       }, this);
+
+      this.markdown = markdown.formatter({
+
+      });
     },
 
     events: {},
@@ -71,6 +76,10 @@ define(['jquery',
       this.feed = data.feed;
       this.hasChildren = data.hasChildren;
       this.commentNumber = data.commentNumber;
+
+      if (this.text) {
+        this.text = this.markdown(this.text);
+      }
     },
 
     handleShowReplyInput: function () {

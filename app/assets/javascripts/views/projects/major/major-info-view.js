@@ -9,7 +9,8 @@ define(['jquery',
   'stache!views/projects/major/major-info-view',
   'selectize',
   'toggle',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'markdown'
 ], function ($,
    Backbone,
    _,
@@ -28,6 +29,10 @@ define(['jquery',
       this.formatDomains();
       this.truncated = false;
       this.isSafari = ($('body').attr('browser') === 'safari');
+
+      this.markdown = markdown.formatter({
+
+      });
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode',
@@ -530,11 +535,16 @@ define(['jquery',
 
       var majorActionBtnInfo = this.getMajorActionBtnInfo(options);
 
+      var description = options.description || '';
+      if (!this.editMode) {
+        description = this.markdown(description);
+      }
+
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
         projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
         subtitle: options.subtitle ? options.subtitle : '',
-        description: options.description ? options.description : '',
+        description: description,
         voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
         starred: options.starred,
         voted: options.voted,
