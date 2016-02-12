@@ -8,8 +8,7 @@ define(['jquery',
   'views/widgets/user-info-bubble',
   'stache!views/projects/major/communication/communication-feed-item-view',
   'backbone-eventbroker',
-  'linkify',
-  'linkify-jquery'
+  'linkify'
 ], function ($,
    Backbone,
    _,

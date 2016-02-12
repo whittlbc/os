@@ -10,8 +10,7 @@ define(['jquery',
   'stache!views/home/project-post-view',
   'backbone-eventbroker',
   'jquery-transit',
-  'linkify',
-  'linkify-jquery'
+  'linkify'
 ], function ($,
    Backbone,
    _,

@@ -10,8 +10,7 @@ define(['jquery',
   'selectize',
   'toggle',
   'backbone-eventbroker',
-  'linkify',
-  'linkify-jquery'
+  'linkify'
 ], function ($,
    Backbone,
    _,
