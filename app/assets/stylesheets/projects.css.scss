@@ -1655,6 +1655,11 @@ $post-gray: #B6B8C0;
   padding-top: 5px;
   padding-bottom: 5px;
   white-space: pre-line;
+
+  a,
+  a:hover {
+    color: #00A6C9;
+  }
 }
 
 #projectPageNewCommentContainer {
