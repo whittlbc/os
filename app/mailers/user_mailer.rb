@@ -30,7 +30,7 @@ class UserMailer < ActionMailer::Base
     subject = 'Someone replied to your comment on Sourcehoney'
 
     if ENV['MAILER_PERFORM_DELIVERIES']
-      email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : email
+      email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email
       mail(to: email, subject: subject)
     end
   end
@@ -47,7 +47,7 @@ class UserMailer < ActionMailer::Base
     subject = 'Someone commented on your project on Sourcehoney'
 
     if ENV['MAILER_PERFORM_DELIVERIES']
-      email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : email
+      email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email
       mail(to: email, subject: subject)
     end
   end
