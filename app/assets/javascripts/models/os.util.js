@@ -323,6 +323,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "id": "Package Managers",
         "title": "Package Managers"
       },
+      "Plugins": {
+        "id": "Plugins",
+        "title": "Plugins"
+      },
       "Productivity Tools": {
         "id": "Productivity Tools",
         "title": "Productivity Tools"
