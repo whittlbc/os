@@ -346,8 +346,7 @@ define(['jquery',
         domains: this.domains
       };
 
-      // if Up for Grabs
-      if (this.isIdea() && this.upForGrabs) {
+      if (this.isIdea() && !this.upForGrabs) {
         data.privacy = this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY];
       }
 
