@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def notify_user_of_comment_reply(user: nil, comment: nil, parent_comment: nil, project: nil)
-    @recipient_name = user.name
+    @recipient_name = user.gh_username
     @project_name = project.name
     @project_uuid = project.uuid
     @comment_text = comment.text
@@ -35,9 +35,8 @@ class UserMailer < ActionMailer::Base
     end
   end
 
-
   def notify_user_of_comment(user: nil, comment: nil, project: nil)
-    @recipient_name = user.name
+    @recipient_name = user.gh_username
     @project_name = project.name
     @project_uuid = project.uuid
     @comment_text = comment.text
@@ -45,6 +44,17 @@ class UserMailer < ActionMailer::Base
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
     subject = 'Someone commented on your project on Sourcehoney'
+
+    if ENV['MAILER_PERFORM_DELIVERIES']
+      email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email
+      mail(to: email, subject: subject)
+    end
+  end
+
+  def received_suggestion(user: nil)
+    @recipient_name = user.gh_username
+    @company_logo = LOGO
+    subject = 'Thanks for the suggestion!'
 
     if ENV['MAILER_PERFORM_DELIVERIES']
       email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email

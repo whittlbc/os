@@ -113,9 +113,7 @@ define(['jquery',
       Backbone.EventBroker.trigger('hide-header-dropdowns');
     });
 
-
     // Header Click Events
-
     $('#addNewProject').click(function () {
       Backbone.EventBroker.trigger('add-new-proj-clicked');
     });
