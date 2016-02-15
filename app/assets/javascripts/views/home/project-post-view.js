@@ -292,6 +292,9 @@ define(['jquery',
         });
       }
 
+      var hasTags = correctedLangsFramesArray.length > 0;
+      var hasDomain = !_.isEmpty(self.domains);
+
       this.$el.html(ProjectPostViewTpl({
         title: self.title,
         subtitle: self.subtitle,
@@ -307,8 +310,9 @@ define(['jquery',
         projectType: self.projectType,
         userPic: self.owner_pic,
         voted: self.voted,
-        hasTags: correctedLangsFramesArray.length > 0,
-        hasDomain: !_.isEmpty(self.domains),
+        hasTags: hasTags,
+        hasDomain: hasDomain,
+        showLineBreak: hasTags && hasDomain,
         domains: self.domains.join(',  '),
         showContribsCount: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas') && !self.upForGrabs,
         upForGrabs: self.upForGrabs,
