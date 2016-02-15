@@ -171,9 +171,9 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "id": "CLI",
         "title": "CLI"
       },
-      "CLoud": {
-        "id": "CLoud",
-        "title": "CLoud"
+      "Cloud": {
+        "id": "Cloud",
+        "title": "Cloud"
       },
       "CMS": {
         "id": "CMS",
@@ -238,10 +238,6 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       "Documentation": {
         "id": "Documentation",
         "title": "Documentation"
-      },
-      "Editors": {
-        "id": "Editors",
-        "title": "Editors"
       },
       "Education": {
         "id": "Education",
@@ -362,6 +358,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       "Testing": {
         "id": "Testing",
         "title": "Testing"
+      },
+      "Text Editors": {
+        "id": "Text Editors",
+        "title": "Text Editors"
       },
       "Text Processing": {
         "id": "Text Processing",
