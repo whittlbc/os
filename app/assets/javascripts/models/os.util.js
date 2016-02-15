@@ -275,6 +275,14 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "id": "iOS",
         "title": "iOS"
       },
+      "IOT": {
+        "id": "IOT",
+        "title": "IOT"
+      },
+      "Just for Kicks": {
+        "id": "Just for Kicks",
+        "title": "Just for Kicks"
+      },
       "Languages": {
         "id": "Languages",
         "title": "Languages"

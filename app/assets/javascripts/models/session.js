@@ -65,7 +65,7 @@ define(['jquery',
     },
 
     userIsOnHomePage: function () {
-      return _.contains(['', '#', '#on-the-fence', '#up-for-grabs', '#launched'], window.location.hash);
+      return _.contains(['', '#ideas', '#launched'], window.location.hash);
     },
 
     addTrackingCookie: function () {

@@ -79,43 +79,11 @@ define(['jquery',
       }
     }, 5);
 
-    //// Highlight the current Project Type based on the initial has upon site entrance
-    var initialPath = window.location.hash;
-    if (initialPath == '#up-for-grabs') {
-      $('#upForGrabsType').addClass('selected-project-type');
-    } else if (initialPath == '#on-the-fence') {
-      $('#onTheFenceType').addClass('selected-project-type');
-    } else if (initialPath == '#launched') {
-      $('#launchedType').addClass('selected-project-type');
-    } else {
-      $('#onTheFenceType').addClass('selected-project-type');
-    }
-
-    // Switch the highlighted project type based on hash changes once you're already in the site
-    $(window).on('hashchange', function () {
-      var path = window.location.hash;
-      if (path == '#up-for-grabs') {
-        $('#upForGrabsType').addClass('selected-project-type');
-        $('#onTheFenceType').removeClass('selected-project-type');
-        $('#launchedType').removeClass('selected-project-type');
-      } else if (path == '#on-the-fence') {
-        $('#onTheFenceType').addClass('selected-project-type');
-        $('#upForGrabsType').removeClass('selected-project-type');
-        $('#launchedType').removeClass('selected-project-type');
-      } else if (path == '#launched') {
-        $('#launchedType').addClass('selected-project-type');
-        $('#upForGrabsType').removeClass('selected-project-type');
-        $('#onTheFenceType').removeClass('selected-project-type');
-      }
-    });
-
     $(document).click(function () {
       Backbone.EventBroker.trigger('hide-header-dropdowns');
     });
 
-
     // Header Click Events
-
     $('#addNewProject').click(function () {
       Backbone.EventBroker.trigger('add-new-proj-clicked');
     });
@@ -140,7 +108,7 @@ define(['jquery',
     new Router();
     // Start the backbone history, but also prevent unspecified hashes from navigating anywhere but the home page
     if (!Backbone.history.start()) {
-      window.location = '/#on-the-fence';
+      window.location = '/#ideas';
     }
   };
 
