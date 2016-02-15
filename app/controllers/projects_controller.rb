@@ -564,14 +564,17 @@ class ProjectsController < ApplicationController
 
       all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)
 
-      if parent_comment.present?
+      # if reply and the parent comment wasn't you
+      if parent_comment.present? && parent_comment.user.id != user.id
         UserMailer.delay.notify_user_of_comment_reply(
           user: parent_comment.user,
           comment: comment,
           parent_comment: parent_comment,
           project: project
         )
-      else
+
+      # else if there was no parent comment and this was not your project
+      elsif parent_comment.nil? && project.user.id != user.id
         UserMailer.delay.notify_user_of_comment(
           user: parent_comment.user,
           comment: comment,
