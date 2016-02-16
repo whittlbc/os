@@ -1286,9 +1286,10 @@ $post-gray: #B6B8C0;
     position: relative;
     line-height: 38.5px;
     display: inline-block;
+    width: 60%;
 
     a {
-      max-width: 175px;
+      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -1341,6 +1342,11 @@ $post-gray: #B6B8C0;
 
   .irc-channel-text {
     color: #B0B0B5;
+    max-width: 47%;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .fa-check {
@@ -1440,6 +1446,11 @@ $post-gray: #B6B8C0;
   .linebreak {
     position: relative;
     top: 2px;
+  }
+
+  .integration-link > a {
+    width: auto;
+    max-width: 50%;
   }
 
   .selectize-dropdown-content {
@@ -2099,6 +2110,18 @@ $post-gray: #B6B8C0;
   color: #c4c5ca;
   padding-left: 12px;
   margin-top: 5px;
+}
+
+@media (max-width: 1180px) {
+  #ircContainer {
+    .integration-link > a {
+      width: auto;
+    }
+  }
+
+  .integration-link {
+    width: 54% !important;
+  }
 }
 
 @media (max-width: 1150px) {
