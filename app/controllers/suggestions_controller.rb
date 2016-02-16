@@ -15,6 +15,10 @@ class SuggestionsController < ApplicationController
 
     Suggestion.new(hash).save!
 
+    if user.present?
+      UserMailer.delay.received_suggestion(user)
+    end
+
     UserMailer.delay.notify_admin_of_suggestion(
       user: from_logged_in_user ? user : nil,
       text: params[:text]
