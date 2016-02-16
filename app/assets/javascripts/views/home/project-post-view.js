@@ -9,7 +9,8 @@ define(['jquery',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/home/project-post-view',
   'backbone-eventbroker',
-  'jquery-transit'
+  'jquery-transit',
+  'linkify'
 ], function ($,
    Backbone,
    _,
@@ -291,6 +292,9 @@ define(['jquery',
         });
       }
 
+      var hasTags = correctedLangsFramesArray.length > 0;
+      var hasDomain = !_.isEmpty(self.domains);
+
       this.$el.html(ProjectPostViewTpl({
         title: self.title,
         subtitle: self.subtitle,
@@ -306,8 +310,9 @@ define(['jquery',
         projectType: self.projectType,
         userPic: self.owner_pic,
         voted: self.voted,
-        hasTags: correctedLangsFramesArray.length > 0,
-        hasDomain: !_.isEmpty(self.domains),
+        hasTags: hasTags,
+        hasDomain: hasDomain,
+        showLineBreak: hasTags && hasDomain,
         domains: self.domains.join(',  '),
         showContribsCount: self.status == OSUtil.PROJECT_TYPES.indexOf('ideas') && !self.upForGrabs,
         upForGrabs: self.upForGrabs,
@@ -319,6 +324,10 @@ define(['jquery',
       this.$seekingContainer = this.$el.find('.post-seeking-container');
       this.$date = this.$el.find('.project-extra-details-container .date');
       this.addListeners();
+
+      this.$el.find('.project-post-subtitle-text').linkify({
+        target: '_blank'
+      });
 
       this.userInfoBubble = new UserInfoBubble({
         el: this.$el.find('.user-info-bubble')

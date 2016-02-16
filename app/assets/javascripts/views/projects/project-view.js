@@ -191,8 +191,7 @@ define(['jquery',
       var self = this;
 
       Github.getContributors(project.owner_gh_username, project.repo_name, function (contribData) {
-        var shContribs = _.union(project.contributors.admin, project.contributors.others);
-        var allContribs = _.union(shContribs, contribData);
+        var allContribs = _.union(project.contributors.others, contribData);
         self.handleFetchedGHContribs(allContribs, project.owner_gh_username);
       }, function () {
         self.revertContribsToSHOnly(project);

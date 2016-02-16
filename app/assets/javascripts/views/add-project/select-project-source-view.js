@@ -124,7 +124,6 @@ define(['jquery',
       this.createFromScratch.render();
 
       if (options.selectedStage === OSUtil.PROJECT_TYPES[0]) {
-        console.log('should have rendered icon', this.$el.find('.ufg-icon'));
         this.ufgIcon = new SVG({
           el: this.$el.find('.ufg-icon'),
           svg: 'up-for-grabs'

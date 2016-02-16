@@ -146,6 +146,10 @@ $side-filters-width: 18.25%;
 
 .project-post-subtitle-text {
   cursor: pointer;
+  a,
+  a:hover {
+    color: #00A6C9;
+  }
 }
 
 .tag-containers {
@@ -1494,13 +1498,13 @@ $side-filters-width: 18.25%;
 
 #floatingLoginWithGHBtn.not-safari + .tooltip.top {
   .tooltip-inner {
-    width: 100px !important;
+    width: 105px !important;
   }
 }
 
 #floatingLoginWithGHBtn.safari + .tooltip.top {
   .tooltip-inner {
-    width: 105px !important;
+    width: 108px !important;
     font-family: 'Proxima-Nova-SemiBold';
   }
 }

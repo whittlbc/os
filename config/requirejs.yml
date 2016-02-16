@@ -15,6 +15,7 @@ paths:
     selectize: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/selectize'
     tabs: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/tabs'
     jquery-transit: 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/js/jquery-transit'
+    linkify: 'https://cdnjs.cloudflare.com/ajax/libs/jQuery-linkify/1.1.7/jquery.linkify.min'
 shim:
     jquery:
         exports: '$'
@@ -53,6 +54,9 @@ shim:
     jquery-transit:
         deps: ['jquery']
         exports: 'jquery-transit'
+    linkify:
+        deps: ['jquery']
+        exports: 'linkify'
 
 modules:
     - name: 'application'

@@ -21,7 +21,7 @@ class LoginController < ApplicationController
     if body['access_token']
       upsert_user(body['access_token'])
     else
-      redirect_to '/#on-the-fence'
+      redirect_to '/#ideas'
     end
   end
 
