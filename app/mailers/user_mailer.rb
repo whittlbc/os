@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
-  default from: 'benwhittle31@gmail.com',
-          return_path: 'benwhittle31@gmail.com'
+
+  default from: 'Sourcehoney <team@sourcehoney.com>', return_path: ENV['MANDRILL_USERNAME']
 
   LOGO = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/sourcehoney.png'
 
