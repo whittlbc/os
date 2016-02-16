@@ -43,7 +43,7 @@ class UserMailer < ActionMailer::Base
     @commenter = comment.user.gh_username
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
-    subject = 'Someone commented on your project on Sourcehoney'
+    subject = 'Someone commented on your project'
 
     if ENV['MAILER_PERFORM_DELIVERIES']
       email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email

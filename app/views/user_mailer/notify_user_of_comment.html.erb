@@ -15,14 +15,14 @@
       <p style="line-height: 1.5em"><b><%= @commenter %></b> commented on your project, <b><%= @project_name %></b>:</p>
     </td>
   </tr>
-  <tr style="height: 25%; width: 100%;">
-    <td align="left" valign="top" style="height: 34%; width: 100%; padding-left: 9%; padding-right: 9%; color: black; font-size: 1.1em; padding-top: 2%">
-      <p style="line-height: 1.5em; font-style: italic;">"<%= @comment_text %>"</p>
+  <tr style="height: auto; width: 100%;">
+    <td align="left" valign="top" style="height: auto; width: 100%; padding-left: 9%; padding-right: 9%; padding-bottom: 2%; color: black; font-size: 1.1em;">
+      <p style="font-style: italic; margin-top: 0.5em; margin-bottom: 0;">"<%= @comment_text %>"</p>
     </td>
   </tr>
   <tr style="height: 15%; width: 100%;">
     <td align="center" valign="center" style="height: 15%; width: 100%; padding-bottom: 20px;">
-      <a style="text-decoration: none;" href="<%= @redirect_base_url %>/#projects/<%= @project_uuid %>"><p style="background-color: #00B7D6; color: white; text-align: center; line-height: 125%; border-radius: 4px; width: 180px; max-width: 67%; font-size: 1.4em; margin-left: auto; margin-right: auto; padding-top: 12px; padding-bottom: 12px;">View on Sourcehoney</p></a>
+      <a style="text-decoration: none;" href="<%= @redirect_base_url %>/#projects/<%= @project_uuid %>"><p style="background-color: #00B7D6; color: white; text-align: center; line-height: 125%; border-radius: 4px; width: 190px; max-width: 67%; font-size: 1.25em; margin-left: auto; margin-right: auto; padding-top: 12px; padding-bottom: 12px;">View on Sourcehoney</p></a>
     </td>
   </tr>
 
