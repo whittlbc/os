@@ -24,8 +24,9 @@ class UserMailer < ActionMailer::Base
     @parent_comment_text = parent_comment.text
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
 
-    send(user.email, "Someone replied to your comment on the project, #{@project_name}")
+    send(user.email, "Someone replied to your comment on the project: #{project_name_abbrev}")
   end
 
   def notify_user_of_comment(user: nil, comment: nil, project: nil)
@@ -36,8 +37,9 @@ class UserMailer < ActionMailer::Base
     @commenter = comment.user.gh_username
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
 
-    send(user.email, "Someone commented on your project, #{@project_name}")
+    send(user.email, "Someone commented on your project: #{project_name_abbrev}")
   end
 
   def received_suggestion(user)
