@@ -61,7 +61,7 @@ class UserMailer < ActionMailer::Base
   def send_email(email, subject)
     puts "SENDING EMAIL TO: #{email}"
     if (ENV['MAILER_PERFORM_DELIVERIES'] || '').downcase == 'true'
-      mail(to: (((ENV['MAILER_PERFORM_DELIVERIES'] || '').downcase == 'true') ? ENV['MAIL_TO_OVERRIDE'] : email), subject: subject)
+      mail(to: (((ENV['OVERRIDE_EMAIL'] || '').downcase == 'true') ? ENV['MAIL_TO_OVERRIDE'] : email), subject: subject)
     end
   end
 
