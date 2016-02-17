@@ -27,7 +27,7 @@ class UserMailer < ActionMailer::Base
     @parent_comment_text = parent_comment.text
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
-    subject = 'Someone replied to your comment'
+    subject = "Someone replied to your comment on the project, #{@project_name}"
 
     if ENV['MAILER_PERFORM_DELIVERIES']
       email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email
@@ -43,7 +43,8 @@ class UserMailer < ActionMailer::Base
     @commenter = comment.user.gh_username
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
-    subject = 'Someone commented on your project'
+    subject = "Someone commented on your project, #{@project_name}"
+
 
     if ENV['MAILER_PERFORM_DELIVERIES']
       email = ENV['OVERRIDE_EMAIL'] ? ENV['MAIL_TO_OVERRIDE'] : user.email
