@@ -574,7 +574,7 @@ class ProjectsController < ApplicationController
         )
 
       # else if there was no parent comment and this was not your project
-      elsif parent_comment.nil? && project.user.id != user.id
+      elsif parent_comment.nil?
         UserMailer.delay.notify_user_of_comment(
           user: project.user,
           comment: comment,
