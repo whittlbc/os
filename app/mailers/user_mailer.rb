@@ -61,7 +61,8 @@ class UserMailer < ActionMailer::Base
   def send_email(email, subject)
     puts "SENDING EMAIL TO: #{email}"
     if ENV['MAILER_PERFORM_DELIVERIES'] == 'true'
-      mail(to: ((ENV['OVERRIDE_EMAIL'] == 'true') ? ENV['MAIL_TO_OVERRIDE'] : email), subject: subject)
+      mailing = mail(to: ((ENV['OVERRIDE_EMAIL'] == 'true') ? ENV['MAIL_TO_OVERRIDE'] : email), subject: subject)
+      puts "MAIL RESPONSE: #{mailing.inspect}"
     end
   end
 
