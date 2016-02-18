@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def notify_user_of_comment_reply(user: nil, comment: nil, parent_comment: nil, project: nil)
-    @recipient_name = user.gh_username
+    @recipient_name = get_recipient_name(user)
     @project_name = project.title
     @project_uuid = project.uuid
     @comment_text = comment.text
@@ -30,7 +30,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def notify_user_of_comment(user: nil, comment: nil, project: nil)
-    @recipient_name = user.gh_username
+    @recipient_name = get_recipient_name(user)
     @project_name = project.title
     @project_uuid = project.uuid
     @comment_text = comment.text
@@ -43,7 +43,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def received_suggestion(user)
-    @recipient_name = user.gh_username
+    @recipient_name = get_recipient_name(user)
     @company_logo = LOGO
 
     send_email(user.email, 'Thanks for the suggestion!')
@@ -56,6 +56,16 @@ class UserMailer < ActionMailer::Base
     @company_logo = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/sourcehoney.png'
 
     send_email(ENV['ADMIN_EMAIL'], 'New Suggestion!')
+  end
+
+  def get_recipient_name(user)
+    name = user.try(:name)
+
+    if user.try(:name).try(:present?)
+      name.split(' ')[0]
+    else
+      user.try(:gh_username)
+    end
   end
 
   def send_email(email, subject)
