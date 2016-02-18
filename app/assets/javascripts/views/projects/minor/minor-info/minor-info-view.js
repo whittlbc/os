@@ -229,9 +229,9 @@ define(['jquery',
 
     checkIfNeedToShowSeekingTooltip: function () {
       var $seeking = this.$el.find('.seeking');
-      // if text is overflowing, enable the tooltip
+      // if text is overflowing, enable the title
       if ($seeking[0].scrollWidth > $seeking.innerWidth()) {
-        $seeking.tooltip();
+        $seeking.attr('title', this.joinedSeeking);
       }
     },
 
@@ -305,10 +305,12 @@ define(['jquery',
         };
       }
 
+      this.joinedSeeking = (options.seeking || []).join(', ');
+
       this.$el.html(MinorInfoViewTpl({
         showSeekingDuringEdit: !this.upForGrabs,
         showSeekingNormally: !this.upForGrabs && !_.isEmpty(options.seeking),
-        seeking: (options.seeking || []).join(', '),
+        seeking: this.joinedSeeking,
         postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
         showRepoName: showRepoName,
         repoName: repoName,
@@ -396,7 +398,7 @@ define(['jquery',
         });
 
         // THIS IS FUCKING UP - TOOLTIP WON'T GO AWAY WHEN HOVER OFF SOMETIMES
-        //this.checkIfNeedToShowSeekingTooltip();
+        this.checkIfNeedToShowSeekingTooltip();
       }
 
       if (options.editMode && showLicense) {

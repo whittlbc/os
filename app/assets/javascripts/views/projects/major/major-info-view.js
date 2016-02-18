@@ -517,11 +517,11 @@ define(['jquery',
 
       // if text is overflowing, enable the tooltip
       if ($title[0].scrollWidth > $title.innerWidth()) {
-        $title.tooltip();
+        $title.attr('title', this.title);
       }
 
       if ($subtitle[0].scrollWidth > $subtitle.innerWidth()) {
-        $subtitle.tooltip();
+        $subtitle.attr('title', this.subtitle);
       }
     },
 
@@ -539,6 +539,7 @@ define(['jquery',
       this.isContributor = options.is_contributor;
       this.isOwner = options.is_owner;
       this.title = options.title || '';
+      this.subtitle = options.subtitle || '';
 
       var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
 
@@ -547,7 +548,7 @@ define(['jquery',
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
         projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
-        subtitle: options.subtitle ? options.subtitle : '',
+        subtitle: this.subtitle,
         description: options.description ? options.description : '',
         voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
         starred: options.starred,
