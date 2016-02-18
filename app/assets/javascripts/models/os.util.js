@@ -53,10 +53,6 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
         "title": "IRCnet"
       },
       {
-        "id": "LinkBR",
-        "title": "LinkBR"
-      },
-      {
         "id": "OFTC",
         "title": "OFTC"
       },

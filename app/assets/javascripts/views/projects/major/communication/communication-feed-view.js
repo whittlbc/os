@@ -111,7 +111,7 @@ define(['jquery',
 
       this.$el.html(CommunicationFeedViewTpl({
         showNoComments: this.noCommentsShown,
-        noCommentsText: this.isTeamFeed ? 'No team chatter......yet' : ('Be the first to comment on this ' + (this.isIdea ? 'idea' : 'project'))
+        noCommentsText: this.isTeamFeed ? 'No team chatter.....yet' : ('Be the first to comment on this ' + (this.isIdea ? 'idea' : 'project'))
       }));
 
     }

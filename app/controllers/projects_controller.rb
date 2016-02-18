@@ -185,7 +185,7 @@ class ProjectsController < ApplicationController
 
       Contributor.new(contrib_data).save!
 
-      if !allowable_params[:slackURL].nil? && !allowable_params[:slackURL].empty?
+      if allowable_params[:slackURL].present?
         slackURL = allowable_params[:slackURL]
         slack_data = {
             :service => 'Slack',
@@ -193,19 +193,29 @@ class ProjectsController < ApplicationController
             :url => slackURL,
             :users => [user.id]
         }
-        if !allowable_params[:slackAPIKey].nil? && !allowable_params[:slackAPIKey].empty?
+        if allowable_params[:slackAPIKey].present?
           slack_data[:key] = allowable_params[:slackAPIKey]
         end
         Integration.new(slack_data).save!
       end
 
-      if !allowable_params[:hipChatURL].nil? && !allowable_params[:hipChatURL].empty?
+      if allowable_params[:hipChatURL].present?
         hipChatURL = allowable_params[:hipChatURL]
         Integration.new(service: 'HipChat', project_id: project.id, url: hipChatURL, users: [user.id]).save!
       end
 
-      if !allowable_params[:irc].nil? && !allowable_params[:irc].empty?
-        Integration.new(service: 'IRC', project_id: project.id, irc: allowable_params[:irc], users: [user.id]).save!
+      if allowable_params[:irc].present?
+        irc = allowable_params[:irc]
+
+        if irc[:channel].present? && irc[:network].present?
+          channel = irc[:channel].gsub('#', '')
+          network_url = Project::IRC_URL_FOR_NETWORK[irc[:network]]
+          url = "irc://irc.#{network_url}/#{channel}"
+        else
+          url = nil
+        end
+
+        Integration.new(service: 'IRC', project_id: project.id, url: url, irc: irc, users: [user.id]).save!
       end
 
       render :json => {:uuid => project.uuid}
@@ -882,10 +892,19 @@ class ProjectsController < ApplicationController
               irc_integration.first.destroy!
             end
           else
+            irc = integrations[:irc]
+            url = nil
+
+            if irc[:channel].present? && irc[:network].present?
+              channel = irc[:channel].gsub('#', '')
+              network_url = Project::IRC_URL_FOR_NETWORK[irc[:network]]
+              url = "irc://irc.#{network_url}/#{channel}"
+            end
+
             if irc_integration.blank?
-              Integration.new(service: 'IRC', project_id: project.id, irc: integrations[:irc]).save!
+              Integration.new(service: 'IRC', project_id: project.id, irc: integrations[:irc], url: url).save!
             else
-              irc_integration.first.update_attributes(irc: integrations[:irc])
+              irc_integration.first.update_attributes(irc: integrations[:irc], url: url)
             end
           end
         end

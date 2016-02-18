@@ -278,6 +278,7 @@ define(['jquery',
           } else if (integration.service == 'IRC') {
             hasIRC = true;
             ircObj = integration.irc;
+            ircObj.url = integration.url;
           }
         });
       }
@@ -327,7 +328,7 @@ define(['jquery',
         ircChannel: hasIRC ? ircObj.channel : null,
         hasIRCNetwork: hasIRC && ircObj.network,
         ircNetwork: hasIRC ? ircObj.network : null,
-        ircURL: hasIRC ? 'irc://' + ircObj.channel + '@' + ircObj.network : null,
+        ircURL: hasIRC ? ircObj.url : null,
         showLicense: showLicense,
         license: license,
         licenseSpecified: license != null,
