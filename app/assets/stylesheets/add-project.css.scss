@@ -147,6 +147,33 @@ input {
   background-color: #00B3D7;
 }
 
+.ufg-choice:hover + .ufg-choice-explanation {
+  opacity: 1;
+}
+
+.ufg-choice-explanation {
+  position: absolute;
+  right: -75px;
+  text-align: center;
+  width: 165px;
+  font-size: 11.5px;
+  height: auto;
+  opacity: 0;
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+  -ms-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
+}
+
+.ufg-choice-explanation.yes {
+  top: 18px;
+}
+
+.ufg-choice-explanation.no {
+  top: 42px;
+}
+
 .project-source-selection {
   svg {
     height: 124px;
