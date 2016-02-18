@@ -805,6 +805,15 @@ $post-gray: #B6B8C0;
     }
   }
 
+  a[data-feed="team"] + .tooltip {
+    width: 165px;
+
+    .tooltip-inner {
+      width: 165px;
+      white-space: pre-wrap;
+    }
+  }
+
 }
 
 .communication-tab.disabled {

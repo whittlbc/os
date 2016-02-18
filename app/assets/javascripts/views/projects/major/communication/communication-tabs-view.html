@@ -10,7 +10,7 @@
         </li>
         {{#showTeam}}
         <li class="tab communication-tab {{^onTeam}}disabled{{/onTeam}}">
-            <a data-feed="team" class="{{^onTeam}}disabled{{/onTeam}} {{#teamActive}}active{{/teamActive}}">{{^onTeam}}<i class="fa fa-lock"></i>{{/onTeam}}<span>Team</span></a>
+            <a data-feed="team" class="{{^onTeam}}disabled {{/onTeam}} {{#teamActive}}active{{/teamActive}}" {{^onTeam}}data-toggle="tooltip" data-placement="top" title="You must be a contributor to this project to access this feed."{{/onTeam}}>{{^onTeam}}<i class="fa fa-lock"></i>{{/onTeam}}<span>Team</span></a>
         </li>
         {{/showTeam}}
     </ul>
