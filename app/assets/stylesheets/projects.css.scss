@@ -183,9 +183,22 @@ $post-gray: #B6B8C0;
     white-space: nowrap;
     text-overflow: ellipsis;
     position: absolute;
+    cursor: default;
     left: 31px;
     top: 0;
     right: 0;
+  }
+
+  .project-title-span + .tooltip {
+    width: auto;
+    max-width: none;
+    top: -27px !important;
+
+    .tooltip-inner {
+      width: auto;
+      max-width: none;
+      white-space: nowrap;
+    }
   }
 
   .star {
@@ -613,6 +626,7 @@ $post-gray: #B6B8C0;
   margin-top: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: default;
 
   a,
   a:hover {
@@ -622,6 +636,18 @@ $post-gray: #B6B8C0;
 
 .major-info-project-subtitle.hide-overflow {
   overflow: hidden
+}
+
+.major-info-project-subtitle + .tooltip {
+  width: auto;
+  max-width: none;
+  top: 66px !important;
+
+  .tooltip-inner {
+    width: auto;
+    max-width: none;
+    white-space: nowrap;
+  }
 }
 
 .major-info-project-description {
