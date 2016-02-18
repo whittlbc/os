@@ -262,6 +262,7 @@ define(['jquery',
 
       project.fetchComments(data, {
         success: function (comments) {
+          Backbone.EventBroker.trigger('is-team-feed', feedStatus == 1);
           self.projectMajorView.passComments({ comments: comments });
         }
       });

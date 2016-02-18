@@ -21,6 +21,7 @@ define(['jquery',
       options = options || {};
 
       this.ufg = options.ufg;
+      this.isIdea = options.isIdea;
       this.showComments = !this.ufg;
     },
 
@@ -111,7 +112,8 @@ define(['jquery',
       }));
 
       this.feedContainerView = new CommunicationFeedContainerView({
-        el: this.$el.find('#containerViewBindPoint')
+        el: this.$el.find('#containerViewBindPoint'),
+        isIdea: this.isIdea
       });
 
       this.feedContainerView.render();

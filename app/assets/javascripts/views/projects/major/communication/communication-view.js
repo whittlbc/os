@@ -20,6 +20,7 @@ define(['jquery',
       options = options || {};
 
       this.ufg = options.ufg;
+      this.isIdea = options.isIdea;
 
       $(document).click(function () {
         Backbone.EventBroker.trigger('comments:hide-empty-replies');
@@ -27,9 +28,6 @@ define(['jquery',
     },
 
     events: {},
-
-    handleTabSelected: function (index) {
-    },
 
     showNewComment: function (data) {
       this.communicationPanelsView.showNewComment(data);
@@ -44,8 +42,6 @@ define(['jquery',
     },
 
     render: function (options) {
-      var self = this;
-
       this.$el.html(CommunicationViewTpl());
 
       this.communicationTabsView = new CommunicationTabsView({
@@ -53,13 +49,12 @@ define(['jquery',
         ufg: this.ufg
       });
 
-      this.listenTo(this.communicationTabsView, 'tab:selected', this.handleTabSelected);
-
       this.communicationTabsView.render(options);
 
       this.communicationPanelsView = new CommunicationPanelsView({
         el: '#panelsView',
-        ufg: this.ufg
+        ufg: this.ufg,
+        isIdea: this.isIdea
       });
 
       this.communicationPanelsView.render();
