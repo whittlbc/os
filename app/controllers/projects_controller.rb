@@ -40,7 +40,11 @@ class ProjectsController < ApplicationController
       user = User.find_by(uuid: params[:user_uuid])
     end
 
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({ link_attributes: { rel: 'nofollow', target: "_blank" } }), fenced_code_blocks: true, autolink: true, tables: false)
+
+    markdown = Redcarpet::Markdown.new(PygmentedMarkdown.new({ link_attributes: { rel: 'nofollow', target: '_blank' } }), fenced_code_blocks: true)
+
+
+    # markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({ link_attributes: { rel: 'nofollow', target: "_blank" } }), fenced_code_blocks: true, autolink: true, tables: false)
 
     project = Project.find_by(uuid: params[:uuid])
 
