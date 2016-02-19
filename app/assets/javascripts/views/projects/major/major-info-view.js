@@ -31,6 +31,7 @@ define(['jquery',
       this.formatDomains();
       this.truncated = false;
       this.isSafari = ($('body').attr('browser') === 'safari');
+      this.maxStartingDetailsHeight = 110;
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode'
@@ -199,7 +200,7 @@ define(['jquery',
       var description = $description[0];
       $description.height(getComputedStyle(description).height);
       description.offsetHeight;
-      $description.height(125);
+      $description.height(this.maxStartingDetailsHeight);
       this.$el.find('.see-more-description').html('See More');
       this.truncated = true;
     },
@@ -506,8 +507,8 @@ define(['jquery',
     determineDescriptionHeight: function () {
       var $description = this.$el.find('.major-info-project-description .markdown');
 
-      if ($description.height() > 125) {
-        $description.height(125);
+      if ($description.height() > this.maxStartingDetailsHeight) {
+        $description.height(this.maxStartingDetailsHeight);
         this.$el.find('.see-more-description').show();
         this.truncated = true;
       }
