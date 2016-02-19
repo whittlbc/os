@@ -133,6 +133,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
+    redcarpet (3.0.0)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -202,6 +203,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails4_upgrade
   rails_12factor (= 0.0.2)
+  redcarpet
   requirejs-rails!
   rest-client (>= 1.8.0)
   sass-rails (~> 4.0.0)

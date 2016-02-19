@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
   require 'rest-client'
   require 'json'
   require 'date'
+  require 'redcarpet'
 
   include ProjectHelper
 
@@ -39,6 +40,8 @@ class ProjectsController < ApplicationController
       user = User.find_by(uuid: params[:user_uuid])
     end
 
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({ link_attributes: { rel: 'nofollow', target: "_blank" } }), fenced_code_blocks: true, autolink: true, tables: false)
+
     project = Project.find_by(uuid: params[:uuid])
 
     if !project.nil? && project.is_active?
@@ -52,6 +55,7 @@ class ProjectsController < ApplicationController
       if !project.blank?
         project_details = {
           :post_date => project.created_at.utc.iso8601,
+          :markdown_description => markdown.render(project.description),
           :description => project.description,
           :langs_and_frames => project.langs_and_frames,
           :license => project.license,

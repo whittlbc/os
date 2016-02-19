@@ -656,15 +656,15 @@ $post-gray: #B6B8C0;
   margin-bottom: 12px;
   float: left;
 
-  p {
+  .markdown {
     font-size: 14px;
-    white-space: pre-wrap;
     overflow: hidden;
   }
 
   p.none {
     font-style: italic;
     color: $light-gray;
+    font-size: 14px;
   }
 
   .see-more-description {

@@ -7,7 +7,6 @@ define(['jquery',
   'models/all-langs',
   'views/widgets/more-dropdown/more-dropdown',
   'stache!views/projects/major/major-info-view',
-  'marked',
   'selectize',
   'toggle',
   'backbone-eventbroker',
@@ -20,8 +19,9 @@ define(['jquery',
    Project,
    AllLangs,
    MoreDropdown,
-   MajorInfoViewTpl,
-   marked) {
+   MajorInfoViewTpl
+) {
+
   'use strict';
 
   var MajorInfoView = OSView.extend({
@@ -33,7 +33,7 @@ define(['jquery',
       this.isSafari = ($('body').attr('browser') === 'safari');
 
       Backbone.EventBroker.register({
-        're-render-for-cancel-edit-mode': 'cancelEditMode',
+        're-render-for-cancel-edit-mode': 'cancelEditMode'
       }, this);
     },
 
@@ -162,7 +162,7 @@ define(['jquery',
           if (!this.hasShownMoreBefore) {
             setTimeout(function () {
               self.hasShownMoreBefore = true;
-              self.entireDescriptionHeight = self.$el.find('.major-info-project-description > p').height();
+              self.entireDescriptionHeight = self.$el.find('.major-info-project-description .markdown').height();
             }, 305);
           }
         } else {
@@ -174,7 +174,7 @@ define(['jquery',
     },
 
     showMoreDescription: function () {
-      var $description = this.$el.find('.major-info-project-description > p');
+      var $description = this.$el.find('.major-info-project-description .markdown');
       var endHeight;
 
       if (this.entireDescriptionHeight) {
@@ -195,7 +195,7 @@ define(['jquery',
     },
 
     showLessDescription: function () {
-      var $description = this.$el.find('.major-info-project-description > p');
+      var $description = this.$el.find('.major-info-project-description .markdown');
       var description = $description[0];
       $description.height(getComputedStyle(description).height);
       description.offsetHeight;
@@ -504,7 +504,7 @@ define(['jquery',
     },
 
     determineDescriptionHeight: function () {
-      var $description = this.$el.find('.major-info-project-description > p');
+      var $description = this.$el.find('.major-info-project-description .markdown');
 
       if ($description.height() > 100) {
         $description.height(100);
@@ -549,15 +549,12 @@ define(['jquery',
 
       var description = options.description || '';
 
-      if (!this.editMode) {
-        description = marked(description);
-      }
-
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
         projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
         subtitle: this.subtitle,
-        description: description,
+        markdownDescription: options.markdown_description,
+        description: options.description || '',
         voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
         starred: options.starred,
         voted: options.voted,
@@ -607,9 +604,6 @@ define(['jquery',
         } else {
           this.$el.find('p.none').hide();
           this.determineDescriptionHeight();
-          this.$el.find('.major-info-project-description > p').linkify({
-            target: '_blank'
-          });
         }
 
         this.checkForTitleSubTitleOverflow();

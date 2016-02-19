@@ -84,3 +84,5 @@ gem 'newrelic_rpm'
 
 # Slack integration
 gem 'slack-api'
+
+gem 'redcarpet'
