@@ -77,7 +77,7 @@ define(['jquery',
         hasScrolled();
         didScroll = false;
       }
-    }, 5);
+    }, 150);
 
     $(document).click(function () {
       Backbone.EventBroker.trigger('hide-header-dropdowns');

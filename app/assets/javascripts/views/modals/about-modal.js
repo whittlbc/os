@@ -18,7 +18,6 @@ define(['jquery',
       this.currentTopPos = 135;
       this.aboutModalHeight = 297;
       this.isSafari = $('body').attr('browser') === 'safari';
-      console.log(this.isSafari);
     },
 
     events: {

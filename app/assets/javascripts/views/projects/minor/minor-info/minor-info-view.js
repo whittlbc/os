@@ -230,7 +230,7 @@ define(['jquery',
     checkIfNeedToShowSeekingTooltip: function () {
       var $seeking = this.$el.find('.seeking');
       // if text is overflowing, enable the title
-      if ($seeking[0].scrollWidth > $seeking.innerWidth()) {
+      if ($seeking[0] && $seeking[0].scrollWidth > $seeking.innerWidth()) {
         $seeking.attr('title', this.joinedSeeking);
       }
     },
