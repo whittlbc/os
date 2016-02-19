@@ -2,7 +2,8 @@ define(['jquery',
   'backbone',
   'views/projects/major/communication/communication-feed-item-view',
   'stache!views/projects/major/communication/communication-feed-view',
-  'underscore'
+  'underscore',
+  'backbone-eventbroker'
 ], function ($,
    Backbone,
    FeedItemView,
@@ -12,11 +13,23 @@ define(['jquery',
 
   var CommunicationFeedView = Backbone.View.extend({
 
-    initialize: function () {
+    initialize: function (options) {
+      options = options || {};
+
+      this.isIdea = options.isIdea;
       this.childCommentListCount = 0;
+      this.isTeamFeed = false;
+
+      Backbone.EventBroker.register({
+        'is-team-feed': 'setIsTeamFeed'
+      }, this);
     },
 
     events: {},
+
+    setIsTeamFeed: function (bool) {
+      this.isTeamFeed = bool;
+    },
 
     hideAllReplyAreas: function (commentView) {
       var self = this;
@@ -97,7 +110,8 @@ define(['jquery',
       this.noCommentsShown = options && options.showNoComments;
 
       this.$el.html(CommunicationFeedViewTpl({
-        showNoComments: this.noCommentsShown
+        showNoComments: this.noCommentsShown,
+        noCommentsText: this.isTeamFeed ? 'No team chatter.....yet' : ('Be the first to comment on this ' + (this.isIdea ? 'idea' : 'project'))
       }));
 
     }

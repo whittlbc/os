@@ -229,9 +229,9 @@ define(['jquery',
 
     checkIfNeedToShowSeekingTooltip: function () {
       var $seeking = this.$el.find('.seeking');
-      // if text is overflowing, enable the tooltip
-      if ($seeking[0].scrollWidth > $seeking.innerWidth()) {
-        $seeking.tooltip();
+      // if text is overflowing, enable the title
+      if ($seeking[0] && $seeking[0].scrollWidth > $seeking.innerWidth()) {
+        $seeking.attr('title', this.joinedSeeking);
       }
     },
 
@@ -278,6 +278,7 @@ define(['jquery',
           } else if (integration.service == 'IRC') {
             hasIRC = true;
             ircObj = integration.irc;
+            ircObj.url = integration.url;
           }
         });
       }
@@ -304,10 +305,12 @@ define(['jquery',
         };
       }
 
+      this.joinedSeeking = (options.seeking || []).join(', ');
+
       this.$el.html(MinorInfoViewTpl({
         showSeekingDuringEdit: !this.upForGrabs,
         showSeekingNormally: !this.upForGrabs && !_.isEmpty(options.seeking),
-        seeking: (options.seeking || []).join(', '),
+        seeking: this.joinedSeeking,
         postDate: options.post_date ? OSUtil.getTimeAgo(options.post_date) : '',
         showRepoName: showRepoName,
         repoName: repoName,
@@ -327,7 +330,7 @@ define(['jquery',
         ircChannel: hasIRC ? ircObj.channel : null,
         hasIRCNetwork: hasIRC && ircObj.network,
         ircNetwork: hasIRC ? ircObj.network : null,
-        ircURL: hasIRC ? 'irc://' + ircObj.channel + '@' + ircObj.network : null,
+        ircURL: hasIRC ? ircObj.url : null,
         showLicense: showLicense,
         license: license,
         licenseSpecified: license != null,
@@ -394,8 +397,7 @@ define(['jquery',
           self.hidePopovers();
         });
 
-        // THIS IS FUCKING UP - TOOLTIP WON'T GO AWAY WHEN HOVER OFF SOMETIMES
-        //this.checkIfNeedToShowSeekingTooltip();
+        this.checkIfNeedToShowSeekingTooltip();
       }
 
       if (options.editMode && showLicense) {

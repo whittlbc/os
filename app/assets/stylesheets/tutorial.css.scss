@@ -47,7 +47,7 @@ $footer-height: 48px;
     .tutorial-text {
       white-space: normal;
       text-align: left;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .confirm-tutorial-item {
@@ -81,6 +81,10 @@ $footer-height: 48px;
         text-align: center;
         text-decoration: underline;
         color: white;
+
+        &:hover {
+          color: #e0e0e8;
+        }
       }
 
     }
@@ -98,11 +102,11 @@ $footer-height: 48px;
 // Ideas
 #ideas-tutorial-anchor {
   .tutorial-bubble-container {
-    width: 272px;
+    width: 309px;
 
     .fa-caret-up {
       top: -20px;
-      left: 121px;
+      left: 146px;
     }
   }
 }
@@ -110,11 +114,11 @@ $footer-height: 48px;
 // Launched
 #launched-tutorial-anchor {
   .tutorial-bubble-container {
-    width: 235px;
+    width: 251px;
 
     .fa-caret-up {
       top: -20px;
-      left: 108.5px;
+      left: 116.5px;
     }
   }
 }
@@ -125,14 +129,14 @@ $footer-height: 48px;
   position: absolute;
 
   .tutorial-bubble-container {
-    width: 272px;
+    width: 291px;
 
     .tutorial-text {
       text-align: center;
     }
 
     .fa-caret-down {
-      left: 127px;
+      left: 136.5px;
       bottom: -17px;
     }
   }
@@ -144,7 +148,7 @@ $footer-height: 48px;
   position: absolute;
 
   .tutorial-bubble-container {
-    width: 220px;
+    width: 233px;
 
     .tutorial-text {
       text-align: center;
@@ -152,7 +156,7 @@ $footer-height: 48px;
 
     .fa-caret-up {
       top: -20px;
-      left: 102px;
+      left: 108.5px;
     }
 
     .confirm-tutorial-item {
@@ -167,7 +171,7 @@ $footer-height: 48px;
   position: absolute;
 
   .tutorial-bubble-container {
-    width: 218px;
+    width: 229px;
 
     .tutorial-text {
       text-align: center;
@@ -195,10 +199,10 @@ body[browser="safari"] {
   // Up for Grabs
   #ideas-tutorial-anchor {
     .tutorial-bubble-container {
-      width: 277px;
+      width: 295px;
 
       .fa-caret-up {
-        left: 123.5px;
+        left: 139px;
       }
     }
   }
@@ -206,10 +210,10 @@ body[browser="safari"] {
   // Launched
   #launched-tutorial-anchor {
     .tutorial-bubble-container {
-      width: 245px;
+      width: 261px;
 
       .fa-caret-up {
-        left: 117px;
+        left: 125px;
       }
     }
   }
@@ -218,10 +222,10 @@ body[browser="safari"] {
   #footer-tutorial-anchor {
 
     .tutorial-bubble-container {
-      width: 284px;
+      width: 303px;
 
       .fa-caret-down {
-        left: 133px;
+        left: 142.5px;
       }
     }
   }
@@ -230,10 +234,10 @@ body[browser="safari"] {
   #anp-tutorial-anchor {
 
     .tutorial-bubble-container {
-      width: 225px;
+      width: 240px;
 
       .fa-caret-up {
-        left: 104.5px;
+        left: 112px;
       }
     }
   }
@@ -241,7 +245,7 @@ body[browser="safari"] {
   // Login
   #login-tutorial-anchor {
     .tutorial-bubble-container {
-      width: 220px;
+      width: 245px;
     }
   }
 

@@ -10,7 +10,8 @@ define(['jquery',
   'marked',
   'selectize',
   'toggle',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'linkify'
 ], function ($,
    Backbone,
    _,
@@ -347,8 +348,7 @@ define(['jquery',
         domains: this.domains
       };
 
-      // if Up for Grabs
-      if (this.isIdea() && this.upForGrabs) {
+      if (this.isIdea() && !this.upForGrabs) {
         data.privacy = this.$el.find('[name="privacy-edit"]').is(':checked') ? [OSUtil.OPEN_PRIVACY] : [OSUtil.REQUEST_PRIVACY];
       }
 
@@ -513,6 +513,20 @@ define(['jquery',
       }
     },
 
+    checkForTitleSubTitleOverflow: function () {
+      var $title = this.$el.find('.project-title-span');
+      var $subtitle = this.$el.find('.major-info-project-subtitle');
+
+      // if text is overflowing, enable the tooltip
+      if ($title[0].scrollWidth > $title.innerWidth()) {
+        $title.attr('title', this.title);
+      }
+
+      if ($subtitle[0].scrollWidth > $subtitle.innerWidth()) {
+        $subtitle.attr('title', this.subtitle);
+      }
+    },
+
     render: function (options) {
       var self = this;
       options = options || {};
@@ -527,12 +541,14 @@ define(['jquery',
       this.isContributor = options.is_contributor;
       this.isOwner = options.is_owner;
       this.title = options.title || '';
+      this.subtitle = options.subtitle || '';
 
       var hasTags = !_.isEmpty(options.domains) || !_.isEmpty(options.langs_and_frames);
 
       var majorActionBtnInfo = this.getMajorActionBtnInfo(options);
 
       var description = options.description || '';
+
       if (!this.editMode) {
         description = marked(description);
       }
@@ -540,7 +556,7 @@ define(['jquery',
       this.$el.html(MajorInfoViewTpl({
         title: this.title,
         projectType: options.hasOwnProperty('status') ? OSUtil.GRAMMATICAL_PROJECT_TYPES[options.status] : '',
-        subtitle: options.subtitle ? options.subtitle : '',
+        subtitle: this.subtitle,
         description: description,
         voteCount: options.hasOwnProperty('vote_count') ? options.vote_count : '-',
         starred: options.starred,
@@ -582,15 +598,24 @@ define(['jquery',
           this.addTags(options);
         }
 
+        this.$el.find('.major-info-project-subtitle').linkify({
+          target: '_blank'
+        });
+
         if (_.isEmpty(options.description)) {
           this.$el.find('p.none').show();
         } else {
           this.$el.find('p.none').hide();
           this.determineDescriptionHeight();
+          this.$el.find('.major-info-project-description > p').linkify({
+            target: '_blank'
+          });
         }
+
+        this.checkForTitleSubTitleOverflow();
       }
 
-      this.$el.find('[data-toggle="tooltip"]').tooltip();
+      this.$el.find('.share-icons-container > [data-toggle="tooltip"]').tooltip();
 
     }
   });

@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-cd public
-rm -rf assets
-cd ..
-bundle exec rake assets:precompile --trace 
+cd public && rm -rf assets && cd ..
+bundle exec rake assets:precompile --trace
 git add -A .
 git commit -m "compiled assets"
 git push origin $2

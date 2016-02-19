@@ -8,7 +8,8 @@ define(['jquery',
   'views/widgets/user-info-bubble',
   'stache!views/projects/major/communication/communication-feed-item-view',
   'marked',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'linkify'
 ], function ($,
    Backbone,
    _,
@@ -236,6 +237,10 @@ define(['jquery',
         hasChildren: this.hasChildren,
         commentNumber: this.commentNumber
       }));
+
+      this.$el.find('.comment-text').linkify({
+        target: '_blank'
+      });
 
       this.addListeners();
 

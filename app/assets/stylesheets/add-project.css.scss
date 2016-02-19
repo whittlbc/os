@@ -147,6 +147,33 @@ input {
   background-color: #00B3D7;
 }
 
+.ufg-choice:hover + .ufg-choice-explanation {
+  opacity: 1;
+}
+
+.ufg-choice-explanation {
+  position: absolute;
+  right: -75px;
+  text-align: center;
+  width: 165px;
+  font-size: 11.5px;
+  height: auto;
+  opacity: 0;
+  -webkit-transition: all 250ms;
+  -moz-transition: all 250ms;
+  -ms-transition: all 250ms;
+  -o-transition: all 250ms;
+  transition: all 250ms;
+}
+
+.ufg-choice-explanation.yes {
+  top: 18px;
+}
+
+.ufg-choice-explanation.no {
+  top: 42px;
+}
+
 .project-source-selection {
   svg {
     height: 124px;
@@ -943,7 +970,6 @@ input[name="add-project-repo-name"] {
   display: block;
   font-size: 15px;
   line-height: 25px;
-  font-family: 'Lato';
 }
 
 .project-creation-error-retry-container {

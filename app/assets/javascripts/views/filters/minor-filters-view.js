@@ -20,11 +20,36 @@ define(['jquery',
     initialize: function () {
       Backbone.EventBroker.register({
         'filters:remove-all': 'removeAllFilters',
-        'adjust-seeking-filters': 'adjustSeekingFilters'
+        'adjust-seeking-filters': 'adjustSeekingFilters',
+        'show-lang-tutorial-filters': 'showTutorialFilters',
+        'hide-tutorial-filters': 'removeAllFilters'
       }, this);
     },
 
     events: {},
+
+    showTutorialFilters: function () {
+      var self = this;
+      var domainTutorialFilters = ['Web', 'Academia', 'Dev Ops'];
+      var seekingTutorialFilters = ['Contributors', 'New Maintainer', 'Feedback'];
+
+      _.each(domainTutorialFilters, function (filter) {
+        self.addDomainItem({
+          value: filter,
+          animate: true
+        })
+      });
+
+      setTimeout(function () {
+        _.each(seekingTutorialFilters, function (filter) {
+          self.addSeekingItem({
+            value: filter,
+            animate: true,
+            force: true
+          })
+        });
+      }, 5);
+    },
 
     removeAllFilters: function () {
       var minorFilterViews = [
@@ -116,7 +141,8 @@ define(['jquery',
 
       this.seekingFiltersView.addItem({
         value: data.value,
-        animate: data.animate
+        animate: data.animate,
+        force: data.force // used for tutorial purposes to avoid shit going into the "more" dropdown
       });
     },
 

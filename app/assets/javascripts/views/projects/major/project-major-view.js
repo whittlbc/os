@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'views/os.view',
+  'models/os.util',
   'views/projects/major/major-info-view',
   'views/projects/major/communication/communication-view',
   'stache!views/projects/major/project-major-view'
@@ -9,6 +10,7 @@ define(['jquery',
    Backbone,
    _,
    OSView,
+   OSUtil,
    MajorInfoView,
    CommunicationView,
    ProjectMajorViewTpl) {
@@ -57,7 +59,8 @@ define(['jquery',
 
       this.communicationView = new CommunicationView({
         el: '#communicationView',
-        ufg: options.project.up_for_grabs === true
+        ufg: options.project.up_for_grabs === true,
+        isIdea: options.project.status == OSUtil.PROJECT_TYPES.indexOf('ideas')
       });
 
       this.communicationView.render(options);

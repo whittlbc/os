@@ -7,6 +7,18 @@ class Project < ActiveRecord::Base
   has_many :pending_requests
   has_many :implementations
 
+  IRC_URL_FOR_NETWORK = {
+    'ChLame' => 'chlame.net',
+    'EFnet' => 'efnet.org',
+    'freenode' => 'freenode.net',
+    'IRC-Hipsano' => 'irc-hispano.org',
+    'IRCnet' => 'ircnet.org',
+    'OFTC' => 'oftc.net',
+    'QuakeNet' => 'quakenet.org',
+    'Rizon' => 'rizon.net',
+    'Undernet' => 'undernet.org'
+  }
+
   scope :active, -> { where(:is_destroyed => false, :was_pulled => false) }
 
   scope :not_pulled, -> { where(:was_pulled => false) }

@@ -135,7 +135,7 @@ class ProjectsController < ApplicationController
     if !sender.nil? && !project.nil?
       project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
       client = Octokit::Client.new(:access_token => User.find_by(email: 'benwhittle31@gmail.com').password)
-      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.id)
+      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.uuid)
       render :json => {}, :status => 200
     else
       render :json => {:message => 'Either sender was nil or project was nil by uuid'}, :status => 500
@@ -185,7 +185,7 @@ class ProjectsController < ApplicationController
 
       Contributor.new(contrib_data).save!
 
-      if !allowable_params[:slackURL].nil? && !allowable_params[:slackURL].empty?
+      if allowable_params[:slackURL].present?
         slackURL = allowable_params[:slackURL]
         slack_data = {
             :service => 'Slack',
@@ -193,19 +193,29 @@ class ProjectsController < ApplicationController
             :url => slackURL,
             :users => [user.id]
         }
-        if !allowable_params[:slackAPIKey].nil? && !allowable_params[:slackAPIKey].empty?
+        if allowable_params[:slackAPIKey].present?
           slack_data[:key] = allowable_params[:slackAPIKey]
         end
         Integration.new(slack_data).save!
       end
 
-      if !allowable_params[:hipChatURL].nil? && !allowable_params[:hipChatURL].empty?
+      if allowable_params[:hipChatURL].present?
         hipChatURL = allowable_params[:hipChatURL]
         Integration.new(service: 'HipChat', project_id: project.id, url: hipChatURL, users: [user.id]).save!
       end
 
-      if !allowable_params[:irc].nil? && !allowable_params[:irc].empty?
-        Integration.new(service: 'IRC', project_id: project.id, irc: allowable_params[:irc], users: [user.id]).save!
+      if allowable_params[:irc].present?
+        irc = allowable_params[:irc]
+
+        if irc[:channel].present? && irc[:network].present?
+          channel = irc[:channel].gsub('#', '')
+          network_url = Project::IRC_URL_FOR_NETWORK[irc[:network]]
+          url = "irc://irc.#{network_url}/#{channel}"
+        else
+          url = nil
+        end
+
+        Integration.new(service: 'IRC', project_id: project.id, url: url, irc: irc, users: [user.id]).save!
       end
 
       render :json => {:uuid => project.uuid}
@@ -549,13 +559,13 @@ class ProjectsController < ApplicationController
 
     if user.present?
       comment_info = {
-          :uuid => UUIDTools::UUID.random_create.to_s,
-          :text => params[:text],
-          :project_id => project.id,
-          :user_id => user.id,
-          :vote_count => 0,
-          :feed => params[:feed],
-          :parent_id => parent_comment.try(:id)
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :text => params[:text],
+        :project_id => project.id,
+        :user_id => user.id,
+        :vote_count => 0,
+        :feed => params[:feed],
+        :parent_id => parent_comment.try(:id)
       }
       comment = Comment.new(comment_info)
       comment.save
@@ -563,6 +573,25 @@ class ProjectsController < ApplicationController
       project.update_attributes(:comments_count => (project.comments_count + 1))
 
       all_comments_of_feed_type = comments_for_feed(project.id, params[:feed], user)
+
+      # if reply and the parent comment wasn't you
+      if parent_comment.present? && parent_comment.user.id != user.id
+        UserMailer.delay.notify_user_of_comment_reply(
+          user: parent_comment.user,
+          comment: comment,
+          parent_comment: parent_comment,
+          project: project
+        )
+
+      # else if there was no parent comment and this was not your project
+      elsif parent_comment.nil? && project.user.id != user.id
+        UserMailer.delay.notify_user_of_comment(
+          user: project.user,
+          comment: comment,
+          project: project
+        )
+      end
+
       render :json => all_comments_of_feed_type
     else
       render :json => {:status => 500}
@@ -863,10 +892,19 @@ class ProjectsController < ApplicationController
               irc_integration.first.destroy!
             end
           else
+            irc = integrations[:irc]
+            url = nil
+
+            if irc[:channel].present? && irc[:network].present?
+              channel = irc[:channel].gsub('#', '')
+              network_url = Project::IRC_URL_FOR_NETWORK[irc[:network]]
+              url = "irc://irc.#{network_url}/#{channel}"
+            end
+
             if irc_integration.blank?
-              Integration.new(service: 'IRC', project_id: project.id, irc: integrations[:irc]).save!
+              Integration.new(service: 'IRC', project_id: project.id, irc: integrations[:irc], url: url).save!
             else
-              irc_integration.first.update_attributes(irc: integrations[:irc])
+              irc_integration.first.update_attributes(irc: integrations[:irc], url: url)
             end
           end
         end

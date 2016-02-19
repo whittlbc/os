@@ -4,7 +4,8 @@ define(['jquery',
   'models/os.util',
   'views/os.view',
   'stache!views/projects/major/communication/communication-tabs-view',
-  'backbone-eventbroker'
+  'backbone-eventbroker',
+  'toggle'
 ], function ($,
    Backbone,
    _,
@@ -86,6 +87,8 @@ define(['jquery',
       }));
 
       this.$el.find('ul.tabs').tabs();
+
+      this.$el.find('[data-toggle="tooltip"]').tooltip();
     }
   });
 

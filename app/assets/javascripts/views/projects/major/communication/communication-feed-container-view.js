@@ -12,7 +12,10 @@ define(['jquery',
 
   var CommunicationFeedContainerView = Backbone.View.extend({
 
-    initialize: function () {
+    initialize: function (options) {
+      options = options || {};
+
+      this.isIdea = options.isIdea;
     },
 
     passComments: function (data) {
@@ -23,8 +26,10 @@ define(['jquery',
       this.$el.html(CommunicationFeedContainerViewTpl());
 
       this.feedView = new CommunicationFeedView({
-        el: this.$el.find('#feedView')
+        el: this.$el.find('#feedView'),
+        isIdea: this.isIdea
       });
+
       this.feedView.render();
     }
 

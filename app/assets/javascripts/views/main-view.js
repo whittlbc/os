@@ -893,7 +893,6 @@ define(['jquery',
         }, 150);
       });
 
-
       this.rulesModal.render();
 
       this.suggestionsModal = new SuggestionsModal({
@@ -1064,7 +1063,7 @@ define(['jquery',
       });
 
       this.$el.find('#login-tutorial-anchor').css({
-        right: 20,
+        right: $('body').attr('browser') === 'safari' ? 32 : 25,
         width: 218
       });
     },

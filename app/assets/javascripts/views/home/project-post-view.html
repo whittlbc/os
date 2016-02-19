@@ -10,9 +10,13 @@
         <div class="tag-containers {{#hasDomain}}has-domain{{/hasDomain}}">
             {{#hasDomain}}
             <div class="domain-tags">{{domains}}</div>
-            <div class="line-break"></div>
             {{/hasDomain}}
+            {{#showLineBreak}}
+            <div class="line-break"></div>
+            {{/showLineBreak}}
+            {{#hasTags}}
             <div class="tag-container"></div>
+            {{/hasTags}}
         </div>
     </div>{{
     }}<div class="project-extra-details-container">

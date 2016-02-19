@@ -8,6 +8,17 @@ Backboneworld::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      :port                 =>  587,
+      :address              =>  'smtp.mandrillapp.com',
+      :user_name            =>  ENV['MANDRILL_USERNAME'],
+      :password             =>  ENV['MANDRILL_PASSWORD'],
+      :enable_starttls_auto =>  true,
+      :authentication       => 'login'
+  }
+
   config.eager_load = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)

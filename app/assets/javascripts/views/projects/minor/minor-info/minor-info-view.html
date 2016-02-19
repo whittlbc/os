@@ -4,7 +4,7 @@
     <div class="seeking-icon-container">
         <span class="octicon octicon-search"></span>
     </div>
-    <div class="seeking" data-toggle="tooltip" data-placement="top" title="{{seeking}}">{{seeking}}</div>
+    <div class="seeking">{{seeking}}</div>
 </div>
 {{/showSeekingNormally}}
 {{/editMode}}
@@ -41,7 +41,7 @@
 <div id="minorInfoRepoURLContainer">
     {{^editMode}}
     {{^linkRepoName}}
-    <span class="minor-info-unspecified">No Github repository</span>
+    <span class="minor-info-unspecified">No GitHub repository</span>
     {{/linkRepoName}}
     {{#linkRepoName}}
     <a target="_blank" href="{{repoURL}}">{{repoName}}</a>
