@@ -672,7 +672,7 @@ $post-gray: #B6B8C0;
     float: left;
     color: #00A6C9;
     cursor: pointer;
-    margin-top: -3px;
+    margin-top: 5px;
   }
 
   .see-more-description:hover {
@@ -687,6 +687,7 @@ $post-gray: #B6B8C0;
 
 .major-info-project-description.no-tags {
   width: 80%;
+  margin-top: 20px;
 }
 
 #projectTypeSelection {
