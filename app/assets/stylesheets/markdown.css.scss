@@ -49,7 +49,7 @@
     padding: 0;
     padding-left: 2em;
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 0;
   }
 
   .c { color: #999988; font-style: italic } /* Comment */
@@ -113,4 +113,9 @@
   .vi { color: #333 } /* Name.Variable.Instance */
   .il { color: #009999 } /* Literal.Number.Integer.Long */
 
+}
+
+.markdown > ul,
+.markdown > ol {
+  margin-bottom: 16px;
 }

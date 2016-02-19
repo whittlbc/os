@@ -199,7 +199,7 @@ define(['jquery',
       var description = $description[0];
       $description.height(getComputedStyle(description).height);
       description.offsetHeight;
-      $description.height(100);
+      $description.height(125);
       this.$el.find('.see-more-description').html('See More');
       this.truncated = true;
     },
@@ -506,8 +506,8 @@ define(['jquery',
     determineDescriptionHeight: function () {
       var $description = this.$el.find('.major-info-project-description .markdown');
 
-      if ($description.height() > 100) {
-        $description.height(100);
+      if ($description.height() > 125) {
+        $description.height(125);
         this.$el.find('.see-more-description').show();
         this.truncated = true;
       }

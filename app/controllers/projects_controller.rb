@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
 
   module Markdown
     def self.render(text)
-      @@markdown ||= Redcarpet::Markdown.new(PygmentedMarkdown.new({ link_attributes: { rel: 'nofollow', target: '_blank' }, no_images: true }), fenced_code_blocks: true, no_images: true)
+      @@markdown ||= Redcarpet::Markdown.new(PygmentedMarkdown.new({ link_attributes: { rel: 'nofollow', target: '_blank' }, hard_wrap: true }), fenced_code_blocks: true, autolink: true)
       @@markdown.render(text)
     end
   end
