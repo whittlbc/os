@@ -92,7 +92,7 @@ define(['jquery',
     },
 
     addItem: function (data) {
-      if (this.shownFiltersFull()) {
+      if (this.shownFiltersFull() && !data.force) {
         this.toggleMoreFiltersContainer(true);
         this.$el.find('.more-count > span').html(this.moreDropdown.getNumItems() + 1);
         this.moreDropdown.addItem(data.value);

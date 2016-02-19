@@ -397,7 +397,6 @@ define(['jquery',
           self.hidePopovers();
         });
 
-        // THIS IS FUCKING UP - TOOLTIP WON'T GO AWAY WHEN HOVER OFF SOMETIMES
         this.checkIfNeedToShowSeekingTooltip();
       }
 

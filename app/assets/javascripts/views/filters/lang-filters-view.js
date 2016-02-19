@@ -29,15 +29,80 @@ define(['jquery',
       this.getAllLanguages();
       this.LANG_FILTERS = [];
       this.requiredBottomSpacing = 160;
+      this.tutorialFilters = ['JavaScript', 'Ruby', 'Python', 'C', 'Emacs Lisp', 'Go', 'Django', 'Scala'];
 
       Backbone.EventBroker.register({
         'hide-more-langs-dropdown': 'forceHideDropdown',
-        'filters:remove-all': 'removeAllFilters'
+        'filters:remove-all': 'removeAllFilters',
+        'show-lang-tutorial-filters': 'showTutorialFilters',
+        'hide-tutorial-filters': 'clearLangFilters'
       }, this);
     },
 
     events: {
       'click #clearLangFiltersBtn': 'clearLangFilters'
+    },
+
+    showTutorialFilters: function () {
+      this.addTutorialFilter(0);
+    },
+
+    addTutorialFilter: function (i) {
+      var self = this;
+
+      this.addItem({
+        value: this.tutorialFilters[i],
+        animate: true
+      });
+
+      setTimeout(function () {
+        if (i < self.tutorialFilters.length - 1) {
+          i++;
+          self.addTutorialFilter(i);
+        } else {
+          setTimeout(function () {
+            $(self.LANG_FILTERS[0].$el).mouseenter();
+          }, 5);
+          setTimeout(function () {
+            self.hoverOnTutorialItemDown(1);
+          }, 1100);
+        }
+      }, 75);
+    },
+
+    hoverOnTutorialItemDown: function (i) {
+      var self = this;
+      var $item = $(this.LANG_FILTERS[i].$el);
+
+      $item.siblings().mouseleave();
+      $item.mouseenter();
+
+      if (i < this.LANG_FILTERS.length - 1) {
+        setTimeout(function () {
+          i++;
+          self.hoverOnTutorialItemDown(i);
+        }, 80);
+      } else {
+        setTimeout(function () {
+          i--;
+          self.hoverOnTutorialItemUp(i);
+        }, 1000);
+      }
+    },
+
+    hoverOnTutorialItemUp: function (i) {
+      var self = this;
+      var $item = $(this.LANG_FILTERS[i].$el);
+
+      $item.siblings().mouseleave();
+      $item.mouseenter();
+
+      if (i > 0) {
+        setTimeout(function () {
+          i--;
+          self.hoverOnTutorialItemUp(i);
+        }, 80);
+      }
     },
 
     removeAllFilters: function () {
@@ -75,10 +140,12 @@ define(['jquery',
       var self = this;
       this.$list.empty();
       var langNamesArray = [];
+
       for (var i = 0; i < this.LANG_FILTERS.length; i++) {
         langNamesArray.push(self.LANG_FILTERS[i].realName);
       }
       this.LANG_FILTERS = [];
+      this.hideInfoIcon();
       Backbone.EventBroker.trigger('clearLangFilters', langNamesArray);
     },
 

@@ -44,6 +44,10 @@ define(['jquery',
 
         if (self.footerItem) {
           $('.filter-choice-container').addClass('show-filter-btns');
+          self.showFiltersTimeout = setTimeout(function () {
+            self.showingFilters = true;
+            Backbone.EventBroker.trigger('show-lang-tutorial-filters');
+          }, 1200);
         }
       }, 50);
 
@@ -62,6 +66,12 @@ define(['jquery',
 
       if (this.footerItem) {
         $('.filter-choice-container').removeClass('show-filter-btns');
+        if (!this.showingFilters) {
+          clearTimeout(this.showFiltersTimeout);
+        } else {
+          Backbone.EventBroker.trigger('hide-tutorial-filters');
+          this.showingFilters = false;
+        }
       }
 
       setTimeout(function () {
