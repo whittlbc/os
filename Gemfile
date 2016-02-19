@@ -86,3 +86,5 @@ gem 'newrelic_rpm'
 gem 'slack-api'
 
 gem 'redcarpet'
+
+gem 'pygments.rb'

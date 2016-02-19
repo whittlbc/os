@@ -22,6 +22,13 @@ class ProjectsController < ApplicationController
 
   LANG_FILTERS_NAME = 'langs_and_frames'
 
+  module Markdown
+    def self.render(text)
+      @@markdown ||= Redcarpet::Markdown.new(PygmentedMarkdown.new({ link_attributes: { rel: 'nofollow', target: '_blank' } }), fenced_code_blocks: true)
+      @@markdown.render(text)
+    end
+  end
+
   def service_for_asset(asset)
     case asset
       when SLACK_ASSET
@@ -40,12 +47,6 @@ class ProjectsController < ApplicationController
       user = User.find_by(uuid: params[:user_uuid])
     end
 
-
-    markdown = Redcarpet::Markdown.new(PygmentedMarkdown.new({ link_attributes: { rel: 'nofollow', target: '_blank' } }), fenced_code_blocks: true)
-
-
-    # markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new({ link_attributes: { rel: 'nofollow', target: "_blank" } }), fenced_code_blocks: true, autolink: true, tables: false)
-
     project = Project.find_by(uuid: params[:uuid])
 
     if !project.nil? && project.is_active?
@@ -59,7 +60,7 @@ class ProjectsController < ApplicationController
       if !project.blank?
         project_details = {
           :post_date => project.created_at.utc.iso8601,
-          :markdown_description => markdown.render(project.description),
+          :markdown_description => Markdown.render(project.description),
           :description => project.description,
           :langs_and_frames => project.langs_and_frames,
           :license => project.license,
@@ -718,7 +719,7 @@ class ProjectsController < ApplicationController
             :voteCount => comment.vote_count,
             :voted => user ? user.voted_on_comment(comment.id) : nil,
             :postTime => comment.created_at.utc.iso8601,
-            :text => comment.text,
+            :text => Markdown.render(comment.text),
             :uuid => comment.uuid,
             :parentUUID => comment.try(:parent).try(:uuid),
             :feed => comment.feed
@@ -744,7 +745,7 @@ class ProjectsController < ApplicationController
                 :voteCount => child.vote_count,
                 :voted => user ? user.voted_on_comment(child.id) : nil,
                 :postTime => child.created_at.utc.iso8601,
-                :text => child.text,
+                :text => Markdown.render(child.text),
                 :uuid => child.uuid,
                 :parentUUID => child.try(:parent).try(:uuid),
                 :feed => child.feed

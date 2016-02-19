@@ -7,9 +7,7 @@ define(['jquery',
   'models/session',
   'views/widgets/user-info-bubble',
   'stache!views/projects/major/communication/communication-feed-item-view',
-  'marked',
-  'backbone-eventbroker',
-  'linkify'
+  'backbone-eventbroker'
 ], function ($,
    Backbone,
    _,
@@ -18,8 +16,7 @@ define(['jquery',
    Project,
    Session,
    UserInfoBubble,
-   CommunicationFeedItemViewTpl,
-   marked
+   CommunicationFeedItemViewTpl
 ) {
   'use strict';
 
@@ -74,10 +71,6 @@ define(['jquery',
       this.feed = data.feed;
       this.hasChildren = data.hasChildren;
       this.commentNumber = data.commentNumber;
-
-      if (this.text) {
-        this.text = marked(this.text);
-      }
     },
 
     handleShowReplyInput: function () {
@@ -238,9 +231,11 @@ define(['jquery',
         commentNumber: this.commentNumber
       }));
 
-      this.$el.find('.comment-text').linkify({
-        target: '_blank'
-      });
+      var lastChildOfComment = _.last(this.$el.find('#comment-' + this.commentNumber + ' .markdown').children());
+
+      if (lastChildOfComment) {
+        $(lastChildOfComment).css({ marginBottom: 0 });
+      }
 
       this.addListeners();
 
