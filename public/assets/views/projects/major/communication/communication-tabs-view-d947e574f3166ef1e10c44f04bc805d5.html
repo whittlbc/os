@@ -1,0 +1,17 @@
+<div class="communication-tabs-container">
+    <ul class="tabs communication-panels-ul">
+        {{#showImplementations}}
+        <li class="tab communication-tab">
+            <a data-feed="implementations" class="{{#implementationsActive}}active{{/implementationsActive}}">Implementations</a>
+        </li>
+        {{/showImplementations}}
+        <li class="tab communication-tab">
+            <a data-feed="general" class="{{#generalActive}}active{{/generalActive}}">{{#showImplementations}}Feedback{{/showImplementations}}{{^showImplementations}}General{{/showImplementations}}</a>
+        </li>
+        {{#showTeam}}
+        <li class="tab communication-tab {{^onTeam}}disabled{{/onTeam}}">
+            <a data-feed="team" class="{{^onTeam}}disabled {{/onTeam}} {{#teamActive}}active{{/teamActive}}" {{^onTeam}}data-toggle="tooltip" data-placement="top" title="You must be a contributor to this project to access this feed."{{/onTeam}}>{{^onTeam}}<i class="fa fa-lock"></i>{{/onTeam}}<span>Team</span></a>
+        </li>
+        {{/showTeam}}
+    </ul>
+</div>
