@@ -31,7 +31,7 @@ define(['jquery',
       this.formatDomains();
       this.truncated = false;
       this.isSafari = ($('body').attr('browser') === 'safari');
-      this.truncatedDetailsHeight = 110;
+      this.truncatedDetailsHeight = 100;
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode'
