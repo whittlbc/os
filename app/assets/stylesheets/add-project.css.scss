@@ -167,11 +167,13 @@ input {
 }
 
 .ufg-choice-explanation.yes {
-  top: 18px;
+  top: 17px;
 }
 
 .ufg-choice-explanation.no {
-  top: 42px;
+  top: 36px;
+  width: 131px;
+  right: -45px;
 }
 
 .project-source-selection {
