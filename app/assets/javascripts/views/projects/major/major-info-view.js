@@ -31,7 +31,7 @@ define(['jquery',
       this.formatDomains();
       this.truncated = false;
       this.isSafari = ($('body').attr('browser') === 'safari');
-      this.maxStartingDetailsHeight = 110;
+      this.truncatedDetailsHeight = 110;
 
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode'
@@ -176,31 +176,14 @@ define(['jquery',
 
     showMoreDescription: function () {
       var $description = this.$el.find('.major-info-project-description .markdown');
-      var endHeight;
-
-      if (this.entireDescriptionHeight) {
-        endHeight = this.entireDescriptionHeight;
-      } else {
-        var description = $description[0];
-        var prevHeight = $description.height();
-        $description.height('auto');
-        endHeight = getComputedStyle(description).height;
-        $description.height(prevHeight);
-        description.offsetHeight;
-      }
-
-      $description.css({ transition: 'height 0.3s' });
-      $description.height(endHeight);
+      $description.height(this.fullDescriptionHeight);
       this.$el.find('.see-more-description').html('See Less');
       this.truncated = false;
     },
 
     showLessDescription: function () {
       var $description = this.$el.find('.major-info-project-description .markdown');
-      var description = $description[0];
-      $description.height(getComputedStyle(description).height);
-      description.offsetHeight;
-      $description.height(this.maxStartingDetailsHeight);
+      $description.height(this.truncatedDetailsHeight);
       this.$el.find('.see-more-description').html('See More');
       this.truncated = true;
     },
@@ -506,11 +489,12 @@ define(['jquery',
 
     determineDescriptionHeight: function () {
       var $description = this.$el.find('.major-info-project-description .markdown');
+      this.fullDescriptionHeight = $description.height();
 
-      if ($description.height() > this.maxStartingDetailsHeight) {
-        $description.height(this.maxStartingDetailsHeight);
+      if (this.fullDescriptionHeight > this.truncatedDetailsHeight) {
+        $description.height(this.fullDescriptionHeight);
+        $description.css({ transition: 'height 0.3s' });
         this.$el.find('.see-more-description').show();
-        this.truncated = true;
       }
     },
 
