@@ -47,7 +47,7 @@ define(['jquery',
           self.showFiltersTimeout = setTimeout(function () {
             self.showingFilters = true;
             Backbone.EventBroker.trigger('show-lang-tutorial-filters');
-          }, 1200);
+          }, 1300);
         }
       }, 50);
 
