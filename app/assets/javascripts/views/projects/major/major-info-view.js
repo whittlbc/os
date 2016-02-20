@@ -490,7 +490,7 @@ define(['jquery',
                 obj.text = 'Request Sent';
               } else {
                 obj.text = ((options.privacy || [])[0] === OSUtil.OPEN_PRIVACY) ? 'Join' : 'Request to Join';
-                self.majorBtnEvent = 'project:save-edit';
+                self.majorBtnEvent = 'project:join';
               }
             }
             break;
