@@ -70,9 +70,9 @@ class UserMailer < ActionMailer::Base
 
   def send_email(email, subject)
     if email.present?
-      if (ENV['MAILER_PERFORM_DELIVERIES'] || '').downcase == 'true'
+      if ENV['MAILER_PERFORM_DELIVERIES'].try(:downcase) == 'true'
         puts "SENDING EMAIL TO: #{email}"
-        mail(to: (((ENV['OVERRIDE_EMAIL'] || '').downcase == 'true') ? ENV['MAIL_TO_OVERRIDE'] : email), subject: subject)
+        mail(to: ((ENV['OVERRIDE_EMAIL'].try(:downcase) == 'true') ? ENV['MAIL_TO_OVERRIDE'] : email), subject: subject)
       else
         puts 'NOT SENDING EMAIL: EMAIL EXISTS, BUT MAILER_PERFORM_DELIVERIES WAS FALSE'
       end
