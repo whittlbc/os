@@ -5,7 +5,7 @@
         </div>
     </div>{{
     }}<div class="title-subtitle-tag-container">
-        <div class="title-container {{^hasTags}}no-tags{{/hasTags}}"><span>{{title}}</span></div>
+        <div class="title-container {{#noTagsOrDomains}}no-tags{{/noTagsOrDomains}}"><span>{{title}}</span></div>
         <div class="subtitle-container"><span class="project-post-subtitle-text">{{subtitle}}</span></div>
         <div class="tag-containers {{#hasDomain}}has-domain{{/hasDomain}}">
             {{#hasDomain}}
