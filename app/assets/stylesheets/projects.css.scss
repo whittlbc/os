@@ -807,11 +807,21 @@ $post-gray: #B6B8C0;
   }
 
   a[data-feed="team"] + .tooltip {
-    width: 165px;
+    width: 190px;
 
     .tooltip-inner {
-      width: 165px;
+      width: 190px;
       white-space: pre-wrap;
+      padding-bottom: 8px;
+      padding-top: 8px;
+    }
+  }
+
+  a[data-feed="team"].idea + .tooltip {
+    width: 180px;
+
+    .tooltip-inner {
+      width: 180px;
     }
   }
 

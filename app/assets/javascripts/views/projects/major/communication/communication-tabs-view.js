@@ -83,7 +83,8 @@ define(['jquery',
         showImplementations: ufgIdeaProject,
         implementationsActive: this.activeFeed == 'implementations',
         generalActive: this.activeFeed == 'general',
-        teamActive: this.activeFeed == 'team'
+        teamActive: this.activeFeed == 'team',
+        isIdea: (project.status == OSUtil.PROJECT_TYPES.indexOf('ideas'))
       }));
 
       this.$el.find('ul.tabs').tabs();
