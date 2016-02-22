@@ -61,7 +61,9 @@ define(['jquery',
           self.addTutorialFilter(i);
         } else {
           setTimeout(function () {
-            $(self.LANG_FILTERS[0].$el).mouseenter();
+            if (_.first(self.LANG_FILTERS) && _.first(self.LANG_FILTERS).$el) {
+              $(self.LANG_FILTERS[0].$el).mouseenter();
+            }
           }, 5);
           setTimeout(function () {
             self.hoverOnTutorialItemDown(1);
@@ -72,6 +74,11 @@ define(['jquery',
 
     hoverOnTutorialItemDown: function (i) {
       var self = this;
+
+      if (!this.LANG_FILTERS[i] || !this.LANG_FILTERS[i].$el) {
+        return;
+      }
+
       var $item = $(this.LANG_FILTERS[i].$el);
 
       $item.siblings().mouseleave();
@@ -92,6 +99,11 @@ define(['jquery',
 
     hoverOnTutorialItemUp: function (i) {
       var self = this;
+
+      if (!this.LANG_FILTERS[i] || !this.LANG_FILTERS[i].$el) {
+        return;
+      }
+
       var $item = $(this.LANG_FILTERS[i].$el);
 
       $item.siblings().mouseleave();
