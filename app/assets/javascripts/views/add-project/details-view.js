@@ -753,6 +753,7 @@ define(['jquery',
 
       this.$el.html(DetailsViewTpl({
         launched: this.stageIsLaunched(),
+        ufg: this.upForGrabs,
         hideDetailsView: options.hideDetailsView,
         title: this.title,
         subtitle: this.subtitle,
