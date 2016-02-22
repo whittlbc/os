@@ -533,12 +533,30 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
       }
 
       .top.no-description {
+        height: 38px;
+
+        .title {
+          position: relative;
+          top: 14px;
+        }
+      }
+
+      .top.no-description.has-links {
         height: 40px;
+
+        .title {
+          position: relative;
+          top: 0px;
+        }
       }
 
       .top.no-description.no-bottom {
         height: 55px;
         margin-top: 25px;
+
+        .title {
+          top: 0;
+        }
       }
 
       .middle {

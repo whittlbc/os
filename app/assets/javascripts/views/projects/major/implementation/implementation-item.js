@@ -67,12 +67,17 @@ define(['jquery',
 		render: function () {
       var self = this;
 
-      var showBottom = !!this.model.get('slack_url') || !!this.model.get('hipchat_url') || !!this.model.get('irc_url') || !!this.model.get('in_progress') || !!this.model.get('seeking_contributors');
+      var showTags = !!this.model.get('in_progress') || !!this.model.get('seeking_contributors');
+      var showLinks = !!this.model.get('slack_url') || !!this.model.get('hipchat_url') || !!this.model.get('irc_url');
+
+      var showBottom = showTags || showLinks;
 
       var display = this.model.toJSON();
 
       _.extend(display, {
-        showBottom: showBottom
+        showBottom: showBottom,
+        showTags: showTags,
+        showLinks: showLinks
       });
 
       this.$el.html(ImplementationItemTpl(display));
