@@ -369,7 +369,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
 }
 
 .imps-exist {
-  display: block;
+  display: none;
   width: 93%;
   margin-left: 3.5%;
   margin-top: 18px;
@@ -457,6 +457,7 @@ $answer-margin-top: ($question-height - $answer-btn-height) / 2;
         color: #1d1e22;
         line-height: 18px;
         text-align: center;
+        opacity: 0;
         font-size: 15px;
 
         .fa {

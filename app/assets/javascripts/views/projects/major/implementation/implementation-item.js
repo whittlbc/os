@@ -47,6 +47,7 @@ define(['jquery',
     setMarginTopOfVoteContainer: function () {
       var $voteCount = this.$el.find('.imp-vote-count');
       $voteCount.css({ marginTop: ((this.$el.find('.implementation-item').height() - $voteCount.height()) / 2) });
+      $voteCount.css({ opacity: 1 });
     },
 
     showBubble: function () {
@@ -78,7 +79,7 @@ define(['jquery',
 
       setTimeout(function () {
         self.setMarginTopOfVoteContainer();
-      }, 3);
+      }, 1);
 
       this.userInfoBubble = new UserInfoBubble({
         el: this.$el.find('.poster-info-bubble')

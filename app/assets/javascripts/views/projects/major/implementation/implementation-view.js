@@ -32,10 +32,11 @@ define(['jquery',
 
       if (_.isEmpty(implementations)) {
         this.$noItemsView.show();
-        this.$addItemWhileItemsExist.hide();
         this.$list.removeClass('has-items');
+        this.$addItemWhileItemsExist.hide();
       } else {
         this.$noItemsView.hide();
+        this.$list.addClass('has-items');
         this.$addItemWhileItemsExist.show();
         this.$list.addClass('has-items');
         _.each(implementations, function (data) {
