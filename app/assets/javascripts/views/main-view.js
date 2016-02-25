@@ -938,6 +938,15 @@ define(['jquery',
             document.body.style.overflow = 'hidden';
             self.aboutModal.showModal(true);
             self.showingAboutModalForTutorial = true;
+            self.tutorialClicks = 0;
+
+            //$('#tutorialCover').click(function () {
+            //  self.tutorialClicks++;
+            //  if (self.tutorialClicks >= 2) {
+            //    self.tutorialManager.done();
+            //  }
+            //});
+
           }, 50);
         }, 400);
       }

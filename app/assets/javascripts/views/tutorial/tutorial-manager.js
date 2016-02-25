@@ -106,6 +106,8 @@ define(['jquery',
         $('#tutorialCover').hide();
         document.body.style.overflow = 'auto';
       }, 155);
+
+      Backbone.EventBroker.trigger('tutorial:done');
     }
 
 	});

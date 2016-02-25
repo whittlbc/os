@@ -588,7 +588,6 @@ define(['jquery',
           this.$el.find('p.none').show();
         } else {
           this.$el.find('p.none').hide();
-          this.determineDescriptionHeight();
         }
 
         this.checkForTitleSubTitleOverflow();

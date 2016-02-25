@@ -35,12 +35,17 @@ define(['jquery',
         'hide-more-langs-dropdown': 'forceHideDropdown',
         'filters:remove-all': 'removeAllFilters',
         'show-lang-tutorial-filters': 'showTutorialFilters',
-        'hide-tutorial-filters': 'clearLangFilters'
+        'hide-tutorial-filters': 'clearLangFilters',
+        'tutorial:done': 'handleTutorialDone'
       }, this);
     },
 
     events: {
       'click #clearLangFiltersBtn': 'clearLangFilters'
+    },
+
+    handleTutorialDone: function () {
+      this.tutorialDone = true;
     },
 
     showTutorialFilters: function () {
