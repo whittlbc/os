@@ -1072,8 +1072,8 @@ define(['jquery',
       });
 
       this.$el.find('#login-tutorial-anchor').css({
-        right: $('body').attr('browser') === 'safari' ? 32 : 25,
-        width: 218
+        right: $('body').attr('browser') === 'safari' ? 20 : 19,
+        width: $('body').attr('browser') === 'safari' ? 230 : 210
       });
     },
 
