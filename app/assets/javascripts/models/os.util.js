@@ -616,6 +616,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'implementationVote': {
         verb: 'PUT',
         action: 'update'
+      },
+      'requestFeedback': {
+        verb: 'POST',
+        action: 'create'
       }
     }
 

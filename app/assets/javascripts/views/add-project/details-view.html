@@ -52,18 +52,6 @@
         <input name="add-project-repo-name" placeholder="GitHub repo name" type="text" value="{{repoName}}"/>
     </div>
 </div>
-
-<div class="send-invites-question-container">
-    <div class="question">Send invitations to current contributors of this repository?</div>{{
-    }}<div class="answers-container">
-        <div class="add-project-send-invites-choice-container">
-            <div id="add-project-send-invites-yes" name="send-invites-yes" class="add-project-send-invites-choice {{#sendInvites}}active-send-invites{{/sendInvites}}">Yes</div>
-        </div>{{
-        }}<div class="add-project-send-invites-choice-container">
-            <div id="add-project-send-invites-no" name="send-invites-no" class="add-project-send-invites-choice {{^sendInvites}}active-send-invites{{/sendInvites}}">No</div>
-        </div>
-    </div>
-</div>
 {{/showRepo}}
 
 {{#showLicense}}
@@ -90,6 +78,14 @@
     </div>
 </div>
 {{/showPrivacy}}
+
+<!-- Request Feedback -->
+<div class="add-project-request-feedback-container">
+    <div class="add-project-request-feedback-text">Want to request feedback from someone specific?</div>{{
+    }}<div class="add-project-request-feedback-input-container">
+        <input name="add-project-request-feedback" placeholder="Emails (comma-separated)" type="text" value="{{requestFeedbackEmails}}"/>
+    </div>
+</div>
 
 {{#showIntegrations}}
 <!--Integrations-->

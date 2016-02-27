@@ -361,7 +361,18 @@ define(['jquery',
       });
 
       return this.sync('sawNotifications', this, requestInfo);
-    }
+    },
+
+    requestFeedback: function (info, options) {
+      var requestInfo = options || {};
+
+      _.extend(requestInfo, {
+        url: this.extension + '/requestFeedback',
+        data: info
+      });
+
+      return this.sync('requestFeedback', this, requestInfo);
+    },
 
   });
 

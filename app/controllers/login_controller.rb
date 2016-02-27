@@ -44,6 +44,12 @@ class LoginController < ApplicationController
 
     user.save!
 
+    # Send email welcome email if first time login
+    if !user.welcome_email_sent
+      user.update_attributes(welcome_email_sent: true)
+      UserMailer.delay.welcome(user: user)
+    end
+
     user_info = {
       gh_username: user.gh_username,
       uuid: user.uuid,

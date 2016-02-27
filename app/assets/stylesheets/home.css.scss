@@ -1459,9 +1459,9 @@ $side-filters-width: 18.25%;
 }
 
 #floatingLoginWithGHBtn {
-  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
-  -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
+  -webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16), 0 3px 14px 0 rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16), 0 3px 14px 0 rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16), 0 3px 14px 0 rgba(0, 0, 0, 0.13);
   -webkit-transition: box-shadow .2s ease-out, color .2s ease-out;
   -moz-transition: box-shadow .2s ease-out, color .2s ease-out;
   -ms-transition: box-shadow .2s ease-out, color .2s ease-out;
@@ -1480,9 +1480,9 @@ $side-filters-width: 18.25%;
 
 #floatingLoginWithGHBtn:hover {
   color: #3F3F3F;
-  -webkit-box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
-  -moz-box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.11);
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 15px 0 rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 15px 0 rgba(0, 0, 0, 0.13);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 15px 0 rgba(0, 0, 0, 0.13);
 }
 
 #floatingLoginWithGHBtn + .tooltip.top {

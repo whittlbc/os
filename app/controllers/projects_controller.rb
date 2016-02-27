@@ -20,6 +20,8 @@ class ProjectsController < ApplicationController
   SLACK_ASSET = 1
   HIPCHAT_ASSET = 2
 
+  TEAM_FEED = 1
+
   LANG_FILTERS_NAME = 'langs_and_frames'
 
   module Markdown
@@ -151,6 +153,32 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def request_feedback
+    user = User.find_by(:uuid => params[:user_uuid])
+    project = Project.find_by(:uuid => params[:uuid])
+
+    recipients = (params[:recipients] || '').split(',').map { |email|
+      email.gsub(' ', '')
+    }
+
+    if user.present? && project.present? && recipients.present?
+      recipients.each { |email|
+        requestee = User.find_by(email: email)
+
+        UserMailer.delay.requesting_feedback_from_user(
+          requestee_name: requestee.try(:name).try(:present?) ? requestee.name.split(' ')[0] : requestee.try(:gh_username),
+          requestee_email: email,
+          requester: user,
+          project: project
+        )
+      }
+
+      render :json => {}, :status => 200
+    else
+      render :json => {:message => 'Either sender was nil or project was nil or recipients weren\'t provided'}, :status => 500
+    end
+  end
+
   def create
 
     begin
@@ -227,7 +255,7 @@ class ProjectsController < ApplicationController
         Integration.new(service: 'IRC', project_id: project.id, url: url, irc: irc, users: [user.id]).save!
       end
 
-      render :json => {:uuid => project.uuid}
+      render :json => project
     rescue
       render :json => {:message => 'Project creation failed'}, :status => 500
     end
@@ -592,13 +620,30 @@ class ProjectsController < ApplicationController
           project: project
         )
 
-      # else if there was no parent comment and this was not your project
-      elsif parent_comment.nil? && project.user.id != user.id
-        UserMailer.delay.notify_user_of_comment(
-          user: project.user,
-          comment: comment,
-          project: project
-        )
+      # else if there was no parent comment
+      elsif parent_comment.nil?
+
+        # If someone posted to the Team feed, get all team members except for the poster, and email them
+        if params[:feed] == TEAM_FEED
+          project.contributors.includes(:user).where.not(user_id: user.id).each { |contributor|
+            UserMailer.delay.notify_team_of_team_comment(
+              user: contributor.user,
+              comment: comment,
+              project: project
+            )
+          }
+
+        # If NOT in the Team feed, email the project owner (unless the poster IS the project owner)
+        else
+          if project.user.id != user.id
+            UserMailer.delay.notify_user_of_comment(
+                user: project.user,
+                comment: comment,
+                project: project
+            )
+          end
+        end
+
       end
 
       render :json => all_comments_of_feed_type
@@ -641,6 +686,15 @@ class ProjectsController < ApplicationController
         hipchat_url: params[:hipchat_url],
         irc: params[:irc]
       ).save!
+
+      project_owner = project.user
+      if project_owner.id != user.id
+        UserMailer.delay.notify_user_of_implementation(
+            user: project_owner,
+            project: project,
+            poster_name: user.gh_username
+        )
+      end
 
       implementations = get_formatted_implementations(project, user)
 

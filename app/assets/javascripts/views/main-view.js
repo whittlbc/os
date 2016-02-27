@@ -80,6 +80,7 @@ define(['jquery',
         'project:delete': 'showDeleteProjectModal',
         'evolution-item:delete': 'showDeleteEvolutionItemModal',
         'invite-gh-contributors': 'getAllContributorsForRepo',
+        'request-feedback-upon-project-creation': 'requestFeedbackUponProjectCreation',
         'force-hide-starred-modal': 'forceHideStarredModal',
         'force-hide-my-projects-modal': 'forceHideMyProjectsModal',
         'hide-header-dropdowns': 'hideHeaderDropdowns',
@@ -260,6 +261,14 @@ define(['jquery',
           uuid: project.uuid,
           usernames: usernames
         });
+      });
+    },
+
+    requestFeedbackUponProjectCreation: function (data) {
+      new Project().requestFeedback({
+        user_uuid: this.currentUser.get('uuid'),
+        uuid: data.uuid,
+        recipients: data.emails
       });
     },
 

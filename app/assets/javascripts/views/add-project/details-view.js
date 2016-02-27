@@ -49,67 +49,9 @@ define(['jquery',
       $(e.currentTarget).closest('div').removeClass('error');
     },
 
-    handleKeyDownAPIKeyContainer: function (e) {
-      var prevValue = $(e.currentTarget).val();
-
-      if (_.isEmpty(prevValue) && !_.contains(this.preventKeys, e.keyCode)) {
-        this.showAPIKeyContainer();
-      }
-      else if (!_.isEmpty(prevValue) && e.keyCode === 8) {
-        this.hideAPIKeyContainer();
-      }
-    },
-
-    hideAPIKeyContainer: function () {
-      var $apiKeyContainer = this.$el.find('.api-key-container');
-      $apiKeyContainer.css({borderBottom: 'none'});
-      $apiKeyContainer.animate({height: 0}, this.extraInfoExpandDuration);
-    },
-
-    showAPIKeyContainer: function () {
-      var $apiKeyContainer = this.$el.find('.api-key-container');
-      $apiKeyContainer.css({borderBottom: '1px solid #EEE'});
-      $apiKeyContainer.animate({height: 67}, this.extraInfoExpandDuration);
-    },
-
-    handleKeyDownRepoName: function (e) {
-      var prevValue = $(e.currentTarget).val();
-
-      if (_.isEmpty(prevValue) && !_.contains(this.preventKeys, e.keyCode)) {
-        this.showInviteUsersQuestion();
-      }
-      else if ((prevValue.length === 0 || prevValue.length === 1) && e.keyCode === 8) {
-        this.hideInviteUsersQuestion();
-      }
-    },
-
-    handleKeyUpRepoName: function (e) {
-      // account for deleting all highlight text
-      if (e.keyCode === 8 && _.isEmpty($(e.currentTarget).val())) {
-        this.hideInviteUsersQuestion();
-      }
-    },
-
-    hideInviteUsersQuestion: function () {
-      var $inviteUsersQuestion = this.$el.find('.send-invites-question-container');
-      $inviteUsersQuestion.css({borderBottom: 'none'});
-      $inviteUsersQuestion.animate({height: 0}, this.extraInfoExpandDuration);
-    },
-
-    showInviteUsersQuestion: function () {
-      var $inviteUsersQuestion = this.$el.find('.send-invites-question-container');
-      $inviteUsersQuestion.css({borderBottom: '1px solid #EEE'});
-      $inviteUsersQuestion.animate({height: 67}, this.extraInfoExpandDuration);
-    },
-
     handleSlackURLBlur: function (e) {
       this.slackURL = $(e.currentTarget).val();
       Backbone.EventBroker.trigger('slackURL:updated', this.slackURL);
-    },
-
-    handleSlackAPIKeyBlur: function (e) {
-      this.slackAPIKey = $(e.currentTarget).val();
-      Backbone.EventBroker.trigger('slackAPIKey:updated', this.slackAPIKey);
     },
 
     handleHipChatBlur: function (e) {
@@ -137,15 +79,13 @@ define(['jquery',
       Backbone.EventBroker.trigger('repoName:updated', this.repoName);
     },
 
+    handleRequestFeedbackEmailsBlur: function (e) {
+      this.requestFeedbackEmails = $(e.currentTarget).val();
+    },
+
     handlePrivacySelection: function (e) {
       if (!$(e.currentTarget).hasClass('active-privacy')) {
         ($(e.currentTarget).attr('name') == OSUtil.REQUEST_PRIVACY) ? this.switchToRequest() : this.switchToOpen();
-      }
-    },
-
-    handleSendInvitesSelection: function (e) {
-      if (!$(e.currentTarget).hasClass('active-send-invites')) {
-        ($(e.currentTarget).attr('name') == 'send-invites-yes') ? this.switchToSendInvitesYes() : this.switchToSendInvitesNo();
       }
     },
 
@@ -161,20 +101,6 @@ define(['jquery',
       this.$el.find('[name=request]').addClass('active-privacy');
       this.privacy = OSUtil.REQUEST_PRIVACY;
       Backbone.EventBroker.trigger('privacy:updated', this.privacy);
-    },
-
-    switchToSendInvitesYes: function () {
-      this.$el.find('[name=send-invites-no]').removeClass('active-send-invites');
-      this.$el.find('[name=send-invites-yes]').addClass('active-send-invites');
-      this.sendInvites = true;
-      Backbone.EventBroker.trigger('send-invites:updated', this.sendInvites);
-    },
-
-    switchToSendInvitesNo: function () {
-      this.$el.find('[name=send-invites-yes]').removeClass('active-send-invites');
-      this.$el.find('[name=send-invites-no]').addClass('active-send-invites');
-      this.sendInvites = false;
-      Backbone.EventBroker.trigger('send-invites:updated', this.sendInvites);
     },
 
     expandDescription: function (e) {
@@ -444,10 +370,6 @@ define(['jquery',
       this.title = data.description; // most relevant actually to be the title
       this.langsFrames = data.languages;
       this.repoName = data.name;
-      if (this.repoName) {
-        this.showInviteUsersQuestion();
-      }
-
       this.hideLoadingReposView();
     },
 
@@ -502,7 +424,7 @@ define(['jquery',
         domains: this.domains,
         seeking: this.seeking,
         repoName: this.repoName,
-        sendInvites: this.sendInvites,
+        requestFeedbackEmails: this.requestFeedbackEmails,
         license: this.license ? [this.license] : [],
         privacy: this.getPrivacy(),
         slackURL: this.slackURL,
@@ -520,6 +442,7 @@ define(['jquery',
       this.$el.find('[name=add-project-subtitle]').blur();
       this.$el.find('[name=add-project-description]').blur();
       this.$el.find('[name=add-project-repo-name]').blur();
+      this.$el.find('[name=add-project-request-feedback]').blur();
       this.$el.find('[name=slack]').blur();
       this.$el.find('[name=hipchat]').blur();
       this.$el.find('[name=irc]').blur();
@@ -553,6 +476,7 @@ define(['jquery',
         '[name=add-project-subtitle]',
         '[name=add-project-description]',
         '[name=add-project-repo-name]',
+        '[name=add-project-request-feedback]',
         '[name=slack]',
         '[name=hipchat]',
         '[name=irc]'
@@ -576,7 +500,6 @@ define(['jquery',
       this.description = (options.projectData || {}).description || null;
       this.langsFrames = (options.projectData || {}).langsFrames || null;
       this.repoName = (options.projectData || {}).repoName || null;
-      this.sendInvites = (options.projectData || {}).sendInvites || false;
       this.license = (options.projectData || {}).license || null;
       this.privacy = (options.projectData || {}).privacy || OSUtil.OPEN_PRIVACY;
       this.slackURL = (options.projectData || {}).slackURL || null;
@@ -667,6 +590,10 @@ define(['jquery',
         self.handleRepoNameBlur(e);
       });
 
+      this.$el.find('[name=add-project-request-feedback]').blur(function (e) {
+        self.handleRequestFeedbackEmailsBlur(e);
+      });
+
       this.$el.find('[name=slack]').blur(function (e) {
         self.handleSlackURLBlur(e);
       });
@@ -677,18 +604,6 @@ define(['jquery',
 
       this.$el.find('[name=irc]').blur(function (e) {
         self.handleIRCChannelBlur(e);
-      });
-
-      this.$el.find('[name=add-project-repo-name]').keydown(function (e) {
-        self.handleKeyDownRepoName(e);
-      });
-
-      this.$el.find('[name=add-project-repo-name]').keyup(function (e) {
-        self.handleKeyUpRepoName(e);
-      });
-
-      this.$el.find('.add-project-send-invites-choice').click(function (e) {
-        self.handleSendInvitesSelection(e);
       });
 
       this.$el.find('[name=add-project-title]').keydown(function (e) {
@@ -759,10 +674,10 @@ define(['jquery',
         subtitle: this.subtitle,
         description: this.description,
         repoName: this.repoName,
+        requestFeedbackEmails: this.requestFeedbackEmails,
         showRepo: this.stageIsLaunched(),
         showLicense: this.stageIsLaunched(),
         showSeeking: !options.upForGrabs,
-        sendInvites: this.sendInvites,
         showPrivacy: this.showPrivacy,
         requestPrivacy: this.privacy != OSUtil.OPEN_PRIVACY,
         openPrivacy: this.privacy === OSUtil.OPEN_PRIVACY,
@@ -782,10 +697,6 @@ define(['jquery',
 
         this.renderLicenseDropdown();
         this.renderIntegrations();
-      }
-
-      if (this.stageIsLaunched() && this.repoName) {
-        this.showInviteUsersQuestion();
       }
 
       this.addListeners();

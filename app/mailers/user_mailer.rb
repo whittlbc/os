@@ -52,7 +52,7 @@ class UserMailer < ActionMailer::Base
     @company_logo = LOGO
     project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
 
-    send_email(user.email, "Someone left a comment for the #{project_name_abbrev} team")
+    send_email(user.email, "Someone left a team comment in #{project_name_abbrev}")
   end
 
   def welcome(user: nil)
@@ -76,8 +76,8 @@ class UserMailer < ActionMailer::Base
   end
 
   def requesting_feedback_from_user(requestee_name: nil, requestee_email: nil, requester: nil, project: nil)
-    @recipient_name = requestee_name
-    @requester_name = get_correct_name(requester)
+    @recipient_name = requestee_name || 'fellow OSS lover'
+    @requester_name = get_correct_name(requester, full_name: true)
     @project_name = project.title
     @project_uuid = project.uuid
     @redirect_base_url = ENV['URL']
@@ -123,11 +123,11 @@ class UserMailer < ActionMailer::Base
     send_email(ENV['ADMIN_EMAIL'], 'New Suggestion!')
   end
 
-  def get_correct_name(user)
+  def get_correct_name(user, full_name: false)
     name = user.try(:name)
 
-    if user.try(:name).try(:present?)
-      name.split(' ')[0]
+    if name.try(:present?)
+      full_name ? name : name.split(' ')[0]
     else
       user.try(:gh_username)
     end

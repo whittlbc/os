@@ -67,7 +67,8 @@ input {
     }
   }
 
-  [name="add-project-repo-name"] {
+  [name="add-project-repo-name"],
+  [name="add-project-request-feedback"] {
     line-height: 18px !important;
     padding-top: 9px;
     padding-bottom: 8px;
@@ -782,6 +783,7 @@ textarea[name="add-project-description"] {
 .add-project-domains-container,
 .add-project-seeking-container,
 .add-project-repo-name-container,
+.add-project-request-feedback-container,
 .send-invites-question-container,
 .add-project-license-container,
 .add-project-privacy-container,
@@ -794,10 +796,15 @@ textarea[name="add-project-description"] {
   position: relative;
 }
 
+.add-project-privacy-container {
+  margin-bottom: 2px;
+}
+
 .add-project-langs-frames-text,
 .add-project-domains-text,
 .add-project-seeking-text,
 .add-project-repo-name-text,
+.add-project-request-feedback-text,
 .add-project-license-text,
 .add-project-privacy-text,
 .add-project-anon-text {
@@ -813,6 +820,7 @@ textarea[name="add-project-description"] {
 }
 
 .add-project-repo-name-text,
+.add-project-request-feedback-text,
 .add-project-license-text,
 .add-project-langs-frames-text,
 .add-project-domains-text,
@@ -829,6 +837,7 @@ textarea[name="add-project-description"] {
 .add-project-domains-selection-container,
 .add-project-seeking-selection-container,
 .add-project-repo-name-input-container,
+.add-project-request-feedback-input-container,
 .add-project-license-selection-container,
 .add-project-privacy-choices,
 .add-project-anon-choices {
@@ -842,6 +851,7 @@ textarea[name="add-project-description"] {
 
 
 .add-project-repo-name-input-container,
+.add-project-request-feedback-input-container,
 .add-project-license-selection-container,
 .add-project-langs-frames-selection-container,
 .add-project-domains-selection-container,
@@ -854,7 +864,8 @@ textarea[name="add-project-description"] {
   width: 30%;
 }
 
-input[name="add-project-repo-name"] {
+input[name="add-project-repo-name"],
+input[name="add-project-request-feedback"]{
   width: 100%;
   line-height: 31px;
   border-radius: 4px;

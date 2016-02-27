@@ -282,8 +282,16 @@ define(['jquery',
 
       Backbone.EventBroker.trigger('create-project-modal:hide');
 
-      if (self.newProjectData.sendInvites === true) {
+      // if project has a repo_name
+      if (!_.isEmpty(project.repo_name)) {
         Backbone.EventBroker.trigger('invite-gh-contributors', project);
+      }
+
+      if (!_.isEmpty((self.newProjectData.requestFeedbackEmails || '').trim())) {
+        Backbone.EventBroker.trigger('request-feedback-upon-project-creation', {
+          uuid: project.uuid,
+          emails: self.newProjectData.requestFeedbackEmails
+        });
       }
 
       OSUtil.navToProject(project.uuid);
