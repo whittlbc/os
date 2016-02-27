@@ -22,11 +22,17 @@ define(['jquery',
         'filters:remove-all': 'removeAllFilters',
         'adjust-seeking-filters': 'adjustSeekingFilters',
         'show-lang-tutorial-filters': 'showTutorialFilters',
-        'hide-tutorial-filters': 'removeAllFilters'
+        'hide-tutorial-filters': 'removeAllFilters',
+        'tutorial:end-early': 'cutTutorialEarly'
       }, this);
     },
 
     events: {},
+
+    cutTutorialEarly: function () {
+      this.cutTutorial = true;
+      this.removeAllFilters();
+    },
 
     showTutorialFilters: function () {
       var self = this;
@@ -34,19 +40,23 @@ define(['jquery',
       var seekingTutorialFilters = ['Contributors', 'New Maintainer', 'Feedback'];
 
       _.each(domainTutorialFilters, function (filter) {
-        self.addDomainItem({
-          value: filter,
-          animate: true
-        })
+        if (!self.cutTutorial) {
+          self.addDomainItem({
+            value: filter,
+            animate: true
+          })
+        }
       });
 
       setTimeout(function () {
         _.each(seekingTutorialFilters, function (filter) {
-          self.addSeekingItem({
-            value: filter,
-            animate: true,
-            force: true
-          })
+          if (!self.cutTutorial) {
+            self.addSeekingItem({
+              value: filter,
+              animate: true,
+              force: true
+            })
+          }
         });
       }, 5);
     },

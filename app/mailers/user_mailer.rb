@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def notify_user_of_comment_reply(user: nil, comment: nil, parent_comment: nil, project: nil)
-    @recipient_name = get_recipient_name(user)
+    @recipient_name = get_correct_name(user)
     @project_name = project.title
     @project_uuid = project.uuid
     @comment_text = comment.text
@@ -30,7 +30,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def notify_user_of_comment(user: nil, comment: nil, project: nil)
-    @recipient_name = get_recipient_name(user)
+    @recipient_name = get_correct_name(user)
     @project_name = project.title
     @project_uuid = project.uuid
     @comment_text = comment.text
@@ -42,8 +42,73 @@ class UserMailer < ActionMailer::Base
     send_email(user.email, "Someone commented on your project: #{project_name_abbrev}")
   end
 
+  def notify_team_of_team_comment(user: nil, comment: nil, project: nil)
+    @recipient_name = get_correct_name(user)
+    @project_name = project.title
+    @project_uuid = project.uuid
+    @comment_text = comment.text
+    @commenter = comment.user.gh_username
+    @redirect_base_url = ENV['URL']
+    @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
+
+    send_email(user.email, "Someone left a comment for the #{project_name_abbrev} team")
+  end
+
+  def welcome(user: nil)
+    @recipient_name = get_correct_name(user)
+    @redirect_base_url = ENV['URL']
+    @company_logo = LOGO
+
+    send_email(user.email, 'Welcome to Sourcehoney!')
+  end
+
+  def notify_user_of_implementation(user: nil, project: nil, poster_name: nil)
+    @recipient_name = get_correct_name(user)
+    @project_name = project.title
+    @project_uuid = project.uuid
+    @poster_name = poster_name
+    @redirect_base_url = ENV['URL']
+    @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
+
+    send_email(user.email, "Someone added an implementation to your project: #{project_name_abbrev}")
+  end
+
+  def requesting_feedback_from_user(requestee_name: nil, requestee_email: nil, requester: nil, project: nil)
+    @recipient_name = requestee_name
+    @requester_name = get_correct_name(requester)
+    @project_name = project.title
+    @project_uuid = project.uuid
+    @redirect_base_url = ENV['URL']
+    @company_logo = LOGO
+
+    send_email(requestee_email, "Someone requested your feedback on a project")
+  end
+
+  def site_invitation(recipient_email: nil, inviter: nil)
+    @inviter_name = get_correct_name(inviter)
+    @redirect_base_url = ENV['URL']
+    @company_logo = LOGO
+
+    send_email(recipient_email, "Someone invited you to join Sourcehoney")
+  end
+
+  def tagged_in_comment(taggee_name: nil, taggee_email: nil, tagger: nil, project: nil, comment: nil)
+    @taggee_name = taggee_name
+    @tagger_name = get_correct_name(tagger)
+    @project_name = project.title
+    @project_uuid = project.uuid
+    @comment_text = comment.text
+    @comment_uuid = comment.uuid
+    @redirect_base_url = ENV['URL']
+    @company_logo = LOGO
+
+    send_email(taggee_email, "Someone tagged you in a comment")
+  end
+
   def received_suggestion(user)
-    @recipient_name = get_recipient_name(user)
+    @recipient_name = get_correct_name(user)
     @company_logo = LOGO
 
     send_email(user.email, 'Thanks for the suggestion!')
@@ -58,7 +123,7 @@ class UserMailer < ActionMailer::Base
     send_email(ENV['ADMIN_EMAIL'], 'New Suggestion!')
   end
 
-  def get_recipient_name(user)
+  def get_correct_name(user)
     name = user.try(:name)
 
     if user.try(:name).try(:present?)

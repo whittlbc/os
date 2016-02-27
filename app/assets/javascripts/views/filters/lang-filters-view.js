@@ -36,7 +36,7 @@ define(['jquery',
         'filters:remove-all': 'removeAllFilters',
         'show-lang-tutorial-filters': 'showTutorialFilters',
         'hide-tutorial-filters': 'clearLangFilters',
-        'tutorial:done': 'handleTutorialDone'
+        'tutorial:end-early': 'cutTutorialEarly'
       }, this);
     },
 
@@ -44,8 +44,9 @@ define(['jquery',
       'click #clearLangFiltersBtn': 'clearLangFilters'
     },
 
-    handleTutorialDone: function () {
-      this.tutorialDone = true;
+    cutTutorialEarly: function () {
+      this.cutTutorial = true;
+      this.removeAllFilters();
     },
 
     showTutorialFilters: function () {
@@ -54,6 +55,10 @@ define(['jquery',
 
     addTutorialFilter: function (i) {
       var self = this;
+
+      if (this.cutTutorial) {
+        return;
+      }
 
       this.addItem({
         value: this.tutorialFilters[i],
@@ -66,7 +71,7 @@ define(['jquery',
           self.addTutorialFilter(i);
         } else {
           setTimeout(function () {
-            if (_.first(self.LANG_FILTERS) && _.first(self.LANG_FILTERS).$el) {
+            if (_.first(self.LANG_FILTERS) && _.first(self.LANG_FILTERS).$el && !this.cutTutorial) {
               $(self.LANG_FILTERS[0].$el).mouseenter();
             }
           }, 5);
@@ -80,7 +85,7 @@ define(['jquery',
     hoverOnTutorialItemDown: function (i) {
       var self = this;
 
-      if (!this.LANG_FILTERS[i] || !this.LANG_FILTERS[i].$el) {
+      if (!this.LANG_FILTERS[i] || !this.LANG_FILTERS[i].$el || this.cutTutorial) {
         return;
       }
 
@@ -105,7 +110,7 @@ define(['jquery',
     hoverOnTutorialItemUp: function (i) {
       var self = this;
 
-      if (!this.LANG_FILTERS[i] || !this.LANG_FILTERS[i].$el) {
+      if (!this.LANG_FILTERS[i] || !this.LANG_FILTERS[i].$el || this.cutTutorial) {
         return;
       }
 

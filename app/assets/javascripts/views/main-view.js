@@ -940,12 +940,13 @@ define(['jquery',
             self.showingAboutModalForTutorial = true;
             self.tutorialClicks = 0;
 
-            //$('#tutorialCover').click(function () {
-            //  self.tutorialClicks++;
-            //  if (self.tutorialClicks >= 2) {
-            //    self.tutorialManager.done();
-            //  }
-            //});
+            $('#tutorialCover').click(function () {
+              self.tutorialClicks++;
+              if (self.tutorialClicks >= 2) {
+                self.tutorialManager.done();
+                Backbone.EventBroker.trigger('tutorial:end-early');
+              }
+            });
 
           }, 50);
         }, 400);
