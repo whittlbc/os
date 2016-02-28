@@ -25,7 +25,7 @@ define(['jquery',
       if (!this.clicked) {
         this.clicked = true;
         this.trigger('next');
-        Backbone.EventBroker.trigger('tutorial:login-with-gh');
+        Backbone.EventBroker.trigger('header-login-btn-clicked');
       }
     },
 

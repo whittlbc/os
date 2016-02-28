@@ -35,7 +35,7 @@ define(['jquery',
         'hide-more-langs-dropdown': 'forceHideDropdown',
         'filters:remove-all': 'removeAllFilters',
         'show-lang-tutorial-filters': 'showTutorialFilters',
-        'hide-tutorial-filters': 'clearLangFilters',
+        'hide-tutorial-filters': 'removeAllFilters',
         'tutorial:end-early': 'cutTutorialEarly'
       }, this);
     },
