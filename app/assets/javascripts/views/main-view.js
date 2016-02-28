@@ -368,7 +368,7 @@ define(['jquery',
     },
 
     loginWithGH: function () {
-      window.location = 'https://github.com/login/oauth/authorize?client_id=' + OSUtil.GH_CLIENT_ID;
+      window.location = 'https://github.com/login/oauth/authorize?client_id=' + OSUtil.GH_CLIENT_ID + '&scope=user:email';
     },
 
     // either show the login modal or vote on the passed projectPostView
