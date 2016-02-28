@@ -183,7 +183,23 @@ define(['jquery',
       });
 
       return this.sync('getStarredProjects', this, requestInfo);
+    },
+
+    inviteUsers: function (info, options) {
+      var requestInfo = options || {};
+
+      _.extend(info, {
+        uuid: this.get('uuid')
+      });
+
+      _.extend(requestInfo, {
+        url: this.extension + '/inviteUsers',
+        data: info
+      });
+
+      return this.sync('inviteUsers', this, requestInfo);
     }
+
   });
 
   return User;

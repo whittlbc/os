@@ -116,15 +116,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def invite_user
+  def invite_users
     user = User.find_by(uuid: params[:uuid])
 
-    if user.present?
-      UserMailer.delay.site_invitation(recipient_email: params[:email], inviter: user)
-      render json: {}, status: 200
-    else
-      render json: { message: 'User not found' }, status: 500
-    end
+    # (params[:emails] || []).each { |email|
+    #   UserMailer.delay.site_invitation(recipient_email: email, inviter: user)
+    # }
+
+    render json: {}, status: 200
   end
 
   private

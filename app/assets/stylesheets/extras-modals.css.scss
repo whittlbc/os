@@ -474,7 +474,7 @@ $not-quite-black: #1D1E22;
       width: 100%;
       height: 30px;
       float: left;
-      margin: 20px 0;
+      margin: 23px 0;
       line-height: 30px;
       font-size: 14px;
       font-family: 'Proxima-Nova-SemiBold';
@@ -482,9 +482,9 @@ $not-quite-black: #1D1E22;
 
     [name="invite-members"] {
       width: 100%;
-      line-height: 31px;
+      line-height: 36px;
       border-radius: 4px;
-      border: 1px solid #C2C2CB;
+      border: 1px solid #DDD;
       padding-left: 6px;
       font-size: 13px;
     }
@@ -494,10 +494,13 @@ $not-quite-black: #1D1E22;
       height: auto;
       margin-left: auto;
       margin-right: auto;
-      padding-top: 50px;
+      padding-top: 58px;
+      padding-bottom: 15px;
 
       .sk-circle {
         margin: 0px auto;
+        position: relative;
+        top: -22px;
       }
     }
 
@@ -508,22 +511,21 @@ $not-quite-black: #1D1E22;
       line-height: 50px;
       text-align: center;
       color: $not-quite-black;
-      font-size: 17px;
-      margin-top: 15px;
+      font-size: 16.5px;
+      margin-top: -19px;
     }
 
     #inviteMembersSuccess {
       width: 100%;
       height: auto;
-      float: left;
 
       .fa {
-        font-size: 80px;
+        font-size: 74px;
         color: #00A6C9;
         text-align: center;
         display: block;
-        margin-top: 35px;
-        margin-bottom: 5px;
+        margin-top: 17px;
+        margin-bottom: 2px;
         margin-left: auto;
         margin-right: auto;
       }
@@ -531,20 +533,17 @@ $not-quite-black: #1D1E22;
 
     .success-text {
       width: 100%;
-      float: left;
       height: 50px;
       line-height: 50px;
       text-align: center;
       color: $not-quite-black;
-      font-size: 17px;
-      margin-bottom: 20px;
+      font-size: 15px;
     }
 
     .invite-members-error-text {
       width: 65%;
-      float: left;
       line-height: 25px;
-      margin: 60px auto;
+      margin: 49px auto;
       text-align: center;
       color: red;
       font-size: 15px;
@@ -564,13 +563,21 @@ $not-quite-black: #1D1E22;
         color: white;
         cursor: pointer;
         text-align: center;
-        margin-top: 26px;
+        margin-top: 32px;
         margin-left: auto;
         margin-right: auto;
       }
     }
 
-    #inviteMembersContentView.safari {
+    .invite-members-footer.success {
+      height: 50px;
+
+      .submit-btn {
+        margin-top: 10px;
+      }
+    }
+
+    #inviteMembersModal.safari {
       .submit-btn {
         font-family: 'Proxima-Nova-SemiBold';
       }

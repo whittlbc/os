@@ -620,6 +620,10 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       'requestFeedback': {
         verb: 'POST',
         action: 'create'
+      },
+      'inviteUsers': {
+        verb: 'POST',
+        action: 'create'
       }
     }
 

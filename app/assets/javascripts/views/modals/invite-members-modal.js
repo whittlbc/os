@@ -28,6 +28,8 @@ define(['jquery',
     },
 
     render: function () {
+      var self = this;
+
       this.$el.html(InviteMembersModalTpl());
 
       this.$modal = this.$el.find('#inviteMembersModalView');
@@ -36,6 +38,10 @@ define(['jquery',
 
       this.inviteMembersView = new InviteMembersView({
         el: this.$el.find('#inviteMembersContentView')
+      });
+
+      this.listenTo(this.inviteMembersView, 'close', function () {
+        self.trigger('close');
       });
 
       this.inviteMembersView.render();

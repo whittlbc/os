@@ -14,10 +14,10 @@
 {{/successView}}
 
 {{#errorView}}
-<div class="invite-members-error-text">There was an error processing your invitations. Please try again at a later time.</div>
+<div class="invite-members-error-text">There was an error sending your invitations. Please try again at a later time.</div>
 {{/errorView}}
 
-<div class="invite-members-footer">
+<div class="invite-members-footer {{#successView}}success{{/successView}}">
     {{^spinnerView}}
     <div class="submit-btn">
         {{^successView}}{{^errorView}}

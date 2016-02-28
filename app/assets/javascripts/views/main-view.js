@@ -754,7 +754,9 @@ define(['jquery',
         this.footerView.passFilterType(this.lastFilterType);
       }
 
-      this.renderSuggestionsBtn();
+      this.$el.find('#floatingSuggestionsBtn').click(function () {
+        self.suggestionsModal.showModal();
+      });
     },
 
     renderProjectView: function (options) {
@@ -936,9 +938,16 @@ define(['jquery',
         }
       });
 
-      _.each([this.aboutModal, this.rulesModal, this.suggestionsModal], function (view) {
+      this.inviteMembersModal = new InviteMembersModal({
+        el: '#inviteMembersModal'
+      });
+
+      this.inviteMembersModal.render();
+
+      _.each([this.aboutModal, this.rulesModal, this.suggestionsModal, this.inviteMembersModal], function (view) {
         self.listenTo(view, 'close', function () {
           view.hideModal();
+          document.body.style.overflow = 'auto';
           setTimeout(function () {
             view.render();
           }, 300);
@@ -967,11 +976,6 @@ define(['jquery',
         }, 400);
       }
 
-      this.inviteMembersModal = new InviteMembersModal({
-        el: '#inviteMembersModal'
-      });
-
-      this.inviteMembersModal.render();
     },
 
     showTutorialIfNeeded: function () {
@@ -1121,26 +1125,6 @@ define(['jquery',
         $ghTooltip.tooltip('show');
       }, function () {
         $ghTooltip.tooltip('hide');
-      });
-    },
-
-    renderSuggestionsBtn: function () {
-      var self = this;
-      var $suggestionsBtn = this.$el.find('#floatingSuggestionsBtn');
-      $suggestionsBtn.css('display', 'inline-block');
-
-      $suggestionsBtn.click(function () {
-        self.suggestionsModal.showModal();
-        $suggestionsTooltip.tooltip('hide');
-      });
-
-      var $suggestionsTooltip = this.$el.find('[data-toggle="suggestions-tooltip"]');
-      $suggestionsTooltip.tooltip({ trigger: 'manual' });
-
-      $suggestionsBtn.hover(function () {
-        $suggestionsTooltip.tooltip('show');
-      }, function () {
-        $suggestionsTooltip.tooltip('hide');
       });
     },
 

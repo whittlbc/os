@@ -87,11 +87,11 @@ class UserMailer < ActionMailer::Base
   end
 
   def site_invitation(recipient_email: nil, inviter: nil)
-    @inviter_name = get_correct_name(inviter)
+    @inviter_name = get_correct_name(inviter, full_name: true)
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
 
-    send_email(recipient_email, "Someone invited you to join Sourcehoney")
+    send_email(recipient_email, "Someone invited you to Sourcehoney")
   end
 
   def tagged_in_comment(taggee_name: nil, taggee_email: nil, tagger: nil, project: nil, comment: nil)

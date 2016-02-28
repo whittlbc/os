@@ -59,6 +59,7 @@ Backboneworld::Application.routes.draw do
       put :star, :path => '/star'
       get :get_my_projects, :path => '/getMyProjects'
       get :get_starred_projects, :path => '/getStarredProjects'
+      post :invite_users, :path => '/inviteUsers'
     end
   end
 
