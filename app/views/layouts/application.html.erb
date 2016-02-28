@@ -24,12 +24,12 @@
       <a href="/"><img id="headerLogoPic" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/sourcehoney.png"/></a>
     </div>
     <div class="rest-of-header-container">
-      <img id="header-user-pic" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/profile.svg"/>
-      <div id="headerEllipsis"><i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i></div>
-      <div id="headerNotificationsIcon">
-        <i class="fa fa-bell-o"></i>
-        <div id="headerNotificationsCount" hidden></div>
-      </div>
+      <% if @user_pic %>
+        <img id="header-user-pic" src="<%= @user_pic %>"/>
+      <% else %>
+        <div id="headerLoginBtn">Login</div>
+      <% end %>
+      <div id="headerEllipsis" class="<%= @user_pic ? '' : 'unauthed' %>"><i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i></div>
       <div id="headerAddProjectBtn">
         <i class="material-icons" id="addNewProject">add</i>
       </div>

@@ -52,7 +52,7 @@ define(['jquery',
       if (this.mainView.showHomeView) {
         this.mainView.changeHomeFeedType(feedIndex);
       } else {
-        this.mainView.resetNotifications();
+        //this.mainView.resetNotifications();
         this.mainView.render({
           view: OSUtil.HOME_PAGE,
           index: feedIndex
@@ -65,7 +65,7 @@ define(['jquery',
     updateProjectView: function (uuid) {
       this.mainView = this.mainView || new MainView({el: '#mainView'});
       this.mainView.captureFilters();
-      this.mainView.resetNotifications();
+      //this.mainView.resetNotifications();
       Backbone.EventBroker.trigger('seeking-filters:reset');
 
       this.mainView.render({

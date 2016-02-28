@@ -319,7 +319,6 @@ $not-quite-black: #1D1E22;
         margin: 20px 0;
         line-height: 30px;
         font-size: 14px;
-        text-align: center;
         font-family: 'Proxima-Nova-SemiBold';
       }
 
@@ -433,4 +432,150 @@ $not-quite-black: #1D1E22;
 
 }
 
+#inviteMembersModalView {
 
+  .modal-content {
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px solid #EEE !important;
+    position: relative;
+
+    button {
+      margin-right: 22px;
+      margin-top: 22px;
+      font-size: 22px;
+    }
+
+    .header-text {
+      width: 100%;
+      height: 100%;
+      line-height: 55px;
+      font-size: 24px;
+      color: black;
+      padding-top: 8px;
+      padding-left: 30px;
+    }
+  }
+
+  .invite-members-modal-body {
+    width: 100%;
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  #inviteMembersContentView {
+    width: 100%;
+
+    .invite-members-text {
+      width: 100%;
+      height: 30px;
+      float: left;
+      margin: 20px 0;
+      line-height: 30px;
+      font-size: 14px;
+      font-family: 'Proxima-Nova-SemiBold';
+    }
+
+    [name="invite-members"] {
+      width: 100%;
+      line-height: 31px;
+      border-radius: 4px;
+      border: 1px solid #C2C2CB;
+      padding-left: 6px;
+      font-size: 13px;
+    }
+
+    #inviteMembersSpinnerView {
+      width: auto;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 50px;
+
+      .sk-circle {
+        margin: 0px auto;
+      }
+    }
+
+    .sending-invites {
+      width: 100%;
+      float: left;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: $not-quite-black;
+      font-size: 17px;
+      margin-top: 15px;
+    }
+
+    #inviteMembersSuccess {
+      width: 100%;
+      height: auto;
+      float: left;
+
+      .fa {
+        font-size: 80px;
+        color: #00A6C9;
+        text-align: center;
+        display: block;
+        margin-top: 35px;
+        margin-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .success-text {
+      width: 100%;
+      float: left;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: $not-quite-black;
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    .invite-members-error-text {
+      width: 65%;
+      float: left;
+      line-height: 25px;
+      margin: 60px auto;
+      text-align: center;
+      color: red;
+      font-size: 15px;
+      margin-left: 17.5%;
+    }
+
+    .invite-members-footer {
+      height: 55px;
+      width: 100%;
+
+      .submit-btn {
+        width: 110px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 16px;
+        background-color: #00A6C9;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 26px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    #inviteMembersContentView.safari {
+      .submit-btn {
+        font-family: 'Proxima-Nova-SemiBold';
+      }
+    }
+
+  }
+
+}

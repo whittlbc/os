@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
     headers['Content-Type'] = 'text/html; charset=utf-8'
   end
 
+  def get_user_info
+    user_info_string = cookies[:gh_login] || '{}'
+    @user_info = JSON.parse(user_info_string)
+  end
+
 end

@@ -34,6 +34,7 @@ define(['jquery',
 
     signOut: function () {
       this.deleteFromStorage(OSUtil.USER_STORAGE_KEY);
+      this.deleteCookie('gh_login')
     },
 
     checkForSession: function () {
@@ -58,7 +59,7 @@ define(['jquery',
           this.setToStorage(OSUtil.USER_STORAGE_KEY, cachedUserData);
           this.setCurrentUser(cachedUserData);
           // don't need the cookie anymore since you stored the data in local storage
-          this.deleteCookie('gh_login');
+          //this.deleteCookie('gh_login');
           this.authed = true;
         }
       }

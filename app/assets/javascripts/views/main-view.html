@@ -1,12 +1,10 @@
-
 <!--HOME VIEW-->
 {{#showHomeView}}
 <div id="homeViewContainer"></div>
 <div id="langFiltersView" class="{{#isSafari}}safari{{/isSafari}}"></div>
 <div id="minorFiltersView" class="{{#isSafari}}safari{{/isSafari}}"></div>
-<span id="floatingLoginWithGHBtn" class="octicon octicon-mark-github {{#isSafari}}safari{{/isSafari}}{{^isSafari}}not-safari{{/isSafari}}" data-toggle="gh-tooltip" data-placement="top" title="Login with GitHub"></span>
+<i id="floatingSuggestionsBtn" class="fa fa-comments {{#isSafari}}safari{{/isSafari}}{{^isSafari}}not-safari{{/isSafari}}" data-toggle="suggestions-tooltip" data-placement="top" title="Leave us a suggestion"></i>
 {{/showHomeView}}
-
 
 <!--PROJECT VIEW-->
 {{#showProjectView}}
@@ -29,9 +27,10 @@
 <div id="modalSuggestions" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';"></div>
 <div id="modalConfirmLaunch" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';"></div>
 <div id="addImplementationModal" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';" class="{{#isSafari}}safari{{/isSafari}}"></div>
+<div id="inviteMembersModal" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';" class="{{#isSafari}}safari{{/isSafari}}"></div>
 
 <!--DROPDOWNS-->
-<div onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';" id="notificationsDropdown" hidden></div>
+<!--<div onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';" id="notificationsDropdown" hidden></div>-->
 <div id="accountDropdown" hidden></div>
 <div id="extrasDropdown" hidden></div>
 

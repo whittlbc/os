@@ -13,7 +13,7 @@ define(['jquery',
   'views/modals/contributors-modal',
   'views/modals/basic-question-modal',
   'views/search/search-container-view',
-  'views/notifications/notifications-dropdown-view',
+  //'views/notifications/notifications-dropdown-view',
   'views/account/account-dropdown-view',
   'views/dropdowns/extras-dropdown-view',
   'views/modals/my-projects-modal',
@@ -26,6 +26,7 @@ define(['jquery',
   'views/filters/lang-filters-view',
   'views/filters/minor-filters-view',
   'views/tutorial/tutorial-manager',
+  'views/modals/invite-members-modal',
   'stache!views/main-view',
   'backbone-eventbroker'
 ], function ($,
@@ -43,7 +44,7 @@ define(['jquery',
    ContributorsModal,
    BasicQuestionModal,
    SearchContainerView,
-   NotificationsDropdownView,
+   //NotificationsDropdownView,
    AccountDropdownView,
    ExtrasDropdownView,
    MyProjectsModal,
@@ -56,6 +57,7 @@ define(['jquery',
    LangFiltersView,
    MinorFiltersView,
    TutorialManager,
+   InviteMembersModal,
    MainViewTpl) {
   'use strict';
 
@@ -85,7 +87,7 @@ define(['jquery',
         'force-hide-my-projects-modal': 'forceHideMyProjectsModal',
         'hide-header-dropdowns': 'hideHeaderDropdowns',
         'add-new-proj-clicked': 'addNewProjectBtnClicked',
-        'notifications-icon-clicked': 'notificationsIconClicked',
+        //'notifications-icon-clicked': 'notificationsIconClicked',
         'header-ellipsis-clicked': 'headerEllipsisClicked',
         'header-user-pic-clicked': 'headerUserPicClicked',
         'open-project': 'openProject',
@@ -98,7 +100,8 @@ define(['jquery',
         'header-footer:force-show': 'forceShowHeaderFooter',
         'login-or-add-implementation': 'loginOrShowAddImplementationModal',
         'hide-add-implementations-modal': 'hideImplementationModal',
-        'login-or-implementation-vote': 'loginOrImplementationVote'
+        'login-or-implementation-vote': 'loginOrImplementationVote',
+        'header-login-btn-clicked': 'headerLoginBtnClicked'
       }, this);
 
       this.lastAddProjectPopupShownForGrab = false;
@@ -120,21 +123,21 @@ define(['jquery',
       this.loginWithGH();
     },
 
-    resetNotifications: function () {
-      this.notificationsDropdown.populated = false;
-    },
+    //resetNotifications: function () {
+    //  this.notificationsDropdown.populated = false;
+    //},
 
     getNonCachedUserInfo: function () {
       var self = this;
 
-      this.notificationsDropdown = new NotificationsDropdownView({
-        el: '#notificationsDropdown'
-      });
+      //this.notificationsDropdown = new NotificationsDropdownView({
+      //  el: '#notificationsDropdown'
+      //});
 
       if (this.currentUser) {
         this.currentUser.getNonCachedInfo({ success: function (data) {
-          self.notifications = data.notifications;
-          self.notificationsDropdown.populate(self.notifications);
+          //self.notifications = data.notifications;
+          //self.notificationsDropdown.populate(self.notifications);
           Github.setToken(data.gh_access_token);
         }});
       }
@@ -480,29 +483,29 @@ define(['jquery',
       }
     },
 
-    notificationsIconClicked: function (e) {
-      var self = this;
-      e.stopPropagation();
-      self.searchView.forceCloseSearchBar();
-      self.accountDropdown.$el.hide();
-      self.extrasDropdown.$el.hide();
-      if (self.footerView) {
-        self.footerView.hideDropup();
-      }
-      Backbone.EventBroker.trigger('hide-more-langs-dropdown');
-      if (self.notificationsDropdown.$el.css('display') === 'none') {
-        self.handleSeen();
-        self.notificationsDropdown.$el.show();
-      } else {
-        self.notificationsDropdown.$el.hide();
-      }
-    },
+    //notificationsIconClicked: function (e) {
+    //  var self = this;
+    //  e.stopPropagation();
+    //  self.searchView.forceCloseSearchBar();
+    //  self.accountDropdown.$el.hide();
+    //  self.extrasDropdown.$el.hide();
+    //  if (self.footerView) {
+    //    self.footerView.hideDropup();
+    //  }
+    //  Backbone.EventBroker.trigger('hide-more-langs-dropdown');
+    //  if (self.notificationsDropdown.$el.css('display') === 'none') {
+    //    self.handleSeen();
+    //    self.notificationsDropdown.$el.show();
+    //  } else {
+    //    self.notificationsDropdown.$el.hide();
+    //  }
+    //},
 
     headerUserPicClicked: function (e) {
       var self = this;
       e.stopPropagation();
       self.searchView.forceCloseSearchBar();
-      self.notificationsDropdown.$el.hide();
+      //self.notificationsDropdown.$el.hide();
       Backbone.EventBroker.trigger('hide-more-langs-dropdown');
       self.extrasDropdown.$el.hide();
       if (self.footerView) {
@@ -511,11 +514,16 @@ define(['jquery',
       self.accountDropdown.$el.css('display') === 'none' ? self.accountDropdown.$el.show() : self.accountDropdown.$el.hide();
     },
 
+    headerLoginBtnClicked: function () {
+      this.loginModal.noMessage();
+      this.loginModal.showModal();
+    },
+
     headerEllipsisClicked: function (e) {
       var self = this;
       e.stopPropagation();
       self.searchView.forceCloseSearchBar();
-      self.notificationsDropdown.$el.hide();
+      //self.notificationsDropdown.$el.hide();
       self.accountDropdown.$el.hide();
       Backbone.EventBroker.trigger('hide-more-langs-dropdown');
       if (self.footerView) {
@@ -524,41 +532,41 @@ define(['jquery',
       self.extrasDropdown.$el.css('display') === 'none' ? self.extrasDropdown.$el.show() : self.extrasDropdown.$el.hide();
     },
 
-    handleSeen: function () {
-      var self = this;
-      var unseen = [];
+    //handleSeen: function () {
+    //  var self = this;
+    //  var unseen = [];
+    //
+    //  if (this.notifications) {
+    //
+    //    for (var i = 0; i < this.notifications.length; i++) {
+    //      if (!this.notifications[i].seen) {
+    //        this.notifications[i].seen = true;
+    //        unseen.push({
+    //          uuid: this.notifications[i].uuid,
+    //          is_request: this.notifications[i].is_request
+    //        });
+    //      }
+    //    }
+    //    if (unseen.length > 0) {
+    //      this.notificationsDropdown.sawAllNotifications();
+    //      var project = new Project();
+    //      project.sawNotifications({notifications: unseen});
+    //    }
+    //  }
+    //
+    //},
 
-      if (this.notifications) {
-
-        for (var i = 0; i < this.notifications.length; i++) {
-          if (!this.notifications[i].seen) {
-            this.notifications[i].seen = true;
-            unseen.push({
-              uuid: this.notifications[i].uuid,
-              is_request: this.notifications[i].is_request
-            });
-          }
-        }
-        if (unseen.length > 0) {
-          this.notificationsDropdown.sawAllNotifications();
-          var project = new Project();
-          project.sawNotifications({notifications: unseen});
-        }
-      }
-
-    },
-
-    respondToRequest: function (notificationData, answer) {
-      var self = this;
-      var project = new Project();
-      project.respondToRequest({
-        requester_uuid: notificationData.requester_uuid,
-        uuid: notificationData.project_uuid,
-        pending_request_uuid: notificationData.uuid,
-        response: answer
-      });
-    },
-
+    //respondToRequest: function (notificationData, answer) {
+    //  var self = this;
+    //  var project = new Project();
+    //  project.respondToRequest({
+    //    requester_uuid: notificationData.requester_uuid,
+    //    uuid: notificationData.project_uuid,
+    //    pending_request_uuid: notificationData.uuid,
+    //    response: answer
+    //  });
+    //},
+    //
     showLoginModalFromAccountTabClick: function () {
       this.loginModal.setMessage('Go ahead and login!');
       this.loginModal.showModal();
@@ -573,7 +581,7 @@ define(['jquery',
 
     hideHeaderDropdowns: function (hideSearchResults) {
       var self = this;
-      this.notificationsDropdown.$el.hide();
+      //this.notificationsDropdown.$el.hide();
       this.accountDropdown.$el.hide();
       this.extrasDropdown.$el.hide();
       if (this.footerView) {
@@ -680,7 +688,7 @@ define(['jquery',
 
     hideHeaderDropdownsOnly: function () {
       var self = this;
-      self.notificationsDropdown.$el.hide();
+      //self.notificationsDropdown.$el.hide();
       self.accountDropdown.$el.hide();
       self.extrasDropdown.$el.hide();
       Backbone.EventBroker.trigger('hide-more-langs-dropdown');
@@ -746,9 +754,7 @@ define(['jquery',
         this.footerView.passFilterType(this.lastFilterType);
       }
 
-      if (!this.currentUser) {
-        this.renderLoginWithGHBtn();
-      }
+      this.renderSuggestionsBtn();
     },
 
     renderProjectView: function (options) {
@@ -918,14 +924,14 @@ define(['jquery',
 
       this.listenTo(this.extrasDropdown, 'item:clicked', function (id) {
         switch (id) {
-          case 'about':
-            self.aboutModal.showModal();
+          case 'invite':
+            self.inviteMembersModal.showModal();
             break;
           case 'rules':
             self.rulesModal.showModal();
             break;
-          case 'suggestions':
-            self.suggestionsModal.showModal();
+          case 'about':
+            self.aboutModal.showModal();
             break;
         }
       });
@@ -960,6 +966,12 @@ define(['jquery',
           }, 50);
         }, 400);
       }
+
+      this.inviteMembersModal = new InviteMembersModal({
+        el: '#inviteMembersModal'
+      });
+
+      this.inviteMembersModal.render();
     },
 
     showTutorialIfNeeded: function () {
@@ -987,21 +999,21 @@ define(['jquery',
     renderDropdowns: function () {
       var self = this;
 
-      this.notificationsDropdown.$el = this.$el.find('#notificationsDropdown');
-
-      this.listenTo(this.notificationsDropdown, 'accept-request', function (notificationData) {
-        self.respondToRequest(notificationData, true);
-      });
-
-      this.listenTo(this.notificationsDropdown, 'reject-request', function (notificationData) {
-        self.respondToRequest(notificationData, false);
-      });
-
-      this.notificationsDropdown.render();
-
-      if (_.has(this, 'notifications') && !this.notificationsDropdown.populated) {
-        this.notificationsDropdown.populate(this.notifications);
-      }
+      //this.notificationsDropdown.$el = this.$el.find('#notificationsDropdown');
+      //
+      //this.listenTo(this.notificationsDropdown, 'accept-request', function (notificationData) {
+      //  self.respondToRequest(notificationData, true);
+      //});
+      //
+      //this.listenTo(this.notificationsDropdown, 'reject-request', function (notificationData) {
+      //  self.respondToRequest(notificationData, false);
+      //});
+      //
+      //this.notificationsDropdown.render();
+      //
+      //if (_.has(this, 'notifications') && !this.notificationsDropdown.populated) {
+      //  this.notificationsDropdown.populate(this.notifications);
+      //}
 
       this.accountDropdown = new AccountDropdownView({
         el: '#accountDropdown'
@@ -1109,6 +1121,26 @@ define(['jquery',
         $ghTooltip.tooltip('show');
       }, function () {
         $ghTooltip.tooltip('hide');
+      });
+    },
+
+    renderSuggestionsBtn: function () {
+      var self = this;
+      var $suggestionsBtn = this.$el.find('#floatingSuggestionsBtn');
+      $suggestionsBtn.css('display', 'inline-block');
+
+      $suggestionsBtn.click(function () {
+        self.suggestionsModal.showModal();
+        $suggestionsTooltip.tooltip('hide');
+      });
+
+      var $suggestionsTooltip = this.$el.find('[data-toggle="suggestions-tooltip"]');
+      $suggestionsTooltip.tooltip({ trigger: 'manual' });
+
+      $suggestionsBtn.hover(function () {
+        $suggestionsTooltip.tooltip('show');
+      }, function () {
+        $suggestionsTooltip.tooltip('hide');
       });
     },
 

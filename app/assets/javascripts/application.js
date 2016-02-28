@@ -88,8 +88,8 @@ define(['jquery',
       Backbone.EventBroker.trigger('add-new-proj-clicked');
     });
 
-    $('#headerNotificationsIcon').click(function (e) {
-      Backbone.EventBroker.trigger('notifications-icon-clicked', e);
+    $('#headerLoginBtn').click(function (e) {
+      Backbone.EventBroker.trigger('header-login-btn-clicked', e);
     });
 
     $('#headerEllipsis').click(function (e) {

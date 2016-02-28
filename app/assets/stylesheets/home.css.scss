@@ -1509,6 +1509,63 @@ $side-filters-width: 18.25%;
   }
 }
 
+#floatingSuggestionsBtn {
+  -webkit-box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.16), 0 3px 12px 0 rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.16), 0 3px 12px 0 rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.16), 0 3px 12px 0 rgba(0, 0, 0, 0.13);
+  -webkit-transition: all .2s ease-out, color .2s ease-out;
+  -moz-transition: all .2s ease-out, color .2s ease-out;
+  -ms-transition: all .2s ease-out, color .2s ease-out;
+  -o-transition: all .2s ease-out, color .2s ease-out;
+  transition: all .2s ease-out, color .2s ease-out;
+  border-radius: 50%;
+  font-size: 26px;
+  line-height: 48px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  display: block;
+  color: white;
+  background-color: #333;
+  cursor: pointer;
+  position: fixed;
+  bottom: 21px;
+  right: 24px;
+  z-index: 1;
+}
+
+#floatingSuggestionsBtn:hover {
+  background-color: #3C3C3C;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.13);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.13);
+}
+
+#floatingSuggestionsBtn + .tooltip.top {
+
+  .tooltip-inner {
+    color: white;
+    position: relative;
+    font-size: 11px;
+    left: -6px;
+    padding-bottom: 4px;
+    padding-top: 3px;
+  }
+
+}
+
+#floatingSuggestionsBtn.not-safari + .tooltip.top {
+  .tooltip-inner {
+    width: 100px !important;
+  }
+}
+
+#floatingSuggestionsBtn.safari + .tooltip.top {
+  .tooltip-inner {
+    width: 103px !important;
+    font-family: 'Proxima-Nova-SemiBold';
+  }
+}
 
 .gh-login-loading {
   width: 50px;

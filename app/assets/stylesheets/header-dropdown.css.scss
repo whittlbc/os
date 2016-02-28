@@ -299,14 +299,12 @@ $more-dropdown-border-radius: 6px;
 }
 
 
-
-
 // Extras Dropdown
 #extrasDropdown {
   position: fixed;
   top: 68px;
-  right: 152px;
-  width: 140px;
+  right: 144px;
+  width: 154px;
   z-index: 1035;
 
   .dropdown-arrow {

@@ -34,10 +34,10 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 35px;
+    margin-top: 28px;
     color: white;
     border-radius: 4px;
-    background-color: #B0B0B2;
+    background-color: #BEBEC1;
     cursor: pointer;
 
     .octicon {
@@ -52,7 +52,27 @@
   }
 
   .gh-login-btn:hover {
-    background-color: #BEBEC1;
+    background-color: #B6B6BD;
   }
 
+  .gh-login-btn.no-message {
+    margin-top: 46px;
+  }
+
+  .permissions {
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    color: #56575B;
+  }
+
+  .permissions.no-message {
+    height: 45px;
+    line-height: 45px;
+  }
+
+  .login-modal-body.no-message {
+    height: 130px !important;
+  }
 }

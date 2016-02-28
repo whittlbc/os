@@ -1,0 +1,34 @@
+{{^spinnerView}}{{^successView}}{{^errorView}}
+<div class="invite-members-text">Invite other members of the OSS community to join Sourcehoney:</div>
+<input type="text" name="invite-members" placeholder="Emails (comma-separated)" />
+{{/errorView}}{{/successView}}{{/spinnerView}}
+
+{{#spinnerView}}
+<div id="inviteMembersSpinnerView"></div>
+<div class="sending-invites">&nbsp;&nbsp;Sending...</div>
+{{/spinnerView}}
+
+{{#successView}}
+<div id="inviteMembersSuccess"><i class="fa fa-check-circle-o"></i></div>
+<div class="success-text">Thanks for expanding the Sourcehoney community!</div>
+{{/successView}}
+
+{{#errorView}}
+<div class="invite-members-error-text">There was an error processing your invitations. Please try again at a later time.</div>
+{{/errorView}}
+
+<div class="invite-members-footer">
+    {{^spinnerView}}
+    <div class="submit-btn">
+        {{^successView}}{{^errorView}}
+        Send
+        {{/errorView}}{{/successView}}
+        {{#successView}}
+        Close
+        {{/successView}}
+        {{#errorView}}
+        Close
+        {{/errorView}}
+    </div>
+    {{/spinnerView}}
+</div>

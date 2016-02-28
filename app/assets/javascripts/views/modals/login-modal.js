@@ -21,6 +21,11 @@ define(['jquery',
 
     events: {},
 
+    noMessage: function () {
+      var self = this;
+      this.loginView.render({noMessage: true});
+    },
+
     setMessage: function (message) {
       var self = this;
       this.loginView.render({message: message});

@@ -113,7 +113,8 @@ define(['jquery',
       options = options || {};
 
       this.$el.html(LoginViewTpl({
-        message: options.message ? options.message : 'You need to be logged in to perform this action.'
+        message: options.message ? options.message : 'You need to be logged in to perform this action.',
+        noMessage: options.noMessage
       }));
 
       this.setSizeForPopup();

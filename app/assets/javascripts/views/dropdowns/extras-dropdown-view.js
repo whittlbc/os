@@ -1,33 +1,37 @@
 define(['jquery',
-    'backbone',
-    'underscore',
-    'stache!views/dropdowns/extras-dropdown-view',
-    'backbone-eventbroker'
+  'backbone',
+  'underscore',
+  'views/os.view',
+  'stache!views/dropdowns/extras-dropdown-view',
+  'backbone-eventbroker'
 ], function ($,
-     Backbone,
-     _,
-     ExtrasDropdownViewTpl) {
-    'use strict';
+   Backbone,
+   _,
+   OSView,
+   ExtrasDropdownViewTpl) {
+  'use strict';
 
-    var ExtrasDropdownView = Backbone.View.extend({
+  var ExtrasDropdownView = OSView.extend({
 
-        initialize: function () {
-        },
+    postInitialize: function () {
+    },
 
-        events: {
-            'click ul#extrasList > li': 'handleClick'
-        },
+    events: {
+      'click ul#extrasList > li': 'handleClick'
+    },
 
-        handleClick: function (e) {
-            e.stopPropagation();
-            this.trigger('item:clicked', e.currentTarget.id);
-        },
+    handleClick: function (e) {
+      e.stopPropagation();
+      this.trigger('item:clicked', e.currentTarget.id);
+    },
 
-        render: function () {
-            this.$el.html(ExtrasDropdownViewTpl());
-        }
-    });
+    render: function () {
+      this.$el.html(ExtrasDropdownViewTpl({
+        showInvite: !!this.currentUser
+      }));
+    }
+  });
 
-    return ExtrasDropdownView;
+  return ExtrasDropdownView;
 
 });
