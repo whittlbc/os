@@ -487,7 +487,7 @@ class ProjectsController < ApplicationController
     pending_request = PendingRequest.find_by(uuid: params[:request])
     requester = User.find_by(id: pending_request.try(:requester_id))
 
-    if requester.present? && project.present? && pending_request.present?
+    if requester.present? && project.present? && pending_request.present? && pending_request.response.nil?
 
       # Update the request with the response value
       pending_request.update_attributes(response: true)
