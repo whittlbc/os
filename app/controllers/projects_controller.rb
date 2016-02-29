@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   module Markdown
     def self.render(text)
       @@markdown ||= Redcarpet::Markdown.new(PygmentedMarkdown.new({ link_attributes: { rel: 'nofollow', target: '_blank' }, hard_wrap: true, no_images: true }), fenced_code_blocks: true, autolink: true)
-      @@markdown.render(text)
+      @@markdown.render(text || '')
     end
   end
 
@@ -439,28 +439,71 @@ class ProjectsController < ApplicationController
     requester = User.find_by(uuid: params[:requester_uuid])
     project = Project.find_by(uuid: params[:uuid])
 
-    if !requester.nil? && !project.nil? && !params[:asset].nil?
+    if requester.present? && project.present? && params[:asset].present?
       asset = params[:asset].to_i
       pending_request = PendingRequest.new(:uuid => UUIDTools::UUID.random_create.to_s, :requested_asset => asset, :requester_id => requester.id, :responder_id => project.user.id, :project_id => project.id)
       pending_request.save!
 
-      # # Invite the user to join the Slack team if the project has a Slack API Key associated with it
-      # if asset === SLACK_ASSET
-      #   integration = Integration.find_by(:service => 'Slack', :project_id => project.id)
-      #
-      #   if !integration.key.nil?
-      #     slack_invite = invite_slack_user(requester, integration.key)
-      #     if slack_invite === true
-      #       pending_request.destroy!
-      #       integration.update_attributes(:users => integration.users + [requester.id])
-      #     end
-      #   end
-      # end
+      case asset
+        when PROJECT_ASSET
+          UserMailer.delay.request_to_join_project(
+            user: project.user,
+            project: project,
+            requester: requester,
+            pending_request: pending_request
+          )
+        when SLACK_ASSET
+          slack = project.integrations.find_by(service: 'Slack')
+
+          if slack.present? && slack.url.present?
+            UserMailer.delay.request_to_join_slack_team(
+              user: project.user,
+              project: project,
+              requester: requester,
+              url: slack.url
+            )
+          end
+        when HIPCHAT_ASSET
+          hipchat = project.integrations.find_by(service: 'HipChat')
+
+          if hipchat.present? && hipchat.url.present?
+            UserMailer.delay.request_to_join_hipchat_team(
+              user: project.user,
+              project: project,
+              requester: requester,
+              url: hipchat.url
+            )
+          end
+      end
 
       render :json => { :message => 'Successfully added pending request' }
     else
       render :json => {:status => 500, :message => 'Could not add pending request'}
     end
+  end
+
+  def accept_project_request
+    project = Project.find_by(uuid: params[:project])
+    pending_request = PendingRequest.find_by(uuid: params[:request])
+    requester = User.find_by(id: pending_request.try(:requester_id))
+
+    if requester.present? && project.present? && pending_request.present?
+
+      # Update the request with the response value
+      pending_request.update_attributes(response: true)
+      pending_request.update_attributes(responded_at: pending_request.updated_at)
+
+      Contributor.new(
+        uuid: UUIDTools::UUID.random_create.to_s,
+        project_id: project.id,
+        user_id: requester.id,
+        admin: false
+      ).save!
+
+      project.update_attributes(contributors_count: (project.contributors_count + 1))
+    end
+
+    redirect_to controller: 'home', action: 'index'
   end
 
   def respond_to_request

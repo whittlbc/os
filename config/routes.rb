@@ -38,6 +38,7 @@ Backboneworld::Application.routes.draw do
       post :add_implementation, :path => '/addImplementation'
       put :implementation_vote, :path => '/implementationVote'
       post :request_feedback, :path => '/requestFeedback'
+      get :accept_project_request, :path => '/acceptProjectRequest'
     end
   end
 

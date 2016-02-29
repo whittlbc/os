@@ -1326,21 +1326,23 @@ $post-gray: #B6B8C0;
   display: inline-block;
   float: left;
   margin-bottom: 10px;
+  position: relative;
 
   .integration-link {
     margin-left: 12px;
     float: left;
-    position: relative;
+    position: absolute;
     line-height: 38.5px;
     display: inline-block;
-    width: 60%;
+    right: 10px;
+    left: 95px;
 
     a {
-      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       float: left;
+      max-width: 85%;
     }
 
     #slackEllipsis,
@@ -1349,7 +1351,7 @@ $post-gray: #B6B8C0;
       width: auto;
       height: auto;
       float: left;
-
+      position: relative;
 
       svg {
         height: 13px;
@@ -1360,16 +1362,21 @@ $post-gray: #B6B8C0;
         display: inline-block;
         top: 2px;
       }
+
+      #slackPopover,
+      #hipchatPopover{
+        position: absolute;
+        top: -42px;
+        left: -114px;
+        width: 145px;
+        display: none;
+      }
     }
 
-    #slackPopover,
-    #hipchatPopover{
-      position: absolute;
-      top: -40px;
-      right: -9px;
-      width: 145px;
-    }
+  }
 
+  .integration-link.no-ellipsis > a {
+    max-width: 95%;
   }
 
   .linebreak {
@@ -1434,11 +1441,7 @@ $post-gray: #B6B8C0;
 }
 
 .minor-info-integration-logo-container.add-top-margin {
-  margin-top: 10px;
-}
-
-#hipChatContainer.add-top-margin {
-  margin-top: 11px;
+  margin-top: 3px;
 }
 
 .last-integration {
@@ -1461,6 +1464,7 @@ $post-gray: #B6B8C0;
   margin-right: 10px;
   margin-left: 10px;
   margin-top: 5px;
+  margin-bottom: 10px;
   float: left;
 }
 
@@ -1487,13 +1491,6 @@ $post-gray: #B6B8C0;
 }
 
 #ircContainer {
-  margin-top: -3px;
-
-  .integration-link,
-  .linebreak {
-    position: relative;
-    top: 2px;
-  }
 
   .integration-link > a {
     width: auto;
@@ -1511,7 +1508,7 @@ $post-gray: #B6B8C0;
 }
 
 #ircContainer.edit {
-  margin-top: 7px;
+  margin-top: 1px;
 }
 
 .minor-info-subsection-title {
@@ -2158,15 +2155,19 @@ $post-gray: #B6B8C0;
   margin-top: 5px;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1085px) {
   #ircContainer {
     .integration-link > a {
       width: auto;
     }
   }
 
-  .integration-link {
-    width: 54% !important;
+  .integration-link > a {
+    width: 80% !important;
+  }
+
+  .integration-link.no-ellipsis > a {
+    width: 90% !important;
   }
 }
 

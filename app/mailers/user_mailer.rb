@@ -123,6 +123,45 @@ class UserMailer < ActionMailer::Base
     send_email(ENV['ADMIN_EMAIL'], 'New Suggestion!')
   end
 
+  def request_to_join_project(user: nil, project: nil, requester: nil, pending_request: nil)
+    @recipient_name = get_correct_name(user)
+    @requester_name = get_correct_name(requester, full_name: true)
+    @project_name = project.title
+    @project_uuid = project.uuid
+    @url = "#{ENV['URL']}/projects/acceptProjectRequest?project=#{project.uuid}&request=#{pending_request.uuid}"
+    @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
+
+    send_email(user.email, "Someone requested to join your project: #{project_name_abbrev}")
+  end
+
+  def request_to_join_slack_team(user: nil, project: nil, requester: nil, url: '')
+    @recipient_name = get_correct_name(user)
+    @requester_name = get_correct_name(requester, full_name: true)
+    @requester_email = requester.email
+    @project_name = project.title
+    @url = "#{url}/admin"
+    @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
+
+    send_email(user.email, "Someone requested to join the Slack team for your project: #{project_name_abbrev}")
+  end
+
+  def request_to_join_hipchat_team(user: nil, project: nil, requester: nil, url: '')
+    @recipient_name = get_correct_name(user)
+    @requester_name = get_correct_name(requester, full_name: true)
+    @requester_email = requester.email
+    @project_name = project.title
+    @url = "#{url}/admin/user?name=#{requester.gh_username}&email=#{requester.email}"
+    @company_logo = LOGO
+    project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name
+
+    send_email(user.email, "Someone requested to join the HipChat team for your project: #{project_name_abbrev}")
+  end
+
+
+# ----- HELPER METHODS ------------------------------------------------------
+
   def get_correct_name(user, full_name: false)
     name = user.try(:name)
 

@@ -2,6 +2,7 @@ define(['jquery',
   'backbone',
   'underscore',
   'models/os.util',
+  'views/os.view',
   'views/projects/minor/minor-info/contributors-view',
   'views/projects/minor/minor-info/repo-stats-view',
   'views/widgets/request-to-join-popover',
@@ -12,6 +13,7 @@ define(['jquery',
    Backbone,
    _,
    OSUtil,
+   OSView,
    ContributorsView,
    RepoStatsView,
    RequestToJoinPopover,
@@ -19,9 +21,9 @@ define(['jquery',
    MinorInfoViewTpl) {
   'use strict';
 
-  var MinorInfoView = Backbone.View.extend({
+  var MinorInfoView = OSView.extend({
 
-    initialize: function () {
+    postInitialize: function () {
       Backbone.EventBroker.register({
         're-render-for-cancel-edit-mode': 'cancelEditMode',
         'repo-stats:fetch-error': 'cantLoadRepoStats'
@@ -56,8 +58,12 @@ define(['jquery',
     },
 
     hidePopovers: function () {
-      this.slackPopover.$el.hide();
-      this.hipchatPopover.$el.hide()
+      if (this.slackPopover) {
+        this.slackPopover.$el.hide();
+      }
+      if (this.hipchatPopover) {
+        this.hipchatPopover.$el.hide()
+      }
     },
 
     showContribsModal: function (e) {
@@ -340,6 +346,7 @@ define(['jquery',
         hipchatAccepted: options.is_hipchat_member,
         slackRequestSent: options.pending_slack_request,
         hipchatRequestSent: options.pending_hipchat_request,
+        noEllipsis: !this.currentUser || options.is_owner,
         upForGrabs: this.upForGrabs,
         editMode: options.editMode,
         editModeRepoName: options.repo_name,
@@ -373,26 +380,6 @@ define(['jquery',
 
         this.repoStatsView.render(repoStatsData);
 
-        this.slackPopover = new RequestToJoinPopover({
-          el: '#slackPopover'
-        });
-        this.listenTo(this.slackPopover, 'join', function () {
-          Backbone.EventBroker.trigger('slack:join', OSUtil.REQUESTS['slack']);
-        });
-        this.slackPopover.render({
-          status: options.pending_slack_request ? 1 : 0
-        });
-
-        this.hipchatPopover = new RequestToJoinPopover({
-          el: '#hipchatPopover'
-        });
-        this.listenTo(this.hipchatPopover, 'join', function () {
-          Backbone.EventBroker.trigger('hipchat:join', OSUtil.REQUESTS['hipchat']);
-        });
-        this.hipchatPopover.render({
-          status: options.pending_hipchat_request ? 1 : 0
-        });
-
         $(document).click(function () {
           self.hidePopovers();
         });
@@ -413,31 +400,73 @@ define(['jquery',
         this.initSeekingDropdown(options.seeking);
       }
 
-      this.slackEllipsis = new SVG({
-        el: '#slackEllipsis',
-        svg: 'v-ellipsis'
-      });
+      // Show Slack ellipsis if:
+      // (1) Project has Slack integration
+      // (2) User is Authed
+      // (3) User is NOT the owner
+      if (hasSlack && !!this.currentUser && !options.is_owner) {
+        this.slackEllipsis = new SVG({
+          el: '#slackEllipsis',
+          svg: 'v-ellipsis'
+        });
 
-      this.slackEllipsis.render();
+        this.slackEllipsis.render();
 
-      this.slackEllipsis.$el.hover(function () {
-        self.slackEllipsis.changeColor('#00A6C9');
-      }, function () {
-        self.slackEllipsis.changeColor('#cecece');
-      });
+        this.slackEllipsis.$el.hover(function () {
+          self.slackEllipsis.changeColor('#00A6C9');
+        }, function () {
+          self.slackEllipsis.changeColor('#cecece');
+        });
 
-      this.hipchatEllipsis = new SVG({
-        el: '#hipchatEllipsis',
-        svg: 'v-ellipsis'
-      });
+        var $slackPopoverAnchor = $('<div>', {id: 'slackPopover'});
+        this.slackEllipsis.$el.append($slackPopoverAnchor);
 
-      this.hipchatEllipsis.render();
+        this.slackPopover = new RequestToJoinPopover({
+          el: '#slackPopover'
+        });
 
-      this.hipchatEllipsis.$el.hover(function () {
-        self.hipchatEllipsis.changeColor('#00A6C9');
-      }, function () {
-        self.hipchatEllipsis.changeColor('#cecece');
-      });
+        this.listenTo(this.slackPopover, 'join', function () {
+          Backbone.EventBroker.trigger('slack:join', OSUtil.REQUESTS['slack']);
+        });
+
+        this.slackPopover.render({
+          status: options.pending_slack_request ? 1 : 0
+        });
+      }
+
+      // Show HipChat ellipsis if:
+      // (1) Project has HipChat integration
+      // (2) User is Authed
+      // (3) User is NOT the owner
+      if (hasHipChat && !!this.currentUser && !options.is_owner) {
+        this.hipchatEllipsis = new SVG({
+          el: '#hipchatEllipsis',
+          svg: 'v-ellipsis'
+        });
+
+        this.hipchatEllipsis.render();
+
+        this.hipchatEllipsis.$el.hover(function () {
+          self.hipchatEllipsis.changeColor('#00A6C9');
+        }, function () {
+          self.hipchatEllipsis.changeColor('#cecece');
+        });
+
+        var $hipchatPopoverAnchor = $('<div>', {id: 'hipchatPopover'});
+        this.hipchatEllipsis.$el.append($hipchatPopoverAnchor);
+
+        this.hipchatPopover = new RequestToJoinPopover({
+          el: '#hipchatPopover'
+        });
+
+        this.listenTo(this.hipchatPopover, 'join', function () {
+          Backbone.EventBroker.trigger('hipchat:join', OSUtil.REQUESTS['hipchat']);
+        });
+
+        this.hipchatPopover.render({
+          status: options.pending_hipchat_request ? 1 : 0
+        });
+      }
 
     }
   });

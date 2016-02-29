@@ -75,19 +75,15 @@
             <img class="minor-info-slack-logo {{^hasHipChat}}{{^hasIRC}}only-one{{/hasIRC}}{{/hasHipChat}}" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_logo.png">
             {{^editMode}}
             <span class="linebreak"></span>
-        <span class="integration-link">
+        <span class="integration-link {{#noEllipsis}}no-ellipsis{{/noEllipsis}}">
             <a target="_blank" href="{{slackTeamURL}}">{{slackTeamName}}</a>
-            {{#isContributor}}
             {{^isOwner}}
-            {{^slackAccepted}}
-            <div id="slackEllipsis"></div><div id="slackPopover" hidden></div>
-            {{/slackAccepted}}
+            <div id="slackEllipsis"></div>
             {{/isOwner}}
-            {{/isContributor}}
         </span>
             {{/editMode}}
             {{#editMode}}
-            <input type="text" name="edit-slack" placeholder="Team URL" value="{{slackTeamName}}"/>
+            <input type="text" name="edit-slack" placeholder="Team URL" value="{{slackTeamURL}}"/>
             {{/editMode}}
         </div>
     </div>
@@ -98,26 +94,22 @@
             <img class="minor-info-hipchat-logo" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.png">
             {{^editMode}}
             <span class="linebreak"></span>
-        <span class="integration-link" id="hipChatSpan">
+        <span class="integration-link {{#noEllipsis}}no-ellipsis{{/noEllipsis}}" id="hipChatSpan">
             <a target="_blank" href="{{hipChatTeamURL}}">{{hipChatTeamName}}</a>
-            {{#isContributor}}
             {{^isOwner}}
-            {{^hipchatAccepted}}
-            <div id="hipchatEllipsis"></div><div id="hipchatPopover" hidden></div>
-            {{/hipchatAccepted}}
+            <div id="hipchatEllipsis"></div>
             {{/isOwner}}
-            {{/isContributor}}
         </span>
             {{/editMode}}
             {{#editMode}}
-            <input type="text" placeholder="Team URL" name="edit-hipchat" value="{{hipChatTeamName}}"/>
+            <input type="text" placeholder="Team URL" name="edit-hipchat" value="{{hipChatTeamURL}}"/>
             {{/editMode}}
         </div>
     </div>
     {{/hasHipChat}}
     {{#hasIRC}}
     <div class="minorInfoIntegrationContainer">
-        <div class="minor-info-integration-logo-container {{^hasHipChat}}{{^hasSlack}}add-top-margin{{/hasSlack}}{{/hasHipChat}} {{#editMode}}edit{{/editMode}}" id="ircContainer">
+        <div class="minor-info-integration-logo-container {{#editMode}}edit{{/editMode}}" id="ircContainer">
             <div class="minor-info-irc-logo {{^hasHipChat}}{{^hasSlack}}only-one{{/hasSlack}}{{/hasHipChat}}">
                 <i class="fa fa-comment-o"></i>IRC
             </div>
