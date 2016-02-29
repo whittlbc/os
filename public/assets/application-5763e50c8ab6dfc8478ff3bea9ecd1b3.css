@@ -5220,11 +5220,7 @@ ul[data-project-type="0"] .project-extra-details-container .user-info-bubble {
   padding-left: 10px;
   padding-right: 10px;
 }
-/* line 82, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
-#contributorsModalView #contributorsFeedView .list-container .contributors-type-title-container .line-break.others {
-  width: 84%;
-}
-/* line 87, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 83, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container .no-others-exist {
   color: #cecece;
   font-style: italic;
@@ -5232,7 +5228,7 @@ ul[data-project-type="0"] .project-extra-details-container .user-info-bubble {
   text-align: center;
   margin-top: 65px;
 }
-/* line 95, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 91, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul {
   width: 100%;
   padding-left: 0;
@@ -5240,29 +5236,29 @@ ul[data-project-type="0"] .project-extra-details-container .user-info-bubble {
   float: left;
   margin-bottom: 25px;
 }
-/* line 102, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 98, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul li {
   width: 100%;
   height: 65px;
   float: left;
 }
-/* line 108, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 104, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul li:hover {
   background-color: #F4F6F8;
   cursor: pointer;
 }
-/* line 112, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 108, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul li:hover span {
   color: #00A6C9;
 }
-/* line 118, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 114, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container {
   width: 100%;
   heigth: 100%;
   float: left;
   display: block;
 }
-/* line 124, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 120, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container img {
   float: left;
   display: inline-block;
@@ -5273,11 +5269,11 @@ ul[data-project-type="0"] .project-extra-details-container .user-info-bubble {
   margin-left: 35px;
   cursor: pointer;
 }
-/* line 135, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 131, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container img.anon {
   cursor: default;
 }
-/* line 139, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 135, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container .name {
   height: 100%;
   line-height: 65px;
@@ -5290,19 +5286,19 @@ ul[data-project-type="0"] .project-extra-details-container .user-info-bubble {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 151, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 147, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container .name span:hover {
   cursor: pointer;
   text-decoration: underline;
   color: #00A6C9;
 }
-/* line 157, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 153, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container .name span.anon:hover {
   cursor: default;
   text-decoration: none;
   color: #333;
 }
-/* line 164, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 160, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container .contributions {
   height: 100%;
   line-height: 65px;
@@ -5312,7 +5308,7 @@ ul[data-project-type="0"] .project-extra-details-container .user-info-bubble {
   margin-right: 42px;
   display: inline-block;
 }
-/* line 173, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
+/* line 169, /Users/benWhittle/ideas/sourcehoney/app/assets/stylesheets/contributors-feed.css.scss */
 #contributorsModalView #contributorsFeedView .list-container ul .contributors-feed-item-container .contributions span {
   color: #333;
   font-size: 14px;
