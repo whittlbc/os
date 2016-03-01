@@ -4,6 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Comment', :foreign_key => 'parent_id'
   has_many :children, :class_name => 'Comment', :foreign_key => 'parent_id'
 
+  ADD_POINTS = 2
 
   scope :top_level, -> (project_id, feed_status) {
     where(:project_id => project_id, :feed => feed_status, :parent_id => nil)

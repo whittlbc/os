@@ -220,6 +220,8 @@ class ProjectsController < ApplicationController
       project.slug = nil
       project.save!
 
+      user.update_attributes(points: (user.points + Project::ADD_POINTS))
+
       contrib_data = {
         :uuid => UUIDTools::UUID.random_create.to_s,
         :project_id => project.id,
@@ -629,6 +631,10 @@ class ProjectsController < ApplicationController
 
     if project.present?
       project.update_attributes(:vote_count => (project.vote_count + 1))
+
+      project_owner = project.user
+      project_owner.update_attributes(points: (project_owner.points + 1))
+
       user = User.find_by(uuid: params[:user_uuid])
 
       if user.present?
@@ -657,7 +663,9 @@ class ProjectsController < ApplicationController
         :parent_id => parent_comment.try(:id)
       }
       comment = Comment.new(comment_info)
-      comment.save
+      comment.save!
+
+      user.update_attributes(points: (user.points + Comment::ADD_POINTS))
 
       project.update_attributes(:comments_count => (project.comments_count + 1))
 
@@ -739,6 +747,8 @@ class ProjectsController < ApplicationController
         irc: params[:irc]
       ).save!
 
+      user.update_attributes(points: (user.points + Implementation::ADD_POINTS))
+
       project_owner = project.user
       if project_owner.id != user.id
         UserMailer.delay.notify_user_of_implementation(
@@ -763,6 +773,10 @@ class ProjectsController < ApplicationController
     if implementation.present?
 
       implementation.update_attributes(:vote_count => (implementation.vote_count + 1))
+
+      implementation_poster = implementation.user
+
+      implementation_poster.update_attributes(points: (implementation_poster.points + 1))
 
       user = User.find_by(uuid: params[:user_uuid])
 
@@ -869,6 +883,9 @@ class ProjectsController < ApplicationController
 
     if !comment.nil?
       comment.update_attributes(:vote_count => (comment.vote_count + 1))
+      comment_poster = comment.user
+      comment_poster.update_attributes(points: (comment_poster.points + 1))
+
       user = User.find_by(uuid: params[:user_uuid])
       if !user.nil?
         user.update_attributes(:upvoted_comments => user.upvoted_comments + [comment.id])
@@ -1091,6 +1108,5 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:title, :subtitle, :user_id, :uuid, :repo_name, :description, :vote_count, :license, :status, :anon, :privacy, :contributors => [], :langs_and_frames => [], :domains => [], :seeking => [])
   end
-
 
 end

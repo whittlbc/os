@@ -2,6 +2,8 @@ class Implementation < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
 
+  ADD_POINTS = 3
+
   scope :active, -> { where(:is_destroyed => false) }
 
   def create_irc_url

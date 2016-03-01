@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   has_many :suggestions
   has_many :implementations
 
-
   scope :username_login, -> (username, password) {
     where(:username => username, :password => password)
   }

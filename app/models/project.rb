@@ -23,6 +23,8 @@ class Project < ActiveRecord::Base
     'Undernet' => 'undernet.org'
   }
 
+  ADD_POINTS = 5
+
   scope :active, -> { where(:is_destroyed => false, :was_pulled => false) }
 
   scope :not_pulled, -> { where(:was_pulled => false) }
