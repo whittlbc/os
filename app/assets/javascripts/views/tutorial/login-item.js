@@ -25,7 +25,9 @@ define(['jquery',
       if (!this.clicked) {
         this.clicked = true;
         this.trigger('next');
-        Backbone.EventBroker.trigger('header-login-btn-clicked');
+        setTimeout(function () {
+          Backbone.EventBroker.trigger('header-login-btn-clicked');
+        }, 230);
       }
     },
 
