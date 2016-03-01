@@ -754,9 +754,6 @@ define(['jquery',
         this.footerView.passFilterType(this.lastFilterType);
       }
 
-      this.$el.find('#floatingSuggestionsBtn').click(function () {
-        self.suggestionsModal.showModal();
-      });
     },
 
     renderProjectView: function (options) {
@@ -1130,6 +1127,7 @@ define(['jquery',
 
     render: function (options) {
       options = options || {};
+      var self = this;
 
       this.showHomeView = (options.view === OSUtil.HOME_PAGE);
       this.showProjectView = (options.view === OSUtil.PROJECT_PAGE);
@@ -1161,6 +1159,10 @@ define(['jquery',
 
       // CREATE MODALS
       this.renderModals();
+
+      this.$el.find('#floatingSuggestionsBtn').click(function () {
+        self.suggestionsModal.showModal();
+      });
 
       this.tutorialManager = new TutorialManager();
 

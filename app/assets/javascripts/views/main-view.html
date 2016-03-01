@@ -3,13 +3,14 @@
 <div id="homeViewContainer"></div>
 <div id="langFiltersView" class="{{#isSafari}}safari{{/isSafari}}"></div>
 <div id="minorFiltersView" class="{{#isSafari}}safari{{/isSafari}}"></div>
-<i id="floatingSuggestionsBtn" class="fa fa-comments {{#isSafari}}safari{{/isSafari}}{{^isSafari}}not-safari{{/isSafari}}" data-toggle="suggestions-tooltip" data-placement="top" title="Leave us a suggestion"></i>
 {{/showHomeView}}
 
 <!--PROJECT VIEW-->
 {{#showProjectView}}
 <div id="projectViewContainer"></div>
 {{/showProjectView}}
+
+<i id="floatingSuggestionsBtn" class="fa fa-comments {{#isSafari}}safari{{/isSafari}}{{^isSafari}}not-safari{{/isSafari}}"></i>
 
 <!--MODALS-->
 <div id="modalCreateProject" class="{{#isSafari}}safari{{/isSafari}}" onmouseover="document.body.style.overflow='hidden';" onmouseout="document.body.style.overflow='auto';"></div>

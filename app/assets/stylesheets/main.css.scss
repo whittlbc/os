@@ -324,3 +324,23 @@ footer {
   }
 
 }
+
+#floatingSuggestionsBtn {
+  -webkit-box-shadow: 0 6px 13px 0 rgba(0,0,0,.23);
+  -moz-box-shadow: 0 6px 13px 0 rgba(0,0,0,.23);
+  box-shadow: 0 6px 13px 0 rgba(0,0,0,.23);
+  border-radius: 50%;
+  font-size: 26px;
+  line-height: 48px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  display: block;
+  color: white;
+  background-color: #333;
+  cursor: pointer;
+  position: fixed;
+  bottom: 21px;
+  right: 24px;
+  z-index: 1;
+}
