@@ -74,7 +74,7 @@ define(['jquery',
           openInNewTab = true;
         }
 
-        OSUtil.navToProject(data.uuid, openInNewTab);
+        OSUtil.navToProject(data.slug, openInNewTab);
 
         if (!openInNewTab){
           setTimeout(function () {

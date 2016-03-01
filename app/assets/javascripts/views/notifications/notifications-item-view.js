@@ -23,7 +23,7 @@ define(['jquery',
     },
 
     openProject: function (e) {
-      Backbone.EventBroker.trigger('open-project', this.data.project_uuid, e);
+      Backbone.EventBroker.trigger('open-project', this.data.slug, e);
     },
 
     handleActionBtnClick: function (e) {

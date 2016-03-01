@@ -19,11 +19,11 @@ define(['jquery', 'backbone', 'moment', 'timeago'], function ($, Backbone, momen
       window.location.hash = '#launched';
     },
 
-    navToProject: function (projectUUID, newTab) {
+    navToProject: function (slug, newTab) {
       if (newTab){
-        window.open((window.location.origin + '/#projects/' + projectUUID), '_blank');
+        window.open((window.location.origin + '/#projects/' + slug), '_blank');
       } else {
-        window.location.hash = '#projects/' + projectUUID;
+        window.location.hash = '#projects/' + slug;
       }
     },
 

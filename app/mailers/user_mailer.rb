@@ -4,11 +4,11 @@ class UserMailer < ActionMailer::Base
 
   LOGO = 'http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/sourcehoney.png'
 
-  def project_invitation(email, sender_name, recipient_name, subject, project_name, project_uuid)
+  def project_invitation(email, sender_name, recipient_name, subject, project_name, project_slug)
     @sender_name = sender_name
     @recipient_name = recipient_name
     @project_name = project_name
-    @project_uuid = project_uuid
+    @project_slug = project_slug
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
 
@@ -18,7 +18,7 @@ class UserMailer < ActionMailer::Base
   def notify_user_of_comment_reply(user: nil, comment: nil, parent_comment: nil, project: nil)
     @recipient_name = get_correct_name(user)
     @project_name = project.title
-    @project_uuid = project.uuid
+    @project_slug = project.slug
     @comment_text = comment.text
     @commenter = comment.user.gh_username
     @parent_comment_text = parent_comment.text
@@ -32,7 +32,7 @@ class UserMailer < ActionMailer::Base
   def notify_user_of_comment(user: nil, comment: nil, project: nil)
     @recipient_name = get_correct_name(user)
     @project_name = project.title
-    @project_uuid = project.uuid
+    @project_slug = project.slug
     @comment_text = comment.text
     @commenter = comment.user.gh_username
     @redirect_base_url = ENV['URL']
@@ -45,7 +45,7 @@ class UserMailer < ActionMailer::Base
   def notify_team_of_team_comment(user: nil, comment: nil, project: nil)
     @recipient_name = get_correct_name(user)
     @project_name = project.title
-    @project_uuid = project.uuid
+    @project_slug = project.slug
     @comment_text = comment.text
     @commenter = comment.user.gh_username
     @redirect_base_url = ENV['URL']
@@ -66,7 +66,7 @@ class UserMailer < ActionMailer::Base
   def notify_user_of_implementation(user: nil, project: nil, poster_name: nil)
     @recipient_name = get_correct_name(user)
     @project_name = project.title
-    @project_uuid = project.uuid
+    @project_slug = project.slug
     @poster_name = poster_name
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
@@ -79,7 +79,7 @@ class UserMailer < ActionMailer::Base
     @recipient_name = requestee_name || 'fellow OSS lover'
     @requester_name = get_correct_name(requester, full_name: true)
     @project_name = project.title
-    @project_uuid = project.uuid
+    @project_slug = project.slug
     @redirect_base_url = ENV['URL']
     @company_logo = LOGO
 
@@ -98,7 +98,7 @@ class UserMailer < ActionMailer::Base
     @taggee_name = taggee_name
     @tagger_name = get_correct_name(tagger)
     @project_name = project.title
-    @project_uuid = project.uuid
+    @project_slug = project.slug
     @comment_text = comment.text
     @comment_uuid = comment.uuid
     @redirect_base_url = ENV['URL']
@@ -127,7 +127,6 @@ class UserMailer < ActionMailer::Base
     @recipient_name = get_correct_name(user)
     @requester_name = get_correct_name(requester, full_name: true)
     @project_name = project.title
-    @project_uuid = project.uuid
     @url = "#{ENV['URL']}/projects/acceptProjectRequest?project=#{project.uuid}&request=#{pending_request.uuid}"
     @company_logo = LOGO
     project_name_abbrev = @project_name.length > 40 ? "#{@project_name[0..37]}..." : @project_name

@@ -31,11 +31,8 @@ define(['jquery',
     postInitialize: function (options) {
       var self = this;
       var project = new Project();
-      this.projectUUID = options.uuid;
 
-      var data = {
-        uuid: options.uuid // project uuid
-      };
+      var data = { slug: options.slug };
 
       if (this.currentUser) {
         data.user_uuid = this.currentUser.get('uuid');
@@ -68,14 +65,11 @@ define(['jquery',
 
     },
 
-    reInitialize: function (uuid) {
+    reInitialize: function (slug) {
       var self = this;
       var project = new Project();
-      self.projectUUID = uuid;
 
-      var data = {
-        uuid: uuid  // project uuid
-      };
+      var data = { slug: slug };
 
       if (this.currentUser) {
         data.user_uuid = this.currentUser.get('uuid');
@@ -118,12 +112,13 @@ define(['jquery',
         });
 
         var project = new Project();
+
         project.edit({
           uuid: self.projectUUID,
           data: projectData
         }, {
-          success: function () {
-            window.location.reload();
+          success: function (updatedProject) {
+            OSUtil.navToProject(updatedProject.slug);
           }, error: function () {
             window.location.reload();
           }
@@ -225,8 +220,8 @@ define(['jquery',
     },
 
     handleFetchedDetails: function (data) {
-      var self = this;
       var project = data.project || {};
+      this.projectUUID = data.project.uuid;
 
       if (this.checkIfProjectHasRepo(project)) {
 

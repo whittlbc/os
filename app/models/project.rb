@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  include FriendlyId
+
   belongs_to :user
   has_many :contributors
   has_many :integrations
@@ -6,6 +8,8 @@ class Project < ActiveRecord::Base
   has_many :evolutions
   has_many :pending_requests
   has_many :implementations
+
+  friendly_id :slug_candidates, use: :slugged
 
   IRC_URL_FOR_NETWORK = {
     'ChLame' => 'chlame.net',
@@ -28,6 +32,13 @@ class Project < ActiveRecord::Base
   scope :ideas, -> { where(:status => 0) }
 
   scope :launched, -> { where(:status => 1) }
+
+  def slug_candidates
+    [
+      :title,
+      [:title, :id]
+    ]
+  end
 
   def get_owner_gh_username
     if self.is_anon?
@@ -68,6 +79,10 @@ class Project < ActiveRecord::Base
 
   def is_hipchat_member?(user_id)
     !self.integrations.where(:service => 'HipChat').where.overlap(:users => [user_id]).empty?
+  end
+
+  def get_named_uuid
+    "#{self.title}-#{self.uuid}"
   end
 
 end

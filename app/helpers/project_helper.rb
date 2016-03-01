@@ -45,7 +45,7 @@ module ProjectHelper
     :repo_name
   ]
 
-  def self.fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_uuid)
+  def self.fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_slug)
     gh_user = client.user(usernames[index])
     users_arr.push({
       :username => usernames[index],
@@ -56,13 +56,14 @@ module ProjectHelper
     if users_arr.length === usernames.length
       # get rid of users who don't have emails connected to their gh profiles
       users_with_emails = users_arr.reject { |obj| obj[:email].nil? }
-      subject = "You've been invited to join #{project_name}"
+      project_name_abbrev = project_name.length > 40 ? "#{project_name[0..37]}..." : project_name
+      subject = "You've been invited to join #{project_name_abbrev}"
       users_with_emails.each { |obj|
-        UserMailer.delay.project_invitation(obj[:email], sender_name, obj[:username], subject, project_name, project_uuid)
+        UserMailer.delay.project_invitation(obj[:email], sender_name, obj[:username], subject, project_name, project_slug)
       }
     else
       sleep 1   # wait a second because we don't want to run out of requests by making a fuck ton
-      fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_uuid)
+      fetch_gh_email(client, sender_name, usernames, project_name, index, users_arr, project_slug)
     end
   end
 

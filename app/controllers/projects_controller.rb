@@ -49,9 +49,9 @@ class ProjectsController < ApplicationController
       user = User.find_by(uuid: params[:user_uuid])
     end
 
-    project = Project.find_by(uuid: params[:uuid])
+    project = Project.friendly.find(params[:slug])
 
-    if !project.nil? && project.is_active?
+    if project.present? && project.is_active?
       owner_gh_username = project.get_owner_gh_username
       admin_arr = Contributor.admin(project.id).map { |contrib|
         contrib.try(:user).try(:gh_username)
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
 
       is_owner = user ? (user.gh_username === project.try(:user).try(:gh_username)) : false
 
-      if !project.blank?
+      if project.present?
         project_details = {
           :post_date => project.created_at.utc.iso8601,
           :markdown_description => Markdown.render(project.description),
@@ -76,6 +76,7 @@ class ProjectsController < ApplicationController
           :subtitle => project.subtitle,
           :user_uuid => project.user.uuid,
           :uuid => project.uuid,
+          :slug => project.slug,
           :voted => user ? user.voted_on_project(project.id) : nil,
           :vote_count => project.vote_count,
           :starred => project.is_starred_for_user?(user),
@@ -146,7 +147,7 @@ class ProjectsController < ApplicationController
     if !sender.nil? && !project.nil?
       project_name = (!project.title.nil? && !project.title.empty?) ? project.title : project.repo_name
       client = Octokit::Client.new(:access_token => User.find_by(email: 'benwhittle31@gmail.com').password)
-      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.uuid)
+      ProjectHelper.delay.fetch_gh_email(client, sender.gh_username, params[:usernames], project_name, 0, [], project.slug)
       render :json => {}, :status => 200
     else
       render :json => {:message => 'Either sender was nil or project was nil by uuid'}, :status => 500
@@ -211,13 +212,19 @@ class ProjectsController < ApplicationController
       }
 
       project = Project.new(project_data)
+
+      # Save it a 1st time to set the id field
+      project.save!
+
+      # Resave so that the id field can be used as the 2nd unique slug param
+      project.slug = nil
       project.save!
 
       contrib_data = {
-          :uuid => UUIDTools::UUID.random_create.to_s,
-          :project_id => project.id,
-          :user_id => user.id,
-          :admin => true
+        :uuid => UUIDTools::UUID.random_create.to_s,
+        :project_id => project.id,
+        :user_id => user.id,
+        :admin => true
       }
 
       Contributor.new(contrib_data).save!
@@ -284,6 +291,7 @@ class ProjectsController < ApplicationController
           :subtitle => project.subtitle,
           :created_at => project.created_at.utc.iso8601,
           :uuid => project.uuid,
+          :slug => project.slug,
           :vote_count => project.vote_count,
           :total_contributors => project.contributors_count,
           :license => project.license,
@@ -393,6 +401,7 @@ class ProjectsController < ApplicationController
             :subtitle => project.subtitle,
             :created_at => project.created_at.utc.iso8601,
             :uuid => project.uuid,
+            :slug => project.slug,
             :vote_count => project.vote_count,
             :total_contributors => project.contributors_count,
             :license => project.license,
@@ -943,7 +952,13 @@ class ProjectsController < ApplicationController
         end
       }
 
-      project.update_attributes(attrs_to_update)
+      project.assign_attributes(attrs_to_update)
+
+      if project.title_changed?
+        project.slug = nil
+      end
+
+      project.save!
 
       if !integrations.nil?
 
@@ -1017,7 +1032,7 @@ class ProjectsController < ApplicationController
 
       end
 
-      render :json => {:status => 200}
+      render :json => project
     else
       render :json => {:status => 500, :message => 'Could not find project by id'}
     end
@@ -1052,6 +1067,7 @@ class ProjectsController < ApplicationController
         :subtitle => highlight_query(project.subtitle, params[:query]),
         :status => project.status,
         :uuid => project.uuid,
+        :slug => project.slug,
         :voteCount => project.vote_count
       }
     }

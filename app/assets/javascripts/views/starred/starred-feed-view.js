@@ -43,7 +43,7 @@ define(['jquery',
 
     setListener: function (view, data) {
       view.$el.click(function (e) {
-        Backbone.EventBroker.trigger('force-hide-starred-modal', data.uuid, e);
+        Backbone.EventBroker.trigger('force-hide-starred-modal', data.slug, e);
       });
     },
 

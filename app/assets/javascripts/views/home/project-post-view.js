@@ -50,7 +50,7 @@ define(['jquery',
     },
 
     openProjectDetails: function (e) {
-      Backbone.EventBroker.trigger('open-project', this.uuid, e);
+      Backbone.EventBroker.trigger('open-project', this.slug, e);
     },
 
     handleVote: function () {
@@ -72,6 +72,7 @@ define(['jquery',
       this.date = OSUtil.getTimeAgo(data.created_at);
       this.id = data.id;
       this.uuid = data.uuid;
+      this.slug = data.slug;
       this.vote_count = data.vote_count;
       this.voted = data.voted;
       this.commentCount = data.total_comments || 0;

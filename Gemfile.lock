@@ -76,6 +76,8 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     heroku_rails_deflate (1.0.3)
       actionpack (>= 3.2.13)
       activesupport (>= 3.2.13)
@@ -197,6 +199,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   delayed_job_active_record (= 4.0.2)
   figaro (= 0.7.0)
+  friendly_id (= 5.1.0)
   heroku_rails_deflate (~> 1.0.3)
   jquery-rails
   log4r (= 1.1.10)

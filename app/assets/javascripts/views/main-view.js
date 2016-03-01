@@ -172,14 +172,14 @@ define(['jquery',
       }});
     },
 
-    openProject: function (uuid, e) {
+    openProject: function (slug, e) {
       var openInNewTab = false;
 
       if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
         openInNewTab = true;
       }
 
-      OSUtil.navToProject(uuid, openInNewTab);
+      OSUtil.navToProject(slug, openInNewTab);
     },
 
     showMyProjectsModal: function () {
@@ -221,22 +221,22 @@ define(['jquery',
       $('footer').removeClass('footer-nav-up').addClass('footer-nav-down');
     },
 
-    forceHideStarredModal: function (uuid, e) {
-      this.switchToProjectAndHideModal(this.starredModal, uuid, e);
+    forceHideStarredModal: function (slug, e) {
+      this.switchToProjectAndHideModal(this.starredModal, slug, e);
     },
 
-    forceHideMyProjectsModal: function (uuid, e) {
-      this.switchToProjectAndHideModal(this.myProjectsModal, uuid, e);
+    forceHideMyProjectsModal: function (slug, e) {
+      this.switchToProjectAndHideModal(this.myProjectsModal, slug, e);
     },
 
-    switchToProjectAndHideModal: function (modal, uuid, e) {
+    switchToProjectAndHideModal: function (modal, slug, e) {
       var openInNewTab = false;
 
       if ((Session.isMac() && e.metaKey) || (!Session.isMac() && e.ctrlKey)) {
         openInNewTab = true;
       }
 
-      OSUtil.navToProject(uuid, openInNewTab);
+      OSUtil.navToProject(slug, openInNewTab);
 
       if (!openInNewTab){
         modal.hideModal();
@@ -757,8 +757,6 @@ define(['jquery',
     },
 
     renderProjectView: function (options) {
-      var self = this;
-
       this.forceShowHeader();
 
       if (this.homeView) {
@@ -767,11 +765,11 @@ define(['jquery',
 
       if (this.projectView) {
         this.projectView.$el = this.$el.find('#projectViewContainer');
-        this.projectView.reInitialize(options.uuid);
+        this.projectView.reInitialize(options.slug);
       } else {
         this.projectView = new ProjectView({
           el: this.$el.find('#projectViewContainer'),
-          uuid: options.uuid
+          slug: options.slug
         });
       }
     },

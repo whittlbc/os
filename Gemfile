@@ -88,3 +88,5 @@ gem 'slack-api'
 gem 'redcarpet'
 
 gem 'pygments.rb'
+
+gem 'friendly_id', '5.1.0'

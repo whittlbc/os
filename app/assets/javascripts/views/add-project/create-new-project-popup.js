@@ -294,7 +294,7 @@ define(['jquery',
         });
       }
 
-      OSUtil.navToProject(project.uuid);
+      OSUtil.navToProject(project.slug);
 
       setTimeout(function () {
         self.resetPopup();

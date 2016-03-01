@@ -66,6 +66,7 @@ class UsersController < ApplicationController
       starred = Project.includes(:user).where(:id => user.starred).active.map { |project|
         {
             :uuid => project.uuid,
+            :slug => project.slug,
             :title => project.title,
             :subtitle => project.subtitle,
             :owner_gh_username => project.user.gh_username,
@@ -86,6 +87,7 @@ class UsersController < ApplicationController
       my_projects = user.projects.active.map { |project|
         {
           :uuid => project.uuid,
+          :slug => project.slug,
           :title => project.title,
           :subtitle => project.subtitle,
           :status => project.status
@@ -100,6 +102,7 @@ class UsersController < ApplicationController
         if proj.user_id != user.id
           just_contributing_projects.push({
             :uuid => proj.uuid,
+            :slug => proj.slug,
             :title => proj.title,
             :subtitle => proj.subtitle,
             :owner_gh_username => proj.user.gh_username,

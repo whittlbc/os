@@ -26,7 +26,7 @@ define(['jquery',
     routes: {
       'ideas': 'ideasRoute',
       'launched': 'launchedRoute',
-      'projects/:uuid': 'projectRoute',
+      'projects/:slug': 'projectRoute',
       '': 'ideasRoute'
     },
 
@@ -38,9 +38,9 @@ define(['jquery',
       this.updateHomeView(1);
     },
 
-    projectRoute: function (uuid) {
+    projectRoute: function (slug) {
       $('footer').hide();
-      this.updateProjectView(uuid);
+      this.updateProjectView(slug);
     },
 
     updateHomeView: function (feedIndex) {
@@ -62,7 +62,7 @@ define(['jquery',
       document.body.style.overflow = 'auto';
     },
 
-    updateProjectView: function (uuid) {
+    updateProjectView: function (slug) {
       this.mainView = this.mainView || new MainView({el: '#mainView'});
       this.mainView.captureFilters();
       //this.mainView.resetNotifications();
@@ -70,7 +70,7 @@ define(['jquery',
 
       this.mainView.render({
         view: OSUtil.PROJECT_PAGE,
-        uuid: uuid
+        slug: slug
       });
 
       document.body.style.overflow = 'auto';
