@@ -1,0 +1,136 @@
+{{^hideDetailsView}}
+<div class="enter-details-message">Enter project details:</div>
+
+<!--Title-->
+<div class="add-project-title-container">
+    <div class="project-creation-validation-error">* Please enter a project title</div>
+    <input name="add-project-title" placeholder="Title" type="text" value="{{title}}"/>
+</div>
+
+<!--Subtitle-->
+<div class="add-project-subtitle-container">
+    <div class="project-creation-validation-error">* Please enter a short description for this project</div>
+    <input name="add-project-subtitle" placeholder="Subtitle" type="text" value="{{subtitle}}"/>
+</div>
+
+<!--Description-->
+<div class="add-project-description-container">
+    <textarea name="add-project-description" placeholder="Details of the {{#launched}}project{{/launched}}{{^launched}}idea{{/launched}}{{#ufg}} (if something you've already started, how far along are you?){{/ufg}}" value="{{description}}">{{description}}</textarea>
+</div>
+
+<!--Languages and Frameworks-->
+<div class="add-project-langs-frames-container">
+    <div class="add-project-langs-frames-text">What languages/frameworks are {{#launched}}involved?{{/launched}}{{^launched}}you proposing?{{/launched}}</div>{{
+    }}<div class="add-project-langs-frames-selection-container">
+        <select id="add-project-langs-frames-selection" placeholder="Languages and frameworks"></select>
+    </div>
+</div>
+
+<!--Domains-->
+<div class="add-project-domains-container">
+    <div class="add-project-domains-text">What domain(s) {{#launched}}do{{/launched}}{{^launched}}will{{/launched}} this project occupy?</div>{{
+    }}<div class="add-project-domains-selection-container">
+        <select id="add-project-domains-selection" placeholder="Domains"></select>
+    </div>
+</div>
+
+{{#showSeeking}}
+<!--Seeking-->
+<div class="add-project-seeking-container">
+    <div class="add-project-seeking-text">What are you seeking by posting this project?</div>{{
+    }}<div class="add-project-seeking-selection-container">
+        <select id="add-project-seeking-selection" placeholder="Seeking"></select>
+    </div>
+</div>
+{{/showSeeking}}
+
+{{#showRepo}}
+<!--Repo Name-->
+<div class="add-project-repo-name-container">
+    <div class="add-project-repo-name-text">What is the name of your GitHub repo?</div>{{
+    }}<div class="add-project-repo-name-input-container">
+        <input name="add-project-repo-name" placeholder="GitHub repo name" type="text" value="{{repoName}}"/>
+    </div>
+</div>
+{{/showRepo}}
+
+{{#showLicense}}
+<!--License-->
+<div class="add-project-license-container">
+    <div class="add-project-license-text">What license does this project have?</div>{{
+    }}<div class="add-project-license-selection-container">
+        <select id="add-project-license-selection" placeholder="License"></select>
+    </div>
+</div>
+{{/showLicense}}
+
+{{#showPrivacy}}
+<!--Privacy-->
+<div class="add-project-privacy-container">
+    <div class="add-project-privacy-text">What will your project's privacy be?</div>{{
+    }}<div class="add-project-privacy-choices">
+        <div class="add-project-privacy-choice-container">
+            <div id="add-project-privacy-request" name="request" class="add-project-privacy-choice {{#requestPrivacy}}active-privacy{{/requestPrivacy}}">Request</div>
+        </div>{{
+        }}<div class="add-project-privacy-choice-container">
+            <div id="add-project-privacy-open" name="open" class="add-project-privacy-choice {{#openPrivacy}}active-privacy{{/openPrivacy}}">Open</div>
+        </div>
+    </div>
+</div>
+{{/showPrivacy}}
+
+<!-- Request Feedback -->
+<div class="add-project-request-feedback-container">
+    <div class="add-project-request-feedback-text">Want to request feedback from someone specific?</div>{{
+    }}<div class="add-project-request-feedback-input-container">
+        <input name="add-project-request-feedback" placeholder="Emails (comma-separated)" type="text" value="{{requestFeedbackEmails}}"/>
+    </div>
+</div>
+
+{{#showIntegrations}}
+<!--Integrations-->
+<div class="add-project-integrations-container">
+    <div class="question">Any team communication forums?</div>
+    <!--IRC-->
+    <div class="integration-container" id="detailsViewIRCContainer">
+        <div class="irc">IRC</div>{{
+        }}<div id="ircChannel" class="forum-link-container">
+        <input name="irc" placeholder="Channel (e.g. #myChannel)" type="text" value="{{ircChannel}}"/>
+    </div>{{
+        }}<div id="ircNetworkContainer">
+            <select id="ircNetwork" placeholder="Network"></select>
+        </div>
+    </div>
+    <!--Slack-->
+    <div class="integration-container" id="slackIntegrationContainer">
+        <div class="logo-container">
+            <img id="slack" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/slack_logo.png"/>
+        </div>
+        <div class="forum-link-container">
+            <input name="slack" placeholder="Full Slack team URL" type="text" value="{{slackURL}}"/>
+        </div>
+        <div class="or">OR</div>
+        <div class="create-forum"><a href="https://slack.com/create" target="_blank">Create Team</a></div>
+    </div>
+    <!--HipChat-->
+    <div class="integration-container">
+        <div class="logo-container">
+            <img id="hipchat" src="http://sourcehoney.s3-website-us-west-1.amazonaws.com/images/hipchat.png"/>
+        </div>
+        <div class="forum-link-container">
+            <input name="hipchat" placeholder="Full HipChat team URL" type="text" value="{{hipChatURL}}"/>
+        </div>
+        <div class="or">OR</div>
+        <div class="create-forum"><a href="https://www.hipchat.com/sign_up#new_team" target="_blank">Create Team</a></div>
+    </div>
+</div>
+{{/showIntegrations}}
+
+<div class="loading-repo-view">
+    <div id="loadingRepoSpinner"></div>
+    <div class="loading-repo-message">Fetching Repo Data...</div>
+</div>
+
+{{/hideDetailsView}}
+
+
