@@ -1,3 +1,4 @@
 Sourcehoney
 ==========================================
-Go fuck yourself.
+
+Full-stack web app for Sourcehoney
